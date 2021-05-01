@@ -40,7 +40,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
   }
 
   init() async {
-    categories.add(CategoryModel(name: 'Electronics', icon: 'images/defaultTheme/category/electronics.png'));
+    categories.add(CategoryModel(name: 'Inquiries', icon: 'images/defaultTheme/category/electronics.png'));
     categories.add(CategoryModel(name: 'TV & Appliances', icon: 'images/defaultTheme/category/Tv.png'));
     categories.add(CategoryModel(name: 'Men', icon: 'images/defaultTheme/category/Man.png'));
     categories.add(CategoryModel(name: 'Women', icon: 'images/defaultTheme/category/women.png'));

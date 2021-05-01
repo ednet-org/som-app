@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: DTDashboardScreen(),
-        theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
+        theme: AppThemeData.darkTheme,
       ),
     );
   }

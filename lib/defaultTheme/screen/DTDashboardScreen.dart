@@ -36,7 +36,7 @@ class DTDashboardScreenState extends State<DTDashboardScreen> {
         builder: (context) => Scaffold(
           appBar: AppBar(
             backgroundColor: appStore.appBarColor,
-            title: appBarTitleWidget(context, 'Dashboard'),
+            title: appBarTitleWidget(context, 'SOM Dashboard'),
           ),
           drawer: DTDrawerWidget(),
           body: DTDashboardWidget(),
