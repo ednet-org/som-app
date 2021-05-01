@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/DTReviewModel.dart';
+import 'package:som/defaultTheme/model/ReviewModel.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/flutter_rating_bar.dart';
 
@@ -8,7 +8,7 @@ import '../../main.dart';
 
 class ReviewWidget extends StatefulWidget {
   static String tag = '/ReviewWidget';
-  final List<DTReviewModel> list;
+  final List<ReviewModel> list;
   final bool enableScrollPhysics;
 
   ReviewWidget({this.list, this.enableScrollPhysics});
@@ -39,7 +39,7 @@ class ReviewWidgetState extends State<ReviewWidget> {
       padding: EdgeInsets.only(bottom: 8, top: 16),
       itemCount: widget.list.length,
       itemBuilder: (_, index) {
-        DTReviewModel data = widget.list[index];
+        ReviewModel data = widget.list[index];
 
         return Container(
           margin: EdgeInsets.all(8),

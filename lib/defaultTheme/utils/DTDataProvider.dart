@@ -2,33 +2,33 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/DTAddressListModel.dart';
-import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:som/defaultTheme/model/DTChatModel.dart';
-import 'package:som/defaultTheme/model/DTProductModel.dart';
-import 'package:som/defaultTheme/model/DTReviewModel.dart';
-import 'package:som/defaultTheme/screen/DTAboutScreen.dart';
-import 'package:som/defaultTheme/screen/DTAddressScreen.dart';
-import 'package:som/defaultTheme/screen/DTCartScreen.dart';
-import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTChatScreen.dart';
-import 'package:som/defaultTheme/screen/DTContactUsScreen.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:som/defaultTheme/screen/DTErrorScreen.dart';
-import 'package:som/defaultTheme/screen/DTFAQScreen.dart';
-import 'package:som/defaultTheme/screen/DTFilterScreen.dart';
-import 'package:som/defaultTheme/screen/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/DTMaintenanceScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoDataScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoResultScreen.dart';
-import 'package:som/defaultTheme/screen/DTOrderSummaryScreen.dart';
-import 'package:som/defaultTheme/screen/DTPaymentScreen.dart';
-import 'package:som/defaultTheme/screen/DTProductDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTProfileScreen.dart';
-import 'package:som/defaultTheme/screen/DTReviewScreen.dart';
-import 'package:som/defaultTheme/screen/DTSearchScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
+import 'package:som/defaultTheme/model/AddressListModel.dart';
+import 'package:som/defaultTheme/model/ChatMessageModel.dart';
+import 'package:som/defaultTheme/model/ChatModel.dart';
+import 'package:som/defaultTheme/model/ProductModel.dart';
+import 'package:som/defaultTheme/model/ReviewModel.dart';
+import 'package:som/defaultTheme/screen/AboutScreen.dart';
+import 'package:som/defaultTheme/screen/AddressScreen.dart';
+import 'package:som/defaultTheme/screen/CartScreen.dart';
+import 'package:som/defaultTheme/screen/CategoryDetailScreen.dart';
+import 'package:som/defaultTheme/screen/ChatScreen.dart';
+import 'package:som/defaultTheme/screen/ContactUsScreen.dart';
+import 'package:som/defaultTheme/screen/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/ErrorScreen.dart';
+import 'package:som/defaultTheme/screen/FAQScreen.dart';
+import 'package:som/defaultTheme/screen/FilterScreen.dart';
+import 'package:som/defaultTheme/screen/ForgotPwdScreen.dart';
+import 'package:som/defaultTheme/screen/MaintenanceScreen.dart';
+import 'package:som/defaultTheme/screen/NoDataScreen.dart';
+import 'package:som/defaultTheme/screen/NoResultScreen.dart';
+import 'package:som/defaultTheme/screen/OrderSummaryScreen.dart';
+import 'package:som/defaultTheme/screen/PaymentScreen.dart';
+import 'package:som/defaultTheme/screen/ProductDetailScreen.dart';
+import 'package:som/defaultTheme/screen/ProfileScreen.dart';
+import 'package:som/defaultTheme/screen/ReviewScreen.dart';
+import 'package:som/defaultTheme/screen/SearchScreen.dart';
+import 'package:som/defaultTheme/screen/SignInScreen.dart';
+import 'package:som/defaultTheme/screen/SignUpScreen.dart';
 import 'package:som/defaultTheme/screen/DTWalkThoughScreen.dart';
 import 'package:som/main/model/ListModels.dart';
 import 'package:som/main/utils/AppConstant.dart';
@@ -36,10 +36,10 @@ import 'package:som/main/utils/AppConstant.dart';
 const sender_id = 1;
 const receiver_id = 2;
 
-List<DTProductModel> getProducts() {
-  List<DTProductModel> list = List();
+List<ProductModel> getProducts() {
+  List<ProductModel> list = List();
 
-  DTProductModel p1 = DTProductModel();
+  ProductModel p1 = ProductModel();
   p1.name = 'Women Pink Cosmetic Bag';
   p1.price = 300;
   p1.discountPrice = 250;
@@ -49,7 +49,7 @@ List<DTProductModel> getProducts() {
   p1.image = ProductImg1;
   list.add(p1);
 
-  DTProductModel p2 = DTProductModel();
+  ProductModel p2 = ProductModel();
   p2.name = 'Nilkamal Plastic Outdoor Chair  (dark brown)';
   p2.price = 384;
   p2.discountPrice = 290;
@@ -59,7 +59,7 @@ List<DTProductModel> getProducts() {
   p2.image = ProductImg2;
   list.add(p2);
 
-  DTProductModel p3 = DTProductModel();
+  ProductModel p3 = ProductModel();
   p3.name = 'Ice Cream Chocolate';
   p3.price = 1082;
   p3.discountPrice = 999;
@@ -69,7 +69,7 @@ List<DTProductModel> getProducts() {
   p3.image = ProductImg3;
   list.add(p3);
 
-  DTProductModel p4 = DTProductModel();
+  ProductModel p4 = ProductModel();
   p4.name = 'Star X PVC Dumbbells Set COMBO Gym & Fitness Kit';
   p4.price = 575;
   p4.discountPrice = 440;
@@ -79,7 +79,7 @@ List<DTProductModel> getProducts() {
   p4.image = ProductImg4;
   list.add(p4);
 
-  DTProductModel p6 = DTProductModel();
+  ProductModel p6 = ProductModel();
   p6.name = 'Bluetooth Headset';
   p6.price = 379;
   p6.discountPrice = 119;
@@ -89,7 +89,7 @@ List<DTProductModel> getProducts() {
   p6.image = ProductImg5;
   list.add(p6);
 
-  DTProductModel p5 = DTProductModel();
+  ProductModel p5 = ProductModel();
   p5.name = 'Alloy Jewel Set';
   p5.price = 999;
   p5.discountPrice = 870;
@@ -102,10 +102,10 @@ List<DTProductModel> getProducts() {
   return list;
 }
 
-List<DTProductModel> getCartProducts() {
-  List<DTProductModel> list = List();
+List<ProductModel> getCartProducts() {
+  List<ProductModel> list = List();
 
-  DTProductModel p1 = DTProductModel();
+  ProductModel p1 = ProductModel();
   p1.name = 'Women Pink Cosmetic Bag';
   p1.price = 300;
   p1.discountPrice = 250;
@@ -115,7 +115,7 @@ List<DTProductModel> getCartProducts() {
   p1.image = ProductImg1;
   list.add(p1);
 
-  DTProductModel p2 = DTProductModel();
+  ProductModel p2 = ProductModel();
   p2.name = 'Nilkamal Plastic Outdoor Chair  (dark brown)';
   p2.price = 384;
   p2.discountPrice = 290;
@@ -125,7 +125,7 @@ List<DTProductModel> getCartProducts() {
   p2.image = ProductImg2;
   list.add(p2);
 
-  DTProductModel p6 = DTProductModel();
+  ProductModel p6 = ProductModel();
   p6.name = 'Ice Cream Chocolate';
   p6.price = 379;
   p6.discountPrice = 119;
@@ -155,38 +155,38 @@ List<ListModel> getDrawerItems() {
   var drawerItems = List<ListModel>();
 
   drawerItems.add(ListModel(name: 'WalkThrough', widget: DTWalkThoughScreen()));
-  drawerItems.add(ListModel(name: 'Sign In', widget: DTSignInScreen()));
-  drawerItems.add(ListModel(name: 'Forgot Password', widget: DTForgotPwdScreen()));
-  drawerItems.add(ListModel(name: 'Sign Up', widget: DTSignUpScreen()));
-  drawerItems.add(ListModel(name: 'Dashboard', widget: DTDashboardScreen()));
-  drawerItems.add(ListModel(name: 'Detail', widget: DTProductDetailScreen()));
-  drawerItems.add(ListModel(name: 'Profile', widget: DTProfileScreen()));
-  drawerItems.add(ListModel(name: 'Cart', widget: DTCartScreen()));
-  drawerItems.add(ListModel(name: 'Payment', widget: DTPaymentScreen()));
-  drawerItems.add(ListModel(name: 'Filter', widget: DTFilterScreen()));
-  drawerItems.add(ListModel(name: 'About', widget: DTAboutScreen()));
-  drawerItems.add(ListModel(name: 'Chat', widget: DTChatScreen()));
+  drawerItems.add(ListModel(name: 'Sign In', widget: SignInScreen()));
+  drawerItems.add(ListModel(name: 'Forgot Password', widget: ForgotPwdScreen()));
+  drawerItems.add(ListModel(name: 'Sign Up', widget: SignUpScreen()));
+  drawerItems.add(ListModel(name: 'Dashboard', widget: DashboardScreen()));
+  drawerItems.add(ListModel(name: 'Detail', widget: ProductDetailScreen()));
+  drawerItems.add(ListModel(name: 'Profile', widget: ProfileScreen()));
+  drawerItems.add(ListModel(name: 'Cart', widget: CartScreen()));
+  drawerItems.add(ListModel(name: 'Payment', widget: PaymentScreen()));
+  drawerItems.add(ListModel(name: 'Filter', widget: FilterScreen()));
+  drawerItems.add(ListModel(name: 'About', widget: AboutScreen()));
+  drawerItems.add(ListModel(name: 'Chat', widget: ChatScreen()));
 
-  if (isMobile) drawerItems.add(ListModel(name: 'Contact Us', widget: DTContactUsScreen()));
+  if (isMobile) drawerItems.add(ListModel(name: 'Contact Us', widget: ContactUsScreen()));
 
-  drawerItems.add(ListModel(name: 'Review & Rating', widget: DTReviewScreen()));
-  drawerItems.add(ListModel(name: 'FAQ', widget: DTFAQScreen()));
+  drawerItems.add(ListModel(name: 'Review & Rating', widget: ReviewScreen()));
+  drawerItems.add(ListModel(name: 'FAQ', widget: FAQScreen()));
   //drawerItems.add(ListModel(name: 'No Internet', widget: DTNoInternetScreen()));
-  drawerItems.add(ListModel(name: 'No Data', widget: DTNoDataScreen()));
-  drawerItems.add(ListModel(name: 'Error', widget: DTErrorScreen()));
-  drawerItems.add(ListModel(name: 'Maintenance', widget: DTMaintenanceScreen()));
+  drawerItems.add(ListModel(name: 'No Data', widget: NoDataScreen()));
+  drawerItems.add(ListModel(name: 'Error', widget: ErrorScreen()));
+  drawerItems.add(ListModel(name: 'Maintenance', widget: MaintenanceScreen()));
   drawerItems.add(ListModel(name: 'Grid View', widget: DTCategoryDetailScreen()));
-  drawerItems.add(ListModel(name: 'Order Summary', widget: DTOrderSummaryScreen(getCartProducts())));
-  drawerItems.add(ListModel(name: 'Address Manager', widget: DTAddressScreen()));
-  drawerItems.add(ListModel(name: 'Search', widget: DTSearchScreen()));
-  drawerItems.add(ListModel(name: 'No Result', widget: DTNoResultScreen()));
+  drawerItems.add(ListModel(name: 'Order Summary', widget: OrderSummaryScreen(getCartProducts())));
+  drawerItems.add(ListModel(name: 'Address Manager', widget: AddressScreen()));
+  drawerItems.add(ListModel(name: 'Search', widget: SearchScreen()));
+  drawerItems.add(ListModel(name: 'No Result', widget: NoResultScreen()));
   return drawerItems;
 }
 
-List<DTChatModel> getChatData() {
-  List<DTChatModel> list = List();
+List<ChatModel> getChatData() {
+  List<ChatModel> list = List();
 
-  DTChatModel c1 = DTChatModel();
+  ChatModel c1 = ChatModel();
   c1.name = 'William';
   c1.img = SampleImageUrl;
   c1.time = '1:43 AM';
@@ -194,7 +194,7 @@ List<DTChatModel> getChatData() {
   c1.unreadCount = Random().nextInt(20);
   list.add(c1);
 
-  DTChatModel c2 = DTChatModel();
+  ChatModel c2 = ChatModel();
   c2.name = 'Benjamin';
   c2.img = SampleImageUrl2;
   c2.time = '4:43 AM';
@@ -202,7 +202,7 @@ List<DTChatModel> getChatData() {
   c2.unreadCount = Random().nextInt(20);
   list.add(c2);
 
-  DTChatModel c3 = DTChatModel();
+  ChatModel c3 = ChatModel();
   c3.name = 'Emma';
   c3.img = SampleImageUrl4;
   c3.time = '7:03 PM';
@@ -210,7 +210,7 @@ List<DTChatModel> getChatData() {
   c3.unreadCount = Random().nextInt(20);
   list.add(c3);
 
-  DTChatModel c4 = DTChatModel();
+  ChatModel c4 = ChatModel();
   c4.name = 'Isabella';
   c4.img = SampleImageUrl2;
   c4.time = '2:43 PM';
@@ -218,7 +218,7 @@ List<DTChatModel> getChatData() {
   c4.unreadCount = Random().nextInt(20);
   list.add(c4);
 
-  DTChatModel c5 = DTChatModel();
+  ChatModel c5 = ChatModel();
   c5.name = 'John Smith';
   c5.img = SampleImageUrl4;
   c5.time = '2:43 PM';
@@ -229,129 +229,129 @@ List<DTChatModel> getChatData() {
   return list;
 }
 
-List<DTChatMessageModel> getChatMsgData() {
-  List<DTChatMessageModel> list = List();
+List<ChatMessageModel> getChatMsgData() {
+  List<ChatMessageModel> list = List();
 
-  DTChatMessageModel c1 = DTChatMessageModel();
+  ChatMessageModel c1 = ChatMessageModel();
   c1.Sender_id = sender_id;
   c1.Recevier_id = receiver_id;
   c1.msg = 'Helloo';
   c1.time = '1:43 AM';
   list.add(c1);
 
-  DTChatMessageModel c2 = DTChatMessageModel();
+  ChatMessageModel c2 = ChatMessageModel();
   c2.Sender_id = sender_id;
   c2.Recevier_id = receiver_id;
   c2.msg = 'How are you? What are you doing?';
   c2.time = '1:45 AM';
   list.add(c2);
 
-  DTChatMessageModel c3 = DTChatMessageModel();
+  ChatMessageModel c3 = ChatMessageModel();
   c3.Sender_id = receiver_id;
   c3.Recevier_id = sender_id;
   c3.msg = 'Helloo...';
   c3.time = '1:45 AM';
   list.add(c3);
 
-  DTChatMessageModel c4 = DTChatMessageModel();
+  ChatMessageModel c4 = ChatMessageModel();
   c4.Sender_id = sender_id;
   c4.Recevier_id = receiver_id;
   c4.msg = 'I am good. Can you do something for me? I need your help.';
   c4.time = '1:45 AM';
   list.add(c4);
 
-  DTChatMessageModel c5 = DTChatMessageModel();
+  ChatMessageModel c5 = ChatMessageModel();
   c5.Sender_id = sender_id;
   c5.Recevier_id = receiver_id;
   c5.msg = 'I am good. Can you do something for me? I need your help.';
   c5.time = '1:45 AM';
   list.add(c5);
 
-  DTChatMessageModel c6 = DTChatMessageModel();
+  ChatMessageModel c6 = ChatMessageModel();
   c6.Sender_id = receiver_id;
   c6.Recevier_id = sender_id;
   c6.msg = 'I am good. Can you do something for me? I need your help.';
   c6.time = '1:45 AM';
   list.add(c6);
 
-  DTChatMessageModel c7 = DTChatMessageModel();
+  ChatMessageModel c7 = ChatMessageModel();
   c7.Sender_id = sender_id;
   c7.Recevier_id = receiver_id;
   c7.msg = 'I am good. Can you do something for me? I need your help.';
   c7.time = '1:45 AM';
   list.add(c7);
 
-  DTChatMessageModel c8 = DTChatMessageModel();
+  ChatMessageModel c8 = ChatMessageModel();
   c8.Sender_id = receiver_id;
   c8.Recevier_id = sender_id;
   c8.msg = 'I am good. Can you do something for me? I need your help.';
   c8.time = '1:45 AM';
   list.add(c8);
 
-  DTChatMessageModel c9 = DTChatMessageModel();
+  ChatMessageModel c9 = ChatMessageModel();
   c9.Sender_id = sender_id;
   c9.Recevier_id = receiver_id;
   c9.msg = 'I am good. Can you do something for me? I need your help.';
   c9.time = '1:45 AM';
   list.add(c9);
 
-  DTChatMessageModel c10 = DTChatMessageModel();
+  ChatMessageModel c10 = ChatMessageModel();
   c10.Sender_id = receiver_id;
   c10.Recevier_id = sender_id;
   c10.msg = 'I am good. Can you do something for me? I need your help.';
   c10.time = '1:45 AM';
   list.add(c10);
 
-  DTChatMessageModel c11 = DTChatMessageModel();
+  ChatMessageModel c11 = ChatMessageModel();
   c11.Sender_id = receiver_id;
   c11.Recevier_id = sender_id;
   c11.msg = 'I am good. Can you do something for me? I need your help.';
   c11.time = '1:45 AM';
   list.add(c11);
 
-  DTChatMessageModel c12 = DTChatMessageModel();
+  ChatMessageModel c12 = ChatMessageModel();
   c12.Sender_id = sender_id;
   c12.Recevier_id = receiver_id;
   c12.msg = 'I am good. Can you do something for me? I need your help.';
   c12.time = '1:45 AM';
   list.add(c12);
 
-  DTChatMessageModel c13 = DTChatMessageModel();
+  ChatMessageModel c13 = ChatMessageModel();
   c13.Sender_id = sender_id;
   c13.Recevier_id = receiver_id;
   c13.msg = 'I am good. Can you do something for me? I need your help.';
   c13.time = '1:45 AM';
   list.add(c13);
 
-  DTChatMessageModel c14 = DTChatMessageModel();
+  ChatMessageModel c14 = ChatMessageModel();
   c14.Sender_id = receiver_id;
   c14.Recevier_id = sender_id;
   c14.msg = 'I am good. Can you do something for me? I need your help.';
   c14.time = '1:45 AM';
   list.add(c14);
 
-  DTChatMessageModel c15 = DTChatMessageModel();
+  ChatMessageModel c15 = ChatMessageModel();
   c15.Sender_id = sender_id;
   c15.Recevier_id = receiver_id;
   c15.msg = 'I am good. Can you do something for me? I need your help.';
   c15.time = '1:45 AM';
   list.add(c15);
 
-  DTChatMessageModel c16 = DTChatMessageModel();
+  ChatMessageModel c16 = ChatMessageModel();
   c16.Sender_id = receiver_id;
   c16.Recevier_id = sender_id;
   c16.msg = 'I am good. Can you do something for me? I need your help.';
   c16.time = '1:45 AM';
   list.add(c16);
 
-  DTChatMessageModel c17 = DTChatMessageModel();
+  ChatMessageModel c17 = ChatMessageModel();
   c17.Sender_id = sender_id;
   c17.Recevier_id = receiver_id;
   c17.msg = 'I am good. Can you do something for me? I need your help.';
   c17.time = '1:45 AM';
   list.add(c17);
 
-  DTChatMessageModel c18 = DTChatMessageModel();
+  ChatMessageModel c18 = ChatMessageModel();
   c18.Sender_id = receiver_id;
   c18.Recevier_id = sender_id;
   c18.msg = 'I am good. Can you do something for me? I need your help.';
@@ -377,10 +377,10 @@ String getMonth(int month) {
   return '';
 }
 
-List<DTAddressListModel> getAddressList() {
-  List<DTAddressListModel> list = List();
+List<AddressListModel> getAddressList() {
+  List<AddressListModel> list = List();
 
-  DTAddressListModel a1 = DTAddressListModel();
+  AddressListModel a1 = AddressListModel();
   a1.name = "Smith Jones";
   a1.type = "Home";
   a1.addressLine1 = '381, Shirley St. Munster, New York';
@@ -388,7 +388,7 @@ List<DTAddressListModel> getAddressList() {
   a1.phoneNo = '+913972847376';
   list.add(a1);
 
-  DTAddressListModel a2 = DTAddressListModel();
+  AddressListModel a2 = AddressListModel();
   a2.name = "Micheal Doe";
   a2.type = "Office";
   a2.addressLine1 = '4046  Fleming Street, Montgomery';
@@ -399,45 +399,45 @@ List<DTAddressListModel> getAddressList() {
   return list;
 }
 
-List<DTReviewModel> getReviewList() {
-  List<DTReviewModel> list = List();
+List<ReviewModel> getReviewList() {
+  List<ReviewModel> list = List();
 
-  DTReviewModel r1 = DTReviewModel();
+  ReviewModel r1 = ReviewModel();
   r1.name = "John smith";
   r1.comment = LoremText;
   r1.ratting = 2.0;
   list.add(r1);
-  DTReviewModel r2 = DTReviewModel();
+  ReviewModel r2 = ReviewModel();
   r2.name = "Lora";
   r2.comment = LoremText;
   r2.ratting = 4.0;
   list.add(r2);
-  DTReviewModel r3 = DTReviewModel();
+  ReviewModel r3 = ReviewModel();
   r3.name = "Isabella";
   r3.comment = LoremText;
   r3.ratting = 5.0;
   list.add(r3);
-  DTReviewModel r4 = DTReviewModel();
+  ReviewModel r4 = ReviewModel();
   r4.name = "Emma";
   r4.comment = LoremText;
   r4.ratting = 3.0;
   list.add(r4);
-  DTReviewModel r5 = DTReviewModel();
+  ReviewModel r5 = ReviewModel();
   r5.name = "John";
   r5.comment = LoremText;
   r5.ratting = 5.0;
   list.add(r5);
-  DTReviewModel r6 = DTReviewModel();
+  ReviewModel r6 = ReviewModel();
   r6.name = "Nora";
   r6.comment = LoremText;
   r6.ratting = 3.0;
   list.add(r6);
-  DTReviewModel r7 = DTReviewModel();
+  ReviewModel r7 = ReviewModel();
   r7.name = "Nora";
   r7.comment = LoremText;
   r7.ratting = 3.0;
   list.add(r7);
-  DTReviewModel r8 = DTReviewModel();
+  ReviewModel r8 = ReviewModel();
   r8.name = "John";
   r8.comment = LoremText;
   r8.ratting = 5.0;

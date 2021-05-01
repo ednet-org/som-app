@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'defaultTheme/screen/DTDashboardScreen.dart';
+import 'defaultTheme/screen/DashboardScreen.dart';
 import 'main/store/AppStore.dart';
 import 'main/utils/AppTheme.dart';
 /// This variable is used to get dynamic colors when theme mode is changed
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
     return Observer(
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DTDashboardScreen(),
-        theme: AppThemeData.darkTheme,
+        home: DashboardScreen(),
+        theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
       ),
     );
   }
