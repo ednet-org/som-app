@@ -70,6 +70,16 @@ flutter:
     - images/defaultTheme/
     - images/defaultTheme/category/
     - images/defaultTheme/banner/
+    - images/
+    - images/som/
+    - images/som/connecting/
+    - images/som/descission/
+    - images/som/independent/
+    - images/som/inquiry/
+    - images/som/offer/
+    - images/som/savings/
+    - images/som/simple/
+    - images/som/sustainable/
     - assets/integrations/map_point.json
     - assets/defaultTheme/
     - lang/en.json
