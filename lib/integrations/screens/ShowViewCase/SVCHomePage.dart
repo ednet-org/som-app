@@ -4,8 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/integrations/screens/Marquee/MHomePage.dart';
 import 'package:prokit_flutter/main.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:showcaseview/showcase.dart';
-import 'package:showcaseview/showcase_widget.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'ExamCardModel.dart';
 import 'LessonsModel.dart';
