@@ -90,9 +90,7 @@ class _RatingBarState extends State<RatingBar> {
         mainAxisSize: MainAxisSize.min,
         children: List.generate(widget.maxRating, (index) {
           return Builder(
-            builder: (rowContext) => widget._readOnly
-                ? buildIcon(context, index + 1)
-                : buildStar(rowContext, index + 1),
+            builder: (rowContext) => widget._readOnly ? buildIcon(context, index + 1) : buildStar(rowContext, index + 1),
           );
         }),
       ),
@@ -117,9 +115,7 @@ class _RatingBarState extends State<RatingBar> {
       color = widget.emptyColor ?? Colors.grey;
     } else if (position == rating + 0.5) {
       iconData = widget.halfFilledIcon;
-      color = widget.halfFilledColor ??
-          widget.filledColor ??
-          Theme.of(context).primaryColor;
+      color = widget.halfFilledColor ?? widget.filledColor ?? Theme.of(context).primaryColor;
     } else {
       iconData = widget.filledIcon;
       color = widget.filledColor ?? Theme.of(context).primaryColor;
@@ -144,9 +140,7 @@ class _RatingBarState extends State<RatingBar> {
         } else if (rating > widget.maxRating) {
           rating = widget.maxRating.toDouble();
         } else {
-          rating = widget.isHalfAllowed
-              ? (2 * rating).ceilToDouble() / 2
-              : rating.ceilToDouble();
+          rating = widget.isHalfAllowed ? (2 * rating).ceilToDouble() / 2 : rating.ceilToDouble();
         }
         if (_currentRating != rating) {
           setState(() => _currentRating = rating);

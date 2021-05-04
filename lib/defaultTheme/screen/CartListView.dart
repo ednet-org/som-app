@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/ProductModel.dart';
-import 'package:som/defaultTheme/utils/DTDataProvider.dart';
-import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTProductModel.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'OrderSummaryScreen.dart';
-import 'ProductDetailScreen.dart';
+import 'DTOrderSummaryScreen.dart';
+import 'DTProductDetailScreen.dart';
 
 class CartListView extends StatefulWidget {
   static String tag = '/CartListView';
@@ -23,7 +23,7 @@ class CartListView extends StatefulWidget {
 }
 
 class CartListViewState extends State<CartListView> {
-  List<ProductModel> data = getCartProducts();
+  List<DTProductModel> data = getCartProducts();
 
   int subTotal = 0;
   int totalAmount = 0;
@@ -62,7 +62,7 @@ class CartListViewState extends State<CartListView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget itemCart(ProductModel data, int index) {
+    Widget itemCart(DTProductModel data, int index) {
       return Container(
         decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
         margin: EdgeInsets.all(8),
@@ -135,10 +135,10 @@ class CartListViewState extends State<CartListView> {
       return ListView.builder(
         itemCount: data.length,
         itemBuilder: (_, index) {
-          ProductModel data1 = data[index];
+          DTProductModel data1 = data[index];
 
           return itemCart(data1, index).onTap(() {
-            ProductDetailScreen(productModel: data1).launch(context);
+            DTProductDetailScreen(productModel: data1).launch(context);
           });
         },
         shrinkWrap: true,
@@ -176,7 +176,7 @@ class CartListViewState extends State<CartListView> {
                   decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appColorPrimary),
                   child: Text('Checkout', style: boldTextStyle(color: white)),
                 ).onTap(() {
-                  OrderSummaryScreen(data).launch(context);
+                  DTOrderSummaryScreen(data).launch(context);
                 }).visible(widget.mIsEditable),
               ],
             ),

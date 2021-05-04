@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/ChatMessageModel.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTChatMessageModel.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -143,7 +143,7 @@ class ChatMessageWidget extends StatelessWidget {
   }) : super(key: key);
 
   final bool isMe;
-  final ChatMessageModel data;
+  final DTChatMessageModel data;
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 

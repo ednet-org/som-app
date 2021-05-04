@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
-import 'DrawerWidget.dart';
-import 'SignInScreen.dart';
+import 'DTDrawerWidget.dart';
+import 'DTSignInScreen.dart';
 
 class DTWalkThoughScreen extends StatefulWidget {
-  static String tag = 'WalkThoughScreen';
+  static String tag = '/DTWalkThoughScreen';
 
   @override
   DTWalkThoughScreenState createState() => DTWalkThoughScreenState();
@@ -76,7 +75,7 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'WalkThrough'),
-      drawer: DrawerWidget(),
+      drawer: DTDrawerWidget(),
       body: Container(
         child: Stack(
           children: [
@@ -102,7 +101,7 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                   decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8)),
                 ).onTap(() {
-                  SignInScreen().launch(context);
+                  DTSignInScreen().launch(context);
                 }),
                 secondChild: SizedBox(),
                 duration: Duration(milliseconds: 300),
@@ -121,7 +120,7 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
                 decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8)),
               ).onTap(() {
                 finish(context);
-                SignInScreen().launch(context);
+                DTSignInScreen().launch(context);
               }),
               left: 20,
               bottom: 20,

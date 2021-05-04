@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -85,8 +85,8 @@ class IntroductionWidgetState extends State<IntroductionWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Hello, I\'m', style: primaryTextStyle(size: 52,color: white)),
-                      Text('Christopher', style: boldTextStyle(size: 65,color: white)),
+                      Text('Hello, I\'m', style: primaryTextStyle(size: 52, color: white)),
+                      Text('Christopher', style: boldTextStyle(size: 65, color: white)),
                       8.height,
                       Text(
                         'UI/UX Designer',

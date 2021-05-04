@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main/utils/AppWidget.dart';
-import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 class InfoWidget extends StatefulWidget {
   static String tag = '/InfoScreen';
@@ -20,7 +20,7 @@ class InfoWidgetState extends State<InfoWidget> {
     init();
   }
 
-  init() async{
+  init() async {
     //
   }
 
@@ -35,7 +35,7 @@ class InfoWidgetState extends State<InfoWidget> {
       width: context.width(),
       child: Stack(
         children: [
-          Image.network(p1HireImg, width: context.width(), height: context.height(),fit: BoxFit.cover),
+          Image.network(p1HireImg, width: context.width(), height: context.height(), fit: BoxFit.cover),
           Container(
             height: context.height(),
             width: context.width(),
@@ -60,16 +60,15 @@ class InfoWidgetState extends State<InfoWidget> {
                             children: [
                               16.height,
                               Container(
-                                padding: EdgeInsets.only(top: 4,bottom: 4,right: 12,left: 12),
-                                decoration: boxDecoration(color: Colors.green,bgColor: Colors.transparent),
-                                child: Text(data.date,style: primaryTextStyle(color: white,size: 14))
-                              ),
+                                  padding: EdgeInsets.only(top: 4, bottom: 4, right: 12, left: 12),
+                                  decoration: boxDecoration(color: Colors.green, bgColor: Colors.transparent),
+                                  child: Text(data.date, style: primaryTextStyle(color: white, size: 14))),
                               16.height,
                               Text(data.title, style: primaryTextStyle(color: white)),
                               8.height,
                               Text(data.subTitle, style: secondaryTextStyle()),
                               16.height,
-                              Divider(height: 0.5,color: Colors.white),
+                              Divider(height: 0.5, color: Colors.white),
                               16.height,
                             ],
                           );
@@ -87,7 +86,7 @@ class InfoWidgetState extends State<InfoWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Education',style: boldTextStyle(size: 28,color: white)).paddingLeft(20),
+                      Text('Education', style: boldTextStyle(size: 28, color: white)).paddingLeft(20),
                       ListView.builder(
                         padding: EdgeInsets.all(16),
                         itemBuilder: (_, index) {
@@ -98,15 +97,14 @@ class InfoWidgetState extends State<InfoWidget> {
                               16.height,
                               Container(
                                   padding: EdgeInsets.only(top: 4, bottom: 4, right: 12, left: 12),
-                                  decoration: boxDecoration(color: Colors.green,bgColor: Colors.transparent),
-                                  child: Text(data.date, style: primaryTextStyle(color: white,size: 14))
-                              ),
+                                  decoration: boxDecoration(color: Colors.green, bgColor: Colors.transparent),
+                                  child: Text(data.date, style: primaryTextStyle(color: white, size: 14))),
                               16.height,
                               Text(data.title, style: primaryTextStyle(color: white)),
                               8.height,
                               Text(data.subTitle, style: secondaryTextStyle()),
                               16.height,
-                              Divider(height: 0.5,color: Colors.white),
+                              Divider(height: 0.5, color: Colors.white),
                               16.height,
                             ],
                           );

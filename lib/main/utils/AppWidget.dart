@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/integrations/utils/common.dart';
-import 'package:som/main.dart';
-import 'package:som/main/model/ListModels.dart';
+import 'package:prokit_flutter/integrations/utils/common.dart';
+import 'package:prokit_flutter/main.dart';
+import 'package:prokit_flutter/main/model/ListModels.dart';
 
 import 'AppColors.dart';
 import 'AppConstant.dart';
@@ -121,26 +120,24 @@ Widget settingItem(context, String text, {Function onTap, Widget detail, Widget 
   );
 }
 
-Widget appBarTitleWidget(context, String title, {Color color}) {
+Widget appBarTitleWidget(context, String title, {Color color, Color textColor}) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
     color: color ?? appStore.appBarColor,
     child: Row(
       children: <Widget>[
-        Expanded(
-          child: Text(
-            title,
-            style: boldTextStyle(color: appStore.textPrimaryColor, size: 20),
-            maxLines: 1,
-          ),
+        Text(
+          title,
+          style: boldTextStyle(color: color ?? appStore.textPrimaryColor, size: 20),
+          maxLines: 1,
         ),
       ],
     ),
   );
 }
 
-Widget appBar(BuildContext context, String title, {List<Widget> actions, bool showBack = true, Color color, Color iconColor}) {
+Widget appBar(BuildContext context, String title, {List<Widget> actions, bool showBack = true, Color color, Color iconColor, Color textColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: color ?? appStore.appBarColor,
@@ -152,7 +149,7 @@ Widget appBar(BuildContext context, String title, {List<Widget> actions, bool sh
             icon: Icon(Icons.arrow_back, color: iconColor ?? null),
           )
         : null,
-    title: appBarTitleWidget(context, title, color: color),
+    title: appBarTitleWidget(context, title, textColor: textColor, color: color),
     actions: actions,
   );
 }

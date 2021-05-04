@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
 
 import '../Colors.dart';
 
@@ -67,7 +67,7 @@ class FunFactsWidgetState extends State<FunFactsWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         24.height,
-                        Text('9K+', style: boldTextStyle(size: 50, color: portfolio3PrimaryColor),maxLines: 1),
+                        Text('9K+', style: boldTextStyle(size: 50, color: portfolio3PrimaryColor), maxLines: 1),
                         4.height,
                         Text('Project Done', style: boldTextStyle(size: 16), textAlign: TextAlign.center),
                         24.height,
@@ -150,7 +150,7 @@ class FunFactsWidgetState extends State<FunFactsWidget> {
                         24.height,
                         Text('18K+', style: boldTextStyle(size: 50, color: portfolio3PrimaryColor), maxLines: 1),
                         4.height,
-                        Text('Happy Smiles', style: boldTextStyle(size: 16),textAlign: TextAlign.center),
+                        Text('Happy Smiles', style: boldTextStyle(size: 16), textAlign: TextAlign.center),
                         24.height,
                       ],
                     ).center()

@@ -31,7 +31,7 @@ class SocialWidgetState extends State<SocialWidget> {
     return Container(
       width: context.width(),
       color: Colors.black,
-      padding: EdgeInsets.only(top: 16,bottom: 16),
+      padding: EdgeInsets.only(top: 16, bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

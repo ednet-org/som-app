@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../Colors.dart';
 
@@ -62,14 +62,14 @@ class LatestWorkWidgetState extends State<LatestWorkWidget> {
                       width: context.width() * 0.25,
                       height: 280,
                       alignment: Alignment.center,
-                      decoration: boxDecorationRoundedWithShadow(5,backgroundColor: Colors.black.withOpacity(0.6)),
+                      decoration: boxDecorationRoundedWithShadow(5, backgroundColor: Colors.black.withOpacity(0.6)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Work Title Here',style: boldTextStyle(size: 24,color: white)),
+                          Text('Work Title Here', style: boldTextStyle(size: 24, color: white)),
                           8.height,
-                          Text('Design',style: boldTextStyle(size: 16,color: white)),
+                          Text('Design', style: boldTextStyle(size: 16, color: white)),
                         ],
                       ),
                     )

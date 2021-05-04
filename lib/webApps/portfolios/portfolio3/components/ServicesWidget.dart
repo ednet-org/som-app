@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -33,7 +33,7 @@ class ServicesWidgetState extends State<ServicesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16,bottom: 16),
+      padding: EdgeInsets.only(top: 16, bottom: 16),
       child: Column(
         children: [
           Container(
@@ -123,7 +123,7 @@ class ServicesWidgetState extends State<ServicesWidget> {
                                 width: 80,
                                 height: 80,
                                 color: portfolio3PrimaryColor.withOpacity(0.2),
-                                child: Icon(MaterialCommunityIcons.laptop_mac,size: 30,color: portfolio3PrimaryColor),
+                                child: Icon(MaterialCommunityIcons.laptop_mac, size: 30, color: portfolio3PrimaryColor),
                               ).cornerRadiusWithClipRRect(40),
                               16.height,
                               Text(e.name, style: boldTextStyle(size: 24)),
