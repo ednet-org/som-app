@@ -29,7 +29,9 @@ void main() async {
 
   await initialize();
 
-  appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
+  // Lets start with default dark mode till we solve logo transparency
+  appStore.toggleDarkMode(value: true);
+  // appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 
   if (isMobile) {
     await Firebase.initializeApp();

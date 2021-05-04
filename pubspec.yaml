@@ -180,6 +180,8 @@ flutter:
     - lang/en.json
     - lang/hi.json
 
+    # som
+    - images/som/
   fonts:
     - family: Andina
       fonts:
