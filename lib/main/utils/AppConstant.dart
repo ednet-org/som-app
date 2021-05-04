@@ -1,4 +1,4 @@
-const mainAppName = 'ProKit Flutter';
+const mainAppName = 'Smart offer management';
 
 const fontRegular = 'Regular';
 const fontMedium = 'Medium';
