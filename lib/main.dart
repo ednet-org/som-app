@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: [MuviAppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
         localeResolutionCallback: (locale, supportedLocales) => Locale(appStore.selectedLanguage),
         locale: Locale(appStore.selectedLanguage),
-        supportedLocales: [Locale('en', '')],
+        supportedLocales: [Locale('en', 'de')],
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
         home: AppSplashScreen(),
