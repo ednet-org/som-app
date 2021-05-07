@@ -40,38 +40,6 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
   }
 
   init() async {
-    categories.add(CategoryModel(name: 'Electronics', icon: 'images/defaultTheme/category/electronics.png'));
-    categories.add(CategoryModel(name: 'TV & Appliances', icon: 'images/defaultTheme/category/Tv.png'));
-    categories.add(CategoryModel(name: 'Men', icon: 'images/defaultTheme/category/Man.png'));
-    categories.add(CategoryModel(name: 'Women', icon: 'images/defaultTheme/category/women.png'));
-    categories.add(CategoryModel(name: 'Baby & Kids', icon: 'images/defaultTheme/category/kids.png'));
-    categories.add(CategoryModel(name: 'Home & Furniture', icon: 'images/defaultTheme/category/furniture.png'));
-    categories.add(CategoryModel(name: 'Fashion', icon: 'images/defaultTheme/category/fashion.png'));
-    categories.add(CategoryModel(name: 'Sports', icon: 'images/defaultTheme/category/sports.png'));
-    categories.add(CategoryModel(name: 'Jewellery', icon: 'images/defaultTheme/category/jewelry.png'));
-    categories.add(CategoryModel(name: 'Stationary', icon: 'images/defaultTheme/category/stationary.png'));
-    categories.add(CategoryModel(name: 'Shoes', icon: 'images/defaultTheme/category/Shoes.png'));
-    categories.add(CategoryModel(name: 'Watch', icon: 'images/defaultTheme/category/Watch.png'));
-    categories.add(CategoryModel(name: 'Electronics', icon: 'images/defaultTheme/category/electronics.png'));
-    categories.add(CategoryModel(name: 'TV & Appliances', icon: 'images/defaultTheme/category/Tv.png'));
-    categories.add(CategoryModel(name: 'Men', icon: 'images/defaultTheme/category/Man.png'));
-    categories.add(CategoryModel(name: 'Women', icon: 'images/defaultTheme/category/women.png'));
-    categories.add(CategoryModel(name: 'Baby & Kids', icon: 'images/defaultTheme/category/kids.png'));
-    categories.add(CategoryModel(name: 'Home & Furniture', icon: 'images/defaultTheme/category/furniture.png'));
-    categories.add(CategoryModel(name: 'Fashion', icon: 'images/defaultTheme/category/fashion.png'));
-    categories.add(CategoryModel(name: 'Sports', icon: 'images/defaultTheme/category/sports.png'));
-    categories.add(CategoryModel(name: 'Jewellery', icon: 'images/defaultTheme/category/jewelry.png'));
-    categories.add(CategoryModel(name: 'Stationary', icon: 'images/defaultTheme/category/stationary.png'));
-    categories.add(CategoryModel(name: 'Shoes', icon: 'images/defaultTheme/category/Shoes.png'));
-    categories.add(CategoryModel(name: 'Watch', icon: 'images/defaultTheme/category/Watch.png'));
-
-    pages = [
-      Container(child: Image.network(SampleImageUrl, height: isMobile ? 150 : 350, fit: BoxFit.cover)),
-      Container(child: Image.network(SampleImageUrl2, height: isMobile ? 150 : 350, fit: BoxFit.cover)),
-      Container(child: Image.network(SampleImageUrl3, height: isMobile ? 150 : 350, fit: BoxFit.cover)),
-      Container(child: Image.network(SampleImageUrl4, height: isMobile ? 150 : 350, fit: BoxFit.cover)),
-    ];
-
     setState(() {});
   }
 
@@ -95,7 +63,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
           children: [
             Icon(AntDesign.search1, color: appStore.textSecondaryColor),
             10.width,
-            Text('Search', style: boldTextStyle(color: appStore.textSecondaryColor)),
+            Text('Search',
+                style: boldTextStyle(color: appStore.textSecondaryColor)),
           ],
         ),
         padding: EdgeInsets.all(10),
@@ -119,11 +88,17 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: appColorPrimary),
-                    child: Image.asset(e.icon, height: 30, width: 30, color: white),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: appColorPrimary),
+                    child: Image.asset(e.icon,
+                        height: 30, width: 30, color: white),
                   ),
                   4.height,
-                  Text(e.name, style: primaryTextStyle(size: 12), maxLines: 1, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
+                  Text(e.name,
+                      style: primaryTextStyle(size: 12),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis),
                 ],
               ),
             ).onTap(() {
@@ -141,7 +116,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
           DTProductModel data = getProducts()[index];
 
           return Container(
-            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+            decoration: boxDecorationRoundedWithShadow(8,
+                backgroundColor: appStore.appBarColor),
             width: 220,
             margin: EdgeInsets.only(right: 8),
             child: Column(
@@ -160,7 +136,9 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                     Positioned(
                       right: 10,
                       top: 10,
-                      child: data.isLiked.validate() ? Icon(Icons.favorite, color: Colors.red, size: 16) : Icon(Icons.favorite_border, size: 16),
+                      child: data.isLiked.validate()
+                          ? Icon(Icons.favorite, color: Colors.red, size: 16)
+                          : Icon(Icons.favorite_border, size: 16),
                     ),
                   ],
                 ).expand(),
@@ -170,7 +148,10 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(data.name, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(data.name,
+                        style: primaryTextStyle(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
                     4.height,
                     Row(
                       children: [
@@ -186,7 +167,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                           ),
                         ),
                         5.width,
-                        Text('${data.rating}', style: secondaryTextStyle(size: 12)),
+                        Text('${data.rating}',
+                            style: secondaryTextStyle(size: 12)),
                       ],
                     ),
                     4.height,
@@ -203,7 +185,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
               ],
             ),
           ).onTap(() async {
-            int index = await DTProductDetailScreen(productModel: data).launch(context);
+            int index =
+                await DTProductDetailScreen(productModel: data).launch(context);
             if (index != null) appStore.setDrawerItemIndex(index);
           });
         },
@@ -228,13 +211,25 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
         margin: EdgeInsets.only(left: 8),
         child: Row(
           children: [
-            Image.asset('images/defaultTheme/banner/dt_advertise1.jpg', fit: BoxFit.cover).cornerRadiusWithClipRRect(8).expand(),
+            Image.asset('images/defaultTheme/banner/dt_advertise1.jpg',
+                    fit: BoxFit.cover)
+                .cornerRadiusWithClipRRect(8)
+                .expand(),
             8.width,
-            Image.asset('images/defaultTheme/banner/dt_advertise2.jpg', fit: BoxFit.cover).cornerRadiusWithClipRRect(8).expand(),
+            Image.asset('images/defaultTheme/banner/dt_advertise2.jpg',
+                    fit: BoxFit.cover)
+                .cornerRadiusWithClipRRect(8)
+                .expand(),
             8.width,
-            Image.asset('images/defaultTheme/banner/dt_advertise4.jpg', fit: BoxFit.cover).cornerRadiusWithClipRRect(8).expand(),
+            Image.asset('images/defaultTheme/banner/dt_advertise4.jpg',
+                    fit: BoxFit.cover)
+                .cornerRadiusWithClipRRect(8)
+                .expand(),
             8.width,
-            Image.asset('images/defaultTheme/banner/dt_advertise3.jpg', fit: BoxFit.cover).cornerRadiusWithClipRRect(8).expand(),
+            Image.asset('images/defaultTheme/banner/dt_advertise3.jpg',
+                    fit: BoxFit.cover)
+                .cornerRadiusWithClipRRect(8)
+                .expand(),
           ],
         ),
       );
@@ -246,7 +241,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Smart offer management', style: boldTextStyle()).paddingAll(8),
+              Text('Smart offer management', style: boldTextStyle())
+                  .paddingAll(8),
             ],
           ),
         ),
@@ -263,84 +259,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset('images/app/app_icon.png', height: 100),
-                  searchTxt().expand(),
-                  25.width,
-                  Container(
-                    padding: EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 8),
-                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8)),
-                    child: Text('Sign In', style: boldTextStyle(color: white, size: 18)),
-                  ).onTap(() {
-                    DTSignInScreen().launch(context);
-                  }),
-                  16.width,
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                    child: Icon(Icons.shopping_cart, size: 30, color: appStore.iconColor),
-                  ).onTap(() {
-                    DTCartScreen().launch(context);
-                  }),
-                  16.width
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.all(8),
-                width: context.width(),
-                decoration: boxDecoration(showShadow: true, radius: 10, bgColor: Colors.transparent),
-                height: 280,
-                child: Stack(
-                  children: [
-                    PageView(
-                      controller: pageController,
-                      scrollDirection: Axis.horizontal,
-                      children: pages,
-                      onPageChanged: (index) {
-                        selectedIndex = index;
-                        setState(() {});
-                      },
-                    ).cornerRadiusWithClipRRect(8),
-                    AnimatedPositioned(
-                      duration: Duration(seconds: 1),
-                      bottom: 20,
-                      left: 0,
-                      right: 0,
-                      child: DotIndicator(
-                        pageController: pageController,
-                        pages: pages,
-                        indicatorColor: appColorPrimary,
-                        onDotTap: (index) {
-                          selectedIndex = index;
-
-                          pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.linear);
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Text('Horizontal ListView', style: boldTextStyle()).paddingAll(8),
-              8.height,
-              horizontalList(),
-              8.height,
-              Text('Top Picks For You', style: boldTextStyle()).paddingAll(8),
-              8.height,
-              Container(height: 300, child: horizontalProductListView()),
-              8.height,
-              Text('Latest Offers For You', style: boldTextStyle()).paddingAll(8),
-              8.height,
-              bannerWidget(),
-              8.height,
-              Text('Recommended For You', style: boldTextStyle()).paddingAll(8),
-              8.height,
-              Container(height: 300, child: horizontalProductListView()),
-              Text('Recommended Offers For You', style: boldTextStyle()).paddingAll(8),
-              8.height,
-              bannerWidget(),
+              Text('Smart Offer Management', style: boldTextStyle()).paddingAll(8),
             ],
           ),
         ),
