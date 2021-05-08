@@ -115,14 +115,8 @@ Widget actionInfoWidget(BuildContext context, String image, String title,
     height: context.height(),
     child: Stack(
       children: [
-        Image.asset(
-          image,
-          height: context.height(),
-          width: context.width(),
-          fit: BoxFit.fitWidth,
-        ),
         Positioned(
-          bottom: 50,
+          top: 100,
           left: 20,
           right: 20,
           child: Container(
@@ -157,7 +151,14 @@ Widget actionInfoWidget(BuildContext context, String image, String title,
               ],
             ),
           ),
-        )
+        ),
+        100.height,
+        Image.asset(
+          image,
+          height: context.height(),
+          width: context.width(),
+          fit: BoxFit.fitWidth,
+        ),
       ],
     ),
   ).center();
