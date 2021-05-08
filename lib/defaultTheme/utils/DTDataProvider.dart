@@ -20,6 +20,7 @@ import 'package:prokit_flutter/defaultTheme/screen/DTFilterScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTForgotPwdScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTMaintenanceScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTNoDataScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTNoInternetScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTNoResultScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTOrderSummaryScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTPaymentScreen.dart';
@@ -158,8 +159,8 @@ List<ListModel> getDrawerItems() {
   var drawerItems = List<ListModel>();
 
   drawerItems.add(ListModel(name: 'Inquiries', widget: DTNoDataScreen()));
-  drawerItems.add(ListModel(name: 'Company', widget: DTNoDataScreen()));
-  drawerItems.add(ListModel(name: 'Users', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Company', widget: DTNoResultScreen()));
+  drawerItems.add(ListModel(name: 'Users', widget: DTNoInternetScreen()));
   drawerItems.add(ListModel(name: 'Ads', widget: DTNoDataScreen()));
   drawerItems.add(ListModel(name: 'Statistics', widget: DTNoDataScreen()));
   return drawerItems;

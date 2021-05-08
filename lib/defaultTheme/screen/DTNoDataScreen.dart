@@ -35,8 +35,8 @@ class DTNoDataScreenState extends State<DTNoDataScreen> {
       body: errorWidget(
         context,
         'images/defaultTheme/no_data.png',
-        'No Data Found',
-        'There was no record based on the details you entered.',
+        'Not Implemented',
+        'This feature is still in progress...',
       ),
     );
   }

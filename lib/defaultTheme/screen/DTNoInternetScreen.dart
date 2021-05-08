@@ -36,8 +36,8 @@ class DTNoInternetScreenState extends State<DTNoInternetScreen> {
       body: errorWidget(
         context,
         'images/defaultTheme/noInternet.jpg',
-        'No Internet',
-        'There is something wrong with the proxy server or the address is incorrect',
+        'Not implemented',
+        'This is embarrassing, you keep clicking around and I have nothing to show ',
         showRetry: true,
         onRetry: () {
           toast('Retrying');
