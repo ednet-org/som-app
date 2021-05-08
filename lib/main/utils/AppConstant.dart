@@ -1,4 +1,4 @@
-const mainAppName = 'Smart offer management';
+const mainAppName = 'Smart Offer Management';
 
 const fontRegular = 'Regular';
 const fontMedium = 'Medium';

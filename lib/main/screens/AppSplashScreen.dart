@@ -30,19 +30,16 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
     }
 
     await Future.delayed(Duration(seconds: 3));
-    if (isWeb) {
-      DTDashboardScreen().launch(context, isNewTask: true);
-    } else {
-      ProKitLauncher().launch(context, isNewTask: true);
-    }
+    DTDashboardScreen().launch(context, isNewTask: true);
+
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: getColorFromHex('#FFFDF1'),
+      backgroundColor: Color(0xFF1D2939),
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset('images/app/app_icon.png', height: 200, fit: BoxFit.fitHeight),
+        child: Image.asset('images/som/logo.png', height: 200, fit: BoxFit.fitHeight),
       ),
     );
   }
