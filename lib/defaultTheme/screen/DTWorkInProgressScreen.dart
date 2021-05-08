@@ -26,11 +26,13 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return errorWidget(
+    return actionInfoWidget(
       context,
       'images/defaultTheme/maintenance.png',
       'Stealth Mode',
-      'This app is currently being developed but we encourage you to Sign Up so that you can be notified when lunch is ready, Thank you for your interest.',
+      'This app is currently being developed but we encourage you to ',
+      'Sign Up',
+      ' so that you can be notified when lunch is ready, Thank you for your interest.',
     );
   }
 }
