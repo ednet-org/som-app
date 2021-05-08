@@ -139,7 +139,10 @@ List<DTProductModel> getCartProducts() {
 }
 
 int getDTWidgetIndex(Widget widget) {
-  getDrawerItems().asMap().entries.map((e) {
+  getDrawerItems()
+      .asMap()
+      .entries
+      .map((e) {
     int index = e.key;
 
     if (e.value.widget == widget) {
@@ -154,32 +157,11 @@ int getDTWidgetIndex(Widget widget) {
 List<ListModel> getDrawerItems() {
   var drawerItems = List<ListModel>();
 
-  drawerItems.add(ListModel(name: 'WalkThrough', widget: DTWalkThoughScreen()));
-  drawerItems.add(ListModel(name: 'Sign In', widget: DTSignInScreen()));
-  drawerItems.add(ListModel(name: 'Forgot Password', widget: DTForgotPwdScreen()));
-  drawerItems.add(ListModel(name: 'Sign Up', widget: DTSignUpScreen()));
-  drawerItems.add(ListModel(name: 'Dashboard', widget: DTDashboardScreen()));
-  drawerItems.add(ListModel(name: 'Detail', widget: DTProductDetailScreen()));
-  drawerItems.add(ListModel(name: 'Profile', widget: DTProfileScreen()));
-  drawerItems.add(ListModel(name: 'Cart', widget: DTCartScreen()));
-  drawerItems.add(ListModel(name: 'Payment', widget: DTPaymentScreen()));
-  drawerItems.add(ListModel(name: 'Filter', widget: DTFilterScreen()));
-  drawerItems.add(ListModel(name: 'About', widget: DTAboutScreen()));
-  drawerItems.add(ListModel(name: 'Chat', widget: DTChatScreen()));
-
-  if (isMobile) drawerItems.add(ListModel(name: 'Contact Us', widget: DTContactUsScreen()));
-
-  drawerItems.add(ListModel(name: 'Review & Rating', widget: DTReviewScreen()));
-  drawerItems.add(ListModel(name: 'FAQ', widget: DTFAQScreen()));
-  //drawerItems.add(ListModel(name: 'No Internet', widget: DTNoInternetScreen()));
-  drawerItems.add(ListModel(name: 'No Data', widget: DTNoDataScreen()));
-  drawerItems.add(ListModel(name: 'Error', widget: DTErrorScreen()));
-  drawerItems.add(ListModel(name: 'Maintenance', widget: DTMaintenanceScreen()));
-  drawerItems.add(ListModel(name: 'Grid View', widget: DTCategoryDetailScreen()));
-  drawerItems.add(ListModel(name: 'Order Summary', widget: DTOrderSummaryScreen(getCartProducts())));
-  drawerItems.add(ListModel(name: 'Address Manager', widget: DTAddressScreen()));
-  drawerItems.add(ListModel(name: 'Search', widget: DTSearchScreen()));
-  drawerItems.add(ListModel(name: 'No Result', widget: DTNoResultScreen()));
+  drawerItems.add(ListModel(name: 'Inquiries', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Company', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Users', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Ads', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Statistics', widget: DTNoDataScreen()));
   return drawerItems;
 }
 
