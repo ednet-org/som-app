@@ -109,8 +109,7 @@ Widget errorWidget(
 }
 
 Widget actionInfoWidget(BuildContext context, String image, String title,
-    String desc, String actionText, String restText,
-    {bool showRetry = false, Function onRetry}) {
+    String desc, String actionText, String restText) {
   return Container(
     constraints: dynamicBoxConstraints(),
     height: context.height(),
@@ -130,7 +129,7 @@ Widget actionInfoWidget(BuildContext context, String image, String title,
             decoration: boxDecorationRoundedWithShadow(8,
                 backgroundColor:
                     appStore.isDarkModeOn ? Colors.black26 : Colors.white70),
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -155,21 +154,6 @@ Widget actionInfoWidget(BuildContext context, String image, String title,
                     ],
                   ),
                 ),
-                Column(
-                  children: [
-                    30.height,
-                    RaisedButton(
-                      onPressed: () {
-                        onRetry();
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      color: white,
-                      child: Text('RETRY',
-                          style: primaryTextStyle(color: textPrimaryColor)),
-                    )
-                  ],
-                ).visible(showRetry),
               ],
             ),
           ),
