@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
+
+import 'DTDrawerWidget.dart';
+
+class DTWorkInProgressScreen extends StatefulWidget {
+  @override
+  _DTWorkInProgressScreenState createState() => _DTWorkInProgressScreenState();
+}
+
+class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    //
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return errorWidget(
+      context,
+      'images/defaultTheme/maintenance.png',
+      'Stealth Mode',
+      'This app is currently being developed but we encourage you to Sign Up so that you can be notified when lunch is ready, Thank you for your interest.',
+    );
+  }
+}

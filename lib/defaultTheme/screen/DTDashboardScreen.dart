@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardWidget.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTWorkInProgressScreen.dart';
+
+// import 'package:prokit_flutter/defaultTheme/screen/DTDashboardWidget.dart';
 import 'package:prokit_flutter/main.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
@@ -35,11 +37,12 @@ class DTDashboardScreenState extends State<DTDashboardScreen> {
       child: Observer(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            backgroundColor: appStore.appBarColor,
-            title: appBarTitleWidget(context, 'Dashboard'),
-          ),
+              backgroundColor: appStore.appBarColor,
+              title: appBarTitleWidget(context, 'Dashboard'),
+              iconTheme: IconThemeData(color: appStore.iconColor)),
           drawer: DTDrawerWidget(),
-          body: DTDashboardWidget(),
+          body: DTWorkInProgressScreen(),
+          // body: DTDashboardWidget(),
         ),
       ),
     );

@@ -39,7 +39,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
       backgroundColor: Color(0xFF1D2939),
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset('images/som/logo.png', height: 200, fit: BoxFit.fitHeight),
+        child: Image.asset('images/som/logo.png', height: 300, fit: BoxFit.fitHeight),
       ),
     );
   }
