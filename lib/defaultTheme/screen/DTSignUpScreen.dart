@@ -120,30 +120,22 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                     focusNode: passFocus,
                     controller: passCont,
                     style: primaryTextStyle(),
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      contentPadding: EdgeInsets.all(16),
-                      labelStyle: secondaryTextStyle(),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              BorderSide(color: appStore.textSecondaryColor)),
-                      suffix: Icon(!obscureText
-                              ? Icons.visibility
-                              : Icons.visibility_off)
-                          .onTap(() {
-                        obscureText = !obscureText;
-                        setState(() {});
-                      }),
-                    ),
+                    decoration: buildInputDecoration('Password'),
                     validator: (s) {
                       if (s.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
+                  ),
+                  16.height,
+                  TextFormField(
+                    decoration: buildInputDecoration('Nesto',
+                        suffixIcon: Icon(!obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off)
+                            .onTap(() {
+                          obscureText = !obscureText;
+                          setState(() {});
+                        })),
                   ),
                   20.height,
                   Container(
@@ -169,9 +161,9 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                   }),
                   20.height,
                   Text('Already Registered?',
-                          style: boldTextStyle(color: appColorPrimary))
-                      .center()
-                      .onTap(() {
+                      style: boldTextStyle(
+                        color: appColorPrimary,
+                      )).center().onTap(() {
                     DTSignInScreen().launch(context);
                   }),
                 ],
@@ -180,6 +172,25 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
           ).center(),
         ),
       ),
+    );
+  }
+
+  InputDecoration buildInputDecoration(
+    String labelText, {
+    Icon suffixIcon,
+  }) {
+    return InputDecoration(
+      labelText: labelText,
+      contentPadding: EdgeInsets.all(16),
+      labelStyle: secondaryTextStyle(),
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appColorPrimary)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appStore.textSecondaryColor)),
+      suffix: suffixIcon,
     );
   }
 }
