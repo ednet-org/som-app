@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 
@@ -35,8 +35,8 @@ class DTNoDataScreenState extends State<DTNoDataScreen> {
       body: errorWidget(
         context,
         'images/defaultTheme/no_data.png',
-        'No Data Found',
-        'There was no record based on the details you entered.',
+        'Not Implemented',
+        'This feature is still in progress...',
       ),
     );
   }

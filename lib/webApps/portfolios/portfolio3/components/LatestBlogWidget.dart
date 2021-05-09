@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -75,7 +75,7 @@ class LatestBlogWidgetState extends State<LatestBlogWidget> {
                             8.height,
                             Text(e.type, style: secondaryTextStyle(size: 16)),
                             8.height,
-                            Text(e.detail, style: primaryTextStyle(size: 16), maxLines: 3,textAlign: TextAlign.start),
+                            Text(e.detail, style: primaryTextStyle(size: 16), maxLines: 3, textAlign: TextAlign.start),
                             16.height,
                             Text(
                               'Read More',

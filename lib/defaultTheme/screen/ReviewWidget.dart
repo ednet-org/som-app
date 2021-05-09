@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/DTReviewModel.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTReviewModel.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
 
 import '../../main.dart';
 

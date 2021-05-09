@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -85,7 +85,11 @@ class ClientHappyWidgetState extends State<ClientHappyWidget> {
                                   16.height,
                                   Text(e.name, style: boldTextStyle(size: 24), maxLines: 2),
                                   16.height,
-                                  Text(e.detail, style: primaryTextStyle(size: 16),textAlign: TextAlign.center,),
+                                  Text(
+                                    e.detail,
+                                    style: primaryTextStyle(size: 16),
+                                    textAlign: TextAlign.center,
+                                  ),
                                   16.height,
                                 ],
                               ).paddingAll(16),

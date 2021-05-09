@@ -1,6 +1,6 @@
-import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:som/webApps/portfolios/models/Portfolio2ServiceModel.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:prokit_flutter/webApps/portfolios/models/Portfolio2ServiceModel.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 List<Portfolio1SkillModel> getSkills() {
   List<Portfolio1SkillModel> list = List<Portfolio1SkillModel>();

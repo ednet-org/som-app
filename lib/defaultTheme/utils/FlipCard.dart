@@ -74,7 +74,8 @@ class FlipCard extends StatefulWidget {
   ///```
   final bool flipOnTouch;
 
-  const FlipCard({Key key, @required this.front, @required this.back, this.speed = 500, this.onFlip, this.onFlipDone, this.direction = FlipDirection.HORIZONTAL, this.flipOnTouch = true}) : super(key: key);
+  const FlipCard({Key key, @required this.front, @required this.back, this.speed = 500, this.onFlip, this.onFlipDone, this.direction = FlipDirection.HORIZONTAL, this.flipOnTouch = true})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

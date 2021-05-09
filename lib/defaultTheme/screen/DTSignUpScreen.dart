@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTSignInScreen.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -68,15 +69,21 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       contentPadding: EdgeInsets.all(16),
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide:
+                              BorderSide(color: appStore.textSecondaryColor)),
                     ),
                     keyboardType: TextInputType.text,
                     validator: (s) {
                       if (s.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
-                    onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(emailFocus),
+                    onFieldSubmitted: (s) =>
+                        FocusScope.of(context).requestFocus(emailFocus),
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
@@ -89,8 +96,13 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       labelStyle: secondaryTextStyle(),
                       contentPadding: EdgeInsets.all(16),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide:
+                              BorderSide(color: appStore.textSecondaryColor)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
@@ -98,7 +110,8 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       if (!s.trim().validateEmail()) return 'Email is invalid';
                       return null;
                     },
-                    onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(passFocus),
+                    onFieldSubmitted: (s) =>
+                        FocusScope.of(context).requestFocus(passFocus),
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
@@ -112,9 +125,17 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       contentPadding: EdgeInsets.all(16),
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
-                      suffix: Icon(!obscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide:
+                              BorderSide(color: appStore.textSecondaryColor)),
+                      suffix: Icon(!obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off)
+                          .onTap(() {
                         obscureText = !obscureText;
                         setState(() {});
                       }),
@@ -128,8 +149,12 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
-                    child: Text('Sign Up', style: boldTextStyle(color: white, size: 18)),
+                    decoration: BoxDecoration(
+                        color: appColorPrimary,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: defaultBoxShadow()),
+                    child: Text('Sign Up',
+                        style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
 
@@ -143,8 +168,11 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       setState(() {});*/
                   }),
                   20.height,
-                  Text('Already Registered?', style: boldTextStyle(color: appColorPrimary)).center().onTap(() {
-                    finish(context);
+                  Text('Already Registered?',
+                          style: boldTextStyle(color: appColorPrimary))
+                      .center()
+                      .onTap(() {
+                    DTSignInScreen().launch(context);
                   }),
                 ],
               ),

@@ -3,8 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../main.dart';
-
 class SocialWidget extends StatefulWidget {
   static String tag = '/SoicalScreen';
 

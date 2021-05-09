@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:som/defaultTheme/screen/DTDrawerWidget.dart';
-import 'package:som/defaultTheme/screen/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
-import 'package:som/main.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTDrawerWidget.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTForgotPwdScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTSignUpScreen.dart';
+import 'package:prokit_flutter/main.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 class DTSignInScreen extends StatefulWidget {
   static String tag = '/DTSignInScreen';
@@ -144,37 +144,6 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     DTSignUpScreen().launch(context);
                   }),
                   10.height,
-                  Text('OR', style: boldTextStyle(size: 22)).center(),
-                  10.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
-                        child: Icon(MaterialCommunityIcons.google_glass, color: white),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
-                        child: Icon(FontAwesome.facebook, color: white),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
-                        child: Icon(Feather.twitter, color: white),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
-                        child: Icon(Feather.linkedin, color: white),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),

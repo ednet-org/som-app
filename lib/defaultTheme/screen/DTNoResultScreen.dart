@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/main/utils/AppConstant.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
+import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 
@@ -19,8 +19,8 @@ class _DTNoResultScreenState extends State<DTNoResultScreen> {
       body: errorWidget(
         context,
         'images/defaultTheme/no_result.png',
-        'No Result',
-        LoremText,
+        'Not Implemented',
+        'I know, same story just another icon :(',
       ),
     );
   }

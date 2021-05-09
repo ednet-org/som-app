@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -49,7 +49,7 @@ class ServicesScreenState extends State<ServicesScreen> {
                 16.height,
                 Text(e.name, style: boldTextStyle()),
                 4.height,
-                Text(e.desc, style: secondaryTextStyle(), textAlign: TextAlign.center,maxLines: 4).paddingOnly(left: 8,right: 8),
+                Text(e.desc, style: secondaryTextStyle(), textAlign: TextAlign.center, maxLines: 4).paddingOnly(left: 8, right: 8),
               ],
             ),
           );

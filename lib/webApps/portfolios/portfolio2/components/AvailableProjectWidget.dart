@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/webApps/portfolios/utils/Images.dart';
+import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 class AvailableProjectWidget extends StatefulWidget {
   static String tag = '/AvailableProjectWidget';
@@ -45,11 +45,13 @@ class AvailableProjectWidgetState extends State<AvailableProjectWidget> {
                 Text('Imagination is more important than knowledge', style: secondaryTextStyle(size: 24)),
                 8.height,
                 Text(
-                    'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore minima doloribus provident,'
-                    'quia, ipsam totam veniam iste ea temporibus non consequatur tenetur? Velit officiis laborum molestias'
-                    'ratione impedit, totam, praesentium a nulla fuga aliquam repellendus facilis consequuntur corrupti cum delectus, '
-                    'quia maiores accusamus animi obcaecati vel ipsum.',
-                    style: primaryTextStyle(size: 16,color: Colors.grey.withOpacity(0.5)),maxLines: 6,).withWidth(context.width() * 0.3),
+                  'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore minima doloribus provident,'
+                  'quia, ipsam totam veniam iste ea temporibus non consequatur tenetur? Velit officiis laborum molestias'
+                  'ratione impedit, totam, praesentium a nulla fuga aliquam repellendus facilis consequuntur corrupti cum delectus, '
+                  'quia maiores accusamus animi obcaecati vel ipsum.',
+                  style: primaryTextStyle(size: 16, color: Colors.grey.withOpacity(0.5)),
+                  maxLines: 6,
+                ).withWidth(context.width() * 0.3),
               ],
             ).withWidth(context.width() * 0.65),
           ).expand(flex: 3),
@@ -76,7 +78,7 @@ class AvailableProjectWidgetState extends State<AvailableProjectWidget> {
                           padding: EdgeInsets.all(8),
                           margin: EdgeInsets.all(8),
                           decoration: boxDecorationWithRoundedCorners(backgroundColor: black, borderRadius: BorderRadius.circular(10)),
-                          child: Text('A Collection of Creative Website Design',style: primaryTextStyle(color: Colors.white)),
+                          child: Text('A Collection of Creative Website Design', style: primaryTextStyle(color: Colors.white)),
                         ),
                       )
                     ],
@@ -101,7 +103,7 @@ class AvailableProjectWidgetState extends State<AvailableProjectWidget> {
                           padding: EdgeInsets.all(8),
                           margin: EdgeInsets.all(8),
                           decoration: boxDecorationWithRoundedCorners(backgroundColor: black, borderRadius: BorderRadius.circular(10)),
-                          child: Text('Personalized Portfolio Work',style: primaryTextStyle(color: Colors.white)),
+                          child: Text('Personalized Portfolio Work', style: primaryTextStyle(color: Colors.white)),
                         ),
                       )
                     ],

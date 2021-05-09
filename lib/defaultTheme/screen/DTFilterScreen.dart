@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/DTFilter.dart';
-import 'package:som/defaultTheme/model/DTFilterOption.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTFilter.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTFilterOption.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -109,7 +109,9 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                               maxLines: 1,
                             ),
                           ),
-                          selectedIndex == index ? Icon(Icons.check, color: appColorPrimary, size: 16) : Text(dataList[index].total.validate().toString(), style: primaryTextStyle(color: appColorPrimary), maxLines: 1)
+                          selectedIndex == index
+                              ? Icon(Icons.check, color: appColorPrimary, size: 16)
+                              : Text(dataList[index].total.validate().toString(), style: primaryTextStyle(color: appColorPrimary), maxLines: 1)
                         ],
                       ),
                     ).onTap(() {

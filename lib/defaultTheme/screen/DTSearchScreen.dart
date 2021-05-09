@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTCategoryDetailScreen.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -51,7 +51,7 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
     return Scaffold(
       appBar: appBar(context, 'Search'),
       drawer: DTDrawerWidget(),
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [

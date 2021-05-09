@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:som/main/utils/AppWidget.dart';
-import 'package:som/webApps/portfolios/portfolio2/components/AvailableProjectWidget.dart';
-import 'package:som/webApps/portfolios/portfolio2/components/GalleryWidget.dart';
-import 'package:som/webApps/portfolios/portfolio2/components/IndeedWidget.dart';
-import 'package:som/webApps/portfolios/portfolio2/components/ProjectDetailWidget.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/AvailableProjectWidget.dart';
+import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/GalleryWidget.dart';
+import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/IndeedWidget.dart';
+import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/ProjectDetailWidget.dart';
 
 import 'components/AboutUsScreen.dart';
 import 'components/IntroductionScreen.dart';

@@ -2,36 +2,37 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/model/DTAddressListModel.dart';
-import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:som/defaultTheme/model/DTChatModel.dart';
-import 'package:som/defaultTheme/model/DTProductModel.dart';
-import 'package:som/defaultTheme/model/DTReviewModel.dart';
-import 'package:som/defaultTheme/screen/DTAboutScreen.dart';
-import 'package:som/defaultTheme/screen/DTAddressScreen.dart';
-import 'package:som/defaultTheme/screen/DTCartScreen.dart';
-import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTChatScreen.dart';
-import 'package:som/defaultTheme/screen/DTContactUsScreen.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:som/defaultTheme/screen/DTErrorScreen.dart';
-import 'package:som/defaultTheme/screen/DTFAQScreen.dart';
-import 'package:som/defaultTheme/screen/DTFilterScreen.dart';
-import 'package:som/defaultTheme/screen/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/DTMaintenanceScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoDataScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoResultScreen.dart';
-import 'package:som/defaultTheme/screen/DTOrderSummaryScreen.dart';
-import 'package:som/defaultTheme/screen/DTPaymentScreen.dart';
-import 'package:som/defaultTheme/screen/DTProductDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTProfileScreen.dart';
-import 'package:som/defaultTheme/screen/DTReviewScreen.dart';
-import 'package:som/defaultTheme/screen/DTSearchScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
-import 'package:som/defaultTheme/screen/DTWalkThoughScreen.dart';
-import 'package:som/main/model/ListModels.dart';
-import 'package:som/main/utils/AppConstant.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTAddressListModel.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTChatMessageModel.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTChatModel.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTProductModel.dart';
+import 'package:prokit_flutter/defaultTheme/model/DTReviewModel.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTAboutScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTAddressScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTCartScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTCategoryDetailScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTChatScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTContactUsScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTErrorScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTFAQScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTFilterScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTForgotPwdScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTMaintenanceScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTNoDataScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTNoInternetScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTNoResultScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTOrderSummaryScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTPaymentScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTProductDetailScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTProfileScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTReviewScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTSearchScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTSignInScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTSignUpScreen.dart';
+import 'package:prokit_flutter/defaultTheme/screen/DTWalkThoughScreen.dart';
+import 'package:prokit_flutter/main/model/ListModels.dart';
+import 'package:prokit_flutter/main/utils/AppConstant.dart';
 
 const sender_id = 1;
 const receiver_id = 2;
@@ -139,7 +140,10 @@ List<DTProductModel> getCartProducts() {
 }
 
 int getDTWidgetIndex(Widget widget) {
-  getDrawerItems().asMap().entries.map((e) {
+  getDrawerItems()
+      .asMap()
+      .entries
+      .map((e) {
     int index = e.key;
 
     if (e.value.widget == widget) {
@@ -154,32 +158,11 @@ int getDTWidgetIndex(Widget widget) {
 List<ListModel> getDrawerItems() {
   var drawerItems = List<ListModel>();
 
-  drawerItems.add(ListModel(name: 'WalkThrough', widget: DTWalkThoughScreen()));
-  drawerItems.add(ListModel(name: 'Sign In', widget: DTSignInScreen()));
-  drawerItems.add(ListModel(name: 'Forgot Password', widget: DTForgotPwdScreen()));
-  drawerItems.add(ListModel(name: 'Sign Up', widget: DTSignUpScreen()));
-  drawerItems.add(ListModel(name: 'Dashboard', widget: DTDashboardScreen()));
-  drawerItems.add(ListModel(name: 'Detail', widget: DTProductDetailScreen()));
-  drawerItems.add(ListModel(name: 'Profile', widget: DTProfileScreen()));
-  drawerItems.add(ListModel(name: 'Cart', widget: DTCartScreen()));
-  drawerItems.add(ListModel(name: 'Payment', widget: DTPaymentScreen()));
-  drawerItems.add(ListModel(name: 'Filter', widget: DTFilterScreen()));
-  drawerItems.add(ListModel(name: 'About', widget: DTAboutScreen()));
-  drawerItems.add(ListModel(name: 'Chat', widget: DTChatScreen()));
-
-  if (isMobile) drawerItems.add(ListModel(name: 'Contact Us', widget: DTContactUsScreen()));
-
-  drawerItems.add(ListModel(name: 'Review & Rating', widget: DTReviewScreen()));
-  drawerItems.add(ListModel(name: 'FAQ', widget: DTFAQScreen()));
-  //drawerItems.add(ListModel(name: 'No Internet', widget: DTNoInternetScreen()));
-  drawerItems.add(ListModel(name: 'No Data', widget: DTNoDataScreen()));
-  drawerItems.add(ListModel(name: 'Error', widget: DTErrorScreen()));
-  drawerItems.add(ListModel(name: 'Maintenance', widget: DTMaintenanceScreen()));
-  drawerItems.add(ListModel(name: 'Grid View', widget: DTCategoryDetailScreen()));
-  drawerItems.add(ListModel(name: 'Order Summary', widget: DTOrderSummaryScreen(getCartProducts())));
-  drawerItems.add(ListModel(name: 'Address Manager', widget: DTAddressScreen()));
-  drawerItems.add(ListModel(name: 'Search', widget: DTSearchScreen()));
-  drawerItems.add(ListModel(name: 'No Result', widget: DTNoResultScreen()));
+  drawerItems.add(ListModel(name: 'Inquiries', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Company', widget: DTNoResultScreen()));
+  drawerItems.add(ListModel(name: 'Users', widget: DTNoInternetScreen()));
+  drawerItems.add(ListModel(name: 'Ads', widget: DTNoDataScreen()));
+  drawerItems.add(ListModel(name: 'Statistics', widget: DTNoDataScreen()));
   return drawerItems;
 }
 

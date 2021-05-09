@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main/utils/AppColors.dart';
+import 'package:prokit_flutter/main/utils/AppColors.dart';
+
 import '../../../../main.dart';
 import '../Colors.dart';
 
@@ -32,8 +33,8 @@ class IndeedWidgetState extends State<IndeedWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      padding: EdgeInsets.only(top: 24,bottom: 24),
-      color: appStore.isDarkModeOn ? appBackgroundColorDark :portfolio3BackgroundColor,
+      padding: EdgeInsets.only(top: 24, bottom: 24),
+      color: appStore.isDarkModeOn ? appBackgroundColorDark : portfolio3BackgroundColor,
       child: Column(
         children: [
           24.height,
