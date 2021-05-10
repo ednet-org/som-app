@@ -21,7 +21,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   var emailCont = TextEditingController();
   var passCont = TextEditingController();
-  var nameCont = TextEditingController();
+  var companyNameCont = TextEditingController();
 
   var emailFocus = FocusNode();
   var passFocus = FocusNode();
@@ -45,7 +45,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar(context, 'Sign Up'),
+      appBar: appBar(context, 'Customer registration'),
       drawer: DTDrawerWidget(),
       body: Center(
         child: Container(
@@ -59,24 +59,13 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Sign Up', style: boldTextStyle(size: 24)),
+                  Text('Buyer', style: boldTextStyle(size: 24)),
                   30.height,
+                  // Company name
                   TextFormField(
-                    controller: nameCont,
+                    controller: companyNameCont,
                     style: primaryTextStyle(),
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      contentPadding: EdgeInsets.all(16),
-                      labelStyle: secondaryTextStyle(),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              BorderSide(color: appStore.textSecondaryColor)),
-                    ),
+                    decoration: buildInputDecoration('Company name'),
                     keyboardType: TextInputType.text,
                     validator: (s) {
                       if (s.trim().isEmpty) return errorThisFieldRequired;
@@ -87,23 +76,12 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
+                  // E-mail
                   TextFormField(
                     controller: emailCont,
                     focusNode: emailFocus,
                     style: primaryTextStyle(),
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: secondaryTextStyle(),
-                      contentPadding: EdgeInsets.all(16),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              BorderSide(color: appStore.textSecondaryColor)),
-                    ),
+                    decoration: buildInputDecoration('E-mail'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
                       if (s.trim().isEmpty) return errorThisFieldRequired;
@@ -115,35 +93,44 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
+                  // Password
                   TextFormField(
                     obscureText: obscureText,
                     focusNode: passFocus,
                     controller: passCont,
                     style: primaryTextStyle(),
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      contentPadding: EdgeInsets.all(16),
-                      labelStyle: secondaryTextStyle(),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              BorderSide(color: appStore.textSecondaryColor)),
-                      suffix: Icon(!obscureText
-                              ? Icons.visibility
-                              : Icons.visibility_off)
-                          .onTap(() {
-                        obscureText = !obscureText;
-                        setState(() {});
-                      }),
-                    ),
+                    decoration: buildInputDecoration('Password',
+                        suffixIcon: Icon(!obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off)
+                          ..onTap(() {
+                            obscureText = !obscureText;
+                            setState(() {});
+                          })),
                     validator: (s) {
                       if (s.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
+                  ),
+                  16.height,
+                  // City
+                  TextFormField(
+                    decoration: buildInputDecoration('City'),
+                  ),
+                  16.height,
+                  // Street
+                  TextFormField(
+                    decoration: buildInputDecoration('Street'),
+                  ),
+                  16.height,
+                  // Number
+                  TextFormField(
+                    decoration: buildInputDecoration('Number'),
+                  ),
+                  16.height,
+                  // Zip
+                  TextFormField(
+                    decoration: buildInputDecoration('Zip'),
                   ),
                   20.height,
                   Container(
@@ -169,9 +156,9 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                   }),
                   20.height,
                   Text('Already Registered?',
-                          style: boldTextStyle(color: appColorPrimary))
-                      .center()
-                      .onTap(() {
+                      style: boldTextStyle(
+                        color: appColorPrimary,
+                      )).center().onTap(() {
                     DTSignInScreen().launch(context);
                   }),
                 ],
@@ -180,6 +167,25 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
           ).center(),
         ),
       ),
+    );
+  }
+
+  InputDecoration buildInputDecoration(
+    String labelText, {
+    Icon suffixIcon,
+  }) {
+    return InputDecoration(
+      labelText: labelText,
+      contentPadding: EdgeInsets.all(16),
+      labelStyle: secondaryTextStyle(),
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appColorPrimary)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appStore.textSecondaryColor)),
+      suffix: suffixIcon,
     );
   }
 }
