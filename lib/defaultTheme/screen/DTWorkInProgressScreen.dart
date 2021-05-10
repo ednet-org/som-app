@@ -29,7 +29,7 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
     return actionInfoWidget(
       context,
       'images/defaultTheme/maintenance.png',
-      'Stealth Mode',
+      '*** stealth mode ***',
       'This app is currently being developed but we encourage you to ',
       'Sign Up',
       ' so that you can be notified when lunch is ready, Thank you for your interest.',
