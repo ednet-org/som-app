@@ -43,6 +43,9 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle style =
+        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context, 'Customer registration'),
@@ -59,8 +62,55 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Buyer', style: boldTextStyle(size: 24)),
+                  Text('Please select role.'),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          style: style,
+                          onPressed: () {
+                            print('Buyer');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                Text('Buyer', style: boldTextStyle(size: 24)),
+                          )),
+                      10.width,
+                      ElevatedButton(
+                          onPressed: () {
+                            print('Provider');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Provider',
+                                style: boldTextStyle(size: 24)),
+                          )),
+                    ],
+                  ),
+
                   30.height,
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 20.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                    Text("Company details"),
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                  ]),
+
                   // Company name
                   TextFormField(
                     controller: companyNameCont,
@@ -93,6 +143,68 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 20.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                    Text("Company address"),
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                  ]),
+                  // City
+                  TextFormField(
+                    decoration: buildInputDecoration('City'),
+                  ),
+                  16.height,
+                  // Street
+                  TextFormField(
+                    decoration: buildInputDecoration('Street'),
+                  ),
+                  16.height,
+                  // Number
+                  TextFormField(
+                    decoration: buildInputDecoration('Number'),
+                  ),
+                  16.height,
+                  // Zip
+                  TextFormField(
+                    decoration: buildInputDecoration('Zip'),
+                  ),
+                  16.height,
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 20.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                    Text("Users"),
+                    Expanded(
+                      child: new Container(
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 36,
+                          )),
+                    ),
+                  ]),
                   // Password
                   TextFormField(
                     obscureText: obscureText,
@@ -113,24 +225,22 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                     },
                   ),
                   16.height,
-                  // City
+                  // Password
                   TextFormField(
-                    decoration: buildInputDecoration('City'),
-                  ),
-                  16.height,
-                  // Street
-                  TextFormField(
-                    decoration: buildInputDecoration('Street'),
-                  ),
-                  16.height,
-                  // Number
-                  TextFormField(
-                    decoration: buildInputDecoration('Number'),
-                  ),
-                  16.height,
-                  // Zip
-                  TextFormField(
-                    decoration: buildInputDecoration('Zip'),
+                    obscureText: obscureText,
+                    style: primaryTextStyle(),
+                    decoration: buildInputDecoration('Repeat password',
+                        suffixIcon: Icon(!obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off)
+                          ..onTap(() {
+                            obscureText = !obscureText;
+                            setState(() {});
+                          })),
+                    validator: (s) {
+                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      return null;
+                    },
                   ),
                   20.height,
                   Container(
@@ -140,7 +250,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                         color: appColorPrimary,
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: defaultBoxShadow()),
-                    child: Text('Sign Up',
+                    child: Text('Register',
                         style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
