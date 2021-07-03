@@ -19,7 +19,7 @@ class BankingSliderWidget extends StatefulWidget {
 
 class BankingSliderWidgetState extends State<BankingSliderWidget> {
   var currentIndexPage = 0;
-  List<BankingCardModel> mList;
+  late List<BankingCardModel> mList;
 
   @override
   void initState() {

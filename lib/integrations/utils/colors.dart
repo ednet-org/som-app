@@ -23,3 +23,18 @@ const shadowColor = Color(0X95E9EBF0);
 
 const textColorPrimary = Color(0xFF464545);
 const textColorSecondary = Color(0xFF747474);
+const  lineCChart = Color(0xFF23b6e6);
+const  lineCChart1  = Color(0xFF02d39a);
+const  borderColor  = Color(0xff37434d);
+const  borderText  = Color(0xFF7589a2);
+const  cardColor  =  Color(0xff2c4260);
+const  TransactionLeft =  Color(0xff53fdd7);
+const  TransactionRight =  Color(0xffff5182);
+const  cardColor1  =  Color(0xff81e5cd);
+const  monthChartLeft =  Color(0xff2c274c);
+const  monthChartRight =  Color(0xff46426c);
+const  BarChartColor_One = Color(0xff2bdb90);
+const  BarChartColor_Two = Color(0xffffdd80);
+const  BarChartColor_Three = Color(0xffff4d94);
+const  BarChartColor_Four = Color(0xff19bfff);
+

@@ -18,7 +18,7 @@ class T13WalkThroughScreen extends StatefulWidget {
 
 class T13WalkThroughScreenState extends State<T13WalkThroughScreen> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class WalkThrough extends StatelessWidget {
   final String textContent;
   final String title;
 
-  WalkThrough({Key key, @required this.textContent, @required this.title}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

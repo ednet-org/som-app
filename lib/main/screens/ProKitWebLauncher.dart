@@ -86,7 +86,7 @@ class ProKitWebLauncherState extends State<ProKitWebLauncher> {
                             children: [
                               Image.asset(icons[index], color: Colors.white, height: 100),
                               16.height,
-                              Text(e.name, style: boldTextStyle(size: 20, color: Colors.white)),
+                              Text(e.name!, style: boldTextStyle(size: 20, color: Colors.white)),
                             ],
                           ),
                         ).onTap(() {

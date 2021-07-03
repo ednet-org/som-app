@@ -30,8 +30,8 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
       status: 'LIVE NOW',
     ),
   ];
-  TabController _tabController;
-  List tabs;
+  TabController? _tabController;
+  late List tabs;
   int _currentIndex = 0;
 
   void initState() {
@@ -39,18 +39,18 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
 
     tabs = ['All Video', 'Live', 'New Uploaded'];
     _tabController = TabController(length: tabs.length, vsync: this);
-    _tabController.addListener(_handleTabControllerTick);
+    _tabController!.addListener(_handleTabControllerTick);
   }
 
   void _handleTabControllerTick() {
     setState(() {
-      _currentIndex = _tabController.index;
+      _currentIndex = _tabController!.index;
     });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -68,7 +68,7 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
               width: 115,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                image: DecorationImage(image: NetworkImage(mLiveVideo.image), fit: BoxFit.fill),
+                image: DecorationImage(image: NetworkImage(mLiveVideo.image!), fit: BoxFit.fill),
               ),
             ),
             SizedBox(width: 16),
@@ -79,7 +79,7 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(mLiveVideo.title, style: boldTextStyle(size: 16)),
+                      Text(mLiveVideo.title!, style: boldTextStyle(size: 16)),
                       Padding(
                         padding: EdgeInsets.only(top: 6),
                         child: Align(alignment: Alignment.topRight, child: Icon(Icons.more_vert)),
@@ -89,7 +89,7 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     child: Text(
-                      mLiveVideo.message,
+                      mLiveVideo.message!,
                       style: primaryTextStyle(size: 14),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -101,7 +101,7 @@ class _SdViewAllLiveVideoScreenState extends State<SdViewAllLiveVideoScreen> wit
                       decoration: boxDecorations(bgColor: sdSecondaryColorRed, radius: 4),
                       padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
                       child: Center(
-                        child: Text(mLiveVideo.status, style: secondaryTextStyle(size: 8, color: Colors.white)),
+                        child: Text(mLiveVideo.status!, style: secondaryTextStyle(size: 8, color: Colors.white)),
                       ),
                     ),
                   )

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
 import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
@@ -13,7 +12,7 @@ class GuideLineWidget extends StatefulWidget {
 }
 
 class GuideLineWidgetState extends State<GuideLineWidget> {
-  var pages = List<Widget>();
+  List<Widget> pages = [];
   var controller = PageController();
   var selectedIndex = 0;
 
@@ -43,18 +42,18 @@ class GuideLineWidgetState extends State<GuideLineWidget> {
             children: getGuideLineDetail1().map((e) {
               return Container(
                 width: context.width() * 0.20,
-                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                 padding: EdgeInsets.all(16),
                 margin: EdgeInsets.only(right: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     16.height,
-                    Image.network(e.img, height: 60, width: 60, fit: BoxFit.cover).cornerRadiusWithClipRRect(30),
+                    Image.network(e.img!, height: 60, width: 60, fit: BoxFit.cover).cornerRadiusWithClipRRect(30),
                     16.height,
-                    Text(e.name, style: primaryTextStyle(color: Colors.green, size: 20)),
+                    Text(e.name!, style: primaryTextStyle(color: Colors.green, size: 20)),
                     16.height,
-                    Text(e.detail, style: secondaryTextStyle(size: 14)).expand(),
+                    Text(e.detail!, style: secondaryTextStyle(size: 14)).expand(),
                     16.height,
                   ],
                 ),
@@ -69,18 +68,18 @@ class GuideLineWidgetState extends State<GuideLineWidget> {
             children: getGuideLineDetail1().map((e) {
               return Container(
                 width: context.width() * 0.20,
-                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                 margin: EdgeInsets.only(right: 16),
                 padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     16.height,
-                    Image.network(e.img, height: 60, width: 60, fit: BoxFit.cover).cornerRadiusWithClipRRect(30),
+                    Image.network(e.img!, height: 60, width: 60, fit: BoxFit.cover).cornerRadiusWithClipRRect(30),
                     16.height,
-                    Text(e.name, style: primaryTextStyle(color: Colors.green, size: 20)),
+                    Text(e.name!, style: primaryTextStyle(color: Colors.green, size: 20)),
                     16.height,
-                    Text(e.detail, style: secondaryTextStyle(size: 14)).expand(),
+                    Text(e.detail!, style: secondaryTextStyle(size: 14)).expand(),
                     16.height,
                   ],
                 ),

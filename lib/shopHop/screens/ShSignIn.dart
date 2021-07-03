@@ -20,7 +20,7 @@ class ShSignIn extends StatefulWidget {
 class ShSignInState extends State<ShSignIn> {
   var emailCont = TextEditingController();
   var passwordCont = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class ShSignInState extends State<ShSignIn> {
             Positioned(
               top: height - (width + width * 0.05),
               child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: ic_app_background,
                 height: width + width * 0.05,
                 width: width,

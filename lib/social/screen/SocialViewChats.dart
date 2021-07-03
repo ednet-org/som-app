@@ -17,7 +17,7 @@ class SocialViewChat extends StatefulWidget {
 }
 
 class SocialViewChatState extends State<SocialViewChat> {
-  List<SocialUser> mList;
+  late List<SocialUser> mList;
 
   @override
   void initState() {

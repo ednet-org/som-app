@@ -17,7 +17,7 @@ class QuizContactUs extends StatefulWidget {
 }
 
 class _QuizContactUsState extends State<QuizContactUs> {
-  List<QuizContactUsModel> mList;
+  late List<QuizContactUsModel> mList;
 
   @override
   void initState() {

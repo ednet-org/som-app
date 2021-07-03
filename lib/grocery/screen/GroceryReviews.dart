@@ -21,7 +21,7 @@ class GroceryReviews extends StatefulWidget {
 }
 
 class GroceryReviewsState extends State<GroceryReviews> {
-  List<ReviewModel> mList;
+  late List<ReviewModel> mList;
 
   @override
   void initState() {
@@ -54,8 +54,9 @@ class GroceryReviewsState extends State<GroceryReviews> {
   }
 }
 
+// ignore: must_be_immutable
 class Review extends StatelessWidget {
-  ReviewModel model;
+  late ReviewModel model;
 
   Review(ReviewModel model, int pos) {
     this.model = model;

@@ -16,9 +16,10 @@ class GroceryPaymentMethods extends StatefulWidget {
 }
 
 class _GroceryPaymentMethodsState extends State<GroceryPaymentMethods> {
-  List<GroceryPaymentModel> mList1;
+  late List<GroceryPaymentModel> mList1;
 
   @override
+  // ignore: must_call_super
   void initState() {
     mList1 = groceryPaymentMethodList();
   }

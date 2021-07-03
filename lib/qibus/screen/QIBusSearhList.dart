@@ -27,9 +27,9 @@ class QIBusSearchListState extends State<QIBusSearchList> {
   var now = new DateTime.now();
   var todayDate = DateTime.now();
   var formatter = new DateFormat('dd - MMM - yyyy');
-  String formatted;
+  String? formatted;
 
-  List<QIBusModel> mList;
+  late List<QIBusModel> mList;
 
   @override
   void initState() {
@@ -162,8 +162,9 @@ class QIBusSearchListState extends State<QIBusSearchList> {
   }
 }
 
+// ignore: must_be_immutable
 class BusList extends StatelessWidget {
-  QIBusModel model;
+  late QIBusModel model;
 
   BusList(QIBusModel model, int pos) {
     this.model = model;
@@ -218,7 +219,7 @@ class BusList extends StatelessWidget {
                           child: Opacity(
                             opacity: 0.2,
                             child: CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: qibus_ic_map,
                               fit: BoxFit.cover,
                               width: width * 0.4,

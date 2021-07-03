@@ -71,7 +71,7 @@ class MBecomeAMemberScreen extends StatelessWidget {
               width: context.width() * 0.7,
               decoration: boxDecorationWithRoundedCorners(backgroundColor: black, border: Border.all(color: white), borderRadius: BorderRadius.circular(3)),
               // ignore: deprecated_member_use
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: Text(
                   "Start your free trial",

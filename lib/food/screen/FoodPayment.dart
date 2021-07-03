@@ -48,7 +48,7 @@ class FoodPaymentState extends State<FoodPayment> {
             children: <Widget>[
               Image.asset(food_ic_fab_back, width: width * 0.17),
               Container(
-                child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: icon, width: width * 0.08, fit: BoxFit.contain),
+                child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: icon, width: width * 0.08, fit: BoxFit.contain),
               )
             ],
           ),
@@ -117,7 +117,7 @@ class FoodPaymentState extends State<FoodPayment> {
                                 WidgetSpan(
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10),
-                                    child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: food_ic_hdfc, height: width * 0.05, width: width * 0.05),
+                                    child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: food_ic_hdfc, height: width * 0.05, width: width * 0.05),
                                   ),
                                 ),
                                 TextSpan(text: food_lbl__42xx_4523_xxxx_55xx, style: primaryTextStyle(size: 16, color: food_textColorPrimary)),

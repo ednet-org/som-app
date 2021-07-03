@@ -14,7 +14,7 @@ class FilePickerScreen extends StatefulWidget {
 }
 
 class FilePickerScreenState extends State<FilePickerScreen> {
-  File file;
+  File? file;
   String fileName = '', filePath = '';
 
   @override
@@ -28,12 +28,12 @@ class FilePickerScreenState extends State<FilePickerScreen> {
   }
 
   Future getFiles() async {
-    FilePickerResult _result = await FilePicker.platform.pickFiles(type: FileType.any);
+    FilePickerResult? _result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (_result != null) {
-      file = File(_result.files.single.path);
-      fileName = file.path.split('/').last;
-      filePath = file.path;
+      file = File(_result.files.single.path!);
+      fileName = file!.path.split('/').last;
+      filePath = file!.path;
     }
   }
 
@@ -57,8 +57,10 @@ class FilePickerScreenState extends State<FilePickerScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [Text("File Path:", style: boldTextStyle(size: 18)), 8.width, if (file != null) Text("$filePath", style: primaryTextStyle()).expand()],
           ).paddingAll(16),
-          RaisedButton(
-            color: appColorPrimary,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: appColorPrimary,
+            ),
             onPressed: () async {
               await getFiles();
               setState(() {});

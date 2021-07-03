@@ -24,7 +24,7 @@ class MoreFragmentState extends State<MoreFragment> {
   var profileImage = "";
   var userName = "";
   var userEmail = "";
-  var isDarkMode = true;
+  bool? isDarkMode = true;
 
   @override
   void initState() {
@@ -110,7 +110,7 @@ class MoreFragmentState extends State<MoreFragment> {
                     ],
                   ).paddingOnly(left: spacing_standard_new, right: spacing_control, top: spacing_control, bottom: spacing_control).onTap(() {
                     setState(() {
-                      isDarkMode = !isDarkMode;
+                      isDarkMode = !isDarkMode!;
                     });
                   }),
                   subType(context, "language", () {}, ic_language),

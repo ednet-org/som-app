@@ -1,7 +1,7 @@
 class SDLessonsDetailsModel {
-  String chapterName;
-  String chapterDetails;
-  String score;
+  String? chapterName;
+  String? chapterDetails;
+  String? score;
 
   SDLessonsDetailsModel({
     this.chapterName,

@@ -21,7 +21,7 @@ class QIBusSelectSeat extends StatefulWidget {
 }
 
 class QIBusSelectSeatState extends State<QIBusSelectSeat> {
-  List<QIBusSeatModel> mlist;
+  late List<QIBusSeatModel> mlist;
 
   @override
   void initState() {
@@ -184,7 +184,7 @@ class QIBusSeatSelection extends StatefulWidget {
 
 class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
   bool visibility = false;
-  QIBusSeatModel model;
+  late QIBusSeatModel model;
 
   Widget mSeat(var color) {
     return Container(
@@ -201,7 +201,7 @@ class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
     });
   }
 
-  int index;
+  int? index;
 
   QIBusSeatSelectionState(QIBusSeatModel model, int index) {
     this.model = model;
@@ -259,7 +259,7 @@ class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
 
 Widget mBookNow(BuildContext context) {
   return Container(
-    height: MediaQuery.of(context).size.width * 0.4,
+    height: MediaQuery.of(context).size.height * 0.2,
     decoration: boxDecoration(showShadow: true, radius: 0.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,

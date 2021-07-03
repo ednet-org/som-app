@@ -99,11 +99,12 @@ class T12WalkThroughState extends State<T12WalkThrough> {
   }
 }
 
+// ignore: must_be_immutable
 class T12WalkThroughWidget extends StatelessWidget {
   var title;
   var image;
   var subTitle;
-  Color color;
+  Color? color;
 
   T12WalkThroughWidget({this.title, this.image, this.subTitle, this.color});
 

@@ -19,7 +19,7 @@ class T3SignIn extends StatefulWidget {
 
 class T3SignInState extends State<T3SignIn> {
   bool passwordVisible = false;
-  bool isRemember = false;
+  bool? isRemember = false;
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class T3SignInState extends State<T3SignIn> {
                           focusColor: t3_colorPrimary,
                           activeColor: t3_colorPrimary,
                           value: isRemember,
-                          onChanged: (bool value) {
+                          onChanged: (bool? value) {
                             setState(() {
                               isRemember = value;
                             });

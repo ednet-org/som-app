@@ -17,7 +17,7 @@ class T3ImageSlider extends StatefulWidget {
 }
 
 class T3ImageSliderState extends State<T3ImageSlider> {
-  List<T3DashboardSliderModel> mSliderListings;
+  late List<T3DashboardSliderModel> mSliderListings;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class T3ImageSliderState extends State<T3ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, t3_slider_title),

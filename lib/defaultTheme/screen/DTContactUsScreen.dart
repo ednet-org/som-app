@@ -62,7 +62,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
             Container(
               margin: EdgeInsets.all(16),
               height: 50,
-              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.scaffoldBackground),
+              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.scaffoldBackground!),
               child: TextFormField(
                 controller: searchCont,
                 style: primaryTextStyle(),
@@ -77,7 +77,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 validator: (s) {
-                  if (s.trim().isEmpty) return errorThisFieldRequired;
+                  if (s!.trim().isEmpty) return errorThisFieldRequired;
                   if (!s.trim().validateEmail()) return 'Email is invalid';
                   return null;
                 },

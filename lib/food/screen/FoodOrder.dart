@@ -17,7 +17,7 @@ class FoodOrder extends StatefulWidget {
 }
 
 class FoodOrderState extends State<FoodOrder> {
-  List<FoodDish> mList2;
+  late List<FoodDish> mList2;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class FoodOrderState extends State<FoodOrder> {
 
 // ignore: must_be_immutable
 class Order extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   Order(FoodDish model, int pos) {
     this.model = model;
@@ -61,8 +61,6 @@ class Order extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return Container(
       margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
       child: Row(

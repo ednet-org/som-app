@@ -35,23 +35,24 @@ class _BankingSplashState extends State<BankingSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topLeft, colors: [Banking_Primary, Banking_palColor])),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(Banking_lbl_app_Name, style: boldTextStyle(color: Banking_TextColorWhite, size: 30)).paddingOnly(bottom: spacing_standard),
-              Text(Banking_lbl_app_Sub_title, style: boldTextStyle(color: Banking_TextColorWhite, size: 14)),
-            ],
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topLeft, colors: [Banking_Primary, Banking_palColor])),
           ),
-        )
-      ],
-    ));
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(Banking_lbl_app_Name, style: boldTextStyle(color: Banking_TextColorWhite, size: 30)).paddingOnly(bottom: spacing_standard),
+                Text(Banking_lbl_app_Sub_title, style: boldTextStyle(color: Banking_TextColorWhite, size: 14)),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

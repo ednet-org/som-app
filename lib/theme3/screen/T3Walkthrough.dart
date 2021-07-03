@@ -16,7 +16,7 @@ class T3WalkThrough extends StatefulWidget {
 
 class T3WalkThroughState extends State<T3WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
   var titles = ["Sign in / Sign Up", "Choose Your Favourite Chef", "Make Delicious Dishes"];
   var subTitles = [
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text ",
@@ -89,11 +89,13 @@ class T3WalkThroughState extends State<T3WalkThrough> {
                     alignment: Alignment.topRight,
                     child: Container(
                       width: 100,
-                      child: RaisedButton(
-                        textColor: t3_white,
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0), topLeft: Radius.circular(80.0))),
-                        padding: EdgeInsets.all(0.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 4,
+                          textStyle: TextStyle(color: t3_white),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0), topLeft: Radius.circular(80.0))),
+                          padding: EdgeInsets.all(0.0),
+                        ),
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(colors: <Color>[t3_colorPrimary, t3_colorPrimaryDark]),
@@ -123,7 +125,7 @@ class T3WalkThroughState extends State<T3WalkThrough> {
 class WalkThrough extends StatelessWidget {
   final String textContent;
 
-  WalkThrough({Key key, @required this.textContent}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +133,7 @@ class WalkThrough extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.topCenter,
       child: CachedNetworkImage(
-        placeholder: placeholderWidgetFn(),
+        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
         imageUrl: textContent,
         width: 280,
         height: (MediaQuery.of(context).size.height) / 2.3,

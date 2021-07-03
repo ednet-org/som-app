@@ -32,13 +32,13 @@ Widget formField(context, hint,
     isPasswordVisible = false,
     isPassword = false,
     keyboardType = TextInputType.text,
-    FormFieldValidator<String> validator,
-    onSaved,
+    FormFieldValidator<String>? validator,
+     onSaved,
     textInputAction = TextInputAction.next,
-    FocusNode focusNode,
-    FocusNode nextFocus,
-    IconData suffixIcon,
-    IconData prefixIcon,
+    FocusNode? focusNode,
+    FocusNode? nextFocus,
+    IconData? suffixIcon,
+    IconData? prefixIcon,
     maxLine = 1,
     suffixIconSelector}) {
   return TextFormField(
@@ -87,6 +87,7 @@ Widget formField(context, hint,
   );
 }
 
+// ignore: must_be_immutable
 class T12SliderWidget extends StatelessWidget {
   List<T12Slider> mSliderList;
   var callBack;
@@ -96,8 +97,7 @@ class T12SliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
-    final Size cardSize = Size(width, width * (9 / 16));
+    final Size cardSize = Size(width, width * (10 / 16));
     return T12CarouselSlider.builder(
       viewportFraction: 0.92,
       height: cardSize.height,
@@ -109,6 +109,7 @@ class T12SliderWidget extends StatelessWidget {
         return Container(
           width: MediaQuery.of(context).size.width,
           height: cardSize.height,
+          padding: EdgeInsets.only(top: 16),
           margin: EdgeInsets.symmetric(horizontal: 4.0),
           child: Stack(
             children: <Widget>[

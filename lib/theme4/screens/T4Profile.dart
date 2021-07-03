@@ -22,7 +22,7 @@ class T4Profile extends StatefulWidget {
 
 class T4ProfileState extends State<T4Profile> {
   int selectedPos = 1;
-  List<T4NewsModel> mListings;
+  List<T4NewsModel>? mListings;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class T4ProfileState extends State<T4Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -79,7 +79,7 @@ class T4ProfileState extends State<T4Profile> {
                       child: Stack(
                         children: <Widget>[
                           CachedNetworkImage(
-                            placeholder: placeholderWidgetFn(),
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                             imageUrl: t4_profile_covr_page,
                             height: height * 0.3,
                             fit: BoxFit.fill,

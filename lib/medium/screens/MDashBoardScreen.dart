@@ -36,7 +36,7 @@ class MDashBoardScreenState extends State<MDashBoardScreen> {
   init() async {}
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override

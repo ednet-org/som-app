@@ -47,7 +47,7 @@ class _GroceryRecipientDetailState extends State<GroceryRecipientDetail> {
                   Stack(
                     children: <Widget>[
                       CachedNetworkImage(
-                        placeholder: placeholderWidgetFn(),
+                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                         imageUrl: Grocery_ic_Profile,
                         height: 70,
                         width: 70,

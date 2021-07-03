@@ -8,9 +8,10 @@ import '../utils/BankingColors.dart';
 import '../utils/BankingContants.dart';
 import '../utils/BankingDataGenerator.dart';
 
+// ignore: must_be_immutable
 class BankingPaymentDetails extends StatefulWidget {
   static var tag = "/BankingPaymentDetails";
-  String headerText;
+  String? headerText;
 
   BankingPaymentDetails({this.headerText});
 
@@ -19,7 +20,7 @@ class BankingPaymentDetails extends StatefulWidget {
 }
 
 class _BankingPaymentDetailsState extends State<BankingPaymentDetails> {
-  List<BankingPaymentModel> mList;
+  late List<BankingPaymentModel> mList;
 
   @override
   void initState() {
@@ -47,7 +48,7 @@ class _BankingPaymentDetailsState extends State<BankingPaymentDetails> {
                     },
                   ),
                   20.height,
-                  Text(widget.headerText, style: boldTextStyle(size: 30, color: Banking_TextColorPrimary)),
+                  Text(widget.headerText!, style: boldTextStyle(size: 30, color: Banking_TextColorPrimary)),
                 ],
               ),
               ListView.builder(
@@ -66,9 +67,9 @@ class _BankingPaymentDetailsState extends State<BankingPaymentDetails> {
                             width: 60,
                             padding: EdgeInsets.all(16),
                             decoration: boxDecorationWithRoundedCorners(borderRadius: BorderRadius.circular(30), backgroundColor: Banking_Primary),
-                            child: Image.asset(mList[index].img, height: 20, width: 20, color: Banking_whitePureColor),
+                            child: Image.asset(mList[index].img!, height: 20, width: 20, color: Banking_whitePureColor),
                           ).paddingAll(spacing_standard),
-                          Text(mList[index].title, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 18, fontFamily: fontRegular)),
+                          Text(mList[index].title!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 18, fontFamily: fontRegular)),
                         ],
                       ),
                     ).onTap(() {

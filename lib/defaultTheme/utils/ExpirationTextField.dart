@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ExpirationFormField extends StatefulWidget {
   ExpirationFormField({
     this.key,
-    @required this.controller,
+    required this.controller,
     this.decoration,
     this.obscureText = false,
     this.enabled = true,
@@ -12,14 +12,14 @@ class ExpirationFormField extends StatefulWidget {
     this.textInputAction,
   }) : super(key: key);
 
-  final Key key;
+  final Key? key;
   final TextEditingController controller;
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
   final bool obscureText;
   final bool enabled;
-  final TextStyle style;
-  final FocusNode focusNode;
-  final TextInputAction textInputAction;
+  final TextStyle? style;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
 
   @override
   _ExpirationFormFieldState createState() => _ExpirationFormFieldState();

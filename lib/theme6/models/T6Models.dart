@@ -9,6 +9,7 @@ class T6CardModel {
 
 class T6LogModel {
   var name = "";
+  // ignore: non_constant_identifier_names
   var Image = "";
   var info = "";
   var type = "";
@@ -16,6 +17,7 @@ class T6LogModel {
 
 class T6Slider {
   var name = "";
+  // ignore: non_constant_identifier_names
   var Image = "";
   var info = "";
   var duration = "";

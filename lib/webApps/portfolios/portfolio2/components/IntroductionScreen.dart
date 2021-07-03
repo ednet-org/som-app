@@ -78,19 +78,23 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                   30.height,
                   Row(
                     children: [
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                          primary: Colors.white,
+                        ),
                         child: Text('My Work', style: boldTextStyle(color: Colors.black)),
-                        color: Colors.white,
                       ),
                       16.width,
-                      OutlineButton(
+                      OutlinedButton(
                         onPressed: () {},
-                        borderSide: BorderSide(color: Colors.white),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.white),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        ),
                         child: Text('Hire Me', style: boldTextStyle(color: Colors.white)),
                       ),
                     ],

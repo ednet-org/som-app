@@ -20,7 +20,7 @@ class QIBusReferEarnState extends State<QIBusReferEarn> {
   Widget mImg(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return CachedNetworkImage(
-      placeholder: placeholderWidgetFn(),
+      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
       imageUrl: qibus_ic_refer_and_earn,
       width: width * 0.4,
       height: width * 0.4,
@@ -64,7 +64,6 @@ class QIBusReferEarnState extends State<QIBusReferEarn> {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: qIBus_app_background,
         body: Column(

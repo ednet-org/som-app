@@ -156,7 +156,6 @@ class CustomDialog extends StatelessWidget {
 }
 
 dialogContent(BuildContext context) {
-  var width = MediaQuery.of(context).size.width;
 
   return Container(
       decoration: BoxDecoration(

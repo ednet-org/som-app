@@ -29,7 +29,7 @@ class MNewStoryScreenState extends State<MNewStoryScreen> {
       backgroundColor: black,
       appBar: AppBar(
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () {},
             child: Text("Publish", style: primaryTextStyle(size: 18, color: Colors.green)),
           ),

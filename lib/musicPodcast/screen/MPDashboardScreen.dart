@@ -18,6 +18,9 @@ class MPDashboardScreen extends StatefulWidget {
 }
 
 class MPDashboardScreenState extends State<MPDashboardScreen> {
+
+  TextEditingController searchController = TextEditingController();
+
   List<DrawerList> drawerList = getDrawerList();
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -59,7 +62,7 @@ class MPDashboardScreenState extends State<MPDashboardScreen> {
           leading: IconButton(
             icon: Icon(Icons.menu, color: white),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
           ),
           title: Container(
@@ -78,7 +81,7 @@ class MPDashboardScreenState extends State<MPDashboardScreen> {
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25.7)),
                 enabledBorder: UnderlineInputBorder(borderRadius: BorderRadius.circular(25.7)),
               ),
-              controller: null,
+              controller: searchController,
             ),
           ),
           actions: [

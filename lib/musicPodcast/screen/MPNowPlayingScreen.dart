@@ -9,7 +9,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 class MPNowPlayingScreen extends StatefulWidget {
-  final MusicModel data;
+  final MusicModel? data;
 
   MPNowPlayingScreen({this.data});
 
@@ -50,7 +50,7 @@ class MPNowPlayingScreenState extends State<MPNowPlayingScreen> {
         leading: IconButton(
           icon: Icon(Icons.menu, color: white.withOpacity(0.9)),
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
         ),
         backgroundColor: mpAppBackGroundColor,
@@ -80,11 +80,11 @@ class MPNowPlayingScreenState extends State<MPNowPlayingScreen> {
               ],
             ).paddingOnly(left: 16, right: 16),
             32.height,
-            commonCacheImageWidget(widget.data.img, 360, width: 240, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
+            commonCacheImageWidget(widget.data!.img, 360, width: 240, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
             16.height,
-            Text(widget.data.title, style: boldTextStyle(color: Colors.white)),
+            Text(widget.data!.title!, style: boldTextStyle(color: Colors.white)),
             8.height,
-            Text(widget.data.subtitle, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
+            Text(widget.data!.subtitle!, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
             32.height,
             Slider(
               inactiveColor: Colors.white,
@@ -155,7 +155,7 @@ class MPNowPlayingScreenState extends State<MPNowPlayingScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 100, width: 100, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                         4.height,
-                        Text(data.title, style: secondaryTextStyle(size: 13, color: Colors.grey), maxLines: 1),
+                        Text(data.title!, style: secondaryTextStyle(size: 13, color: Colors.grey), maxLines: 1),
                       ],
                     ).paddingOnly(left: 8, right: 8);
                   },

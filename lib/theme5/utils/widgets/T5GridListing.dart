@@ -9,7 +9,7 @@ import '../T5Constant.dart';
 
 // ignore: must_be_immutable
 class T5GridListing extends StatelessWidget {
-  List<T5Category> mFavouriteList;
+  List<T5Category>? mFavouriteList;
   var isScrollable = false;
 
   T5GridListing(this.mFavouriteList, this.isScrollable);
@@ -20,7 +20,7 @@ class T5GridListing extends StatelessWidget {
     return GridView.builder(
         scrollDirection: Axis.vertical,
         physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
-        itemCount: mFavouriteList.length,
+        itemCount: mFavouriteList!.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 16, mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -36,13 +36,13 @@ class T5GridListing extends StatelessWidget {
                     width: width / 7.5,
                     margin: EdgeInsets.only(bottom: 4, top: 8),
                     padding: EdgeInsets.all(width / 30),
-                    decoration: boxDecoration(bgColor: mFavouriteList[index].color, radius: 10),
+                    decoration: boxDecoration(bgColor: mFavouriteList![index].color, radius: 10),
                     child: SvgPicture.asset(
-                      mFavouriteList[index].icon,
+                      mFavouriteList![index].icon,
                       color: t5White,
                     ),
                   ),
-                  text(mFavouriteList[index].name, textColor: appStore.textSecondaryColor, fontSize: textSizeMedium)
+                  text(mFavouriteList![index].name, textColor: appStore.textSecondaryColor, fontSize: textSizeMedium)
                 ],
               ),
             ),

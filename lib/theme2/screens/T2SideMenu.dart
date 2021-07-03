@@ -14,7 +14,7 @@ class T2SideMenu extends StatefulWidget {
 class T2SideMenuState extends State<T2SideMenu> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
@@ -26,7 +26,7 @@ class T2SideMenuState extends State<T2SideMenu> {
             child: IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
+                _scaffoldKey.currentState!.openDrawer();
               },
             ),
           ),

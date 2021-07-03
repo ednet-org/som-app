@@ -18,7 +18,7 @@ class T2BottomSheet extends StatefulWidget {
 }
 
 class T2BottomSheetState extends State<T2BottomSheet> {
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class T2BottomSheetState extends State<T2BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     scaffoldKey = GlobalKey<ScaffoldState>();
     Future.delayed(Duration(milliseconds: 1000), () {

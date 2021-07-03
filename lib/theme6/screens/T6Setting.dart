@@ -16,13 +16,15 @@ class T6Setting extends StatefulWidget {
 }
 
 class T6SettingState extends State<T6Setting> {
+  // ignore: non_constant_identifier_names
   bool mSwitched_On = false;
+  // ignore: non_constant_identifier_names
   bool isSwitched_Sync = false;
-  String _selectedLocation = '10 Sec';
+  String? _selectedLocation = '10 Sec';
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

@@ -18,10 +18,10 @@ class FoodGallery extends StatefulWidget {
 }
 
 class FoodGalleryState extends State<FoodGallery> {
-  List<images> mAmbienceList;
-  List<images> mFoodList;
-  List<images> mViewImagesList;
-  List<images> mUserPhotosList;
+  late List<images> mAmbienceList;
+  late List<images> mFoodList;
+  List<images>? mViewImagesList;
+  late List<images> mUserPhotosList;
 
   @override
   void initState() {
@@ -217,7 +217,7 @@ class FoodGalleryState extends State<FoodGallery> {
 
 // ignore: must_be_immutable
 class Media extends StatelessWidget {
-  images model;
+  late images model;
 
   Media(images model, int pos) {
     this.model = model;
@@ -230,7 +230,7 @@ class Media extends StatelessWidget {
       child: ClipRRect(
         borderRadius: new BorderRadius.circular(12.0),
         child: CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: model.image,
           fit: BoxFit.fill,
           height: width * 0.15,

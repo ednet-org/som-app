@@ -15,7 +15,7 @@ class LearnerFriendDetail extends StatefulWidget {
 }
 
 class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
-  List<LearnerBadgeModel> mList2;
+  late List<LearnerBadgeModel> mList2;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
           alignment: Alignment.topRight,
           children: <Widget>[
             CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: learner_ic_profile1,
               height: width * 0.3,
               width: width * 0.3,
@@ -53,11 +53,13 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
         SizedBox(
           height: 25,
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {},
           child: text("Add Friend", textColor: learner_colorPrimary, fontSize: textSizeMedium, fontFamily: fontSemibold).paddingAll(8),
-          textColor: learner_colorPrimary,
-          shape: RoundedRectangleBorder(side: BorderSide(color: learner_colorPrimary, width: 1.5, style: BorderStyle.solid), borderRadius: BorderRadius.circular(50)),
+          style: TextButton.styleFrom(
+            textStyle: TextStyle(color:learner_colorPrimary),
+            shape: RoundedRectangleBorder(side: BorderSide(color: learner_colorPrimary, width: 1.5, style: BorderStyle.solid), borderRadius: BorderRadius.circular(50)),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,8 +164,9 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerBadges extends StatelessWidget {
-  LearnerBadgeModel model;
+  late LearnerBadgeModel model;
 
   LearnerBadges(LearnerBadgeModel model, int pos) {
     this.model = model;

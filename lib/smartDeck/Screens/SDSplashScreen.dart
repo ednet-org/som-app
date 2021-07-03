@@ -34,7 +34,6 @@ class _SDSplashScreenState extends State<SDSplashScreen> with SingleTickerProvid
   }
 
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xFF076ACF),
       body: Center(

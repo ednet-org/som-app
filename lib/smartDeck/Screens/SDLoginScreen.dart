@@ -110,7 +110,7 @@ class _SDLoginScreenState extends State<SDLoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Don\'t have an account?', style: secondaryTextStyle()),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     sdRegisterScreen().launch(context);
                   },

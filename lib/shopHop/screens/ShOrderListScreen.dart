@@ -7,7 +7,6 @@ import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
 import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
 import 'package:prokit_flutter/shopHop/utils/ShExtension.dart';
 import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
-import 'package:prokit_flutter/shopHop/utils/ShWidget.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 class ShOrderListScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class ShOrderListScreen extends StatefulWidget {
 }
 
 class ShOrderListScreenState extends State<ShOrderListScreen> {
-  var list = List<ShOrder>();
+  List<ShOrder> list = [];
 
   @override
   void initState() {
@@ -54,16 +53,16 @@ class ShOrderListScreenState extends State<ShOrderListScreen> {
                   Container(
                     padding: EdgeInsets.all(1),
                     decoration: BoxDecoration(border: Border.all(color: sh_view_color, width: 1)),
-                    child: Image.asset("images/shophop/img/products" + list[index].item.image, fit: BoxFit.cover, height: width * 0.35, width: width * 0.29),
+                    child: Image.asset("images/shophop/img/products" + list[index].item!.image!, fit: BoxFit.cover, height: width * 0.35, width: width * 0.29),
                   ),
                   SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        text(list[index].item.name, textColor: sh_textColorPrimary, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
+                        text(list[index].item!.name, textColor: sh_textColorPrimary, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
                         SizedBox(height: 4),
-                        text(list[index].item.price.toString().toCurrencyFormat(), textColor: sh_colorPrimary, fontFamily: fontMedium, fontSize: textSizeNormal),
+                        text(list[index].item!.price.toString().toCurrencyFormat(), textColor: sh_colorPrimary, fontFamily: fontMedium, fontSize: textSizeNormal),
                         SizedBox(
                           height: spacing_standard,
                         ),
@@ -97,7 +96,7 @@ class ShOrderListScreenState extends State<ShOrderListScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: <Widget>[
-                                      text(list[index].order_date + "\n Order Placed", maxLine: 2, fontSize: textSizeSmall, textColor: sh_textColorPrimary),
+                                      text(list[index].order_date! + "\n Order Placed", maxLine: 2, fontSize: textSizeSmall, textColor: sh_textColorPrimary),
                                       text("Order Pending", fontSize: textSizeSmall, textColor: sh_textColorPrimary),
                                     ],
                                   ),

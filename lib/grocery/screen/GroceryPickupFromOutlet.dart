@@ -15,7 +15,7 @@ class GroceryPickupFromOutlet extends StatefulWidget {
 }
 
 class _GroceryPickupFromOutletState extends State<GroceryPickupFromOutlet> {
-  String selectedLocation1 = "Pannipitiya";
+  String? selectedLocation1 = "Pannipitiya";
 
   List<String> location1 = ["Pannipitiya"];
 
@@ -86,7 +86,7 @@ class _GroceryPickupFromOutletState extends State<GroceryPickupFromOutlet> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation1 = newValue;
                         });

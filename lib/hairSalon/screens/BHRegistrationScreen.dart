@@ -159,13 +159,15 @@ class NewRegistrationScreenState extends State<BHRegistrationScreen> {
                     16.height,
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(12),
+                          primary: BHColorPrimary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        ),
                         onPressed: () {
                           finish(context);
                         },
-                        color: BHColorPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           BHBtnSignUp,
                           style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold),

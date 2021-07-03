@@ -11,7 +11,7 @@ import 'BHDetailScreen.dart';
 
 class BHSpecialOfferViewAllScreen extends StatefulWidget {
   static String tag = '/SpecialOfferViewAllScreen';
-  final String offerData;
+  final String? offerData;
 
   BHSpecialOfferViewAllScreen({this.offerData});
 
@@ -20,7 +20,7 @@ class BHSpecialOfferViewAllScreen extends StatefulWidget {
 }
 
 class BHSpecialOfferViewAllScreenState extends State<BHSpecialOfferViewAllScreen> {
-  List<BHSpecialOfferModel> specialOfferList;
+  late List<BHSpecialOfferModel> specialOfferList;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class BHSpecialOfferViewAllScreenState extends State<BHSpecialOfferViewAllScreen
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
-        title: Text(widget.offerData, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+        title: Text(widget.offerData!, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {
@@ -71,13 +71,13 @@ class BHSpecialOfferViewAllScreenState extends State<BHSpecialOfferViewAllScreen
                       Padding(
                         padding: EdgeInsets.all(8),
                         child: Text(
-                          e.title,
+                          e.title!,
                           style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                        child: Text(e.subtitle, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
+                        child: Text(e.subtitle!, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
                       ),
                     ],
                   ),

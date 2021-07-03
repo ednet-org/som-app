@@ -46,7 +46,7 @@ class _IMDraggableScreenState extends State<IMDraggableScreen> with TickerProvid
               return ExampleItemWidget(
                 example[index],
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
                 },
               );
             }));

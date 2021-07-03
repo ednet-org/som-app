@@ -44,12 +44,14 @@ class _OPTransferScreenState extends State<OPTransferScreen> {
                   width: double.infinity,
                   height: 50,
                   margin: EdgeInsets.all(16),
-                  child: RaisedButton(
-                    color: opPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: opPrimaryColor,
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
-                    elevation: 1,
                     onPressed: () {
                       Navigator.push(
                         context,

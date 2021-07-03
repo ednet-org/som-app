@@ -13,7 +13,7 @@ class BankingButton extends StatefulWidget {
   var height = 50.0;
   var radius = 5.0;
 
-  BankingButton({@required this.textContent, @required this.onPressed, this.isStroked = false, this.height = 45.0, this.radius = 5.0});
+  BankingButton({required this.textContent, required this.onPressed, this.isStroked = false, this.height = 45.0, this.radius = 5.0});
 
   @override
   BankingButtonState createState() => BankingButtonState();
@@ -61,7 +61,7 @@ class TopCard extends StatelessWidget {
   final String acno;
   final String bal;
 
-  TopCard({Key key, @required this.name, @required this.acno, @required this.bal}) : super(key: key);
+  TopCard({Key? key, required this.name, required this.acno, required this.bal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +109,9 @@ class EditText extends StatefulWidget {
   var fontFamily;
   var text;
   var maxLine;
-  TextEditingController mController;
+  TextEditingController? mController;
 
-  VoidCallback onPressed;
+  VoidCallback? onPressed;
 
   EditText({
     var this.fontSize = textSizeNormal,

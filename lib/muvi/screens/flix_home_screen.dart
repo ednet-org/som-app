@@ -23,7 +23,7 @@ class HomeScreenState extends State<HomeScreen> {
   var searchFragment = SearchFragment();
   var myFilesFragment = MyFilesFragment();
   var moreFragment = MoreFragment();
-  List<Widget> viewContainer;
+  late List<Widget> viewContainer;
   ListQueue<int> _navigationQueue = ListQueue();
 
   @override

@@ -110,7 +110,7 @@ class _LearnerChattingScreenState extends State<LearnerChattingScreen> {
                 height: 60,
                 width: width,
                 margin: EdgeInsets.only(top: 8),
-                decoration: BoxDecoration(color: learner_white),
+                decoration: boxDecorationDefault(),
                 child: Row(
                   children: <Widget>[
                     Image.asset(learner_ic_smile, height: 30, width: 30).paddingAll(10),
@@ -145,7 +145,7 @@ class _LearnerChattingScreenState extends State<LearnerChattingScreen> {
                     }),
                   ],
                 ),
-              ).withShadow(shadowColor: learner_ShadowColor),
+              ),
             ),
           ],
         ),

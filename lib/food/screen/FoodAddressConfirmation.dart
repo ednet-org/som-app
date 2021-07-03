@@ -94,7 +94,7 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> {
-  BitmapDescriptor pinLocationIcon;
+  late BitmapDescriptor pinLocationIcon;
   Set<Marker> _markers = {};
   Completer<GoogleMapController> _controller = Completer();
 

@@ -79,9 +79,9 @@ class MPPlayListScreenState extends State<MPPlayListScreen> {
                           MPPlayListDetailScreen(data: data).launch(context);
                         }),
                         4.height,
-                        Text(data.title, style: primaryTextStyle(color: Colors.white), maxLines: 1),
+                        Text(data.title!, style: primaryTextStyle(color: Colors.white), maxLines: 1),
                         4.height,
-                        Text(data.subtitle, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5)), maxLines: 1),
+                        Text(data.subtitle!, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5)), maxLines: 1),
                       ],
                     ),
                   );

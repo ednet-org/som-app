@@ -1,11 +1,11 @@
 class PCPlayerInfoData {
-  IplStats iplStats;
-  OdiStats odiStats;
-  PlayerCareer playerCareer;
-  PlayerInfo playerInfo;
-  String playerProfile;
-  T20iStats t20iStats;
-  TestStats testStats;
+  IplStats? iplStats;
+  OdiStats? odiStats;
+  PlayerCareer? playerCareer;
+  PlayerInfo? playerInfo;
+  String? playerProfile;
+  T20iStats? t20iStats;
+  TestStats? testStats;
 
   PCPlayerInfoData({this.iplStats, this.odiStats, this.playerCareer, this.playerInfo, this.playerProfile, this.t20iStats, this.testStats});
 
@@ -25,102 +25,107 @@ class PCPlayerInfoData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['playerProfile'] = this.playerProfile;
     if (this.iplStats != null) {
-      data['iplStats'] = this.iplStats.toJson();
+      data['iplStats'] = this.iplStats!.toJson();
     }
     if (this.odiStats != null) {
-      data['odiStats'] = this.odiStats.toJson();
+      data['odiStats'] = this.odiStats!.toJson();
     }
     if (this.playerCareer != null) {
-      data['playerCareer'] = this.playerCareer.toJson();
+      data['playerCareer'] = this.playerCareer!.toJson();
     }
     if (this.playerInfo != null) {
-      data['playerInfo'] = this.playerInfo.toJson();
+      data['playerInfo'] = this.playerInfo!.toJson();
     }
     if (this.t20iStats != null) {
-      data['t20iStats'] = this.t20iStats.toJson();
+      data['t20iStats'] = this.t20iStats!.toJson();
     }
     if (this.testStats != null) {
-      data['testStats'] = this.testStats.toJson();
+      data['testStats'] = this.testStats!.toJson();
     }
     return data;
   }
 }
 
 class PlayerCareer {
-  String clDebut;
-  String clDebutAgainst;
-  String clDebutAgainstId;
-  String clDebutAt;
-  String clDebutAtId;
-  String clMatchId;
-  String cl_debut_match_id;
-  String intlDebutAgainst;
-  String intlDebutAgainstId;
-  String intlDebutAt;
-  String intlDebutAtId;
-  String intlDebutMatchId;
-  String intlDebutMatchTypeId;
-  String intlDebutOn;
-  String intlLastAgainst;
-  String intlLastAgainstId;
-  String intlLastAt;
-  String intlLastAtId;
-  String intlLastMatchId;
-  String intlLastMatchTypeId;
-  String intlLastPlayedOn;
-  String iplDebut;
-  String iplDebutAgainst;
-  String iplDebutAgainstId;
-  String iplDebutAt;
-  String iplDebutAtId;
-  String iplMatchId;
-  String ipl_debut_match_id;
-  String lastClPlayed;
-  String lastClPlayedAgainst;
-  String lastClPlayedAgainstId;
-  String lastClPlayedAt;
-  String lastClPlayedAtId;
-  String lastIplPlayed;
-  String lastIplPlayedAgainst;
-  String lastIplPlayedAgainstId;
-  String lastIplPlayedAt;
-  String lastIplPlayedAtId;
-  String lastOdiPlayed;
-  String lastOdiPlayedAgainst;
-  String lastOdiPlayedAgainstId;
-  String lastOdiPlayedAt;
-  String lastOdiPlayedAtId;
-  String lastT20iPlayed;
-  String lastT20iPlayedAgainst;
-  String lastT20iPlayedAgainstId;
-  String lastT20iPlayedAt;
-  String lastT20iPlayedAtId;
-  String lastTestPlayed;
-  String lastTestPlayedAgainst;
-  String lastTestPlayedAgainstId;
-  String lastTestPlayedAt;
-  String lastTestPlayedAtId;
-  String odiDebut;
-  String odiDebutAgainst;
-  String odiDebutAgainstId;
-  String odiDebutAt;
-  String odiDebutAtId;
-  String odiMatchId;
-  String odi_debut_match_id;
-  String t20iDebut;
-  String t20iDebutAgainst;
-  String t20iDebutAgainstId;
-  String t20iDebutAt;
-  String t20iDebutAtId;
-  String t20iMatchId;
-  String t20i_debut_match_id;
-  String testDebut;
-  String testDebutAgainst;
-  String testDebutAgainstId;
-  String testDebutAt;
-  String testDebutAtId;
-  String testMatchId;
-  String test_debut_match_id;
+  String? clDebut;
+  String? clDebutAgainst;
+  String? clDebutAgainstId;
+  String? clDebutAt;
+  String? clDebutAtId;
+  String? clMatchId;
+  // ignore: non_constant_identifier_names
+  String? cl_debut_match_id;
+  String? intlDebutAgainst;
+  String? intlDebutAgainstId;
+  String? intlDebutAt;
+  String? intlDebutAtId;
+  String? intlDebutMatchId;
+  String? intlDebutMatchTypeId;
+  String? intlDebutOn;
+  String? intlLastAgainst;
+  String? intlLastAgainstId;
+  String? intlLastAt;
+  String? intlLastAtId;
+  String? intlLastMatchId;
+  String? intlLastMatchTypeId;
+  String? intlLastPlayedOn;
+  String? iplDebut;
+  String? iplDebutAgainst;
+  String? iplDebutAgainstId;
+  String? iplDebutAt;
+  String? iplDebutAtId;
+  String? iplMatchId;
+  // ignore: non_constant_identifier_names
+  String? ipl_debut_match_id;
+  String? lastClPlayed;
+  String? lastClPlayedAgainst;
+  String? lastClPlayedAgainstId;
+  String? lastClPlayedAt;
+  String? lastClPlayedAtId;
+  String? lastIplPlayed;
+  String? lastIplPlayedAgainst;
+  String? lastIplPlayedAgainstId;
+  String? lastIplPlayedAt;
+  String? lastIplPlayedAtId;
+  String? lastOdiPlayed;
+  String? lastOdiPlayedAgainst;
+  String? lastOdiPlayedAgainstId;
+  String? lastOdiPlayedAt;
+  String? lastOdiPlayedAtId;
+  String? lastT20iPlayed;
+  String? lastT20iPlayedAgainst;
+  String? lastT20iPlayedAgainstId;
+  String? lastT20iPlayedAt;
+  String? lastT20iPlayedAtId;
+  String? lastTestPlayed;
+  String? lastTestPlayedAgainst;
+  String? lastTestPlayedAgainstId;
+  String? lastTestPlayedAt;
+  String? lastTestPlayedAtId;
+  String? odiDebut;
+  String? odiDebutAgainst;
+  String? odiDebutAgainstId;
+  String? odiDebutAt;
+  String? odiDebutAtId;
+  String? odiMatchId;
+  // ignore: non_constant_identifier_names
+  String? odi_debut_match_id;
+  String? t20iDebut;
+  String? t20iDebutAgainst;
+  String? t20iDebutAgainstId;
+  String? t20iDebutAt;
+  String? t20iDebutAtId;
+  String? t20iMatchId;
+  // ignore: non_constant_identifier_names
+  String? t20i_debut_match_id;
+  String? testDebut;
+  String? testDebutAgainst;
+  String? testDebutAgainstId;
+  String? testDebutAt;
+  String? testDebutAtId;
+  String? testMatchId;
+  // ignore: non_constant_identifier_names
+  String? test_debut_match_id;
 
   PlayerCareer(
       {this.clDebut,
@@ -129,6 +134,7 @@ class PlayerCareer {
       this.clDebutAt,
       this.clDebutAtId,
       this.clMatchId,
+      // ignore: non_constant_identifier_names
       this.cl_debut_match_id,
       this.intlDebutAgainst,
       this.intlDebutAgainstId,
@@ -150,6 +156,7 @@ class PlayerCareer {
       this.iplDebutAt,
       this.iplDebutAtId,
       this.iplMatchId,
+      // ignore: non_constant_identifier_names
       this.ipl_debut_match_id,
       this.lastClPlayed,
       this.lastClPlayedAgainst,
@@ -182,6 +189,7 @@ class PlayerCareer {
       this.odiDebutAt,
       this.odiDebutAtId,
       this.odiMatchId,
+      // ignore: non_constant_identifier_names
       this.odi_debut_match_id,
       this.t20iDebut,
       this.t20iDebutAgainst,
@@ -189,6 +197,7 @@ class PlayerCareer {
       this.t20iDebutAt,
       this.t20iDebutAtId,
       this.t20iMatchId,
+      // ignore: non_constant_identifier_names
       this.t20i_debut_match_id,
       this.testDebut,
       this.testDebutAgainst,
@@ -196,6 +205,7 @@ class PlayerCareer {
       this.testDebutAt,
       this.testDebutAtId,
       this.testMatchId,
+      // ignore: non_constant_identifier_names
       this.test_debut_match_id});
 
   factory PlayerCareer.fromJson(Map<String, dynamic> json) {
@@ -358,41 +368,41 @@ class PlayerCareer {
 }
 
 class T20iStats {
-  int bBIruns;
-  int bBIwickets;
-  int bBMruns;
-  int bBMwickets;
-  int ballsBowled;
-  int ballsTaken;
-  double batAverage;
-  double batStrikeRate;
-  double bowlAverage;
-  int bowlInnings;
-  double bowlStrikeRate;
-  int doubleHundreds;
-  int ducks;
-  double economy;
-  int fifties;
-  int fiveWicket;
-  int fourWicket;
-  int fours;
-  int highestScore;
-  int hundreds;
-  int id;
-  int innings;
-  int keepingCatches;
-  int keepingDismissals;
-  int maidens;
-  int matches;
-  int notouts;
-  int quadrupleHundreds;
-  int runs;
-  int runsGiven;
-  int sixes;
-  int stumpings;
-  int tenWicket;
-  int tripleHundreds;
-  int wicketsTaken;
+  int? bBIruns;
+  int? bBIwickets;
+  int? bBMruns;
+  int? bBMwickets;
+  int? ballsBowled;
+  int? ballsTaken;
+  double? batAverage;
+  double? batStrikeRate;
+  double? bowlAverage;
+  int? bowlInnings;
+  double? bowlStrikeRate;
+  int? doubleHundreds;
+  int? ducks;
+  double? economy;
+  int? fifties;
+  int? fiveWicket;
+  int? fourWicket;
+  int? fours;
+  int? highestScore;
+  int? hundreds;
+  int? id;
+  int? innings;
+  int? keepingCatches;
+  int? keepingDismissals;
+  int? maidens;
+  int? matches;
+  int? notouts;
+  int? quadrupleHundreds;
+  int? runs;
+  int? runsGiven;
+  int? sixes;
+  int? stumpings;
+  int? tenWicket;
+  int? tripleHundreds;
+  int? wicketsTaken;
 
   T20iStats(
       {this.bBIruns,
@@ -513,41 +523,41 @@ class T20iStats {
 }
 
 class OdiStats {
-  int bBIruns;
-  int bBIwickets;
-  int bBMruns;
-  int bBMwickets;
-  int ballsBowled;
-  int ballsTaken;
-  double batAverage;
-  double batStrikeRate;
-  double bowlAverage;
-  int bowlInnings;
-  double bowlStrikeRate;
-  int doubleHundreds;
-  int ducks;
-  double economy;
-  int fifties;
-  int fiveWicket;
-  int fourWicket;
-  int fours;
-  int highestScore;
-  int hundreds;
-  int id;
-  int innings;
-  int keepingCatches;
-  int keepingDismissals;
-  int maidens;
-  int matches;
-  int notouts;
-  int quadrupleHundreds;
-  int runs;
-  int runsGiven;
-  int sixes;
-  int stumpings;
-  int tenWicket;
-  int tripleHundreds;
-  int wicketsTaken;
+  int? bBIruns;
+  int? bBIwickets;
+  int? bBMruns;
+  int? bBMwickets;
+  int? ballsBowled;
+  int? ballsTaken;
+  double? batAverage;
+  double? batStrikeRate;
+  double? bowlAverage;
+  int? bowlInnings;
+  double? bowlStrikeRate;
+  int? doubleHundreds;
+  int? ducks;
+  double? economy;
+  int? fifties;
+  int? fiveWicket;
+  int? fourWicket;
+  int? fours;
+  int? highestScore;
+  int? hundreds;
+  int? id;
+  int? innings;
+  int? keepingCatches;
+  int? keepingDismissals;
+  int? maidens;
+  int? matches;
+  int? notouts;
+  int? quadrupleHundreds;
+  int? runs;
+  int? runsGiven;
+  int? sixes;
+  int? stumpings;
+  int? tenWicket;
+  int? tripleHundreds;
+  int? wicketsTaken;
 
   OdiStats(
       {this.bBIruns,
@@ -668,41 +678,41 @@ class OdiStats {
 }
 
 class TestStats {
-  int bBIruns;
-  int bBIwickets;
-  int bBMruns;
-  int bBMwickets;
-  int ballsBowled;
-  int ballsTaken;
-  double batAverage;
-  double batStrikeRate;
-  int bowlAverage;
-  int bowlInnings;
-  int bowlStrikeRate;
-  int doubleHundreds;
-  int ducks;
-  double economy;
-  int fifties;
-  int fiveWicket;
-  int fourWicket;
-  int fours;
-  int highestScore;
-  int hundreds;
-  int id;
-  int innings;
-  int keepingCatches;
-  int keepingDismissals;
-  int maidens;
-  int matches;
-  int notouts;
-  int quadrupleHundreds;
-  int runs;
-  int runsGiven;
-  int sixes;
-  int stumpings;
-  int tenWicket;
-  int tripleHundreds;
-  int wicketsTaken;
+  int? bBIruns;
+  int? bBIwickets;
+  int? bBMruns;
+  int? bBMwickets;
+  int? ballsBowled;
+  int? ballsTaken;
+  double? batAverage;
+  double? batStrikeRate;
+  int? bowlAverage;
+  int? bowlInnings;
+  int? bowlStrikeRate;
+  int? doubleHundreds;
+  int? ducks;
+  double? economy;
+  int? fifties;
+  int? fiveWicket;
+  int? fourWicket;
+  int? fours;
+  int? highestScore;
+  int? hundreds;
+  int? id;
+  int? innings;
+  int? keepingCatches;
+  int? keepingDismissals;
+  int? maidens;
+  int? matches;
+  int? notouts;
+  int? quadrupleHundreds;
+  int? runs;
+  int? runsGiven;
+  int? sixes;
+  int? stumpings;
+  int? tenWicket;
+  int? tripleHundreds;
+  int? wicketsTaken;
 
   TestStats(
       {this.bBIruns,
@@ -823,41 +833,41 @@ class TestStats {
 }
 
 class IplStats {
-  int bBIruns;
-  int bBIwickets;
-  int bBMruns;
-  int bBMwickets;
-  int ballsBowled;
-  int ballsTaken;
-  double batAverage;
-  double batStrikeRate;
-  int bowlAverage;
-  int bowlInnings;
-  double bowlStrikeRate;
-  int doubleHundreds;
-  int ducks;
-  double economy;
-  int fifties;
-  int fiveWicket;
-  int fourWicket;
-  int fours;
-  int highestScore;
-  int hundreds;
-  int id;
-  int innings;
-  int keepingCatches;
-  int keepingDismissals;
-  int maidens;
-  int matches;
-  int notouts;
-  int quadrupleHundreds;
-  int runs;
-  int runsGiven;
-  int sixes;
-  int stumpings;
-  int tenWicket;
-  int tripleHundreds;
-  int wicketsTaken;
+  int? bBIruns;
+  int? bBIwickets;
+  int? bBMruns;
+  int? bBMwickets;
+  int? ballsBowled;
+  int? ballsTaken;
+  double? batAverage;
+  double? batStrikeRate;
+  int? bowlAverage;
+  int? bowlInnings;
+  double? bowlStrikeRate;
+  int? doubleHundreds;
+  int? ducks;
+  double? economy;
+  int? fifties;
+  int? fiveWicket;
+  int? fourWicket;
+  int? fours;
+  int? highestScore;
+  int? hundreds;
+  int? id;
+  int? innings;
+  int? keepingCatches;
+  int? keepingDismissals;
+  int? maidens;
+  int? matches;
+  int? notouts;
+  int? quadrupleHundreds;
+  int? runs;
+  int? runsGiven;
+  int? sixes;
+  int? stumpings;
+  int? tenWicket;
+  int? tripleHundreds;
+  int? wicketsTaken;
 
   IplStats(
       {this.bBIruns,
@@ -978,48 +988,63 @@ class IplStats {
 }
 
 class PlayerInfo {
-  String birthPlace;
-  String birth_year;
-  String completeName;
-  String coverImageName;
-  String date_of_death;
-  String death_year;
-  String doB;
-  String doBFormat;
-  String education;
-  int face_image_id;
-  String fielding_position_id;
-  String fullName;
-  String height;
-  String id;
-  String imageHeight;
-  String imageName;
-  String imageWidth;
-  String intro;
-  bool is_woman;
-  String known_as;
-  String nickName;
-  String other;
-  String place_of_death;
-  String playerBatStyle;
-  String playerBowlStyle;
-  String player_role;
-  String playerrole_id;
-  String shortName;
-  String team;
-  String teamId;
+  String? birthPlace;
+  // ignore: non_constant_identifier_names
+  String? birth_year;
+  String? completeName;
+  String? coverImageName;
+  // ignore: non_constant_identifier_names
+  String? date_of_death;
+  // ignore: non_constant_identifier_names
+  String? death_year;
+  String? doB;
+  String? doBFormat;
+  String? education;
+  // ignore: non_constant_identifier_names
+  int? face_image_id;
+  // ignore: non_constant_identifier_names
+  String? fielding_position_id;
+  String? fullName;
+  String? height;
+  String? id;
+  String? imageHeight;
+  String? imageName;
+  String? imageWidth;
+  String? intro;
+  // ignore: non_constant_identifier_names
+  bool? is_woman;
+  // ignore: non_constant_identifier_names
+  String? known_as;
+  String? nickName;
+  String? other;
+  // ignore: non_constant_identifier_names
+  String? place_of_death;
+  String? playerBatStyle;
+  String? playerBowlStyle;
+  // ignore: non_constant_identifier_names
+  String? player_role;
+  // ignore: non_constant_identifier_names
+  String? playerrole_id;
+  String? shortName;
+  String? team;
+  String? teamId;
 
   PlayerInfo(
       {this.birthPlace,
+      // ignore: non_constant_identifier_names
       this.birth_year,
       this.completeName,
       this.coverImageName,
+      // ignore: non_constant_identifier_names
       this.date_of_death,
+      // ignore: non_constant_identifier_names
       this.death_year,
       this.doB,
       this.doBFormat,
       this.education,
+      // ignore: non_constant_identifier_names
       this.face_image_id,
+      // ignore: non_constant_identifier_names
       this.fielding_position_id,
       this.fullName,
       this.height,
@@ -1028,14 +1053,19 @@ class PlayerInfo {
       this.imageName,
       this.imageWidth,
       this.intro,
+      // ignore: non_constant_identifier_names
       this.is_woman,
+      // ignore: non_constant_identifier_names
       this.known_as,
       this.nickName,
       this.other,
+      // ignore: non_constant_identifier_names
       this.place_of_death,
       this.playerBatStyle,
       this.playerBowlStyle,
+      // ignore: non_constant_identifier_names
       this.player_role,
+      // ignore: non_constant_identifier_names
       this.playerrole_id,
       this.shortName,
       this.team,

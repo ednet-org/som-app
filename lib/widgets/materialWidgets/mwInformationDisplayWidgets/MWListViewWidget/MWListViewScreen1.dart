@@ -29,8 +29,9 @@ class _MWListViewScreen1State extends State<MWListViewScreen1> {
   }
 }
 
+// ignore: must_be_immutable
 class DataList extends StatelessWidget {
-  DataModel model;
+  late DataModel model;
 
   DataList(DataModel model, int pos) {
     this.model = model;

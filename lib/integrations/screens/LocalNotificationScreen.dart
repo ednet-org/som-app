@@ -15,9 +15,9 @@ class LocalNotificationScreen extends StatefulWidget {
 class LocalNotificationScreenState extends State<LocalNotificationScreen> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  AndroidInitializationSettings androidInitializationSettings;
-  IOSInitializationSettings iosInitializationSettings;
-  InitializationSettings initializationSettings;
+  AndroidInitializationSettings? androidInitializationSettings;
+  IOSInitializationSettings? iosInitializationSettings;
+  late InitializationSettings initializationSettings;
 
   @override
   void initState() {
@@ -46,29 +46,37 @@ class LocalNotificationScreenState extends State<LocalNotificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildSingleNotification();
               },
               child: Text("Simple notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(16),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildMultipleNotification();
               },
               child: Text("Multiple notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(8),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildBigPictureNotification();
               },
               child: Text("Big Picture notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(16),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildInboxStyleNotification();
               },
@@ -150,7 +158,7 @@ class LocalNotificationScreenState extends State<LocalNotificationScreen> {
     await flutterLocalNotificationsPlugin.show(4, 'New Notification', 'someone send Image', platformChannelSpecifics);
   }
 
-  Future<void> buildInboxStyleNotification() {
+  Future<void> buildInboxStyleNotification() async {
     InboxStyleInformation inboxInfo = InboxStyleInformation(
       ["this is a inbox style notification", "this is use to show an inbox style notification in flutter", "this is use for more show more text content in flutter"],
       contentTitle: "Prokit Flutter",

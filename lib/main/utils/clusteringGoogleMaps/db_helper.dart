@@ -1,19 +1,16 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLngBounds;
-import 'package:meta/meta.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'aggregated_points.dart';
-import 'lat_lang_geohash.dart';
 
 class DBHelper {
   static Future<List<AggregatedPoints>> getAggregatedPoints({
-    @required Database database,
-    @required String dbTable,
-    @required String dbLatColumn,
-    @required String dbLongColumn,
-    @required String dbGeohashColumn,
-    @required int level,
-    LatLngBounds latLngBounds,
+    required Database database,
+    required String dbTable,
+    required String dbLatColumn,
+    required String dbLongColumn,
+    required String dbGeohashColumn,
+    required int level,
+    required LatLngBounds latLngBounds,
     String whereClause = "",
   }) async {
     assert(() {
@@ -21,6 +18,7 @@ class DBHelper {
       return true;
     }());
     try {
+      // ignore: unnecessary_null_comparison
       if (database == null) {
         throw Exception("Database must not be null");
       }
@@ -42,7 +40,7 @@ class DBHelper {
       }());
       var result = await database.rawQuery(query);
 
-      List<AggregatedPoints> aggregatedPoints = new List();
+      List<AggregatedPoints> aggregatedPoints = [];
 
       for (Map<String, dynamic> item in result) {
         assert(() {
@@ -63,18 +61,18 @@ class DBHelper {
         print("--------- COMPLETE QUERY AGGREGATION WITH ERROR");
         return true;
       }());
-      return List<AggregatedPoints>();
+      return <AggregatedPoints>[];
     }
   }
-
-  static Future<List<LatLngAndGeohash>> getPoints({@required Database database, @required String dbTable, @required String dbLatColumn, @required String dbLongColumn, String whereClause = ""}) async {
+  // TODO Without NullSafety Geo coder
+ /* static Future<List<LatLngAndGeohash>> getPoints({required Database database, required String dbTable, required String dbLatColumn, required String dbLongColumn, String whereClause = ""}) async {
     try {
       var result = await database.rawQuery('SELECT $dbLatColumn as lat, $dbLongColumn as long '
           'FROM $dbTable $whereClause;');
-      List<LatLngAndGeohash> points = new List();
+      List<LatLngAndGeohash> points = [];
       for (Map<String, dynamic> item in result) {
-        var p = new LatLngAndGeohash.fromMap(item);
-        points.add(p);
+       var p = new LatLngAndGeohash.fromMap(item);
+       // points.add(p);
       }
       assert(() {
         print("--------- COMPLETE QUERY");
@@ -87,10 +85,10 @@ class DBHelper {
         print(e.toString());
         return true;
       }());
-      return List<LatLngAndGeohash>();
+      return <LatLngAndGeohash>[];
     }
   }
-
+*/
   static String buildBoundingBoxClause(LatLngBounds latLngBounds, String dbTable, String dbLat, String dbLong) {
     assert(() {
       print(latLngBounds.toString());

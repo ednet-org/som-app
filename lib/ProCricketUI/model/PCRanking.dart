@@ -1,6 +1,6 @@
 class PCRanking {
-  Player player;
-  Team team;
+  Player? player;
+  Team? team;
 
   PCRanking({this.player, this.team});
 
@@ -13,9 +13,9 @@ class PCRanking {
 }
 
 class Player {
-  FiledType oDI;
-  FiledType t20;
-  FiledType tEST;
+  FiledType? oDI;
+  FiledType? t20;
+  FiledType? tEST;
 
   Player({this.oDI, this.t20, this.tEST});
 
@@ -29,9 +29,9 @@ class Player {
 }
 
 class Team {
-  List<ODI> oDI;
-  List<T20> t20;
-  List<TEST> tEST;
+  List<ODI>? oDI;
+  List<T20>? t20;
+  List<TEST>? tEST;
 
   Team({this.oDI, this.t20, this.tEST});
 
@@ -46,26 +46,26 @@ class Team {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.oDI != null) {
-      data['oDI'] = this.oDI.map((v) => v.toJson()).toList();
+      data['oDI'] = this.oDI!.map((v) => v.toJson()).toList();
     }
     if (this.t20 != null) {
-      data['t20'] = this.t20.map((v) => v.toJson()).toList();
+      data['t20'] = this.t20!.map((v) => v.toJson()).toList();
     }
     if (this.tEST != null) {
-      data['tEST'] = this.tEST.map((v) => v.toJson()).toList();
+      data['tEST'] = this.tEST!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TEST {
-  String id;
-  String img;
-  String matches;
-  String name;
-  String points;
-  String rank;
-  String rating;
+  String? id;
+  String? img;
+  String? matches;
+  String? name;
+  String? points;
+  String? rank;
+  String? rating;
 
   TEST({this.id, this.img, this.matches, this.name, this.points, this.rank, this.rating});
 
@@ -95,13 +95,13 @@ class TEST {
 }
 
 class T20 {
-  String id;
-  String img;
-  String matches;
-  String name;
-  String points;
-  String rank;
-  String rating;
+  String? id;
+  String? img;
+  String? matches;
+  String? name;
+  String? points;
+  String? rank;
+  String? rating;
 
   T20({this.id, this.img, this.matches, this.name, this.points, this.rank, this.rating});
 
@@ -131,13 +131,13 @@ class T20 {
 }
 
 class ODI {
-  String id;
-  String img;
-  String matches;
-  String name;
-  String points;
-  String rank;
-  String rating;
+  String? id;
+  String? img;
+  String? matches;
+  String? name;
+  String? points;
+  String? rank;
+  String? rating;
 
   ODI({this.id, this.img, this.matches, this.name, this.points, this.rank, this.rating});
 
@@ -167,9 +167,9 @@ class ODI {
 }
 
 class RankType {
-  ODI oDI;
-  T20 t20;
-  TEST tEST;
+  ODI? oDI;
+  T20? t20;
+  TEST? tEST;
 
   RankType({this.oDI, this.t20, this.tEST});
 
@@ -183,9 +183,9 @@ class RankType {
 }
 
 class FiledType {
-  List<Rank> allrounder;
-  List<Rank> batting;
-  List<Rank> bowling;
+  List<Rank>? allrounder;
+  List<Rank>? batting;
+  List<Rank>? bowling;
 
   FiledType({this.allrounder, this.batting, this.bowling});
 
@@ -199,15 +199,17 @@ class FiledType {
 }
 
 class Rank {
-  String avg;
-  String country;
-  String country_id;
-  String id;
-  String img;
-  String name;
-  String rank;
-  String rating;
+  String? avg;
+  String? country;
+  // ignore: non_constant_identifier_names
+  String? country_id;
+  String? id;
+  String? img;
+  String? name;
+  String? rank;
+  String? rating;
 
+  // ignore: non_constant_identifier_names
   Rank({this.avg, this.country, this.country_id, this.id, this.img, this.name, this.rank, this.rating});
 
   factory Rank.fromJson(Map<String, dynamic> json) {

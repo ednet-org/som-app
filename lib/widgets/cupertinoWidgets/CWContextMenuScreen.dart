@@ -5,8 +5,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main/utils/AppConstant.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
-import '../../main.dart';
-
 class CWContextMenuScreen extends StatefulWidget {
   static String tag = '/CWContextMenuScreen';
 

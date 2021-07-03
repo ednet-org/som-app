@@ -19,7 +19,7 @@ class FoodProfileState extends State<FoodProfile> {
   @override
   Widget build(BuildContext context) {
     //changeStatusColor(food_app_background);
-    String _selectedLocation = 'Female';
+    String? _selectedLocation = 'Female';
     return Scaffold(
       backgroundColor: food_white,
       appBar: appBar(context, food_lbl_profile),

@@ -16,7 +16,7 @@ class LearnerDescription extends StatefulWidget {
 }
 
 class _LearnerDescriptionState extends State<LearnerDescription> {
-  List<LearnerContentModel> mList;
+  late List<LearnerContentModel> mList;
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _LearnerDescriptionState extends State<LearnerDescription> {
                       ClipRRect(
                         borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: learner_climb,
                           fit: BoxFit.cover,
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -121,7 +121,7 @@ class _LearnerDescriptionState extends State<LearnerDescription> {
                       ),
                       RichText(
                         text: TextSpan(
-                          style: Theme.of(context).textTheme.body1,
+                          style: Theme.of(context).textTheme.bodyText2,
                           children: [
                             WidgetSpan(
                               child: Padding(
@@ -155,8 +155,9 @@ class _LearnerDescriptionState extends State<LearnerDescription> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerQuestion extends StatelessWidget {
-  LearnerContentModel model;
+  late LearnerContentModel model;
 
   LearnerQuestion(LearnerContentModel model, int pos) {
     this.model = model;
@@ -189,6 +190,7 @@ class LearnerQuestion extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget LearnerOptionDescription(var total, var type) {
   return Container(
     margin: EdgeInsets.only(left: 16, right: 16),

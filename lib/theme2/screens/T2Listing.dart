@@ -18,7 +18,7 @@ class T2Listing extends StatefulWidget {
 
 class T2ListingState extends State<T2Listing> {
   int selectedPos = 1;
-  List<T2ListModel> mListings;
+  late List<T2ListModel> mListings;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T2ListingState extends State<T2Listing> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
         appBar: appBar(context, t2_Listing),
@@ -117,7 +117,7 @@ class T2ListingState extends State<T2Listing> {
                             color: appStore.scaffoldBackground,
                             child: Row(
                               children: <Widget>[
-                                CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: mListings[index].icon, width: width / 3, height: width / 2.8, fit: BoxFit.fill),
+                                CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: mListings[index].icon, width: width / 3, height: width / 2.8, fit: BoxFit.fill),
                                 Container(
                                   width: width - (width / 3) - 35,
                                   child: Column(

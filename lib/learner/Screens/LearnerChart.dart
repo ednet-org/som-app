@@ -17,7 +17,7 @@ class LearnerChart extends StatefulWidget {
 }
 
 class _LearnerChartState extends State<LearnerChart> {
-  List<LearnerCoursesModel> mList1;
+  late List<LearnerCoursesModel> mList1;
 
   @override
   void initState() {
@@ -37,7 +37,6 @@ class _LearnerChartState extends State<LearnerChart> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(135),
               child: Container(
-                color: Colors.white,
                 child: SafeArea(
                   child: Container(
                     color: learner_layout_background,
@@ -139,9 +138,10 @@ class _LearnerChartState extends State<LearnerChart> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerCourses extends StatelessWidget {
-  LearnerCoursesModel model;
-  String tags;
+  late LearnerCoursesModel model;
+  late String tags;
 
   LearnerCourses(LearnerCoursesModel model, int pos, String tags) {
     this.model = model;
@@ -194,7 +194,7 @@ class LearnerCourses extends StatelessWidget {
             )
           ],
         ),
-      ).cornerRadiusWithClipRRect(10.0).withShadow(shadowColor: learner_ShadowColor).paddingOnly(top: 16, left: 16, right: 16),
+      ).cornerRadiusWithClipRRect(10.0).paddingOnly(top: 16, left: 16, right: 16),
     );
   }
 }

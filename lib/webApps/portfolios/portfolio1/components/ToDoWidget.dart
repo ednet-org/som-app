@@ -16,9 +16,9 @@ class ToDoWidget extends StatefulWidget {
 
 class ToDoWidgetState extends State<ToDoWidget> {
   String selectedTab = 'All Project';
-  var toDoTab = List();
-  var imgList = List<Portfolio1ToDolModel>();
-  var searchList = List<Portfolio1ToDolModel>();
+  List toDoTab = [];
+  List<Portfolio1ToDolModel> imgList = [];
+  List<Portfolio1ToDolModel> searchList = [];
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ class ToDoWidgetState extends State<ToDoWidget> {
                 width: context.width() * 0.12,
                 decoration: boxDecoration(
                   radius: 10,
-                  color: selectedTab == 'All Project' ? Colors.transparent : appStore.textPrimaryColor,
+                  color: selectedTab == 'All Project' ? Colors.transparent : appStore.textPrimaryColor!,
                   bgColor: selectedTab == 'All Project' ? Colors.green : appStore.scaffoldBackground,
                 ),
                 child: Center(
@@ -103,7 +103,7 @@ class ToDoWidgetState extends State<ToDoWidget> {
                 width: context.width() * 0.12,
                 decoration: boxDecoration(
                   radius: 10,
-                  color: selectedTab == 'Illustration' ? Colors.transparent : appStore.textPrimaryColor,
+                  color: selectedTab == 'Illustration' ? Colors.transparent : appStore.textPrimaryColor!,
                   bgColor: selectedTab == 'Illustration' ? Colors.green : appStore.scaffoldBackground,
                 ),
                 margin: EdgeInsets.all(8),
@@ -119,7 +119,7 @@ class ToDoWidgetState extends State<ToDoWidget> {
                 width: context.width() * 0.12,
                 decoration: boxDecoration(
                   radius: 10,
-                  color: selectedTab == 'Photography' ? Colors.transparent : appStore.textPrimaryColor,
+                  color: selectedTab == 'Photography' ? Colors.transparent : appStore.textPrimaryColor!,
                   bgColor: selectedTab == 'Photography' ? Colors.green : appStore.scaffoldBackground,
                 ),
                 margin: EdgeInsets.all(8),
@@ -135,7 +135,7 @@ class ToDoWidgetState extends State<ToDoWidget> {
                 width: context.width() * 0.12,
                 decoration: boxDecoration(
                   radius: 10,
-                  color: selectedTab == 'Website' ? Colors.transparent : appStore.textPrimaryColor,
+                  color: selectedTab == 'Website' ? Colors.transparent : appStore.textPrimaryColor!,
                   bgColor: selectedTab == 'Website' ? Colors.green : appStore.scaffoldBackground,
                 ),
                 margin: EdgeInsets.all(8),
@@ -158,7 +158,7 @@ class ToDoWidgetState extends State<ToDoWidget> {
                 height: 200,
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.all(8),
-                child: Image.network(e.img, fit: BoxFit.cover, width: context.width() * 0.25, height: 200).cornerRadiusWithClipRRect(5),
+                child: Image.network(e.img!, fit: BoxFit.cover, width: context.width() * 0.25, height: 200).cornerRadiusWithClipRRect(5),
               );
             }).toList(),
           ),

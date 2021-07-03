@@ -7,10 +7,11 @@ import 'package:prokit_flutter/smartDeck/ModelClass/SDLessonsDetailsModel.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
 import 'package:prokit_flutter/smartDeck/Screens/SDLessonChapterScreen.dart';
 
+// ignore: must_be_immutable
 class SDLessonsDetScreen extends StatefulWidget {
-  String name;
-  String totalChapter;
-  String backgroundImages;
+  String? name;
+  String? totalChapter;
+  String? backgroundImages;
 
   SDLessonsDetScreen({this.name, this.totalChapter, this.backgroundImages});
 
@@ -50,7 +51,7 @@ class _SDLessonsDetScreenState extends State<SDLessonsDetScreen> {
                       image: DecorationImage(
                           image: widget.backgroundImages == null
                               ? NetworkImage("https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20190816134243/Desert-sand-sunset.jpg")
-                              : NetworkImage(widget.backgroundImages),
+                              : NetworkImage(widget.backgroundImages!),
                           fit: BoxFit.cover),
                     ),
                     child: ClipRRect(
@@ -67,11 +68,11 @@ class _SDLessonsDetScreenState extends State<SDLessonsDetScreen> {
                               CircleAvatar(radius: 20, backgroundColor: Colors.black12, child: CloseButton()),
                               Container(
                                 margin: EdgeInsets.only(top: 100),
-                                child: Text(widget.name == null ? 'Biology' : widget.name, style: boldTextStyle(color: Colors.white)),
+                                child: Text(widget.name == null ? 'Biology' : widget.name!, style: boldTextStyle(color: Colors.white)),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 5),
-                                child: Text(widget.totalChapter == null ? '7 chapter' : widget.totalChapter, style: secondaryTextStyle(color: Colors.white.withOpacity(0.8))),
+                                child: Text(widget.totalChapter == null ? '7 chapter' : widget.totalChapter!, style: secondaryTextStyle(color: Colors.white.withOpacity(0.8))),
                               ),
                               Container(
                                   margin: EdgeInsets.only(top: 10),
@@ -127,7 +128,7 @@ class _SDLessonsDetScreenState extends State<SDLessonsDetScreen> {
                         borderRadius: BorderRadius.circular(5),
                         image: DecorationImage(
                           image: NetworkImage(
-                            widget.backgroundImages == null ? "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20190816134243/Desert-sand-sunset.jpg" : widget.backgroundImages,
+                            widget.backgroundImages == null ? "https://d2rdhxfof4qmbb.cloudfront.net/wp-content/uploads/20190816134243/Desert-sand-sunset.jpg" : widget.backgroundImages!,
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -148,7 +149,7 @@ class _SDLessonsDetScreenState extends State<SDLessonsDetScreen> {
                       child: Text('Select Chapter', style: secondaryTextStyle()),
                     ),
                     ListView.builder(
-                      itemCount: chapters == null ? 0 : chapters.length,
+                      itemCount: chapters.length,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
@@ -166,17 +167,17 @@ class _SDLessonsDetScreenState extends State<SDLessonsDetScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(chapters[index].chapterName, style: boldTextStyle(size: 16)),
+                                    Text(chapters[index].chapterName!, style: boldTextStyle(size: 16)),
                                     Container(
                                       margin: EdgeInsets.only(top: 8, bottom: 5),
-                                      child: Text(chapters[index].chapterDetails, style: secondaryTextStyle(size: 12)),
+                                      child: Text(chapters[index].chapterDetails!, style: secondaryTextStyle(size: 12)),
                                     ),
                                   ],
                                 ),
                                 CircleAvatar(
                                   radius: 15,
                                   backgroundColor: sdSecondaryColorGreen.withOpacity(0.7),
-                                  child: Text(chapters[index].score, style: boldTextStyle(color: CupertinoColors.white, size: 16)),
+                                  child: Text(chapters[index].score!, style: boldTextStyle(color: CupertinoColors.white, size: 16)),
                                 ),
                               ],
                             ),

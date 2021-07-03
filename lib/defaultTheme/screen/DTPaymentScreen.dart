@@ -39,7 +39,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
 
   init() async {
     securityCodeFocus.addListener(() {
-      cardKey.currentState.toggleCard();
+      cardKey.currentState!.toggleCard();
 
       setState(() {});
     });
@@ -52,7 +52,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
 
   @override
   void dispose() {
-    securityCodeFocus?.dispose();
+    securityCodeFocus.dispose();
     super.dispose();
   }
 
@@ -150,7 +150,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                       labelText: 'Card Number',
                       counterText: '',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                       labelStyle: secondaryTextStyle(),
                     ),
@@ -174,7 +174,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Expiry Date',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
@@ -212,7 +212,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Security Code',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
@@ -236,7 +236,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                     decoration: InputDecoration(
                       labelText: 'Card Holder',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                       labelStyle: secondaryTextStyle(),
                     ),

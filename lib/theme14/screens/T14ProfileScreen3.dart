@@ -100,7 +100,7 @@ class _T14ProfileScreen3State extends State<T14ProfileScreen3> {
               crossAxisSpacing: 16.0,
               itemBuilder: (BuildContext context, int index) => ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(25)),
-                child: Image.asset(topTravelList[index].img, fit: BoxFit.cover),
+                child: Image.asset(topTravelList[index].img!, fit: BoxFit.cover),
               ),
             ),
           ],

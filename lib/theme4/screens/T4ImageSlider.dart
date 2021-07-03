@@ -18,7 +18,7 @@ class T4ImageSlider extends StatefulWidget {
 }
 
 class T4ImageSliderState extends State<T4ImageSlider> {
-  List<T4NewsModel> mHorizontalListings;
+  late List<T4NewsModel> mHorizontalListings;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T4ImageSliderState extends State<T4ImageSlider> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: Container(
@@ -53,7 +53,7 @@ class T4ImageSliderState extends State<T4ImageSlider> {
                         children: <Widget>[
                           ClipRRect(
                             child: CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: mHorizontalListings[index].image,
                               height: height * 0.28,
                               width: width * 0.8,

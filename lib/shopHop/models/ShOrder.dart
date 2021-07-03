@@ -1,9 +1,13 @@
 class ShOrder {
-  Item item;
-  String order_date;
-  String order_status;
-  String order_number;
+  Item? item;
+  // ignore: non_constant_identifier_names
+  String? order_date;
+  // ignore: non_constant_identifier_names
+  String? order_status;
+  // ignore: non_constant_identifier_names
+  String? order_number;
 
+  // ignore: non_constant_identifier_names
   ShOrder({this.item, this.order_date, this.order_status, this.order_number});
 
   factory ShOrder.fromJson(Map<String, dynamic> json) {
@@ -21,17 +25,17 @@ class ShOrder {
     data['order_status'] = this.order_status;
     data['order_number'] = this.order_number;
     if (this.item != null) {
-      data['item'] = this.item.toJson();
+      data['item'] = this.item!.toJson();
     }
     return data;
   }
 }
 
 class Item {
-  int id;
-  String name;
-  String price;
-  String image;
+  int? id;
+  String? name;
+  String? price;
+  String? image;
 
   Item({this.id, this.name, this.price, this.image});
 

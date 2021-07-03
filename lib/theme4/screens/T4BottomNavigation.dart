@@ -34,7 +34,7 @@ class T4BottomNavigationState extends State<T4BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

@@ -1,10 +1,10 @@
 
 
 class SDNotidicationModel {
-  String images;
-  String notificationmessage;
-  String time;
-  bool dot = false;
+  String? images;
+  String? notificationmessage;
+  String? time;
+  bool? dot = false;
 
   SDNotidicationModel({
     this.images,

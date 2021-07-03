@@ -17,7 +17,7 @@ class T11Description extends StatefulWidget {
 }
 
 class _T11DescriptionState extends State<T11Description> {
-  List<Theme11Albums> mList1;
+  late List<Theme11Albums> mList1;
 
   @override
   void initState() {

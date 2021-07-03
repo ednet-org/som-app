@@ -19,10 +19,10 @@ class PCCricketRankingScreen extends StatefulWidget {
 }
 
 class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
-  List<Rank> odiBatsmanList = List();
-  List<Rank> odiBowlingList = List();
-  List<Rank> odiAllRounderList = List();
-  List<ODI> odiTeamList = List();
+  List<Rank> odiBatsmanList = [];
+  List<Rank> odiBowlingList = [];
+  List<Rank> odiAllRounderList = [];
+  List<ODI> odiTeamList = [];
 
   @override
   void initState() {
@@ -34,10 +34,10 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
     String json = await rootBundle.loadString('assets/cricket_data/ranking.json');
     PCRanking cricketRankingData = PCRanking.fromJson(jsonDecode(json));
 
-    odiBatsmanList.addAll(cricketRankingData.player.oDI.batting);
-    odiBowlingList.addAll(cricketRankingData.player.oDI.bowling);
-    odiAllRounderList.addAll(cricketRankingData.player.oDI.allrounder);
-    odiTeamList.addAll(cricketRankingData.team.oDI);
+    odiBatsmanList.addAll(cricketRankingData.player!.oDI!.batting!);
+    odiBowlingList.addAll(cricketRankingData.player!.oDI!.bowling!);
+    odiAllRounderList.addAll(cricketRankingData.player!.oDI!.allrounder!);
+    odiTeamList.addAll(cricketRankingData.team!.oDI!);
     setState(() {});
   }
 
@@ -133,7 +133,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(odiBatsmanList[index].rank, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
+                                    Text(odiBatsmanList[index].rank!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
@@ -141,8 +141,8 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(odiBatsmanList[index].name, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 16, left: 8),
-                                            Text(odiBatsmanList[index].country, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
+                                            Text(odiBatsmanList[index].name!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 16, left: 8),
+                                            Text(odiBatsmanList[index].country!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
                                           ],
                                         )
                                       ],
@@ -152,7 +152,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Text(odiBatsmanList[index].rating, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                child: Text(odiBatsmanList[index].rating!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(top: 8, right: 16, bottom: 8),
                               )
                             ],
@@ -202,7 +202,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(odiBowlingList[index].rank, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
+                                    Text(odiBowlingList[index].rank!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
@@ -210,8 +210,8 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(odiBowlingList[index].name, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 16, left: 8),
-                                            Text(odiBowlingList[index].country, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
+                                            Text(odiBowlingList[index].name!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 16, left: 8),
+                                            Text(odiBowlingList[index].country!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
                                           ],
                                         )
                                       ],
@@ -221,7 +221,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Text(odiBowlingList[index].rating, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                child: Text(odiBowlingList[index].rating!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(top: 8, right: 16, bottom: 8),
                               )
                             ],
@@ -271,7 +271,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(odiAllRounderList[index].rank, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
+                                    Text(odiAllRounderList[index].rank!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 16, right: 16),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
@@ -279,9 +279,9 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(odiAllRounderList[index].name, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular))
+                                            Text(odiAllRounderList[index].name!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular))
                                                 .paddingOnly(top: 16, left: 8),
-                                            Text(odiAllRounderList[index].country, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
+                                            Text(odiAllRounderList[index].country!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(left: 8),
                                           ],
                                         )
                                       ],
@@ -291,7 +291,7 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Text(odiAllRounderList[index].rating, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                child: Text(odiAllRounderList[index].rating!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(top: 8, right: 16, bottom: 8),
                               )
                             ],
@@ -345,23 +345,23 @@ class _PCCricketRankingScreenState extends State<PCCricketRankingScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
-                                      child: Text(odiTeamList[index].rank, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                      child: Text(odiTeamList[index].rank!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                       padding: EdgeInsets.only(left: 16, right: 16),
                                       width: 50,
                                       alignment: Alignment.centerLeft,
                                     ),
-                                    Text(odiTeamList[index].name, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 8, left: 8, bottom: 8),
+                                    Text(odiTeamList[index].name!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 14, fontFamily: fontRegular)).paddingOnly(top: 8, left: 8, bottom: 8),
                                   ],
                                 ),
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Text(odiTeamList[index].rating, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium), textAlign: TextAlign.end)
+                                child: Text(odiTeamList[index].rating!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium), textAlign: TextAlign.end)
                                     .paddingOnly(top: 8, bottom: 8),
                               ),
                               Flexible(
                                 flex: 1,
-                                child: Text(odiTeamList[index].points, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                child: Text(odiTeamList[index].points!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(top: 8, right: 16, bottom: 8),
                               )
                             ],

@@ -13,8 +13,8 @@ class LearnerHome extends StatefulWidget {
 }
 
 class _LearnerHomeState extends State<LearnerHome> {
-  List<LearnerFeaturedModel> mList1;
-  List<LearnerCategoryModel> mList2;
+  late List<LearnerFeaturedModel> mList1;
+  late List<LearnerCategoryModel> mList2;
 
   @override
   void initState() {
@@ -81,8 +81,9 @@ class _LearnerHomeState extends State<LearnerHome> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerFeatured extends StatelessWidget {
-  LearnerFeaturedModel model;
+  late LearnerFeaturedModel model;
 
   LearnerFeatured(LearnerFeaturedModel model, int pos) {
     this.model = model;
@@ -101,7 +102,7 @@ class LearnerFeatured extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.img,
               fit: BoxFit.cover,
               height: w * 0.4,
@@ -126,8 +127,9 @@ class LearnerFeatured extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerCategory extends StatelessWidget {
-  LearnerCategoryModel model;
+  late LearnerCategoryModel model;
 
   LearnerCategory(LearnerCategoryModel model, int pos) {
     this.model = model;

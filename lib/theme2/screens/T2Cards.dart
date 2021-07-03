@@ -20,7 +20,7 @@ class T2Cards extends StatefulWidget {
 }
 
 class T2CardsState extends State<T2Cards> {
-  List<T2Favourite> mFavouriteList;
+  late List<T2Favourite> mFavouriteList;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T2CardsState extends State<T2Cards> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       appBar: appBar(context, t2_Cards),
       body: Observer(
@@ -121,7 +121,7 @@ class T2CardsState extends State<T2Cards> {
                                       Row(
                                         children: <Widget>[
                                           CachedNetworkImage(
-                                            placeholder: placeholderWidgetFn(),
+                                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                             imageUrl: mFavouriteList[index].image,
                                             width: width / 5,
                                             height: 100,

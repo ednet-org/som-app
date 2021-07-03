@@ -14,7 +14,7 @@ class NBAllNewsComponent extends StatefulWidget {
 }
 
 class NBAllNewsComponentState extends State<NBAllNewsComponent> {
-  PageController pageController;
+  PageController? pageController;
   int pageIndex = 0;
 
   List<NBBannerItemModel> mBannerItems = nbGetBannerItems();
@@ -51,13 +51,13 @@ class NBAllNewsComponentState extends State<NBAllNewsComponent> {
             child: PageView(
               controller: pageController,
               children: List.generate(mBannerItems.length, (index) {
-                return Image.asset(mBannerItems[index].image, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).paddingRight(pageIndex < 2 ? 16 : 0);
+                return Image.asset(mBannerItems[index].image!, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).paddingRight(pageIndex < 2 ? 16 : 0);
               }),
               onPageChanged: (value) {},
             ),
           ),
           8.height,
-          DotIndicator(pageController: pageController, pages: mBannerItems, indicatorColor: NBPrimaryColor),
+          DotIndicator(pageController: pageController!, pages: mBannerItems, indicatorColor: NBPrimaryColor),
           16.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

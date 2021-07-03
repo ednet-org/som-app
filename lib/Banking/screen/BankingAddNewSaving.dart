@@ -23,7 +23,7 @@ class BankingAddNewSaving extends StatefulWidget {
 
 class _BankingAddNewSavingState extends State<BankingAddNewSaving> {
   var currentIndexPage = 0;
-  List<BankingCardModel> mList;
+  List<BankingCardModel>? mList;
   var isTapped = false;
   var tapCount = 0;
 

@@ -13,9 +13,10 @@ import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import 'ShViewAllProducts.dart';
 
+// ignore: must_be_immutable
 class ShSubCategory extends StatefulWidget {
   static String tag = '/ShSubCategory';
-  ShCategory category;
+  ShCategory? category;
 
   ShSubCategory({this.category});
 
@@ -24,11 +25,11 @@ class ShSubCategory extends StatefulWidget {
 }
 
 class ShSubCategoryState extends State<ShSubCategory> {
-  var images = List<String>();
+  List<String> images = [];
   var currentIndex = 0;
-  var newestProducts = List<ShProduct>();
-  var featuredProducts = List<ShProduct>();
-  Timer timer;
+  List<ShProduct> newestProducts = [];
+  List<ShProduct> featuredProducts = [];
+  Timer? timer;
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class ShSubCategoryState extends State<ShSubCategory> {
   void dispose() {
     super.dispose();
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
   }
 
@@ -61,23 +62,23 @@ class ShSubCategoryState extends State<ShSubCategory> {
 
   fetchData() async {
     List<ShProduct> products = await loadProducts();
-    var categoryProducts = List<ShProduct>();
+    List<ShProduct> categoryProducts = [];
     products.forEach((product) {
-      product.categories.forEach((category) {
-        if (category.name == widget.category.name) {
+      product.categories!.forEach((category) {
+        if (category.name == widget.category!.name) {
           categoryProducts.add(product);
         }
       });
     });
-    var featured = List<ShProduct>();
-    var banner = List<String>();
+    List<ShProduct> featured = [];
+    List<String> banner = [];
 
     categoryProducts.forEach((product) {
-      if (product.featured) {
+      if (product.featured!) {
         featured.add(product);
       }
-      if (product.images.isNotEmpty) {
-        banner.add("images/shophop/img/products" + product.images[0].src);
+      if (product.images!.isNotEmpty) {
+        banner.add("images/shophop/img/products" + product.images![0].src!);
       }
     });
 
@@ -104,7 +105,7 @@ class ShSubCategoryState extends State<ShSubCategory> {
         backgroundColor: sh_white,
         iconTheme: IconThemeData(color: sh_textColorPrimary),
         actions: <Widget>[Icon(Icons.search)],
-        title: text(widget.category.name, textColor: sh_textColorPrimary, fontFamily: fontBold, fontSize: textSizeNormal),
+        title: text(widget.category!.name, textColor: sh_textColorPrimary, fontFamily: fontBold, fontSize: textSizeNormal),
       ),
       body: SingleChildScrollView(
         child: Column(

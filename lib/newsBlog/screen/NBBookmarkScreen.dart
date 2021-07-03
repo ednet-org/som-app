@@ -18,7 +18,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
   List<NBNewsDetailsModel> newsList = nbGetNewsDetails();
   List<NBNewsDetailsModel> bookmarkNewsList = [];
 
-  String dropDownValue = 'Most Recent';
+  String? dropDownValue = 'Most Recent';
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
                             value: dropDownItems[index],
                           );
                         }),
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             dropDownValue = value;
                             toast(dropDownValue);
@@ -100,7 +100,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
                                   ),
                                 ];
                               },
-                              onSelected: (value) {
+                              onSelected: (dynamic value) {
                                 setState(() {
                                   if (value == 'Remove') {
                                     mData.isBookmark = !mData.isBookmark;

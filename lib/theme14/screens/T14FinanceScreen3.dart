@@ -149,7 +149,7 @@ class _T14FinanceScreen3State extends State<T14FinanceScreen3> {
                               padding: EdgeInsets.all(16),
                               decoration: boxDecorationWithRoundedCorners(
                                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                                backgroundColor: data.color,
+                                backgroundColor: data.color!,
                               ),
                               child: Icon(data.icon, color: t14_colorBlue, size: 24),
                             ),
@@ -157,9 +157,9 @@ class _T14FinanceScreen3State extends State<T14FinanceScreen3> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(data.name, style: primaryTextStyle(size: 14, color: Colors.grey)),
+                                Text(data.name!, style: primaryTextStyle(size: 14, color: Colors.grey)),
                                 4.height,
-                                Text(data.rate, style: boldTextStyle(size: 16, color: t14_colorBlue)),
+                                Text(data.rate!, style: boldTextStyle(size: 16, color: t14_colorBlue)),
                               ],
                             ),
                           ],

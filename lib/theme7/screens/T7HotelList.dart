@@ -20,7 +20,7 @@ class T7HotelList extends StatefulWidget {
 }
 
 class T7HotelListState extends State<T7HotelList> {
-  List<T7HotelDataModel> mListings;
+  late List<T7HotelDataModel> mListings;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T7HotelListState extends State<T7HotelList> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: ListView(
@@ -71,7 +71,7 @@ class T7HotelListState extends State<T7HotelList> {
                               ClipRRect(
                                 borderRadius: new BorderRadius.circular(12.0),
                                 child: CachedNetworkImage(
-                                  placeholder: placeholderWidgetFn(),
+                                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                   imageUrl: mListings[index].image,
                                   fit: BoxFit.fill,
                                   height: width * 0.32,

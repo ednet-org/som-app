@@ -17,7 +17,7 @@ class OverLappingHeaders extends StatelessWidget {
             return Container(
               height: 50.0,
               // Set the color and opacity of the header
-              color: Colors.grey[900].withOpacity(0.6 + stuckAmount * 0.4),
+              color: Colors.grey[900]!.withOpacity(0.6 + stuckAmount * 0.4),
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               alignment: Alignment.centerLeft,
               child: Text(

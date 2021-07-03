@@ -12,9 +12,9 @@ import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
 
 class MAudioArticlesScreen extends StatefulWidget {
   static String tag = '/MAudioArticlesScreen';
-  final String appBarTitle;
+  final String? appBarTitle;
 
-  const MAudioArticlesScreen({Key key, this.appBarTitle}) : super(key: key);
+  const MAudioArticlesScreen({Key? key, this.appBarTitle}) : super(key: key);
 
   @override
   MAudioArticlesScreenState createState() => MAudioArticlesScreenState();
@@ -60,15 +60,17 @@ class MAudioArticlesScreenState extends State<MAudioArticlesScreen> {
                     color: mLimeColor,
                     child: Text("Following"),
                   )
-                : OutlineButton(
+                : OutlinedButton(
                     child: Text("Follow", style: primaryTextStyle(color: white)),
-                    borderSide: BorderSide(color: mLimeColor),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+                      side: BorderSide(color: mLimeColor),
+                    ),
                     onPressed: () {
                       setState(() {
                         isFollow = !isFollow;
                       });
                     },
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                   ),
           ),
         ],
@@ -80,7 +82,7 @@ class MAudioArticlesScreenState extends State<MAudioArticlesScreen> {
           },
         ),
         backgroundColor: black,
-        title: Text(widget.appBarTitle, style: boldTextStyle(size: 18, color: white)),
+        title: Text(widget.appBarTitle!, style: boldTextStyle(size: 18, color: white)),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -110,9 +112,9 @@ class MAudioArticlesScreenState extends State<MAudioArticlesScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(horizontalList[index].title, style: boldTextStyle(color: white, size: 18)).expand(),
-                                Text(horizontalList[index].authName, style: primaryTextStyle(color: white, size: 14)),
-                                Text(horizontalList[index].time, style: boldTextStyle(color: grey, size: 12)),
+                                Text(horizontalList[index].title!, style: boldTextStyle(color: white, size: 18)).expand(),
+                                Text(horizontalList[index].authName!, style: primaryTextStyle(color: white, size: 14)),
+                                Text(horizontalList[index].time!, style: boldTextStyle(color: grey, size: 12)),
                               ],
                             ),
                           ).cornerRadiusWithClipRRectOnly(bottomLeft: 5, bottomRight: 5),
@@ -131,8 +133,8 @@ class MAudioArticlesScreenState extends State<MAudioArticlesScreen> {
 
 class AudioArticlesVerticalList extends StatefulWidget {
   const AudioArticlesVerticalList({
-    Key key,
-    @required this.verticalList,
+    Key? key,
+    required this.verticalList,
   }) : super(key: key);
 
   final List<MListModel> verticalList;
@@ -171,9 +173,9 @@ class _AudioArticlesVerticalListState extends State<AudioArticlesVerticalList> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: boldTextStyle(size: 16, color: white)),
+                            Text(data.title!, maxLines: 2, overflow: TextOverflow.ellipsis, style: boldTextStyle(size: 16, color: white)),
                             10.height,
-                            Text(data.subtitle, overflow: TextOverflow.ellipsis, style: primaryTextStyle(size: 16, color: grey)),
+                            Text(data.subtitle!, overflow: TextOverflow.ellipsis, style: primaryTextStyle(size: 16, color: grey)),
                           ],
                         ).expand(),
                         10.width,
@@ -182,7 +184,7 @@ class _AudioArticlesVerticalListState extends State<AudioArticlesVerticalList> {
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.all(0),
-                      title: Text(data.authName, style: primaryTextStyle(size: 14, color: white)),
+                      title: Text(data.authName!, style: primaryTextStyle(size: 14, color: white)),
                       subtitle: Row(
                         children: [
                           Text("${data.date} - ${data.time} read", style: boldTextStyle(size: 12, color: grey)),

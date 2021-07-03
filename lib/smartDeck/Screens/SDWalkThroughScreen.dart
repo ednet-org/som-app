@@ -10,7 +10,7 @@ class SDWalkThroughScreen extends StatefulWidget {
 }
 
 class _SDWalkThroughScreenState extends State<SDWalkThroughScreen> {
-  bool isActive;
+  bool? isActive;
   PageController pageController = PageController(initialPage: 0);
   int pageChanged = 0;
 
@@ -23,7 +23,7 @@ class _SDWalkThroughScreenState extends State<SDWalkThroughScreen> {
     return list;
   }
 
-  Widget sDDotIndicator({bool isActive}) {
+  Widget sDDotIndicator({required bool isActive}) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
       margin: EdgeInsets.symmetric(horizontal: 4.0),
@@ -144,10 +144,12 @@ class _SDWalkThroughScreenState extends State<SDWalkThroughScreen> {
                           margin: EdgeInsets.only(bottom: 0, left: 20, right: 20),
                           width: size.width,
                           height: 50,
-                          child: RaisedButton(
-                            color: sdPrimaryColor,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                            elevation: 1,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: sdPrimaryColor,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                              elevation: 1,
+                            ),
                             onPressed: () {
                               finish(context);
                               SDLoginScreen().launch(context);

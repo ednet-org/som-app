@@ -21,9 +21,9 @@ class MyFilesFragment extends StatefulWidget {
 }
 
 class MyFilesFragmentState extends State<MyFilesFragment> {
-  var popularMovieList = List<Movie>();
-  var downloadedMovieList = List<Movie>();
-  var mcontinueList = List<Movie>();
+  List<Movie> popularMovieList = [];
+  List<Movie> downloadedMovieList = [];
+  List<Movie> mcontinueList = [];
 
   @override
   void initState() {
@@ -163,8 +163,8 @@ class MyFilesFragmentState extends State<MyFilesFragment> {
                 labelColor: muvi_colorPrimary,
                 labelPadding: EdgeInsets.only(left: spacing_large, right: spacing_large),
                 tabs: [
-                  Tab(child: Text(keyString(context, "my_list"))),
-                  Tab(child: Text(keyString(context, "downloaded"))),
+                  Tab(child: Text(keyString(context, "my_list")!)),
+                  Tab(child: Text(keyString(context, "downloaded")!)),
                 ],
               ),
             ),

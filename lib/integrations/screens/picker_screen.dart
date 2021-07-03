@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/integrations/utils/colors.dart';
@@ -24,18 +22,18 @@ class PickerScreen extends StatefulWidget {
 class PickerScreenState extends State<PickerScreen> {
   var mSelectedDate = '';
   DateTime selectedDate = DateTime.now();
-  Color pickerColor = appStore.textPrimaryColor;
+  Color? pickerColor = appStore.textPrimaryColor;
   var mSelectedColor = '';
 
   var mSelectedAddress = '';
 
   Future<Null> selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(selectedDate.year, selectedDate.month, selectedDate.day),
         lastDate: DateTime(2101),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return aw.CustomTheme(child: child);
         });
     setState(() {
@@ -50,12 +48,12 @@ class PickerScreenState extends State<PickerScreen> {
       builder: (_) => AlertDialog(
         content: SingleChildScrollView(
           child: ColorPicker(
-            pickerColor: pickerColor,
+            pickerColor: pickerColor!,
             onColorChanged: changeColor,
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: text("Pick"),
             onPressed: () {
               Navigator.of(context).pop();
@@ -69,15 +67,15 @@ class PickerScreenState extends State<PickerScreen> {
   void changeColor(Color color) {
     setState(() {
       pickerColor = color;
-      mSelectedColor = intToHex(pickerColor.value);
+      mSelectedColor = intToHex(pickerColor!.value);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     changeStatusColor(appColorPrimary);
-
-    getLocation() async {
+//TODO Without NullSafety Geo coder
+/*    getLocation() async {
       var position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       var coordinates = Coordinates(position.latitude, position.longitude);
       var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -86,7 +84,7 @@ class PickerScreenState extends State<PickerScreen> {
       setState(() {
         mSelectedAddress = first.addressLine;
       });
-    }
+    }*/
 
     return Scaffold(
       appBar: appBar(context, "Pickers"),
@@ -143,7 +141,7 @@ class PickerScreenState extends State<PickerScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  getLocation();
+                  //getLocation();
                 },
                 child: Container(
                     margin: EdgeInsets.only(left: 16, right: 16),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
+// ignore: must_be_immutable
 class MWListViewScreen5 extends StatefulWidget {
   static const tag = '/MWListViewScreen5';
   List<String> item = ["Management", "Food", "Cafe", "Travel", "Education", "Finance", "Business", "Yoga & Gym", "Health"];

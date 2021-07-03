@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 import 'BHAppointmentScreen.dart';
@@ -39,11 +38,11 @@ class BHDashedBoardScreenState extends State<BHDashedBoardScreen> {
       unselectedLabelStyle: TextStyle(color: BHGreyColor),
       unselectedItemColor: BHGreyColor,
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), title: Text(BHBottomNavDiscover)),
-        BottomNavigationBarItem(icon: Icon(Icons.business), title: Text(BHBottomNavNotify)),
-        BottomNavigationBarItem(icon: Icon(Icons.date_range), title: Text(BHBottomNavAppointment)),
-        BottomNavigationBarItem(icon: Icon(Icons.message), title: Text(BHBottomNavMessages)),
-        BottomNavigationBarItem(icon: Icon(Icons.person), title: Text(BHBottomNavProfile)),
+        BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Discover'),
+        BottomNavigationBarItem(icon: Icon(Icons.business),label: 'Notify'),
+        BottomNavigationBarItem(icon: Icon(Icons.date_range),label: 'Appointment'),
+        BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );
   }

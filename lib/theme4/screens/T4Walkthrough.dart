@@ -30,7 +30,7 @@ class T4WalkThroughState extends State<T4WalkThrough> {
     currentIndexPage = 0;
   }
 
-  VoidCallback onPrev() {
+  VoidCallback? onPrev() {
     setState(() {
       if (currentIndexPage >= 1) {
         currentIndexPage = currentIndexPage - 1;
@@ -39,7 +39,7 @@ class T4WalkThroughState extends State<T4WalkThrough> {
     });
   }
 
-  VoidCallback onNext() {
+ VoidCallback? onNext() {
     setState(() {
       if (currentIndexPage < 2) {
         currentIndexPage = currentIndexPage + 1;
@@ -104,10 +104,10 @@ class T4WalkThroughState extends State<T4WalkThrough> {
 }
 
 class WalkThrough extends StatelessWidget {
-  final String textContent;
-  final String walkImg;
+  final String? textContent;
+  final String? walkImg;
 
-  WalkThrough({Key key, this.textContent, this.walkImg}) : super(key: key);
+  WalkThrough({Key? key, this.textContent, this.walkImg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,7 @@ class WalkThrough extends StatelessWidget {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
-                CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: walkImg, width: width * 0.8, height: h * 0.4),
+                CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: walkImg!, width: width * 0.8, height: h * 0.4),
               ],
             ),
           ),

@@ -11,10 +11,10 @@ import 'package:nb_utils/nb_utils.dart';
 class CSCopyAndMoveComponents extends StatefulWidget {
   static String tag = '/CSCopyAndMoveComponents';
 
-  final List<CSDataModel> listOfData;
-  final String appBarTitle;
+  final List<CSDataModel>? listOfData;
+  final String? appBarTitle;
 
-  const CSCopyAndMoveComponents({Key key, this.listOfData, this.appBarTitle}) : super(key: key);
+  const CSCopyAndMoveComponents({Key? key, this.listOfData, this.appBarTitle}) : super(key: key);
 
   @override
   CSCopyAndMoveComponentsState createState() => CSCopyAndMoveComponentsState();
@@ -46,7 +46,7 @@ class CSCopyAndMoveComponentsState extends State<CSCopyAndMoveComponents> {
             onPressed: () {
               finish(context);
             }),
-        title: Text(widget.appBarTitle),
+        title: Text(widget.appBarTitle!),
         actions: [
           IconButton(
               icon: Icon(Icons.search, color: CSDarkBlueColor),

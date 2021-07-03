@@ -8,32 +8,31 @@ import 'package:prokit_flutter/theme5/utils/widgets/T5SliderWidget.dart';
 import '../T5Colors.dart';
 import '../T5Constant.dart';
 
+// ignore: must_be_immutable
 class T5SliderWidget extends StatelessWidget {
-  List<T5Slider> mSliderList;
+  List<T5Slider>? mSliderList;
 
   T5SliderWidget(this.mSliderList);
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
     final Size cardSize = Size(width, width / 1.8);
     return T5CarouselSlider(
       viewportFraction: 0.9,
       height: cardSize.height,
       enlargeCenterPage: true,
       scrollDirection: Axis.horizontal,
-      items: mSliderList.map((slider) {
+      items: mSliderList!.map((slider) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
               width: MediaQuery.of(context).size.width,
               height: cardSize.height,
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: Stack(
                 children: <Widget>[
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: slider.image,
                     fit: BoxFit.fill,
                     width: MediaQuery.of(context).size.width,

@@ -21,7 +21,7 @@ class T6SignUp extends StatefulWidget {
 class T6SignUpState extends State<T6SignUp> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -38,7 +38,7 @@ class T6SignUpState extends State<T6SignUp> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.center,
-                  child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t6_ic_logo, width: width / 2.2),
+                  child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t6_ic_logo, width: width / 2.2),
                 ),
                 SizedBox(height: 30),
                 text(t6_lbl_user_name, textColor: appStore.textSecondaryColor),

@@ -44,7 +44,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 ),
               ),
               Divider(),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     toast('Material button with icon');
                   },
@@ -65,7 +65,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 ),
               ),
               Divider(),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: null,
                   icon: Icon(
                     Icons.add,
@@ -80,7 +80,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 onPressed: () {
                   toast('Border Material button');
                 },
-                shape: Border.all(color: appStore.iconColor),
+                shape: Border.all(color: appStore.iconColor!),
                 child: Text(
                   'Border Material button',
                   style: primaryTextStyle(),

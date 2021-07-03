@@ -18,10 +18,10 @@ class BHAppointmentScreen extends StatefulWidget {
 class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTickerProviderStateMixin {
   bool isSwitched = false;
 
-  DateTime date;
+  late DateTime date;
 
   _pickDate() async {
-    DateTime time = await showDatePicker(
+    DateTime? time = await showDatePicker(
       context: context,
       initialDate: date,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -75,7 +75,7 @@ class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTic
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
+                        child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
                       ),
                       8.width,
                       Column(
@@ -167,7 +167,7 @@ class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTic
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
+                        child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
                       ),
                       8.width,
                       Column(

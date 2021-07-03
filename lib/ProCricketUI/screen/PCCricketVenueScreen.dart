@@ -17,9 +17,10 @@ class PCCricketVenueScreen extends StatefulWidget {
 }
 
 class _PCCricketVenueScreenState extends State<PCCricketVenueScreen> {
-  List<CricketGroundModel> mList1;
+  late List<CricketGroundModel> mList1;
 
   @override
+  // ignore: must_call_super
   void initState() {
     mList1 = cricketVenueList();
   }

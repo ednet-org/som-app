@@ -12,7 +12,7 @@ BoxDecoration boxDecorations({double radius = 8, Color color = Colors.transparen
   );
 }
 
-BoxDecoration boxDecoration({double radius = 80.0, Color backGroundColor = sdPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient gradient}) {
+BoxDecoration boxDecoration({double radius = 80.0, Color backGroundColor = sdPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient? gradient}) {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(radius),
     boxShadow: [
@@ -27,6 +27,7 @@ BoxDecoration boxDecoration({double radius = 80.0, Color backGroundColor = sdPri
   );
 }
 
+// ignore: must_be_immutable
 class SDButton extends StatefulWidget {
   static String tag = '/T4Button';
   var textContent;
@@ -34,7 +35,7 @@ class SDButton extends StatefulWidget {
   var isStroked = false;
   var height = 40.0;
 
-  SDButton({@required this.textContent, @required this.onPressed, this.isStroked = false, this.height = 45.0});
+  SDButton({required this.textContent, required this.onPressed, this.isStroked = false, this.height = 45.0});
 
   @override
   SDButtonState createState() => SDButtonState();

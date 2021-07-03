@@ -17,7 +17,7 @@ class MInterestsScreen extends StatefulWidget {
 
 class MInterestsScreenState extends State<MInterestsScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  TabController tabController;
+  TabController? tabController;
   List<Widget> tabs = [];
   List<String> tabList = ['Topics', 'People', 'Publications'];
   List<MListModel> savingList = getSavingPostList();
@@ -43,7 +43,7 @@ class MInterestsScreenState extends State<MInterestsScreen> {
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override

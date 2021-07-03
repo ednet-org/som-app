@@ -16,8 +16,8 @@ class GalleryWidget extends StatefulWidget {
 }
 
 class GalleryWidgetState extends State<GalleryWidget> {
-  var imgList = List<GuideLinesModel>();
-  int selectedIndex;
+  List<GuideLinesModel> imgList = [];
+  late int selectedIndex;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class GalleryWidgetState extends State<GalleryWidget> {
           children: [
             32.height,
             Image.network(
-              imgList[selectedIndex].img,
+              imgList[selectedIndex].img!,
               height: context.height() * 0.6,
               fit: BoxFit.cover,
             ).cornerRadiusWithClipRRect(10).paddingOnly(left: 16, right: 16),
@@ -66,7 +66,7 @@ class GalleryWidgetState extends State<GalleryWidget> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      child: Image.network(imgList[index].img, height: 150, width: 150, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
+                      child: Image.network(imgList[index].img!, height: 150, width: 150, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                     ),
                   );
                 },

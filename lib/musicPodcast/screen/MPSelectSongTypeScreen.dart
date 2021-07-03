@@ -42,7 +42,7 @@ class MPSelectSongTypeScreenState extends State<MPSelectSongTypeScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white),
         ),
@@ -78,7 +78,7 @@ class MPSelectSongTypeScreenState extends State<MPSelectSongTypeScreen> {
                   ),
                   Container(color: Colors.black.withOpacity(data.isSelect ? 0.8 : 0.5), height: 120),
                   Icon(Icons.done, color: data.isSelect ? mpAppButtonColor : Colors.transparent, size: 30),
-                  Text(data.title, style: boldTextStyle(color: data.isSelect ? Colors.transparent : white.withOpacity(0.9)))
+                  Text(data.title!, style: boldTextStyle(color: data.isSelect ? Colors.transparent : white.withOpacity(0.9)))
                 ],
               ).cornerRadiusWithClipRRect(10),
             ).cornerRadiusWithClipRRect(10).onTap(() {

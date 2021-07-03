@@ -5,12 +5,12 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../main.dart';
 import 'T2Colors.dart';
 
-// ignore: must_be_immutable
+// ignore: must_be_immutable, camel_case_types
 class t2AppButton extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  t2AppButton({@required this.textContent, @required this.onPressed});
+  t2AppButton({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,15 +18,18 @@ class t2AppButton extends StatefulWidget {
   }
 }
 
+// ignore: camel_case_types
 class t2AppButtonState extends State<t2AppButton> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
         onPressed: widget.onPressed,
-        textColor: t2_white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-        padding: EdgeInsets.all(0.0),
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(color: t2_white),
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+          padding: EdgeInsets.all(0.0),
+        ),
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: <Color>[t2_colorPrimary, t2_colorPrimaryDark]),
@@ -44,12 +47,6 @@ class t2AppButtonState extends State<t2AppButton> {
           ),
         ));
   }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
 }
 
 // ignore: must_be_immutable
@@ -61,9 +58,9 @@ class T2EditTextField extends StatefulWidget {
   var fontFamily;
   var text;
   var maxLine;
-  TextEditingController mController;
+  TextEditingController? mController;
 
-  VoidCallback onPressed;
+  VoidCallback? onPressed;
 
   T2EditTextField(
       {var this.fontSize = 20.0, var this.textColor = t2_textColorSecondary, var this.isPassword = true, var this.isSecure = false, var this.text = "", var this.mController, var this.maxLine = 1});
@@ -86,7 +83,7 @@ class T2EditTextFieldState extends State<T2EditTextField> {
         style: TextStyle(fontSize: widget.fontSize, color: appStore.textPrimaryColor, fontFamily: widget.fontFamily),
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: appStore.iconColor),
+            borderSide: BorderSide(color: appStore.iconColor!),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: t2_colorPrimary),
@@ -109,18 +106,13 @@ class T2EditTextFieldState extends State<T2EditTextField> {
               child: Icon(widget.isPassword ? Icons.visibility : Icons.visibility_off, color: appStore.iconColor),
             ),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: appStore.iconColor),
+              borderSide: BorderSide(color: appStore.iconColor!),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: t2_colorPrimary),
             ),
           ));
     }
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
   }
 }
 

@@ -16,10 +16,10 @@ class BankingLocation extends StatefulWidget {
 }
 
 class _BankingLocationState extends State<BankingLocation> {
-  List<BankingLocationModel> mList1;
+  late List<BankingLocationModel> mList1;
 
-  bool isSelected;
-  String txtHeader;
+  bool? isSelected;
+  String? txtHeader;
 
   @override
   void initState() {
@@ -80,10 +80,10 @@ class _BankingLocationState extends State<BankingLocation> {
                               children: [
                                 Image.asset(Banking_ic_Pin, color: Banking_Primary, height: 30, width: 30),
                                 16.width,
-                                Text(mList1[index].location, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
+                                Text(mList1[index].location!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
                               ],
                             ),
-                            Text(mList1[index].m, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
+                            Text(mList1[index].m!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
                           ],
                         ),
                       ).onTap(

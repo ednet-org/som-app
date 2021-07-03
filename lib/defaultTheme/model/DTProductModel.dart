@@ -1,11 +1,11 @@
 class DTProductModel {
-  String image;
-  String name;
-  double rating;
-  bool isLiked;
-  int price;
-  int discountPrice;
-  int qty;
+  String? image;
+  String? name;
+  double? rating;
+  bool? isLiked;
+  int? price;
+  int? discountPrice;
+  int? qty;
 
   DTProductModel({this.image, this.name, this.rating, this.isLiked, this.price, this.discountPrice, this.qty});
 

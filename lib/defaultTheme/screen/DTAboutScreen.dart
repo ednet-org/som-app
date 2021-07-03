@@ -55,7 +55,7 @@ class DTAboutScreenState extends State<DTAboutScreen> {
                     children: [
                       Text('Version:', style: secondaryTextStyle()),
                       5.width,
-                      Text(snap.data, style: primaryTextStyle(size: 18)),
+                      Text(snap.data!, style: primaryTextStyle(size: 18)),
                     ],
                   );
                 return SizedBox();

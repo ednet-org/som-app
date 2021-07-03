@@ -16,7 +16,7 @@ class BankingSaving extends StatefulWidget {
 }
 
 class _BankingSavingState extends State<BankingSaving> {
-  List<BankingSavingModel> savingList;
+  late List<BankingSavingModel> savingList;
 
   @override
   void initState() {
@@ -26,7 +26,6 @@ class _BankingSavingState extends State<BankingSaving> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Banking_app_Background,
       body: Container(
@@ -68,16 +67,16 @@ class _BankingSavingState extends State<BankingSaving> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(data.title, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 18, fontFamily: fontMedium)),
+                                  Text(data.title!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 18, fontFamily: fontMedium)),
                                   8.height,
-                                  Text(data.rs, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 18)),
+                                  Text(data.rs!, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 18)),
                                   2.height,
-                                  Text(data.interest, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 18)),
+                                  Text(data.interest!, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 18)),
                                 ],
                               ).expand(),
                               Align(
                                 alignment: Alignment.topRight,
-                                child: Text(data.date, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 16)),
+                                child: Text(data.date!, style: primaryTextStyle(color: Banking_TextColorSecondary, size: 16)),
                               ),
                             ],
                           ),

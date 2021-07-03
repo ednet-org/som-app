@@ -25,7 +25,7 @@ class FoodBookDetailState extends State<FoodBookDetail> {
   var now = new DateTime.now();
   var count = 1;
   var formatter = new DateFormat('dd  MMM');
-  String formatted;
+  late String formatted;
 
   @override
   void initState() {

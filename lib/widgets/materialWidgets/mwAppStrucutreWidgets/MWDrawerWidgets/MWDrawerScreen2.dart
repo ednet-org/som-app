@@ -22,7 +22,7 @@ class _MWDrawerScreen2State extends State<MWDrawerScreen2> {
 
   init() async {
     await Future.delayed(Duration(seconds: 1));
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -36,7 +36,7 @@ class _MWDrawerScreen2State extends State<MWDrawerScreen2> {
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
         ),
       ),
@@ -62,7 +62,7 @@ class _MWDrawerScreen2State extends State<MWDrawerScreen2> {
                           color: appStore.textPrimaryColor,
                         ),
                         onPressed: () {
-                          scaffoldKey.currentState.openEndDrawer();
+                          scaffoldKey.currentState!.openEndDrawer();
                         },
                       ),
                     ),
@@ -113,7 +113,7 @@ class _MWDrawerScreen2State extends State<MWDrawerScreen2> {
       ),
       body: MaterialButton(
         onPressed: () {
-          scaffoldKey.currentState.openDrawer();
+          scaffoldKey.currentState!.openDrawer();
         },
         child: Text('Open Drawer', style: primaryTextStyle(color: whiteColor)),
         padding: EdgeInsets.all(16),
@@ -130,7 +130,7 @@ class _MWDrawerScreen2State extends State<MWDrawerScreen2> {
         Text(title, style: TextStyle(color: appStore.textPrimaryColor)),
       ],
     ).onTap(() {
-      scaffoldKey.currentState.openEndDrawer();
+      scaffoldKey.currentState!.openEndDrawer();
       toast(title);
     });
   }

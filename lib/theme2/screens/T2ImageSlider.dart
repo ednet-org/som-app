@@ -17,7 +17,7 @@ class T2ImageSlider extends StatefulWidget {
 
 class T2ImageSliderState extends State<T2ImageSlider> {
   var currentIndexPage = 0;
-  List<T2Slider> mSliderList;
+  List<T2Slider>? mSliderList;
 
   @override
   void initState() {
@@ -27,17 +27,18 @@ class T2ImageSliderState extends State<T2ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
-        appBar: appBar(context, t2_Image_Slider),
-        body: Observer(
-          builder: (_) => Column(
-            children: <Widget>[
-              SizedBox(height: 16),
-              T2SliderWidget(),
-            ],
-          ),
-        ));
+      appBar: appBar(context, t2_Image_Slider),
+      body: Observer(
+        builder: (_) => Column(
+          children: <Widget>[
+            SizedBox(height: 16),
+            T2SliderWidget(),
+          ],
+        ),
+      ),
+    );
   }
 }

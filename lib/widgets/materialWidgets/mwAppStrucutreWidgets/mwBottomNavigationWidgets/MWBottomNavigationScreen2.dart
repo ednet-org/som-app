@@ -81,38 +81,38 @@ class MWBottomNavigationScreen2State extends State<MWBottomNavigationScreen2> {
           BottomNavigationBarItem(
             icon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/home.png', height: 25, width: 25, color: appStore.iconSecondaryColor),
             activeIcon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/home_fill.png', height: 25, width: 25, color: appStore.iconColor),
-            title: Text('Home'),
+            label: 'Home',
             backgroundColor: appStore.appBarColor,
           ),
           //2
           BottomNavigationBarItem(
             icon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/reel.png', height: 25, width: 25, color: appStore.iconSecondaryColor),
             activeIcon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/reel_fill.png', height: 25, width: 25, color: appStore.iconColor),
-            title: Text('Reels'),
+            label: 'Reels',
           ),
           //3
           BottomNavigationBarItem(
             icon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/gallery.png', height: 25, width: 25, color: appStore.iconSecondaryColor),
             activeIcon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/gallery_fill.png', height: 25, width: 25, color: appStore.iconColor),
-            title: Text('Gallery'),
+            label: 'Gallery',
           ),
           //4
           BottomNavigationBarItem(
             icon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/heart.png', height: 25, width: 25, color: appStore.iconSecondaryColor),
             activeIcon: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/heart_fill.png', height: 25, width: 25, color: appStore.iconColor),
-            title: Text('Activity'),
+            label: 'Activity',
           ),
           //5
           BottomNavigationBarItem(
             icon: Container(
-              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: appStore.iconSecondaryColor, width: 1)),
+              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: appStore.iconSecondaryColor!, width: 1)),
               child: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/profile1.png', height: 30, width: 30).cornerRadiusWithClipRRect(20),
             ),
             activeIcon: Container(
-              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: appStore.iconColor, width: 1)),
+              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: appStore.iconColor!, width: 1)),
               child: Image.asset('images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/profile1.png', height: 30, width: 30).cornerRadiusWithClipRRect(20),
             ),
-            title: Text('Profile'),
+            label: 'Profile',
           ),
         ],
       ),

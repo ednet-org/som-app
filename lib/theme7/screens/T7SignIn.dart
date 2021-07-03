@@ -22,7 +22,7 @@ class T7SignInState extends State<T7SignIn> with SingleTickerProviderStateMixin 
   bool sPasswordObscure = true;
   bool scPasswordObscure = true;
 
-  TabController tabController;
+  late TabController tabController;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class T7SignInState extends State<T7SignIn> with SingleTickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

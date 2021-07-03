@@ -1,7 +1,9 @@
 class FollowerModel {
-  String login;
-  String avatar_url;
+  String? login;
+  // ignore: non_constant_identifier_names
+  String? avatar_url;
 
+  // ignore: non_constant_identifier_names
   FollowerModel({this.login, this.avatar_url});
 
   factory FollowerModel.fromJson(Map<String, dynamic> json) {

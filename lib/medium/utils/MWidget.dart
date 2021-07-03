@@ -37,7 +37,7 @@ import 'package:share/share.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -118,6 +118,7 @@ class SideDrawer extends StatelessWidget {
           width: context.width(),
           color: Colors.black87,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               8.width,
               Image.asset(app_ic_medium, height: 30, width: 30, color: white),
@@ -125,7 +126,7 @@ class SideDrawer extends StatelessWidget {
               Text('Settings', style: secondaryTextStyle(size: 16)).onTap(() {
                 finish(context);
                 MSettingScreen().launch(context);
-              }).expand(),
+              }),
               Text('Help', style: secondaryTextStyle(size: 16)).onTap(() {
                 finish(context);
               }),
@@ -140,8 +141,8 @@ class SideDrawer extends StatelessWidget {
 
 class MCommonList extends StatelessWidget {
   const MCommonList({
-    Key key,
-    @required this.list,
+    Key? key,
+    required this.list,
   }) : super(key: key);
 
   final List<MListModel> list;
@@ -197,8 +198,8 @@ class MCommonList extends StatelessWidget {
 
 class HorizontalListWidget extends StatelessWidget {
   const HorizontalListWidget({
-    Key key,
-    @required this.list,
+    Key? key,
+    required this.list,
   }) : super(key: key);
 
   final List<MListModel> list;
@@ -225,7 +226,7 @@ class HorizontalListWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(data.img, height: 150, width: context.width(), fit: BoxFit.fitWidth).cornerRadiusWithClipRRectOnly(topLeft: 8, topRight: 8),
+                  Image.asset(data.img!, height: 150, width: context.width(), fit: BoxFit.fitWidth).cornerRadiusWithClipRRectOnly(topLeft: 8, topRight: 8),
                   8.height,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,15 +256,15 @@ class HorizontalListWidget extends StatelessWidget {
 }
 
 class CommonListForStories extends StatelessWidget {
-  final List<MStoriesModel> list;
+  final List<MStoriesModel>? list;
 
-  const CommonListForStories({Key key, this.list}) : super(key: key);
+  const CommonListForStories({Key? key, this.list}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (_, index) => Divider(color: appDividerColor, height: 0.5),
-      itemCount: list.length,
+      itemCount: list!.length,
       itemBuilder: (context, index) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,7 +280,7 @@ class CommonListForStories extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        list[index].title,
+                        list![index].title!,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: boldTextStyle(color: white),
@@ -288,8 +289,8 @@ class CommonListForStories extends StatelessWidget {
                         color: black,
                         icon: Icon(Icons.more_vert, color: grey),
                         padding: EdgeInsets.all(0),
-                        onSelected: (val) {
-                          if (val == 2) Share.share(list[index].title);
+                        onSelected: (dynamic val) {
+                          if (val == 2) Share.share(list![index].title!);
                           if (val == 3) commonDeleteDialog(context);
                         },
                         itemBuilder: (context) => [
@@ -300,7 +301,7 @@ class CommonListForStories extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text("${list[index].time} - 1 min read", style: primaryTextStyle(size: 14, color: grey))
+                  Text("${list![index].time} - 1 min read", style: primaryTextStyle(size: 14, color: grey))
                 ],
               ),
             ),
@@ -312,9 +313,9 @@ class CommonListForStories extends StatelessWidget {
 }
 
 class CommonListDataForProfile extends StatefulWidget {
-  final List<MStoriesModel> list;
+  final List<MStoriesModel>? list;
 
-  const CommonListDataForProfile({Key key, this.list}) : super(key: key);
+  const CommonListDataForProfile({Key? key, this.list}) : super(key: key);
 
   @override
   _CommonListDataForProfileState createState() => _CommonListDataForProfileState();
@@ -325,7 +326,7 @@ class _CommonListDataForProfileState extends State<CommonListDataForProfile> {
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.all(0),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
@@ -340,7 +341,7 @@ class _CommonListDataForProfileState extends State<CommonListDataForProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.list[index].title,
+                    widget.list![index].title!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: boldTextStyle(color: white),
@@ -348,12 +349,12 @@ class _CommonListDataForProfileState extends State<CommonListDataForProfile> {
                   ListTile(
                     contentPadding: EdgeInsets.only(right: 0),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-                    title: Text(widget.list[index].userName, style: primaryTextStyle(size: 16, color: white)),
-                    subtitle: Text("${widget.list[index].time} - 1 min read", style: primaryTextStyle(size: 14, color: grey)),
+                    title: Text(widget.list![index].userName!, style: primaryTextStyle(size: 16, color: white)),
+                    subtitle: Text("${widget.list![index].time} - 1 min read", style: primaryTextStyle(size: 14, color: grey)),
                     trailing: IconButton(
-                        icon: Icon(widget.list[index].isFav.validate() ? Icons.bookmark : Icons.bookmark_border, color: white),
+                        icon: Icon(widget.list![index].isFav.validate() ? Icons.bookmark : Icons.bookmark_border, color: white),
                         onPressed: () {
-                          widget.list[index].isFav = !widget.list[index].isFav;
+                          widget.list![index].isFav = !widget.list![index].isFav;
                           setState(() {});
                         }),
                   ),
@@ -399,7 +400,7 @@ Future commonDeleteDialog(BuildContext context) {
 }
 
 class MPeopleList extends StatefulWidget {
-  const MPeopleList({Key key, @required this.list}) : super(key: key);
+  const MPeopleList({Key? key, required this.list}) : super(key: key);
 
   final List<MPeopleModel> list;
 
@@ -433,8 +434,8 @@ class _MPeopleListState extends State<MPeopleList> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(data.title, style: boldTextStyle(color: white), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      Text(data.subTitle, style: secondaryTextStyle(size: 14), maxLines: 4, overflow: TextOverflow.ellipsis),
+                      Text(data.title!, style: boldTextStyle(color: white), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      Text(data.subTitle!, style: secondaryTextStyle(size: 14), maxLines: 4, overflow: TextOverflow.ellipsis),
                     ],
                   ).expand(),
                   8.width,
@@ -457,7 +458,7 @@ class _MPeopleListState extends State<MPeopleList> {
 }
 
 class MPublicationList extends StatefulWidget {
-  const MPublicationList({Key key, @required this.list}) : super(key: key);
+  const MPublicationList({Key? key, required this.list}) : super(key: key);
 
   final List<MPeopleModel> list;
 
@@ -489,8 +490,8 @@ class _MPublicationListState extends State<MPublicationList> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.title, style: boldTextStyle(color: white), maxLines: 2, overflow: TextOverflow.ellipsis),
-                    Text(data.subTitle, style: secondaryTextStyle(size: 14), maxLines: 4, overflow: TextOverflow.ellipsis),
+                    Text(data.title!, style: boldTextStyle(color: white), maxLines: 2, overflow: TextOverflow.ellipsis),
+                    Text(data.subTitle!, style: secondaryTextStyle(size: 14), maxLines: 4, overflow: TextOverflow.ellipsis),
                   ],
                 ).expand(),
                 8.width,

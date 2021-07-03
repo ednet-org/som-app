@@ -49,12 +49,12 @@ class _T14FinanceScreen4State extends State<T14FinanceScreen4> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.img, style: boldTextStyle(size: 14, color: t14_colorBlue)),
+                    Text(data.img!, style: boldTextStyle(size: 14, color: t14_colorBlue)),
                     4.height,
-                    Text(data.name, style: boldTextStyle(size: 14, color: t14_SuccessTxtColor.withOpacity(0.5))),
+                    Text(data.name!, style: boldTextStyle(size: 14, color: t14_SuccessTxtColor.withOpacity(0.5))),
                   ],
                 ).expand(),
-                Text(data.message, style: boldTextStyle(size: 14, color: data.isActive ? t14_txt_trasactionColor : t14_OppsColor2)),
+                Text(data.message!, style: boldTextStyle(size: 14, color: data.isActive! ? t14_txt_trasactionColor : t14_OppsColor2)),
               ],
             ),
           );
@@ -104,7 +104,7 @@ class _T14FinanceScreen4State extends State<T14FinanceScreen4> {
       child: Scaffold(
         backgroundColor: t14_finance4_bgColor,
         body: SlidingUpPanel(
-          panelBuilder: (ScrollController sc) => _scrollingList(sc),
+          panelBuilder: (ScrollController? sc) => _scrollingList(sc!),
           minHeight: 350,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0),
@@ -158,7 +158,7 @@ class _T14FinanceScreen4State extends State<T14FinanceScreen4> {
                         border: Border.all(color: i == index ? Colors.transparent : white.withOpacity(0.5)),
                         backgroundColor: i == index ? t14_finance4_SelectBgColor : t14_finance4_bgColor,
                       ),
-                      child: Text(i == index ? data.title : data.title[0], textAlign: TextAlign.center, style: boldTextStyle(color: i == index ? black : white, size: 14)),
+                      child: Text(i == index ? data.title! : data.title![0], textAlign: TextAlign.center, style: boldTextStyle(color: i == index ? black : white, size: 14)),
                     ).onTap(() {
                       i = index;
                       setState(() {});

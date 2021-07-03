@@ -18,7 +18,7 @@ class ToastScreen extends StatefulWidget {
 class ToastScreenState extends State<ToastScreen> {
   var mIsLoading = false;
 
-  double width;
+  double? width;
 
   @override
   Widget build(BuildContext context) {

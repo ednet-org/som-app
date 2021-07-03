@@ -68,9 +68,9 @@ class _T14SubscriptionScreenState extends State<T14SubscriptionScreen> {
                               child: Column(
                                 children: [
                                   8.height,
-                                  Text(data.name, style: primaryTextStyle(color: t14_colorWhite)),
+                                  Text(data.name!, style: primaryTextStyle(color: t14_colorWhite)),
                                   8.height,
-                                  Image.asset(data.img, height: 20, width: 20, color: t14_colorWhite),
+                                  Image.asset(data.img!, height: 20, width: 20, color: t14_colorWhite),
                                 ],
                               ),
                             ),
@@ -84,11 +84,13 @@ class _T14SubscriptionScreenState extends State<T14SubscriptionScreen> {
                         Container(
                           width: 230,
                           margin: EdgeInsets.only(bottom: 16),
-                          child: RaisedButton(
-                            color: t14_colorWhite,
-                            elevation: 0.0,
-                            padding: EdgeInsets.all(12),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: t14_colorWhite,
+                              elevation: 0.0,
+                              padding: EdgeInsets.all(12),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                            ),
                             onPressed: () {},
                             child: Text(t14_txt_BuyAccount, style: primaryTextStyle(color: t14_colorBlue)),
                           ),
@@ -105,14 +107,14 @@ class _T14SubscriptionScreenState extends State<T14SubscriptionScreen> {
 }
 
 class ShapesPainter extends CustomPainter {
-  Color color;
+  Color? color;
 
   ShapesPainter({this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = color;
+    paint.color = color!;
     paint.style = PaintingStyle.fill;
 
     var path = Path();

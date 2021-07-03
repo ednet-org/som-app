@@ -19,7 +19,7 @@ class ShPaymentsScreen extends StatefulWidget {
 }
 
 class ShPaymentsScreenState extends State<ShPaymentsScreen> {
-  List<ShPaymentCard> mPaymentCards = List();
+  List<ShPaymentCard> mPaymentCards = [];
 
   @override
   void initState() {
@@ -172,6 +172,7 @@ class ShPaymentsScreenState extends State<ShPaymentsScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class ShPaymentCards extends StatelessWidget {
   List<ShPaymentCard> mSliderList;
 
@@ -181,7 +182,6 @@ class ShPaymentCards extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
-    final Size cardSize = Size(width, width * 0.6);
     return ShCarouselSlider(
       viewportFraction: 0.9,
       height: 210,
@@ -235,7 +235,7 @@ class ShPaymentCards extends StatelessWidget {
                                 SizedBox(
                                   height: spacing_standard,
                                 ),
-                                text("JOHN", textColor: sh_white, fontFamily: fontMedium, fontSize: textSizeMedium),
+                                Expanded(child: text("JOHN", textColor: sh_white, fontFamily: fontMedium, fontSize: textSizeMedium)),
                               ],
                             ),
                           )

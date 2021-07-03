@@ -21,12 +21,12 @@ class _T14SignInScreen3State extends State<T14SignInScreen3> {
   FocusNode forthDigit = FocusNode();
 
   int _counter = 59;
-  Timer _timer;
+  Timer? _timer;
 
   void _startTimer() {
     _counter = 59;
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
     }
     _timer = Timer.periodic(
       Duration(seconds: 1),
@@ -44,7 +44,7 @@ class _T14SignInScreen3State extends State<T14SignInScreen3> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     super.dispose();
   }
 

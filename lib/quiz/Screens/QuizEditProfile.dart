@@ -18,6 +18,7 @@ class QuizEditProfile extends StatefulWidget {
 class _QuizEditProfileState extends State<QuizEditProfile> {
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
     final Imgview = Container(
       child: Column(
         children: <Widget>[

@@ -7,14 +7,15 @@ import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
 import '../../main.dart';
 import 'T6Constant.dart';
 
+// ignore: must_be_immutable
 class T6Button extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
   var isStroked = false;
 
   T6Button({
-    @required this.textContent,
-    @required this.onPressed,
+    required this.textContent,
+    required this.onPressed,
     this.isStroked = false,
   });
 
@@ -37,6 +38,7 @@ class T6ButtonState extends State<T6Button> {
   }
 }
 
+// ignore: non_constant_identifier_names
 Container T6EditTextStyle(var hintText, {isPassword = false}) {
   return Container(
     decoration: boxDecoration(radius: 12, showShadow: true, bgColor: t6white),
@@ -121,6 +123,7 @@ TextFormField editTextStyle(var hintText, {isPassword = true}) {
   );
 }
 
+// ignore: must_be_immutable
 class TopBar extends StatefulWidget {
   var titleName;
 
@@ -155,10 +158,6 @@ class TopBarState extends State<TopBar> {
     );
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    return null;
-  }
 }
 
 Widget shareIcon(String iconPath) {
@@ -192,7 +191,7 @@ Widget ring(String description) {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

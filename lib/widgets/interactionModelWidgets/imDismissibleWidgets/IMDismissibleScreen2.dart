@@ -34,13 +34,13 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
       itemBuilder: (context, index) {
         return Dismissible(
           direction: DismissDirection.endToStart,
-          key: Key(userList[index].tag),
+          key: Key(userList[index].tag!),
           child: mDismissibleList(userList[index]),
           background: slideRightBackground(),
           // ignore: missing_return
           confirmDismiss: (direction) async {
             if (direction == DismissDirection.endToStart) {
-              final bool res = await showDialog(
+              final bool? res = await showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
@@ -50,7 +50,7 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
                         style: primaryTextStyle(),
                       ),
                       actions: <Widget>[
-                        FlatButton(
+                        TextButton(
                           child: Text(
                             "Cancel",
                             style: primaryTextStyle(),
@@ -59,7 +59,7 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
                             Navigator.of(context).pop();
                           },
                         ),
-                        FlatButton(
+                        TextButton(
                           child: Text(
                             "Delete",
                             style: primaryTextStyle(color: Colors.red),

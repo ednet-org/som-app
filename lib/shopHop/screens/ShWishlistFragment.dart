@@ -18,7 +18,7 @@ class ShWishlistFragment extends StatefulWidget {
 }
 
 class ShWishlistFragmentState extends State<ShWishlistFragment> {
-  var list = List<ShProduct>();
+  List<ShProduct> list = [];
 
   @override
   void initState() {
@@ -48,7 +48,6 @@ class ShWishlistFragmentState extends State<ShWishlistFragment> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView.builder(
           scrollDirection: Axis.vertical,
@@ -64,7 +63,7 @@ class ShWishlistFragmentState extends State<ShWishlistFragment> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Image.asset(
-                      "images/shophop/img/products" + list[index].images[0].src,
+                      "images/shophop/img/products" + list[index].images![0].src!,
                       width: width * 0.25,
                       height: width * 0.3,
                       fit: BoxFit.fill,

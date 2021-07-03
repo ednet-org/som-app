@@ -23,9 +23,9 @@ class SignUpScreenState extends State<SignUpScreen> {
   FocusNode confirmPasswordFocus = FocusNode();
   TextEditingController _controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  bool _autoValidate = false;
+  String? email;
+  String? password;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
 
@@ -39,7 +39,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     var form = Form(
       key: _formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -51,7 +51,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               if (!value.validateEmail()) return keyString(context, "error_invalid_email");
               return null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               email = value;
             },
             textInputAction: TextInputAction.next,
@@ -75,10 +75,10 @@ class SignUpScreenState extends State<SignUpScreen> {
             cursorColor: muvi_colorPrimary,
             style: TextStyle(fontSize: ts_normal, color: muvi_textColorPrimary, fontFamily: font_regular),
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: passFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               password = value;
             },
             textInputAction: TextInputAction.done,
@@ -103,7 +103,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(fontSize: ts_normal, color: muvi_textColorPrimary, fontFamily: font_regular),
               focusNode: confirmPasswordFocus,
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return keyString(context, "error_confirm_password_required");
                 }
                 return _controller.text == value ? null : keyString(context, "error_password_not_match");
@@ -133,13 +133,13 @@ class SignUpScreenState extends State<SignUpScreen> {
     var signUpButton = SizedBox(
       width: double.infinity,
       child: button(context, keyString(context, "sign_up"), () {
-        final form = _formKey.currentState;
+        final form = _formKey.currentState!;
         if (form.validate()) {
           form.save();
 
           HomeScreen().launch(context);
         } else {
-          setState(() => _autoValidate = true);
+          setState(() => autoValidate = true);
         }
       }),
     );

@@ -16,7 +16,7 @@ class MWIconScreenState extends State<MWIconScreen> with SingleTickerProviderSta
   bool isPress = false;
   bool isBookMarkPress = true;
   List<bool> isSelected = [false, false, false];
-  AnimationController _animationController;
+  late AnimationController _animationController;
   bool isPlaying1 = false;
   bool isPlaying2 = false;
   bool isPlaying3 = false;

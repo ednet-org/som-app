@@ -8,7 +8,7 @@ import 'T1Constant.dart';
 
 //-------------------------------------------Form-------------------------------------------------------------------------
 // EditText rounded Style
-Padding editTextStyle(var hintText, {isPassword = true, TextEditingController controller}) {
+Padding editTextStyle(var hintText, {isPassword = true, TextEditingController? controller}) {
   return Padding(
     padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
     child: TextFormField(
@@ -95,6 +95,7 @@ Row rowHeading(var label) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Text Heading(var label) {
   return Text(label, style: TextStyle(color: appStore.textPrimaryColor, fontSize: 18, fontFamily: 'Bold'), textAlign: TextAlign.left);
 }
@@ -145,11 +146,12 @@ Text subHeadingText(var text) {
   return Text(text, style: TextStyle(fontFamily: fontBold, fontSize: 17.5, color: appStore.textSecondaryColor));
 }
 
+// ignore: must_be_immutable
 class AppButton extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  AppButton({@required this.textContent, @required this.onPressed});
+  AppButton({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -160,12 +162,14 @@ class AppButton extends StatefulWidget {
 class AppButtonState extends State<AppButton> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: t1_white),
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        padding: const EdgeInsets.all(0.0),
+      ),
       onPressed: widget.onPressed,
-      textColor: t1_white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-      padding: const EdgeInsets.all(0.0),
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: <Color>[t1_colorPrimary, t1_colorPrimaryDark]),
@@ -186,6 +190,7 @@ class AppButtonState extends State<AppButton> {
   }
 }
 
+// ignore: must_be_immutable
 class TopBar extends StatefulWidget {
   var titleName;
 
@@ -222,11 +227,6 @@ class TopBarState extends State<TopBar> {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
   }
 }
 

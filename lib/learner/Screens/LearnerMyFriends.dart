@@ -16,8 +16,8 @@ class LearnerMyFriends extends StatefulWidget {
 }
 
 class _LearnerMyFriendsState extends State<LearnerMyFriends> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerPeopleModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerPeopleModel> mList2;
 
   @override
   void initState() {
@@ -130,8 +130,9 @@ class _LearnerMyFriendsState extends State<LearnerMyFriends> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerPending extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerPending(LearnerPeopleModel model, int pos) {
     this.model = model;
@@ -187,7 +188,7 @@ class LearnerPending extends StatelessWidget {
                       learner_ic_uncheck,
                       height: 40,
                       width: 40,
-                    ).withShadow(shadowColor: learner_ShadowColor, blurRadius: 10.0, spreadRadius: 4.0).paddingOnly(right: 16).onTap(() {
+                    ).paddingOnly(right: 16).onTap(() {
                       print("uncheck");
                     }),
                     Image.asset(
@@ -211,8 +212,9 @@ class LearnerPending extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerAccepted extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerAccepted(LearnerPeopleModel model, int pos) {
     this.model = model;

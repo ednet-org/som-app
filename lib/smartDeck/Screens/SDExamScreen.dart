@@ -1,18 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
 import 'package:prokit_flutter/smartDeck/Screens/SDExamDetailsScreen.dart';
 
+// ignore: must_be_immutable
 class SDExamScreen extends StatefulWidget {
-  String name;
-  String image;
-  Color startColor;
-  Color endColor;
+  String? name;
+  String? image;
+  Color? startColor;
+  Color? endColor;
 
   SDExamScreen([this.name, this.image, this.startColor, this.endColor]);
 
@@ -21,9 +22,10 @@ class SDExamScreen extends StatefulWidget {
 }
 
 class _SDExamScreenState extends State<SDExamScreen> {
-  var text;
+  late var text;
 
   @override
+  // ignore: must_call_super
   void initState() {
     text = lipsum.createText(numParagraphs: 1, numSentences: 5);
   }
@@ -31,13 +33,13 @@ class _SDExamScreenState extends State<SDExamScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    changeStatusColor(widget.startColor);
+    changeStatusColor(widget.startColor!);
     return SafeArea(
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [widget.startColor, widget.endColor],
+              colors: [widget.startColor!, widget.endColor!],
             ),
           ),
           height: size.height,
@@ -55,7 +57,7 @@ class _SDExamScreenState extends State<SDExamScreen> {
                 margin: EdgeInsets.only(top: 50, left: 16),
                 child: CircleAvatar(
                   backgroundColor: Colors.white.withOpacity(0.3),
-                  child: Image.asset(widget.image, height: 60, width: 60),
+                  child: Image.asset(widget.image!, height: 60, width: 60),
                   radius: 40,
                 ),
               ),
@@ -63,7 +65,7 @@ class _SDExamScreenState extends State<SDExamScreen> {
                 margin: EdgeInsets.only(top: 20),
                 padding: EdgeInsets.only(left: 16),
                 child: Text(
-                  widget.name,
+                  widget.name!,
                   style: boldTextStyle(color: Colors.white, letterSpacing: 0.2),
                 ),
               ),

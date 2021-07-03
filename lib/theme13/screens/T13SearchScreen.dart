@@ -20,7 +20,7 @@ class T13SearchScreen extends StatefulWidget {
 }
 
 class T13SearchScreenState extends State<T13SearchScreen> {
-  List<Filter> mList;
+  late List<Filter> mList;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T13SearchScreenState extends State<T13SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return SafeArea(
       child: Scaffold(
         backgroundColor: appStore.scaffoldBackground,
@@ -97,8 +97,9 @@ class T13SearchScreenState extends State<T13SearchScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class PopularCity extends StatelessWidget {
-  Filter model;
+  late Filter model;
 
   PopularCity(Filter model, int pos) {
     this.model = model;

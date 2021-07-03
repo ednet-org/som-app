@@ -54,7 +54,7 @@ class GrocerySearchState extends State<GrocerySearch> {
           child: Column(
             children: <Widget>[
               CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: Grocery_ic_DeliveryBoy,
                 width: width * 0.4,
                 height: width * 0.4,

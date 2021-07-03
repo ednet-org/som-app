@@ -20,7 +20,7 @@ class T5Cards extends StatefulWidget {
 
 class T5CardsState extends State<T5Cards> {
   int selectedPos = 1;
-  List<T5Bill> mCards;
+  late List<T5Bill> mCards;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class T5CardsState extends State<T5Cards> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: Container(

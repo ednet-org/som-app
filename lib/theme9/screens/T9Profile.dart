@@ -20,7 +20,7 @@ class T9Profile extends StatefulWidget {
 class T9ProfileState extends State<T9Profile> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -101,7 +101,7 @@ Widget t9Award(var icon, var bgColor) {
     child: Padding(
       padding: EdgeInsets.all(8.0),
       child: CachedNetworkImage(
-        placeholder: placeholderWidgetFn(),
+        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
         imageUrl: icon,
       ),
     ),

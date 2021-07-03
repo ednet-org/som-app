@@ -118,14 +118,14 @@ class BHWalkThroughScreenState extends State<BHWalkThroughScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FlatButton(
+                TextButton(
                   child: Text('Skip', style: TextStyle(color: BHAppTextColorSecondary)),
                   onPressed: () {
                     finish(context);
                     BHLoginScreen().launch(context);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(BHBtnNext, style: TextStyle(color: BHAppTextColorSecondary)),
                   onPressed: () {
                     _pageController.nextPage(duration: _kDuration, curve: _kCurve);
@@ -141,13 +141,15 @@ class BHWalkThroughScreenState extends State<BHWalkThroughScreen> {
                   child: Container(
                     width: 270,
                     height: 40,
-                    child: RaisedButton(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: BHColorPrimary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
                       onPressed: () {
                         BHLoginScreen().launch(context);
                       },
-                      color: BHColorPrimary,
                       child: Text(BHBtnGetStarted, style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor)),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                 ),

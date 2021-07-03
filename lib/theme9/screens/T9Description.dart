@@ -18,7 +18,7 @@ class T9Description extends StatefulWidget {
 }
 
 class T9DescriptionState extends State<T9Description> {
-  List<T9ContentModel> mList;
+  late List<T9ContentModel> mList;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class T9DescriptionState extends State<T9Description> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(
@@ -46,7 +46,7 @@ class T9DescriptionState extends State<T9Description> {
                       ClipRRect(
                         borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: t9_climb,
                           fit: BoxFit.cover,
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -125,7 +125,7 @@ class T9DescriptionState extends State<T9Description> {
                       ),
                       RichText(
                         text: TextSpan(
-                          style: Theme.of(context).textTheme.body1,
+                          style: Theme.of(context).textTheme.bodyText2,
                           children: [
                             WidgetSpan(
                               child: Padding(
@@ -161,8 +161,9 @@ class T9DescriptionState extends State<T9Description> {
   }
 }
 
+// ignore: must_be_immutable
 class T9Question extends StatelessWidget {
-  T9ContentModel model;
+  late T9ContentModel model;
 
   T9Question(T9ContentModel model, int pos) {
     this.model = model;
@@ -195,12 +196,13 @@ class T9Question extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget T9OptionDescription(var total, var type) {
   return Container(
     margin: EdgeInsets.only(left: 16, right: 16),
     child: Column(
       children: <Widget>[
-        CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t9_ic_cup, height: 20, width: 20),
+        CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t9_ic_cup, height: 20, width: 20),
         SizedBox(height: 4),
         text(total, textColor: appStore.textPrimaryColor, fontFamily: fontMedium, isLongText: true),
         text(type, textColor: appStore.textSecondaryColor),

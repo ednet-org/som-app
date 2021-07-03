@@ -10,19 +10,18 @@ import 'country_code.dart';
 /// selection dialog used for selection of the country code
 class SelectionDialog extends StatefulWidget {
   final List<CountryCode> elements;
-  final bool showCountryOnly;
+  final bool? showCountryOnly;
   final InputDecoration searchDecoration;
-  final TextStyle searchStyle;
-  final WidgetBuilder emptySearchBuilder;
-  final bool showFlag;
+  final TextStyle? searchStyle;
+  final WidgetBuilder? emptySearchBuilder;
+  final bool? showFlag;
 
   /// elements passed as favorite
   final List<CountryCode> favoriteElements;
 
   SelectionDialog(this.elements, this.favoriteElements,
-      {Key key, this.showCountryOnly, this.emptySearchBuilder, InputDecoration searchDecoration = const InputDecoration(), this.searchStyle, this.showFlag})
-      : assert(searchDecoration != null, 'searchDecoration must not be null!'),
-        this.searchDecoration = searchDecoration.copyWith(prefixIcon: Icon(Icons.search)),
+      {Key? key, this.showCountryOnly, this.emptySearchBuilder, InputDecoration searchDecoration = const InputDecoration(), this.searchStyle, this.showFlag})
+      : this.searchDecoration = searchDecoration.copyWith(prefixIcon: Icon(Icons.search)),
         super(key: key);
 
   @override
@@ -31,7 +30,7 @@ class SelectionDialog extends StatefulWidget {
 
 class _SelectionDialogState extends State<SelectionDialog> {
   /// this is useful for filtering purpose
-  List<CountryCode> filteredElements;
+  late List<CountryCode> filteredElements;
 
   @override
   Widget build(BuildContext context) => CustomTheme(
@@ -95,13 +94,13 @@ class _SelectionDialogState extends State<SelectionDialog> {
       child: Flex(
         direction: Axis.horizontal,
         children: <Widget>[
-          widget.showFlag
+          widget.showFlag!
               ? Flexible(
                   child: Padding(
                     padding: EdgeInsets.only(right: 16.0),
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
-                      imageUrl: e.flagUri,
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                      imageUrl: e.flagUri!,
                       width: 25.0,
                     ),
                   ),
@@ -124,7 +123,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
 
   Widget _buildEmptySearchWidget(BuildContext context) {
     if (widget.emptySearchBuilder != null) {
-      return widget.emptySearchBuilder(context);
+      return widget.emptySearchBuilder!(context);
     }
 
     return Center(child: Text('No Country Found'));
@@ -139,7 +138,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
   void _filterElements(String s) {
     s = s.toUpperCase();
     setState(() {
-      filteredElements = widget.elements.where((e) => e.code.contains(s) || e.dialCode.contains(s) || e.name.toUpperCase().contains(s)).toList();
+      filteredElements = widget.elements.where((e) => e.code!.contains(s) || e.dialCode!.contains(s) || e.name!.toUpperCase().contains(s)).toList();
     });
   }
 

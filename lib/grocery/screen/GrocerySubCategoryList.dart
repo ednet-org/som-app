@@ -19,7 +19,7 @@ class GrocerySubCategoryList extends StatefulWidget {
 }
 
 class GrocerySubCategoryListState extends State<GrocerySubCategoryList> {
-  List<ProductModel> mStoreDealList;
+  late List<ProductModel> mStoreDealList;
 
   @override
   void initState() {
@@ -54,8 +54,9 @@ class GrocerySubCategoryListState extends State<GrocerySubCategoryList> {
   }
 }
 
+// ignore: must_be_immutable
 class StoreDeal extends StatelessWidget {
-  ProductModel model;
+  late ProductModel model;
 
   StoreDeal(ProductModel model, int pos) {
     this.model = model;
@@ -94,7 +95,7 @@ class StoreDeal extends StatelessWidget {
               height: 4,
             ),
             CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.img,
               fit: BoxFit.fill,
               height: MediaQuery.of(context).size.width * 0.22,

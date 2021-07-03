@@ -37,7 +37,7 @@ class ShSignUpState extends State<ShSignUp> {
               Positioned(
                 top: height - (width + width * 0.05),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: ic_app_background,
                   height: width + width * 0.05,
                   width: width,

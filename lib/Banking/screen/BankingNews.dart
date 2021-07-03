@@ -14,7 +14,7 @@ class BankingNews extends StatefulWidget {
 }
 
 class _BankingNewsState extends State<BankingNews> {
-  List<BankingShareInfoModel> mList1;
+  late List<BankingShareInfoModel> mList1;
 
   @override
   void initState() {
@@ -24,7 +24,6 @@ class _BankingNewsState extends State<BankingNews> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Banking_app_Background,
       body: Container(

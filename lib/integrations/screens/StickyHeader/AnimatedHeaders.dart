@@ -33,7 +33,8 @@ class AnimatedHeaders extends StatelessWidget {
                       opacity: stuckAmount,
                       child: IconButton(
                         icon: Icon(Icons.favorite, color: Colors.white),
-                        onPressed: () => Scaffold.of(context).showSnackBar(SnackBar(content: Text('Favorite #$index'))),
+
+                        onPressed: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Favorite #$index'))),
                       ),
                     ),
                   ),

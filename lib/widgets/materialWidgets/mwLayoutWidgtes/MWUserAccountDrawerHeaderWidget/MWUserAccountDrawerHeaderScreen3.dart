@@ -22,7 +22,7 @@ class _MWUserAccountDrawerHeaderScreen3State extends State<MWUserAccountDrawerHe
 
   init() async {
     await Future.delayed(Duration(milliseconds: 500));
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -33,7 +33,7 @@ class _MWUserAccountDrawerHeaderScreen3State extends State<MWUserAccountDrawerHe
       body: Center(
         child: GestureDetector(
           onTap: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
           child: Container(
             decoration: boxDecoration(bgColor: appColorPrimary, radius: 8),
@@ -90,7 +90,7 @@ class _MWUserAccountDrawerHeaderScreen3State extends State<MWUserAccountDrawerHe
                   ),
                 ),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Account");
                 },
               ),
@@ -104,7 +104,7 @@ class _MWUserAccountDrawerHeaderScreen3State extends State<MWUserAccountDrawerHe
                   ),
                 ),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Balance");
                 },
               ),

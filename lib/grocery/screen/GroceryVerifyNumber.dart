@@ -18,7 +18,7 @@ class GroceryVerifyNumber extends StatefulWidget {
 }
 
 class _GroceryVerifyNumberState extends State<GroceryVerifyNumber> {
-  Timer _timer;
+  late Timer _timer;
   int _start = 9;
 
   void startTimer() {

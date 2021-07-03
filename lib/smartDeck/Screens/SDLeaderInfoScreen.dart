@@ -69,14 +69,14 @@ class _SDLeaderInfoScreenState extends State<SDLeaderInfoScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(mScoreboardModel.title, style: boldTextStyle(size: 16)),
-                Text(mScoreboardModel.subtitle, style: secondaryTextStyle(size: 10)),
+                Text(mScoreboardModel.title!, style: boldTextStyle(size: 16)),
+                Text(mScoreboardModel.subtitle!, style: secondaryTextStyle(size: 10)),
               ],
             ),
             CircleAvatar(
               radius: 15,
-              backgroundColor: (mScoreboardModel.status > 70) ? sdSecondaryColorGreen.withOpacity(0.7) : sdSecondaryColorYellow.withOpacity(0.7),
-              child: Text(mScoreboardModel.status.toInt().toString(), style: boldTextStyle(color: Colors.white, size: 16)),
+              backgroundColor: (mScoreboardModel.status! > 70) ? sdSecondaryColorGreen.withOpacity(0.7) : sdSecondaryColorYellow.withOpacity(0.7),
+              child: Text(mScoreboardModel.status!.toInt().toString(), style: boldTextStyle(color: Colors.white, size: 16)),
             )
           ],
         ),

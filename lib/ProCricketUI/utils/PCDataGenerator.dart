@@ -3,8 +3,9 @@ import 'package:prokit_flutter/ProCricketUI/model/PCLiveMatchesData.dart';
 import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
 import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
 
+// ignore: non_constant_identifier_names
 List<PCDashboardModel> CricketDashboardList() {
-  List<PCDashboardModel> list = List<PCDashboardModel>();
+  List<PCDashboardModel> list = [];
 
   var title1 = PCDashboardModel(Cricket_ic_fixtures, Cricket_lbl_Schedules);
   list.add(title1);
@@ -28,7 +29,7 @@ List<PCDashboardModel> CricketDashboardList() {
 }
 
 List<PCDashboardModel> cricketTeamList() {
-  List<PCDashboardModel> list = List<PCDashboardModel>();
+  List<PCDashboardModel> list = [];
 
   var title1 = PCDashboardModel(Cricket_India_Team, Cricket_lbl_India);
   list.add(title1);
@@ -64,7 +65,7 @@ List<PCDashboardModel> cricketTeamList() {
 }
 
 List<CricketGroundModel> cricketVenueList() {
-  List<CricketGroundModel> list = List<CricketGroundModel>();
+  List<CricketGroundModel> list = [];
 
   var title1 = CricketGroundModel("birmingham", "India", "Edgbaston, Birmingham", "Birmingham", "25,000", "5", Cricket_ic_trent_bridge_nottingham);
   list.add(title1);
@@ -102,8 +103,9 @@ List<CricketGroundModel> cricketVenueList() {
   return list;
 }
 
+// ignore: non_constant_identifier_names
 List<CricketPointTableModel> CricketPointTableList() {
-  List<CricketPointTableModel> list = List<CricketPointTableModel>();
+  List<CricketPointTableModel> list = [];
 
   var p1 = CricketPointTableModel("2", "India", "9", "7", "1", "0", "15", "1", "+0.809", Cricket_head_flag_Ind);
   list.add(p1);
@@ -122,8 +124,9 @@ List<CricketPointTableModel> CricketPointTableList() {
   return list;
 }
 
+// ignore: non_constant_identifier_names
 List<PCLiveMatchesModel> CricketLiveMatchesList() {
-  List<PCLiveMatchesModel> list = List<PCLiveMatchesModel>();
+  List<PCLiveMatchesModel> list = [];
   var list1 = PCLiveMatchesModel("3rd Test- The Ashes 2019", "TEST", "Headingly", "ENG", "AUS", "153-8", "179-10", "ENG need 27 runs to win", true);
   list.add(list1);
   var list2 = PCLiveMatchesModel("Qualifier 1- India tour of West Indies 2019", "ODI", "Sir Vivisn Richards Stadium", "WI", "IND", "", "", "Starts in 9 hrs 09 mins", false);

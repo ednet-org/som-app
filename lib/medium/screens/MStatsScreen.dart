@@ -3,11 +3,12 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/medium/utils/MColors.dart';
 import 'package:prokit_flutter/medium/utils/MWidget.dart';
 
+// ignore: must_be_immutable
 class MStatsScreen extends StatelessWidget {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override

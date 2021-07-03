@@ -12,7 +12,7 @@ class T8Result extends StatefulWidget {
   static String tag = '/T8Result';
 
   const T8Result({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class T8Result extends StatefulWidget {
 class T8ResultState extends State<T8Result> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

@@ -29,6 +29,7 @@ class MyPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
+// ignore: must_be_immutable
 class TopBar extends StatefulWidget {
   var titleName;
 

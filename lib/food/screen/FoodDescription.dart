@@ -21,8 +21,8 @@ class FoodDescription extends StatefulWidget {
 }
 
 class FoodDescriptionState extends State<FoodDescription> {
-  List<FoodDish> mList1;
-  List<FoodDish> mList2;
+  late List<FoodDish> mList1;
+  late List<FoodDish> mList2;
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class FoodDescriptionState extends State<FoodDescription> {
                   background: Container(
                     height: expandHeight,
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: food_ic_popular3,
                       height: expandHeight,
                       fit: BoxFit.fill,
@@ -264,7 +264,7 @@ class FoodDescriptionState extends State<FoodDescription> {
 
 // ignore: must_be_immutable
 class ItemList extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   ItemList(FoodDish model, int pos) {
     this.model = model;
@@ -282,7 +282,7 @@ class ItemList extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.image,
               width: width * 0.2,
               height: width * 0.2,
@@ -317,7 +317,7 @@ class ItemList extends StatelessWidget {
 
 // ignore: must_be_immutable
 class ItemGrid extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   ItemGrid(FoodDish model, int pos) {
     this.model = model;
@@ -334,7 +334,7 @@ class ItemGrid extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.image,
               width: width,
               height: width * 0.3,

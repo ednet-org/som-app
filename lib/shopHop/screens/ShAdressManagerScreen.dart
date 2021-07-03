@@ -20,8 +20,8 @@ class ShAddressManagerScreen extends StatefulWidget {
 }
 
 class ShAddressManagerScreenState extends State<ShAddressManagerScreen> {
-  var addressList = List<ShAddressModel>();
-  var selectedAddressIndex = 0;
+  List<ShAddressModel> addressList = [];
+  int? selectedAddressIndex = 0;
   var primaryColor;
   var mIsLoading = true;
   var isLoaded = false;
@@ -109,7 +109,7 @@ class ShAddressManagerScreenState extends State<ShAddressManagerScreen> {
                     Radio(
                         value: index,
                         groupValue: selectedAddressIndex,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             selectedAddressIndex = value;
                           });
@@ -119,10 +119,10 @@ class ShAddressManagerScreenState extends State<ShAddressManagerScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          text(addressList[index].first_name + " " + addressList[index].last_name, textColor: sh_textColorPrimary, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
+                          text(addressList[index].first_name! + " " + addressList[index].last_name!, textColor: sh_textColorPrimary, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
                           text(addressList[index].address, textColor: sh_textColorPrimary, fontSize: textSizeMedium),
-                          text(addressList[index].city + "," + addressList[index].state, textColor: sh_textColorPrimary, fontSize: textSizeMedium),
-                          text(addressList[index].country + "," + addressList[index].pinCode, textColor: sh_textColorPrimary, fontSize: textSizeMedium),
+                          text(addressList[index].city! + "," + addressList[index].state!, textColor: sh_textColorPrimary, fontSize: textSizeMedium),
+                          text(addressList[index].country! + "," + addressList[index].pinCode!, textColor: sh_textColorPrimary, fontSize: textSizeMedium),
                           SizedBox(
                             height: spacing_standard_new,
                           ),

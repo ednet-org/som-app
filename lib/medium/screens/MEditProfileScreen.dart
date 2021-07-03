@@ -7,7 +7,7 @@ import 'package:prokit_flutter/medium/utils/MImages.dart';
 
 class MEditProfileScreen extends StatefulWidget {
   static String tag = '/MEditProfileScreen';
-  final String name;
+  final String? name;
 
   MEditProfileScreen({this.name});
 
@@ -28,7 +28,7 @@ class MEditProfileScreenState extends State<MEditProfileScreen> {
   }
 
   init() async {
-    nameCont.text = widget.name;
+    nameCont.text = widget.name!;
   }
 
   @override

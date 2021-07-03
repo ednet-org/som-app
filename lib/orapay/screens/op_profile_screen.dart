@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prokit_flutter/orapay/utils/Style.dart';
 
+// ignore: non_constant_identifier_names
 Widget OPprofilePage() {
   return SingleChildScrollView(
     child: Container(

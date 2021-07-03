@@ -17,7 +17,7 @@ class BankingPaymentInvoice extends StatefulWidget {
 
 class _BankingPaymentInvoiceState extends State<BankingPaymentInvoice> {
   var currentIndexPage = 0;
-  List<BankingCardModel> mList;
+  List<BankingCardModel>? mList;
 
   @override
   Widget build(BuildContext context) {

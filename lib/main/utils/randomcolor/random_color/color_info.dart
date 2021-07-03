@@ -46,7 +46,7 @@ class ColorBrightness {
     return 'custom';
   }
 
-  static ColorBrightness multiple({@required List<ColorBrightness> colorBrightnessList, Random random}) {
+  static ColorBrightness multiple({required List<ColorBrightness> colorBrightnessList, Random? random}) {
     colorBrightnessList.shuffle(random);
     return colorBrightnessList.first;
   }
@@ -115,7 +115,7 @@ class ColorHue {
     return 'custom';
   }
 
-  static ColorHue multiple({@required List<ColorHue> colorHues, Random random}) {
+  static ColorHue multiple({required List<ColorHue> colorHues, Random? random}) {
     colorHues.shuffle(random);
     return colorHues.first;
   }
@@ -168,7 +168,7 @@ class ColorSaturation {
     return 'custom';
   }
 
-  static ColorSaturation multiple({@required List<ColorSaturation> colorSaturations, Random random}) {
+  static ColorSaturation multiple({required List<ColorSaturation> colorSaturations, Random? random}) {
     colorSaturations.shuffle(random);
     return colorSaturations.first;
   }

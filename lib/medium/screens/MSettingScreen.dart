@@ -38,13 +38,13 @@ class MSettingScreenState extends State<MSettingScreen> {
       title: Text("Confirmation", style: boldTextStyle(color: white)),
       content: Text("Are you sure you want to logout?", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text("Yes", style: primaryTextStyle(color: mLimeColor)),
           onPressed: () {
             finish(context);
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text("No", style: primaryTextStyle(color: mLimeColor)),
           onPressed: () {
             finish(context);

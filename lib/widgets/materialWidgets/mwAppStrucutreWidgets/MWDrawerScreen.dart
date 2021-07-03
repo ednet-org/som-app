@@ -45,7 +45,7 @@ class MWDrawerScreenState extends State<MWDrawerScreen> {
       child: Scaffold(
           appBar: appBar(context, 'Drawer Example'),
           body: ListView.builder(
-              itemCount: example.length == null ? 0 : example.length,
+              itemCount: example.length,
               itemBuilder: (BuildContext context, index) {
                 return ExampleItemWidget(
                   example[index],

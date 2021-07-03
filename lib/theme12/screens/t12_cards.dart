@@ -15,7 +15,7 @@ class T12Cards extends StatefulWidget {
 }
 
 class T12CardsState extends State<T12Cards> {
-  List<T12Slider> mSliderList = List<T12Slider>();
+  List<T12Slider> mSliderList = [];
 
   @override
   void initState() {

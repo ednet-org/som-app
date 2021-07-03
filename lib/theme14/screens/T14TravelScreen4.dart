@@ -62,15 +62,15 @@ class _T14TravelScreen4State extends State<T14TravelScreen4> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
-                      child: Image.asset(data.img, height: 35, width: 35, fit: BoxFit.cover),
+                      child: Image.asset(data.img!, height: 35, width: 35, fit: BoxFit.cover),
                     ),
                     8.width,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(data.name, style: boldTextStyle(size: 14, color: t14_colorBlue)),
-                        Text(data.lastSeen, style: secondaryTextStyle(size: 12)),
+                        Text(data.name!, style: boldTextStyle(size: 14, color: t14_colorBlue)),
+                        Text(data.lastSeen!, style: secondaryTextStyle(size: 12)),
                       ],
                     )
                   ],
@@ -78,7 +78,7 @@ class _T14TravelScreen4State extends State<T14TravelScreen4> {
                 16.height,
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
-                  child: Image.asset(data.placeImg, width: context.width(), height: 190, fit: BoxFit.cover),
+                  child: Image.asset(data.placeImg!, width: context.width(), height: 190, fit: BoxFit.cover),
                 ),
                 8.height,
                 Row(

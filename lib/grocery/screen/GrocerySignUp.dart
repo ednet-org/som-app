@@ -10,10 +10,11 @@ import 'GroceryAddNumber.dart';
 import 'GroceryDashboard.dart';
 import 'GroceryForgotPassword.dart';
 
+// ignore: must_be_immutable
 class GrocerySignUp extends StatefulWidget {
   static String tag = '/GrocerySignUp';
-  bool isSignIn;
-  bool isSignUp;
+  bool? isSignIn;
+  bool? isSignUp;
 
   GrocerySignUp({this.isSignIn, this.isSignUp});
 
@@ -151,7 +152,7 @@ class _GrocerySignUpState extends State<GrocerySignUp> {
                       })
                     ],
                   ),
-                  widget.isSignUp ? signUp : signIn
+                  widget.isSignUp! ? signUp : signIn
                 ],
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:prokit_flutter/main/utils/AppConstant.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
 
+// ignore: must_be_immutable
 class T4Button extends StatefulWidget {
   static String tag = '/T4Button';
   var textContent;
@@ -11,7 +12,7 @@ class T4Button extends StatefulWidget {
   var isStroked = false;
   var height = 50.0;
 
-  T4Button({@required this.textContent, @required this.onPressed, this.isStroked = false, this.height = 45.0});
+  T4Button({required this.textContent, required this.onPressed, this.isStroked = false, this.height = 45.0});
 
   @override
   T4ButtonState createState() => T4ButtonState();

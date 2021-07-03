@@ -88,16 +88,18 @@ class CSManageDevicesScreen extends StatelessWidget {
                   border: Border.all(color: Colors.black, width: 1.5),
                 ),
                 alignment: Alignment.center,
-                child: FlatButton(
+                child: Container(
                   height: 50,
-                  minWidth: double.infinity,
-                  child: Text(
-                    "Try Plus for free",
-                    style: boldTextStyle(),
+                  width: double.infinity,
+                  child: TextButton(
+                    child: Text(
+                      "Try Plus for free",
+                      style: boldTextStyle(),
+                    ),
+                    onPressed: () {
+                      CSUpgradeAccountScreen().launch(context);
+                    },
                   ),
-                  onPressed: () {
-                    CSUpgradeAccountScreen().launch(context);
-                  },
                 ),
               ),
             ],

@@ -34,7 +34,7 @@ class T3AppButton extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  T3AppButton({@required this.textContent, @required this.onPressed});
+  T3AppButton({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -45,34 +45,26 @@ class T3AppButton extends StatefulWidget {
 class T3AppButtonState extends State<T3AppButton> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-        onPressed: widget.onPressed,
-        textColor: t3_white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-        padding: EdgeInsets.all(0.0),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: <Color>[t3_colorPrimary, t3_colorPrimaryDark]),
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
-          ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(18.0),
-              child: Text(
-                widget.textContent,
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+    return ElevatedButton(
+      onPressed: widget.onPressed,
+      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)), padding: EdgeInsets.all(0.0), elevation: 4, textStyle: TextStyle(color: t3_white)),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: <Color>[t3_colorPrimary, t3_colorPrimaryDark]),
+          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(18.0),
+            child: Text(
+              widget.textContent,
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
             ),
           ),
-        ));
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
+        ),
+      ),
+    );
   }
 }
 
@@ -131,11 +123,6 @@ class T3AppBarState extends State<T3AppBar> {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
   }
 }
 

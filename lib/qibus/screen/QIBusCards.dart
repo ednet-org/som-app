@@ -18,7 +18,7 @@ class QIBusCards extends StatefulWidget {
 }
 
 class QIBusCardsState extends State<QIBusCards> {
-  List<QIBusCardModel> mCards;
+  late List<QIBusCardModel> mCards;
 
   @override
   void initState() {
@@ -51,8 +51,9 @@ class QIBusCardsState extends State<QIBusCards> {
   }
 }
 
+// ignore: must_be_immutable
 class Cards extends StatelessWidget {
-  QIBusCardModel model;
+  late QIBusCardModel model;
 
   Cards(QIBusCardModel model, int pos) {
     this.model = model;
@@ -68,7 +69,7 @@ class Cards extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.cardBg,
               height: width * 0.5,
               fit: BoxFit.cover,

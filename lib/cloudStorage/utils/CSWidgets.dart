@@ -8,7 +8,8 @@ import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
 import 'package:prokit_flutter/main.dart';
 import 'package:share/share.dart';
 
-Widget CSCommonAppBar(BuildContext context, {String title = 'Enter AppName', bool isBack = true}) {
+// ignore: non_constant_identifier_names
+AppBar CSCommonAppBar(BuildContext context, {String title = 'Enter AppName', bool isBack = true}) {
   return AppBar(
     title: Text(title, style: boldTextStyle()),
     leading: isBack
@@ -49,11 +50,11 @@ InputDecoration buildInputDecoration(String labelText) {
   );
 }
 
-Widget createBasicListTile({IconData icon, String text, Function onTap}) {
+Widget createBasicListTile({IconData? icon, required String text, Function? onTap}) {
   return ListTile(
     contentPadding: EdgeInsets.all(0),
     visualDensity: VisualDensity(horizontal: -4, vertical: -2),
-    onTap: onTap,
+    onTap: onTap as void Function()?,
     title: Text(text, style: TextStyle(fontSize: 16)),
     leading: Icon(icon, color: Colors.black, size: 22),
   );
@@ -127,7 +128,7 @@ Future showBottomSheetForAddingData(BuildContext context) {
                 }),
                 createBasicListTile(text: "Scan Document", icon: Icons.my_library_books_outlined),
                 createBasicListTile(text: "Upload photos or videos", icon: Icons.photo_album_rounded).onTap(() async {
-                  PickedFile imageFile = await ImagePicker().getImage(source: ImageSource.gallery);
+                  PickedFile? imageFile = await ImagePicker().getImage(source: ImageSource.gallery);
                   if (imageFile != null) {}
                   finish(context);
                 }),
@@ -278,7 +279,7 @@ Future buildDeleteDialog(BuildContext context, CSDataModel dataModel) {
         buttonPadding: EdgeInsets.all(8),
         contentPadding: EdgeInsets.fromLTRB(25, 16, 32, 8),
         insetPadding: EdgeInsets.all(16),
-        title: Text(dataModel.fileName, style: boldTextStyle(size: 24)),
+        title: Text(dataModel.fileName!, style: boldTextStyle(size: 24)),
         content: dataModel.isFolder ? Text("Are you sure you want to delete this folder ?") : Text("Are you sure you want to delete this item from your Cloudbox?"),
         actions: [
           TextButton(
@@ -299,7 +300,7 @@ Future buildDeleteDialog(BuildContext context, CSDataModel dataModel) {
   );
 }
 
-Future buildCommonDialog(BuildContext context, {String title, String content, String posBtn = "OK", String negBtn = "Cancel"}) {
+Future buildCommonDialog(BuildContext context, {String? title, String? content, String posBtn = "OK", String negBtn = "Cancel"}) {
   return showDialog(
     context: context,
     barrierDismissible: false,
@@ -308,8 +309,8 @@ Future buildCommonDialog(BuildContext context, {String title, String content, St
         buttonPadding: EdgeInsets.all(8),
         contentPadding: EdgeInsets.fromLTRB(25, 16, 32, 8),
         insetPadding: EdgeInsets.all(16),
-        title: title.isEmptyOrNull ? null : Text(title, style: boldTextStyle(size: 24)),
-        content: Text(content),
+        title: title.isEmptyOrNull ? null : Text(title!, style: boldTextStyle(size: 24)),
+        content: Text(content!),
         actions: [
           TextButton(
             child: Text(negBtn, style: boldTextStyle(size: 16, color: Colors.grey)),
@@ -446,7 +447,7 @@ Future buildCreateFolderDialog(BuildContext context) {
   );
 }
 
-Widget buildListTileForSetting({String title, String subTitle = "", Widget trailing, Widget leading, Color color, Function onTap, bool isEnable = true}) {
+Widget buildListTileForSetting({required String title, String subTitle = "", Widget? trailing, Widget? leading, Color? color, Function? onTap, bool isEnable = true}) {
   return ListTile(
     enabled: isEnable,
     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -454,6 +455,6 @@ Widget buildListTileForSetting({String title, String subTitle = "", Widget trail
     subtitle: subTitle.isEmpty ? null : Text(subTitle),
     trailing: trailing,
     leading: leading,
-    onTap: onTap,
+    onTap: onTap as void Function()?,
   );
 }

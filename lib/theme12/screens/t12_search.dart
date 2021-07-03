@@ -19,7 +19,7 @@ class T12SearchScreen extends StatefulWidget {
 
 class T12SearchScreenState extends State<T12SearchScreen> {
   TextEditingController controller = TextEditingController();
-  var searchDataList = List<T12Service>();
+  List<T12Service> searchDataList = [];
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T12SearchScreenState extends State<T12SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     var searchList = ListView.builder(
         shrinkWrap: true,

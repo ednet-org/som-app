@@ -17,8 +17,8 @@ class MReadingListScreen extends StatefulWidget {
 
 class MReadingListScreenState extends State<MReadingListScreen> with TickerProviderStateMixin, AfterLayoutMixin<MReadingListScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  TabController tabController;
-  List<Widget> tabs = List();
+  TabController? tabController;
+  List<Widget> tabs = [];
   List<String> tabList = ['Saved(2)', 'Archived', 'Recently Viewed', 'Highlighted'];
   List<MListModel> savingList = getSavingPostList();
   List<MListModel> archivedList = getArchivedList();
@@ -52,7 +52,7 @@ class MReadingListScreenState extends State<MReadingListScreen> with TickerProvi
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override

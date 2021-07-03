@@ -27,8 +27,8 @@ class PCDashBoardScreen extends StatefulWidget {
 }
 
 class _PCDashBoardScreenState extends State<PCDashBoardScreen> {
-  List<PCLiveMatchesModel> mList1;
-  List<PCDashboardModel> mList2;
+  late List<PCLiveMatchesModel> mList1;
+  late List<PCDashboardModel> mList2;
 
   @override
   void initState() {

@@ -19,10 +19,10 @@ class Dashboard1 extends StatefulWidget {
 }
 
 class Dashboard1State extends State<Dashboard1> {
-  List<Db1CategoryModel> mListings;
-  List<Db1CategoryModel> mListings1;
-  List<DB1FoodModel> mListings2;
-  List<DB1FoodModel> mListings3;
+  late List<Db1CategoryModel> mListings;
+  late List<Db1CategoryModel> mListings1;
+  late List<DB1FoodModel> mListings2;
+  late List<DB1FoodModel> mListings3;
 
   @override
   void initState() {
@@ -152,7 +152,7 @@ class Dashboard1State extends State<Dashboard1> {
 
 // ignore: must_be_immutable
 class Popular extends StatelessWidget {
-  DB1FoodModel model;
+  late DB1FoodModel model;
 
   Popular(DB1FoodModel model, int pos) {
     this.model = model;
@@ -202,7 +202,7 @@ class Popular extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Category extends StatelessWidget {
-  Db1CategoryModel model;
+  late Db1CategoryModel model;
 
   Category(Db1CategoryModel model, int pos) {
     this.model = model;
@@ -230,7 +230,7 @@ class Category extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Recommended extends StatelessWidget {
-  DB1FoodModel model;
+  late DB1FoodModel model;
 
   Recommended(DB1FoodModel model, int pos) {
     this.model = model;
@@ -291,7 +291,7 @@ class Recommended extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Filter extends StatelessWidget {
-  Db1CategoryModel model;
+  late Db1CategoryModel model;
 
   Filter(Db1CategoryModel model, int pos) {
     this.model = model;

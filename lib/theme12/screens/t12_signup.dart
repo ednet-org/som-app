@@ -20,17 +20,17 @@ class T12SignUpState extends State<T12SignUp> {
   FocusNode passwordFocus = FocusNode();
   FocusNode nameFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String phone;
-  String name;
-  String password;
-  bool _autoValidate = false;
+  String? phone;
+  String? name;
+  String? password;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
   bool isRemember = false;
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: SafeArea(
@@ -49,18 +49,18 @@ class T12SignUpState extends State<T12SignUp> {
                       themeLogo().paddingOnly(left: spacing_standard_new, right: spacing_standard_new, bottom: spacing_standard_new, top: spacing_standard_new),
                       Form(
                         key: _formKey,
-                        autovalidate: _autoValidate,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             formField(context, "Your Name", prefixIcon: Icons.person_outline, focusNode: nameFocus, textInputAction: TextInputAction.next, nextFocus: phoneNumberFocus,
-                                onSaved: (String value) {
+                                onSaved: (String? value) {
                               setState(() {
                                 name = value;
                               });
                             }).paddingBottom(spacing_standard_new),
                             formField(context, "Phone Number", prefixIcon: Icons.phone_iphone, focusNode: phoneNumberFocus, textInputAction: TextInputAction.next, nextFocus: passwordFocus,
-                                onSaved: (String value) {
+                                onSaved: (String? value) {
                               setState(() {
                                 phone = value;
                               });
@@ -70,10 +70,10 @@ class T12SignUpState extends State<T12SignUp> {
                                 isPassword: true,
                                 isPasswordVisible: passwordVisible,
                                 validator: (value) {
-                                  return value.isEmpty ? "Password Required" : null;
+                                  return value!.isEmpty ? "Password Required" : null;
                                 },
                                 focusNode: passwordFocus,
-                                onSaved: (String value) {
+                                onSaved: (String? value) {
                                   password = value;
                                 },
                                 textInputAction: TextInputAction.done,

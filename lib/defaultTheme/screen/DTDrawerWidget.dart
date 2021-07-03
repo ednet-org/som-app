@@ -3,6 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
 import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
 import 'package:prokit_flutter/main/model/ListModels.dart';
+import 'package:prokit_flutter/main/screens/ProKitLauncher.dart';
 import 'package:prokit_flutter/main/utils/AppColors.dart';
 import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
 
@@ -91,7 +92,7 @@ class DTDrawerWidgetState extends State<DTDrawerWidget> {
                               : appStore.scaffoldBackground,
                         ),
                         child: Text(
-                          drawerItems[index].name,
+                          drawerItems[index].name!,
                           style: boldTextStyle(
                               color: appStore.selectedDrawerItem == index
                                   ? appColorPrimary

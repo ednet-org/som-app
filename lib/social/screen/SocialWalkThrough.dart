@@ -35,7 +35,7 @@ class SocialWalkThroughState extends State<SocialWalkThrough> {
                 text(social_lbl_welcome_to_inmood, fontFamily: fontBold, fontSize: textSizeLarge),
                 SizedBox(height: spacing_xxLarge),
                 CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: social_walk,
                   height: width * 0.5,
                 ),

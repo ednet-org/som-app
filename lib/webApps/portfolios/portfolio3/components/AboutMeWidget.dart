@@ -82,13 +82,15 @@ class AboutMeWidgetState extends State<AboutMeWidget> {
                       style: secondaryTextStyle(size: 16),
                     ),
                     24.height,
-                    OutlineButton(
+                    OutlinedButton(
                       onPressed: () {},
-                      borderSide: BorderSide(color: portfolio3PrimaryColor),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                      padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.transparent,
+                        side: BorderSide(color: portfolio3PrimaryColor),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                      ),
                       child: Text('Download CV', style: boldTextStyle(color: portfolio3PrimaryColor, size: 18)),
-                      color: Colors.transparent,
                     )
                   ],
                 ),

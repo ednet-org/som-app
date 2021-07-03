@@ -16,7 +16,7 @@ class FoodAddAddress extends StatefulWidget {
 }
 
 class FoodAddAddressState extends State<FoodAddAddress> {
-  String _selectedLocation = 'Home';
+  String? _selectedLocation = 'Home';
 
   @override
   Widget build(BuildContext context) {

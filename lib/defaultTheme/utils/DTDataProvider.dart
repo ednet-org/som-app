@@ -20,7 +20,6 @@ import 'package:prokit_flutter/defaultTheme/screen/DTFilterScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTForgotPwdScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTMaintenanceScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTNoDataScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTNoInternetScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTNoResultScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTOrderSummaryScreen.dart';
 import 'package:prokit_flutter/defaultTheme/screen/DTPaymentScreen.dart';
@@ -38,7 +37,7 @@ const sender_id = 1;
 const receiver_id = 2;
 
 List<DTProductModel> getProducts() {
-  List<DTProductModel> list = List();
+  List<DTProductModel> list = [];
 
   DTProductModel p1 = DTProductModel();
   p1.name = 'Women Pink Cosmetic Bag';
@@ -104,7 +103,7 @@ List<DTProductModel> getProducts() {
 }
 
 List<DTProductModel> getCartProducts() {
-  List<DTProductModel> list = List();
+  List<DTProductModel> list = [];
 
   DTProductModel p1 = DTProductModel();
   p1.name = 'Women Pink Cosmetic Bag';
@@ -140,10 +139,7 @@ List<DTProductModel> getCartProducts() {
 }
 
 int getDTWidgetIndex(Widget widget) {
-  getDrawerItems()
-      .asMap()
-      .entries
-      .map((e) {
+  getDrawerItems().asMap().entries.map((e) {
     int index = e.key;
 
     if (e.value.widget == widget) {
@@ -156,18 +152,18 @@ int getDTWidgetIndex(Widget widget) {
 }
 
 List<ListModel> getDrawerItems() {
-  var drawerItems = List<ListModel>();
+  List<ListModel> drawerItems = [];
 
   drawerItems.add(ListModel(name: 'Inquiries', widget: DTNoDataScreen()));
   drawerItems.add(ListModel(name: 'Company', widget: DTNoResultScreen()));
-  drawerItems.add(ListModel(name: 'Users', widget: DTNoInternetScreen()));
+  drawerItems.add(ListModel(name: 'Users', widget: DTNoResultScreen()));
   drawerItems.add(ListModel(name: 'Ads', widget: DTNoDataScreen()));
   drawerItems.add(ListModel(name: 'Statistics', widget: DTNoDataScreen()));
   return drawerItems;
 }
 
 List<DTChatModel> getChatData() {
-  List<DTChatModel> list = List();
+  List<DTChatModel> list = [];
 
   DTChatModel c1 = DTChatModel();
   c1.name = 'William';
@@ -213,7 +209,7 @@ List<DTChatModel> getChatData() {
 }
 
 List<DTChatMessageModel> getChatMsgData() {
-  List<DTChatMessageModel> list = List();
+  List<DTChatMessageModel> list = [];
 
   DTChatMessageModel c1 = DTChatMessageModel();
   c1.Sender_id = sender_id;
@@ -361,7 +357,7 @@ String getMonth(int month) {
 }
 
 List<DTAddressListModel> getAddressList() {
-  List<DTAddressListModel> list = List();
+  List<DTAddressListModel> list = [];
 
   DTAddressListModel a1 = DTAddressListModel();
   a1.name = "Smith Jones";
@@ -383,7 +379,7 @@ List<DTAddressListModel> getAddressList() {
 }
 
 List<DTReviewModel> getReviewList() {
-  List<DTReviewModel> list = List();
+  List<DTReviewModel> list = [];
 
   DTReviewModel r1 = DTReviewModel();
   r1.name = "John smith";

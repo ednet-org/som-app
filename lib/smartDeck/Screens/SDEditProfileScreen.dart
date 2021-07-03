@@ -11,8 +11,8 @@ class SDEditProfileScreen extends StatefulWidget {
 class _SDEditProfileScreenState extends State<SDEditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    String _selectedLocation = 'Female';
-    String _selectedValue = '12th Grade';
+    String? _selectedLocation = 'Female';
+    String? _selectedValue = '12th Grade';
 
     Widget mInput(var mLabel) {
       return Padding(

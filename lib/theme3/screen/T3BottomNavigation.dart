@@ -26,7 +26,7 @@ class T3BottomNavigationState extends State<T3BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       appBar: appBar(context, t3_lbl_bottom_navigation),
       body: SafeArea(

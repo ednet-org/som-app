@@ -10,9 +10,10 @@ import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
 import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
 
+// ignore: must_be_immutable
 class ViewSeriesEpisodeScreen extends StatefulWidget {
   static String tag = '/ViewSeriesEpisodeScreen';
-  var title = "";
+  String? title = "";
 
   ViewSeriesEpisodeScreen({this.title});
 
@@ -21,7 +22,7 @@ class ViewSeriesEpisodeScreen extends StatefulWidget {
 }
 
 class ViewSeriesEpisodeScreenState extends State<ViewSeriesEpisodeScreen> {
-  var episodes = List<Movie>();
+  List<Movie> episodes = [];
 
   @override
   void initState() {

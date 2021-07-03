@@ -20,8 +20,8 @@ class QuizProfile extends StatefulWidget {
 }
 
 class _QuizProfileState extends State<QuizProfile> {
-  List<QuizBadgesModel> mList;
-  List<QuizScoresModel> mList1;
+  late List<QuizBadgesModel> mList;
+  late List<QuizScoresModel> mList1;
 
   int selectedPos = 1;
 
@@ -175,7 +175,7 @@ class _QuizProfileState extends State<QuizProfile> {
                               child: Row(
                                 children: <Widget>[
                                   CachedNetworkImage(
-                                    placeholder: placeholderWidgetFn(),
+                                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                     imageUrl: mList1[index].img,
                                     height: 50,
                                     width: 50,

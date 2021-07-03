@@ -23,7 +23,7 @@ class NBEditProfileScreenState extends State<NBEditProfileScreen> {
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
 
-  File imageFile;
+  late File imageFile;
   bool loadFromFile = false;
 
   Future getImage(ImageSource source) async {

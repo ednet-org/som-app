@@ -22,16 +22,16 @@ class BHDetailScreen extends StatefulWidget {
 }
 
 class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProviderStateMixin {
-  int _radioValue1 = 0;
-  TabController controller;
+  int? _radioValue1 = 0;
+  TabController? controller;
 
-  List<BHGalleryModel> galleryList;
-  List<BHCategoryModel> categoryList;
-  List<BHOfferModel> offerList;
-  List<BHServicesModel> servicesList;
-  List<BHReviewModel> reviewList;
-  List<BHHairStyleModel> hairStyleList;
-  List<BHMakeUpModel> makeupList;
+  late List<BHGalleryModel> galleryList;
+  late List<BHCategoryModel> categoryList;
+  late List<BHOfferModel> offerList;
+  late List<BHServicesModel> servicesList;
+  late List<BHReviewModel> reviewList;
+  late List<BHHairStyleModel> hairStyleList;
+  late List<BHMakeUpModel> makeupList;
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
     makeupList = getMakeupList();
   }
 
-  void something(int value) {
+  void something(int? value) {
     setState(() {
       _radioValue1 = value;
       print(_radioValue1);
@@ -200,7 +200,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
         padding: EdgeInsets.all(16),
         itemBuilder: (BuildContext context, int index) => ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          child: Image.asset(galleryList[index].img, fit: BoxFit.cover),
+          child: Image.asset(galleryList[index].img!, fit: BoxFit.cover),
         ),
         staggeredTileBuilder: (int index) => new StaggeredTile.count(2, index.isEven ? 2 : 3),
         mainAxisSpacing: 16.0,
@@ -224,9 +224,9 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                     margin: EdgeInsets.all(8),
                     child: Column(
                       children: <Widget>[
-                        SvgPicture.asset(categoryList[index].img, height: 40, width: 40),
+                        SvgPicture.asset(categoryList[index].img!, height: 40, width: 40),
                         8.height,
-                        Text(categoryList[index].categoryName, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14))
+                        Text(categoryList[index].categoryName!, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14))
                       ],
                     ),
                   );
@@ -261,7 +261,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                           ),
                           Padding(
                             padding: EdgeInsets.all(8),
-                            child: Text(offerList[index].offerName, style: TextStyle(fontSize: 14, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
+                            child: Text(offerList[index].offerName!, style: TextStyle(fontSize: 14, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
@@ -270,7 +270,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(offerList[index].offerDate, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14), textAlign: TextAlign.left),
+                                Text(offerList[index].offerDate!, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14), textAlign: TextAlign.left),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -318,12 +318,12 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(servicesList[index].serviceName, style: TextStyle(fontWeight: FontWeight.bold, color: BHAppTextColorPrimary, fontSize: 14)),
+                            child: Text(servicesList[index].serviceName!, style: TextStyle(fontWeight: FontWeight.bold, color: BHAppTextColorPrimary, fontSize: 14)),
                           ),
                           8.height,
                           Row(
                             children: [
-                              Text(servicesList[index].time, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
+                              Text(servicesList[index].time!, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
                               8.width,
                               Text('\$${servicesList[index].price}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: BHColorPrimary)),
                             ],
@@ -334,7 +334,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                         value: servicesList[index].radioVal,
                         groupValue: _radioValue1,
                         activeColor: BHColorPrimary,
-                        onChanged: (value) => something(value),
+                        onChanged: (dynamic value) => something(value),
                       ),
                     ],
                   ),
@@ -344,13 +344,15 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
             Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
-              child: RaisedButton(
-                padding: EdgeInsets.all(12),
+              child: ElevatedButton(
                 onPressed: () {
                   BHPackageOffersScreen().launch(context);
                 },
-                color: BHColorPrimary,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(12),
+                  primary: BHColorPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                ),
                 child: Text(BHBtnBookAppointment, style: TextStyle(color: whiteColor, fontSize: 16, fontWeight: FontWeight.bold)),
               ),
             ),
@@ -467,13 +469,13 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(backgroundImage: AssetImage(reviewList[index].img), radius: 30),
+                            CircleAvatar(backgroundImage: AssetImage(reviewList[index].img!), radius: 30),
                             8.width,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(reviewList[index].name, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
-                                Text(reviewList[index].day, style: TextStyle(fontSize: 12, color: BHGreyColor, fontWeight: FontWeight.bold)),
+                                Text(reviewList[index].name!, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
+                                Text(reviewList[index].day!, style: TextStyle(fontSize: 12, color: BHGreyColor, fontWeight: FontWeight.bold)),
                               ],
                             ).expand(),
                             Row(
@@ -486,7 +488,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                           ],
                         ),
                         8.height,
-                        Text(reviewList[index].review, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
+                        Text(reviewList[index].review!, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
                       ],
                     ),
                   );
@@ -527,7 +529,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              hairStyleList[index].name,
+                              hairStyleList[index].name!,
                               style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary),
                             ),
                           ),
@@ -559,7 +561,7 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                           Padding(
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              makeupList[index].name,
+                              makeupList[index].name!,
                               style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary),
                             ),
                           ),
@@ -597,7 +599,6 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                     collapseMode: CollapseMode.parallax,
                     titlePadding: EdgeInsets.all(10),
                     background: Stack(
-                      overflow: Overflow.visible,
                       children: [
                         Image.asset(
                           BHDashedBoardImage6,
@@ -645,11 +646,13 @@ class BHDetailScreenState extends State<BHDetailScreen> with SingleTickerProvide
                                     height: 25,
                                     width: 65,
                                     margin: EdgeInsets.only(right: 16),
-                                    child: FlatButton(
+                                    child: TextButton(
                                       onPressed: () {},
                                       child: Text(BHBtnOpen, style: TextStyle(color: whiteColor, fontSize: 14)),
-                                      color: BHColorPrimary,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                      style: TextButton.styleFrom(
+                                        primary: BHColorPrimary,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                      ),
                                     ),
                                   )
                                 ],

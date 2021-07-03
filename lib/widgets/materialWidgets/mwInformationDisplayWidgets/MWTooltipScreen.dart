@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main/utils/AppColors.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';

@@ -57,7 +57,7 @@ class SocialNotificationState extends State<SocialNotification> {
 
   Widget mPopup() => PopupMenuButton(
         itemBuilder: (context) {
-          var list = List<PopupMenuEntry<Object>>();
+          List<PopupMenuEntry<Object>> list = [];
           list.add(
             PopupMenuItem(
               child: text(social_reset_settings),

@@ -19,7 +19,7 @@ class T8Listing extends StatefulWidget {
 }
 
 class T8ListingState extends State<T8Listing> {
-  List<T8TestModel> mList;
+  late List<T8TestModel> mList;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T8ListingState extends State<T8Listing> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       appBar: appBar(context, t8_lbl_biology_basics),
@@ -61,9 +61,10 @@ class T8ListingState extends State<T8Listing> {
   }
 }
 
+// ignore: must_be_immutable
 class T8List extends StatelessWidget {
-  var width;
-  T8TestModel model;
+  late var width;
+  late T8TestModel model;
 
   T8List(T8TestModel model, int pos) {
     this.model = model;

@@ -100,7 +100,7 @@ class QIBusMoreState extends State<QIBusMore> {
                       height: spacing_standard_new,
                     ),
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: qibus_ic_buslogo,
                       width: width * 0.2,
                     ),
@@ -113,7 +113,7 @@ class QIBusMoreState extends State<QIBusMore> {
         ));
   }
 
-  Widget mOption(var icon, var lbl, {@required Function onTap}) {
+  Widget mOption(var icon, var lbl, {required Function onTap}) {
     return GestureDetector(
       onTap: () {
         onTap();

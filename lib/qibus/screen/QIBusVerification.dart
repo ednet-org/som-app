@@ -21,7 +21,7 @@ class QIBusVerification extends StatefulWidget {
 }
 
 class QIBusVerificationState extends State<QIBusVerification> {
-  Timer _timer;
+  late Timer _timer;
   int _start = 60;
 
   void startTimer() {
@@ -67,7 +67,7 @@ class QIBusVerificationState extends State<QIBusVerification> {
                 child: Column(
                   children: <Widget>[
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: qibus_ic_gr_mobile_otp,
                       fit: BoxFit.contain,
                       width: width * 0.5,

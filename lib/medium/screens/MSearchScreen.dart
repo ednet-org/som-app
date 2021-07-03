@@ -45,7 +45,7 @@ class MSearchScreenState extends State<MSearchScreen> {
               MTopicModel data = topicList[index];
               return Container(
                 padding: EdgeInsets.all(8),
-                child: Text(data.title, style: boldTextStyle(size: 16, color: mLimeColor)),
+                child: Text(data.title!, style: boldTextStyle(size: 16, color: mLimeColor)),
               ).onTap(() {
                 finish(context);
                 MAudioArticlesScreen(appBarTitle: data.title).launch(context);

@@ -17,7 +17,7 @@ class T7WalkThrough extends StatefulWidget {
 
 class T7WalkThroughState extends State<T7WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
   var titles = [
     "Discover New Destination",
     "Best Flight Booking Service",
@@ -66,14 +66,14 @@ class WalkThrough extends StatelessWidget {
   final String title;
   final String info;
 
-  WalkThrough({Key key, @required this.textContent, @required this.title, @required this.info}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent, required this.title, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: textContent,
           fit: BoxFit.cover,
           width: (MediaQuery.of(context).size.width),

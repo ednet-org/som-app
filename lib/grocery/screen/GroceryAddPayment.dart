@@ -25,7 +25,7 @@ class _GroceryAddPaymentScreenState extends State<GroceryAddPaymentScreen> {
   }
 
   List<AddPayment> listAddPayment = addPayment;
-  var cardNumber = '';
+  String? cardNumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +183,7 @@ class _GroceryAddPaymentScreenState extends State<GroceryAddPaymentScreen> {
                           children: <Widget>[
                             text(grocery_lbl_remove_an_item, fontFamily: fontMedium, fontSize: textSizeNormal),
                             Text(
-                              grocery_removeMsg + ' ' + cardNumber + ' ' + grocery_card + '?',
+                              grocery_removeMsg + ' ' + cardNumber! + ' ' + grocery_card + '?',
                               style: TextStyle(fontSize: textSizeMedium, fontFamily: fontMedium, color: grocery_textColorSecondary),
                             ),
                           ],

@@ -19,7 +19,7 @@ class T12TransactionList extends StatefulWidget {
 
 class T12TransactionListState extends State<T12TransactionList> {
   var selectedTab = 0;
-  var list = List<T12Transactions>();
+  List<T12Transactions> list = [];
 
   @override
   void initState() {

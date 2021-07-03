@@ -7,7 +7,7 @@ import 'BHConstants.dart';
 import 'BHImages.dart';
 
 List<BHBestSpecialModel> getSpecialList() {
-  List<BHBestSpecialModel> list = List<BHBestSpecialModel>();
+  List<BHBestSpecialModel> list = [];
   list.add(BHBestSpecialModel(title: 'Joseph Drake', subTitle: 'Makeup Artist', img: BHdDashedBoardImage5));
   list.add(BHBestSpecialModel(title: 'Dale Horward', subTitle: 'Hire Stylist', img: BHDashedBoardImage1));
   list.add(BHBestSpecialModel(title: 'willies carpen', subTitle: 'Barber', img: BHDashedBoardImage6));
@@ -21,7 +21,7 @@ List<BHBestSpecialModel> getSpecialList() {
 }
 
 List<BHBestSpecialModel> getSpecialNewList() {
-  List<BHBestSpecialModel> list = List<BHBestSpecialModel>();
+  List<BHBestSpecialModel> list = [];
   list.add(BHBestSpecialModel(title: 'Joseph Drake', subTitle: 'Makeup Artist', img: BHdDashedBoardImage5));
   list.add(BHBestSpecialModel(title: 'Dale Horward', subTitle: 'Hire Stylist', img: BHDashedBoardImage1));
   list.add(BHBestSpecialModel(title: 'willies carpen', subTitle: 'Barber', img: BHDashedBoardImage6));
@@ -32,7 +32,7 @@ List<BHBestSpecialModel> getSpecialNewList() {
 }
 
 List<BHSpecialOfferModel> getSpecialOfferList() {
-  List<BHSpecialOfferModel> specialOfferList = List<BHSpecialOfferModel>();
+  List<BHSpecialOfferModel> specialOfferList = [];
   specialOfferList.add(BHSpecialOfferModel(img: BHdDashedBoardImage5, title: 'Joseph Salon', subtitle: 'Cool Summer Event'));
   specialOfferList.add(BHSpecialOfferModel(img: BHDashedBoardImage3, title: 'Sherman Hair ', subtitle: 'Cool Winter Event'));
   specialOfferList.add(BHSpecialOfferModel(img: BHDashedBoardImage6, title: 'Drake Hair Salon', subtitle: 'Cool Winter Event'));
@@ -45,7 +45,7 @@ List<BHSpecialOfferModel> getSpecialOfferList() {
 }
 
 List<BHSpecialOfferModel> getSpecialOfferNewList() {
-  List<BHSpecialOfferModel> specialOfferList = List<BHSpecialOfferModel>();
+  List<BHSpecialOfferModel> specialOfferList = [];
   specialOfferList.add(BHSpecialOfferModel(img: BHdDashedBoardImage5, title: 'Joseph Drake Hair Salon', subtitle: 'Cool Summer Event'));
   specialOfferList.add(BHSpecialOfferModel(img: BHDashedBoardImage3, title: 'Sherman Barber Hair Salon', subtitle: 'Cool Winter Event'));
   specialOfferList.add(BHSpecialOfferModel(img: BHDashedBoardImage6, title: 'Joseph Drake Hair Salon', subtitle: 'Cool Winter Event'));
@@ -55,7 +55,7 @@ List<BHSpecialOfferModel> getSpecialOfferNewList() {
 }
 
 List<MessageModel> getMessageList() {
-  List<MessageModel> messageList = List<MessageModel>();
+  List<MessageModel> messageList = [];
   messageList.add(MessageModel(img: BHDashedBoardImage3, name: 'Sherman Barber Shop', message: 'Hi Jackson..', lastSeen: 'Now'));
   messageList.add(MessageModel(img: BHDashedBoardImage2, name: 'Dale Horward', message: 'Thank you.', lastSeen: '8:30 AM'));
   messageList.add(MessageModel(img: BHDashedBoardImage6, name: 'Norah Beauty Salon', message: 'Hello', lastSeen: 'Yesterday'));
@@ -63,7 +63,7 @@ List<MessageModel> getMessageList() {
 }
 
 List<BHCallModel> getCallList() {
-  List<BHCallModel> callList = List<BHCallModel>();
+  List<BHCallModel> callList = [];
   callList.add(
     BHCallModel(
       img: BHDashedBoardImage3,
@@ -108,7 +108,7 @@ List<BHCallModel> getCallList() {
 }
 
 List<BHGalleryModel> getGalleryList() {
-  List<BHGalleryModel> galleryList = List<BHGalleryModel>();
+  List<BHGalleryModel> galleryList = [];
   galleryList.add(BHGalleryModel(img: BHDashedBoardImage1));
   galleryList.add(BHGalleryModel(img: BHDashedBoardImage2));
   galleryList.add(BHGalleryModel(img: BHDashedBoardImage3));
@@ -125,7 +125,7 @@ List<BHGalleryModel> getGalleryList() {
 }
 
 List<BHCategoryModel> getCategory() {
-  List<BHCategoryModel> categoryList = List<BHCategoryModel>();
+  List<BHCategoryModel> categoryList = [];
   categoryList.add(BHCategoryModel(img: BHMakeUp, categoryName: 'All'));
   categoryList.add(BHCategoryModel(img: BHSkinCare, categoryName: 'Skin Care'));
   categoryList.add(BHCategoryModel(img: BHMakeUp, categoryName: 'Make Up'));
@@ -137,7 +137,7 @@ List<BHCategoryModel> getCategory() {
 }
 
 List<BHOfferModel> getOfferList() {
-  List<BHOfferModel> offerList = List<BHOfferModel>();
+  List<BHOfferModel> offerList = [];
   offerList.add(
     BHOfferModel(img: BHDashedBoardImage1, offerName: 'Personality Girl Event', offerDate: 'June 10 - June 26', offerOldPrice: 100, offerNewPrice: 89),
   );
@@ -154,7 +154,7 @@ List<BHOfferModel> getOfferList() {
 }
 
 List<BHServicesModel> getServicesList() {
-  List<BHServicesModel> servicesList = List<BHServicesModel>();
+  List<BHServicesModel> servicesList = [];
   servicesList.add(BHServicesModel(img: BHDashedBoardImage4, serviceName: 'hair Style', time: '45 Min', price: 50, radioVal: 1));
   servicesList.add(BHServicesModel(img: BHDashedBoardImage1, serviceName: 'Change Hair Color', time: '50 Min', price: 100, radioVal: 2));
   servicesList.add(BHServicesModel(img: BHDashedBoardImage3, serviceName: 'hair Cutting', time: '60 Min', price: 70, radioVal: 3));
@@ -163,7 +163,7 @@ List<BHServicesModel> getServicesList() {
 }
 
 List<BHIncludeServiceModel> getIncludeServicesList() {
-  List<BHIncludeServiceModel> servicesList = List<BHIncludeServiceModel>();
+  List<BHIncludeServiceModel> servicesList = [];
   servicesList.add(BHIncludeServiceModel(serviceImg: BHDashedBoardImage3, serviceName: 'hair Cutting', time: '60 Min', price: 70));
   servicesList.add(BHIncludeServiceModel(serviceImg: BHdDashedBoardImage5, serviceName: 'Skin Care', time: '30 Min', price: 150));
   servicesList.add(BHIncludeServiceModel(serviceImg: BHDashedBoardImage4, serviceName: 'hair Style', time: '45 Min', price: 50));
@@ -176,7 +176,7 @@ List<BHIncludeServiceModel> getIncludeServicesList() {
 }
 
 List<BHReviewModel> getReviewList() {
-  List<BHReviewModel> reviewList = List<BHReviewModel>();
+  List<BHReviewModel> reviewList = [];
   reviewList.add(BHReviewModel(img: BHDashedBoardImage1, name: 'Carlos Day', rating: 4.5, day: '4 Day ago', review: BHReview));
   reviewList.add(BHReviewModel(img: BHUserImg, name: 'Sherman', rating: 2.5, day: '10 Day ago', review: BHReview));
   reviewList.add(BHReviewModel(img: BHUserImg, name: 'Dale Horward', rating: 4, day: '1 Day ago', review: BHReview));
@@ -185,7 +185,7 @@ List<BHReviewModel> getReviewList() {
 }
 
 List<BHHairStyleModel> getHairStyleList() {
-  List<BHHairStyleModel> hairStyleList = List<BHHairStyleModel>();
+  List<BHHairStyleModel> hairStyleList = [];
   hairStyleList.add(BHHairStyleModel(img: BHDashedBoardImage4, name: 'Carlos Day'));
   hairStyleList.add(BHHairStyleModel(img: BHDashedBoardImage2, name: 'Carlos Sherman'));
   hairStyleList.add(BHHairStyleModel(img: BHDashedBoardImage6, name: 'Dale Horward'));
@@ -194,7 +194,7 @@ List<BHHairStyleModel> getHairStyleList() {
 }
 
 List<BHMakeUpModel> getMakeupList() {
-  List<BHMakeUpModel> makeupList = List<BHMakeUpModel>();
+  List<BHMakeUpModel> makeupList = [];
   makeupList.add(BHMakeUpModel(img: BHDashedBoardImage3, name: 'willies carpen'));
   makeupList.add(BHMakeUpModel(img: BHDashedBoardImage4, name: 'Carlos Day'));
   makeupList.add(BHMakeUpModel(img: BHdDashedBoardImage5, name: 'Dale Horward'));
@@ -203,7 +203,7 @@ List<BHMakeUpModel> getMakeupList() {
 }
 
 List<BHNotificationModel> getNotificationList() {
-  List<BHNotificationModel> notificationList = List<BHNotificationModel>();
+  List<BHNotificationModel> notificationList = [];
   notificationList.add(BHNotificationModel(img: BHDashedBoardImage6, name: 'Sherman Shop', msg: 'Hi Jackson..', status: 'Just Now', callInfo: BHCallIcon));
   notificationList.add(BHNotificationModel(img: BHDashedBoardImage2, name: 'Dale Horward', msg: 'Thank you.', status: '8:30 AM', callInfo: BHMessage));
   notificationList.add(BHNotificationModel(img: BHDashedBoardImage3, name: 'Norah  Salon', msg: 'Hello', status: 'Yesterday', callInfo: BHCallIcon));
@@ -212,7 +212,7 @@ List<BHNotificationModel> getNotificationList() {
 }
 
 List<BHNotifyModel> getNotifyList() {
-  List<BHNotifyModel> notifyList = List<BHNotifyModel>();
+  List<BHNotifyModel> notifyList = [];
   notifyList.add(
     BHNotifyModel(img: BHDashedBoardImage4, name: 'Norah Beauty Salon', address: '301 Dorthy walks,chicago,Us.', rating: 4.5, distance: 7.5),
   );
@@ -232,7 +232,7 @@ List<BHNotifyModel> getNotifyList() {
 }
 
 List<BHMessageModel> getChatMsgData() {
-  List<BHMessageModel> list = List();
+  List<BHMessageModel> list = [];
 
   BHMessageModel c1 = BHMessageModel();
   c1.senderId = BHSender_id;

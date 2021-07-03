@@ -19,7 +19,7 @@ class T10Listing extends StatefulWidget {
 }
 
 class T10ListingState extends State<T10Listing> {
-  List<T10Product> mList;
+  late List<T10Product> mList;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T10ListingState extends State<T10Listing> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(
@@ -50,8 +50,9 @@ class T10ListingState extends State<T10Listing> {
   }
 }
 
+// ignore: must_be_immutable
 class ProductList extends StatelessWidget {
-  T10Product model;
+  late T10Product model;
 
   ProductList(T10Product model, int pos) {
     this.model = model;
@@ -71,7 +72,7 @@ class ProductList extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: model.img,
                       fit: BoxFit.cover,
                       height: width * 0.2,

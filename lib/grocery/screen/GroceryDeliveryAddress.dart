@@ -21,8 +21,8 @@ class _GroceryDeliveryAddressState extends State<GroceryDeliveryAddress> {
     changeStatusColor(grocery_colorPrimary);
   }
 
-  String selectedLocation1 = "Pannipitiya";
-  String selectedLocation2 = "Egodawatta";
+  String? selectedLocation1 = "Pannipitiya";
+  String? selectedLocation2 = "Egodawatta";
 
   List<String> location1 = ["Pannipitiya"];
 
@@ -99,7 +99,7 @@ class _GroceryDeliveryAddressState extends State<GroceryDeliveryAddress> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation1 = newValue;
                         });
@@ -131,7 +131,7 @@ class _GroceryDeliveryAddressState extends State<GroceryDeliveryAddress> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation2 = newValue;
                         });

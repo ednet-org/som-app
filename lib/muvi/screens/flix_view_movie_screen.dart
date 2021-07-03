@@ -17,7 +17,7 @@ class MovieScreen extends StatefulWidget {
 }
 
 class MovieScreenState extends State<MovieScreen> with WidgetsBindingObserver {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   var isloaded = false;
   bool showOverLay = false;
   bool isFullScreen = false;
@@ -39,7 +39,7 @@ class MovieScreenState extends State<MovieScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -59,7 +59,8 @@ class MovieScreenState extends State<MovieScreen> with WidgetsBindingObserver {
     _controller.addListener(
       () {
         isBuffering = _controller.value.isBuffering;
-        if (_controller.value.duration == null || _controller.value.position == null) {
+        // ignore: unnecessary_null_comparison
+        if (_controller.value.position == null) {
           return;
         }
         if (mounted) {
@@ -77,7 +78,7 @@ class MovieScreenState extends State<MovieScreen> with WidgetsBindingObserver {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
@@ -215,10 +216,10 @@ class MovieScreenState extends State<MovieScreen> with WidgetsBindingObserver {
   }
 }
 
-class _PlayPauseOverlay extends StatelessWidget {
-  const _PlayPauseOverlay({Key key, this.controller}) : super(key: key);
+class PlayPauseOverlay extends StatelessWidget {
+  const PlayPauseOverlay({Key? key, this.controller}) : super(key: key);
 
-  final VideoPlayerController controller;
+  final VideoPlayerController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +228,7 @@ class _PlayPauseOverlay extends StatelessWidget {
         AnimatedSwitcher(
           duration: Duration(milliseconds: 50),
           reverseDuration: Duration(milliseconds: 200),
-          child: controller.value.isPlaying
+          child: controller!.value.isPlaying
               ? SizedBox.shrink()
               : Container(
                   color: Colors.black26,
@@ -242,7 +243,7 @@ class _PlayPauseOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
+            controller!.value.isPlaying ? controller!.pause() : controller!.play();
           },
         ),
       ],

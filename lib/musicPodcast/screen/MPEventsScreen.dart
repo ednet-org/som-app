@@ -8,7 +8,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 class MPEventsScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
   MPEventsScreen({this.name});
 
@@ -47,7 +47,7 @@ class MPEventsScreenState extends State<MPEventsScreen> {
       backgroundColor: mpAppBackGroundColor,
       appBar: AppBar(
         backgroundColor: mpAppBackGroundColor,
-        title: Text(widget.name, style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
+        title: Text(widget.name!, style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
         centerTitle: true,
         automaticallyImplyLeading: true,
         iconTheme: IconThemeData(color: white.withOpacity(0.9)),
@@ -80,7 +80,7 @@ class MPEventsScreenState extends State<MPEventsScreen> {
                         left: 14,
                         bottom: 16,
                         right: 0,
-                        child: Text(data.title, style: boldTextStyle(color: white.withOpacity(0.9)), maxLines: 2),
+                        child: Text(data.title!, style: boldTextStyle(color: white.withOpacity(0.9)), maxLines: 2),
                       )
                     ],
                   ).paddingOnly(left: 8, right: 8);
@@ -107,7 +107,7 @@ class MPEventsScreenState extends State<MPEventsScreen> {
                           ).cornerRadiusWithClipRRect(10).paddingOnly(top: 5),
                           16.width,
                           4.height,
-                          Text(eventDateList[index].title, style: boldTextStyle(color: current == index ? mpAppButtonColor : Colors.grey)),
+                          Text(eventDateList[index].title!, style: boldTextStyle(color: current == index ? mpAppButtonColor : Colors.grey)),
                         ],
                       ).paddingOnly(left: 8, right: 8).onTap(() {
                         current = index;
@@ -142,9 +142,9 @@ class MPEventsScreenState extends State<MPEventsScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.name, style: boldTextStyle(color: white.withOpacity(0.9))),
+                          Text(data.name!, style: boldTextStyle(color: white.withOpacity(0.9))),
                           4.height,
-                          Text(data.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
+                          Text(data.description!, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
                         ],
                       ).expand()
                     ],

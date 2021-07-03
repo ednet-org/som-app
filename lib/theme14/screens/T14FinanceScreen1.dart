@@ -15,7 +15,7 @@ class T14FinanceScreen1 extends StatefulWidget {
 class _T14FinanceScreen1State extends State<T14FinanceScreen1> {
   List<SubscriptionModel> travelStoryList = getTravelStoryList();
   List<CheckBoxTextModel> finance1CheckBoxTxtList = getFinance1CheckBoxTxtList();
-  int i;
+  int? i;
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _T14FinanceScreen1State extends State<T14FinanceScreen1> {
                               width: 50,
                               margin: EdgeInsets.all(8),
                               decoration: boxDecorationWithShadow(
-                                decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                                decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                                 boxShape: BoxShape.circle,
                               ),
                             );
@@ -148,13 +148,13 @@ class _T14FinanceScreen1State extends State<T14FinanceScreen1> {
                                         height: 40,
                                         width: 40,
                                         decoration: boxDecorationWithShadow(
-                                          decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                                          decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                                           boxShape: BoxShape.circle,
                                         ),
                                       ),
                                     ),
                                     16.width,
-                                    Text(data.name, style: secondaryTextStyle()).expand(),
+                                    Text(data.name!, style: secondaryTextStyle()).expand(),
                                     16.width,
                                     Container(
                                       width: 25,

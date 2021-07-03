@@ -1,20 +1,8 @@
-import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:meta/meta.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'aggregated_points.dart';
-import 'aggregation_setup.dart';
-import 'db_helper.dart';
-import 'lat_lang_geohash.dart';
 
 class ClusteringHelper {
-  ClusteringHelper.forDB({
+  //static ClusteringHelper? forMemory({List<LatLngAndGeohash>? list, Function(Set<Marker> markers) updateMarkers, aggregationSetup}) {}
+  //TODO Without NullSafety Geo coder
+  /*ClusteringHelper.forDB({
     @required this.dbTable,
     @required this.dbLatColumn,
     @required this.dbLongColumn,
@@ -335,5 +323,5 @@ class ClusteringHelper {
       // + 1k
       return aggregationSetup.colors[6];
     }
-  }
+  }*/
 }

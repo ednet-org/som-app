@@ -31,7 +31,7 @@ class T5WalkThroughState extends State<T5WalkThrough> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
         body: Stack(
       children: <Widget>[
@@ -71,11 +71,11 @@ class T5WalkThroughState extends State<T5WalkThrough> {
 }
 
 class WalkThrough extends StatelessWidget {
-  final String textContent;
-  final String bgImg;
-  final String walkImg;
+  final String? textContent;
+  final String? bgImg;
+  final String? walkImg;
 
-  WalkThrough({Key key, this.textContent, this.bgImg, this.walkImg}) : super(key: key);
+  WalkThrough({Key? key, this.textContent, this.bgImg, this.walkImg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +94,10 @@ class WalkThrough extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    bgImg != null ? Image.asset(bgImg, width: width, height: h * 0.5, fit: BoxFit.fill) : Container(),
+                    bgImg != null ? Image.asset(bgImg!, width: width, height: h * 0.5, fit: BoxFit.fill) : Container(),
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
-                      imageUrl: walkImg,
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                      imageUrl: walkImg!,
                       width: width * 0.8,
                       height: h * 0.6,
                     ),

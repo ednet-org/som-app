@@ -19,7 +19,7 @@ class GrocerySaveCart extends StatefulWidget {
 }
 
 class GrocerySaveCartState extends State<GrocerySaveCart> {
-  List<CartModel> mList;
+  late List<CartModel> mList;
 
   @override
   void initState() {
@@ -30,8 +30,6 @@ class GrocerySaveCartState extends State<GrocerySaveCart> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(grocery_colorPrimary);
-    var width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: grocery_app_background,
       appBar: PreferredSize(
@@ -52,8 +50,9 @@ class GrocerySaveCartState extends State<GrocerySaveCart> {
   }
 }
 
+// ignore: must_be_immutable
 class SaveCart extends StatelessWidget {
-  CartModel model;
+  late CartModel model;
 
   SaveCart(CartModel model, int pos) {
     this.model = model;
@@ -62,7 +61,7 @@ class SaveCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    Widget mRemoveItem() {
+    Widget? mRemoveItem() {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,

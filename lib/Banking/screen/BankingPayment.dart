@@ -17,7 +17,7 @@ class BankingPayment extends StatefulWidget {
 }
 
 class _BankingPaymentState extends State<BankingPayment> {
-  List<BankingPaymentModel> mList;
+  late List<BankingPaymentModel> mList;
 
   @override
   void initState() {
@@ -57,14 +57,14 @@ class _BankingPaymentState extends State<BankingPayment> {
                   setStatusBarColor(Banking_app_Background);
                   return Container(
                     margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
-                    padding: EdgeInsets.all(6),
+                    //padding: EdgeInsets.all(6),
                     decoration: boxDecorationWithShadow(backgroundColor: Banking_whitePureColor, boxShadow: defaultBoxShadow(), borderRadius: BorderRadius.circular(12)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Image.asset(mList[index].img, height: 35, width: 35, color: mList[index].color),
+                        Image.asset(mList[index].img!, height: 35, width: 35, color: mList[index].color),
                         15.height,
-                        Text(mList[index].title, style: primaryTextStyle(size: 16), textAlign: TextAlign.center),
+                        Text(mList[index].title!, style: primaryTextStyle(size: 16), textAlign: TextAlign.center,maxLines: 2),
                       ],
                     ),
                   ).onTap(() {

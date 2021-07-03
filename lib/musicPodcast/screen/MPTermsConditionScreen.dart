@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipSum;
 import 'package:nb_utils/nb_utils.dart';
+import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
 
 class MPTermsConditionScreen extends StatefulWidget {
@@ -47,14 +47,14 @@ class MPTermsConditionScreenState extends State<MPTermsConditionScreen> {
               onTap: () {},
             ),
             16.height,
-            Text(lipSum.createParagraph(numParagraphs: 1), style: secondaryTextStyle(color: Colors.white), maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text(lipsum.createParagraph(numParagraphs: 1), style: secondaryTextStyle(color: Colors.white), maxLines: 3, overflow: TextOverflow.ellipsis),
             32.height,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(height: 10, width: 10, color: mpAppButtonColor).cornerRadiusWithClipRRect(10).paddingOnly(top: 4),
                 8.width,
-                Text(lipSum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
+                Text(lipsum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
               ],
             ),
             8.height,
@@ -63,7 +63,7 @@ class MPTermsConditionScreenState extends State<MPTermsConditionScreen> {
               children: [
                 Container(height: 10, width: 10, color: mpAppButtonColor).cornerRadiusWithClipRRect(10).paddingOnly(top: 4),
                 8.width,
-                Text(lipSum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
+                Text(lipsum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
               ],
             ),
             8.height,
@@ -72,7 +72,7 @@ class MPTermsConditionScreenState extends State<MPTermsConditionScreen> {
               children: [
                 Container(height: 10, width: 10, color: mpAppButtonColor).cornerRadiusWithClipRRect(10).paddingOnly(top: 4),
                 8.width,
-                Text(lipSum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
+                Text(lipsum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
               ],
             ),
             8.height,
@@ -81,17 +81,17 @@ class MPTermsConditionScreenState extends State<MPTermsConditionScreen> {
               children: [
                 Container(height: 10, width: 10, color: mpAppButtonColor).cornerRadiusWithClipRRect(10).paddingOnly(top: 4),
                 8.width,
-                Text(lipSum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
+                Text(lipsum.createText(numSentences: 1), maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: Colors.white)).expand()
               ],
             ),
             16.height,
             Text('Service', style: boldTextStyle(color: Colors.white.withOpacity(0.5))).center(),
             16.height,
-            Text(lipSum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
+            Text(lipsum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
             8.height,
-            Text(lipSum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
+            Text(lipsum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
             8.height,
-            Text(lipSum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
+            Text(lipsum.createParagraph(numSentences: 3), style: secondaryTextStyle(color: Colors.white)),
           ],
         ).paddingOnly(left: 16, right: 16),
       ),

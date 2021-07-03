@@ -28,14 +28,16 @@ Widget textFieldWidget(String hintText, TextEditingController controller, {bool 
   );
 }
 
-Widget raiseButton({String btnText}) {
+Widget raiseButton({required String btnText}) {
   return Container(
     width: 130,
-    child: RaisedButton(
-      padding: EdgeInsets.all(8),
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(8),
+        primary: whiteColor,
+        shape: RoundedRectangleBorder(side: BorderSide(color: BHGreyColor)),
+      ),
       onPressed: () {},
-      color: whiteColor,
-      shape: RoundedRectangleBorder(side: BorderSide(color: BHGreyColor)),
       child: Text(
         btnText,
         style: TextStyle(
@@ -48,11 +50,13 @@ Widget raiseButton({String btnText}) {
 }
 
 Widget raiseButton1(String btnText1) {
-  return RaisedButton(
-    padding: EdgeInsets.all(12),
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      padding: EdgeInsets.all(12),
+      primary: BHColorPrimary,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    ),
     onPressed: () {},
-    color: BHColorPrimary,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     child: Text(
       btnText1,
       style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
@@ -64,10 +68,10 @@ Widget raiseButton1(String btnText1) {
 class EditTextFieldWidget extends StatefulWidget {
   static String tag = '/EditTextFieldWidget';
 
-  String hintText = '';
-  TextEditingController controller;
-  bool isPassword;
-  bool showPassword = false;
+  String? hintText = '';
+  TextEditingController? controller;
+  bool? isPassword;
+  bool? showPassword = false;
 
   EditTextFieldWidget({this.hintText, this.controller, this.showPassword});
 
@@ -94,9 +98,9 @@ class EditTextFieldWidgetState extends State<EditTextFieldWidget> {
 
 class ChatMessageWidget extends StatelessWidget {
   const ChatMessageWidget({
-    Key key,
-    @required this.isMe,
-    @required this.data,
+    Key? key,
+    required this.isMe,
+    required this.data,
   }) : super(key: key);
 
   final bool isMe;
@@ -123,8 +127,8 @@ class ChatMessageWidget extends StatelessWidget {
             crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Flexible(child: Text(data.msg, style: primaryTextStyle(color: !isMe ? white : textPrimaryColor))),
-              Text(data.time, style: secondaryTextStyle(color: !isMe ? white : textSecondaryColor, size: 12))
+              Flexible(child: Text(data.msg!, style: primaryTextStyle(color: !isMe ? white : textPrimaryColor))),
+              Text(data.time!, style: secondaryTextStyle(color: !isMe ? white : textSecondaryColor, size: 12))
             ],
           ),
         ),

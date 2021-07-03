@@ -62,11 +62,13 @@ class T3DrawerState extends State<T3Drawer> {
                       alignment: Alignment.topRight,
                       child: Container(
                         width: 46,
-                        child: RaisedButton(
-                          textColor: t3_white,
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0), topLeft: Radius.circular(80.0))),
-                          padding: const EdgeInsets.all(0.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(color:t3_white),
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0), topLeft: Radius.circular(80.0))),
+                            padding: const EdgeInsets.all(0.0),
+                          ),
                           child: Container(
                             decoration: const BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0), topLeft: Radius.circular(80.0)), color: t3_white),
                             child: Center(child: Padding(padding: const EdgeInsets.all(16.0), child: Icon(Icons.arrow_forward, color: t3_colorPrimary))),

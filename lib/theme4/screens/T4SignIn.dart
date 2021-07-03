@@ -48,7 +48,7 @@ class T4SignInState extends State<T4SignIn> {
                 margin: EdgeInsets.only(left: 24, right: 24, top: height * 0.1),
                 child: Column(
                   children: <Widget>[
-                    CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t4_icon, width: width / 3.2),
+                    CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t4_icon, width: width / 3.2),
                     SizedBox(height: 40),
                     T4EditText(hint: t4_hint_Email, isPassword: false),
                     SizedBox(height: 24),

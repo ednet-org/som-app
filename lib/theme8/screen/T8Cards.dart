@@ -15,7 +15,7 @@ class T8Cards extends StatefulWidget {
 }
 
 class T8CardsState extends State<T8Cards> {
-  List<Widget> cardList = new List();
+  List<Widget> cardList = [];
 
   void removeCards(index) {
     setState(() {
@@ -39,7 +39,7 @@ class T8CardsState extends State<T8Cards> {
   }
 
   List<Widget> _generateCards() {
-    List<T8Quiz> planetCard = new List();
+    List<T8Quiz> planetCard = [];
     planetCard.add(
       T8Quiz("How many basic steps are there in scientific method?", "Eight Steps", "Ten Steps", "Two Steps", "One Steps", 70.0),
     );
@@ -51,7 +51,7 @@ class T8CardsState extends State<T8Cards> {
     planetCard.add(
       T8Quiz("How many basic steps are there in scientific method?", "Eight Steps", "Ten Steps", "One Steps", "Three Steps", 110.0),
     );
-    List<Widget> cardList = new List();
+    List<Widget> cardList = [];
 
     for (int x = 0; x < 5; x++) {
       cardList.add(

@@ -15,7 +15,7 @@ class NBSettingScreen extends StatefulWidget {
 
 class NBSettingScreenState extends State<NBSettingScreen> {
   List<NBSettingsItemModel> mSettingList = nbGetSettingItems();
-  NBLanguageItemModel result = NBLanguageItemModel(NBEnglishFlag, 'English');
+  NBLanguageItemModel? result = NBLanguageItemModel(NBEnglishFlag, 'English');
 
   @override
   void initState() {
@@ -54,9 +54,9 @@ class NBSettingScreenState extends State<NBSettingScreen> {
               index == 0
                   ? Row(
                       children: [
-                        commonCacheImageWidget('${result.image}', 30),
+                        commonCacheImageWidget('${result!.image}', 30),
                         8.width,
-                        Text('${result.name}', style: primaryTextStyle()),
+                        Text('${result!.name}', style: primaryTextStyle()),
                         Icon(Icons.navigate_next).paddingAll(8),
                       ],
                     )

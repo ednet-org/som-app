@@ -93,6 +93,7 @@ List<SDExamCardModel> cards = [
   )
 ];
 
+// ignore: non_constant_identifier_names
 Widget SDDashboard(BuildContext context) {
   return Container(
     child: SingleChildScrollView(
@@ -165,7 +166,7 @@ Widget SDDashboard(BuildContext context) {
             child: ListView.builder(
               padding: EdgeInsets.only(right: 16),
               scrollDirection: Axis.horizontal,
-              itemCount: cards == null ? 0 : cards.length,
+              itemCount: cards.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
@@ -179,7 +180,7 @@ Widget SDDashboard(BuildContext context) {
                       radius: 8,
                       spreadRadius: 1,
                       blurRadius: 4,
-                      gradient: LinearGradient(colors: [cards[index].startColor, cards[index].endColor]),
+                      gradient: LinearGradient(colors: [cards[index].startColor!, cards[index].endColor!]),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,18 +189,17 @@ Widget SDDashboard(BuildContext context) {
                         CircleAvatar(
                           radius: 40,
                           backgroundColor: Colors.white30,
-                          child: Image.asset(cards[index].image, height: 60, width: 60),
+                          child: Image.asset(cards[index].image!, height: 60, width: 60),
                         ),
                         SizedBox(height: 15),
-                        Text(cards[index].examName, style: secondaryTextStyle(color: Colors.white, size: 20)),
+                        Text(cards[index].examName!, style: secondaryTextStyle(color: Colors.white, size: 20)),
                         SizedBox(height: 15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(cards[index].time, style: secondaryTextStyle(color: Colors.white54, size: 18)),
-                            cards[index].icon,
-                          ],
-                        )
+                          children: [
+                            Text(cards[index].time!, style: secondaryTextStyle(color: Colors.white54, size: 18)),
+                            cards[index].icon!,
+                          ]),
                       ],
                     ),
                   ),
@@ -255,9 +255,9 @@ Widget SDDashboard(BuildContext context) {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: Colors.white,
-                            child: Image.asset(lessons[index].image, height: 30, width: 30),
+                            child: Image.asset(lessons[index].image!, height: 30, width: 30),
                           ),
-                          Container(margin: EdgeInsets.only(top: 10), child: Text(lessons[index].title)),
+                          Container(margin: EdgeInsets.only(top: 10), child: Text(lessons[index].title!)),
                         ],
                       ),
                     ),
@@ -303,7 +303,7 @@ Widget SDDashboard(BuildContext context) {
                         width: 115,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                          image: DecorationImage(image: CachedNetworkImageProvider(liveVideo[index].image), fit: BoxFit.fill),
+                          image: DecorationImage(image: CachedNetworkImageProvider(liveVideo[index].image!), fit: BoxFit.fill),
                         ),
                       ),
                       SizedBox(width: 16),
@@ -314,7 +314,7 @@ Widget SDDashboard(BuildContext context) {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(liveVideo[index].title, style: boldTextStyle(size: 16)),
+                                Text(liveVideo[index].title!, style: boldTextStyle(size: 16)),
                                 Padding(
                                   padding: EdgeInsets.only(top: 6),
                                   child: Align(alignment: Alignment.topRight, child: Icon(Icons.more_vert)),
@@ -325,7 +325,7 @@ Widget SDDashboard(BuildContext context) {
                               margin: EdgeInsets.only(top: 8),
                               child: FittedBox(
                                 child: Text(
-                                  liveVideo[index].message,
+                                  liveVideo[index].message!,
                                   style: primaryTextStyle(size: 14),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -338,7 +338,7 @@ Widget SDDashboard(BuildContext context) {
                                 decoration: boxDecorations(bgColor: sdSecondaryColorRed, radius: 4),
                                 padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
                                 child: Center(
-                                  child: Text(liveVideo[index].status, style: secondaryTextStyle(size: 8, color: Colors.white)),
+                                  child: Text(liveVideo[index].status!, style: secondaryTextStyle(size: 8, color: Colors.white)),
                                 ),
                               ),
                             )

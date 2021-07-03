@@ -22,8 +22,8 @@ class T3Dashboard extends StatefulWidget {
 }
 
 class T3DashboardState extends State<T3Dashboard> {
-  List<T3DashboardSliderModel> mSliderListings;
-  List<Theme3Dish> mListings;
+  late List<T3DashboardSliderModel> mSliderListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -155,7 +155,7 @@ class T3DashboardState extends State<T3Dashboard> {
 
 // ignore: must_be_immutable
 class T3DashboardSlider extends StatelessWidget {
-  T3DashboardSliderModel model;
+  late T3DashboardSliderModel model;
 
   T3DashboardSlider(T3DashboardSliderModel model, int pos) {
     this.model = model;
@@ -229,7 +229,7 @@ class T3DashboardSlider extends StatelessWidget {
 
 // ignore: must_be_immutable
 class T3DashboardList extends StatelessWidget {
-  Theme3Dish model;
+  late Theme3Dish model;
 
   T3DashboardList(Theme3Dish model, int pos) {
     this.model = model;

@@ -27,8 +27,9 @@ class _T14RateScreenState extends State<T14RateScreen> {
     if (mounted) super.setState(fn);
   }
 
+  String? rateType;
+
   String getRate(double num) {
-    String rateType;
     if (num == 0) {
       return rateType = "Bad";
     } else if (num == 25) {
@@ -42,8 +43,9 @@ class _T14RateScreenState extends State<T14RateScreen> {
     }
   }
 
+  String? rateImg;
+
   String getRateImg(double num) {
-    String rateImg;
     if (num == 0) {
       return rateImg = t14_bad;
     } else if (num == 25) {

@@ -23,7 +23,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
 
   init() async {
     await Future.delayed(Duration(seconds: 1));
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -46,19 +46,19 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
             children: [
               UserAccountsDrawerHeader(
                 currentAccountPicture: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: 'https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg',
                   fit: BoxFit.cover,
                 ).cornerRadiusWithClipRRect(100),
                 accountName: Text('john Doe'),
                 otherAccountsPictures: [
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTkynekYrn6_eDaVJG5l_DTiD_5LAm2_osI0Q&usqp=CAU',
                     fit: BoxFit.cover,
                   ).cornerRadiusWithClipRRect(100),
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTD8u1Nmrk78DSX0v2i_wTgS6tW5yvHSD7o6g&usqp=CAU',
                     fit: BoxFit.cover,
                   ).cornerRadiusWithClipRRect(100),
@@ -72,7 +72,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 ),
                 leading: Icon(Icons.home, color: Colors.black.withOpacity(0.7)),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast('Home');
                 },
               ),
@@ -83,7 +83,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 ),
                 leading: Icon(Icons.photo, color: Colors.black.withOpacity(0.7)),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast('Photos');
                 },
               ),
@@ -94,7 +94,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 ),
                 leading: Icon(Icons.movie, color: Colors.black.withOpacity(0.7)),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast('Movies');
                 },
               ),
@@ -105,7 +105,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 ),
                 leading: Icon(Icons.notifications, color: Colors.black.withOpacity(0.7)),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast('Notification');
                 },
               ),
@@ -116,7 +116,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 ),
                 leading: Icon(Icons.settings, color: Colors.black.withOpacity(0.7)),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast('Settings');
                 },
               ),
@@ -126,14 +126,14 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
                 'About Us',
                 style: boldTextStyle(color: black),
               ).paddingAll(12.0).onTap(() {
-                scaffoldKey.currentState.openEndDrawer();
+                scaffoldKey.currentState!.openEndDrawer();
                 toast('About us');
               }),
               Text(
                 'Privacy Policy',
                 style: boldTextStyle(color: black),
               ).paddingAll(12.0).onTap(() {
-                scaffoldKey.currentState.openEndDrawer();
+                scaffoldKey.currentState!.openEndDrawer();
                 toast('Privacy Policy');
               }),
             ],
@@ -141,7 +141,7 @@ class _MWDrawerScreen1State extends State<MWDrawerScreen1> {
         ),
         body: MaterialButton(
           onPressed: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
           child: Text('Open Drawer', style: primaryTextStyle(color: whiteColor)),
           padding: EdgeInsets.all(16),

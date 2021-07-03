@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTSignInScreen.dart';
 import 'package:prokit_flutter/main/utils/AppColors.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
@@ -21,7 +20,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   var emailCont = TextEditingController();
   var passCont = TextEditingController();
-  var companyNameCont = TextEditingController();
+  var nameCont = TextEditingController();
 
   var emailFocus = FocusNode();
   var passFocus = FocusNode();
@@ -43,202 +42,85 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar(context, 'Customer registration'),
+      appBar: appBar(context, 'Sign Up'),
       drawer: DTDrawerWidget(),
       body: Center(
         child: Container(
           width: dynamicWidth(context),
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Please select role.'),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          style: style,
-                          onPressed: () {
-                            print('Buyer');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text('Buyer', style: boldTextStyle(size: 24)),
-                          )),
-                      10.width,
-                      ElevatedButton(
-                          onPressed: () {
-                            print('Provider');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Provider',
-                                style: boldTextStyle(size: 24)),
-                          )),
-                    ],
-                  ),
-
+                  Text('Sign Up', style: boldTextStyle(size: 24)),
                   30.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Company details"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-
-                  // Company name
                   TextFormField(
-                    controller: companyNameCont,
+                    controller: nameCont,
                     style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Company name'),
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                      contentPadding: EdgeInsets.all(16),
+                      labelStyle: secondaryTextStyle(),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                    ),
                     keyboardType: TextInputType.text,
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
-                    onFieldSubmitted: (s) =>
-                        FocusScope.of(context).requestFocus(emailFocus),
+                    onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(emailFocus),
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
-                  // E-mail
                   TextFormField(
                     controller: emailCont,
                     focusNode: emailFocus,
                     style: primaryTextStyle(),
-                    decoration: buildInputDecoration('E-mail'),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: secondaryTextStyle(),
+                      contentPadding: EdgeInsets.all(16),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       if (!s.trim().validateEmail()) return 'Email is invalid';
                       return null;
                     },
-                    onFieldSubmitted: (s) =>
-                        FocusScope.of(context).requestFocus(passFocus),
+                    onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(passFocus),
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Company address"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-                  // City
-                  TextFormField(
-                    decoration: buildInputDecoration('City'),
-                  ),
-                  16.height,
-                  // Street
-                  TextFormField(
-                    decoration: buildInputDecoration('Street'),
-                  ),
-                  16.height,
-                  // Number
-                  TextFormField(
-                    decoration: buildInputDecoration('Number'),
-                  ),
-                  16.height,
-                  // Zip
-                  TextFormField(
-                    decoration: buildInputDecoration('Zip'),
-                  ),
-                  16.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Users"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-                  // Password
                   TextFormField(
                     obscureText: obscureText,
                     focusNode: passFocus,
                     controller: passCont,
                     style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Password',
-                        suffixIcon: Icon(!obscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off)
-                          ..onTap(() {
-                            obscureText = !obscureText;
-                            setState(() {});
-                          })),
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      contentPadding: EdgeInsets.all(16),
+                      labelStyle: secondaryTextStyle(),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                      suffix: Icon(!obscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
+                        obscureText = !obscureText;
+                        setState(() {});
+                      }),
+                    ),
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
-                      return null;
-                    },
-                  ),
-                  16.height,
-                  // Password
-                  TextFormField(
-                    obscureText: obscureText,
-                    style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Repeat password',
-                        suffixIcon: Icon(!obscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off)
-                          ..onTap(() {
-                            obscureText = !obscureText;
-                            setState(() {});
-                          })),
-                    validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
                   ),
@@ -246,12 +128,8 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    decoration: BoxDecoration(
-                        color: appColorPrimary,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: defaultBoxShadow()),
-                    child: Text('Register',
-                        style: boldTextStyle(color: white, size: 18)),
+                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
+                    child: Text('Sign Up', style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
 
@@ -265,11 +143,8 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                       setState(() {});*/
                   }),
                   20.height,
-                  Text('Already Registered?',
-                      style: boldTextStyle(
-                        color: appColorPrimary,
-                      )).center().onTap(() {
-                    DTSignInScreen().launch(context);
+                  Text('Already Registered?', style: boldTextStyle(color: appColorPrimary)).center().onTap(() {
+                    finish(context);
                   }),
                 ],
               ),
@@ -277,25 +152,6 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
           ).center(),
         ),
       ),
-    );
-  }
-
-  InputDecoration buildInputDecoration(
-    String labelText, {
-    Icon suffixIcon,
-  }) {
-    return InputDecoration(
-      labelText: labelText,
-      contentPadding: EdgeInsets.all(16),
-      labelStyle: secondaryTextStyle(),
-      border: OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: appColorPrimary)),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: appStore.textSecondaryColor)),
-      suffix: suffixIcon,
     );
   }
 }

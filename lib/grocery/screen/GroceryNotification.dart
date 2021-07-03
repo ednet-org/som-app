@@ -17,7 +17,7 @@ class GroceryNotification extends StatefulWidget {
 }
 
 class GroceryNotificationState extends State<GroceryNotification> {
-  List<NotificationModel> mList;
+  late List<NotificationModel> mList;
 
   @override
   void initState() {
@@ -62,8 +62,9 @@ class GroceryNotificationState extends State<GroceryNotification> {
   }
 }
 
+// ignore: must_be_immutable
 class Notification extends StatelessWidget {
-  NotificationModel model;
+  late NotificationModel model;
 
   Notification(NotificationModel model, int pos) {
     this.model = model;

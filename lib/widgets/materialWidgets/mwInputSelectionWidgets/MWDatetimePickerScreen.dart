@@ -22,7 +22,7 @@ class MWDatetimePickerScreenState extends State<MWDatetimePickerScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         helpText: 'Select your Booking date',
         cancelText: 'Not Now',
         confirmText: "Book",
@@ -31,7 +31,7 @@ class MWDatetimePickerScreenState extends State<MWDatetimePickerScreen> {
         errorFormatText: 'Enter valid date',
         errorInvalidText: 'Enter date in valid range',
         context: context,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return CustomTheme(
             child: child,
           );
@@ -47,21 +47,21 @@ class MWDatetimePickerScreenState extends State<MWDatetimePickerScreen> {
   }
 
   Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay Picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
         context: context,
         initialTime: selectedTime,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return CustomTheme(
             child: MediaQuery(
               data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
-              child: child,
+              child: child!,
             ),
           );
         });
 
-    if (Picked != null)
+    if (picked != null)
       setState(() {
-        selectedTime = Picked;
+        selectedTime = picked;
       });
   }
 

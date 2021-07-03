@@ -16,7 +16,6 @@ class OPBottomNavigationScreen extends StatefulWidget {
 
 class _OPBottomNavigationScreenState extends State<OPBottomNavigationScreen> {
   int _currentIndex = 0;
-  static Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +77,13 @@ class _OPBottomNavigationScreenState extends State<OPBottomNavigationScreen> {
                         Icons.home,
                         size: 24,
                       ),
-                      title: dot),
+                      label: ''),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.credit_card,
                         size: 24,
                       ),
-                      title: dot),
+                      label: ''),
                   BottomNavigationBarItem(
                       icon: Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
@@ -95,19 +94,19 @@ class _OPBottomNavigationScreenState extends State<OPBottomNavigationScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      title: dot),
+                      label: ''),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.location_on,
                         size: 24,
                       ),
-                      title: dot),
+                      label: ''),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         size: 24,
                       ),
-                      title: dot),
+                      label: ''),
                 ],
                 onTap: (index) {
                   setState(() {

@@ -4,10 +4,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/quiz/Screens/QuizDashboard.dart';
 import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
 import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-
 import 'package:prokit_flutter/quiz/utils/QuizImages.dart';
 import 'package:prokit_flutter/quiz/utils/QuizStrings.dart';
-import 'package:prokit_flutter/quiz/utils/QuizWidget.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 class QuizNotification extends StatefulWidget {
@@ -47,7 +45,7 @@ class _QuizNotificationState extends State<QuizNotification> {
                   height: 50,
                 ),
                 CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: quiz_ic_notification,
                   height: 200,
                   width: 200,

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import './render.dart';
 
@@ -31,38 +30,37 @@ typedef Widget StickyHeaderWidgetBuilder(BuildContext context, double stuckAmoun
 class StickyHeader extends MultiChildRenderObjectWidget {
   /// Constructs a new [StickyHeader] widget.
   StickyHeader({
-    Key key,
-    @required this.header,
-    @required this.content,
+    Key? key,
+    required this.header,
+    required this.content,
     this.overlapHeaders: false,
     this.controller,
     this.callback,
   }) : super(
           key: key,
           // Note: The order of the children must be preserved for the RenderObject.
-          children: [content, header],
+          children: [content!, header],
         );
 
   /// Header to be shown at the top of the parent [Scrollable] content.
   final Widget header;
 
   /// Content to be shown below the header.
-  final Widget content;
+  final Widget? content;
 
   /// If true, the header will overlap the Content.
   final bool overlapHeaders;
 
   /// Optional [ScrollController] that will be used by the widget instead of the default inherited one.
-  final ScrollController controller;
+  final ScrollController? controller;
 
   /// Optional callback with stickyness value. If you think you need this, then you might want to
   /// consider using [StickyHeaderBuilder] instead.
-  final RenderStickyHeaderCallback callback;
+  final RenderStickyHeaderCallback? callback;
 
   @override
   RenderStickyHeader createRenderObject(BuildContext context) {
-    final scrollPosition = this.controller?.position ?? Scrollable.of(context).position;
-    assert(scrollPosition != null);
+    final scrollPosition = this.controller?.position ?? Scrollable.of(context)!.position;
     return RenderStickyHeader(
       scrollPosition: scrollPosition,
       callback: this.callback,
@@ -72,8 +70,7 @@ class StickyHeader extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(BuildContext context, RenderStickyHeader renderObject) {
-    final scrollPosition = this.controller?.position ?? Scrollable.of(context).position;
-    assert(scrollPosition != null);
+    final scrollPosition = this.controller?.position ?? Scrollable.of(context)!.position;
     renderObject
       ..scrollPosition = scrollPosition
       ..callback = this.callback
@@ -91,8 +88,8 @@ class StickyHeader extends MultiChildRenderObjectWidget {
 class StickyHeaderBuilder extends StatefulWidget {
   /// Constructs a new [StickyHeaderBuilder] widget.
   const StickyHeaderBuilder({
-    Key key,
-    @required this.builder,
+    Key? key,
+    required this.builder,
     this.content,
     this.overlapHeaders: false,
     this.controller,
@@ -103,20 +100,20 @@ class StickyHeaderBuilder extends StatefulWidget {
   final StickyHeaderWidgetBuilder builder;
 
   /// Content to be shown below the header.
-  final Widget content;
+  final Widget? content;
 
   /// If true, the header will overlap the Content.
   final bool overlapHeaders;
 
   /// Optional [ScrollController] that will be used by the widget instead of the default inherited one.
-  final ScrollController controller;
+  final ScrollController? controller;
 
   @override
   _StickyHeaderBuilderState createState() => _StickyHeaderBuilderState();
 }
 
 class _StickyHeaderBuilderState extends State<StickyHeaderBuilder> {
-  double _stuckAmount;
+  double? _stuckAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +127,7 @@ class _StickyHeaderBuilderState extends State<StickyHeaderBuilder> {
       callback: (double stuckAmount) {
         if (_stuckAmount != stuckAmount) {
           _stuckAmount = stuckAmount;
-          WidgetsBinding.instance.endOfFrame.then((_) {
+          WidgetsBinding.instance!.endOfFrame.then((_) {
             if (mounted) {
               setState(() {});
             }

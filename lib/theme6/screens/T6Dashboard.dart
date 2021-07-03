@@ -29,8 +29,8 @@ class T6DashboardState extends State<T6Dashboard> {
   DateTime selectedDate = DateTime.now().subtract(Duration(days: 2));
   List<DateTime> markedDates = [DateTime.now().subtract(Duration(days: 1)), DateTime.now().subtract(Duration(days: 2)), DateTime.now().add(Duration(days: 4))];
   int selectedPos = 1;
-  List<T6Slider> mSliderList;
-  List<T6LogModel> mActivity;
+  List<T6Slider>? mSliderList;
+   List<T6LogModel>? mActivity;
 
   onSelect(data) {
     print("Selected Date -> $data");
@@ -83,7 +83,6 @@ class T6DashboardState extends State<T6Dashboard> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
       alignment: Alignment.center,
-      padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 5),
       decoration: BoxDecoration(
         color: !isSelectedDate ? Colors.transparent : t6view_color,
         borderRadius: BorderRadius.all(Radius.circular(60)),
@@ -137,7 +136,7 @@ class T6DashboardState extends State<T6Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -202,14 +201,14 @@ class T6DashboardState extends State<T6Dashboard> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.32,
                     child: ListView.builder(
                         padding: EdgeInsets.all(8),
                         scrollDirection: Axis.horizontal,
-                        itemCount: mActivity.length,
+                        itemCount: mActivity!.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return T6Activity(mActivity[index], index);
+                          return T6Activity(mActivity![index], index);
                         }),
                   ),
                   Container(
@@ -370,8 +369,9 @@ class T6DashboardState extends State<T6Dashboard> {
   }
 }
 
+// ignore: must_be_immutable
 class T6Activity extends StatelessWidget {
-  T6LogModel model;
+  late T6LogModel model;
 
   T6Activity(T6LogModel model, int pos) {
     this.model = model;

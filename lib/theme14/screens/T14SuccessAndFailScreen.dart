@@ -12,11 +12,9 @@ class T14SuccessAndFailScreen extends StatefulWidget {
 }
 
 class _T14SuccessAndFailScreenState extends State<T14SuccessAndFailScreen> with AfterLayoutMixin<T14SuccessAndFailScreen> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController();
   List<Widget> pages = [];
-  final _kDuration = Duration(milliseconds: 300);
-  final _kCurve = Curves.ease;
 
   @override
   void initState() {

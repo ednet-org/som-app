@@ -45,9 +45,6 @@ class CSDashboardScreenState extends State<CSDashboardScreen> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                onStretchTrigger: () {
-                  return null;
-                },
                 actions: [
                   IconButton(
                     icon: Icon(Icons.search),

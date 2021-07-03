@@ -15,8 +15,8 @@ class LearnerSearch extends StatefulWidget {
 }
 
 class _LearnerSearchState extends State<LearnerSearch> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerPeopleModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerPeopleModel> mList2;
 
   @override
   void initState() {
@@ -107,8 +107,9 @@ class _LearnerSearchState extends State<LearnerSearch> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerInstructor extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerInstructor(LearnerPeopleModel model, int pos) {
     this.model = model;
@@ -152,8 +153,9 @@ class LearnerInstructor extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerRecommended extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerRecommended(LearnerPeopleModel model, int pos) {
     this.model = model;

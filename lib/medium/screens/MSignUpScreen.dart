@@ -48,7 +48,7 @@ class MSignUpScreenState extends State<MSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget commonButton({String title, String icon, Function onTap}) {
+    Widget commonButton({required String title, required String icon, Function? onTap}) {
       return Container(
         decoration: boxDecoration(color: white, radius: 5, bgColor: Colors.transparent),
         margin: EdgeInsets.all(12),

@@ -11,7 +11,7 @@ class T14WalkThroughScreen2 extends StatefulWidget {
 }
 
 class _T14WalkThroughScreen2State extends State<T14WalkThroughScreen2> with AfterLayoutMixin<T14WalkThroughScreen2> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController(viewportFraction: 0.7);
   List<Widget> pages = [];
   final _kDuration = Duration(milliseconds: 300);

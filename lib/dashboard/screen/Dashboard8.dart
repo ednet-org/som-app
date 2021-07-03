@@ -17,8 +17,8 @@ class Dashboard8 extends StatefulWidget {
 }
 
 class Dashboard8State extends State<Dashboard8> {
-  List<DB8Scene> mList1;
-  List<DB8Rooms> mList2;
+  late List<DB8Scene> mList1;
+  late List<DB8Rooms> mList2;
 
   @override
   void initState() {
@@ -194,8 +194,9 @@ class Dashboard8State extends State<Dashboard8> {
   }
 }
 
+// ignore: must_be_immutable
 class Rooms extends StatelessWidget {
-  DB8Rooms model;
+  late DB8Rooms model;
 
   Rooms(DB8Rooms model, int pos) {
     this.model = model;

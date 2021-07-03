@@ -17,9 +17,9 @@ class Dashboard3 extends StatefulWidget {
 }
 
 class Dashboard3State extends State<Dashboard3> {
-  List<Db3FurnitureModel> mList1;
-  List<Db3FurnitureModel> mList2;
-  List<Db3FurnitureModel> mList3;
+  late List<Db3FurnitureModel> mList1;
+  late List<Db3FurnitureModel> mList2;
+  late List<Db3FurnitureModel> mList3;
 
   @override
   void initState() {
@@ -182,7 +182,7 @@ class Dashboard3State extends State<Dashboard3> {
 class Db3Slider extends StatelessWidget {
   final String img, heading, subheading;
 
-  Db3Slider({Key key, @required this.img, @required this.heading, @required this.subheading}) : super(key: key);
+  Db3Slider({Key? key, required this.img, required this.heading, required this.subheading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +212,7 @@ class Db3Slider extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Db3Product extends StatelessWidget {
-  Db3FurnitureModel model;
+  late Db3FurnitureModel model;
 
   Db3Product(Db3FurnitureModel model, int pos) {
     this.model = model;
@@ -252,7 +252,7 @@ class Db3Product extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Db3Seller extends StatelessWidget {
-  Db3FurnitureModel model;
+  late Db3FurnitureModel model;
 
   Db3Seller(Db3FurnitureModel model, int pos) {
     this.model = model;

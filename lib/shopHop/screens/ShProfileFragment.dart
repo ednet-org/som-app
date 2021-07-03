@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
@@ -19,7 +18,7 @@ class ShProfileFragmentState extends State<ShProfileFragment> {
   var confirmPasswordCont = TextEditingController();
   var firstNameCont = TextEditingController();
   var lastNameCont = TextEditingController();
-  var selectedValue = "Male";
+  String? selectedValue = "Male";
 
   @override
   Widget build(BuildContext context) {

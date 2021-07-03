@@ -11,8 +11,8 @@ class AMScaleTransitionScreen extends StatefulWidget {
 }
 
 class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen> with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {

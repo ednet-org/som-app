@@ -52,7 +52,7 @@ class QIBusAddPassengerState extends State<QIBusAddPassenger> {
 
   bool visibility = false;
 
-  void _changed() {
+  void changed() {
     setState(() {
       visibility = !visibility;
     });
@@ -60,7 +60,7 @@ class QIBusAddPassengerState extends State<QIBusAddPassenger> {
 
   @override
   Widget build(BuildContext context) {
-    String _selectedLocation = 'Female';
+    String? _selectedLocation = 'Female';
 
     return Scaffold(
         backgroundColor: qIBus_app_background,

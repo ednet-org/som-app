@@ -54,7 +54,7 @@ class T6BottomNavigationState extends State<T6BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       bottomNavigationBar: Stack(

@@ -30,8 +30,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is simple Snackbar'),
               ));
             },
@@ -39,8 +39,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(
                 SnackBar(
                   content: text('This is Snackbar with Action'),
                   action: SnackBarAction(
@@ -56,8 +56,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is custom Snackbar', fontSize: 20),
                 backgroundColor: appColorPrimary,
               ));
@@ -66,14 +66,14 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is infinite Snackbar with some info'),
                 duration: Duration(days: 365),
                 action: SnackBarAction(
                     label: 'Ok',
                     onPressed: () {
-                      scaffoldKey.currentState.hideCurrentSnackBar();
+                      ScaffoldMessengerState().hideCurrentSnackBar();
                     }),
               ));
             },
@@ -81,8 +81,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is Floating Snackbar'),
                 behavior: SnackBarBehavior.floating,
               ));
@@ -91,8 +91,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is Rounded Snackbar'),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
                 behavior: SnackBarBehavior.floating,
@@ -102,8 +102,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
           ),
           GestureDetector(
             onTap: () {
-              scaffoldKey.currentState.hideCurrentSnackBar();
-              scaffoldKey.currentState.showSnackBar(SnackBar(
+              ScaffoldMessengerState().hideCurrentSnackBar();
+              ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is Bordered Snackbar', textColor: appColorPrimary),
                 shape: Border.all(color: appColorPrimary),
                 backgroundColor: whiteColor,

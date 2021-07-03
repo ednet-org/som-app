@@ -32,7 +32,7 @@ Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSData
                   child: Column(
                     children: [
                       lisTileForFileEditingOption(
-                        title: dataModel.fileName,
+                        title: dataModel.fileName!,
                         leading: dataModel.isFolder ? Image.asset(CSFolderIcon, width: 40, height: 40) : Image.asset(CSFileImg, width: 40, height: 40),
                         subTitle: dataModel.isFolder ? CSAppName : "date and size of the file",
                       ),
@@ -53,7 +53,7 @@ Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSData
                         title: "Make available offline",
                         leading: blackIcon(Icons.arrow_circle_down),
                         trailing: dataModel.isFolder
-                            ? FlatButton(
+                            ? TextButton(
                                 onPressed: () {
                                   finish(context);
                                   CSUpgradeAccountScreen().launch(context);
@@ -82,8 +82,8 @@ Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSData
                             }),
                       lisTileForFileEditingOption(title: "Rename", leading: blackIcon(Icons.edit)).onTap(() async {
                         TextEditingController controller = TextEditingController();
-                        controller.text = dataModel.fileName;
-                        controller = await buildRenameDialog(context, controller);
+                        controller.text = dataModel.fileName!;
+                        controller = await (buildRenameDialog(context, controller));
                         if (controller.text != dataModel.fileName) {
                           dataModel.fileName = controller.text;
                           finish(context);
@@ -107,14 +107,14 @@ Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSData
                       dataModel.isFolder
                           ? 0.height
                           : lisTileForFileEditingOption(title: "Export", leading: blackIcon(Icons.double_arrow)).onTap(() {
-                              Share.share(dataModel.fileName);
+                              Share.share(dataModel.fileName!);
                             }),
                       dataModel.isShared ? 0.height : buildDivider(isFull: true),
                       dataModel.isShared
                           ? 0.height
                           : lisTileForFileEditingOption(title: "Delete", leading: Icon(Icons.delete, color: Colors.red), color: Colors.red).onTap(() async {
                               //success
-                              bool isFileDeleted = await buildDeleteDialog(context, dataModel);
+                              bool isFileDeleted = await (buildDeleteDialog(context, dataModel));
                               if (isFileDeleted) {
                                 getCloudboxList.removeWhere((element) {
                                   return element.fileName == dataModel.fileName;
@@ -134,7 +134,7 @@ Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSData
   );
 }
 
-Widget lisTileForFileEditingOption({String title, String subTitle = "", Widget trailing, Color color, Widget leading}) {
+Widget lisTileForFileEditingOption({required String title, String subTitle = "", Widget? trailing, Color? color, Widget? leading}) {
   return ListTile(
     contentPadding: EdgeInsets.all(0),
     visualDensity: VisualDensity(horizontal: -3, vertical: -4),

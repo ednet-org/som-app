@@ -13,7 +13,7 @@ class T14ProfileScreen extends StatefulWidget {
 
 class _T14ProfileScreenState extends State<T14ProfileScreen> {
   int _pageIndex = 0;
-  PageController _pageController;
+  PageController? _pageController;
 
   List<Widget> tabPages = [
     T14ProfileScreen1(),
@@ -29,7 +29,7 @@ class _T14ProfileScreenState extends State<T14ProfileScreen> {
   }
 
   void onTabTapped(int index) {
-    this._pageController.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    this._pageController!.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 
   Widget _bottomTab() {
@@ -40,11 +40,11 @@ class _T14ProfileScreenState extends State<T14ProfileScreen> {
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.teal,
       items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), title: Padding(padding: EdgeInsets.all(0))),
-        BottomNavigationBarItem(icon: Icon(Icons.person, size: 20), title: Padding(padding: EdgeInsets.all(0))),
-        BottomNavigationBarItem(icon: Icon(Icons.add_circle_outline, size: 20), title: Padding(padding: EdgeInsets.all(0))),
-        BottomNavigationBarItem(icon: Icon(Icons.search, size: 20), title: Padding(padding: EdgeInsets.all(0))),
-        BottomNavigationBarItem(icon: Icon(Icons.settings, size: 20), title: Padding(padding: EdgeInsets.all(0))),
+        BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.person, size: 20), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.add_circle_outline, size: 20), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.search, size: 20), label: ''),
+        BottomNavigationBarItem(icon: Icon(Icons.settings, size: 20), label: ''),
       ],
     );
   }
@@ -58,7 +58,7 @@ class _T14ProfileScreenState extends State<T14ProfileScreen> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -71,9 +71,6 @@ class _T14ProfileScreenState extends State<T14ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PageController _controller = PageController(
-      initialPage: 0,
-    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: t14_colorWhite,

@@ -19,8 +19,8 @@ class _DTNoResultScreenState extends State<DTNoResultScreen> {
       body: errorWidget(
         context,
         'images/defaultTheme/no_result.png',
-        'Not Implemented',
-        'I know, same story just another icon :(',
+        'No Result',
+        LoremText,
       ),
     );
   }

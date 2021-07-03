@@ -52,7 +52,7 @@ dialogContent(BuildContext context) {
       child: Stack(
         children: <Widget>[
           ClipRRect(
-            child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t3_ic_pizza_dialog),
+            child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t3_ic_pizza_dialog),
             borderRadius: BorderRadius.circular(8),
           ),
           Column(

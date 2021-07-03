@@ -47,16 +47,18 @@ class CWTabBarScreenState extends State<CWTabBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, 'TabBar Example'),
-        body: ListView.builder(
-            itemCount: example.length == null ? 0 : example.length,
-            itemBuilder: (BuildContext context, index) {
-              return ExampleItemWidget(
-                example[index],
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
-                },
-              );
-            }));
+      appBar: appBar(context, 'TabBar Example'),
+      body: ListView.builder(
+        itemCount: example.length,
+        itemBuilder: (BuildContext context, index) {
+          return ExampleItemWidget(
+            example[index],
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
+            },
+          );
+        },
+      ),
+    );
   }
 }

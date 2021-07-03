@@ -1,7 +1,7 @@
 class DTFilterOptionModel {
-  String name;
+  String? name;
   bool isSelected = false;
-  int totalSelectedItem = 0;
+  int? totalSelectedItem = 0;
 
   DTFilterOptionModel({this.name, this.totalSelectedItem});
 }

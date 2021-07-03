@@ -1,23 +1,25 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:prokit_flutter/integrations/screens/StickyHeader/stickyHeaderHomePage.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart' as SD;
+import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/smartDeck/Screens/SDSettingScreen.dart';
-
 import 'SDEditProfileScreen.dart';
 
+// ignore: camel_case_types
 class sdPRofileScreen extends StatefulWidget {
   @override
   _sdPRofileScreenState createState() => _sdPRofileScreenState();
 }
 
+// ignore: camel_case_types
 class _sdPRofileScreenState extends State<sdPRofileScreen> {
-  List<charts.Series<Task, String>> _taskPieData;
+  // TODO Without NullSafety charts
+  //List<charts.Series<Task, String>> _taskPieData;
 
-  _generateData() {
+  // TODO Without NullSafety charts
+/*  _generateData() {
     var taskData = [
       Task(task: 'Completed', value: 82.0, color: Colors.blue),
       Task(task: 'On going', value: 22.0, color: Colors.deepOrangeAccent),
@@ -32,13 +34,14 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
         id: 'Montlhy',
       ),
     );
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    _taskPieData = List<charts.Series<Task, String>>();
-    _generateData();
+    // TODO Without NullSafety charts
+   // _taskPieData = List<charts.Series<Task, String>>();
+    //_generateData();
   }
 
   @override
@@ -101,7 +104,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
                       child: Container(
                         margin: EdgeInsets.only(top: 20),
                         padding: EdgeInsets.fromLTRB(10, 4, 10, 4),
-                        decoration: SD.boxDecorations(radius: 4),
+                        decoration: boxDecorations(radius: 4),
                         child: Center(
                           child: Text('Edit Profile', style: boldTextStyle(size: 12, color: sdPrimaryColor)),
                         ),
@@ -121,7 +124,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
                     child: Container(
                       margin: EdgeInsets.only(top: 320.00 - 50),
                       padding: EdgeInsets.all(20),
-                      decoration: SD.boxDecoration(radius: 8, backGroundColor: Colors.white, spreadRadius: 2, blurRadius: 10),
+                      decoration: BoxDecoration(color: white,borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,7 +148,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
                     child: Container(
                       margin: EdgeInsets.only(top: 320.00 - 50),
                       padding: EdgeInsets.all(20),
-                      decoration: SD.boxDecoration(radius: 8, backGroundColor: Colors.white, spreadRadius: 2, blurRadius: 10),
+                      decoration: BoxDecoration(color: white,borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +173,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
               child: Container(
                 margin: EdgeInsets.only(top: 320.00 + 100, bottom: 25, left: 16, right: 16),
                 padding: EdgeInsets.only(top: 5, left: 15, right: 15),
-                decoration: SD.boxDecorations(showShadow: true),
+                //decoration: SD.boxDecorations(showShadow: true),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -192,7 +195,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
                         )
                       ],
                     ),
-                    Row(
+                    /*Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -224,7 +227,7 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                   ],
                 ),
               ),
@@ -237,9 +240,9 @@ class _sdPRofileScreenState extends State<sdPRofileScreen> {
 }
 
 class Task {
-  String task;
-  double value;
-  Color color;
+  String? task;
+  double? value;
+  Color? color;
 
   Task({this.task, this.value, this.color});
 }

@@ -16,7 +16,7 @@ class T11List extends StatefulWidget {
 }
 
 class _T11ListState extends State<T11List> {
-  List<Theme11SongsList> mList1;
+  late List<Theme11SongsList> mList1;
 
   void initState() {
     super.initState();
@@ -38,7 +38,7 @@ class _T11ListState extends State<T11List> {
                 height: 350,
                 width: MediaQuery.of(context).size.width - 24,
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mList1[index].img,
                   fit: BoxFit.fill,
                 ).cornerRadiusWithClipRRect(20).paddingTop(16),

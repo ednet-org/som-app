@@ -16,7 +16,7 @@ class MPWalkThroughScreen extends StatefulWidget {
 class MPWalkThroughScreenState extends State<MPWalkThroughScreen> with AfterLayoutMixin<MPWalkThroughScreen> {
   PageController pageController = PageController();
   List<Widget> pages = [];
-  double currentPage = 0;
+  double? currentPage = 0;
 
   final _kCurve = Curves.ease;
 

@@ -48,7 +48,7 @@ class MPSongTypeScreenState extends State<MPSongTypeScreen> {
 
                 return Container(
                   color: data.color,
-                  child: Text(data.title, style: boldTextStyle(color: Colors.white)).center(),
+                  child: Text(data.title!, style: boldTextStyle(color: Colors.white)).center(),
                 ).cornerRadiusWithClipRRect(10).onTap(() {
                   MPPopularSongScreen(data: data).launch(context);
                 });

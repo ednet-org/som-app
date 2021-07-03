@@ -17,11 +17,11 @@ class T7BottomSheet extends StatefulWidget {
 }
 
 class T7BottomSheetState extends State<T7BottomSheet> {
-  GlobalKey<ScaffoldState> _scaffoldKey = null;
+  GlobalKey<ScaffoldState>? scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    _scaffoldKey = new GlobalKey<ScaffoldState>();
+    scaffoldKey = new GlobalKey<ScaffoldState>();
     Future.delayed(Duration(milliseconds: 1000), () {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,

@@ -18,7 +18,7 @@ class ShCartFragment extends StatefulWidget {
 }
 
 class ShCartFragmentState extends State<ShCartFragment> {
-  var list = List<ShProduct>();
+  List<ShProduct> list = [];
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class ShCartFragmentState extends State<ShCartFragment> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Image.asset(
-                    "images/shophop/img/products" + list[index].images[0].src,
+                    "images/shophop/img/products" + list[index].images![0].src!,
                     width: width * 0.32,
                     height: width * 0.37,
                     fit: BoxFit.fill,
@@ -124,7 +124,7 @@ class ShCartFragmentState extends State<ShCartFragment> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
-                                    text(list[index].on_sale ? list[index].sale_price.toString().toCurrencyFormat() : list[index].price.toString().toCurrencyFormat(),
+                                    text(list[index].on_sale! ? list[index].sale_price.toString().toCurrencyFormat() : list[index].price.toString().toCurrencyFormat(),
                                         textColor: sh_colorPrimary, fontSize: textSizeNormal, fontFamily: fontMedium),
                                     SizedBox(
                                       width: spacing_control,
@@ -132,7 +132,7 @@ class ShCartFragmentState extends State<ShCartFragment> {
                                     Padding(
                                       padding: const EdgeInsets.only(bottom: 3.0),
                                       child: Text(
-                                        list[index].regular_price.toString().toCurrencyFormat(),
+                                        list[index].regular_price.toString().toCurrencyFormat()!,
                                         style: TextStyle(color: sh_textColorSecondary, fontFamily: fontRegular, fontSize: textSizeSMedium, decoration: TextDecoration.lineThrough),
                                       ),
                                     ),

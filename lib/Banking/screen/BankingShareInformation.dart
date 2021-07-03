@@ -15,7 +15,7 @@ class BankingShareInformation extends StatefulWidget {
 }
 
 class _BankingShareInformationState extends State<BankingShareInformation> {
-  List<BankingShareInfoModel> mList1;
+  late List<BankingShareInfoModel> mList1;
 
   @override
   void initState() {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/theme4/models/T4Models.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
 import 'package:prokit_flutter/theme4/utils/T4Constant.dart';
 import 'package:prokit_flutter/theme4/utils/T4DataGenerator.dart';
 import 'package:prokit_flutter/theme4/utils/T4Images.dart';
@@ -21,7 +20,7 @@ class T4Detail extends StatefulWidget {
 
 class T4DetailState extends State<T4Detail> {
   int selectedPos = 1;
-  List<T4NewsModel> mListings;
+  late List<T4NewsModel> mListings;
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class T4DetailState extends State<T4Detail> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -54,7 +53,7 @@ class T4DetailState extends State<T4Detail> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: t4_img2,
                           width: (width - 48) * 0.5,
                           height: height * 0.3,
@@ -65,7 +64,7 @@ class T4DetailState extends State<T4Detail> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: t4_img4,
                           width: (width - 48) * 0.5,
                           height: height * 0.3,
@@ -137,7 +136,7 @@ class T4DetailState extends State<T4Detail> {
                               children: <Widget>[
                                 ClipRRect(
                                   child: CachedNetworkImage(
-                                    placeholder: placeholderWidgetFn(),
+                                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                     imageUrl: mListings[index].image,
                                     width: width / 3,
                                     height: width / 3.2,

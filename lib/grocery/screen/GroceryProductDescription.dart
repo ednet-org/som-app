@@ -29,7 +29,6 @@ class GroceryProductDescriptionState extends State<GroceryProductDescription> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(grocery_app_background);
-    double expandHeight = MediaQuery.of(context).size.width * 1.1;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: grocery_app_background,
@@ -133,7 +132,7 @@ class GroceryProductDescriptionState extends State<GroceryProductDescription> {
                     height: width * 0.35,
                     width: width * 0.6,
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: grocery_ic_carrot,
                       fit: BoxFit.fill,
                     ),

@@ -24,7 +24,7 @@ Widget playMusicWidget(BuildContext context) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        LinearPercentIndicator(width: context.width(), lineHeight: 2.0, percent: 0.6, progressColor: mpAppButtonColor),
+       LinearPercentIndicator(width: context.width(), lineHeight: 2.0, percent: 0.6, progressColor: mpAppButtonColor),
         4.height,
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +61,7 @@ Widget playMusicWidget(BuildContext context) {
   );
 }
 
-Widget editProfileWidget({String title, String uName}) {
+Widget editProfileWidget({required String title, required String uName}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -71,7 +71,7 @@ Widget editProfileWidget({String title, String uName}) {
   );
 }
 
-Widget editProfileIconWidget({String title, IconData icon}) {
+Widget editProfileIconWidget({required String title, IconData? icon}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -83,7 +83,7 @@ Widget editProfileIconWidget({String title, IconData icon}) {
 
 // ignore: must_be_immutable
 class EditProfileSwitchWidget extends StatefulWidget {
-  final String name;
+  final String? name;
   bool isSelected;
 
   EditProfileSwitchWidget({this.name, this.isSelected = true});
@@ -113,7 +113,7 @@ class EditProfileSwitchWidgetState extends State<EditProfileSwitchWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(widget.name, style: primaryTextStyle(color: Colors.white)),
+        Text(widget.name!, style: primaryTextStyle(color: Colors.white)),
         Switch(
           activeColor: white,
           activeTrackColor: mpAppButtonColor,
@@ -130,7 +130,7 @@ class EditProfileSwitchWidgetState extends State<EditProfileSwitchWidget> {
   }
 }
 
-Widget searchIconWidget({Function onPressed}) {
+Widget searchIconWidget({Function? onPressed}) {
   return IconButton(
     icon: Icon(Icons.search, color: white.withOpacity(0.9)),
     onPressed: () {

@@ -50,11 +50,11 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>> list = [];
                         list.add(
                           PopupMenuItem(
                             child: Text("Mark as read"),
@@ -89,12 +89,12 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       offset: Offset(0, 100),
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>>  list = [];
                         list.add(
                           PopupMenuItem(
                             child: Text("Select Language"),
@@ -151,12 +151,12 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       offset: Offset(0, 100),
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>> list = [];
                         list.add(
                           PopupMenuItem(
                             child: ListTile(

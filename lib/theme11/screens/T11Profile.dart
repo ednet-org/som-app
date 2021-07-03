@@ -15,7 +15,7 @@ class T11Profile extends StatefulWidget {
 }
 
 class _T11ProfileState extends State<T11Profile> {
-  List<Theme11ListProfile> mList1;
+  late List<Theme11ListProfile> mList1;
 
   @override
   void initState() {

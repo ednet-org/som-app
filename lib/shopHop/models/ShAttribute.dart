@@ -1,10 +1,10 @@
 import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
 
 class ShAttributes {
-  List<Brand> brand;
-  List<ShSize> size;
-  List<ShColor> color;
-  List<ShCategory> categories;
+  List<Brand>? brand;
+  List<ShSize>? size;
+  List<ShColor>? color;
+  List<ShCategory>? categories;
 
   ShAttributes({this.brand, this.size, this.color, this.categories});
 
@@ -19,14 +19,16 @@ class ShAttributes {
 }
 
 class ShColor {
-  int count;
-  String description;
-  int id;
-  int menu_order;
-  String name;
-  String slug;
+  int? count;
+  String? description;
+  int? id;
+  // ignore: non_constant_identifier_names
+  int? menu_order;
+  String? name;
+  String? slug;
   bool isSelected = false;
 
+  // ignore: non_constant_identifier_names
   ShColor({this.count, this.description, this.id, this.menu_order, this.name, this.slug});
 
   factory ShColor.fromJson(Map<String, dynamic> json) {
@@ -53,14 +55,16 @@ class ShColor {
 }
 
 class ShSize {
-  int count;
-  String description;
-  int id;
-  int menu_order;
-  String name;
-  String slug;
+  int? count;
+  String? description;
+  int? id;
+  // ignore: non_constant_identifier_names
+  int? menu_order;
+  String? name;
+  String? slug;
   bool isSelected = false;
 
+  // ignore: non_constant_identifier_names
   ShSize({this.count, this.description, this.id, this.menu_order, this.name, this.slug});
 
   factory ShSize.fromJson(Map<String, dynamic> json) {
@@ -87,8 +91,8 @@ class ShSize {
 }
 
 class Brand {
-  String name;
-  String slug;
+  String? name;
+  String? slug;
   bool isSelected = false;
 
   Brand({this.name, this.slug});

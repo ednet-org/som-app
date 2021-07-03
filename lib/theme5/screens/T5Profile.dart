@@ -20,7 +20,7 @@ class T5Profile extends StatefulWidget {
 }
 
 class T5ProfileState extends State<T5Profile> {
-  double width;
+  double? width;
 
   @override
   void initState() {
@@ -39,16 +39,16 @@ class T5ProfileState extends State<T5Profile> {
 
   Widget gridItem(int pos) {
     return Container(
-        width: (width - (16 * 3)) / 2,
-        height: (width - (16 * 3)) / 2,
+        width: (width! - (16 * 3)) / 2,
+        height: (width! - (16 * 3)) / 2,
         decoration: boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SvgPicture.asset(
               iconList[pos],
-              width: width / 7,
-              height: width / 7,
+              width: width! / 7,
+              height: width! / 7,
               color: black,
             ),
             text(nameList[pos], fontSize: textSizeNormal, textColor: t5TextColorPrimary, fontFamily: fontSemibold)

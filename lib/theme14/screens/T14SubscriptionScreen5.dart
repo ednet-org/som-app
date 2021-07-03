@@ -14,7 +14,7 @@ class T14SubscriptionScreen5 extends StatefulWidget {
 
 class _T14SubscriptionScreen5State extends State<T14SubscriptionScreen5> {
   List<ChoosePlanModel> subscription5choosePlanList = getSubscription5ChoosePlanList();
-  int i;
+  int? i;
 
   @override
   void initState() {
@@ -78,16 +78,16 @@ class _T14SubscriptionScreen5State extends State<T14SubscriptionScreen5> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.title, style: boldTextStyle(size: 16)),
+                              Text(data.title!, style: boldTextStyle(size: 16)),
                               4.height,
-                              Text(data.subTitle, style: primaryTextStyle(size: 14, color: i == index ? white : t14_colorBlue)),
+                              Text(data.subTitle!, style: primaryTextStyle(size: 14, color: i == index ? white : t14_colorBlue)),
                             ],
                           ),
                           Container(
                               width: 25,
                               height: 25,
                               decoration: new BoxDecoration(
-                                  color: data.checkBox ? Colors.transparent : white,
+                                  color: data.checkBox! ? Colors.transparent : white,
                                   border: Border.all(
                                     width: 1,
                                     color: i == index ? white : t14_colorBlue,

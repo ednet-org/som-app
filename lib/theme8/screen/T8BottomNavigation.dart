@@ -35,7 +35,7 @@ class T8BottomNavigationState extends State<T8BottomNavigation> {
             SvgPicture.asset(
               icon,
               width: MediaQuery.of(context).size.width * 0.07,
-              height: 24,
+              height: 20,
               color: isSelected == pos ? t8_colorPrimary : t8_icon_color,
             ),
             text(
@@ -50,7 +50,7 @@ class T8BottomNavigationState extends State<T8BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

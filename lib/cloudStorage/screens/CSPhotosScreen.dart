@@ -14,8 +14,8 @@ class CSPhotosScreen extends StatefulWidget {
 }
 
 class CSPhotosScreenState extends State<CSPhotosScreen> {
-  List<Asset> images = List<Asset>();
-  String _error = 'No Error Detected';
+  List<Asset> images = [];
+  String error1 = 'No Error Detected';
   bool isIconShowingOrNot = false;
 
   @override
@@ -50,10 +50,10 @@ class CSPhotosScreenState extends State<CSPhotosScreen> {
 
   Future<void> loadAssets() async {
     setState(() {
-      images = List<Asset>();
+      images = [];
     });
 
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList = [];
     String error = 'No Error Dectected';
 
     try {
@@ -77,7 +77,7 @@ class CSPhotosScreenState extends State<CSPhotosScreen> {
 
     setState(() {
       images = resultList;
-      _error = error;
+      error1 = error;
     });
   }
 

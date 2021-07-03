@@ -19,7 +19,7 @@ class T5Listing extends StatefulWidget {
 
 class T5ListingState extends State<T5Listing> {
   int selectedPos = 1;
-  List<T5Bill> mListings;
+  late List<T5Bill> mListings;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T5ListingState extends State<T5Listing> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

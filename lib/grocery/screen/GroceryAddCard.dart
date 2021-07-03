@@ -30,6 +30,7 @@ class _GroceryAddCardScreenState extends State<GroceryAddCardScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          decoration: boxDecorationDefault(),
           color: whiteColor,
           child: Column(
             children: <Widget>[
@@ -79,7 +80,7 @@ class _GroceryAddCardScreenState extends State<GroceryAddCardScreen> {
               ).paddingOnly(top: 16, bottom: 16),
             ],
           ).paddingOnly(left: 16, right: 16),
-        ).cornerRadiusWithClipRRect(15).withShadow().paddingOnly(bottom: 16),
+        ).cornerRadiusWithClipRRect(15).paddingOnly(bottom: 16),
       ),
     );
   }

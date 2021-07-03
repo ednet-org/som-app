@@ -42,8 +42,8 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
       ).paddingOnly(bottom: 16);
     }
 
-    DragStartDetails startVerticalDragDetails;
-    DragUpdateDetails updateVerticalDragDetails;
+    late DragStartDetails startVerticalDragDetails;
+    late DragUpdateDetails updateVerticalDragDetails;
     return SafeArea(
       child: Scaffold(
         backgroundColor: appStore.scaffoldBackground,
@@ -109,7 +109,7 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                       onVerticalDragEnd: (endDetails) {
                         double dx = updateVerticalDragDetails.globalPosition.dx - startVerticalDragDetails.globalPosition.dx;
                         double dy = updateVerticalDragDetails.globalPosition.dy - startVerticalDragDetails.globalPosition.dy;
-                        double velocity = endDetails.primaryVelocity;
+                        double velocity = endDetails.primaryVelocity!;
 
                         //Convert values to be positive
                         if (dx < 0) dx = -dx;

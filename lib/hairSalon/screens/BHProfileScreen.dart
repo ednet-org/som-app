@@ -32,13 +32,13 @@ class BHProfileScreenState extends State<BHProfileScreen> {
               title: Text(BHTxtLogoutDialog, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary)),
               content: Text(BHTxtLogoutMsg, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text(BHBtnYes, style: TextStyle(color: Colors.blue, fontSize: 14)),
                   onPressed: () {
                     finish(context);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(BHBtnNo, style: TextStyle(color: Colors.blue, fontSize: 14)),
                   onPressed: () {},
                 ),

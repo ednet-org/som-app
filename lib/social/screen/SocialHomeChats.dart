@@ -18,8 +18,8 @@ class SocialHomeChats extends StatefulWidget {
 }
 
 class SocialHomeChatsState extends State<SocialHomeChats> {
-  List<SocialUser> mList;
-  List<SocialUser> mList1;
+  late List<SocialUser> mList;
+  late List<SocialUser> mList1;
 
   @override
   void initState() {
@@ -112,8 +112,9 @@ class SocialHomeChatsState extends State<SocialHomeChats> {
   }
 }
 
+// ignore: must_be_immutable
 class Chats extends StatelessWidget {
-  SocialUser model;
+  late SocialUser model;
 
   Chats(SocialUser model, int pos) {
     this.model = model;
@@ -139,7 +140,7 @@ class Chats extends StatelessWidget {
                       child: Container(
                         color: social_dark_gray,
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: model.image,
                           height: width * 0.13,
                           width: width * 0.13,

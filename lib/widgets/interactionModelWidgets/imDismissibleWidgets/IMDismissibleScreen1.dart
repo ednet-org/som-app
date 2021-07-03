@@ -34,16 +34,16 @@ class _IMDismissibleScreen1State extends State<IMDismissibleScreen1> {
         itemCount: userList.length,
         itemBuilder: (context, index) {
           return Dismissible(
-            key: Key(userList[index].tag),
+            key: Key(userList[index].tag!),
             child: mDismissibleList(userList[index]),
             background: slideRightBackground(),
             secondaryBackground: slideLeftBackground(),
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text("Swipe to left")));
+                ScaffoldMessengerState().showSnackBar(SnackBar(content: Text("Swipe to left")));
               } else if (direction == DismissDirection.endToStart) {
                 userList.removeAt(index);
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text("Swipe to right")));
+                ScaffoldMessengerState().showSnackBar(SnackBar(content: Text("Swipe to right")));
               }
             },
           );

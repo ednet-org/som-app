@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/integrations/utils/constants.dart';
 import 'package:prokit_flutter/main/utils/AppColors.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class RazorPayScreen extends StatefulWidget {
   static String tag = '/RazorPayScreen';
@@ -14,18 +13,20 @@ class RazorPayScreen extends StatefulWidget {
 }
 
 class RazorPayScreenState extends State<RazorPayScreen> {
-  Razorpay _razorpay;
+  //TODO Without NullSafety Razor pay
+  //Razorpay _razorpay;
 
   @override
   void initState() {
     super.initState();
-    _razorpay = Razorpay();
+    //TODO Without NullSafety Razor pay
+    /*_razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);*/
   }
-
-  void openCheckout() async {
+//TODO Without NullSafety Razor pay
+ /* void openCheckout() async {
     var options = {
       'key': 'rzp_test_1DP5mmOlF5G5ag',
       'amount': 2000,
@@ -36,15 +37,16 @@ class RazorPayScreenState extends State<RazorPayScreen> {
         'wallets': ['paytm']
       }
     };
-
+    //TODO Without NullSafety Razor pay
     try {
-      _razorpay.open(options);
+      //TODO Without NullSafety Razor pay
+     // _razorpay.open(options);
     } catch (e) {
-      debugPrint(e);
+      //debugPrint(e);
     }
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  }*/
+//TODO Without NullSafety Razor pay
+/*  void _handlePaymentSuccess(PaymentSuccessResponse response) {
     toast("SUCCESS: " + response.paymentId);
   }
 
@@ -54,12 +56,13 @@ class RazorPayScreenState extends State<RazorPayScreen> {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     toast("EXTERNAL_WALLET: " + response.walletName);
-  }
+  }*/
 
   @override
   void dispose() {
     super.dispose();
-    _razorpay.clear();
+    //TODO Without NullSafety Razor pay
+    //_razorpay.clear();
   }
 
   @override
@@ -146,7 +149,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
                   style: primaryTextStyle(color: white),
                 ),
               ).onTap(() {
-                openCheckout();
+                //openCheckout();
               })
             ],
           )

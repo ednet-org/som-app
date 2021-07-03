@@ -27,10 +27,10 @@ class _SVCHomePageState extends State<SVCHomePage> {
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
   GlobalKey _three = GlobalKey();
-  BuildContext myContext;
+  late BuildContext myContext;
 
   BoxDecoration boxDecoration(
-      {double radius = 80.0, Color backGroundColor = sdPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient gradient}) {
+      {double radius = 80.0, Color backGroundColor = sdPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient? gradient}) {
     return BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         boxShadow: [
@@ -121,8 +121,8 @@ class _SVCHomePageState extends State<SVCHomePage> {
   void initState() {
     super.initState();
     //  Start showcase view after current widget frames are drawn.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 200), () => ShowCaseWidget.of(myContext).startShowCase([_one, _two, _three]));
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Future.delayed(Duration(milliseconds: 200), () => ShowCaseWidget.of(myContext)!.startShowCase([_one, _two, _three]));
     });
   }
 
@@ -224,7 +224,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                         height: 250,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: cards == null ? 0 : cards.length,
+                            itemCount: cards.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 child: Container(
@@ -241,7 +241,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                       ),
                                     ],
                                     gradient: LinearGradient(
-                                      colors: [cards[index].startColor, cards[index].endColor],
+                                      colors: [cards[index].startColor!, cards[index].endColor!],
                                     ),
                                   ),
                                   child: Column(
@@ -252,7 +252,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                         radius: 40,
                                         backgroundColor: Colors.white30,
                                         child: Image.asset(
-                                          cards[index].image,
+                                          cards[index].image!,
                                           height: 60,
                                           width: 60,
                                         ),
@@ -261,7 +261,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                         height: 15,
                                       ),
                                       Text(
-                                        cards[index].examName,
+                                        cards[index].examName!,
                                         style: secondaryTextStyle(color: Colors.white, size: 20),
                                       ),
                                       SizedBox(
@@ -269,14 +269,14 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
+                                        children: [
                                           Text(
-                                            cards[index].time,
+                                            cards[index].time!,
                                             style: secondaryTextStyle(color: Colors.white54, size: 18),
                                           ),
-                                          cards[index].icon
-                                        ],
-                                      )
+                                          cards[index].icon!
+                                        ]),
+
                                     ],
                                   ),
                                 ),
@@ -338,7 +338,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                         radius: 30,
                                         backgroundColor: Colors.white,
                                         child: Image.asset(
-                                          lessons[index].image,
+                                          lessons[index].image!,
                                           height: 30,
                                           width: 30,
                                         ),
@@ -346,7 +346,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                       Container(
                                         margin: EdgeInsets.only(top: 10),
                                         child: Text(
-                                          lessons[index].title,
+                                          lessons[index].title!,
                                           style: primaryTextStyle(size: 14),
                                         ),
                                       )
@@ -389,7 +389,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                               return Container(
                                 margin: EdgeInsets.only(left: 20),
                                 width: 300,
-                                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                                decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -403,7 +403,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                         ),
                                         color: appStore.appBarColor,
                                         image: DecorationImage(
-                                          image: CachedNetworkImageProvider(liveVideo[index].image),
+                                          image: CachedNetworkImageProvider(liveVideo[index].image!),
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -417,7 +417,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               Text(
-                                                liveVideo[index].title,
+                                                liveVideo[index].title!,
                                                 style: boldTextStyle(size: 16),
                                               ),
                                               Padding(
@@ -434,7 +434,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                             color: appStore.appBarColor,
                                             child: FittedBox(
                                               child: Text(
-                                                liveVideo[index].message,
+                                                liveVideo[index].message!,
                                                 style: primaryTextStyle(size: 14),
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -448,7 +448,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                               padding: EdgeInsets.fromLTRB(10, 6, 10, 6),
                                               child: Center(
                                                 child: Text(
-                                                  liveVideo[index].status,
+                                                  liveVideo[index].status!,
                                                   style: secondaryTextStyle(size: 8, color: Colors.white),
                                                 ),
                                               ),

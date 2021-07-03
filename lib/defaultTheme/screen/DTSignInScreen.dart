@@ -53,8 +53,8 @@ class DTSignInScreenState extends State<DTSignInScreen> {
           width: dynamicWidth(context),
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
-            child: SingleChildScrollView(
+           autovalidateMode: AutovalidateMode.onUserInteraction,
+           child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,11 +71,11 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       if (!s.trim().validateEmail()) return 'Email is invalid';
                       return null;
                     },
@@ -94,14 +94,14 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                       suffix: Icon(!obscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
                         obscureText = !obscureText;
                         setState(() {});
                       }),
                     ),
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       return null;
                     },
                   ),
@@ -144,6 +144,37 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     DTSignUpScreen().launch(context);
                   }),
                   10.height,
+                  Text('OR', style: boldTextStyle(size: 22)).center(),
+                  10.height,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        child: Icon(MaterialCommunityIcons.google_glass, color: white),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        child: Icon(FontAwesome.facebook, color: white),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        child: Icon(Feather.twitter, color: white),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        child: Icon(Feather.linkedin, color: white),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

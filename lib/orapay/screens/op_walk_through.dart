@@ -14,7 +14,7 @@ class OPWalkThroughScreen extends StatefulWidget {
 class _OPWalkThroughScreenState extends State<OPWalkThroughScreen> {
   PageController pageController = PageController(initialPage: 0);
   int pageChanged = 0;
-  DateTime backbuttonpressedTime;
+  DateTime? backbuttonpressedTime;
 
   @override
   Widget build(BuildContext context) {

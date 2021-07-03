@@ -42,8 +42,14 @@ class _T14AllMessagesListScreenState extends State<T14AllMessagesListScreen> {
           },
         ),
         actions: [
-          IconButton(icon: Icon(AntDesign.search1, size: 20, color: Colors.grey)),
-          IconButton(icon: Icon(AntDesign.pluscircleo, size: 20, color: Colors.grey)),
+          IconButton(
+            icon: Icon(AntDesign.search1, size: 20, color: Colors.grey),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(AntDesign.pluscircleo, size: 20, color: Colors.grey),
+            onPressed: () {},
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -68,7 +74,7 @@ class _T14AllMessagesListScreenState extends State<T14AllMessagesListScreen> {
                         height: 40,
                         width: 40,
                         decoration: boxDecorationWithShadow(
-                          decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                          decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                           boxShape: BoxShape.circle,
                         ),
                       ),
@@ -78,19 +84,19 @@ class _T14AllMessagesListScreenState extends State<T14AllMessagesListScreen> {
                         children: [
                           Row(
                             children: [
-                              Text(data.name, style: boldTextStyle(color: t14_colorBlue, size: 14)),
-                              Icon(Entypo.dot_single, color: data.isActive ? Colors.green : Colors.transparent, size: 35),
+                              Text(data.name!, style: boldTextStyle(color: t14_colorBlue, size: 14)),
+                              Icon(Entypo.dot_single, color: data.isActive! ? Colors.green : Colors.transparent, size: 35),
                             ],
                           ),
-                          Text(data.message, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
+                          Text(data.message!, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
                         ],
                       ).expand(),
-                      Text(data.lastSeen, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
+                      Text(data.lastSeen!, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
                     ],
                   ),
                 ).onTap(() {
-                  String img = messageList[index].img;
-                  String name = messageList[index].name;
+                  String? img = messageList[index].img;
+                  String? name = messageList[index].name;
                   T14ChattingScreen(img: img, name: name).launch(context);
                 });
               },

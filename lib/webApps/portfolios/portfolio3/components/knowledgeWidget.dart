@@ -4,6 +4,7 @@ import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
 
 import '../Colors.dart';
 
+// ignore: camel_case_types
 class knowledgeWidget extends StatefulWidget {
   static String tag = '/knowledgeWidget';
 
@@ -11,6 +12,7 @@ class knowledgeWidget extends StatefulWidget {
   knowledgeWidgetState createState() => knowledgeWidgetState();
 }
 
+// ignore: camel_case_types
 class knowledgeWidgetState extends State<knowledgeWidget> {
   @override
   void initState() {

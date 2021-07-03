@@ -12,17 +12,30 @@ import 'package:prokit_flutter/dashboard/screen/Dashboard8.dart';
 import 'package:prokit_flutter/food/screen/FoodWalkThrough.dart';
 import 'package:prokit_flutter/grocery/screen/GrocerySplash.dart';
 import 'package:prokit_flutter/hairSalon/screens/BHSplashScreen.dart';
+import 'package:prokit_flutter/integrations/screens/BarChart1Screen.dart';
+import 'package:prokit_flutter/integrations/screens/BarChart2Screen.dart';
 import 'package:prokit_flutter/integrations/screens/FilePickerScreen.dart';
 import 'package:prokit_flutter/integrations/screens/FingerprintAuthentication.dart';
 import 'package:prokit_flutter/integrations/screens/ImagePickerScreen.dart';
 import 'package:prokit_flutter/integrations/screens/LikeButton/LBHomePage.dart';
+import 'package:prokit_flutter/integrations/screens/LineChartScreen.dart';
 import 'package:prokit_flutter/integrations/screens/LocalNotificationScreen.dart';
 import 'package:prokit_flutter/integrations/screens/Marquee/MHomePage.dart';
+import 'package:prokit_flutter/integrations/screens/MonthlySale1Screen.dart';
+import 'package:prokit_flutter/integrations/screens/MonthlySale2Screen.dart';
+import 'package:prokit_flutter/integrations/screens/PieChartScreen.dart';
 import 'package:prokit_flutter/integrations/screens/Shimmer/SHomePage.dart';
 import 'package:prokit_flutter/integrations/screens/ShowViewCase/SVCHomePage.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart1Screen.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart2Screen.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart3Screen.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart4Screen.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart5Screen.dart';
+import 'package:prokit_flutter/integrations/screens/StackedChart6Screen.dart';
 import 'package:prokit_flutter/integrations/screens/StickyHeader/AnimatedHeaders.dart';
 import 'package:prokit_flutter/integrations/screens/StickyHeader/OverLappingHeaders.dart';
 import 'package:prokit_flutter/integrations/screens/StickyHeader/SimpleHeaders.dart';
+import 'package:prokit_flutter/integrations/screens/TransactionScreen.dart';
 import 'package:prokit_flutter/integrations/screens/VideoPickerScreen.dart';
 import 'package:prokit_flutter/integrations/screens/api/get_method_api_integration.dart';
 import 'package:prokit_flutter/integrations/screens/api/post_method_api_integration.dart';
@@ -33,15 +46,12 @@ import 'package:prokit_flutter/integrations/screens/fluid_slider_screen.dart';
 import 'package:prokit_flutter/integrations/screens/flutterCalender/CalenderHomePage.dart';
 import 'package:prokit_flutter/integrations/screens/flutterTinderCard/TinderHomePage.dart';
 import 'package:prokit_flutter/integrations/screens/folding_cell_screen.dart';
-import 'package:prokit_flutter/integrations/screens/google_map_screen.dart';
 import 'package:prokit_flutter/integrations/screens/google_signin_screen.dart';
 import 'package:prokit_flutter/integrations/screens/liquid_pull_to_refresh_screen.dart';
 import 'package:prokit_flutter/integrations/screens/liquid_swipe_screen.dart';
 import 'package:prokit_flutter/integrations/screens/picker_screen.dart';
-import 'package:prokit_flutter/integrations/screens/razorpay_screen.dart';
 import 'package:prokit_flutter/integrations/screens/shader_mask_screen.dart';
 import 'package:prokit_flutter/integrations/screens/singature_screen.dart';
-import 'package:prokit_flutter/integrations/screens/sliding_panel_screen.dart';
 import 'package:prokit_flutter/integrations/screens/wave_screen.dart';
 import 'package:prokit_flutter/learner/Screens/LearnerWalkThrough.dart';
 import 'package:prokit_flutter/main/model/AppModel.dart';
@@ -464,7 +474,7 @@ List<ProTheme> getDiamondKit() {
 }
 
 List<ProTheme> getMusicStreaming() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T11SignIn()));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T11SignUp()));
@@ -479,7 +489,7 @@ List<ProTheme> getMusicStreaming() {
 }
 
 List<ProTheme> getECommerce() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T10SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T10SignUp(), darkThemeSupported: true));
@@ -495,7 +505,7 @@ List<ProTheme> getECommerce() {
 }
 
 List<ProTheme> getLearner() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T9SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T9SignUp(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile', is_theme: true, type: '', widget: T9Profile(), darkThemeSupported: true));
@@ -510,7 +520,7 @@ List<ProTheme> getLearner() {
 }
 
 List<ProTheme> getQuiz() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T8SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T8SignUp(), darkThemeSupported: true));
@@ -526,7 +536,7 @@ List<ProTheme> getQuiz() {
 }
 
 List<ProTheme> getHotelBooking() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T7WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Social Login', is_theme: true, type: '', widget: T7SocialLogin(), darkThemeSupported: true));
@@ -543,7 +553,7 @@ List<ProTheme> getHotelBooking() {
 }
 
 List<ProTheme> getGymApp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T6WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T6SignIn(), darkThemeSupported: true));
@@ -560,7 +570,7 @@ List<ProTheme> getGymApp() {
 }
 
 List<ProTheme> getEWallet() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T5WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T5SignIn(), darkThemeSupported: true));
@@ -579,7 +589,7 @@ List<ProTheme> getEWallet() {
 }
 
 List<ProTheme> getFeedApp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T4WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T4SignIn(), darkThemeSupported: true));
@@ -597,7 +607,7 @@ List<ProTheme> getFeedApp() {
 }
 
 List<ProTheme> getFoodRecipe() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T3WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T3SignIn(), darkThemeSupported: true));
@@ -620,7 +630,7 @@ List<ProTheme> getFoodRecipe() {
 }
 
 List<ProTheme> getExerciseTips() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T2WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T2SignIn(), darkThemeSupported: true));
@@ -640,7 +650,7 @@ List<ProTheme> getExerciseTips() {
 }
 
 List<ProTheme> getFileManageScreens() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T1WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T1Login(), darkThemeSupported: true));
@@ -662,7 +672,7 @@ List<ProTheme> getFileManageScreens() {
 
 //region ScreenList
 List<ProTheme> getScreenList() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'WalkThrough', title_name: 'WalkThrough Screens', type: '', show_cover: true, sub_kits: getWalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', title_name: 'Sign In Screens', type: '', show_cover: true, sub_kits: getSignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', title_name: 'Sign Up Screens', type: '', show_cover: true, sub_kits: getSignUp(), darkThemeSupported: true));
@@ -683,7 +693,7 @@ List<ProTheme> getScreenList() {
 }
 
 List<ProTheme> getWalkThrough() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'WalkThrough 1', is_theme: true, type: '', widget: T1WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'WalkThrough 2', is_theme: true, type: '', widget: T2WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'WalkThrough 3', is_theme: true, type: '', widget: T3WalkThrough(), darkThemeSupported: true));
@@ -695,7 +705,7 @@ List<ProTheme> getWalkThrough() {
 }
 
 List<ProTheme> getSignIn() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign In 1', is_theme: true, type: '', widget: T1Login(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In 2', is_theme: true, type: '', widget: T2SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In 3', is_theme: true, type: '', widget: T3SignIn(), darkThemeSupported: true));
@@ -711,7 +721,7 @@ List<ProTheme> getSignIn() {
 }
 
 List<ProTheme> getSignUp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign Up 1', is_theme: true, type: '', widget: T1Signup(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up 2', is_theme: true, type: '', widget: T2SignUp(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up 3', is_theme: true, type: '', widget: T3SignUp(), darkThemeSupported: true));
@@ -726,7 +736,7 @@ List<ProTheme> getSignUp() {
 }
 
 List<ProTheme> getProfile() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Profile 1', is_theme: true, type: '', widget: T1Profile(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile 2', is_theme: true, type: '', widget: T2Profile(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile 3', is_theme: true, type: '', widget: T3Profile(), darkThemeSupported: true));
@@ -738,7 +748,7 @@ List<ProTheme> getProfile() {
 }
 
 List<ProTheme> getDashboard() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dashboard 1', is_theme: true, type: '', widget: T1Dashboard(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dashboard 2', is_theme: true, type: '', widget: T2Dashboard(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dashboard 3', is_theme: true, type: '', widget: T3Dashboard(), darkThemeSupported: true));
@@ -754,7 +764,7 @@ List<ProTheme> getDashboard() {
 }
 
 List<ProTheme> getSideMenu() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Side Menu 1', is_theme: true, type: '', widget: T1SideMenu(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Side Menu 2', is_theme: true, type: '', widget: T2SideMenu(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Side Menu 3', is_theme: true, type: '', widget: T3SideMenu(), darkThemeSupported: true));
@@ -763,7 +773,7 @@ List<ProTheme> getSideMenu() {
 }
 
 List<ProTheme> getBottomNavigation() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Bottom Navigation 1', is_theme: true, type: '', widget: T1BottomNavigation(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Navigation 2', is_theme: true, type: '', widget: T2BottomNavigation(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Navigation 3', is_theme: true, type: '', widget: T3BottomNavigation(), darkThemeSupported: true));
@@ -776,7 +786,7 @@ List<ProTheme> getBottomNavigation() {
 }
 
 List<ProTheme> getDetailScreen() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Detail Screen 1', is_theme: true, type: '', widget: T3Description(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Detail Screen 2', is_theme: true, type: '', widget: T4Detail(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Detail Screen 3', is_theme: true, type: '', widget: T7PlaceDetail(), darkThemeSupported: true));
@@ -787,7 +797,7 @@ List<ProTheme> getDetailScreen() {
 }
 
 List<ProTheme> getImageSlider() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Image Slider 1', is_theme: true, type: '', widget: T1ImageSlider(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Image Slider 2', is_theme: true, type: '', widget: T2ImageSlider(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Image Slider 3', is_theme: true, type: '', widget: T3ImageSlider(), darkThemeSupported: true));
@@ -798,7 +808,7 @@ List<ProTheme> getImageSlider() {
 }
 
 List<ProTheme> getBottomSheet() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Bottom Sheet 1', is_theme: true, type: '', widget: T1BottomSheet(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Sheet 2', is_theme: true, type: '', widget: T2BottomSheet(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Sheet 3', is_theme: true, type: '', widget: T3BottomSheet(), darkThemeSupported: true));
@@ -809,7 +819,7 @@ List<ProTheme> getBottomSheet() {
 }
 
 List<ProTheme> getSearch() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Search 1', is_theme: true, type: '', widget: T1Search(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Search 2', is_theme: true, type: '', widget: T2Search(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Search 3', is_theme: true, type: '', widget: T3Search(), darkThemeSupported: true));
@@ -822,7 +832,7 @@ List<ProTheme> getSearch() {
 }
 
 List<ProTheme> getListing() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Listing 1', is_theme: true, type: '', widget: T1Listing(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Listing 2', is_theme: true, type: '', widget: T2Listing(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Listing 3', is_theme: true, type: '', widget: T3Listing(), darkThemeSupported: true));
@@ -838,7 +848,7 @@ List<ProTheme> getListing() {
 }
 
 List<ProTheme> getCards() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Cards 1', is_theme: true, type: '', widget: T1Card(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Cards 2', is_theme: true, type: '', widget: T2Cards(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Cards 3', is_theme: true, type: '', widget: T3Cards(), darkThemeSupported: true));
@@ -852,7 +862,7 @@ List<ProTheme> getCards() {
 }
 
 List<ProTheme> getDialog() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dialog 1', is_theme: true, type: '', widget: T1Dialog(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 2', is_theme: true, type: '', widget: T2Dialog(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 3', is_theme: true, type: '', widget: T3Dialog(), darkThemeSupported: true));
@@ -864,7 +874,7 @@ List<ProTheme> getDialog() {
 }
 
 List<ProTheme> getSettings() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dialog 1', is_theme: true, type: '', widget: T3Setting(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 2', is_theme: true, type: '', widget: T5Settings(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 3', is_theme: true, type: '', widget: T6Setting(), darkThemeSupported: true));
@@ -887,7 +897,7 @@ ProTheme getDashboards() {
   list.add(ProTheme(name: 'Medical', type: '', widget: Dashboard7()));
   list.add(ProTheme(name: 'Home automation', type: '', widget: Dashboard8()));
 
-  theme.sub_kits.addAll(list);
+  theme.sub_kits!.addAll(list);
   return theme;
 }
 
@@ -916,7 +926,7 @@ ProTheme getFullApps() {
   list.add(ProTheme(name: 'Flix App', type: '', widget: MuviSplashScreen()));
   list.add(ProTheme(name: 'Smart Deck', type: '', widget: SDSplashScreen()));
 
-  theme.sub_kits.addAll(list);
+  theme.sub_kits!.addAll(list);
   return theme;
 }
 
@@ -1200,13 +1210,13 @@ ProTheme getDefaultTheme() {
 ProTheme getIntegrations() {
   List<ProTheme> list = [];
 
+  list.add(ProTheme(name: 'Chart', title_name: 'Integrations', show_cover: false, sub_kits: getChartList(), darkThemeSupported: true, type: 'New'));
   list.add(ProTheme(name: 'Integration', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getIntegration(), darkThemeSupported: true));
   list.add(ProTheme(name: 'UI Interactions', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getUI(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Lists', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getLists(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Maps', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getMaps(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Payment Gateways', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getPayment(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Maps', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getMaps(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Payment Gateways', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getPayment(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Rest API Integration', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getRestAPi(), darkThemeSupported: true));
-
   return ProTheme(name: 'Integration', title_name: 'Integration', type: '', show_cover: false, sub_kits: list);
 }
 
@@ -1268,8 +1278,8 @@ List<ProTheme> getSubStickyHeader() {
 List<ProTheme> getMaps() {
   List<ProTheme> list = [];
 
-  list.add(ProTheme(name: 'Google Maps with Clustering', type: '', show_cover: false, widget: GoogleMapScreen(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Google Maps with Slipping Panel', type: '', show_cover: false, widget: SlidingPanelScreen(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Google Maps with Clustering', type: '', show_cover: false, widget: GoogleMapScreen(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Google Maps with Slipping Panel', type: '', show_cover: false, widget: SlidingPanelScreen(), darkThemeSupported: true));
 
   return list;
 }
@@ -1277,7 +1287,7 @@ List<ProTheme> getMaps() {
 List<ProTheme> getPayment() {
   List<ProTheme> list = [];
 
-  list.add(ProTheme(name: 'RazorPay Payment', type: '', show_cover: false, widget: RazorPayScreen(), darkThemeSupported: true));
+  // list.add(ProTheme(name: 'RazorPay Payment', type: '', show_cover: false, widget: RazorPayScreen(), darkThemeSupported: true));
 
   return list;
 }
@@ -1303,7 +1313,7 @@ ProTheme getWebApps() {
 }
 
 List<ProTheme> getPortfolioSites() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Portfolio 1', type: '', show_cover: false, widget: Portfolio1Screen(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Portfolio 2', type: '', show_cover: false, widget: Portfolio2Screen(), darkThemeSupported: true));
@@ -1312,4 +1322,22 @@ List<ProTheme> getPortfolioSites() {
   return list;
 }
 
+List<ProTheme> getChartList() {
+  List<ProTheme> list = [];
+  list.add(ProTheme(name: 'Pie Chart', type: 'New', show_cover: false, widget: PieChartScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Line Chart', type: 'New', show_cover: false, widget: LineChartScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Monthly Sale Chart1', type: 'New', show_cover: false, widget: MonthlySale1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Monthly Sale Chart2', type: 'New', show_cover: false, widget: MonthlySale2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Bar Chart 1', type: 'New', show_cover: false, widget: BarChart1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Bar Chart 2', type: 'New', show_cover: false, widget: BarChart2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Transaction Chart', type: 'New', show_cover: false, widget: TransactionScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 1', type: 'New', show_cover: false, widget: StackedChart1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 2', type: 'New', show_cover: false, widget: StackedChart2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 3', type: 'New', show_cover: false, widget: StackedChart3Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 4', type: 'New', show_cover: false, widget: StackedChart4Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 5', type: 'New', show_cover: false, widget: StackedChart5Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 6', type: 'New', show_cover: false, widget: StackedChart6Screen(), darkThemeSupported: true));
+
+  return list;
+}
 //endregion

@@ -10,7 +10,7 @@ import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
 class NBNewsDetailsScreen extends StatefulWidget {
   static String tag = '/NBNewsDetailsScreen';
 
-  final NBNewsDetailsModel newsDetails;
+  final NBNewsDetailsModel? newsDetails;
 
   NBNewsDetailsScreen({this.newsDetails});
 
@@ -52,16 +52,16 @@ class NBNewsDetailsScreenState extends State<NBNewsDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${widget.newsDetails.categoryName}', style: boldTextStyle(color: NBPrimaryColor)),
+            Text('${widget.newsDetails!.categoryName}', style: boldTextStyle(color: NBPrimaryColor)),
             Row(
               children: [
-                Text('${widget.newsDetails.title}', style: boldTextStyle(size: 20)).expand(flex: 3),
-                widget.newsDetails.isBookmark
+                Text('${widget.newsDetails!.title}', style: boldTextStyle(size: 20)).expand(flex: 3),
+                widget.newsDetails!.isBookmark
                     ? IconButton(
                         icon: Icon(Icons.bookmark),
                         onPressed: () {
                           setState(() {
-                            widget.newsDetails.isBookmark = !widget.newsDetails.isBookmark;
+                            widget.newsDetails!.isBookmark = !widget.newsDetails!.isBookmark;
                           });
                           toast('Removed from Bookmark');
                         })
@@ -69,14 +69,14 @@ class NBNewsDetailsScreenState extends State<NBNewsDetailsScreen> {
                         icon: Icon(Icons.bookmark_border),
                         onPressed: () {
                           setState(() {
-                            widget.newsDetails.isBookmark = !widget.newsDetails.isBookmark;
+                            widget.newsDetails!.isBookmark = !widget.newsDetails!.isBookmark;
                           });
                           toast('Added to Bookmark');
                         }),
               ],
             ),
             16.height,
-            commonCacheImageWidget(widget.newsDetails.image, 200, width: context.width(), fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
+            commonCacheImageWidget(widget.newsDetails!.image, 200, width: context.width(), fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
             16.height,
             ListTile(
               contentPadding: EdgeInsets.all(0),
@@ -101,7 +101,7 @@ class NBNewsDetailsScreenState extends State<NBNewsDetailsScreen> {
               ).cornerRadiusWithClipRRect(30),
             ),
             16.height,
-            Text('${widget.newsDetails.details}', style: primaryTextStyle(), textAlign: TextAlign.justify),
+            Text('${widget.newsDetails!.details}', style: primaryTextStyle(), textAlign: TextAlign.justify),
             16.height,
             nbAppButtonWidget(context, 'Comment', () {
               NBCommentScreen(widget.newsDetails).launch(context);

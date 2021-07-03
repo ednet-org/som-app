@@ -14,7 +14,7 @@ class BankingRateInfo extends StatefulWidget {
 }
 
 class _BankingRateInfoState extends State<BankingRateInfo> {
-  List<BankingRateInfoModel> mList1;
+  late List<BankingRateInfoModel> mList1;
 
   @override
   void initState() {
@@ -69,13 +69,13 @@ class _BankingRateInfoState extends State<BankingRateInfo> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Image.asset(mList1[index].flag, height: 30, width: 30, fit: BoxFit.fill).cornerRadiusWithClipRRect(15.0),
+                            Image.asset(mList1[index].flag!, height: 30, width: 30, fit: BoxFit.fill).cornerRadiusWithClipRRect(15.0),
                             10.width,
-                            Text(mList1[index].currency, style: primaryTextStyle(size: 16, color: Banking_TextColorPrimary, fontFamily: fontRegular)),
+                            Text(mList1[index].currency!, style: primaryTextStyle(size: 16, color: Banking_TextColorPrimary, fontFamily: fontRegular)),
                           ],
                         ).expand(flex: 4),
-                        Text(mList1[index].buy, style: primaryTextStyle(size: 18, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
-                        Text(mList1[index].sell, style: primaryTextStyle(size: 18, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
+                        Text(mList1[index].buy!, style: primaryTextStyle(size: 18, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
+                        Text(mList1[index].sell!, style: primaryTextStyle(size: 18, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
                       ],
                     ),
                   );

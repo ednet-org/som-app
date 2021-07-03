@@ -26,7 +26,7 @@ class QIBusPackages extends StatefulWidget {
 class QIBusPackagesState extends State<QIBusPackages> {
   var currentIndexPage = 0;
 
-  List<QIBusNewPackageModel> mList1;
+  late List<QIBusNewPackageModel> mList1;
 
   @override
   void initState() {
@@ -52,10 +52,10 @@ class QIBusPackagesState extends State<QIBusPackages> {
     );
   }
 
-  Widget mPackages() {
+  Widget mPackages(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
-    final Size cardSize = Size(width, width * 0.62);
+    width = width - 30;
+    final Size cardSize = Size(width, width * 0.71);
 
     return QiBusCarouselSlider(
       viewportFraction: 0.8,
@@ -75,13 +75,13 @@ class QIBusPackagesState extends State<QIBusPackages> {
                   ClipRRect(
                     borderRadius: BorderRadius.only(topRight: Radius.circular(spacing_middle), topLeft: Radius.circular(spacing_middle)),
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: list.image,
                       height: width * 0.32,
                       width: width,
                       fit: BoxFit.fill,
                     ),
-                  ),
+                  ).expand(),
                   Padding(
                     padding: EdgeInsets.all(spacing_middle),
                     child: Column(
@@ -170,13 +170,13 @@ class QIBusPackagesState extends State<QIBusPackages> {
                 child: Column(
                   children: <Widget>[
                     mHeading(QIBus_txt_new_package, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                     mHeading(QIBus_txt_popular_package, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                     mHeading(QIBus_text_trending_packages, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                   ],
                 ),

@@ -23,7 +23,7 @@ class T13MenuScreenState extends State<T13MenuScreen> {
           child: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
           ),
         ),

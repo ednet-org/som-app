@@ -29,7 +29,7 @@ class _GrocerySuccessfulVerifyState extends State<GrocerySuccessfulVerify> {
           SizedBox(height: spacing_xxLarge),
           SizedBox(height: spacing_xxLarge),
           SizedBox(height: spacing_xxLarge),
-          Image.asset(grocery_logo, width: width * 0.35, height: width * 0.35, fit: BoxFit.fill).center(),
+          commonCacheImageWidget(grocery_logo, width * 0.35, width: width * 0.35, fit: BoxFit.fill).center(),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,

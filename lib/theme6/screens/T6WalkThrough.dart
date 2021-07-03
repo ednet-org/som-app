@@ -18,7 +18,7 @@ class T6WalkThrough extends StatefulWidget {
 
 class T6WalkThroughState extends State<T6WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
 
   var titles = [
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text ",
@@ -96,7 +96,7 @@ class WalkThrough extends StatelessWidget {
   final String textContent;
   final String title;
 
-  WalkThrough({Key key, @required this.textContent, @required this.title}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class WalkThrough extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: textContent,
               height: (MediaQuery.of(context).size.height) / 2.5,
             ),

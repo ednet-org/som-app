@@ -81,7 +81,7 @@ class CSOfflineScreenState extends State<CSOfflineScreen> {
                         Text("Files you make available offline will show up here.", textAlign: TextAlign.center, style: TextStyle(fontSize: 17)).paddingOnly(top: 10, bottom: 10),
                       ],
                     ),
-                    FlatButton(onPressed: () {}, child: Text("Learn more", style: TextStyle(color: CSDarkBlueColor)))
+                    TextButton(onPressed: () {}, child: Text("Learn more", style: TextStyle(color: CSDarkBlueColor)))
                   ],
                 ).center(),
         ),

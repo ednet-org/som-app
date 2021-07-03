@@ -15,7 +15,6 @@ class BankingPayInvoice extends StatefulWidget {
 class _BankingPayInvoiceState extends State<BankingPayInvoice> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Banking_app_Background,
       body: Stack(

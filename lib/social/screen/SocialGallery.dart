@@ -20,8 +20,6 @@ class SocialGallery extends StatefulWidget {
 class SocialGalleryState extends State<SocialGallery> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.height;
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.grey[200],
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -46,9 +44,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final double _initFabHeight = 90.0;
-  double _fabHeight;
-  double _panelHeightOpen;
-  List<Media> mList;
+  double? _fabHeight;
+  double? _panelHeightOpen;
+  late List<Media> mList;
 
   @override
   void initState() {
@@ -75,10 +73,10 @@ class _HomePageState extends State<HomePage> {
             parallaxEnabled: true,
             parallaxOffset: .5,
             body: _body(),
-            panelBuilder: (sc) => _panel(sc),
+            panelBuilder: (sc) => _panel(sc!),
             borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
             onPanelSlide: (double pos) => setState(() {
-              _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) + _initFabHeight;
+              _fabHeight = pos * (_panelHeightOpen! - _panelHeightClosed) + _initFabHeight;
             }),
           ),
 
@@ -169,7 +167,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _body() {
     return CachedNetworkImage(
-      placeholder: placeholderWidgetFn(),
+      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
       imageUrl: social_ic_user1,
     );
   }
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage> {
 
 // ignore: must_be_immutable
 class SocialMedia extends StatelessWidget {
-  Media model;
+  late Media model;
 
   SocialMedia(Media model, int pos) {
     this.model = model;
@@ -190,7 +188,7 @@ class SocialMedia extends StatelessWidget {
       child: ClipRRect(
         borderRadius: new BorderRadius.circular(12.0),
         child: CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: model.image,
           fit: BoxFit.fill,
           height: width * 0.15,

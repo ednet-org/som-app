@@ -20,7 +20,7 @@ class T12BottomSheet extends StatefulWidget {
 class T12BottomSheetState extends State<T12BottomSheet> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, "Electricity Bill"),
@@ -138,7 +138,7 @@ class T12BottomSheetState extends State<T12BottomSheet> {
                                                                   Container(
                                                                     decoration: boxDecoration(showShadow: true, bgColor: Color(0xffBBd2fc), radius: spacing_standard),
                                                                     child: Image.asset(
-                                                                      "",
+                                                                      t12_bill,
                                                                       width: 24,
                                                                       height: 24,
                                                                     ).paddingAll(spacing_standard_new),

@@ -20,8 +20,8 @@ class Dashboard5 extends StatefulWidget {
 }
 
 class Dashboard5State extends State<Dashboard5> {
-  List<Db5CategoryData> mListings;
-  List<Db6BestDestinationData> mListings1;
+  late List<Db5CategoryData> mListings;
+  late List<Db6BestDestinationData> mListings1;
   var _selectedIndex = 0;
 
   @override
@@ -184,8 +184,9 @@ class Dashboard5State extends State<Dashboard5> {
   }
 }
 
+// ignore: must_be_immutable, camel_case_types
 class category extends StatelessWidget {
-  Db5CategoryData model;
+  late Db5CategoryData model;
 
   category(Db5CategoryData model, int pos) {
     this.model = model;

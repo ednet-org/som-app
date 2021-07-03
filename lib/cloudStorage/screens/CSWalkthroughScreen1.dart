@@ -23,9 +23,9 @@ class CSWalkthroughScreen1 extends StatelessWidget {
               Container(
                 height: 50,
                 decoration: BoxDecoration(color: CSDarkBlueColor),
-                child: Text('Select photos to upload', style: boldTextStyle(color: Colors.white, size: 17)).center().expand(),
+                child: Text('Select photos to upload', style: boldTextStyle(color: Colors.white, size: 17)).center(),
               ).paddingTop(20).onTap(() {}),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   CSWalkthroughScreen2().launch(context);
                 },

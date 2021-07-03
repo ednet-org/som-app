@@ -16,8 +16,7 @@ class LearnerInstructorsDetails extends StatefulWidget {
 }
 
 class _LearnerInstructorsDetailsState extends State<LearnerInstructorsDetails> {
-  @override
-  List<LearnerFeaturedModel> mList1;
+  late List<LearnerFeaturedModel> mList1;
 
   @override
   void initState() {
@@ -35,7 +34,7 @@ class _LearnerInstructorsDetailsState extends State<LearnerInstructorsDetails> {
           alignment: Alignment.topRight,
           children: <Widget>[
             CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: learner_ic_profile1,
               height: width * 0.3,
               width: width * 0.3,
@@ -112,7 +111,7 @@ class _LearnerInstructorsDetailsState extends State<LearnerInstructorsDetails> {
                   ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: mList1[index].img,
                       height: 50,
                       width: 50,

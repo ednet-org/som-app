@@ -23,7 +23,6 @@ class T7HotelBookingState extends State<T7HotelBooking> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
-    final Size cardSize = Size(width, width / 1.8);
     changeStatusColor(Colors.transparent);
     return Scaffold(
       body: Stack(
@@ -31,7 +30,7 @@ class T7HotelBookingState extends State<T7HotelBooking> {
           Container(
             height: MediaQuery.of(context).size.width / 1.5,
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: t7_ic_thailand_beach,
               fit: BoxFit.fill,
             ),
@@ -125,10 +124,10 @@ Container t7EditTextStyle(var hintText) {
         hintText: hintText,
         hintStyle: primaryTextStyle(),
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+          borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+          borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
         ),
       ),
     ),

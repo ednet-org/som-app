@@ -17,7 +17,7 @@ class FoodReview extends StatefulWidget {
 }
 
 class FoodReviewState extends State<FoodReview> {
-  List<ReviewModel> mReviewList;
+  late List<ReviewModel> mReviewList;
 
   @override
   void initState() {

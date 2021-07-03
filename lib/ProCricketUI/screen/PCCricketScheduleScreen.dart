@@ -23,7 +23,7 @@ class PCCricketScheduleScreen extends StatefulWidget {
 class _PCCricketScheduleScreenState extends State<PCCricketScheduleScreen> {
   String strSplit = "";
 
-  PCScheduleData model;
+  PCScheduleData? model;
 
   @override
   void initState() {
@@ -52,11 +52,11 @@ class _PCCricketScheduleScreenState extends State<PCCricketScheduleScreen> {
               child: Column(
                 children: [
                   ListView.builder(
-                    itemCount: model.schedule.length,
+                    itemCount: model!.schedule!.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
-                      Schedule schedule = model.schedule[index];
+                      Schedule schedule = model!.schedule![index];
 
                       return Container(
                         padding: EdgeInsets.only(top: 8, bottom: 8),
@@ -82,11 +82,11 @@ class _PCCricketScheduleScreenState extends State<PCCricketScheduleScreen> {
                                                   Container(height: 25, width: (context.width() - 16) / 2, color: getColorFromHex(getLightColor(schedule.team1Key))),
                                                 ],
                                               ),
-                                              if (getBgFlag(schedule.team1Key).isNotEmpty) Image.asset(getBgFlag(schedule.team1Key)),
+                                              if (getBgFlag(schedule.team1Key).isNotEmpty) commonCacheImageWidget(getBgFlag(schedule.team1Key),context.width() *0.1),
                                               // text
                                             ],
                                           ),
-                                          Text(schedule.team1Key.toUpperCase(), style: primaryTextStyle(color: Cricket_white, fontFamily: fontMedium)),
+                                          Text(schedule.team1Key!.toUpperCase(), style: primaryTextStyle(color: Cricket_white, fontFamily: fontMedium)),
                                         ],
                                       ),
                                       Stack(
@@ -101,11 +101,11 @@ class _PCCricketScheduleScreenState extends State<PCCricketScheduleScreen> {
                                                   Container(height: 25, width: (context.width() - 16) / 2, color: getColorFromHex(getLightColor(schedule.team2Key))),
                                                 ],
                                               ),
-                                              if (getBgFlag(schedule.team2Key).isNotEmpty) Image.asset(getBgFlag(schedule.team2Key)),
+                                              if (getBgFlag(schedule.team2Key).isNotEmpty) commonCacheImageWidget(getBgFlag(schedule.team2Key),context.width() *0.1),
                                               // text
                                             ],
                                           ),
-                                          Text(schedule.team2Key.toUpperCase(), style: primaryTextStyle(color: Cricket_white, fontFamily: fontMedium)),
+                                          Text(schedule.team2Key!.toUpperCase(), style: primaryTextStyle(color: Cricket_white, fontFamily: fontMedium)),
                                         ],
                                       ),
                                     ],
@@ -123,16 +123,16 @@ class _PCCricketScheduleScreenState extends State<PCCricketScheduleScreen> {
                               ),
                               child: Column(
                                 children: <Widget>[
-                                  Text(schedule.vnu, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 18, fontFamily: fontMedium)),
+                                  Text(schedule.vnu!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 18, fontFamily: fontMedium)),
                                   10.height,
-                                  Text(schedule.result, style: primaryTextStyle(color: Cricket_Primary, size: 18, fontFamily: fontMedium))
+                                  Text(schedule.result!, style: primaryTextStyle(color: Cricket_Primary, size: 18, fontFamily: fontMedium))
                                 ],
                               ),
                             )
                           ],
                         ).onTap(
                           () {
-                            PCCricketMatchDetailScreen(team1: model.schedule[index].team1Key.toUpperCase(), team2: model.schedule[index].team2Key.toUpperCase()).launch(context);
+                            PCCricketMatchDetailScreen(team1: model!.schedule![index].team1Key!.toUpperCase(), team2: model!.schedule![index].team2Key!.toUpperCase()).launch(context);
                           },
                         ),
                       );

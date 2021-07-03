@@ -8,7 +8,7 @@ import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
 class NBAudioNewsDetailsScreen extends StatefulWidget {
   static String tag = '/NBAudioNewsDetailsScreen';
 
-  final NBNewsDetailsModel audioDetails;
+  final NBNewsDetailsModel? audioDetails;
 
   NBAudioNewsDetailsScreen({this.audioDetails});
 
@@ -49,9 +49,9 @@ class NBAudioNewsDetailsScreenState extends State<NBAudioNewsDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            commonCacheImageWidget(widget.audioDetails.image, 200, width: context.width(), fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
+            commonCacheImageWidget(widget.audioDetails!.image, 200, width: context.width(), fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
             16.height,
-            Text('${widget.audioDetails.title}', style: boldTextStyle(), textAlign: TextAlign.center),
+            Text('${widget.audioDetails!.title}', style: boldTextStyle(), textAlign: TextAlign.center),
             16.height,
             Row(
               children: [
@@ -64,7 +64,7 @@ class NBAudioNewsDetailsScreenState extends State<NBAudioNewsDetailsScreen> {
                   minHeight: 5,
                 ).expand(),
                 8.width,
-                Text('${widget.audioDetails.time}', style: primaryTextStyle(size: 14)),
+                Text('${widget.audioDetails!.time}', style: primaryTextStyle(size: 14)),
               ],
             ),
             16.height,
@@ -100,7 +100,7 @@ class NBAudioNewsDetailsScreenState extends State<NBAudioNewsDetailsScreen> {
             16.height,
             Text('Description', style: boldTextStyle(size: 20)),
             8.height,
-            Text('${widget.audioDetails.details}', style: primaryTextStyle(), textAlign: TextAlign.justify),
+            Text('${widget.audioDetails!.details}', style: primaryTextStyle(), textAlign: TextAlign.justify),
             16.height,
           ],
         ).paddingOnly(left: 16, right: 16),

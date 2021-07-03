@@ -6,7 +6,7 @@ import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
 
 class NBNewsComponent extends StatefulWidget {
   static String tag = '/NBNewsComponent';
-  final List<NBNewsDetailsModel> list;
+  final List<NBNewsDetailsModel>? list;
 
   NBNewsComponent({this.list});
 
@@ -33,10 +33,10 @@ class NBNewsComponentState extends State<NBNewsComponent> {
     return ListView.separated(
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       padding: EdgeInsets.all(16),
       itemBuilder: (context, index) {
-        NBNewsDetailsModel mData = widget.list[index];
+        NBNewsDetailsModel mData = widget.list![index];
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

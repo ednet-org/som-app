@@ -19,7 +19,7 @@ class SocialProfile extends StatefulWidget {
 }
 
 class SocialProfileState extends State<SocialProfile> {
-  Widget mOption(var value, var icon, {@required Function onTap}) {
+  Widget mOption(var value, var icon, {required Function onTap}) {
     return GestureDetector(
       onTap: () {
         onTap();
@@ -62,7 +62,7 @@ class SocialProfileState extends State<SocialProfile> {
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
           child: CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: social_ic_user1,
             height: width * 0.25,
             width: width * 0.25,

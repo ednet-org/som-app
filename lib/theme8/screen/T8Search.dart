@@ -18,11 +18,11 @@ class T8Search extends StatefulWidget {
 }
 
 class T8SearchState extends State<T8Search> {
-  List<T8QuizModel> mListings;
+  List<T8QuizModel>? mListings;
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

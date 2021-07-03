@@ -144,11 +144,11 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                       trailing: Switch(
                         value: offlineFiles,
                         onChanged: (val) async {
-                          bool isOK = await buildCommonDialog(
+                          bool isOK = await (buildCommonDialog(
                             context,
                             title: "Update files on data plan?",
                             content: "Updating files using cellular data could incur data charges",
-                          );
+                          ));
                           offlineFiles = isOK ? true : false;
                           setState(() {});
                         },
@@ -200,7 +200,7 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                       builder: (_, snap) {
                         if (snap.hasError) return Text(snap.error.toString()).center();
                         if (snap.hasData) {
-                          return buildListTileForSetting(title: "App version", subTitle: snap.data.version);
+                          return buildListTileForSetting(title: "App version", subTitle: snap.data!.version);
                         }
                         return CircularProgressIndicator();
                       },
@@ -236,11 +236,11 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                   title: "Sign out of this Cloudbox",
                   color: Colors.red.shade800,
                   onTap: () async {
-                    bool isSignOut = await buildCommonDialog(
+                    bool isSignOut = await (buildCommonDialog(
                       context,
                       posBtn: "Sign out",
                       content: "Are you sure you want to sign out from your $CSAppName account ?",
-                    );
+                    ));
                     if (isSignOut) {
                       finish(context);
                       CSStartingScreen().launch(context);

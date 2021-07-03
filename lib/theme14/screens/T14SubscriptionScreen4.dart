@@ -16,7 +16,7 @@ class T14SubscriptionScreen4 extends StatefulWidget {
 class _T14SubscriptionScreen4State extends State<T14SubscriptionScreen4> {
   List<CheckBoxTextModel> subscription4checkBoxTxtList = getSubscription4CheckBoxTxtList();
   List<ChoosePlanModel> subscription4choosePlanList = getSubscription4ChoosePlanList();
-  int i;
+  int? i;
 
   @override
   void initState() {
@@ -73,10 +73,10 @@ class _T14SubscriptionScreen4State extends State<T14SubscriptionScreen4> {
                               width: 25,
                               height: 25,
                               decoration: new BoxDecoration(
-                                  color: data.checkBox ? t14_btn_checkBoxColor : Colors.transparent,
+                                  color: data.checkBox! ? t14_btn_checkBoxColor : Colors.transparent,
                                   border: Border.all(
                                     width: 1,
-                                    color: data.checkBox ? Colors.transparent : appStore.textPrimaryColor,
+                                    color: data.checkBox! ? Colors.transparent : appStore.textPrimaryColor!,
                                   ),
                                   shape: BoxShape.circle),
                               child: Theme(
@@ -85,7 +85,7 @@ class _T14SubscriptionScreen4State extends State<T14SubscriptionScreen4> {
                                   value: data.checkBox,
                                   onChanged: (state) {
                                     setState(() {
-                                      return data.checkBox = state;
+                                       data.checkBox = state;
                                     });
                                   },
                                   activeColor: Colors.transparent,
@@ -95,11 +95,11 @@ class _T14SubscriptionScreen4State extends State<T14SubscriptionScreen4> {
                               ),
                             ),
                             16.width,
-                            Text(data.name, style: boldTextStyle(size: 16)),
+                            Text(data.name!, style: boldTextStyle(size: 16)),
                           ],
                         ),
                       ).onTap(() {
-                        data.checkBox = !data.checkBox;
+                        data.checkBox = !data.checkBox!;
                         setState(() {});
                       });
                     }),
@@ -122,8 +122,8 @@ class _T14SubscriptionScreen4State extends State<T14SubscriptionScreen4> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.title, style: primaryTextStyle(size: 16)),
-                            Text(data.subTitle, style: primaryTextStyle(size: 14)),
+                            Text(data.title!, style: primaryTextStyle(size: 16)),
+                            Text(data.subTitle!, style: primaryTextStyle(size: 14)),
                           ],
                         ),
                       ).onTap(() {

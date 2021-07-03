@@ -26,12 +26,12 @@ class QIBusHome extends StatefulWidget {
 
 class QIBusHomeState extends State<QIBusHome> {
   var isSelected = 0;
-  List<QIBusBookingModel> mRecentList;
-  List<QIBusNewOfferModel> mOfferList;
+  late List<QIBusBookingModel> mRecentList;
+  late List<QIBusNewOfferModel> mOfferList;
   var now = new DateTime.now();
   var count = 1;
   var formatter = new DateFormat('dd - MMM - yyyy');
-  String formatted;
+  String? formatted;
 
   @override
   void initState() {
@@ -165,7 +165,7 @@ class QIBusHomeState extends State<QIBusHome> {
                       )
                     ],
                   ),
-                ),
+                ).expand(),
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 6, 8, 6),
                   child: Column(
@@ -244,7 +244,6 @@ class QIBusHomeState extends State<QIBusHome> {
   }
 
   Widget mRecentSearch(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return SizedBox(
 //      height: width * 0.4,
       height: 155,
@@ -343,8 +342,9 @@ class QIBusHomeState extends State<QIBusHome> {
   }
 }
 
+// ignore: must_be_immutable
 class RecentSearch extends StatelessWidget {
-  QIBusBookingModel model;
+  late QIBusBookingModel model;
 
   RecentSearch(QIBusBookingModel model, int pos) {
     this.model = model;
@@ -387,14 +387,16 @@ class RecentSearch extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(spacing_middle, 0, spacing_standard_new, 14),
             child: text(model.duration, textColor: qIBus_textChild),
           ),
-          RaisedButton(
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+                padding: const EdgeInsets.all(0.0),
+                textStyle: TextStyle(color: qIBus_white),
+              ),
               onPressed: () {
                 QIBusSearchList().launch(context);
               },
-              textColor: qIBus_white,
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-              padding: const EdgeInsets.all(0.0),
               child: Container(
                 decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.0)), color: qIBus_colorPrimary),
                 child: Center(
@@ -414,8 +416,9 @@ class RecentSearch extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class NewOffer extends StatelessWidget {
-  QIBusNewOfferModel model;
+  late QIBusNewOfferModel model;
 
   NewOffer(QIBusNewOfferModel model, int pos) {
     this.model = model;
@@ -437,7 +440,7 @@ class NewOffer extends StatelessWidget {
                 Container(
                   color: model.color,
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: model.img,
                     height: 130,
                     fit: BoxFit.none,

@@ -21,7 +21,7 @@ class _DTMessageScreenState extends State<DTMessageScreen> {
   TextEditingController msgController = TextEditingController();
   FocusNode msgFocusNode = FocusNode();
 
-  var msgListing = List<DTChatMessageModel>();
+  List<DTChatMessageModel> msgListing = [];
   var personName = 'John Doe';
 
   @override
@@ -90,14 +90,14 @@ class _DTMessageScreenState extends State<DTMessageScreen> {
 
                       msgController.text = '';
 
-                      if (mounted) scrollController?.animToTop();
+                      if (mounted) scrollController.animToTop();
                       setState(() {});
 
                       await Future.delayed(Duration(seconds: 1));
 
                       msgListing.insert(0, msgModel1);
 
-                      if (mounted) scrollController?.animToTop();
+                      if (mounted) scrollController.animToTop();
                     } else {
                       FocusScope.of(context).requestFocus(msgFocusNode);
                     }

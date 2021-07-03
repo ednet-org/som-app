@@ -90,11 +90,11 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: appColorPrimary),
-                    child: Image.asset(e.icon,
+                    child: Image.asset(e.icon!,
                         height: 30, width: 30, color: white),
                   ),
                   4.height,
-                  Text(e.name,
+                  Text(e.name!,
                       style: primaryTextStyle(size: 12),
                       maxLines: 1,
                       textAlign: TextAlign.center,
@@ -117,7 +117,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
 
           return Container(
             decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor: appStore.appBarColor),
+                backgroundColor: appStore.appBarColor!),
             width: 220,
             margin: EdgeInsets.only(right: 8),
             child: Column(
@@ -128,7 +128,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                 Stack(
                   children: [
                     Image.network(
-                      data.image,
+                      data.image!,
                       fit: BoxFit.fitHeight,
                       height: 180,
                       width: context.width(),
@@ -148,7 +148,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(data.name,
+                    Text(data.name!,
                         style: primaryTextStyle(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis),
@@ -160,7 +160,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                             onRatingChanged: (r) {},
                             filledIcon: Icons.star,
                             emptyIcon: Icons.star_border,
-                            initialRating: data.rating,
+                            initialRating: data.rating!,
                             maxRating: 5,
                             filledColor: Colors.yellow,
                             size: 14,
@@ -185,7 +185,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
               ],
             ),
           ).onTap(() async {
-            int index =
+            int? index =
                 await DTProductDetailScreen(productModel: data).launch(context);
             if (index != null) appStore.setDrawerItemIndex(index);
           });
@@ -250,16 +250,14 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
     }
 
     Widget webWidget() {
-      double cardWidth = (dynamicWidth(context)) / 2;
-      double cardHeight = context.height() / 5;
-
       return SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 60),
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Smart Offer Management', style: boldTextStyle()).paddingAll(8),
+              Text('Smart Offer Management', style: boldTextStyle())
+                  .paddingAll(8),
             ],
           ),
         ),

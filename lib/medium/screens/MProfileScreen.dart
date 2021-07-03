@@ -54,7 +54,7 @@ class MProfileScreenState extends State<MProfileScreen> {
                     color: mGreyColor,
                     icon: Icon(Icons.more_vert, color: grey),
                     padding: EdgeInsets.all(0),
-                    onSelected: (i) {
+                    onSelected: (dynamic i) {
                       MEditProfileScreen(name: 'Smith John').launch(context);
                     },
                     itemBuilder: (context) => [

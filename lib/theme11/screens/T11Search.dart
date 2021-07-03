@@ -16,7 +16,7 @@ class T11Search extends StatefulWidget {
 }
 
 class _T11SearchState extends State<T11Search> {
-  List<Theme11Albums> mList1;
+  late List<Theme11Albums> mList1;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _T11SearchState extends State<T11Search> {
                 Row(
                   children: <Widget>[
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: mList1[index].img,
                       height: 70,
                       width: 70,
@@ -97,7 +97,7 @@ class _T11SearchState extends State<T11Search> {
                 Row(
                   children: <Widget>[
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: mList1[index].img,
                       height: 70,
                       width: 70,

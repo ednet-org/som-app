@@ -47,11 +47,14 @@ class FoldingCellScreenState extends State<FoldingCellScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           text("CARD", fontSize: 20.0),
-          FlatButton(
-            onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+          TextButton(
+            onPressed: () => _foldingCellKey.currentState?.toggleFold(),
             child: text("Open", textColor: Colors.white),
-            color: Colors.indigoAccent,
-            splashColor: Colors.white.withOpacity(0.5),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.indigoAccent),
+              overlayColor: MaterialStateProperty.all(Colors.white.withOpacity(0.5)),
+            ),
+            //splashColor: Colors.white.withOpacity(0.5),
           )
         ],
       ),
@@ -69,12 +72,15 @@ class FoldingCellScreenState extends State<FoldingCellScreen> {
       alignment: Alignment.bottomCenter,
       child: Padding(
         padding: EdgeInsets.only(bottom: 10),
-        child: FlatButton(
-          onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+        child: TextButton(
+          onPressed: () => _foldingCellKey.currentState?.toggleFold(),
           child: text("Close"),
-          textColor: Colors.white,
-          color: Colors.indigoAccent,
-          splashColor: Colors.white.withOpacity(0.5),
+          style: TextButton.styleFrom(
+            textStyle: TextStyle(color: Colors.white),
+            primary: Colors.indigoAccent,
+
+          ),
+          //splashColor: Colors.white.withOpacity(0.5),
         ),
       ),
     );

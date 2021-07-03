@@ -14,11 +14,11 @@ class CHomePage extends StatefulWidget {
 
 class _CHomePageState extends State<CHomePage> {
   //  Use this to control the duration.
-  ConfettiController _controllerCenter;
-  ConfettiController _controllerCenterRight;
-  ConfettiController _controllerCenterLeft;
-  ConfettiController _controllerTopCenter;
-  ConfettiController _controllerBottomCenter;
+  late ConfettiController _controllerCenter;
+  late ConfettiController _controllerCenterRight;
+  late ConfettiController _controllerCenterLeft;
+  late ConfettiController _controllerTopCenter;
+  late ConfettiController _controllerBottomCenter;
 
   @override
   void initState() {
@@ -148,7 +148,7 @@ class _CHomePageState extends State<CHomePage> {
                     child: Container(
                       margin: EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(color: Color(0xFF8998FF), borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           _controllerCenterLeft.play();
                         },
@@ -161,7 +161,7 @@ class _CHomePageState extends State<CHomePage> {
                     child: Container(
                       margin: EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(color: Color(0xFF8998FF), borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           _controllerCenter.play();
                         },
@@ -174,7 +174,7 @@ class _CHomePageState extends State<CHomePage> {
                     child: Container(
                       margin: EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(color: Color(0xFF8998FF), borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           _controllerBottomCenter.play();
                         },
@@ -186,7 +186,7 @@ class _CHomePageState extends State<CHomePage> {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(color: Color(0xFF8998FF), borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           _controllerCenterRight.play();
                         },

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -19,7 +17,7 @@ class T1Login extends StatefulWidget {
 }
 
 class _T1LoginState extends State<T1Login> {
-  bool rememberMe = false;
+  bool? rememberMe = false;
 
   @override
   Widget build(BuildContext context) {

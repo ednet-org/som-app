@@ -16,7 +16,7 @@ class T3Cards extends StatefulWidget {
 }
 
 class T3CardsState extends State<T3Cards> {
-  List<Theme3Dish> mListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class T3CardsState extends State<T3Cards> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       appBar: appBar(context, 'Cards'),
       backgroundColor: appStore.scaffoldBackground,

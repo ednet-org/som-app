@@ -2,7 +2,7 @@ import 'package:prokit_flutter/theme13/model/T13Model.dart';
 import 'package:prokit_flutter/theme13/utils/T13Images.dart';
 
 List<Home> generateFeatured() {
-  List<Home> featured = List<Home>();
+  List<Home> featured = [];
   featured.add(Home.info("London", t13_ic_city1));
   featured.add(Home.info("Santorini", t13_ic_city2));
   featured.add(Home.info("Toronto", t13_ic_city5));
@@ -12,7 +12,7 @@ List<Home> generateFeatured() {
 }
 
 List<Home> generatePopular() {
-  List<Home> popular = List<Home>();
+  List<Home> popular = [];
   popular.add(Home("Green House", t13_ic_item1, "\$1500", "20 sqm", "Toronto"));
   popular.add(Home("Lake House", t13_ic_item2, "\$1500", "20 sqm", "Bali"));
   popular.add(Home("Modern House", t13_ic_item3, "\$1500", "20 sqm", "Santorini"));
@@ -22,7 +22,7 @@ List<Home> generatePopular() {
 }
 
 List<Currency> generateCurrency() {
-  List<Currency> currency = List<Currency>();
+  List<Currency> currency = [];
   currency.add(Currency("Afghanistan", t13_ic_afghanistan, "AFN"));
   currency.add(Currency("India", t13_ic_india, "Inr"));
   currency.add(Currency("United State", t13_ic_usa, "dollar"));
@@ -34,7 +34,7 @@ List<Currency> generateCurrency() {
 }
 
 List<Photos> generatePhotos() {
-  List<Photos> photos = List<Photos>();
+  List<Photos> photos = [];
   photos.add(Photos(t13_ic_item1));
   photos.add(Photos(t13_ic_item2));
   photos.add(Photos(t13_ic_item3));
@@ -43,7 +43,7 @@ List<Photos> generatePhotos() {
 }
 
 List<Filter> generateFilter() {
-  List<Filter> filter = List<Filter>();
+  List<Filter> filter = [];
   filter.add(Filter("Toronto", "(50 property)"));
   filter.add(Filter("Bali", "(50 property)"));
   filter.add(Filter("Santorini", "(50 property)"));

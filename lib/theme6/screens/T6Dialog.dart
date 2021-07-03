@@ -86,7 +86,7 @@ dialogContent(BuildContext context) {
             Container(
               alignment: Alignment.center,
               child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: t6_ic_work4,
                 height: 110,
               ),

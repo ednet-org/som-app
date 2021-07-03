@@ -17,7 +17,7 @@ class FoodFavourite extends StatefulWidget {
 }
 
 class FoodFavouriteState extends State<FoodFavourite> {
-  List<FoodDish> mList1;
+  late List<FoodDish> mList1;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class FoodFavouriteState extends State<FoodFavourite> {
 
 // ignore: must_be_immutable
 class Favourite extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   Favourite(FoodDish model, int pos) {
     this.model = model;
@@ -75,7 +75,7 @@ class Favourite extends StatelessWidget {
               topLeft: Radius.circular(10),
             ),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.image,
               height: width * 0.3,
               width: width,

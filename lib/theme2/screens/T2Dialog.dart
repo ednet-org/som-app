@@ -20,7 +20,7 @@ class T2Dialog extends StatefulWidget {
 class T2DialogState extends State<T2Dialog> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     Future.delayed(Duration(milliseconds: 1000), () {
       showDialog(context: context, builder: (BuildContext context) => CustomDialog());

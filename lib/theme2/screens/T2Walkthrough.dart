@@ -22,7 +22,7 @@ class T2WalkThrough extends StatefulWidget {
 
 class T2WalkThroughState extends State<T2WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
 
   var titles = ["All important tips", "Meditation is usefull for health", "Jogging is good for health"];
 
@@ -145,7 +145,7 @@ class T2WalkThroughState extends State<T2WalkThrough> {
 class WalkThrough extends StatelessWidget {
   final String textContent;
 
-  WalkThrough({Key key, @required this.textContent}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,24 +153,25 @@ class WalkThrough extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: SizedBox(
-          child: Stack(
-        children: <Widget>[
-          Image.asset(t2_walk_bg, fit: BoxFit.fill, width: MediaQuery.of(context).size.width, height: (MediaQuery.of(context).size.height) / 1.7),
-          SafeArea(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: (MediaQuery.of(context).size.height) / 1.7,
-              alignment: Alignment.center,
-              child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
-                imageUrl: textContent,
-                width: 300,
-                height: (MediaQuery.of(context).size.height) / 2.5,
+        child: Stack(
+          children: <Widget>[
+            Image.asset(t2_walk_bg, fit: BoxFit.fill, width: MediaQuery.of(context).size.width, height: (MediaQuery.of(context).size.height) / 1.7),
+            SafeArea(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: (MediaQuery.of(context).size.height) / 1.7,
+                alignment: Alignment.center,
+                child: CachedNetworkImage(
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                  imageUrl: textContent,
+                  width: 300,
+                  height: (MediaQuery.of(context).size.height) / 2.5,
+                ),
               ),
             ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -57,7 +57,7 @@ class LatestWorkWidgetState extends State<LatestWorkWidget> {
                 margin: EdgeInsets.all(8),
                 child: Stack(
                   children: [
-                    Image.network(e.img, fit: BoxFit.cover, width: context.width() * 0.25, height: 280).cornerRadiusWithClipRRect(5),
+                    Image.network(e.img!, fit: BoxFit.cover, width: context.width() * 0.25, height: 280).cornerRadiusWithClipRRect(5),
                     Container(
                       width: context.width() * 0.25,
                       height: 280,
@@ -80,12 +80,15 @@ class LatestWorkWidgetState extends State<LatestWorkWidget> {
           ),
           16.height,
           Center(
-            child: FlatButton(
+            child: TextButton(
               onPressed: () {},
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-              padding: EdgeInsets.all(24),
               child: Text('Follow me on Instagram', style: boldTextStyle(color: Colors.white, size: 18)),
-              color: Colors.black,
+              style: TextButton.styleFrom(
+                backgroundColor: portfolio3PrimaryColor,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                padding: EdgeInsets.all(24),
+                primary: Colors.black,
+              ),
             ),
           ),
           50.height,

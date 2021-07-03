@@ -11,7 +11,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 // ignore: must_be_immutable
 class MPProfileScreen extends StatefulWidget {
-  bool isTab = false;
+  bool? isTab = false;
 
   MPProfileScreen({this.isTab});
 
@@ -43,7 +43,7 @@ class MPProfileScreenState extends State<MPProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: widget.isTab
+        appBar: widget.isTab!
             ? AppBar(
                 backgroundColor: mpAppBackGroundColor,
                 title: Text("Profile", style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
@@ -117,7 +117,7 @@ class MPProfileScreenState extends State<MPProfileScreen> {
                             MPOurChoicesScreen().launch(context);
                           }),
                           8.height,
-                          Text(data.title, style: secondaryTextStyle(color: Colors.white)),
+                          Text(data.title!, style: secondaryTextStyle(color: Colors.white)),
                           8.height,
                         ],
                       ),

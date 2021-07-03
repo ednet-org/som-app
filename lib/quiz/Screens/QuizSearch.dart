@@ -19,7 +19,7 @@ class QuizSearch extends StatefulWidget {
 }
 
 class _QuizSearchState extends State<QuizSearch> {
-  List<NewQuizModel> mListings;
+  late List<NewQuizModel> mListings;
   var searchCont = TextEditingController();
 
   @override
@@ -32,6 +32,7 @@ class _QuizSearchState extends State<QuizSearch> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
 
+    // ignore: non_constant_identifier_names
     final QuizAll = StaggeredGridView.countBuilder(
       crossAxisCount: 4,
       mainAxisSpacing: 4.0,
@@ -55,7 +56,7 @@ class _QuizSearchState extends State<QuizSearch> {
                     topRight: Radius.circular(16.0),
                   ),
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: mListings[index].quizImage,
                     height: width * 0.4,
                     width: MediaQuery.of(context).size.width / 0.25,

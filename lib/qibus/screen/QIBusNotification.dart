@@ -16,7 +16,7 @@ class QIBusNotification extends StatefulWidget {
 }
 
 class QIBusNotificationState extends State<QIBusNotification> {
-  List<QIBusBookingModel> mList;
+  late List<QIBusBookingModel> mList;
 
   @override
   void initState() {
@@ -51,8 +51,9 @@ class QIBusNotificationState extends State<QIBusNotification> {
   }
 }
 
+// ignore: must_be_immutable
 class Notification extends StatelessWidget {
-  QIBusBookingModel model;
+  late QIBusBookingModel model;
 
   Notification(QIBusBookingModel model, int pos) {
     this.model = model;

@@ -24,13 +24,13 @@ class GroceryCheckOut extends StatefulWidget {
 
 class GroceryCheckOutState extends State<GroceryCheckOut> {
   final double _initFabHeight = 90.0;
-  double _fabHeight;
-  double _panelHeightOpen;
+  double? fabHeight;
+  double? _panelHeightOpen;
 
   @override
   void initState() {
     super.initState();
-    _fabHeight = _initFabHeight;
+    fabHeight = _initFabHeight;
   }
 
   @override
@@ -115,7 +115,7 @@ class GroceryCheckOutState extends State<GroceryCheckOut> {
                   width: width,
                   color: Colors.white,
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: grocery_ic_carts,
                     height: width * 0.38,
                     fit: BoxFit.contain,
@@ -221,7 +221,7 @@ class GroceryCheckOutState extends State<GroceryCheckOut> {
                 ),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
                 onPanelSlide: (double pos) => setState(() {
-                  _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) + _initFabHeight;
+                  fabHeight = pos * (_panelHeightOpen! - _panelHeightClosed) + _initFabHeight;
                 }),
               ),
             )

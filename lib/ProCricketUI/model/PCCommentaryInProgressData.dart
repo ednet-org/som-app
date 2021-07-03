@@ -1,55 +1,85 @@
 import 'package:prokit_flutter/ProCricketUI/model/PCSummaryData.dart';
 
 class PCCommentaryInProgressData {
-  String alerts;
-  BatTeam bat_team;
-  List<Batsman> batsman;
-  BowTeam bow_team;
-  List<Bowler> bowler;
-  bool burst_cache;
-  int burst_cache_id;
-  int burst_cache_time;
-  List<CommLine> comm_lines;
-  String crr;
-  String data_path;
-  Header header;
-  String last_wkt;
-  String last_wkt_name;
-  String last_wkt_score;
-  String match_id;
-  OverSummary over_summary;
-  String overs_left;
-  String prtshp;
-  int pulltoRefreshStopRate;
-  String range;
-  String series_id;
-  String series_name;
-  String target;
-  Venue venue;
+  String? alerts;
+  // ignore: non_constant_identifier_names
+  BatTeam? bat_team;
+  List<Batsman>? batsman;
+  // ignore: non_constant_identifier_names
+  BowTeam? bow_team;
+  List<Bowler>? bowler;
+  // ignore: non_constant_identifier_names
+  bool? burst_cache;
+  // ignore: non_constant_identifier_names
+  int? burst_cache_id;
+  // ignore: non_constant_identifier_names
+  int? burst_cache_time;
+  // ignore: non_constant_identifier_names
+  List<CommLine>? comm_lines;
+  String? crr;
+  // ignore: non_constant_identifier_names
+  String? data_path;
+  Header? header;
+  // ignore: non_constant_identifier_names
+  String? last_wkt;
+  // ignore: non_constant_identifier_names
+  String? last_wkt_name;
+  // ignore: non_constant_identifier_names
+  String? last_wkt_score;
+  // ignore: non_constant_identifier_names
+  String? match_id;
+  // ignore: non_constant_identifier_names
+  OverSummary? over_summary;
+  // ignore: non_constant_identifier_names
+  String? overs_left;
+  String? prtshp;
+  int? pulltoRefreshStopRate;
+  String? range;
+  // ignore: non_constant_identifier_names
+  String? series_id;
+  // ignore: non_constant_identifier_names
+  String? series_name;
+  String? target;
+  Venue? venue;
 
   PCCommentaryInProgressData(
       {this.alerts,
+      // ignore: non_constant_identifier_names
       this.bat_team,
       this.batsman,
+      // ignore: non_constant_identifier_names
       this.bow_team,
       this.bowler,
+      // ignore: non_constant_identifier_names
       this.burst_cache,
+      // ignore: non_constant_identifier_names
       this.burst_cache_id,
+      // ignore: non_constant_identifier_names
       this.burst_cache_time,
+      // ignore: non_constant_identifier_names
       this.comm_lines,
       this.crr,
+      // ignore: non_constant_identifier_names
       this.data_path,
       this.header,
+      // ignore: non_constant_identifier_names
       this.last_wkt,
+      // ignore: non_constant_identifier_names
       this.last_wkt_name,
+      // ignore: non_constant_identifier_names
       this.last_wkt_score,
+      // ignore: non_constant_identifier_names
       this.match_id,
+      // ignore: non_constant_identifier_names
       this.over_summary,
+      // ignore: non_constant_identifier_names
       this.overs_left,
       this.prtshp,
       this.pulltoRefreshStopRate,
       this.range,
+      // ignore: non_constant_identifier_names
       this.series_id,
+      // ignore: non_constant_identifier_names
       this.series_name,
       this.target,
       this.venue});
@@ -104,40 +134,40 @@ class PCCommentaryInProgressData {
     data['series_name'] = this.series_name;
     data['target'] = this.target;
     if (this.bat_team != null) {
-      data['bat_team'] = this.bat_team.toJson();
+      data['bat_team'] = this.bat_team!.toJson();
     }
     if (this.batsman != null) {
-      data['batsman'] = this.batsman.map((v) => v.toJson()).toList();
+      data['batsman'] = this.batsman!.map((v) => v.toJson()).toList();
     }
     if (this.bow_team != null) {
-      data['bow_team'] = this.bow_team.toJson();
+      data['bow_team'] = this.bow_team!.toJson();
     }
     if (this.bowler != null) {
-      data['bowler'] = this.bowler.map((v) => v.toJson()).toList();
+      data['bowler'] = this.bowler!.map((v) => v.toJson()).toList();
     }
     if (this.comm_lines != null) {
-      data['comm_lines'] = this.comm_lines.map((v) => v.toJson()).toList();
+      data['comm_lines'] = this.comm_lines!.map((v) => v.toJson()).toList();
     }
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.over_summary != null) {
-      data['over_summary'] = this.over_summary.toJson();
+      data['over_summary'] = this.over_summary!.toJson();
     }
     if (this.venue != null) {
-      data['venue'] = this.venue.toJson();
+      data['venue'] = this.venue!.toJson();
     }
     return data;
   }
 }
 
 class Bowler {
-  String id;
-  String m;
-  String name;
-  String o;
-  String r;
-  String w;
+  String? id;
+  String? m;
+  String? name;
+  String? o;
+  String? r;
+  String? w;
 
   Bowler({this.id, this.m, this.name, this.o, this.r, this.w});
 
@@ -165,11 +195,11 @@ class Bowler {
 }
 
 class Venue {
-  String lat;
-  String location;
-  String long;
-  String name;
-  String timezone;
+  String? lat;
+  String? location;
+  String? long;
+  String? name;
+  String? timezone;
 
   Venue({this.lat, this.location, this.long, this.name, this.timezone});
 
@@ -195,9 +225,9 @@ class Venue {
 }
 
 class BowTeam {
-  String id;
-  List<InningX> innings;
-  String name;
+  String? id;
+  List<InningX>? innings;
+  String? name;
 
   BowTeam({this.id, this.innings, this.name});
 
@@ -214,17 +244,17 @@ class BowTeam {
     data['id'] = this.id;
     data['name'] = this.name;
     if (this.innings != null) {
-      data['innings'] = this.innings.map((v) => v.toJson()).toList();
+      data['innings'] = this.innings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Inning {
-  String id;
-  String overs;
-  String score;
-  String wkts;
+  String? id;
+  String? overs;
+  String? score;
+  String? wkts;
 
   Inning({this.id, this.overs, this.score, this.wkts});
 
@@ -248,14 +278,17 @@ class Inning {
 }
 
 class OverSummary {
-  String ball_def;
-  String fours;
-  String over;
-  String rem_over;
-  String runs;
-  String sixes;
-  String wickets;
+  // ignore: non_constant_identifier_names
+  String? ball_def;
+  String? fours;
+  String? over;
+  // ignore: non_constant_identifier_names
+  String? rem_over;
+  String? runs;
+  String? sixes;
+  String? wickets;
 
+  // ignore: non_constant_identifier_names
   OverSummary({this.ball_def, this.fours, this.over, this.rem_over, this.runs, this.sixes, this.wickets});
 
   factory OverSummary.fromJson(Map<String, dynamic> json) {
@@ -284,9 +317,9 @@ class OverSummary {
 }
 
 class BatTeam {
-  String id;
-  List<Inning> innings;
-  String name;
+  String? id;
+  List<Inning>? innings;
+  String? name;
 
   BatTeam({this.id, this.innings, this.name});
 
@@ -303,17 +336,17 @@ class BatTeam {
     data['id'] = this.id;
     data['name'] = this.name;
     if (this.innings != null) {
-      data['innings'] = this.innings.map((v) => v.toJson()).toList();
+      data['innings'] = this.innings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InningX {
-  String id;
-  String overs;
-  String score;
-  String wkts;
+  String? id;
+  String? overs;
+  String? score;
+  String? wkts;
 
   InningX({this.id, this.overs, this.score, this.wkts});
 
@@ -337,13 +370,13 @@ class InningX {
 }
 
 class Batsman {
-  String fours;
-  String sixes;
-  String b;
-  String id;
-  String name;
-  String r;
-  String strike;
+  String? fours;
+  String? sixes;
+  String? b;
+  String? id;
+  String? name;
+  String? r;
+  String? strike;
 
   Batsman({this.fours, this.sixes, this.b, this.id, this.name, this.r, this.strike});
 
@@ -373,49 +406,77 @@ class Batsman {
 }
 
 class CommLine {
-  String bat_ns_balls;
-  String bat_ns_name;
-  String bat_ns_runs;
-  String bat_s_balls;
-  String bat_s_name;
-  String bat_s_runs;
-  String bgcolor;
-  String bowl_maidens;
-  String bowl_name;
-  String bowl_overs;
-  String bowl_runs;
-  String bowl_wickets;
-  String comm;
-  String evt;
-  String i_id;
-  String img;
-  String link;
-  String o_no;
-  String o_summary;
-  String runs;
-  String score;
-  String timestamp;
-  String wkts;
+  // ignore: non_constant_identifier_names
+  String? bat_ns_balls;
+  // ignore: non_constant_identifier_names
+  String? bat_ns_name;
+  // ignore: non_constant_identifier_names
+  String? bat_ns_runs;
+  // ignore: non_constant_identifier_names
+  String? bat_s_balls;
+  // ignore: non_constant_identifier_names
+  String? bat_s_name;
+  // ignore: non_constant_identifier_names
+  String? bat_s_runs;
+  String? bgcolor;
+  // ignore: non_constant_identifier_names
+  String? bowl_maidens;
+  // ignore: non_constant_identifier_names
+  String? bowl_name;
+  // ignore: non_constant_identifier_names
+  String? bowl_overs;
+  // ignore: non_constant_identifier_names
+  String? bowl_runs;
+  // ignore: non_constant_identifier_names
+  String? bowl_wickets;
+  String? comm;
+  String? evt;
+  // ignore: non_constant_identifier_names
+  String? i_id;
+  String? img;
+  String? link;
+  // ignore: non_constant_identifier_names
+  String? o_no;
+  // ignore: non_constant_identifier_names
+  String? o_summary;
+  String? runs;
+  String? score;
+  String? timestamp;
+  String? wkts;
 
   CommLine(
+      // ignore: non_constant_identifier_names
       {this.bat_ns_balls,
+      // ignore: non_constant_identifier_names
       this.bat_ns_name,
+      // ignore: non_constant_identifier_names
       this.bat_ns_runs,
+      // ignore: non_constant_identifier_names
       this.bat_s_balls,
+      // ignore: non_constant_identifier_names
       this.bat_s_name,
+      // ignore: non_constant_identifier_names
       this.bat_s_runs,
       this.bgcolor,
+      // ignore: non_constant_identifier_names
       this.bowl_maidens,
+      // ignore: non_constant_identifier_names
       this.bowl_name,
+      // ignore: non_constant_identifier_names
       this.bowl_overs,
+      // ignore: non_constant_identifier_names
       this.bowl_runs,
+      // ignore: non_constant_identifier_names
       this.bowl_wickets,
       this.comm,
       this.evt,
+      // ignore: non_constant_identifier_names
       this.i_id,
       this.img,
       this.link,
+      // ignore: non_constant_identifier_names
       this.o_no,
+      // ignore: non_constant_identifier_names
       this.o_summary,
       this.runs,
       this.score,

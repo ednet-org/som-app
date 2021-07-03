@@ -52,7 +52,7 @@ class _MWSliverAppBarScreen1State extends State<MWSliverAppBarScreen1> {
                   centerTitle: true,
                   title: Text('SliverAppBar with ListView', style: primaryTextStyle(color: innerBoxIsScrolled ? appStore.textPrimaryColor : white)),
                   background: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: 'https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
                     fit: BoxFit.cover,
                   )),

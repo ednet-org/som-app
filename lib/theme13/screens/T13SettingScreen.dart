@@ -20,7 +20,7 @@ class T13SettingScreen extends StatefulWidget {
 class T13SettingScreenState extends State<T13SettingScreen> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     Widget mLabel(String value) {
       return Padding(

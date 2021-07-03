@@ -23,7 +23,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
   List<NBNewsDetailsModel> mNewsList = nbGetNewsDetails();
   List<NBNewsDetailsModel> mTechNewsList = [], mFashionNewsList = [], mSportsNewsList = [], mScienceNewsList = [];
 
-  TabController tabController;
+  TabController? tabController;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
 
   @override
   void dispose() {
-    tabController.dispose();
+    tabController!.dispose();
     super.dispose();
   }
 
@@ -65,7 +65,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
         leading: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             }),
         title: Text('News Blog', style: boldTextStyle(color: black, size: 20)),
         backgroundColor: white,

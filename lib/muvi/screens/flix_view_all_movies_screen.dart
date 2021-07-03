@@ -5,9 +5,10 @@ import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
 import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
 import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
 
+// ignore: must_be_immutable
 class ViewAllMovieScreen extends StatefulWidget {
   static String tag = '/ViewAllMovieScreen';
-  var title = "";
+  String? title = "";
 
   ViewAllMovieScreen({this.title});
 
@@ -16,7 +17,7 @@ class ViewAllMovieScreen extends StatefulWidget {
 }
 
 class ViewAllMovieScreenState extends State<ViewAllMovieScreen> {
-  var movieList = List<Movie>();
+  List<Movie> movieList = [];
 
   @override
   void initState() {

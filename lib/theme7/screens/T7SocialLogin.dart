@@ -23,7 +23,7 @@ class T7SocialLoginState extends State<T7SocialLogin> {
       body: Stack(
         children: <Widget>[
           CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: t7_ic_best_destination_japan,
             fit: BoxFit.cover,
             width: (MediaQuery.of(context).size.width),

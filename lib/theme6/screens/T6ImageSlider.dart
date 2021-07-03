@@ -17,7 +17,7 @@ class T6ImageSlider extends StatefulWidget {
 
 class T6ImageSliderState extends State<T6ImageSlider> {
   int selectedPos = 1;
-  List<T6Slider> mSliderList;
+  List<T6Slider>? mSliderList;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class T6ImageSliderState extends State<T6ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: Container(

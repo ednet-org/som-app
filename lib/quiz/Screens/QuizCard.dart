@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/quiz/Screens/QuizResult.dart';
 import 'package:prokit_flutter/quiz/utils/QuizCard.dart';
 import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
 import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-
-import 'package:prokit_flutter/quiz/utils/QuizWidget.dart';
 
 class QuizCards extends StatefulWidget {
   static String tag = '/QuizCards';
@@ -16,7 +14,7 @@ class QuizCards extends StatefulWidget {
 }
 
 class _QuizCardsState extends State<QuizCards> {
-  List<Widget> cardList = new List();
+  List<Widget> cardList = [];
 
   void removeCards(index) {
     setState(() {
@@ -32,7 +30,6 @@ class _QuizCardsState extends State<QuizCards> {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: quiz_app_background,
         body: SafeArea(
@@ -73,7 +70,7 @@ class _QuizCardsState extends State<QuizCards> {
   }
 
   List<Widget> _generateCards() {
-    List<Quiz> planetCard = new List();
+    List<Quiz> planetCard = [];
     planetCard.add(
       Quiz("How many basic steps are there in scientific method?", "Eight Steps", "Ten Steps", "Two Steps", "One Steps", 70.0),
     );
@@ -86,7 +83,7 @@ class _QuizCardsState extends State<QuizCards> {
     planetCard.add(
       Quiz("How many basic steps are there in scientific method?", "Eight Steps", "Ten Steps", "One Steps", "Three Steps", 110.0),
     );
-    List<Widget> cardList = new List();
+    List<Widget> cardList = [];
 
     for (int x = 0; x < 5; x++) {
       cardList.add(

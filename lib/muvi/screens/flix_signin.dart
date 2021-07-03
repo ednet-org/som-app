@@ -22,9 +22,9 @@ class SignInScreenState extends State<SignInScreen> {
   FocusNode passFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  bool _autoValidate = false;
+  String? email;
+  String? password;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
 
@@ -38,7 +38,7 @@ class SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     var form = Form(
       key: _formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -51,7 +51,7 @@ class SignInScreenState extends State<SignInScreen> {
               if (!value.validateEmail()) return keyString(context, "error_invalid_email");
               return null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               email = value;
             },
             textInputAction: TextInputAction.next,
@@ -65,10 +65,10 @@ class SignInScreenState extends State<SignInScreen> {
             isPassword: true,
             isPasswordVisible: passwordVisible,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: passFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               password = value;
             },
             textInputAction: TextInputAction.done,

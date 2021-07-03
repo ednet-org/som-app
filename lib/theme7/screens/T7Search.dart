@@ -117,8 +117,8 @@ class Search extends StatefulWidget {
 }
 
 class SearchState extends State<Search> {
-  List<T7RecentSearchDataModel> mListings;
-  List<T7RecentSearchDataModel> mListings1;
+  late List<T7RecentSearchDataModel> mListings;
+  late List<T7RecentSearchDataModel> mListings1;
 
   @override
   void initState() {
@@ -129,7 +129,7 @@ class SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(20.0),
@@ -139,7 +139,7 @@ class SearchState extends State<Search> {
             SizedBox(height: 16),
             RichText(
               text: TextSpan(
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText2,
                 children: [
                   WidgetSpan(
                     child: Padding(
@@ -172,7 +172,7 @@ class SearchState extends State<Search> {
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: RichText(
                       text: TextSpan(
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText2,
                         children: [
                           WidgetSpan(
                             child: Padding(

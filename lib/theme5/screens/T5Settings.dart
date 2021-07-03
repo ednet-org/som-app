@@ -24,9 +24,9 @@ class T5SettingsState extends State<T5Settings> {
   bool gift = false;
   bool fastPayment = false;
   ExpandableController _controller = new ExpandableController();
-  String _selectedLocation = 'English';
+  String? _selectedLocation = 'English';
 
-  double width;
+  late double width;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class T5SettingsState extends State<T5Settings> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -80,6 +80,7 @@ class T5SettingsState extends State<T5Settings> {
                     children: <Widget>[
                       SizedBox(height: 24),
                       T5ExpandablePanel(
+                        // ignore: deprecated_member_use_from_same_package
                         hasIcon: false,
                         header: Row(
                           children: <Widget>[
@@ -98,7 +99,6 @@ class T5SettingsState extends State<T5Settings> {
                             )
                           ],
                         ),
-                        tapHeaderToExpand: false,
                         controller: _controller,
                         expanded: Column(
                           children: <Widget>[

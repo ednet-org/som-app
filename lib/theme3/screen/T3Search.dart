@@ -19,7 +19,7 @@ class T3Search extends StatefulWidget {
 }
 
 class T3SearchState extends State<T3Search> {
-  List<Theme3Dish> mListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T3SearchState extends State<T3Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: Container(
@@ -114,7 +114,7 @@ class T3SearchState extends State<T3Search> {
 
 // ignore: must_be_immutable
 class T3SearchList extends StatelessWidget {
-  Theme3Dish model;
+  late Theme3Dish model;
 
   T3SearchList(Theme3Dish model, int pos) {
     this.model = model;

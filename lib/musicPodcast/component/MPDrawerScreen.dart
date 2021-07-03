@@ -73,7 +73,7 @@ class DrawerScreenState extends State<DrawerScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(e.name, style: primaryTextStyle(color: white)).paddingAll(8),
+                          Text(e.name!, style: primaryTextStyle(color: white)).paddingAll(8),
                           Divider(color: mpAppTextColor1),
                         ],
                       ).onTap(() {

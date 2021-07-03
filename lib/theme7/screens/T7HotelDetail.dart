@@ -28,7 +28,7 @@ class T7HotelDetailState extends State<T7HotelDetail> {
           Container(
             height: MediaQuery.of(context).size.width / 1.5,
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: t7_ic_hotel_room,
               fit: BoxFit.fill,
             ),

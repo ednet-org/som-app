@@ -33,11 +33,12 @@ Padding t13EditTextStyle(var hintText, {isPassword = true, TextInputType keyboar
       ));
 }
 
+// ignore: must_be_immutable
 class T13Button extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  T13Button({@required this.textContent, @required this.onPressed});
+  T13Button({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -48,36 +49,33 @@ class T13Button extends StatefulWidget {
 class T13ButtonState extends State<T13Button> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-        onPressed: widget.onPressed,
-        textColor: t13_white,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: t13_white),
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[t13_colorPrimary, t13_color_gradient1],
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
+      ),
+      onPressed: widget.onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: <Color>[t13_colorPrimary, t13_color_gradient1],
           ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(14.0),
-              child: Text(
-                widget.textContent,
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(14.0),
+            child: Text(
+              widget.textContent,
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
             ),
           ),
-        ));
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
+        ),
+      ),
+    );
   }
 }
 
@@ -101,16 +99,17 @@ Widget mSale(BuildContext context) {
 var mSearch = Container(
   // decoration: boxDecoration(radius: 50, showShadow: false,bgColor: appStore.appBarColor),
   child: TextFormField(
-      textAlignVertical: TextAlignVertical.center,
-      cursorColor: black,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: t13_edit_text_color,
-        hintText: t13_lbl_search,
-        hintStyle: primaryTextStyle(color: black),
-        border: InputBorder.none,
-        suffixIcon: Icon(Icons.search, color: appStore.iconColor),
-        contentPadding: EdgeInsets.only(left: 26.0, bottom: 8.0, top: 8.0, right: 50.0),
-      )),
+    textAlignVertical: TextAlignVertical.center,
+    cursorColor: black,
+    decoration: InputDecoration(
+      filled: true,
+      fillColor: t13_edit_text_color,
+      hintText: t13_lbl_search,
+      hintStyle: primaryTextStyle(color: black),
+      border: InputBorder.none,
+      suffixIcon: Icon(Icons.search, color: appStore.iconColor),
+      contentPadding: EdgeInsets.only(left: 26.0, bottom: 8.0, top: 8.0, right: 50.0),
+    ),
+  ),
   alignment: Alignment.center,
 );

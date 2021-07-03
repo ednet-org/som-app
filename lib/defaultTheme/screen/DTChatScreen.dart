@@ -26,7 +26,7 @@ class DTChatScreenState extends State<DTChatScreen> {
 
   var msgListing = getChatMsgData();
   List<DTChatModel> chats = getChatData();
-  var personName = '';
+  String? personName = '';
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class DTChatScreenState extends State<DTChatScreen> {
 
       msgController.text = '';
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
       FocusScope.of(context).requestFocus(msgFocusNode);
       setState(() {});
 
@@ -64,7 +64,7 @@ class DTChatScreenState extends State<DTChatScreen> {
 
       msgListing.insert(0, msgModel1);
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
     } else {
       FocusScope.of(context).requestFocus(msgFocusNode);
     }
@@ -105,7 +105,7 @@ class DTChatScreenState extends State<DTChatScreen> {
                 children: [
                   FadeInImage(
                     placeholder: Image.asset('images/widgets/cupertinoWidgets/grey.jpg', fit: BoxFit.cover).image,
-                    image: Image.network(data.img).image,
+                    image: Image.network(data.img!).image,
                     height: 50,
                     width: 50,
                     fit: BoxFit.cover,
@@ -118,13 +118,13 @@ class DTChatScreenState extends State<DTChatScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.name, style: primaryTextStyle(color: appStore.textPrimaryColor)).expand(),
-                            Text(data.time, style: secondaryTextStyle(size: 12, color: appStore.textSecondaryColor)),
+                            Text(data.name!, style: primaryTextStyle(color: appStore.textPrimaryColor)).expand(),
+                            Text(data.time!, style: secondaryTextStyle(size: 12, color: appStore.textSecondaryColor)),
                           ],
                         ),
                         Row(
                           children: [
-                            Text(data.lastMsg, style: secondaryTextStyle(size: 12), maxLines: 1).expand(),
+                            Text(data.lastMsg!, style: secondaryTextStyle(size: 12), maxLines: 1).expand(),
                             2.width,
                             Row(
                               children: [
@@ -199,7 +199,7 @@ class DTChatScreenState extends State<DTChatScreen> {
                           autofocus: true,
                           textCapitalization: TextCapitalization.sentences,
                           textInputAction: TextInputAction.done,
-                          decoration: InputDecoration.collapsed(hintText: personName.isNotEmpty ? 'Write to $personName' : 'Type a message', hintStyle: primaryTextStyle()),
+                          decoration: InputDecoration.collapsed(hintText: personName!.isNotEmpty ? 'Write to $personName' : 'Type a message', hintStyle: primaryTextStyle()),
                           style: primaryTextStyle(),
                           onSubmitted: (s) {
                             sendClick();

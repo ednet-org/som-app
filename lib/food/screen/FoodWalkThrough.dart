@@ -22,7 +22,7 @@ class FoodWalkThroughState extends State<FoodWalkThrough> {
   PageController pageController = PageController();
 
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
   var titles = ["Discover place near you", "Most Delicious Dishes!", "Just make an order!"];
   var subTitles = [
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text ",
@@ -111,7 +111,7 @@ class FoodWalkThroughState extends State<FoodWalkThrough> {
 class WalkThrough extends StatelessWidget {
   final String textContent;
 
-  WalkThrough({Key key, @required this.textContent}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -19,8 +19,8 @@ class ShQuickPayCardsScreen extends StatefulWidget {
 }
 
 class ShQuickPayCardsScreenState extends State<ShQuickPayCardsScreen> {
-  var list = List<ShPaymentCard>();
-  var selectedCard = 0;
+  List<ShPaymentCard> list = [];
+  int? selectedCard = 0;
 
   editCard(ShPaymentCard card) {
     Navigator.push(
@@ -149,7 +149,7 @@ class ShQuickPayCardsScreenState extends State<ShQuickPayCardsScreen> {
                     Radio(
                         value: index,
                         groupValue: selectedCard,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             selectedCard = value;
                           });

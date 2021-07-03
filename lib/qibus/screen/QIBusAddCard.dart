@@ -26,7 +26,7 @@ class QIBusAddCardState extends State<QIBusAddCard> {
   List<String> month = <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   List<String> year = <String>['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'];
 
-  Widget mSelection(var heading, List<String> list, String value) {
+  Widget mSelection(var heading, List<String> list, String? value) {
     return Container(
         padding: EdgeInsets.only(left: spacing_standard_new, right: spacing_standard_new),
         decoration: BoxDecoration(
@@ -134,7 +134,7 @@ class QIBusAddCardState extends State<QIBusAddCard> {
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: TextFormField(
                         maxLines: 1,
-                        inputFormatters: [new LengthLimitingTextInputFormatter(3), WhitelistingTextInputFormatter.digitsOnly],
+                        inputFormatters: [new LengthLimitingTextInputFormatter(3), FilteringTextInputFormatter.digitsOnly],
                         obscureText: true,
                         style: TextStyle(
                           fontSize: textSizeMedium,
@@ -269,7 +269,7 @@ Container pinEditTextStyle(var hintText, {var line = 1}) {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: TextFormField(
         maxLines: line,
-        inputFormatters: [new LengthLimitingTextInputFormatter(4), WhitelistingTextInputFormatter.digitsOnly],
+        inputFormatters: [new LengthLimitingTextInputFormatter(4), FilteringTextInputFormatter.digitsOnly],
         style: TextStyle(
           fontSize: textSizeMedium,
           fontFamily: fontRegular,
@@ -292,9 +292,6 @@ Container pinEditTextStyle(var hintText, {var line = 1}) {
 }
 
 dialogContent(BuildContext context) {
-  String selectedValue = QIBus_lbl_ac;
-  var _value = 0.0;
-
   return Container(
       decoration: new BoxDecoration(
         color: Colors.white,

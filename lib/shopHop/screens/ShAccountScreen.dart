@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/shopHop/screens/ShAdressManagerScreen.dart';
 import 'package:prokit_flutter/shopHop/screens/ShOffersScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShProfileFragment.dart';
 import 'package:prokit_flutter/shopHop/screens/ShQuickPayCardsScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShWishlistFragment.dart';
 import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
 import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
 import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
@@ -161,7 +159,7 @@ class ShAccountScreenState extends State<ShAccountScreen> {
     );
   }
 
-  Widget getRowItem(String title, {VoidCallback callback}) {
+  Widget getRowItem(String title, {VoidCallback? callback}) {
     return InkWell(
       onTap: callback,
       child: Container(

@@ -107,22 +107,26 @@ class FinishedScreenState extends State<BHFinishedAppScreen> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(12),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(12),
+                      primary: BHColorPrimary,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
                     onPressed: () {},
-                    color: BHColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                     child: Text('Book more Appointment', style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                 ),
                 8.height,
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(12),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(12),
+                      primary: whiteColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: BHColorPrimary)),
+                    ),
                     onPressed: () {},
-                    color: whiteColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: BHColorPrimary)),
                     child: Text('Go to Appointment', style: TextStyle(color: BHColorPrimary, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                 ),

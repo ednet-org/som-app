@@ -23,7 +23,7 @@ class T5SignUp extends StatefulWidget {
 class T5SignUpState extends State<T5SignUp> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -37,7 +37,7 @@ class T5SignUpState extends State<T5SignUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
+              CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
               text(t5_heading_login, textColor: appStore.textPrimaryColor, fontFamily: fontBold, fontSize: 22.0),
               Padding(
                 padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 16),

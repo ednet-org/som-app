@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/smartDeck/ModelClass/SDLeaderboardModel.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
@@ -58,12 +59,13 @@ List<SDLeaderBoardModel> students = [
   ),
 ];
 
-Widget SDLeaderboardScreen([BuildContext context, Size size]) {
+// ignore: non_constant_identifier_names
+Widget SDLeaderboardScreen([BuildContext? context, Size? size]) {
   return Column(
     children: <Widget>[
       Container(
         padding: EdgeInsets.only(top: 25, left: 16, bottom: 16),
-        width: size.width,
+        width: size!.width,
         color: sdPrimaryColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +92,7 @@ Widget SDLeaderboardScreen([BuildContext context, Size size]) {
         child: ListView.builder(
           padding: EdgeInsets.only(bottom: 16),
           scrollDirection: Axis.vertical,
-          itemCount: students == null ? 0 : students.length,
+          itemCount: students.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
@@ -137,11 +139,7 @@ Widget SDLeaderboardScreen([BuildContext context, Size size]) {
                       width: 45,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(40),
-                        child: FadeInImage(
-                          fit: BoxFit.cover,
-                          placeholder: AssetImage('Loading'),
-                          image: Image.network(students[index].image, height: 35, width: 10).image,
-                        ),
+                        child: commonCacheImageWidget(students[index].image!,35, width: 10)
                       ),
                     ),
                     SizedBox(width: 10),
@@ -150,10 +148,10 @@ Widget SDLeaderboardScreen([BuildContext context, Size size]) {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(students[index].name, style: boldTextStyle(size: 16)),
+                          Text(students[index].name!, style: boldTextStyle(size: 16)),
                           Container(
                             margin: EdgeInsets.only(top: 5),
-                            child: Text(students[index].message, style: secondaryTextStyle(size: 12)),
+                            child: Text(students[index].message!, style: secondaryTextStyle(size: 12)),
                           ),
                         ],
                       ),

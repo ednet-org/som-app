@@ -74,9 +74,9 @@ class MuviOnBoardingScreenState extends State<MuviOnBoardingScreen> {
 }
 
 class WalkThrough extends StatelessWidget {
-  final String walkImg;
+  final String? walkImg;
 
-  WalkThrough({Key key, this.walkImg}) : super(key: key);
+  WalkThrough({Key? key, this.walkImg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +89,8 @@ class WalkThrough extends StatelessWidget {
           right: -spacing_large,
           bottom: -width * 0.55,
           child: CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
-            imageUrl: walkImg,
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+            imageUrl: walkImg!,
             width: double.infinity,
           ).paddingAll(spacing_standard_new).cornerRadiusWithClipRRect(spacing_standard_new),
         ),

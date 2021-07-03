@@ -28,8 +28,8 @@ class T5DashboardState extends State<T5Dashboard> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<T5Category> mFavouriteList;
-  List<T5Slider> mSliderList;
+  List<T5Category>? mFavouriteList;
+  List<T5Slider>? mSliderList;
 
   @override
   void initState() {

@@ -8,7 +8,7 @@ class _DashPainter extends CustomPainter {
   final Color color;
   final BorderType borderType;
   final Radius radius;
-  final PathBuilder customPath;
+  final PathBuilder? customPath;
   final StrokeCap strokeCap;
 
   _DashPainter({
@@ -34,7 +34,7 @@ class _DashPainter extends CustomPainter {
     Path _path;
     if (customPath != null) {
       _path = dashPath(
-        customPath(size),
+        customPath!(size),
         dashArray: CircularIntervalList(dashPattern),
       );
     } else {
@@ -46,7 +46,7 @@ class _DashPainter extends CustomPainter {
 
   /// Returns a [Path] based on the the [borderType] parameter
   Path _getPath(Size size) {
-    Path path;
+    late Path path;
     switch (borderType) {
       case BorderType.Circle:
         path = _getCirclePath(size);

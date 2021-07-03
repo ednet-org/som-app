@@ -10,7 +10,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 class MPArtistsScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
   MPArtistsScreen({this.name});
 
@@ -47,13 +47,13 @@ class MPArtistsScreenState extends State<MPArtistsScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white),
         ),
         backgroundColor: mpAppBackGroundColor,
         elevation: 0.0,
-        title: Text(widget.name, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
+        title: Text(widget.name!, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
         actions: [
           searchIconWidget(onPressed: () {
             MPSearchScreen().launch(context);
@@ -77,10 +77,10 @@ class MPArtistsScreenState extends State<MPArtistsScreen> {
                   children: [
                     commonCacheImageWidget(data.img, 100, width: 180, fit: BoxFit.cover).cornerRadiusWithClipRRect(12),
                     Container(height: 100, width: 180, color: black.withOpacity(0.7)).cornerRadiusWithClipRRect(12),
-                    Text(data.title, textAlign: TextAlign.center, style: boldTextStyle(color: white.withOpacity(0.9)))
+                    Text(data.title!, textAlign: TextAlign.center, style: boldTextStyle(color: white.withOpacity(0.9)))
                   ],
                 ).onTap(() {
-                  String img = data.img;
+                  String? img = data.img;
                   MPArtistsDetailScreen(img: img).launch(context);
                 });
               },

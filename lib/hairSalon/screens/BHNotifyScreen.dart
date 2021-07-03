@@ -18,7 +18,7 @@ class BHNotifyScreen extends StatefulWidget {
 }
 
 class SlideUpSheetScreenState extends State<BHNotifyScreen> {
-  List<BHNotifyModel> notifyList;
+  late List<BHNotifyModel> notifyList;
 
   @override
   void initState() {
@@ -102,12 +102,12 @@ class SlideUpSheetScreenState extends State<BHNotifyScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(notifyList[index].name, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
+                          Text(notifyList[index].name!, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
                           8.height,
                           Row(
                             children: [
                               Icon(Icons.location_on, size: 14, color: BHAppTextColorSecondary),
-                              Text(notifyList[index].address, style: TextStyle(fontSize: 12, color: BHGreyColor)),
+                              Text(notifyList[index].address!, style: TextStyle(fontSize: 12, color: BHGreyColor)),
                             ],
                           ),
                           8.height,
@@ -138,7 +138,7 @@ class SlideUpSheetScreenState extends State<BHNotifyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
-        panelBuilder: (ScrollController sc) => _scrollingList(sc),
+        panelBuilder: (ScrollController? sc) => _scrollingList(sc!),
         margin: EdgeInsets.symmetric(horizontal: 16),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.0),

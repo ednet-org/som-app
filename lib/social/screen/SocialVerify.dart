@@ -17,7 +17,7 @@ class SocialVerify extends StatefulWidget {
 }
 
 class SocialVerifyState extends State<SocialVerify> {
-  List<Qr> mList;
+  late List<Qr> mList;
 
   @override
   void initState() {

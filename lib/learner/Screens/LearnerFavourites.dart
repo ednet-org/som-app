@@ -14,7 +14,7 @@ class LearnerFavourites extends StatefulWidget {
 }
 
 class _LearnerFavouritesState extends State<LearnerFavourites> {
-  List<LearnerFeaturedModel> mListings1;
+  late List<LearnerFeaturedModel> mListings1;
 
   @override
   void initState() {

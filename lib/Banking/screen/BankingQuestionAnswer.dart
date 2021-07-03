@@ -14,7 +14,7 @@ class BankingQuestionAnswer extends StatefulWidget {
 }
 
 class _BankingQuestionAnswerState extends State<BankingQuestionAnswer> {
-  List<BankingQuesAnsModel> mList;
+  late List<BankingQuesAnsModel> mList;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class Question extends StatefulWidget {
 
 class QuestionState extends State<Question> {
   bool visibility = false;
-  BankingQuesAnsModel model;
+  late BankingQuesAnsModel model;
 
   void _changed() {
     setState(() {

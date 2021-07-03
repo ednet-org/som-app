@@ -17,7 +17,7 @@ class QIBusEditProfile extends StatefulWidget {
 }
 
 class QIBusEditProfileState extends State<QIBusEditProfile> {
-  String _selectedLocation = 'Male';
+  String? _selectedLocation = 'Male';
 
   final profileImg = new Container(
       alignment: FractionalOffset.center,

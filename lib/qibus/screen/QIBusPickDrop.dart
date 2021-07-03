@@ -20,8 +20,8 @@ class QIBusPickDrop extends StatefulWidget {
 
 class QIBusPickDropState extends State<QIBusPickDrop> {
   int selectedPos = 1;
-  List<QIBusDroppingModel> mList;
-  List<QIBusDroppingModel> mList1;
+  late List<QIBusDroppingModel> mList;
+  late List<QIBusDroppingModel> mList1;
 
   @override
   void initState() {

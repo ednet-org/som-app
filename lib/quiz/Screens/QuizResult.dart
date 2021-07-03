@@ -4,9 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
 import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
 import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-
 import 'package:prokit_flutter/quiz/utils/QuizImages.dart';
-import 'package:prokit_flutter/quiz/utils/QuizWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
@@ -14,7 +12,7 @@ class QuizResult extends StatefulWidget {
   static String tag = '/QuizResult';
 
   const QuizResult({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -94,6 +92,7 @@ class _QuizResultState extends State<QuizResult> {
                       child: Padding(padding: EdgeInsets.all(10.0), child: SvgPicture.asset(quiz_ic_facebook, color: quiz_white)),
                     ).onTap(() {
                       const url = 'https://www.facebook.com/';
+                      // ignore: unnecessary_null_comparison
                       if (canLaunch(url) != null) {
                         launch(url);
                       } else {
@@ -108,6 +107,7 @@ class _QuizResultState extends State<QuizResult> {
                       child: Padding(padding: EdgeInsets.all(10.0), child: SvgPicture.asset(quiz_ic_google, color: quiz_white)),
                     ).onTap(() {
                       const url = 'https://www.google.com/';
+                      // ignore: unnecessary_null_comparison
                       if (canLaunch(url) != null) {
                         launch(url);
                       } else {
@@ -122,6 +122,7 @@ class _QuizResultState extends State<QuizResult> {
                       child: Padding(padding: EdgeInsets.all(10.0), child: SvgPicture.asset(quiz_ic_mail, color: quiz_white)),
                     ).onTap(() {
                       const url = 'https://mail.google.com/';
+                      // ignore: unnecessary_null_comparison
                       if (canLaunch(url) != null) {
                         launch(url);
                       } else {
@@ -137,6 +138,7 @@ class _QuizResultState extends State<QuizResult> {
                     ).onTap(() {
                       print("https://twitter.com/");
                       const url = 'https://twitter.com/';
+                      // ignore: unnecessary_null_comparison
                       if (canLaunch(url) != null) {
                         launch(url);
                       } else {

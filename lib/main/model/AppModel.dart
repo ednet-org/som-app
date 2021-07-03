@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  List<ProTheme> themes;
-  List<ProTheme> screenList;
-  ProTheme dashboard;
-  ProTheme fullApp;
-  ProTheme widgets;
-  ProTheme defaultTheme;
-  ProTheme integrations;
-  ProTheme webApps;
+  List<ProTheme>? themes;
+  List<ProTheme>? screenList;
+  ProTheme? dashboard;
+  ProTheme? fullApp;
+  ProTheme? widgets;
+  ProTheme? defaultTheme;
+  ProTheme? integrations;
+  ProTheme? webApps;
 
   AppTheme({this.themes, this.screenList, this.dashboard, this.fullApp, this.widgets, this.defaultTheme, this.integrations, this.webApps});
 
@@ -28,24 +28,29 @@ class AppTheme {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.themes != null) {
-      data['themes'] = this.themes.map((v) => v.toJson()).toList();
+      data['themes'] = this.themes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ProTheme {
-  String name;
-  bool show_cover;
-  List<ProTheme> sub_kits;
-  String title_name;
-  String type;
-  String icon;
-  bool is_theme;
-  String tag;
-  bool darkThemeSupported;
-  Widget widget;
+  String? name;
+  // ignore: non_constant_identifier_names
+  bool? show_cover;
+  // ignore: non_constant_identifier_names
+  List<ProTheme>? sub_kits;
+  // ignore: non_constant_identifier_names
+  String? title_name;
+  String? type;
+  String? icon;
+  // ignore: non_constant_identifier_names
+  bool? is_theme;
+  String? tag;
+  bool? darkThemeSupported;
+  Widget? widget;
 
+  // ignore: non_constant_identifier_names
   ProTheme({this.name, this.icon, this.is_theme, this.tag, this.type, this.show_cover, this.sub_kits, this.title_name, this.darkThemeSupported, this.widget});
 
   factory ProTheme.fromJson(Map<String, dynamic> json) {
@@ -75,7 +80,7 @@ class ProTheme {
     data['widget'] = this.widget;
     data['is_theme'] = this.is_theme;
     if (this.sub_kits != null) {
-      data['sub_kits'] = this.sub_kits.map((v) => v.toJson()).toList();
+      data['sub_kits'] = this.sub_kits!.map((v) => v.toJson()).toList();
     }
     return data;
   }

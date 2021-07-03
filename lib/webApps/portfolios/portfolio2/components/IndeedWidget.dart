@@ -64,20 +64,24 @@ class IndeedWidgetState extends State<IndeedWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FlatButton(
+                        TextButton(
                           onPressed: () {},
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                            padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                            primary: portfolio2PrimaryColor,
+                          ),
                           child: Text('Get Quotes', style: boldTextStyle(color: Colors.white, size: 18)),
-                          color: portfolio2PrimaryColor,
                         ),
                         16.width,
-                        FlatButton(
+                        TextButton(
                           onPressed: () {},
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                            padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                            primary: Colors.white,
+                          ),
                           child: Text('Hire Me', style: boldTextStyle(color: black, size: 18)),
-                          color: Colors.white,
                         ),
                       ],
                     ),

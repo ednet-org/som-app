@@ -258,8 +258,8 @@ Padding editTextStyle(var hintText) {
         hintStyle: primaryTextStyle(color: appStore.isDarkModeOn ? white.withOpacity(0.5) : grey),
         filled: true,
         fillColor: appStore.appBarColor,
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: appStore.iconSecondaryColor, width: 1.0)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: appStore.iconSecondaryColor, width: 1.0)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: appStore.iconSecondaryColor!, width: 1.0)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: appStore.iconSecondaryColor!, width: 1.0)),
       ),
     ),
   );

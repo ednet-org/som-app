@@ -12,8 +12,8 @@ import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 class BHChatScreen extends StatefulWidget {
   static String tag = '/ChatScreen';
-  final String img;
-  final String name;
+  final String? img;
+  final String? name;
 
   BHChatScreen({this.img, this.name});
 
@@ -57,7 +57,7 @@ class BHChatScreenState extends State<BHChatScreen> {
 
       msgController.text = '';
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
       FocusScope.of(context).requestFocus(msgFocusNode);
       setState(() {});
 
@@ -65,7 +65,7 @@ class BHChatScreenState extends State<BHChatScreen> {
 
       msgListing.insert(0, msgModel1);
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
     } else {
       FocusScope.of(context).requestFocus(msgFocusNode);
     }
@@ -92,9 +92,9 @@ class BHChatScreenState extends State<BHChatScreen> {
         ),
         title: Row(
           children: <Widget>[
-            CircleAvatar(backgroundImage: AssetImage(widget.img), radius: 16),
+            CircleAvatar(backgroundImage: AssetImage(widget.img!), radius: 16),
             8.width,
-            Text(widget.name, style: boldTextStyle(color: BHAppTextColorPrimary, size: 16)),
+            Text(widget.name!, style: boldTextStyle(color: BHAppTextColorPrimary, size: 16)),
           ],
         ),
         actions: [Padding(padding: EdgeInsets.only(right: 16), child: Icon(Icons.call, color: BHAppTextColorPrimary, size: 20))],

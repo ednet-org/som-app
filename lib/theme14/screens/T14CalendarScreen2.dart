@@ -14,7 +14,7 @@ class _T14CalendarScreen2State extends State<T14CalendarScreen2> {
   Map<DateTime, List> _events = Map<DateTime, List>();
   List _selectedEvents = [];
   DateTime _selectedDay = DateTime.now();
-  int i;
+  int? i;
 
   @override
   void initState() {

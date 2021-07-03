@@ -8,7 +8,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 
 class MPPopularSongScreen extends StatefulWidget {
-  final MusicModel data;
+  final MusicModel? data;
 
   MPPopularSongScreen({this.data});
 
@@ -43,7 +43,7 @@ class MPPopularSongScreenState extends State<MPPopularSongScreen> {
       appBar: AppBar(
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.white),
-        title: Text(widget.data.title, style: boldTextStyle(color: Colors.white)),
+        title: Text(widget.data!.title!, style: boldTextStyle(color: Colors.white)),
         backgroundColor: mpAppBackGroundColor,
       ),
       body: SingleChildScrollView(
@@ -74,9 +74,9 @@ class MPPopularSongScreenState extends State<MPPopularSongScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 160, fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
                         4.height,
-                        Text(data.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: boldTextStyle(color: white.withOpacity(0.9))),
+                        Text(data.title!, maxLines: 1, overflow: TextOverflow.ellipsis, style: boldTextStyle(color: white.withOpacity(0.9))),
                         4.height,
-                        Text(data.subtitle, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
+                        Text(data.subtitle!, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
                         10.height,
                       ],
                     ).onTap(() {

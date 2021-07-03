@@ -18,7 +18,7 @@ class QuizAllList extends StatefulWidget {
 }
 
 class _QuizAllListState extends State<QuizAllList> {
-  List<NewQuizModel> mListings;
+  late List<NewQuizModel> mListings;
   int selectedPos = 1;
 
   @override
@@ -50,7 +50,7 @@ class _QuizAllListState extends State<QuizAllList> {
               ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mListings[index].quizImage,
                   height: width * 0.4,
                   width: MediaQuery.of(context).size.width / 0.25,
@@ -98,7 +98,7 @@ class _QuizAllListState extends State<QuizAllList> {
               ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mListings[index].quizImage,
                   height: width * 0.4,
                   width: MediaQuery.of(context).size.width / 0.25,

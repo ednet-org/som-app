@@ -1,14 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main.dart';
 import 'package:prokit_flutter/main/utils/AppColors.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/clusteringGoogleMaps/aggregation_setup.dart';
 import 'package:prokit_flutter/main/utils/clusteringGoogleMaps/clustering_helper.dart';
 import 'package:prokit_flutter/main/utils/clusteringGoogleMaps/lat_lang_geohash.dart';
 
@@ -20,15 +16,17 @@ class GoogleMapScreen extends StatefulWidget {
 }
 
 class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<GoogleMapScreen> {
-  Completer<GoogleMapController> _controller = Completer();
+  //TODO Without NullSafety Geo coder
+  //Completer<GoogleMapController> _controller = Completer();
 
-  ClusteringHelper clusteringHelper;
-  List<LatLngAndGeohash> list;
+  ClusteringHelper? clusteringHelper;
+  List<LatLngAndGeohash>? list;
 
-  List<Marker> markers = List();
+  List<Marker> markers = [];
   var mMapType = MapType.normal;
 
-  initMemoryClustering(context) async {
+//TODO Without NullSafety Geo coder
+  /*initMemoryClustering(context) async {
     list = await getListOfLatLngAndGeoHash(context);
     clusteringHelper = ClusteringHelper.forMemory(
       list: list,
@@ -36,7 +34,7 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
       aggregationSetup: AggregationSetup(markerSize: 150), // You can customize marker size, colors and size limits
     );
     setState(() {});
-  }
+  }*/
 
   updateMarkers(Set<Marker> markers) {
     this.markers = markers.toList();
@@ -44,22 +42,25 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
 
   @override
   void afterFirstLayout(BuildContext context) {
-    initMemoryClustering(context);
+    //  TODO Without NullSafety Geo coder
+    //initMemoryClustering(context);
   }
 
+  // TODO Without NullSafety Geo coder
   @override
   Widget build(BuildContext context) {
     changeStatusColor(appColorPrimary);
 
-    CameraPosition initialPosition = CameraPosition(
+    // TODO Without NullSafety Geo coder
+    /*CameraPosition initialPosition = CameraPosition(
       target: LatLng(43.7262115, 12.636526499999945),
       zoom: 5,
-    );
-
-    CameraPosition newPosition = CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), tilt: 59.440717697143555, zoom: 19.151926040649414);
-
+    );*/
+      // TODO Without NullSafety Geo coder
+    //CameraPosition newPosition = CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), tilt: 59.440717697143555, zoom: 19.151926040649414);
+    // TODO Without NullSafety Geo coder
     return Scaffold(
-      appBar: appBar(context, 'Google Maps with Clustering', actions: buildActionButtons()),
+        /*appBar: appBar(context, 'Google Maps with Clustering', actions: buildActionButtons()),
       body: clusteringHelper != null
           ? GoogleMap(
               compassEnabled: true,
@@ -70,7 +71,7 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
               onCameraMove: (newPosition) => clusteringHelper.onCameraMove(newPosition, forceUpdate: false),
               onCameraIdle: clusteringHelper != null ? clusteringHelper.onMapIdle : null,
               initialCameraPosition: initialPosition,
-              onTap: _handleTap,
+              //onTap: _handleTap,
               onMapCreated: (GoogleMapController controller) {
                 clusteringHelper.mapController = controller;
                 _controller.complete(controller);
@@ -89,8 +90,8 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
           final GoogleMapController controller = await _controller.future;
           controller.animateCamera(CameraUpdate.newCameraPosition(newPosition));
         },
-      ),
-    );
+      ),*/
+        );
   }
 
   buildActionButtons() {
@@ -156,14 +157,15 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
       )
     ];
   }
-
-  getLocation(LatLng point) async {
+//TODO Without NullSafety Geo coder
+/* getLocation(LatLng point) async {
     var coordinates = Coordinates(point.latitude, point.longitude);
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     return addresses.first.addressLine;
   }
-
-  void _handleTap(LatLng point) async {
+*/
+//TODO Without NullSafety Geo coder
+/*  void _handleTap(LatLng point) async {
     toast('Fetching Location');
     var location = await getLocation(point);
     setState(() {
@@ -177,5 +179,5 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
       ));
     });
-  }
+  }*/
 }

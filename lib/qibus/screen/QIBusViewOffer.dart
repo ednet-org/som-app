@@ -18,7 +18,7 @@ class QIBusViewOffer extends StatefulWidget {
 }
 
 class QIBusViewOfferState extends State<QIBusViewOffer> {
-  List<QIBusNewOfferModel> mOfferList;
+  late List<QIBusNewOfferModel> mOfferList;
 
   @override
   void initState() {
@@ -54,8 +54,9 @@ class QIBusViewOfferState extends State<QIBusViewOffer> {
   }
 }
 
+// ignore: must_be_immutable
 class NewOffer extends StatelessWidget {
-  QIBusNewOfferModel model;
+  late QIBusNewOfferModel model;
 
   NewOffer(QIBusNewOfferModel model, int pos) {
     this.model = model;
@@ -80,7 +81,7 @@ class NewOffer extends StatelessWidget {
                   Container(
                     color: model.color,
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: model.img,
                       height: width * 0.3,
                       fit: BoxFit.none,

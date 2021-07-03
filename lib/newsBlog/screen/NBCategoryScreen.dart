@@ -37,7 +37,7 @@ class NBCategoryScreenState extends State<NBCategoryScreen> {
         onNotification: (overscroll) {
           overscroll.disallowGlow();
           return;
-        },
+        } as bool Function(OverscrollIndicatorNotification)?,
         child: GridView.builder(
           itemCount: mCategoryList.length,
           shrinkWrap: true,

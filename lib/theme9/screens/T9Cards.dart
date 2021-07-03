@@ -18,7 +18,7 @@ class T9Cards extends StatefulWidget {
 }
 
 class _T9CardsState extends State<T9Cards> {
-  List<T9FeaturedModel> mListings1;
+  late List<T9FeaturedModel> mListings1;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _T9CardsState extends State<T9Cards> {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t9_ic_fab_back, width: 40, height: 40),
+              CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t9_ic_fab_back, width: 40, height: 40),
               Icon(Icons.search, color: t9_colorPrimary),
             ],
           ),
@@ -66,7 +66,7 @@ class _T9CardsState extends State<T9Cards> {
                 children: <Widget>[
                   ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                    child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: mListings1[index].img, height: 50, width: 50, fit: BoxFit.fill),
+                    child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: mListings1[index].img, height: 50, width: 50, fit: BoxFit.fill),
                   ),
                   SizedBox(width: 10),
                   Expanded(

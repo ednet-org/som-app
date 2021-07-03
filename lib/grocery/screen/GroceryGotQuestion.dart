@@ -33,13 +33,14 @@ class _GroceryGotQuestionScreenState extends State<GroceryGotQuestionScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          decoration: boxDecorationDefault(),
           color: grocery_color_white,
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: Grocery_ic_Profile,
                     height: 70,
                     width: 70,
@@ -70,7 +71,7 @@ class _GroceryGotQuestionScreenState extends State<GroceryGotQuestionScreen> {
               ).paddingOnly(left: 16, right: 16)
             ],
           ).paddingOnly(bottom: 16),
-        ).cornerRadiusWithClipRRect(15).withShadow().paddingOnly(bottom: 16),
+        ).cornerRadiusWithClipRRect(15).paddingOnly(bottom: 16),
       ),
     );
   }

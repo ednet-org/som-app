@@ -19,7 +19,7 @@ class QIBusViewPackage extends StatefulWidget {
 }
 
 class QIBusViewPackageState extends State<QIBusViewPackage> {
-  List<QIBusNewPackageModel> mList1;
+  late List<QIBusNewPackageModel> mList1;
 
   @override
   void initState() {
@@ -52,8 +52,9 @@ class QIBusViewPackageState extends State<QIBusViewPackage> {
   }
 }
 
+// ignore: must_be_immutable
 class ViewPackage extends StatelessWidget {
-  QIBusNewPackageModel model;
+  late QIBusNewPackageModel model;
 
   ViewPackage(QIBusNewPackageModel model, int pos) {
     this.model = model;
@@ -70,7 +71,7 @@ class ViewPackage extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.only(topRight: Radius.circular(spacing_middle), topLeft: Radius.circular(spacing_middle)),
-            child: Image.asset(
+            child: Image.network(
               model.image,
               height: width * 0.32,
               width: width,

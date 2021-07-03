@@ -18,7 +18,7 @@ class GroceryCategoryList extends StatefulWidget {
 }
 
 class GroceryCategoryListState extends State<GroceryCategoryList> {
-  List<CategoryOptionModel> mOptionList;
+  late List<CategoryOptionModel> mOptionList;
 
   @override
   void initState() {
@@ -37,10 +37,7 @@ class GroceryCategoryListState extends State<GroceryCategoryList> {
             Container(
               width: width,
               height: expandHeight * 0.32,
-              child: Image.asset(
-                grocery_ic_bg_drinks,
-                fit: BoxFit.fill,
-              ),
+              child: commonCacheImageWidget(grocery_ic_bg_drinks, context.width() * 0.7),
             ),
             SafeArea(
               child: Container(
@@ -160,8 +157,9 @@ class GroceryCategoryListState extends State<GroceryCategoryList> {
   }
 }
 
+// ignore: must_be_immutable
 class CategoryList extends StatelessWidget {
-  CategoryOptionModel model;
+  late CategoryOptionModel model;
 
   CategoryList(CategoryOptionModel model, int pos) {
     this.model = model;

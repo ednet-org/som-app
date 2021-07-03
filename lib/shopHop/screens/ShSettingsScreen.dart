@@ -17,7 +17,7 @@ class ShSettingsScreenState extends State<ShSettingsScreen> {
   bool pushNotification = false;
   bool smsNotification = false;
   bool emailNotification = false;
-  var selectedValue = "English(US)";
+  String? selectedValue = "English(US)";
 
   @override
   Widget build(BuildContext context) {

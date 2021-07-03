@@ -3,6 +3,7 @@ import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
 
 import '../T4Constant.dart';
 
+// ignore: must_be_immutable
 class T4EditText extends StatefulWidget {
   var isPassword;
   var isSecure;
@@ -12,9 +13,9 @@ class T4EditText extends StatefulWidget {
   var text;
   var hint;
   var maxLine;
-  TextEditingController mController;
+  TextEditingController? mController;
 
-  VoidCallback onPressed;
+  VoidCallback? onPressed;
 
   T4EditText(
       {var this.fontSize = textSizeNormal,
@@ -65,10 +66,5 @@ class T4EditTextState extends State<T4EditText> {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
   }
 }

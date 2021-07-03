@@ -18,8 +18,8 @@ class T11Dashboard extends StatefulWidget {
 }
 
 class _T11DashboardState extends State<T11Dashboard> {
-  List<Theme11SongType> mList1;
-  List<Theme11SongsList> mList2;
+  late List<Theme11SongType> mList1;
+  late List<Theme11SongsList> mList2;
 
   var selectedIndex = 0;
   var selectedSongType = 0;
@@ -175,7 +175,7 @@ class _T11DashboardState extends State<T11Dashboard> {
               color: selectedIndex == 0 ? whiteColor : whiteColor.withOpacity(0.2),
               size: 35,
             ),
-            title: Text(''),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -183,7 +183,7 @@ class _T11DashboardState extends State<T11Dashboard> {
               color: selectedIndex == 1 ? whiteColor : whiteColor.withOpacity(0.2),
               size: 35,
             ),
-            title: Text(''),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: CachedNetworkImage(
@@ -192,7 +192,7 @@ class _T11DashboardState extends State<T11Dashboard> {
               width: 35,
               fit: BoxFit.cover,
             ).cornerRadiusWithClipRRect(10),
-            title: Text(''),
+            label: '',
           ),
         ],
         onTap: onItemTapped,

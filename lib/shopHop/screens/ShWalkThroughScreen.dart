@@ -39,7 +39,6 @@ class _ShWalkThroughScreenState extends State<ShWalkThroughScreen> {
     changeStatusColor(Colors.white);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
-    final Size cardSize = Size(width, width / 1.8);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -75,7 +74,9 @@ class _ShWalkThroughScreenState extends State<ShWalkThroughScreen> {
                           boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.4), spreadRadius: spacing_control_half, blurRadius: 10, offset: Offset(1, 3))],
                         ),
                         margin: EdgeInsets.all(spacing_standard_new),
-                        child: Center(child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: slider, width: MediaQuery.of(context).size.width, fit: BoxFit.cover)),
+                        child: Center(
+                            child: CachedNetworkImage(
+                                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: slider, width: MediaQuery.of(context).size.width, fit: BoxFit.cover)),
                       );
                     },
                   );
@@ -134,6 +135,7 @@ class _ShWalkThroughScreenState extends State<ShWalkThroughScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class ShSliderWidget extends StatelessWidget {
   var mSliderList = <String>[ic_walk_1, ic_walk_2, ic_walk_3];
 
@@ -163,7 +165,12 @@ class ShSliderWidget extends StatelessWidget {
                 elevation: 0,
                 margin: EdgeInsets.all(0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: slider, fit: BoxFit.fill, width: MediaQuery.of(context).size.width, height: cardSize.height),
+                child: CachedNetworkImage(
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                    imageUrl: slider,
+                    fit: BoxFit.fill,
+                    width: MediaQuery.of(context).size.width,
+                    height: cardSize.height),
               ),
             );
           },

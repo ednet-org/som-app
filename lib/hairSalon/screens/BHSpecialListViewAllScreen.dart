@@ -11,7 +11,7 @@ import 'BHDetailScreen.dart';
 class BHSpecialListViewAllScreen extends StatefulWidget {
   static String tag = '/SpecialListViewAllScreen';
 
-  final String specialList;
+  final String? specialList;
 
   BHSpecialListViewAllScreen({this.specialList});
 
@@ -20,7 +20,7 @@ class BHSpecialListViewAllScreen extends StatefulWidget {
 }
 
 class BHSpecialListViewAllScreenState extends State<BHSpecialListViewAllScreen> {
-  List<BHBestSpecialModel> bestSpecialList;
+  late List<BHBestSpecialModel> bestSpecialList;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class BHSpecialListViewAllScreenState extends State<BHSpecialListViewAllScreen> 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
-        title: Text(widget.specialList, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+        title: Text(widget.specialList!, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {
@@ -71,14 +71,14 @@ class BHSpecialListViewAllScreenState extends State<BHSpecialListViewAllScreen> 
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        e.title,
+                        e.title!,
                         style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(height: 5),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(e.subTitle, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
+                      child: Text(e.subTitle!, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
                     ),
                     8.height,
                   ],

@@ -90,7 +90,7 @@ class _T11SignInState extends State<T11SignIn> {
         buttonStyle(t11_lbl_signIn).paddingAll(16),
         Text(t11_lbl_forgot_password, style: boldTextStyle(size: 18, color: t11_PrimaryColor)).onTap(() {}).paddingAll(16.0),
         MaterialButton(
-          child: Text(t11_lbl_create_account).withStyle(fontSize: 18, color: t11_PrimaryColor),
+          child: Text(t11_lbl_create_account,style: primaryTextStyle(size: 18,color: t11_PrimaryColor)),
           color: Colors.grey,
           minWidth: double.infinity,
           height: 50,

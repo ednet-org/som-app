@@ -18,9 +18,9 @@ class Dashboard6 extends StatefulWidget {
 }
 
 class Dashboard6State extends State<Dashboard6> {
-  List<DB6Service> mList1;
-  List<DB6Laundry> mList2;
-  List<DB6Offer> mList3;
+  late List<DB6Service> mList1;
+  late List<DB6Laundry> mList2;
+  late List<DB6Offer> mList3;
   var _selectedIndex = 0;
 
   @override
@@ -215,7 +215,7 @@ class Dashboard6State extends State<Dashboard6> {
 
 // ignore: must_be_immutable
 class D6TopService extends StatelessWidget {
-  DB6Service model;
+  late DB6Service model;
 
   D6TopService(DB6Service model, int pos) {
     this.model = model;
@@ -247,7 +247,7 @@ class D6TopService extends StatelessWidget {
 
 // ignore: must_be_immutable
 class D6Popular extends StatelessWidget {
-  DB6Laundry model;
+  late DB6Laundry model;
 
   D6Popular(DB6Laundry model, int pos) {
     this.model = model;
@@ -284,7 +284,7 @@ class D6Popular extends StatelessWidget {
                       Text(model.name, style: primaryTextStyle(size: 14)),
                       RichText(
                         text: TextSpan(
-                          style: Theme.of(context).textTheme.body1,
+                          style: Theme.of(context).textTheme.bodyText2,
                           children: [
                             WidgetSpan(
                               child: Padding(
@@ -309,7 +309,7 @@ class D6Popular extends StatelessWidget {
 
 // ignore: must_be_immutable
 class D6Special extends StatelessWidget {
-  DB6Offer model;
+  late DB6Offer model;
 
   D6Special(DB6Offer model, int pos) {
     this.model = model;

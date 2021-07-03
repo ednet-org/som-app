@@ -65,7 +65,7 @@ class QIBusWalletState extends State<QIBusWallet> {
                 child: Column(
                   children: <Widget>[
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: qibus_ic_gr_wallet,
                       width: w * 0.4,
                       height: w * 0.4,

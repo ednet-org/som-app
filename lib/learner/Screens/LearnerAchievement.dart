@@ -14,8 +14,8 @@ class LearnerAchievements extends StatefulWidget {
 }
 
 class _LearnerAchievementsState extends State<LearnerAchievements> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerBadgeModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerBadgeModel> mList2;
 
   @override
   void initState() {
@@ -113,8 +113,9 @@ class _LearnerAchievementsState extends State<LearnerAchievements> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerBadges extends StatelessWidget {
-  LearnerBadgeModel model;
+  late LearnerBadgeModel model;
 
   LearnerBadges(LearnerBadgeModel model, int pos) {
     this.model = model;
@@ -176,8 +177,9 @@ class LearnerBadges extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerLeaderBoard extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerLeaderBoard(LearnerPeopleModel model, int pos) {
     this.model = model;

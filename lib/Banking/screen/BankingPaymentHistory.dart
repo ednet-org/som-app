@@ -15,7 +15,7 @@ class BankingPaymentHistory extends StatefulWidget {
 }
 
 class _BankingPaymentHistoryState extends State<BankingPaymentHistory> {
-  List<BankingPaymentHistoryModel> mList1;
+  late List<BankingPaymentHistoryModel> mList1;
 
   @override
   void initState() {
@@ -50,10 +50,10 @@ class _BankingPaymentHistoryState extends State<BankingPaymentHistory> {
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.account_balance_wallet, size: 30, color: Banking_Primary).paddingOnly(left: spacing_standard),
-                    Text(mList1[index].title, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
+                    Text(mList1[index].title!, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text(mList1[index].rs, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
+                      child: Text(mList1[index].rs!, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
                     )
                   ],
                 ).paddingAll(spacing_standard),
@@ -73,10 +73,10 @@ class _BankingPaymentHistoryState extends State<BankingPaymentHistory> {
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.account_balance_wallet, size: 30, color: Banking_Primary).paddingOnly(left: spacing_standard),
-                    Text(mList1[index].title, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
+                    Text(mList1[index].title!, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text(mList1[index].rs, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
+                      child: Text(mList1[index].rs!, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
                     )
                   ],
                 ).paddingAll(spacing_standard),
@@ -97,10 +97,10 @@ class _BankingPaymentHistoryState extends State<BankingPaymentHistory> {
                     child: Row(
                   children: <Widget>[
                     Icon(Icons.account_balance_wallet, size: 30, color: Banking_Primary).paddingOnly(left: spacing_standard),
-                    Text(mList1[index].title, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
+                    Text(mList1[index].title!, style: primaryTextStyle(size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard).expand(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text(mList1[index].rs, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
+                      child: Text(mList1[index].rs!, style: primaryTextStyle(color: Banking_TextColorOrange, size: 16)).paddingOnly(left: spacing_standard, right: spacing_standard),
                     )
                   ],
                 ).paddingAll(spacing_standard)),

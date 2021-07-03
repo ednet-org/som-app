@@ -15,6 +15,7 @@ class LearnerBottomNavigation extends StatefulWidget {
 class LearnerBottomNavigationState extends State<LearnerBottomNavigation> {
   var _selectedIndex = 0;
 
+  // ignore: non_constant_identifier_names
   get learner_ic_home_navigation => null;
 
   @override

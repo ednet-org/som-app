@@ -74,7 +74,7 @@ class MPSettingScreenState extends State<MPSettingScreen> {
 
                 return Row(
                   children: [
-                    Text(data.title, style: primaryTextStyle(color: Colors.white)).paddingOnly(left: 16, top: 8, bottom: 8).expand(),
+                    Text(data.title!, style: primaryTextStyle(color: Colors.white)).paddingOnly(left: 16, top: 8, bottom: 8).expand(),
                     data.isShow
                         ? Icon(data.icon, color: Colors.grey)
                         : Switch(

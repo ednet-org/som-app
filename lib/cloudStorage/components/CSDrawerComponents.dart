@@ -99,7 +99,7 @@ class CSDrawerComponentsState extends State<CSDrawerComponents> {
                     return Container(
                       color: getCSDrawerList[index].isSelected ? Colors.blueGrey.withOpacity(0.3) : transparentColor,
                       child: createBasicListTile(
-                        text: getCSDrawerList[index].title,
+                        text: getCSDrawerList[index].title!,
                         icon: getCSDrawerList[index].icon,
                         onTap: () {
                           if (currentIndex == index) {

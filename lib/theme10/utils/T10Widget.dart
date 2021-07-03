@@ -9,6 +9,7 @@ import 'T10Colors.dart';
 import 'T10Constant.dart';
 import 'T10Images.dart';
 
+// ignore: must_be_immutable
 class EditText extends StatefulWidget {
   var isPassword;
   var isSecure;
@@ -17,9 +18,9 @@ class EditText extends StatefulWidget {
   var fontFamily;
   var text;
   var maxLine;
-  TextEditingController mController;
+  TextEditingController? mController;
 
-  VoidCallback onPressed;
+  VoidCallback? onPressed;
 
   EditText(
       {var this.fontSize = textSizeMedium,
@@ -52,10 +53,10 @@ class EditTextState extends State<EditText> {
           hintStyle: secondaryTextStyle(),
           labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+            borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+            borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
           ),
         ),
         maxLines: widget.maxLine,
@@ -81,28 +82,24 @@ class EditTextState extends State<EditText> {
           hintStyle: secondaryTextStyle(),
           labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+            borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+            borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
           ),
         ),
         style: TextStyle(fontSize: widget.fontSize, color: appStore.textPrimaryColor, fontFamily: widget.fontFamily),
       );
     }
   }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
-  }
 }
 
+// ignore: must_be_immutable
 class AppButtons extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  AppButtons({@required this.textContent, @required this.onPressed});
+  AppButtons({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -113,37 +110,35 @@ class AppButtons extends StatefulWidget {
 class AppButtonsState extends State<AppButtons> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-        onPressed: widget.onPressed,
-        textColor: t10_white,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: t10_white),
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: const EdgeInsets.all(0.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: <Color>[t10_gradient1, t10_gradient2]),
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-              child: Text(
-                widget.textContent,
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
+      ),
+      onPressed: widget.onPressed,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: <Color>[t10_gradient1, t10_gradient2]),
+          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            child: Text(
+              widget.textContent,
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
             ),
           ),
-        ));
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
+        ),
+      ),
+    );
   }
 }
 
+// ignore: must_be_immutable
 class T10TopBar extends StatefulWidget {
   var titleName;
 
@@ -187,10 +182,5 @@ class T10TopBarState extends State<T10TopBar> {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return null;
   }
 }

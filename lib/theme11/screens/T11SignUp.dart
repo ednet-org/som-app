@@ -38,8 +38,8 @@ class _T11SignUpState extends State<T11SignUp> {
             TextFormField(
               style: primaryTextStyle(size: 20, color: textPrimaryColor),
               decoration: InputDecoration(
-                  labelText: t11_lbl_username,
-                  labelStyle: TextStyle(height: -16, fontSize: 20.0, color: t11_PrimaryColor),
+                hintText: t11_lbl_username,
+                  labelStyle: TextStyle(height: 16, fontSize: 20.0, color: t11_PrimaryColor),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black12),
                   ),
@@ -49,11 +49,11 @@ class _T11SignUpState extends State<T11SignUp> {
                   border: UnderlineInputBorder()),
               obscureText: false,
             ).paddingOnly(top: 16, left: 16, right: 16, bottom: 8),
-            TextFormField(
+             TextFormField(
               style: primaryTextStyle(size: 20, color: textPrimaryColor),
               decoration: InputDecoration(
-                  labelText: t11_lbl_mobile_no,
-                  labelStyle: TextStyle(height: -16, fontSize: 20.0, color: t11_PrimaryColor),
+                hintText: t11_lbl_mobile_no,
+                  labelStyle: TextStyle(height: 16, fontSize: 20.0, color: t11_PrimaryColor),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black12),
                   ),
@@ -67,8 +67,8 @@ class _T11SignUpState extends State<T11SignUp> {
             TextFormField(
               style: primaryTextStyle(size: 20, color: textPrimaryColor),
               decoration: InputDecoration(
-                  labelText: t11_lbl_password,
-                  labelStyle: TextStyle(height: -16, fontSize: 20.0, color: t11_PrimaryColor),
+                hintText: t11_lbl_password,
+                  labelStyle: TextStyle(height: 16, fontSize: 20.0, color: t11_PrimaryColor),
                   suffixIcon: Icon(
                     password ? Icons.visibility_off : Icons.visibility,
                     color: t11_PrimaryColor,
@@ -89,8 +89,8 @@ class _T11SignUpState extends State<T11SignUp> {
             TextFormField(
               style: primaryTextStyle(size: 20, color: textPrimaryColor),
               decoration: InputDecoration(
-                  labelText: t11_lbl_retype_password,
-                  labelStyle: TextStyle(height: -16, fontSize: 20.0, color: t11_PrimaryColor),
+                hintText: t11_lbl_retype_password,
+                  labelStyle: TextStyle(height: 16, fontSize: 20.0, color: t11_PrimaryColor),
                   suffixIcon: Icon(
                     retypePwd ? Icons.visibility_off : Icons.visibility,
                     color: t11_PrimaryColor,
@@ -305,7 +305,7 @@ class _T11SignUpState extends State<T11SignUp> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         MaterialButton(
-          child: Text(t11_lbl_step1).withStyle(fontSize: 18, color: whiteColor),
+          child: Text(t11_lbl_step1,style: primaryTextStyle(size: 18,color: whiteColor)),
           color: t11_PrimaryColor,
           minWidth: 50,
           height: 50,
@@ -323,7 +323,7 @@ class _T11SignUpState extends State<T11SignUp> {
           color: Colors.black12,
         ).paddingOnly(top: 32, left: 8),
         MaterialButton(
-          child: Text(t11_lbl_step2).withStyle(fontSize: 18, color: btn2 ? whiteColor : t11_PrimaryColor),
+          child: Text(t11_lbl_step2,style: primaryTextStyle(size: 18,color: btn2 ? whiteColor : t11_PrimaryColor)),
           color: btn2 ? t11_PrimaryColor : whiteColor,
           minWidth: 50,
           height: 50,
@@ -341,7 +341,7 @@ class _T11SignUpState extends State<T11SignUp> {
           color: Colors.black12,
         ).paddingOnly(top: 32, left: 8),
         MaterialButton(
-          child: Text(t11_lbl_step3).withStyle(fontSize: 18, color: btn3 ? whiteColor : t11_PrimaryColor),
+          child: Text(t11_lbl_step3,style: primaryTextStyle(size: 18,color: btn3 ? whiteColor : t11_PrimaryColor)),
           color: btn3 ? t11_PrimaryColor : whiteColor,
           minWidth: 50,
           height: 50,
@@ -381,7 +381,7 @@ class _T11SignUpState extends State<T11SignUp> {
         ),
         child: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
+            children:[
               SizedBox(height: 40),
               stepView,
               selectedWidget(),

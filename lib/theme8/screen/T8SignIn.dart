@@ -18,7 +18,7 @@ class T8SignIn extends StatefulWidget {
 class T8SignInState extends State<T8SignIn> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Observer(
       builder: (_) => Scaffold(
         backgroundColor: appStore.scaffoldBackground,

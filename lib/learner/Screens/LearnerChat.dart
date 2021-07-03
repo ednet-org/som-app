@@ -15,8 +15,8 @@ class LearnerChat extends StatefulWidget {
 }
 
 class _LearnerChatState extends State<LearnerChat> {
-  List<LearnerChatModel> mList1;
-  List<LearnerPeopleModel> mList2;
+  late List<LearnerChatModel> mList1;
+  late List<LearnerPeopleModel> mList2;
 
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _LearnerChatState extends State<LearnerChat> {
                                   width: 40,
                                   color: Colors.white,
                                   child: Icon(Icons.search, size: 30, color: learner_colorPrimary),
-                                ).cornerRadiusWithClipRRect(20).withShadow(shadowColor: learner_ShadowColor).paddingOnly(top: 16),
+                                ).cornerRadiusWithClipRRect(20).paddingOnly(top: 16),
                                 onTap: () {
                                   print('Search');
                                 },
@@ -170,8 +170,9 @@ class _LearnerChatState extends State<LearnerChat> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerChatsData extends StatelessWidget {
-  LearnerChatModel model;
+  late LearnerChatModel model;
 
   LearnerChatsData(LearnerChatModel model, int pos) {
     this.model = model;
@@ -217,8 +218,9 @@ class LearnerChatsData extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerNewChats extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerNewChats(LearnerPeopleModel model, int pos) {
     this.model = model;

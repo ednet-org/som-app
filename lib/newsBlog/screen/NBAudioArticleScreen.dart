@@ -15,8 +15,8 @@ class NBAudioArticleScreen extends StatefulWidget {
 class NBAudioArticleScreenState extends State<NBAudioArticleScreen> with SingleTickerProviderStateMixin {
   int pageIndex = 0;
 
-  PageController pageController;
-  TabController tabController;
+  PageController? pageController;
+  TabController? tabController;
 
   List<NBNewsDetailsModel> mNewsList = nbGetNewsDetails();
   List<NBBannerItemModel> pages = nbGetBannerItems();
@@ -51,7 +51,7 @@ class NBAudioArticleScreenState extends State<NBAudioArticleScreen> with SingleT
 
   @override
   void dispose() {
-    tabController.dispose();
+    tabController!.dispose();
     super.dispose();
   }
 
@@ -85,7 +85,7 @@ class NBAudioArticleScreenState extends State<NBAudioArticleScreen> with SingleT
                             return Stack(
                               children: [
                                 Image.asset(
-                                  pages[index].image,
+                                  pages[index].image!,
                                   fit: BoxFit.fill,
                                   width: context.width(),
                                 ).cornerRadiusWithClipRRect(16),
@@ -117,7 +117,7 @@ class NBAudioArticleScreenState extends State<NBAudioArticleScreen> with SingleT
                         ),
                       ),
                       8.height,
-                      DotIndicator(pageController: pageController, pages: pages, indicatorColor: NBPrimaryColor),
+                      DotIndicator(pageController: pageController!, pages: pages, indicatorColor: NBPrimaryColor),
                       16.height,
                     ],
                   ),

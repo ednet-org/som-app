@@ -35,7 +35,7 @@ class T5VerificationState extends State<T5Verification> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t5_verification, width: width / 2.5, height: width / 2.5),
+                  CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t5_verification, width: width / 2.5, height: width / 2.5),
                   SizedBox(height: 30),
                   text(t5_lbl_verification, textColor: appStore.textPrimaryColor, fontFamily: fontBold, fontSize: 22.0),
                   Padding(

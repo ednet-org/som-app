@@ -8,7 +8,6 @@ import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
 import 'package:prokit_flutter/food/utils/FoodString.dart';
 import 'package:prokit_flutter/food/utils/FoodWidget.dart';
 import 'package:prokit_flutter/food/utils/dotted_border.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
 class FoodCoupon extends StatefulWidget {
   static String tag = '/FoodCoupon';
@@ -18,7 +17,7 @@ class FoodCoupon extends StatefulWidget {
 }
 
 class FoodCouponState extends State<FoodCoupon> {
-  List<Coupons> mList;
+  late List<Coupons> mList;
 
   @override
   void initState() {
@@ -118,7 +117,7 @@ class FoodCouponState extends State<FoodCoupon> {
 
 // ignore: must_be_immutable
 class Coupon extends StatelessWidget {
-  Coupons model;
+  late Coupons model;
 
   Coupon(Coupons model, int pos) {
     this.model = model;

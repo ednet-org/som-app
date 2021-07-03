@@ -10,8 +10,8 @@ import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
 
 class CSDataModel {
   String fileUrl;
-  String fileName;
-  bool isFileSelect;
+  String? fileName;
+  bool? isFileSelect;
   bool isDownload;
   bool isStared;
   bool isFolder;
@@ -21,7 +21,7 @@ class CSDataModel {
 }
 
 List<CSDataModel> getCloudboxData() {
-  List<CSDataModel> _dataModel = List<CSDataModel>();
+  List<CSDataModel> _dataModel = [];
   _dataModel.add(CSDataModel(fileName: "Books", fileUrl: CSBookImg, isDownload: true));
   _dataModel.add(CSDataModel(fileName: "Nog says bow bow", fileUrl: CSDogGIFImg, isDownload: true));
   _dataModel.add(CSDataModel(fileName: "CloudBox file", fileUrl: CSCloudboxLogo, isStared: true));
@@ -31,16 +31,16 @@ List<CSDataModel> getCloudboxData() {
 }
 
 class CSDrawerModel {
-  String title;
-  IconData icon;
-  Widget goto;
+  String? title;
+  IconData? icon;
+  Widget? goto;
   bool isSelected;
 
   CSDrawerModel({this.title, this.icon, this.goto, this.isSelected = false});
 }
 
 List<CSDrawerModel> getCSDrawer() {
-  List<CSDrawerModel> _drawerModel = List<CSDrawerModel>();
+  List<CSDrawerModel> _drawerModel = [];
   _drawerModel.add(CSDrawerModel(title: "Home", icon: Icons.home, goto: CSDashboardScreen()));
   _drawerModel.add(CSDrawerModel(title: "Files", icon: Icons.folder, goto: CSCommonFileComponents(appBarTitle: CSAppName)));
   _drawerModel.add(CSDrawerModel(title: "Photos", icon: Icons.photo, goto: CSPhotosScreen()));

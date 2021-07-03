@@ -15,7 +15,7 @@ class T6Cards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: ListView(
@@ -126,7 +126,7 @@ class T6Cards extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            text(t6_lbl_running_in_the_place_with_the_ball, textColor: appStore.textSecondaryColor),
+                            text(t6_lbl_running_in_the_place_with_the_ball, textColor: appStore.textSecondaryColor).expand(),
                             text(t6_lbl__4_35_today, textColor: t6colorPrimary),
                           ],
                         ),

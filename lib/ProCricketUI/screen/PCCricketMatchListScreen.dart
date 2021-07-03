@@ -9,10 +9,12 @@ import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
 import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
 import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
 import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
+import 'package:prokit_flutter/main/utils/AppWidget.dart';
 
+// ignore: must_be_immutable
 class PCCricketMatchListScreen extends StatefulWidget {
   static String tag = '/CricketMatchList';
-  String groundName = "";
+  String? groundName = "";
 
   PCCricketMatchListScreen({this.groundName});
 
@@ -21,9 +23,9 @@ class PCCricketMatchListScreen extends StatefulWidget {
 }
 
 class _PCCricketMatchListScreenState extends State<PCCricketMatchListScreen> {
-  PCScheduleData model = PCScheduleData(schedule: List());
+  PCScheduleData model = PCScheduleData(schedule: []);
   List listSchedule = [];
-  var list = List<Schedule>();
+  List<Schedule> list = [];
 
   @override
   void initState() {
@@ -37,9 +39,9 @@ class _PCCricketMatchListScreenState extends State<PCCricketMatchListScreen> {
     model = PCScheduleData.fromJson(jsonDecode(json));
     print(widget.groundName);
 
-    for (int i = 0; i < model.schedule.length; i++) {
-      if (model.schedule[i].vnu == widget.groundName) {
-        listSchedule.add(model.schedule[i]);
+    for (int i = 0; i < model.schedule!.length; i++) {
+      if (model.schedule![i].vnu == widget.groundName) {
+        listSchedule.add(model.schedule![i]);
       }
     }
     print(listSchedule);
@@ -85,11 +87,11 @@ class _PCCricketMatchListScreenState extends State<PCCricketMatchListScreen> {
                                         Container(height: 25, width: (context.width() - 16) / 2, color: getColorFromHex(getLightColor(schedule.team1Key))),
                                       ],
                                     ),
-                                    Image.asset(getBgFlag(schedule.team1Key)),
+                                    commonCacheImageWidget(getBgFlag(schedule.team1Key), context.width() * 0.1),
                                     // text
                                   ],
                                 ),
-                                Text(schedule.team1Key.toUpperCase(), style: primaryTextStyle(color: Cricket_white, size: 24, fontFamily: fontMedium)),
+                                Text(schedule.team1Key!.toUpperCase(), style: primaryTextStyle(color: Cricket_white, size: 24, fontFamily: fontMedium)),
                               ],
                             ),
                             Stack(
@@ -104,17 +106,17 @@ class _PCCricketMatchListScreenState extends State<PCCricketMatchListScreen> {
                                         Container(height: 25, width: (context.width() - 16) / 2, color: getColorFromHex(getLightColor(schedule.team2Key))),
                                       ],
                                     ),
-                                    Image.asset(getBgFlag(schedule.team2Key)),
+                                    commonCacheImageWidget(getBgFlag(schedule.team2Key), context.width() * 0.1),
                                     // text
                                   ],
                                 ),
-                                Text(schedule.team2Key.toUpperCase(), style: primaryTextStyle(color: Cricket_white, size: 24, fontFamily: fontMedium)),
+                                Text(schedule.team2Key!.toUpperCase(), style: primaryTextStyle(color: Cricket_white, size: 24, fontFamily: fontMedium)),
                               ],
                             ),
                           ],
                         ),
                       ).cornerRadiusWithClipRRect(10.0).paddingOnly(left: 8, right: 8, top: 16),
-                      Image.asset(Cricket_ic_ball_white, height: 65, width: 65).center()
+                      commonCacheImageWidget(Cricket_ic_ball_white, 65, width: 65).center()
                     ],
                   ),
                   Container(
@@ -126,9 +128,9 @@ class _PCCricketMatchListScreenState extends State<PCCricketMatchListScreen> {
                     ),
                     child: Column(
                       children: <Widget>[
-                        Text(schedule.vnu, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 18, fontFamily: fontMedium)),
+                        Text(schedule.vnu!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 18, fontFamily: fontMedium)),
                         10.height,
-                        Text(schedule.result, style: primaryTextStyle(color: Cricket_Primary, size: 18, fontFamily: fontMedium))
+                        Text(schedule.result!, style: primaryTextStyle(color: Cricket_Primary, size: 18, fontFamily: fontMedium))
                       ],
                     ),
                   )

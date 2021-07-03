@@ -17,19 +17,19 @@ class BHBookAppointmentScreen extends StatefulWidget {
 }
 
 class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
-  DateTime date;
+  late DateTime date;
   int currentStep = 0;
-  int _radioValue1 = 0;
+  int? _radioValue1 = 0;
   Color likeButtonColor = whiteColor;
 
-  void something(int value) {
+  void something(int? value) {
     setState(() {
       _radioValue1 = value;
     });
   }
 
   _pickDate() async {
-    DateTime time = await showDatePicker(
+    DateTime? time = await showDatePicker(
       context: context,
       initialDate: date,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -167,7 +167,7 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: BHDashedBoardImage4, height: 70, width: 120, fit: BoxFit.cover),
+                            child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: BHDashedBoardImage4, height: 70, width: 120, fit: BoxFit.cover),
                           ),
                           8.width,
                           Column(
@@ -254,7 +254,7 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                           Text('**** **** *123', style: TextStyle(color: BHAppTextColorPrimary)),
                         ],
                       ),
-                      Radio(value: 0, groupValue: _radioValue1, activeColor: BHColorPrimary, onChanged: (value) => something(value)),
+                      Radio(value: 0, groupValue: _radioValue1, activeColor: BHColorPrimary, onChanged: (dynamic value) => something(value)),
                     ],
                   ),
                 ),
@@ -279,7 +279,7 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                         groupValue: _radioValue1,
                         activeColor: BHColorPrimary,
                         focusColor: BHAppTextColorSecondary,
-                        onChanged: (value) => something(value),
+                        onChanged: (dynamic value) => something(value),
                       ),
                     ],
                   ),
@@ -376,22 +376,26 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(12),
+                    child: ElevatedButton(
                       onPressed: () {},
-                      color: BHColorPrimary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                      style: ElevatedButton.styleFrom(
+                        primary: BHColorPrimary,
+                        padding: EdgeInsets.all(12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                      ),
                       child: Text(BHTxtBookMoreAppointment, style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   8.height,
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(12),
+                    child: ElevatedButton(
                       onPressed: () {},
-                      color: whiteColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: BHColorPrimary)),
+                      style: ElevatedButton.styleFrom(
+                        primary: whiteColor,
+                        padding: EdgeInsets.all(12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: BHColorPrimary)),
+                      ),
                       child: Text(BHTxtGoAppointment, style: TextStyle(color: BHColorPrimary, fontSize: 15, fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -440,8 +444,7 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
               children: <Widget>[
                 Container(
                   width: 140,
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(12),
+                  child: ElevatedButton(
                     onPressed: () {
                       if (currentStep < 2) {
                         setState(() {
@@ -451,15 +454,18 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                         currentStep = 0;
                       }
                     },
-                    color: BHColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    style: ElevatedButton.styleFrom(
+                      primary: BHColorPrimary,
+                      padding: EdgeInsets.all(12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
+
                     child: Text(BHBtnContinue, style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                 ),
                 Container(
                   width: 140,
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(12),
+                  child: ElevatedButton(
                     onPressed: () {
                       if (currentStep > 0) {
                         setState(() {
@@ -470,8 +476,11 @@ class BHBookAppointmentScreenState extends State<BHBookAppointmentScreen> {
                         finish(context);
                       }
                     },
-                    color: BHColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(12),
+                      primary:BHColorPrimary,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    ),
                     child: Text(BHBtnCancel, style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                 )

@@ -55,7 +55,7 @@ class QIBusSettingState extends State<QIBusSetting> {
     );
   }
 
-  Widget mSeeting1(var heading, var subLabel, List<String> a, String value) {
+  Widget mSeeting1(var heading, var subLabel, List<String> a, String? value) {
     return Container(
       decoration: boxDecoration(showShadow: true),
       padding: EdgeInsets.all(spacing_standard_new),

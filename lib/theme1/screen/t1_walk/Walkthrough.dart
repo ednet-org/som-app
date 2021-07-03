@@ -38,7 +38,7 @@ class WalkthroughState extends State<Walkthrough> with SingleTickerProviderState
         text(widget.title, fontSize: textSizeLarge, fontFamily: fontSemibold, textColor: t1_colorPrimary),
         SizedBox(height: height / 30),
         CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: widget.imageIcon,
           width: height * 0.35,
           height: height * 0.35,

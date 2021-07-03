@@ -32,7 +32,7 @@ class _MWListViewScreenState extends State<MWListViewScreen> {
             itemCount: example.length,
             itemBuilder: (BuildContext context, index) {
               return ExampleItemWidget(example[index], onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
               });
             }));
   }

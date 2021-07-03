@@ -1,7 +1,7 @@
 class PCScoreCardData {
-  List<Inning> innings;
-  String state;
-  String status;
+  List<Inning>? innings;
+  String? state;
+  String? status;
 
   PCScoreCardData({this.innings, this.state, this.status});
 
@@ -18,25 +18,30 @@ class PCScoreCardData {
     data['state'] = this.state;
     data['status'] = this.status;
     if (this.innings != null) {
-      data['innings'] = this.innings.map((v) => v.toJson()).toList();
+      data['innings'] = this.innings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Inning {
-  String bat_team_id;
-  String bat_team_name;
-  List<Batsmen> batsmen;
-  String bowl_team_id;
-  List<Bowler> bowlers;
-  Extras extras;
-  List<Fow> fow;
-  String innings_id;
-  String ovr;
-  String score;
-  String wkts;
+  // ignore: non_constant_identifier_names
+  String? bat_team_id;
+  // ignore: non_constant_identifier_names
+  String? bat_team_name;
+  List<Batsmen>? batsmen;
+  // ignore: non_constant_identifier_names
+  String? bowl_team_id;
+  List<Bowler>? bowlers;
+  Extras? extras;
+  List<Fow>? fow;
+  // ignore: non_constant_identifier_names
+  String? innings_id;
+  String? ovr;
+  String? score;
+  String? wkts;
 
+  // ignore: non_constant_identifier_names
   Inning({this.bat_team_id, this.bat_team_name, this.batsmen, this.bowl_team_id, this.bowlers, this.extras, this.fow, this.innings_id, this.ovr, this.score, this.wkts});
 
   factory Inning.fromJson(Map<String, dynamic> json) {
@@ -65,29 +70,29 @@ class Inning {
     data['score'] = this.score;
     data['wkts'] = this.wkts;
     if (this.batsmen != null) {
-      data['batsmen'] = this.batsmen.map((v) => v.toJson()).toList();
+      data['batsmen'] = this.batsmen!.map((v) => v.toJson()).toList();
     }
     if (this.bowlers != null) {
-      data['bowlers'] = this.bowlers.map((v) => v.toJson()).toList();
+      data['bowlers'] = this.bowlers!.map((v) => v.toJson()).toList();
     }
     if (this.extras != null) {
-      data['extras'] = this.extras.toJson();
+      data['extras'] = this.extras!.toJson();
     }
     if (this.fow != null) {
-      data['fow'] = this.fow.map((v) => v.toJson()).toList();
+      data['fow'] = this.fow!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Bowler {
-  String id;
-  String m;
-  String n;
-  String o;
-  String r;
-  String w;
-  String wd;
+  String? id;
+  String? m;
+  String? n;
+  String? o;
+  String? r;
+  String? w;
+  String? wd;
 
   Bowler({this.id, this.m, this.n, this.o, this.r, this.w, this.wd});
 
@@ -117,13 +122,15 @@ class Bowler {
 }
 
 class Batsmen {
-  String fours;
-  String sixes;
-  String b;
-  String id;
-  String out_desc;
-  String r;
+  String? fours;
+  String? sixes;
+  String? b;
+  String? id;
+  // ignore: non_constant_identifier_names
+  String? out_desc;
+  String? r;
 
+  // ignore: non_constant_identifier_names
   Batsmen({this.fours, this.sixes, this.b, this.id, this.out_desc, this.r});
 
   factory Batsmen.fromJson(Map<String, dynamic> json) {
@@ -150,12 +157,12 @@ class Batsmen {
 }
 
 class Extras {
-  String b;
-  String lb;
-  String nb;
-  String p;
-  String t;
-  String wd;
+  String? b;
+  String? lb;
+  String? nb;
+  String? p;
+  String? t;
+  String? wd;
 
   Extras({this.b, this.lb, this.nb, this.p, this.t, this.wd});
 
@@ -183,11 +190,13 @@ class Extras {
 }
 
 class Fow {
-  String id;
-  String over;
-  String score;
-  String wkt_nbr;
+  String? id;
+  String? over;
+  String? score;
+  // ignore: non_constant_identifier_names
+  String? wkt_nbr;
 
+  // ignore: non_constant_identifier_names
   Fow({this.id, this.over, this.score, this.wkt_nbr});
 
   factory Fow.fromJson(Map<String, dynamic> json) {

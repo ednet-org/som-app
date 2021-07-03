@@ -1,5 +1,5 @@
 class PCHistoryData {
-  List<History> history;
+  List<History>? history;
 
   PCHistoryData({this.history});
 
@@ -12,20 +12,20 @@ class PCHistoryData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.history != null) {
-      data['history'] = this.history.map((v) => v.toJson()).toList();
+      data['history'] = this.history!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class History {
-  String champion;
-  String result;
-  String runnersUp;
-  String teamImage;
-  String teamOneScore;
-  String teamTwoScore;
-  String year;
+  String? champion;
+  String? result;
+  String? runnersUp;
+  String? teamImage;
+  String? teamOneScore;
+  String? teamTwoScore;
+  String? year;
 
   History({this.champion, this.result, this.runnersUp, this.teamImage, this.teamOneScore, this.teamTwoScore, this.year});
 

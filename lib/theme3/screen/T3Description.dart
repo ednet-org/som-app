@@ -42,7 +42,7 @@ class T3DescriptionState extends State<T3Description> {
                 title: Text(t3_lbl_food_recipe_detail, style: boldTextStyle(color: white, size: 22)),
                 flexibleSpace: FlexibleSpaceBar(
                     background: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: t3_ic_dish2,
                   fit: BoxFit.cover,
                 )),

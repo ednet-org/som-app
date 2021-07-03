@@ -25,9 +25,10 @@ import 'package:prokit_flutter/integrations/screens/singature_screen.dart';
 import 'package:prokit_flutter/integrations/screens/sliding_panel_screen.dart';
 import 'package:prokit_flutter/integrations/screens/wave_screen.dart';
 import 'package:prokit_flutter/integrations/utils/colors.dart';
+import 'package:prokit_flutter/main/model/ExpenseData.dart';
 
 Future<List<ContentModel>> getContents(context) async {
-  List<ContentModel> list = List();
+  List<ContentModel> list = [];
 
   var cat1Item1 = ContentModel(title: 'Before After Image', pageName: BeforeAfterImageScreen());
   var cat1Item2 = ContentModel(title: 'Google Sign In', pageName: GoogleSignInScreen());
@@ -99,5 +100,17 @@ Future<List<ContentModel>> getContents(context) async {
       tag: 'New',
     ),
   );
+  return list;
+}
+
+List<ExpenseData> getChartData() {
+  List<ExpenseData> list = [];
+  list.add(ExpenseData(expanseCategory: 'Food', father: 55, mother: 48, daughter: 45, son: 10));
+  list.add(ExpenseData(expanseCategory: 'Transport', father: 33, mother: 45, daughter: 54, son: 28));
+  list.add(ExpenseData(expanseCategory: 'Medical', father: 40, mother: 23, daughter: 20, son: 34));
+  list.add(ExpenseData(expanseCategory: 'Clothes', father: 75, mother: 54, daughter: 23, son: 54));
+  list.add(ExpenseData(expanseCategory: 'Books', father: 12, mother: 18, daughter: 43, son: 55));
+  list.add(ExpenseData(expanseCategory: 'Other', father: 23, mother: 54, daughter: 33, son: 23));
+
   return list;
 }

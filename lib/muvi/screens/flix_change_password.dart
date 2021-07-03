@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/muvi/screens/flix_home_screen.dart';
 import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
 import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
@@ -21,9 +20,9 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   FocusNode newPassFocus = FocusNode();
   FocusNode newConfirmPassFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String password;
-  String newPassword;
-  bool _autoValidate = false;
+  String? password;
+  String? newPassword;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
 
@@ -37,7 +36,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     var form = Form(
       key: _formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -47,11 +46,11 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
             isPassword: true,
             isPasswordVisible: passwordVisible,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: passFocus,
             nextFocus: newPassFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               password = value;
             },
             textInputAction: TextInputAction.next,
@@ -68,11 +67,11 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
             isPassword: true,
             isPasswordVisible: passwordVisible,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: newPassFocus,
             nextFocus: newConfirmPassFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               newPassword = value;
             },
             textInputAction: TextInputAction.next,
@@ -89,10 +88,10 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
             isPassword: true,
             isPasswordVisible: passwordVisible,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: newConfirmPassFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               newPassword = value;
             },
             textInputAction: TextInputAction.done,

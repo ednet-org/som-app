@@ -13,12 +13,11 @@ class T11Setting extends StatefulWidget {
 }
 
 class _T11SettingState extends State<T11Setting> {
-  @override
   bool isAutoPlay = true;
   bool isVolume = true;
   bool isDataServer = true;
-  String selectedValue = 'High';
-  String downloadSpeed = 'High';
+  String? selectedValue = 'High';
+  String? downloadSpeed = 'High';
 
   Widget build(BuildContext context) {
     final listView = Column(

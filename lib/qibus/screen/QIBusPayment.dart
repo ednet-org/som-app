@@ -21,7 +21,7 @@ class QIBusPayment extends StatefulWidget {
 }
 
 class QIBusPaymentState extends State<QIBusPayment> {
-  List<QIBusCardModel> mCardsList;
+  late List<QIBusCardModel> mCardsList;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class QIBusPaymentState extends State<QIBusPayment> {
         });
   }
 
-  Widget mOption(var icon, var lbl, {@required Function onTap}) {
+  Widget mOption(var icon, var lbl, {required Function onTap}) {
     return GestureDetector(
       onTap: () {
         onTap();

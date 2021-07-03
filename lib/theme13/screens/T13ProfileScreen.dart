@@ -20,7 +20,7 @@ class T13ProfileScreen extends StatefulWidget {
 }
 
 class T13ProfileScreenState extends State<T13ProfileScreen> {
-  List<Home> mList;
+  late List<Home> mList;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T13ProfileScreenState extends State<T13ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
 
     var mProfileHeader = Container(
@@ -132,8 +132,9 @@ class T13ProfileScreenState extends State<T13ProfileScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Properties extends StatelessWidget {
-  Home model;
+  late Home model;
 
   Properties(Home model, int pos) {
     this.model = model;

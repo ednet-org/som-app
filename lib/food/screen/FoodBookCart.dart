@@ -23,7 +23,7 @@ class FoodBookCart extends StatefulWidget {
 }
 
 class FoodBookCartState extends State<FoodBookCart> {
-  List<FoodDish> mList2;
+  late List<FoodDish> mList2;
 
   @override
   void initState() {
@@ -184,7 +184,7 @@ class FoodBookCartState extends State<FoodBookCart> {
 
 // ignore: must_be_immutable
 class Cart extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   Cart(FoodDish model, int pos) {
     this.model = model;
@@ -192,7 +192,6 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       child: Row(

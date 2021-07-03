@@ -107,10 +107,10 @@ class CWTextFieldScreenState extends State<CWTextFieldScreen> {
             12.height,
             CupertinoTextField(
               placeholder: 'Please enter text here',
-              placeholderStyle: TextStyle(color: appStore.textPrimaryColor.withOpacity(0.5)),
+              placeholderStyle: TextStyle(color: appStore.textPrimaryColor!.withOpacity(0.5)),
               style: TextStyle(color: white.withOpacity(0.5)),
               cursorColor: appStore.isDarkModeOn ? white : blackColor,
-              decoration: BoxDecoration(border: Border.all(width: 1, color: appStore.textPrimaryColor.withOpacity(0.7)), borderRadius: BorderRadius.all(Radius.circular(5))),
+              decoration: BoxDecoration(border: Border.all(width: 1, color: appStore.textPrimaryColor!.withOpacity(0.7)), borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.all(12),
             ),
             12.height,
@@ -118,10 +118,10 @@ class CWTextFieldScreenState extends State<CWTextFieldScreen> {
             12.height,
             CupertinoTextField(
               placeholder: 'Please enter text here',
-              placeholderStyle: TextStyle(color: appStore.textPrimaryColor.withOpacity(0.5)),
+              placeholderStyle: TextStyle(color: appStore.textPrimaryColor!.withOpacity(0.5)),
               style: TextStyle(color: white.withOpacity(0.5)),
               cursorColor: appStore.isDarkModeOn ? white : blackColor,
-              decoration: BoxDecoration(border: Border.all(width: 1, color: appStore.textPrimaryColor.withOpacity(0.7)), borderRadius: BorderRadius.all(Radius.circular(30))),
+              decoration: BoxDecoration(border: Border.all(width: 1, color: appStore.textPrimaryColor!.withOpacity(0.7)), borderRadius: BorderRadius.all(Radius.circular(30))),
               padding: EdgeInsets.all(12),
             ),
             12.height

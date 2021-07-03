@@ -8,7 +8,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 class MPAlbumsDetailScreen extends StatefulWidget {
-  final MusicModel data;
+  final MusicModel? data;
 
   MPAlbumsDetailScreen({this.data});
 
@@ -56,21 +56,21 @@ class MPAlbumsDetailScreenState extends State<MPAlbumsDetailScreen> {
           children: [
             Stack(
               children: [
-                commonCacheImageWidget(widget.data.img, 300, width: context.width(), fit: BoxFit.cover),
+                commonCacheImageWidget(widget.data!.img, 300, width: context.width(), fit: BoxFit.cover),
                 Container(height: 300, color: Colors.black.withOpacity(0.8)),
                 Positioned(
                   left: 16,
                   top: 32,
                   child: Row(
                     children: [
-                      commonCacheImageWidget(widget.data.img, 130, width: 150, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
+                      commonCacheImageWidget(widget.data!.img, 130, width: 150, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                       16.width,
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.data.title, style: boldTextStyle(color: Colors.white)),
+                          Text(widget.data!.title!, style: boldTextStyle(color: Colors.white)),
                           8.height,
-                          Text(widget.data.subtitle, style: secondaryTextStyle(color: Colors.white)),
+                          Text(widget.data!.subtitle!, style: secondaryTextStyle(color: Colors.white)),
                           8.height,
                           Row(
                             children: [
@@ -142,8 +142,8 @@ class MPAlbumsDetailScreenState extends State<MPAlbumsDetailScreen> {
                   children: [
                     Icon(Icons.play_circle_fill_outlined, color: mpAppButtonColor),
                     16.width,
-                    Text((data.title), style: primaryTextStyle(color: Colors.white), overflow: TextOverflow.ellipsis, maxLines: 1).expand(),
-                    Text(data.subtitle, style: primaryTextStyle(color: Colors.white)),
+                    Text(data.title!, style: primaryTextStyle(color: Colors.white), overflow: TextOverflow.ellipsis, maxLines: 1).expand(),
+                    Text(data.subtitle!, style: primaryTextStyle(color: Colors.white)),
                     8.width,
                     Icon(Icons.more_horiz, color: Colors.white)
                   ],
@@ -193,7 +193,7 @@ class MPAlbumsDetailScreenState extends State<MPAlbumsDetailScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 100, width: 100, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                         4.height,
-                        Text(data.title, style: secondaryTextStyle(size: 13, color: Colors.grey), maxLines: 1),
+                        Text(data.title!, style: secondaryTextStyle(size: 13, color: Colors.grey), maxLines: 1),
                       ],
                     ).paddingOnly(left: 8, right: 8);
                   },

@@ -3,9 +3,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
 import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
 
+// ignore: must_be_immutable
 class SDChatPageViewScreen extends StatefulWidget {
-  String name;
-  String profileImages;
+  String? name;
+  String? profileImages;
 
   SDChatPageViewScreen({this.name, this.profileImages});
 
@@ -91,7 +92,7 @@ class _SDChatPageViewScreenState extends State<SDChatPageViewScreen> {
                               fit: BoxFit.cover,
                               placeholder: AssetImage('Loading'),
                               image: Image.network(
-                                widget.profileImages == null ? 'https://i.insider.com/5de6dd81fd9db241b00c04d3?width=1100&format=jpeg&auto=webp' : widget.profileImages,
+                                widget.profileImages == null ? 'https://i.insider.com/5de6dd81fd9db241b00c04d3?width=1100&format=jpeg&auto=webp' : widget.profileImages!,
                                 height: 35,
                                 width: 10,
                               ).image,
@@ -104,7 +105,7 @@ class _SDChatPageViewScreenState extends State<SDChatPageViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text(widget.name == null ? 'Ankit Gada' : widget.name, style: TextStyle(color: Colors.white, fontSize: 16)),
+                              Text(widget.name == null ? 'Ankit Gada' : widget.name!, style: TextStyle(color: Colors.white, fontSize: 16)),
                               Container(
                                 margin: EdgeInsets.only(top: 2),
                                 child: Text("online", style: TextStyle(color: Colors.white60, fontSize: 14)),
@@ -193,37 +194,40 @@ class _SDChatPageViewScreenState extends State<SDChatPageViewScreen> {
   }
 }
 
-Widget ReceivedMessageWidget({String content, String time}) {
+// ignore: non_constant_identifier_names
+Widget ReceivedMessageWidget({required String content, required String time}) {
   return Container(
-      child: Padding(
-    padding: const EdgeInsets.only(right: 75.0, left: 8.0, top: 8.0, bottom: 8.0),
-    child: Container(
-      decoration: boxDecorations(showShadow: true, radius: 6),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0, bottom: 15.0),
-              child: Text(
-                content,
-                style: primaryTextStyle(
-                  size: 14,
-                  color: Colors.black,
+    child: Padding(
+      padding: const EdgeInsets.only(right: 75.0, left: 8.0, top: 8.0, bottom: 8.0),
+      child: Container(
+        decoration: boxDecorations(showShadow: true, radius: 6),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0, bottom: 15.0),
+                child: Text(
+                  content,
+                  style: primaryTextStyle(
+                    size: 14,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
-          ),
-          Text(
-            time,
-            style: TextStyle(fontSize: 10, color: Colors.black),
-          ),
-        ],
+            Text(
+              time,
+              style: TextStyle(fontSize: 10, color: Colors.black),
+            ),
+          ],
+        ),
       ),
     ),
-  ));
+  );
 }
 
-Widget SendedMessageWidget({String content, String time}) {
+// ignore: non_constant_identifier_names
+Widget SendedMessageWidget({required String content, required String time}) {
   return Container(
     child: Padding(
       padding: const EdgeInsets.only(right: 8.0, left: 50.0, top: 4.0, bottom: 4.0),

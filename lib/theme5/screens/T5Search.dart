@@ -19,8 +19,8 @@ class T5Search extends StatefulWidget {
 }
 
 class T5SearchState extends State<T5Search> {
-  List<T5Contact> mRecentContact = List<T5Contact>();
-  List<T5Contact> mOtherContact = List<T5Contact>();
+  List<T5Contact> mRecentContact = [];
+  List<T5Contact> mOtherContact = [];
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class T5SearchState extends State<T5Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: Container(

@@ -8,9 +8,9 @@ import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
 class CSShareComponents extends StatefulWidget {
   static String tag = '/CSShareComponents';
 
-  final CSDataModel dataModel;
+  final CSDataModel? dataModel;
 
-  const CSShareComponents({Key key, this.dataModel}) : super(key: key);
+  const CSShareComponents({Key? key, this.dataModel}) : super(key: key);
 
   @override
   CSShareComponentsState createState() => CSShareComponentsState();
@@ -18,7 +18,7 @@ class CSShareComponents extends StatefulWidget {
 
 class CSShareComponentsState extends State<CSShareComponents> {
   TextEditingController controller = TextEditingController();
-  AccessOption defaultAccess = AccessOption.edit;
+  AccessOption? defaultAccess = AccessOption.edit;
 
   bool isTextEmpty = false;
 
@@ -47,7 +47,7 @@ class CSShareComponentsState extends State<CSShareComponents> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Share \"${widget.dataModel.fileName}\"", style: boldTextStyle(size: 20)),
+        title: Text("Share \"${widget.dataModel!.fileName}\"", style: boldTextStyle(size: 20)),
         actions: [IconButton(icon: Icon(Icons.settings), onPressed: () {})],
       ),
       body: Container(
@@ -81,7 +81,7 @@ class CSShareComponentsState extends State<CSShareComponents> {
                 PopupMenuButton(
                     child: Text("Can Edit", style: boldTextStyle(size: 14)),
                     padding: EdgeInsets.symmetric(horizontal: 4),
-                    onSelected: (val) {},
+                    onSelected: (dynamic val) {},
                     itemBuilder: (context) => [
                           PopupMenuItem(
                             value: 1,
@@ -93,7 +93,7 @@ class CSShareComponentsState extends State<CSShareComponents> {
                               leading: Radio(
                                 value: AccessOption.edit,
                                 groupValue: defaultAccess,
-                                onChanged: (AccessOption val) => setState(() => defaultAccess = val),
+                                onChanged: (AccessOption? val) => setState(() => defaultAccess = val),
                                 visualDensity: VisualDensity(vertical: -4, horizontal: -4),
                               ),
                             ),
@@ -108,7 +108,7 @@ class CSShareComponentsState extends State<CSShareComponents> {
                                 leading: Radio(
                                   value: AccessOption.view,
                                   groupValue: defaultAccess,
-                                  onChanged: (AccessOption val) => setState(() => defaultAccess = val),
+                                  onChanged: (AccessOption? val) => setState(() => defaultAccess = val),
                                   visualDensity: VisualDensity(vertical: -4, horizontal: -4),
                                 ),
                               ))
@@ -143,7 +143,7 @@ class CSShareComponentsState extends State<CSShareComponents> {
                 color: isTextEmpty ? CSDarkBlueColor : Colors.grey,
               ).onTap(() {
                 if (isTextEmpty) {
-                  widget.dataModel.isShared = true;
+                  widget.dataModel!.isShared = true;
                 }
                 setState(() {});
                 finish(context);

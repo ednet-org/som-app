@@ -21,10 +21,10 @@ class ShHomeFragment extends StatefulWidget {
 }
 
 class ShHomeFragmentState extends State<ShHomeFragment> {
-  var list = List<ShCategory>();
-  var banners = List<String>();
-  var newestProducts = List<ShProduct>();
-  var featuredProducts = List<ShProduct>();
+  List<ShCategory> list = [];
+  List<String> banners = [];
+  List<ShProduct> newestProducts = [];
+  List<ShProduct> featuredProducts = [];
   var position = 0;
   var colors = [sh_cat_1, sh_cat_2, sh_cat_3, sh_cat_4, sh_cat_5];
 
@@ -44,13 +44,13 @@ class ShHomeFragmentState extends State<ShHomeFragment> {
       toast(error);
     });
     List<ShProduct> products = await loadProducts();
-    var featured = List<ShProduct>();
+    List<ShProduct> featured = [];
     products.forEach((product) {
-      if (product.featured) {
+      if (product.featured!) {
         featured.add(product);
       }
     });
-    var banner = List<String>();
+    List<String> banner = [];
     for (var i = 1; i < 7; i++) {
       banner.add("images/shophop/img/products/banners/b" + i.toString() + ".jpg");
     }
@@ -135,7 +135,7 @@ class ShHomeFragmentState extends State<ShHomeFragment> {
                                   Container(
                                     padding: EdgeInsets.all(spacing_middle),
                                     decoration: BoxDecoration(shape: BoxShape.circle, color: colors[index % colors.length]),
-                                    child: Image.asset(list[index].image, width: 15, color: sh_white),
+                                    child: Image.asset(list[index].image!, width: 15, color: sh_white),
                                   ),
                                   SizedBox(height: spacing_control),
                                   text(list[index].name, textColor: colors[index % colors.length], fontFamily: fontMedium)

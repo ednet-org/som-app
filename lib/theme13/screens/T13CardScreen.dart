@@ -6,7 +6,6 @@ import 'package:prokit_flutter/theme13/utils/T13Images.dart';
 import 'package:prokit_flutter/theme13/utils/T13Strings.dart';
 import 'package:prokit_flutter/theme13/utils/T13Widget.dart';
 import 'package:prokit_flutter/theme13/utils/T13Constant.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/theme13/model/T13Model.dart';
 import 'package:prokit_flutter/theme13/utils/T13DataGenerator.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
@@ -22,7 +21,7 @@ class T13CardScreen extends StatefulWidget {
 
 class T13CardScreenState extends State<T13CardScreen> {
   int selectedPos = 1;
-  List<Home> mList;
+  late List<Home> mList;
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class T13CardScreenState extends State<T13CardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     var mTop = Container(
       margin: EdgeInsets.only(left: spacing_large, right: spacing_large, bottom: spacing_standard_new),
@@ -111,8 +110,9 @@ class T13CardScreenState extends State<T13CardScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Properties extends StatelessWidget {
-  Home model;
+  late Home model;
 
   Properties(Home model, int pos) {
     this.model = model;

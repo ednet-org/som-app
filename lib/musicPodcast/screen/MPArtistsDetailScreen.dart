@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:prokit_flutter/main/utils/AppWidget.dart';
 import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
@@ -10,7 +10,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
 import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 
 class MPArtistsDetailScreen extends StatefulWidget {
-  final String img;
+  final String? img;
 
   MPArtistsDetailScreen({this.img});
 
@@ -60,7 +60,6 @@ class MPArtistsDetailScreenState extends State<MPArtistsDetailScreen> {
           children: [
             Stack(
               fit: StackFit.passthrough,
-              overflow: Overflow.clip,
               children: [
                 commonCacheImageWidget(widget.img, 250, width: context.width(), fit: BoxFit.cover),
                 Container(color: black.withOpacity(0.7), height: 250, width: context.width()),
@@ -135,7 +134,7 @@ class MPArtistsDetailScreenState extends State<MPArtistsDetailScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 130, width: 130, fit: BoxFit.cover).cornerRadiusWithClipRRect(14),
                         8.height,
-                        Text(data.title, overflow: TextOverflow.ellipsis, maxLines: 1, style: boldTextStyle(color: white)).expand(),
+                        Text(data.title!, overflow: TextOverflow.ellipsis, maxLines: 1, style: boldTextStyle(color: white)).expand(),
                         4.height,
                         Text(data.number.toString(), style: secondaryTextStyle(color: mpAppTextColor)),
                       ],
@@ -172,7 +171,7 @@ class MPArtistsDetailScreenState extends State<MPArtistsDetailScreen> {
                       children: [
                         Icon(Icons.play_circle_outline, color: mpAppButtonColor),
                         16.width,
-                        Text(data.title, style: boldTextStyle(color: white, size: 14)).expand(),
+                        Text(data.title!, style: boldTextStyle(color: white, size: 14)).expand(),
                         Text(data.number1.toString(), style: secondaryTextStyle(color: white, size: 12)),
                         24.width,
                         Icon(Icons.more_horiz, color: white.withOpacity(0.9)),

@@ -28,8 +28,8 @@ class T2DashboardState extends State<T2Dashboard> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<T2Favourite> mFavouriteList;
-  List<T2Slider> mSliderList;
+  late List<T2Favourite> mFavouriteList;
+  List<T2Slider>? mSliderList;
   var currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -49,7 +49,7 @@ class T2DashboardState extends State<T2Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     return Observer(
       builder: (_) => Scaffold(
@@ -90,7 +90,7 @@ class T2DashboardState extends State<T2Dashboard> {
                           child: Row(
                             children: <Widget>[
                               CachedNetworkImage(
-                                placeholder: placeholderWidgetFn(),
+                                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                 imageUrl: mFavouriteList[position].image,
                                 width: width / 3,
                                 height: width / 2.4,

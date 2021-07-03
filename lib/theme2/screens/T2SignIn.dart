@@ -19,7 +19,7 @@ class T2SignIn extends StatefulWidget {
 
 class T2SignInState extends State<T2SignIn> {
   bool passwordVisible = false;
-  bool isRemember = false;
+  bool? isRemember = false;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T2SignInState extends State<T2SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       body: Observer(
         builder: (_) => SingleChildScrollView(
@@ -90,7 +90,7 @@ class T2SignInState extends State<T2SignIn> {
                               focusColor: t2_colorPrimary,
                               activeColor: t2_colorPrimary,
                               value: isRemember,
-                              onChanged: (bool value) {
+                              onChanged: (bool? value) {
                                 setState(() {
                                   isRemember = value;
                                 });

@@ -17,7 +17,7 @@ class T3BottomSheet extends StatefulWidget {
 }
 
 class T3BottomSheetState extends State<T3BottomSheet> {
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   void initState() {

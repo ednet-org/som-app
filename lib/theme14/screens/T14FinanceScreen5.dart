@@ -76,7 +76,7 @@ class _T14FinanceScreen5State extends State<T14FinanceScreen5> {
                 label: "\$",
                 lineColor: t14_colorSkyBlue,
                 onMissingValue: (dateTime) {
-                  if (dateTime.month.isEven) {
+                  if (dateTime!.month.isEven) {
                     return 10.0;
                   }
                   return 5.0;
@@ -155,7 +155,7 @@ class _T14FinanceScreen5State extends State<T14FinanceScreen5> {
                         backgroundColor: i == index ? white : t14_finance5_BgColor,
                       ),
                       child: Text(
-                        i == index ? data.title : data.title[0],
+                        i == index ? data.title! : data.title![0],
                         textAlign: TextAlign.center,
                         style: boldTextStyle(color: i == index ? black : t14_colorBlue, size: 14),
                       ),
@@ -193,17 +193,17 @@ class _T14FinanceScreen5State extends State<T14FinanceScreen5> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.transactionType, style: boldTextStyle(size: 14, color: t14_colorBlue)),
+                              Text(data.transactionType!, style: boldTextStyle(size: 14, color: t14_colorBlue)),
                               4.height,
-                              Text(data.totalTransaction, style: boldTextStyle(size: 12, color: t14_SuccessTxtColor.withOpacity(0.5))),
+                              Text(data.totalTransaction!, style: boldTextStyle(size: 12, color: t14_SuccessTxtColor.withOpacity(0.5))),
                             ],
                           ).expand(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(data.rate, style: boldTextStyle(size: 14, color: t14_colorBlue)),
+                              Text(data.rate!, style: boldTextStyle(size: 14, color: t14_colorBlue)),
                               4.height,
-                              Text(data.offer, style: boldTextStyle(size: 12, color: t14_SuccessTxtColor.withOpacity(0.5))),
+                              Text(data.offer!, style: boldTextStyle(size: 12, color: t14_SuccessTxtColor.withOpacity(0.5))),
                             ],
                           )
                         ],

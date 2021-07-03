@@ -13,7 +13,7 @@ import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
 // ignore: must_be_immutable
 class MPAlbumsScreen extends StatefulWidget {
   static String tag = '/ MPAlbumsScreen';
-  bool isTab = true;
+  bool? isTab = true;
 
   MPAlbumsScreen({this.isTab});
 
@@ -45,7 +45,7 @@ class MPAlbumsScreenState extends State<MPAlbumsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: mpAppBackGroundColor,
-        appBar: widget.isTab
+        appBar: widget.isTab!
             ? null
             : AppBar(
                 backgroundColor: mpAppBackGroundColor,
@@ -91,9 +91,9 @@ class MPAlbumsScreenState extends State<MPAlbumsScreen> {
                           MPAlbumsDetailScreen(data: data).launch(context);
                         }),
                         4.height,
-                        Text(data.title, style: primaryTextStyle(color: Colors.white)),
+                        Text(data.title!, style: primaryTextStyle(color: Colors.white)),
                         4.height,
-                        Text(data.subtitle, style: secondaryTextStyle(color: Colors.grey)),
+                        Text(data.subtitle!, style: secondaryTextStyle(color: Colors.grey)),
                       ],
                     ).paddingOnly(left: 8, right: 8);
                   },
@@ -131,9 +131,9 @@ class MPAlbumsScreenState extends State<MPAlbumsScreen> {
                             MPNowPlayingScreen(data: data).launch(context);
                           }),
                           8.height,
-                          Text(data.title, style: boldTextStyle(color: Colors.white), maxLines: 1),
+                          Text(data.title!, style: boldTextStyle(color: Colors.white), maxLines: 1),
                           4.height,
-                          Text(data.subtitle, style: primaryTextStyle(color: Colors.grey, size: 14), maxLines: 1),
+                          Text(data.subtitle!, style: primaryTextStyle(color: Colors.grey, size: 14), maxLines: 1),
                         ],
                       ),
                     ).onTap(() {

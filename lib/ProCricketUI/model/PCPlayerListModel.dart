@@ -1,6 +1,8 @@
 class PCPlayerListModel {
-  List<CricketTeam> cricket_Team;
+  // ignore: non_constant_identifier_names
+  List<CricketTeam>? cricket_Team;
 
+  // ignore: non_constant_identifier_names
   PCPlayerListModel({this.cricket_Team});
 
   factory PCPlayerListModel.fromJson(Map<String, dynamic> json) {
@@ -12,18 +14,18 @@ class PCPlayerListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.cricket_Team != null) {
-      data['Cricket_Team'] = this.cricket_Team.map((v) => v.toJson()).toList();
+      data['Cricket_Team'] = this.cricket_Team!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CricketTeam {
-  String coachName;
-  String sName;
-  String teamIcon;
-  String teamName;
-  List<TeamPlayer> teamPlayers;
+  String? coachName;
+  String? sName;
+  String? teamIcon;
+  String? teamName;
+  List<TeamPlayer>? teamPlayers;
 
   CricketTeam({
     this.coachName,
@@ -50,18 +52,18 @@ class CricketTeam {
     data['teamIcon'] = this.teamIcon;
     data['teamName'] = this.teamName;
     if (this.teamPlayers != null) {
-      data['teamPlayers'] = this.teamPlayers.map((v) => v.toJson()).toList();
+      data['teamPlayers'] = this.teamPlayers!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TeamPlayer {
-  String id;
-  bool isCaptain;
-  bool isWicketKeeper;
-  String playerName;
-  String role;
+  String? id;
+  bool? isCaptain;
+  bool? isWicketKeeper;
+  String? playerName;
+  String? role;
 
   TeamPlayer({this.id, this.isWicketKeeper = false, this.playerName, this.role, this.isCaptain = false});
 

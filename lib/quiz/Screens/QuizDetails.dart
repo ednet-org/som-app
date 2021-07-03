@@ -17,7 +17,7 @@ class QuizDetails extends StatefulWidget {
 }
 
 class _QuizDetailsState extends State<QuizDetails> {
-  List<QuizTestModel> mList;
+  late List<QuizTestModel> mList;
 
   @override
   void initState() {
@@ -63,9 +63,10 @@ class _QuizDetailsState extends State<QuizDetails> {
   }
 }
 
+// ignore: must_be_immutable, camel_case_types
 class quizList extends StatelessWidget {
-  var width;
-  QuizTestModel model;
+  late var width;
+  late QuizTestModel model;
 
   quizList(QuizTestModel model, int pos) {
     this.model = model;

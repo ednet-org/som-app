@@ -12,8 +12,8 @@ class MWProgressBarScreen extends StatefulWidget {
 }
 
 class MWProgressBarScreenState extends State<MWProgressBarScreen> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {

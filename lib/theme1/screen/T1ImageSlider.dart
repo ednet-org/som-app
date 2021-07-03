@@ -30,7 +30,7 @@ class T1ImageSliderState extends State<T1ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Observer(
       builder: (_) => Scaffold(
         appBar: appBar(context, t1_Image_Slider),
@@ -72,7 +72,7 @@ class T1ImageSliderState extends State<T1ImageSlider> {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class Slider extends StatelessWidget {
           margin: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: file,
             fit: BoxFit.fill,
           )),

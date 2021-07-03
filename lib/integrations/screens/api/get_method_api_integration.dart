@@ -31,12 +31,12 @@ class GETMethodExampleScreenState extends State<GETMethodExampleScreen> {
           return Container(
             margin: EdgeInsets.all(8),
             padding: EdgeInsets.all(8),
-            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
             child: Row(
               children: [
                 networkImage(data[index].avatar_url, fit: BoxFit.fill, aWidth: 60, aHeight: 60).cornerRadiusWithClipRRect(50),
                 10.width,
-                Text(data[index].login, style: boldTextStyle()),
+                Text(data[index].login!, style: boldTextStyle()),
               ],
             ),
           );
@@ -49,8 +49,8 @@ class GETMethodExampleScreenState extends State<GETMethodExampleScreen> {
       body: FutureBuilder<List<FollowerModel>>(
         future: getFollowers(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) return Text(snapshot.error).center();
-          if (snapshot.hasData) return followerList(snapshot.data);
+          if (snapshot.hasError) return Text(snapshot.error as String).center();
+          if (snapshot.hasData) return followerList(snapshot.data!);
           return loadingWidgetMaker().center();
         },
       ),

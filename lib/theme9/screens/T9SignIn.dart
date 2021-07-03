@@ -20,7 +20,7 @@ class T9SignIn extends StatefulWidget {
 class T9SignInState extends State<T9SignIn> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

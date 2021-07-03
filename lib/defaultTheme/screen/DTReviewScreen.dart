@@ -151,7 +151,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
               decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
               child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
             ).onTap(() async {
-              DTReviewModel model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+              DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
               if (model != null) {
                 list.insert(0, model);
                 setState(() {});
@@ -277,7 +277,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                     decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
                     child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
                   ).onTap(() async {
-                    DTReviewModel model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+                    DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
                     if (model != null) {
                       list.insert(0, model);
                       setState(() {});
@@ -306,6 +306,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class WriteReviewDialog extends StatelessWidget {
   var reviewCont = TextEditingController();
   var reviewFocus = FocusNode();
@@ -380,7 +381,7 @@ class WriteReviewDialog extends StatelessWidget {
                   labelStyle: secondaryTextStyle(),
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                 ),
                 keyboardType: TextInputType.multiline,
                 minLines: 1,

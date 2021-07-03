@@ -16,8 +16,8 @@ class DTSearchScreen extends StatefulWidget {
 
 class _DTSearchScreenState extends State<DTSearchScreen> {
   var searchCont = TextEditingController();
-  var recentSearch = List<String>();
-  var trending = List<String>();
+  List<String> recentSearch = [];
+   List<String> trending = [];
 
   String searchText = '';
 
@@ -66,7 +66,7 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                 labelStyle: secondaryTextStyle(),
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appColorPrimary)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
               ),
               keyboardType: TextInputType.name,
               textInputAction: TextInputAction.done,

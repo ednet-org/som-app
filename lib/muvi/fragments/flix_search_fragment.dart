@@ -21,8 +21,8 @@ class SearchFragment extends StatefulWidget {
 class SearchFragmentState extends State<SearchFragment> {
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
-  var popularMovieList = List<Movie>();
-  var searchResults = List<Movie>();
+  List<Movie> popularMovieList = [];
+  List<Movie> searchResults = [];
   var searchText = "";
 
   showLoading(bool show) {
@@ -171,7 +171,7 @@ class SearchFragmentState extends State<SearchFragment> {
     var searchResultLayout = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        headingText(context, keyString(context, "result_for") + " \'" + searchText + "\'").paddingOnly(left: spacing_standard_new, right: spacing_standard_new, top: spacing_standard_new, bottom: 12),
+        headingText(context, keyString(context, "result_for")! + " \'" + searchText + "\'").paddingOnly(left: spacing_standard_new, right: spacing_standard_new, top: spacing_standard_new, bottom: 12),
         Expanded(child: searchResultList)
       ],
     );

@@ -21,7 +21,7 @@ class T10Description extends StatefulWidget {
 class T10DescriptionState extends State<T10Description> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
 
     Widget mTag(var value) {
@@ -72,7 +72,7 @@ class T10DescriptionState extends State<T10Description> {
                       child: Column(
                         children: <Widget>[
                           CachedNetworkImage(
-                            placeholder: placeholderWidgetFn(),
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                             imageUrl: t10_slider_3,
                             width: width,
                             height: width * 0.4,

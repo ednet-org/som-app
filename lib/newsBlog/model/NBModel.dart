@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 class NBBannerItemModel {
-  String image;
+  String? image;
 
   NBBannerItemModel({this.image});
 }
 
 class NBDrawerItemModel {
-  String title;
-  Widget widget;
+  String? title;
+  Widget? widget;
 
   NBDrawerItemModel({this.title, this.widget});
 }
 
 class NBNewsDetailsModel {
-  String categoryName;
-  String title;
-  String date;
-  String image;
-  String details;
+  String? categoryName;
+  String? title;
+  String? date;
+  String? image;
+  String? details;
   bool isBookmark;
-  String time;
+  String? time;
 
   NBNewsDetailsModel({this.categoryName, this.title, this.date, this.image, this.details, this.isBookmark = false, this.time});
 }
 
 class NBSettingsItemModel {
-  String title;
-  Widget widget;
+  String? title;
+  Widget? widget;
 
   NBSettingsItemModel({this.title, this.widget});
 }
@@ -70,11 +70,11 @@ class NBFollowersItemModel {
 }
 
 class NBCommentItemModel {
-  String name;
-  String image;
-  String date;
-  String time;
-  String message;
+  String? name;
+  String? image;
+  String? date;
+  String? time;
+  String? message;
 
   NBCommentItemModel({this.name, this.image, this.date, this.time, this.message});
 }

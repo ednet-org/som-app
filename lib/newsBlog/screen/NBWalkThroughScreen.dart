@@ -16,7 +16,7 @@ class NBWalkThroughScreenState extends State<NBWalkThroughScreen> {
 
   int position = 0;
 
-  PageController pageController;
+  PageController? pageController;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class NBWalkThroughScreenState extends State<NBWalkThroughScreen> {
                 ),
               ),
               20.height,
-              DotIndicator(pageController: pageController, pages: mPages, indicatorColor: NBPrimaryColor),
+              DotIndicator(pageController: pageController!, pages: mPages, indicatorColor: NBPrimaryColor),
               16.height,
               Text('Welcome to News Blog', style: boldTextStyle(size: 20)).paddingOnly(left: 16, right: 16),
               16.height,
@@ -109,7 +109,7 @@ class NBWalkThroughScreenState extends State<NBWalkThroughScreen> {
                   onTap: () {
                     setState(() {
                       if (position < 2) {
-                        pageController.nextPage(duration: Duration(microseconds: 300), curve: Curves.linear);
+                        pageController!.nextPage(duration: Duration(microseconds: 300), curve: Curves.linear);
                       } else if (position == 2) {
                         NBSignInScreen().launch(context);
                       }

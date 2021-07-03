@@ -50,34 +50,34 @@ Future<List<ShOrder>> loadOrders() async {
 
 Future<List<String>> loadBanners() async {
   List<ShProduct> products = await loadProducts();
-  var banner = List<String>();
+  List<String> banner = [];
 
   products.forEach((product) {
-    if (product.images.isNotEmpty) {
-      banner.add("images/shophop/img/products" + product.images[0].src);
+    if (product.images!.isNotEmpty) {
+      banner.add("images/shophop/img/products" + product.images![0].src!);
     }
   });
   return banner;
 }
 
-extension StringExtension on String {
-  String toCurrencyFormat({var format = '\$'}) {
+extension StringExtension on String? {
+  String? toCurrencyFormat({var format = '\$'}) {
     return format + this;
   }
 
   String formatDateTime() {
-    if (this == null || this.isEmpty || this == "null") {
+    if (this == null || this!.isEmpty || this == "null") {
       return "NA";
     } else {
-      return DateFormat("HH:mm dd MMM yyyy", "en_US").format(DateFormat("yyyy-MM-dd HH:mm:ss.0", "en_US").parse(this));
+      return DateFormat("HH:mm dd MMM yyyy", "en_US").format(DateFormat("yyyy-MM-dd HH:mm:ss.0", "en_US").parse(this!));
     }
   }
 
   String formatDate() {
-    if (this == null || this.isEmpty || this == "null") {
+    if (this == null || this!.isEmpty || this == "null") {
       return "NA";
     } else {
-      return DateFormat("dd MMM yyyy", "en_US").format(DateFormat("yyyy-MM-dd", "en_US").parse(this));
+      return DateFormat("dd MMM yyyy", "en_US").format(DateFormat("yyyy-MM-dd", "en_US").parse(this!));
     }
   }
 }

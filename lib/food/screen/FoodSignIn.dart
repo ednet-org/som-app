@@ -56,7 +56,7 @@ class FoodSignInState extends State<FoodSignIn> {
       body: Stack(
         children: <Widget>[
           CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: food_ic_login,
             height: width * 0.6,
             fit: BoxFit.cover,

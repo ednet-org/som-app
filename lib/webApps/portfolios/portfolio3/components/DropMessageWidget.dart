@@ -142,12 +142,14 @@ class DropMessageWidgetState extends State<DropMessageWidget> {
                       maxLines: 5,
                     ),
                     24.height,
-                    FlatButton(
+                    TextButton(
                       onPressed: () {},
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                      padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        primary: portfolio3PrimaryColor,
+                      ),
                       child: Text('SEND', style: boldTextStyle(color: Colors.white, size: 18)),
-                      color: portfolio3PrimaryColor,
                     ),
                     24.height,
                   ],

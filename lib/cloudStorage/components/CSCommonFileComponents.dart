@@ -14,9 +14,9 @@ import 'package:prokit_flutter/main.dart';
 class CSCommonFileComponents extends StatefulWidget {
   static String tag = '/CSCommonFileComponents';
 
-  final String appBarTitle;
+  final String? appBarTitle;
 
-  const CSCommonFileComponents({Key key, this.appBarTitle}) : super(key: key);
+  const CSCommonFileComponents({Key? key, this.appBarTitle}) : super(key: key);
 
   @override
   CSCommonFileComponentsState createState() => CSCommonFileComponentsState();
@@ -24,7 +24,7 @@ class CSCommonFileComponents extends StatefulWidget {
 
 class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
   CrossFadeState state = CrossFadeState.showFirst;
-  Sorting defaultSortingType = Sorting.Name;
+  Sorting? defaultSortingType = Sorting.Name;
   int selectedItem = 0;
   bool isSelect = false;
   bool isSelectAll = false;
@@ -68,11 +68,11 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
       );
       listOfActionBarWidgets.add(PopupMenuButton(
           icon: Icon(Icons.more_vert, color: CSDarkBlueColor),
-          onSelected: (val) async {
+          onSelected: (dynamic val) async {
             if (val == 2) CSCopyAndMoveComponents(appBarTitle: "Copy $selectedItem items to", listOfData: getCloudboxList).launch(context);
             if (val == 3) CSCopyAndMoveComponents(appBarTitle: "Move $selectedItem items to", listOfData: getCloudboxList).launch(context);
             if (val == 4) {
-              bool isSelectedFileDeleted = await buildDeleteSelectedFileDialog(context, "Delete $selectedItem items?");
+              bool isSelectedFileDeleted = await (buildDeleteSelectedFileDialog(context, "Delete $selectedItem items?"));
               if (isSelectedFileDeleted) {
                 getCloudboxList.removeWhere((element) => element.isFileSelect == true);
                 finish(context);
@@ -94,7 +94,7 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
   }
 
   void ascendingOrderList() {
-    getCloudboxList.sort((a, b) => a.fileName.toLowerCase().compareTo(b.fileName.toLowerCase()));
+    getCloudboxList.sort((a, b) => a.fileName!.toLowerCase().compareTo(b.fileName!.toLowerCase()));
   }
 
   void descendingOrderList() {
@@ -126,7 +126,7 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                         visualDensity: VisualDensity(vertical: -2),
                         value: Sorting.Name,
                         groupValue: defaultSortingType,
-                        onChanged: (Sorting val) => state(() {
+                        onChanged: (Sorting? val) => state(() {
                               ascendingOrderList();
                               defaultSortingType = val;
                               setState(() {});
@@ -148,7 +148,7 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                         visualDensity: VisualDensity(vertical: -2),
                         value: Sorting.Modified,
                         groupValue: defaultSortingType,
-                        onChanged: (Sorting val) => state(() {
+                        onChanged: (Sorting? val) => state(() {
                               descendingOrderList();
                               defaultSortingType = val;
                               setState(() {});
@@ -212,7 +212,7 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                         ),
                         PopupMenuButton(
                           icon: Icon(Icons.more_vert, color: CSDarkBlueColor),
-                          onSelected: (val) {
+                          onSelected: (dynamic val) {
                             if (val == 1) showSortingType(context);
                           },
                           itemBuilder: (context) => [PopupMenuItem(value: 1, child: Text("Sort"))],
@@ -224,7 +224,7 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                       ? selectedItem == 0
                           ? Text("Select items", style: boldTextStyle(color: black, size: 18))
                           : Text("$selectedItem selected", style: boldTextStyle(color: black, size: 18))
-                      : Text(widget.appBarTitle, style: boldTextStyle(color: black, size: 18)),
+                      : Text(widget.appBarTitle!, style: boldTextStyle(color: black, size: 18)),
                 ),
               ),
             ];
@@ -238,8 +238,8 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                   children: [
                     widget.appBarTitle != CSAppName
                         ? !isSelect
-                            ? FlatButton(
-                                visualDensity: VisualDensity(horizontal: -4, vertical: -2),
+                            ? TextButton(
+                                style: TextButton.styleFrom(visualDensity: VisualDensity(horizontal: -4, vertical: -2)),
                                 onPressed: () {},
                                 child: Text("Only you", style: primaryTextStyle(size: 16)),
                               ).paddingLeft(12)
@@ -289,9 +289,9 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                               isSelectAll: isSelectAll,
                               listOfData: getCloudboxList,
                               isSelect: isSelect,
-                              onChange: (int itemCount, bool selectAll) {
-                                selectedItem = itemCount;
-                                isSelectAll = selectAll;
+                              onChange: (int? itemCount, bool? selectAll) {
+                                selectedItem = itemCount!;
+                                isSelectAll = selectAll!;
                                 setState(() {});
                               },
                             ),
@@ -301,9 +301,9 @@ class CSCommonFileComponentsState extends State<CSCommonFileComponents> {
                               listOfData: getCloudboxList,
                               selectedItem: selectedItem,
                               isCopyOrMove: false,
-                              onChange: (int itemCount, bool selectAll) {
-                                selectedItem = itemCount;
-                                isSelectAll = selectAll;
+                              onChange: (int? itemCount, bool? selectAll) {
+                                selectedItem = itemCount!;
+                                isSelectAll = selectAll!;
                                 setState(() {});
                               },
                               onListChanged: () => setState(() {}),

@@ -109,7 +109,7 @@ class SocialChattingState extends State<SocialChatting> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: social_ic_user1,
                   height: width * 0.1,
                   width: width * 0.1,
@@ -127,11 +127,13 @@ class SocialChattingState extends State<SocialChatting> {
               )
             ],
           ),
-          Row(
-            children: <Widget>[
-              IconButton(icon: Icon(Icons.call, color: social_textColorPrimary), onPressed: null),
-              IconButton(icon: Icon(Icons.videocam, color: social_textColorPrimary), onPressed: null),
-            ],
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                IconButton(icon: Icon(Icons.call, color: social_textColorPrimary), onPressed: null),
+                IconButton(icon: Icon(Icons.videocam, color: social_textColorPrimary), onPressed: null).expand(),
+              ],
+            ),
           )
         ],
       ),

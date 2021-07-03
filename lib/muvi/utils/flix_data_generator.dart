@@ -2,14 +2,14 @@ import 'package:prokit_flutter/main/utils/AppConstant.dart';
 import 'package:prokit_flutter/muvi/models/flix_response.dart';
 
 List<HomeSlider> getSliders() {
-  var list = List<HomeSlider>();
+  List<HomeSlider> list = [];
   list.add(HomeSlider(slideImage: "images/muvi/items/element___image___square_copy_ek1.jpg", isHD: true));
   list.add(HomeSlider(slideImage: "images/muvi/items/element___image___square_copy_ek3.jpg", isHD: false));
   return list;
 }
 
 List<Movie> getMovie() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/poster_ek27.jpg", isHD: true));
   list.add(Movie(slideImage: "images/muvi/items/poster_ek29.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/poster_ek31.jpg", isHD: true));
@@ -21,7 +21,7 @@ List<Movie> getMovie() {
 }
 
 List<Movie> getTrendingOnMovie() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/poster_ek27.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/poster_ek29.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/poster_ek31.jpg", isHD: false));
@@ -33,7 +33,7 @@ List<Movie> getTrendingOnMovie() {
 }
 
 List<Movie> getMadeForYouMovie() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/poster_ek27.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/Images6.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/Images9.jpg", isHD: false));
@@ -45,7 +45,7 @@ List<Movie> getMadeForYouMovie() {
 }
 
 List<Movie> getHorizontalMovie() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/rectangle_ek9.jpg", isHD: true));
   list.add(Movie(slideImage: "images/muvi/items/rectangle_ek11.jpg", isHD: false));
   list.add(Movie(slideImage: "images/muvi/items/rectangle_ek13.jpg", isHD: true));
@@ -56,7 +56,7 @@ List<Movie> getHorizontalMovie() {
 }
 
 List<Movie> getContinueMovies() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek1.jpg", isHD: true, percent: 0.2, title: "Joker"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek7.jpg", isHD: false, percent: 0.8, title: "The Scorch Trials"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek1.jpg", isHD: true, percent: 0.4, title: "Fantastic Four"));
@@ -68,7 +68,7 @@ List<Movie> getContinueMovies() {
 }
 
 List<Movie> getMyListMovies() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek11.jpg", isHD: false, percent: 0.5, title: "Itaewon Class"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek17.jpg", isHD: true, percent: 0.4, title: "Conjuring 3"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek21.jpg", isHD: false, percent: 0.9, title: "Coco"));
@@ -78,7 +78,7 @@ List<Movie> getMyListMovies() {
 }
 
 List<Movie> getDownloadedMovies() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek23.jpg", isHD: false, percent: 0.5, title: "Frozen 2"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek25.jpg", isHD: true, percent: 0.4, title: "Ip Man 4"));
   list.add(Movie(slideImage: "images/muvi/items/thumbnail_ek27.jpg", isHD: false, percent: 0.9, title: "Man of Steel"));
@@ -87,7 +87,7 @@ List<Movie> getDownloadedMovies() {
 }
 
 List<FAQ> getFaq() {
-  var list = List<FAQ>();
+  List<FAQ> list = [];
   list.add(FAQ(
       title: "How to delete conitnue watching",
       subTitle:
@@ -118,7 +118,7 @@ List<FAQ> getFaq() {
 }
 
 List<Movie> getActors() {
-  var list = List<Movie>();
+  List<Movie> list = [];
   list.add(Movie(slideImage: "$BaseUrl/images/muvi/items/t3_ic_profile1.png", isHD: true, percent: 0.2, title: "Rajiv Kapoor"));
   list.add(Movie(slideImage: "$BaseUrl/images/muvi/items/t3_ic_profile2.png", isHD: false, percent: 0.8, title: "John doe"));
   list.add(Movie(slideImage: "$BaseUrl/images/muvi/items/t3_ic_profile3.png", isHD: true, percent: 0.4, title: "Alice Denial"));

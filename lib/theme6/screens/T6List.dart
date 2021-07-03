@@ -20,7 +20,7 @@ class T6List extends StatefulWidget {
 
 class T6ListState extends State<T6List> {
   int selectedPos = 1;
-  List<T6LogModel> mListings;
+  late List<T6LogModel> mListings;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T6ListState extends State<T6List> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -60,7 +60,7 @@ class T6ListState extends State<T6List> {
                                 ClipRRect(
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
                                     child: CachedNetworkImage(
-                                      placeholder: placeholderWidgetFn(),
+                                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                       imageUrl: mListings[index].Image,
                                       height: 200,
                                       width: width,

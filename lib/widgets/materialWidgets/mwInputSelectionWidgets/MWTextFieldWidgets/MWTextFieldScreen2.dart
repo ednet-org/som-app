@@ -11,7 +11,7 @@ class MWTextFieldScreen2 extends StatefulWidget {
 }
 
 class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
-  bool passwordVisible;
+  bool? passwordVisible;
 
   @override
   void initState() {
@@ -48,11 +48,11 @@ class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: appStore.iconColor),
+                      borderSide: BorderSide(color: appStore.iconColor!),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                      borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                     ),
                     hintText: "Password",
                     hintStyle: TextStyle(color: appStore.textSecondaryColor),
@@ -68,11 +68,11 @@ class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: appStore.iconColor),
+                      borderSide: BorderSide(color: appStore.iconColor!),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                      borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                     ),
                     labelText: "Message",
                     labelStyle: TextStyle(color: appStore.textSecondaryColor),
@@ -87,11 +87,11 @@ class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(color: appStore.iconColor),
+                      borderSide: BorderSide(color: appStore.iconColor!),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                      borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                     ),
                     hintText: "E-Mail",
                     hintStyle: TextStyle(color: appStore.textSecondaryColor),
@@ -105,11 +105,11 @@ class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(color: appStore.iconColor),
+                    borderSide: BorderSide(color: appStore.iconColor!),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                    borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                   ),
                   hintText: "New Phone Number",
                   hintStyle: TextStyle(color: appStore.textSecondaryColor),
@@ -142,11 +142,11 @@ class _MWTextFieldScreen2State extends State<MWTextFieldScreen2> {
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: appStore.iconColor),
+                    borderSide: BorderSide(color: appStore.iconColor!),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                    borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                   ),
                   labelText: "Ticket Form",
                   hintText: "write....",

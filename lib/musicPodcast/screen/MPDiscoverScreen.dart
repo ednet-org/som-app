@@ -60,9 +60,9 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 130, width: 250, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                         4.height,
-                        Text(data.title, style: primaryTextStyle(color: Colors.white)),
+                        Text(data.title!, style: primaryTextStyle(color: Colors.white)),
                         4.height,
-                        Text(data.subtitle, style: secondaryTextStyle(color: Colors.grey)),
+                        Text(data.subtitle!, style: secondaryTextStyle(color: Colors.grey)),
                       ],
                     ).paddingOnly(left: 8, right: 8).onTap(() {
                       MPSelectSongTypeScreen().launch(context);
@@ -102,7 +102,7 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                             MPNowPlayingScreen(data: data).launch(context);
                           }),
                           4.height,
-                          Text(data.title, style: boldTextStyle(color: Colors.white), maxLines: 1),
+                          Text(data.title!, style: boldTextStyle(color: Colors.white), maxLines: 1),
                           4.height,
                           Container(
                             child: Row(
@@ -120,7 +120,7 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                                 6.width,
                                 Icon(Icons.add_circle_outline_rounded, color: mpAppButtonColor, size: 20),
                                 4.width,
-                                Text(data.subtitle, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
+                                Text(data.subtitle!, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
                               ],
                             ),
                           )

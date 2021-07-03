@@ -18,7 +18,7 @@ class T2Profile extends StatefulWidget {
 }
 
 class T2ProfileState extends State<T2Profile> {
-  String _selectedLocation = 'Male';
+  String? _selectedLocation = 'Male';
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
@@ -45,7 +45,7 @@ class T2ProfileState extends State<T2Profile> {
           builder: (_) => Stack(
             children: <Widget>[
               CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: t2_profile_cover_page_54,
                 width: width,
                 height: height / 2.5,
@@ -85,7 +85,7 @@ class T2ProfileState extends State<T2Profile> {
                                         SizedBox(width: 16),
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(16),
-                                          child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t2_profile, width: 80, height: 80),
+                                          child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t2_profile, width: 80, height: 80),
                                         ),
                                         SizedBox(width: 24),
                                         Container(

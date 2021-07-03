@@ -45,21 +45,22 @@ class IndeedWidgetState extends State<IndeedWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlatButton(
+              TextButton(
                 onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)), padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32), primary: portfolio3PrimaryColor),
                 child: Text('GET QUOTES', style: boldTextStyle(color: Colors.white, size: 18)),
-                color: portfolio3PrimaryColor,
               ),
               16.width,
-              OutlineButton(
+              OutlinedButton(
                 onPressed: () {},
-                borderSide: BorderSide(color: portfolio3PrimaryColor),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: portfolio3PrimaryColor),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                  primary: Colors.transparent,
+                ),
                 child: Text('HIRE ME', style: boldTextStyle(color: portfolio3PrimaryColor, size: 18)),
-                color: Colors.transparent,
               ),
             ],
           ),

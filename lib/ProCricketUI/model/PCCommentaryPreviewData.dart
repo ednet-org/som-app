@@ -1,30 +1,46 @@
 class PCCommentaryPreviewData {
-  String alerts;
-  bool burst_cache;
-  int burst_cache_id;
-  int burst_cache_time;
-  List<CommLine> comm_lines;
-  String data_path;
-  Header header;
-  String match_id;
-  int pulltoRefreshStopRate;
-  String range;
-  String series_id;
-  String series_name;
-  Venue venue;
+  String? alerts;
+  // ignore: non_constant_identifier_names
+  bool? burst_cache;
+  // ignore: non_constant_identifier_names
+  int? burst_cache_id;
+  // ignore: non_constant_identifier_names
+  int? burst_cache_time;
+  // ignore: non_constant_identifier_names
+  List<CommLine>? comm_lines;
+  // ignore: non_constant_identifier_names
+  String? data_path;
+  Header? header;
+  // ignore: non_constant_identifier_names
+  String? match_id;
+  int? pulltoRefreshStopRate;
+  String? range;
+  // ignore: non_constant_identifier_names
+  String? series_id;
+  // ignore: non_constant_identifier_names
+  String? series_name;
+  Venue? venue;
 
   PCCommentaryPreviewData(
       {this.alerts,
+      // ignore: non_constant_identifier_names
       this.burst_cache,
+      // ignore: non_constant_identifier_names
       this.burst_cache_id,
+      // ignore: non_constant_identifier_names
       this.burst_cache_time,
+      // ignore: non_constant_identifier_names
       this.comm_lines,
+      // ignore: non_constant_identifier_names
       this.data_path,
       this.header,
+      // ignore: non_constant_identifier_names
       this.match_id,
       this.pulltoRefreshStopRate,
       this.range,
+      // ignore: non_constant_identifier_names
       this.series_id,
+      // ignore: non_constant_identifier_names
       this.series_name,
       this.venue});
 
@@ -59,30 +75,35 @@ class PCCommentaryPreviewData {
     data['series_id'] = this.series_id;
     data['series_name'] = this.series_name;
     if (this.comm_lines != null) {
-      data['comm_lines'] = this.comm_lines.map((v) => v.toJson()).toList();
+      data['comm_lines'] = this.comm_lines!.map((v) => v.toJson()).toList();
     }
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.venue != null) {
-      data['venue'] = this.venue.toJson();
+      data['venue'] = this.venue!.toJson();
     }
     return data;
   }
 }
 
 class Header {
-  int dn;
-  String end_time;
-  String match_desc;
-  String start_time;
-  String state;
-  String state_title;
-  String status;
-  String timeDiff;
-  String toss;
-  String type;
+  int? dn;
+  // ignore: non_constant_identifier_names
+  String? end_time;
+  // ignore: non_constant_identifier_names
+  String? match_desc;
+  // ignore: non_constant_identifier_names
+  String? start_time;
+  String? state;
+  // ignore: non_constant_identifier_names
+  String? state_title;
+  String? status;
+  String? timeDiff;
+  String? toss;
+  String? type;
 
+  // ignore: non_constant_identifier_names
   Header({this.dn, this.end_time, this.match_desc, this.start_time, this.state, this.state_title, this.status, this.timeDiff, this.toss, this.type});
 
   factory Header.fromJson(Map<String, dynamic> json) {
@@ -117,8 +138,8 @@ class Header {
 }
 
 class CommLine {
-  String comm;
-  String timestamp;
+  String? comm;
+  String? timestamp;
 
   CommLine({this.comm, this.timestamp});
 
@@ -138,11 +159,11 @@ class CommLine {
 }
 
 class Venue {
-  String lat;
-  String location;
-  String long;
-  String name;
-  String timezone;
+  String? lat;
+  String? location;
+  String? long;
+  String? name;
+  String? timezone;
 
   Venue({this.lat, this.location, this.long, this.name, this.timezone});
 

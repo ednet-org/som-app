@@ -27,7 +27,7 @@ class MStoriesScreenState extends State<MStoriesScreen> {
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   List<MStoriesModel> getListOfDraftStories() {

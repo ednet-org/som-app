@@ -14,7 +14,7 @@ class SHomePage extends StatefulWidget {
 }
 
 class _SHomePageState extends State<SHomePage> {
-  bool isActive;
+  bool? isActive;
 
   List<Feeds> feed1 = [
     Feeds(
@@ -57,7 +57,7 @@ class _SHomePageState extends State<SHomePage> {
         body: ListView.builder(
           itemCount: feed1.length,
           itemBuilder: (BuildContext context, int index) {
-            return isActive
+            return isActive!
                 ? SizedBox(
                     child: Shimmer.fromColors(
                       baseColor: appStore.isDarkModeOn ? Colors.black12 : Colors.grey[400],
@@ -117,14 +117,14 @@ class _SHomePageState extends State<SHomePage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image: CachedNetworkImageProvider(feed1[index].profileImg),
+                                  image: CachedNetworkImageProvider(feed1[index].profileImg!),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Container(
                                 padding: EdgeInsets.only(left: 10),
-                                child: Text(feed1[index].name, style: primaryTextStyle()),
+                                child: Text(feed1[index].name!, style: primaryTextStyle()),
                               ),
                             ),
                             Container(
@@ -136,7 +136,7 @@ class _SHomePageState extends State<SHomePage> {
                         Container(
                           margin: EdgeInsets.only(top: 15),
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                          child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: feed1[index].feedImage),
+                          child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: feed1[index].feedImage!),
                         )
                       ],
                     ),
@@ -149,9 +149,9 @@ class _SHomePageState extends State<SHomePage> {
 }
 
 class Feeds {
-  String profileImg;
-  String name;
-  String feedImage;
+  String? profileImg;
+  String? name;
+  String? feedImage;
 
   Feeds({this.profileImg, this.name, this.feedImage});
 }

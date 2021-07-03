@@ -21,8 +21,8 @@ class T13DashboardScreen extends StatefulWidget {
 }
 
 class T13DashboardScreenState extends State<T13DashboardScreen> {
-  List<Home> mList;
-  List<Home> mList1;
+  late List<Home> mList;
+  late List<Home> mList1;
   int selectedPos = 1;
   int isSelected = 1;
 
@@ -36,7 +36,7 @@ class T13DashboardScreenState extends State<T13DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     var width = MediaQuery.of(context).size.width;
 
@@ -245,7 +245,7 @@ class T13DashboardScreenState extends State<T13DashboardScreen> {
           Container(
             margin: EdgeInsets.all(16),
             height: 70,
-            decoration: boxDecoration(color: appStore.appBarColor, showShadow: true),
+            decoration: boxDecoration(color: appStore.appBarColor!, showShadow: true),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -262,8 +262,9 @@ class T13DashboardScreenState extends State<T13DashboardScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Featured extends StatelessWidget {
-  Home model;
+  late Home model;
 
   Featured(Home model, int pos) {
     this.model = model;

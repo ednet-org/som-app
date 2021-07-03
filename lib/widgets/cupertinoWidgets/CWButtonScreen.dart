@@ -99,7 +99,7 @@ class CWButtonScreenState extends State<CWButtonScreen> {
             ),
             Container(
               width: context.width(),
-              decoration: BoxDecoration(color: getColorFromHex('#DB7093'), border: Border.all(width: 2, color: appStore.iconColor), borderRadius: BorderRadius.all(Radius.circular(30))),
+              decoration: BoxDecoration(color: getColorFromHex('#DB7093'), border: Border.all(width: 2, color: appStore.iconColor!), borderRadius: BorderRadius.all(Radius.circular(30))),
               child: CupertinoButton(
                 disabledColor: getColorFromHex('#DB7093'),
                 child: Text('Circular button with custom border color', style: primaryTextStyle(color: white, size: 18)),

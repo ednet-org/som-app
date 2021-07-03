@@ -32,12 +32,12 @@ class ShHomeScreen extends StatefulWidget {
 }
 
 class ShHomeScreenState extends State<ShHomeScreen> {
-  var list = List<ShCategory>();
+  List<ShCategory> list = [];
   var homeFragment = ShHomeFragment();
   var cartFragment = ShCartFragment();
   var wishlistFragment = ShWishlistFragment();
   var profileFragment = ShProfileFragment();
-  var fragments;
+  late var fragments;
   var selectedTab = 0;
 
   @override
@@ -67,7 +67,6 @@ class ShHomeScreenState extends State<ShHomeScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.width;
     var title = "Home";
 
     return Scaffold(
@@ -86,7 +85,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
       ),
       body: Stack(
         alignment: Alignment.bottomLeft,
-        children: <Widget>[
+        children: [
           fragments[selectedTab],
           Container(
             height: 58,
@@ -110,8 +109,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
               ],
             ),
           )
-        ],
-      ),
+        ]),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         height: MediaQuery.of(context).size.height,
@@ -256,7 +254,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
     );
   }
 
-  Widget getDrawerItem(String icon, String name, {VoidCallback callback}) {
+  Widget getDrawerItem(String? icon, String? name, {VoidCallback? callback}) {
     return InkWell(
       onTap: callback,
       child: Container(

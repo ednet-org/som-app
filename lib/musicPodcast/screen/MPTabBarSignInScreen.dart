@@ -15,8 +15,8 @@ class MPTabBarSignInScreen extends StatefulWidget {
 }
 
 class MPTabBarSignInScreenState extends State<MPTabBarSignInScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  bool checkedValue = false;
+  TabController? _tabController;
+  bool? checkedValue = false;
 
   TextEditingController contEmailAddress = TextEditingController();
   TextEditingController contPassword = TextEditingController();

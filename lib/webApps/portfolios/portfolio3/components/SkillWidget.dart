@@ -78,9 +78,9 @@ class SkillWidgetState extends State<SkillWidget> {
                           children: [
                             Icon(Icons.phone_android_sharp, size: 30, color: Colors.white),
                             8.height,
-                            Text(e.name, style: boldTextStyle(size: 20, color: white)),
+                            Text(e.name!, style: boldTextStyle(size: 20, color: white)),
                             16.height,
-                            Text(e.detail, style: secondaryTextStyle(size: 15, color: white)),
+                            Text(e.detail!, style: secondaryTextStyle(size: 15, color: white)),
                             16.height,
                           ],
                         ),

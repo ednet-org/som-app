@@ -23,9 +23,10 @@ class GroceryProfile extends StatefulWidget {
 }
 
 class _GroceryProfileState extends State<GroceryProfile> {
-  List<GroceryProfileModel> profileList;
+  late List<GroceryProfileModel> profileList;
 
   @override
+  // ignore: must_call_super
   void initState() {
     profileList = groceryProfileList();
   }

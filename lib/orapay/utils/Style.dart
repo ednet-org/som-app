@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'Colors.dart';
 
-BoxDecoration boxDecoration({double radius = 80.0, Color backGroundColor = opPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, shadowColor = Colors.black12}) {
+BoxDecoration boxDecoration({double radius = 80.0, Color? backGroundColor = opPrimaryColor, double blurRadius = 8.0, double spreadRadius = 8.0, shadowColor = Colors.black12}) {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(radius),
     boxShadow: [
@@ -32,8 +32,9 @@ Widget applogo() {
   );
 }
 
-Widget ButtonBars({String title, Size size, IconData icon, Color color, VoidCallback onPressed}) {
-  return FlatButton(
+// ignore: non_constant_identifier_names
+Widget ButtonBars({required String title, Size? size, IconData? icon, Color? color, VoidCallback? onPressed}) {
+  return TextButton(
     onPressed: onPressed,
     child: Container(
       height: 50,
@@ -105,7 +106,7 @@ Widget profileCard() {
   );
 }
 
-Widget profileSetting({IconData icon, String title}) {
+Widget profileSetting({IconData? icon, required String title}) {
   return Padding(
     padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
     child: Row(
@@ -127,7 +128,7 @@ Widget profileSetting({IconData icon, String title}) {
   );
 }
 
-Widget indicator({bool isActive}) {
+Widget indicator({required bool isActive}) {
   return AnimatedContainer(
     duration: Duration(milliseconds: 150),
     margin: EdgeInsets.symmetric(horizontal: 4.0),
@@ -141,9 +142,9 @@ Widget indicator({bool isActive}) {
 }
 
 Widget textField({
-  String title,
-  IconData image,
-  TextInputType textInputType,
+  String? title,
+  IconData? image,
+  TextInputType? textInputType,
 }) {
   return TextField(
     keyboardType: textInputType,
@@ -161,9 +162,9 @@ Widget textField({
 }
 
 Widget textField2({
-  String title,
-  IconData image,
-  TextInputType textInputType,
+  String? title,
+  IconData? image,
+  TextInputType? textInputType,
 }) {
   return TextField(
     keyboardType: textInputType,
@@ -180,7 +181,8 @@ Widget textField2({
   );
 }
 
-Widget VerifyCards({final Size size, String title, String subtitle, String image, Color color}) {
+// ignore: non_constant_identifier_names
+Widget VerifyCards({final Size? size, required String title, required String subtitle, required String image, Color? color}) {
   return Container(
     decoration: boxDecoration(backGroundColor: color, radius: 24, spreadRadius: 2, blurRadius: 4),
     child: Padding(
@@ -215,12 +217,13 @@ Widget VerifyCards({final Size size, String title, String subtitle, String image
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget CardDetails({
-  String visaTitle,
-  Color color,
-  String creditNumber,
-  String expire,
-  String name,
+  required String visaTitle,
+  required Color color,
+  required String creditNumber,
+  required String expire,
+  required String name,
 }) {
   return Container(
     padding: EdgeInsets.all(20),
@@ -323,7 +326,7 @@ Widget CardDetails({
   );
 }
 
-getAppBar(title, {showBack = true, GestureTapCallback pressed}) {
+getAppBar(title, {showBack = true, GestureTapCallback? pressed}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(60.0),
     child: Row(
@@ -383,15 +386,16 @@ getAppBar1(title, {actions, leading}) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget DashboardList({
   String name = "",
   String status = "",
   String amount = "",
-  VoidCallback onPressed,
+  VoidCallback? onPressed,
   IconData icon = Icons.call_received,
   Color colors = Colors.green,
   Color iconcolor = Colors.green,
-  Color color,
+  Color? color,
 }) {
   return GestureDetector(
     onTap: onPressed,
@@ -469,24 +473,27 @@ Widget DashboardList({
   );
 }
 
-Widget SliderButton({Color color, String title = '', VoidCallback onPressed}) {
-  return RaisedButton(
-      padding: EdgeInsets.only(left: 16, right: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.0),
-        side: BorderSide(color: Colors.transparent),
+// ignore: non_constant_identifier_names
+Widget SliderButton({Color? color, String title = '', VoidCallback? onPressed}) {
+  return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: color,
+        padding: EdgeInsets.only(left: 16, right: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24.0),
+          side: BorderSide(color: Colors.transparent),
+        ),
       ),
-      color: color,
       child: Text(
         title,
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () {
-        onPressed();
+        onPressed!();
       });
 }
 
-Widget oPDotIndicator({bool isActive}) {
+Widget oPDotIndicator({required bool isActive}) {
   return AnimatedContainer(
     duration: Duration(milliseconds: 150),
     margin: EdgeInsets.symmetric(horizontal: 4.0),
@@ -499,7 +506,8 @@ Widget oPDotIndicator({bool isActive}) {
   );
 }
 
-Widget SliderPage({final Size size, String image, String title, String description}) {
+// ignore: non_constant_identifier_names
+Widget SliderPage({required final Size size, required String image, required String title, required String description}) {
   return Column(
     children: <Widget>[
       Container(

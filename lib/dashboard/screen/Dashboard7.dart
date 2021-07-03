@@ -17,7 +17,7 @@ class Dashboard7 extends StatefulWidget {
 }
 
 class Dashboard7State extends State<Dashboard7> {
-  List<DB7Topic> mList;
+  late List<DB7Topic> mList;
   var _selectedIndex = 0;
 
   @override
@@ -164,8 +164,9 @@ class Dashboard7State extends State<Dashboard7> {
   }
 }
 
+// ignore: must_be_immutable
 class Topic extends StatelessWidget {
-  DB7Topic model;
+  late DB7Topic model;
 
   Topic(DB7Topic model, int pos) {
     this.model = model;
@@ -234,7 +235,7 @@ class Topic extends StatelessWidget {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

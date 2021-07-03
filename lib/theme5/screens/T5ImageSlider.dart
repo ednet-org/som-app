@@ -18,7 +18,7 @@ class T5ImageSlider extends StatefulWidget {
 
 class T5ImageSliderState extends State<T5ImageSlider> {
   int selectedPos = 1;
-  List<T5Slider> mSliderList;
+  List<T5Slider>? mSliderList;
 
   @override
   void initState() {
@@ -29,9 +29,8 @@ class T5ImageSliderState extends State<T5ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     changeStatusColor(
-      appStore.appBarColor,
+      appStore.appBarColor!,
     );
 
     return Scaffold(

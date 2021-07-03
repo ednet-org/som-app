@@ -16,7 +16,7 @@ class NBProfileScreen extends StatefulWidget {
 }
 
 class NBProfileScreenState extends State<NBProfileScreen> with SingleTickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
 
   List<NBNewsDetailsModel> newsList = nbGetNewsDetails();
 
@@ -37,7 +37,7 @@ class NBProfileScreenState extends State<NBProfileScreen> with SingleTickerProvi
 
   @override
   void dispose() {
-    tabController.dispose();
+    tabController!.dispose();
     super.dispose();
   }
 

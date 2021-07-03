@@ -20,9 +20,9 @@ const CURVE_HEIGHT = 100.0;
 const AVATAR_RADIUS = CURVE_HEIGHT * 0.8;
 
 class Dashboard2State extends State<Dashboard2> {
-  List<Db2ShopModel> mListings;
-  List<Db2ShopModel> mListings1;
-  List<Db2ShopModel> mListings2;
+  late List<Db2ShopModel> mListings;
+  late List<Db2ShopModel> mListings1;
+  late List<Db2ShopModel> mListings2;
 
   @override
   void initState() {
@@ -226,7 +226,7 @@ class Dashboard2State extends State<Dashboard2> {
 
 // ignore: must_be_immutable
 class Db2Category extends StatelessWidget {
-  Db2ShopModel model;
+  late Db2ShopModel model;
 
   Db2Category(Db2ShopModel model, int pos) {
     this.model = model;
@@ -252,7 +252,7 @@ class Db2Category extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Db2Product extends StatelessWidget {
-  Db2ShopModel model;
+  late Db2ShopModel model;
 
   Db2Product(Db2ShopModel model, int pos) {
     this.model = model;
@@ -294,7 +294,7 @@ class Db2Product extends StatelessWidget {
 class Db2Slider extends StatelessWidget {
   final String file;
 
-  Db2Slider({Key key, @required this.file}) : super(key: key);
+  Db2Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
