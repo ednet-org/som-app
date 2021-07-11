@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCDashBoardScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/screen/PCDashBoardScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCSplashScreen extends StatefulWidget {
   static String tag = '/CricketSplashScreen';

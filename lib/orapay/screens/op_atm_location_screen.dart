@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:prokit_flutter/orapay/utils/ATMList.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/ATMList.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 class OPAtmLocationScreen extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
 
 // ignore: must_be_immutable
 class SDChatPageViewScreen extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
-import 'package:prokit_flutter/cloudStorage/model/CSDataModel.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
+import 'package:som/cloudStorage/model/CSDataModel.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/main.dart';
 
 class CSSharedScreen extends StatefulWidget {
   static String tag = '/CSSharedScreen';

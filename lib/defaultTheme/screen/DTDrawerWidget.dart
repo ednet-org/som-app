@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/screens/ProKitLauncher.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
+import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/screens/ProKitLauncher.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
 
 import '../../main.dart';
 

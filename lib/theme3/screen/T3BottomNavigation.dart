@@ -4,12 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/utils/T3BottomNavigationBar.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/utils/T3BottomNavigationBar.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3BottomNavigation extends StatefulWidget {
   static var tag = "/T3BottomNavigation";

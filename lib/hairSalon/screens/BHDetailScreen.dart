@@ -4,13 +4,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 import 'BHPackageOffersScreen.dart';
 

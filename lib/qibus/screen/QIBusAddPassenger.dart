@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 import 'QIBusPayment.dart';
 import 'package:nb_utils/nb_utils.dart';

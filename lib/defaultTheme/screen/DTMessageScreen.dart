@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class DTMessageScreen extends StatefulWidget {
   static String tag = '/DTMessageScreen';

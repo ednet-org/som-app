@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 const String _loremIpsumParagraph = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod '
     'tempor incididunt ut labore et dolore magna aliqua. Vulputate dignissim '

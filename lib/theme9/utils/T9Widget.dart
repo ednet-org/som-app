@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
 
 import 'T9Constant.dart';
 

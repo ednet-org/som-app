@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme2/models/models.dart';
+import 'package:som/theme2/models/models.dart';
 import 'T2DataGenerator.dart';
 import 'T2SliderWidget.dart';
 

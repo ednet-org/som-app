@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/theme2/utils/T2Colors.dart';
+import 'package:som/main.dart';
+import 'package:som/theme2/utils/T2Colors.dart';
 
 const double _kActiveFontSize = 14.0;
 const double _kBottomMargin = 8.0;

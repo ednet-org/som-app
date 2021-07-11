@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
 
 import 'BHColors.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBWalkThroughScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/screen/NBWalkThroughScreen.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class NBSplashScreen extends StatefulWidget {

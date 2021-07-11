@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPAlbumsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPArtistsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPEventsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNewsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPlayListScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPodCastScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSettingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPAlbumsScreen.dart';
+import 'package:som/musicPodcast/screen/MPArtistsScreen.dart';
+import 'package:som/musicPodcast/screen/MPEventsScreen.dart';
+import 'package:som/musicPodcast/screen/MPNewsScreen.dart';
+import 'package:som/musicPodcast/screen/MPPlayListScreen.dart';
+import 'package:som/musicPodcast/screen/MPPodCastScreen.dart';
+import 'package:som/musicPodcast/screen/MPProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPSettingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongsScreen.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 List<DrawerList> getDrawerList() {
   List<DrawerList> drawerList = [];

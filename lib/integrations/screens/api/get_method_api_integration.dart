@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/models/follower_model.dart';
-import 'package:prokit_flutter/integrations/network/rest_apis.dart';
-import 'package:prokit_flutter/integrations/utils/common.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/models/follower_model.dart';
+import 'package:som/integrations/network/rest_apis.dart';
+import 'package:som/integrations/utils/common.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class GETMethodExampleScreen extends StatefulWidget {
   static String tag = '/GETMethodExampleScreen';

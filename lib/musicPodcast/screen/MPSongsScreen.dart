@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNowPlayingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPNowPlayingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPSongsScreen extends StatefulWidget {
   @override

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/shopHop/screens/ShAdressManagerScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShOffersScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShQuickPayCardsScreen.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/shopHop/screens/ShAdressManagerScreen.dart';
+import 'package:som/shopHop/screens/ShOffersScreen.dart';
+import 'package:som/shopHop/screens/ShQuickPayCardsScreen.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
 
 import 'ShOrderListScreen.dart';
 import 'package:nb_utils/nb_utils.dart';

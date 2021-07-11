@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPAlbumsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPDiscoverScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongTypeScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPAlbumsScreen.dart';
+import 'package:som/musicPodcast/screen/MPDiscoverScreen.dart';
+import 'package:som/musicPodcast/screen/MPProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongTypeScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 class MPDashboardScreen extends StatefulWidget {
   static String tag = '/MPDashboardScreen';

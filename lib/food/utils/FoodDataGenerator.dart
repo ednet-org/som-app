@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/food/model/FoodModel.dart';
+import 'package:som/food/model/FoodModel.dart';
 
 import 'FoodImages.dart';
 

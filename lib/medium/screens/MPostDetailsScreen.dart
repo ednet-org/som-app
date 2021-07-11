@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MColors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MPostDetailsScreen extends StatefulWidget {

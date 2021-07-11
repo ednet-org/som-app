@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 

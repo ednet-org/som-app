@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/models/ContentModel.dart';
-import 'package:prokit_flutter/integrations/utils/data_provider.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/models/ContentModel.dart';
+import 'package:som/integrations/utils/data_provider.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IntegrationHomePage extends StatefulWidget {
   static String tag = '/HomePage';

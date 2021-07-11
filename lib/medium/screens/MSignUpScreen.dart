@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/screens/MDashBoardScreen.dart';
-import 'package:prokit_flutter/medium/screens/MSelectTopicScreen.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MConstants.dart';
-import 'package:prokit_flutter/medium/utils/MImages.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/screens/MDashBoardScreen.dart';
+import 'package:som/medium/screens/MSelectTopicScreen.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MConstants.dart';
+import 'package:som/medium/utils/MImages.dart';
 
 class MSignUpScreen extends StatefulWidget {
   static String tag = '/MSignUpScreen';

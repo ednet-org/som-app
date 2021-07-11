@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
-import 'package:prokit_flutter/theme4/utils/T4Images.dart';
-import 'package:prokit_flutter/theme4/utils/T4Widgets.dart';
-import 'package:prokit_flutter/theme4/utils/widgets/T4BottomNavigationBar.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/utils/T4Colors.dart';
+import 'package:som/theme4/utils/T4Images.dart';
+import 'package:som/theme4/utils/T4Widgets.dart';
+import 'package:som/theme4/utils/widgets/T4BottomNavigationBar.dart';
 
 import '../../main.dart';
 

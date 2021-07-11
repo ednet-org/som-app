@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/shimmer/shimmer.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/shimmer/shimmer.dart';
 
 class SHomePage extends StatefulWidget {
   static String tag = '/SHomePage';

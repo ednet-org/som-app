@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCCommentaryPreviewData.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCCommentaryPreviewData.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 // ignore: must_be_immutable
 class PCCricketMatchInPreviewScreen extends StatefulWidget {

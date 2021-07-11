@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSDashboardScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignUpScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSDashboardScreen.dart';
+import 'package:som/cloudStorage/screens/CSSignUpScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSSignInScreen extends StatefulWidget {
   static String tag = '/CSSignInScreen';

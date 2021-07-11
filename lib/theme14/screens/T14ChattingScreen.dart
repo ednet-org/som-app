@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14ChattingScreen extends StatefulWidget {
   final String? img;

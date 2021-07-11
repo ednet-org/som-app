@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class BHVideoCallingScreen extends StatefulWidget {
   static String tag = '/VideoCallingScreen';

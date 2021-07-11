@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
 
 import '../../main.dart';
 import 'T6Constant.dart';

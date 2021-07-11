@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardWidget.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTDashboardWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 

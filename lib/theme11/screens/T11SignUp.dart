@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
-import 'package:prokit_flutter/theme11/utils/T11Images.dart';
-import 'package:prokit_flutter/theme11/utils/T11Strings.dart';
-import 'package:prokit_flutter/theme11/utils/T11Widget.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11Images.dart';
+import 'package:som/theme11/utils/T11Strings.dart';
+import 'package:som/theme11/utils/T11Widget.dart';
 
 class T11SignUp extends StatefulWidget {
   static String tag = '/T11SignUp';

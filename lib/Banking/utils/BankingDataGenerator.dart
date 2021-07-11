@@ -1,6 +1,6 @@
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
 
 import '../model/BankingModel.dart';
 

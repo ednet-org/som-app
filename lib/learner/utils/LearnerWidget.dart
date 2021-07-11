@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 // ignore: non_constant_identifier_names
 Container LearnerEditTextStyle(var hintText, {isPassword = false}) {

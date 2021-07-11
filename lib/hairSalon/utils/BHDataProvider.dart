@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
 
 import 'BHConstants.dart';
 import 'BHImages.dart';

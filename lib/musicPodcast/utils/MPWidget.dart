@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/linear_percent_indicator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/linear_percent_indicator.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 bool value = true;
 

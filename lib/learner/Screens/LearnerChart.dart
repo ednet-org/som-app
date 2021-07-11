@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerDescription.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/LearnerDescription.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'LearnerModrenMedicine.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/codePicker/country_code_picker.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDVerificationScreen.dart';
+import 'package:som/main/utils/codePicker/country_code_picker.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDVerificationScreen.dart';
 
 // ignore: camel_case_types
 class sdRegisterScreen extends StatefulWidget {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSCommonFileComponents.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSDashboardScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSOfflineScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSPhotosScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSettingScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSUpgradeAccountScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/components/CSCommonFileComponents.dart';
+import 'package:som/cloudStorage/screens/CSDashboardScreen.dart';
+import 'package:som/cloudStorage/screens/CSOfflineScreen.dart';
+import 'package:som/cloudStorage/screens/CSPhotosScreen.dart';
+import 'package:som/cloudStorage/screens/CSSettingScreen.dart';
+import 'package:som/cloudStorage/screens/CSUpgradeAccountScreen.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 
 class CSDataModel {
   String fileUrl;

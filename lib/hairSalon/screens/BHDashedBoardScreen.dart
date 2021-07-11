@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'BHAppointmentScreen.dart';
 import 'BHDiscoverScreen.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDSearchModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/ModelClass/SDSearchModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
 
 class SDSortScreen extends StatefulWidget {
   @override

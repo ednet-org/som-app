@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
 
 class T3WalkThrough extends StatefulWidget {
   static var tag = "/T3WalkThrough";

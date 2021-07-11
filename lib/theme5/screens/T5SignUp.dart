@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/codePicker/country_code_picker.dart';
-import 'package:prokit_flutter/theme5/screens/T5Verification.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/codePicker/country_code_picker.dart';
+import 'package:som/theme5/screens/T5Verification.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
 
 import '../../main.dart';
 

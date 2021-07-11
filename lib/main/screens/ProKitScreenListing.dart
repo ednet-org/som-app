@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'ThemeList.dart';

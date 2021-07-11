@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/utils/MImages.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/utils/MImages.dart';
 
 List<MListModel> getSavingPostList() {
   List<MListModel> list = [];

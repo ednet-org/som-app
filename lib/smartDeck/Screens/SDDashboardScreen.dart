@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/LessonsModelClass.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/LiveVideoModel.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDExamCardModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDAllLessonsScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDExamScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDNotificationScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDSearchScreen.dart';
+import 'package:som/smartDeck/ModelClass/LessonsModelClass.dart';
+import 'package:som/smartDeck/ModelClass/LiveVideoModel.dart';
+import 'package:som/smartDeck/ModelClass/SDExamCardModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDAllLessonsScreen.dart';
+import 'package:som/smartDeck/Screens/SDExamScreen.dart';
+import 'package:som/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
+import 'package:som/smartDeck/Screens/SDNotificationScreen.dart';
+import 'package:som/smartDeck/Screens/SDSearchScreen.dart';
 
 import 'SdViewAllLivevideoScreen.dart';
 

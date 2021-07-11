@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14WalkThroughScreen5 extends StatefulWidget {
   @override

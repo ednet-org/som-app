@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCPlayerListModel.dart';
+import 'package:som/ProCricketUI/model/PCPlayerListModel.dart';
 
 Future<String> loadContentAsset(String path) async {
   return await rootBundle.loadString(path);

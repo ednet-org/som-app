@@ -1,6 +1,6 @@
-import 'package:prokit_flutter/cloudStorage/screens/CSConnectWithComputerScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/screens/CSConnectWithComputerScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';

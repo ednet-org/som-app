@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';

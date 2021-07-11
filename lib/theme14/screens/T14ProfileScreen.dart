@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/screens/T14ProfileScreen1.dart';
-import 'package:prokit_flutter/theme14/screens/T14ProfileScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14ProfileScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14ProfileScreen4.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/screens/T14ProfileScreen1.dart';
+import 'package:som/theme14/screens/T14ProfileScreen2.dart';
+import 'package:som/theme14/screens/T14ProfileScreen3.dart';
+import 'package:som/theme14/screens/T14ProfileScreen4.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
 
 class T14ProfileScreen extends StatefulWidget {
   @override

@@ -203,7 +203,7 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/wave/config.dart';
+import 'package:som/main/utils/wave/config.dart';
 
 class WaveWidget extends StatefulWidget {
   final Config config;

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme12/screens/t12_dashboard.dart';
-import 'package:prokit_flutter/theme12/utils/t12_colors.dart';
-import 'package:prokit_flutter/theme12/utils/t12_constant.dart';
-import 'package:prokit_flutter/theme12/utils/t12_images.dart';
-import 'package:prokit_flutter/theme12/utils/t12_widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme12/screens/t12_dashboard.dart';
+import 'package:som/theme12/utils/t12_colors.dart';
+import 'package:som/theme12/utils/t12_constant.dart';
+import 'package:som/theme12/utils/t12_images.dart';
+import 'package:som/theme12/utils/t12_widget.dart';
 
 import '../../main.dart';
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/quiz/utils/QuizImages.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
+import 'package:som/quiz/utils/QuizImages.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class QuizResult extends StatefulWidget {
   static String tag = '/QuizResult';

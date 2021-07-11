@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class ImagePickerScreen extends StatefulWidget {
   static String tag = '/ImagePickerScreen';

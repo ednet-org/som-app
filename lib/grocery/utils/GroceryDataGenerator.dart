@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
 
 import 'GeoceryStrings.dart';
 import 'GroceryColors.dart';

@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
+import 'package:som/shopHop/models/ShCategory.dart';
 
 class ShProduct {
   int? id;

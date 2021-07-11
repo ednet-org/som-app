@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/theme5/utils/T5BubbleBotoomBar.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/main.dart';
+import 'package:som/theme5/utils/T5BubbleBotoomBar.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 class T5BottomNavigation extends StatefulWidget {
   static var tag = "/T5BottomNavigation";

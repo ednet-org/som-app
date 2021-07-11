@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/model/SocialModel.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialDataGenerator.dart';
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/model/SocialModel.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialDataGenerator.dart';
+import 'package:som/social/utils/SocialImages.dart';
+import 'package:som/social/utils/SocialStrings.dart';
 
 class SocialChatting extends StatefulWidget {
   static String tag = '/SocialChatting';

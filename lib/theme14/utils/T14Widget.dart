@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/theme14/model/T14Model.dart';
 
 import 'T14Colors.dart';
 

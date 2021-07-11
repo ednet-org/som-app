@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerAchievement.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerFavourites.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerMyFriends.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/LearnerAchievement.dart';
+import 'package:som/learner/Screens/LearnerFavourites.dart';
+import 'package:som/learner/Screens/LearnerMyFriends.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerProfile extends StatefulWidget {
   @override

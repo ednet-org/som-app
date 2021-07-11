@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDLessonsDetailsModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLessonChapterScreen.dart';
+import 'package:som/smartDeck/ModelClass/SDLessonsDetailsModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/Screens/SDLessonChapterScreen.dart';
 
 // ignore: must_be_immutable
 class SDLessonsDetScreen extends StatefulWidget {

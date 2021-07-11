@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBChangePasswordScreen extends StatefulWidget {
   @override

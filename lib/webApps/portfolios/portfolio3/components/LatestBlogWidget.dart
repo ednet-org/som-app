@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../utils/FoodColors.dart';
 

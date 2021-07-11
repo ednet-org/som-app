@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPAlbumsDetailScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNowPlayingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPAlbumsDetailScreen.dart';
+import 'package:som/musicPodcast/screen/MPNowPlayingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongsScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 // ignore: must_be_immutable
 class MPAlbumsScreen extends StatefulWidget {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/colors.dart';
-import 'package:prokit_flutter/integrations/utils/constants.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/colors.dart';
+import 'package:som/integrations/utils/constants.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class ToastScreen extends StatefulWidget {
   static String tag = '/ToastScreen';

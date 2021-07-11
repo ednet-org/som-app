@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
 
 import 'QIBusSignIn.dart';
 

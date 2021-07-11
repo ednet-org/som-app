@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=ProKit Flutter
+Name=Smart Offer Manager
 Comment=Flutter UI Kit
 Icon=${SNAP}/meta/gui/icon.png
-Exec=prokit-flutter
+Exec=som
 Terminal=false
 Type=Application
 Categories=Office;Utility;

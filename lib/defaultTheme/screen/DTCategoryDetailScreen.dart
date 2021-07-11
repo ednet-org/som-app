@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/rating_bar.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/rating_bar.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';

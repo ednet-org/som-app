@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSignInAndSignUpScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPTabBarSignInScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/screen/MPSignInAndSignUpScreen.dart';
+import 'package:som/musicPodcast/screen/MPTabBarSignInScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 class MPWalkThroughScreen extends StatefulWidget {
   static String tag = '/MPWalkThroughScreen';

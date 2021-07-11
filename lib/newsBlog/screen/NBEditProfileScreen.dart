@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBEditProfileScreen extends StatefulWidget {
   static String tag = '/NBEditProfileScreen';

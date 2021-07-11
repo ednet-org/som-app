@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSCameraUploadScreen extends StatefulWidget {
   static String tag = '/CSCameraUploadScreen';

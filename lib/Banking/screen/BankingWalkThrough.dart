@@ -1,12 +1,12 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/screen/BankingSignIn.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/screen/BankingSignIn.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 class BankingWalkThrough extends StatefulWidget {
   static var tag = "/BankingWalkThrough";

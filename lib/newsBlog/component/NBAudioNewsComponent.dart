@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBAudioNewsDetailsScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBAudioNewsDetailsScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
 
 class NBAudioNewsComponent extends StatefulWidget {
   static String tag = '/NBAudioNewsComponent';

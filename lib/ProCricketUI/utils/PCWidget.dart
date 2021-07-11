@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
 
 // ignore: non_constant_identifier_names
 BoxDecoration PCboxDecoration({double radius = 1.0, Color color = Colors.transparent, Color bgColor = Cricket_white, double borderWidth = 1.0, var showShadow = false}) {

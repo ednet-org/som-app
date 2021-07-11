@@ -1,6 +1,6 @@
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
 
 List<LearnerWalk> learnerWalkImg() {
   List<LearnerWalk> list = [];

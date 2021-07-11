@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSStartingScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/screens/CSStartingScreen.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 
 class CSSplashScreen extends StatefulWidget {
   static String tag = '/CSSplashScreen';

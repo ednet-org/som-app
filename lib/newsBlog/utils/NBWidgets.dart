@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget nbAppTextFieldWidget(TextEditingController controller, String hintText, TextFieldType textFieldType, {FocusNode? focus, FocusNode? nextFocus}) {

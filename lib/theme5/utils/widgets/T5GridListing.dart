@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
 
 import '../../../main.dart';
 import '../T5Colors.dart';

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSDrawerComponents.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/components/CSDrawerComponents.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 
 class CSPhotosScreen extends StatefulWidget {
   static String tag = '/CSPhotosScreen';

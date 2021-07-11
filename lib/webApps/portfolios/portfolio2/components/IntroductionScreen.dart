@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/SnowWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/portfolio2/components/SnowWidget.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class IntroductionScreen extends StatefulWidget {
   static String tag = '/IntroductionScreen';

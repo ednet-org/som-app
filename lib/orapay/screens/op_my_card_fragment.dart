@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 // ignore: non_constant_identifier_names
 Widget OPMyCards() {

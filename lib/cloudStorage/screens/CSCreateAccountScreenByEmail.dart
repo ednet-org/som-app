@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignInScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSWalkthroughScreen1.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSSignInScreen.dart';
+import 'package:som/cloudStorage/screens/CSWalkthroughScreen1.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSCreateAccountScreenByEmail extends StatefulWidget {
   static String tag = '/CSCreateAccountScreenByEmail';

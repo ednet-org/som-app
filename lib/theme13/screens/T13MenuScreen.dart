@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme13/utils/T13Colors.dart';
-import 'package:prokit_flutter/theme13/utils/T13Constant.dart';
-import 'package:prokit_flutter/theme13/utils/T13Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme13/utils/T13Colors.dart';
+import 'package:som/theme13/utils/T13Constant.dart';
+import 'package:som/theme13/utils/T13Strings.dart';
 
 class T13MenuScreen extends StatefulWidget {
   static String tag = '/T13MenuScreen';

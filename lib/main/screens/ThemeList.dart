@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppImages.dart';
-import 'package:prokit_flutter/main/utils/AppStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppImages.dart';
+import 'package:som/main/utils/AppStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'ProKitScreenListing.dart';
 

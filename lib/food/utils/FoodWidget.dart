@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/screen/FoodAddAddress.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/food/screen/FoodAddAddress.dart';
+import 'package:som/main.dart';
 
 import 'FoodColors.dart';
 import 'FoodString.dart';

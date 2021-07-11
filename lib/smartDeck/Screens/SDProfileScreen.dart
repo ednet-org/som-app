@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/integrations/screens/StickyHeader/stickyHeaderHomePage.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/integrations/screens/StickyHeader/stickyHeaderHomePage.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDSettingScreen.dart';
+import 'package:som/smartDeck/Screens/SDSettingScreen.dart';
 import 'SDEditProfileScreen.dart';
 
 // ignore: camel_case_types

@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme9/models/T9Models.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-import 'package:prokit_flutter/theme9/utils/T9Constant.dart';
-import 'package:prokit_flutter/theme9/utils/T9DataGenerator.dart';
-import 'package:prokit_flutter/theme9/utils/T9Images.dart';
-import 'package:prokit_flutter/theme9/utils/T9Strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme9/models/T9Models.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
+import 'package:som/theme9/utils/T9Constant.dart';
+import 'package:som/theme9/utils/T9DataGenerator.dart';
+import 'package:som/theme9/utils/T9Images.dart';
+import 'package:som/theme9/utils/T9Strings.dart';
 
 class T9Description extends StatefulWidget {
   static String tag = '/T9Description';

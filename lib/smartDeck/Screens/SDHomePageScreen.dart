@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDChatScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDDashboardScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLeaderBoardScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDProfileScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDScoreBoardScreen.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/Screens/SDChatScreen.dart';
+import 'package:som/smartDeck/Screens/SDDashboardScreen.dart';
+import 'package:som/smartDeck/Screens/SDLeaderBoardScreen.dart';
+import 'package:som/smartDeck/Screens/SDProfileScreen.dart';
+import 'package:som/smartDeck/Screens/SDScoreBoardScreen.dart';
 
 class SDHomePageScreen extends StatefulWidget {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/screen/T1Signup.dart';
-import 'package:prokit_flutter/theme1/screen/t1_walk/IntroScreen.dart';
-import 'package:prokit_flutter/theme1/screen/t1_walk/Walkthrough.dart';
-import 'package:prokit_flutter/theme1/utils/T1Images.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/screen/T1Signup.dart';
+import 'package:som/theme1/screen/t1_walk/IntroScreen.dart';
+import 'package:som/theme1/screen/t1_walk/Walkthrough.dart';
+import 'package:som/theme1/utils/T1Images.dart';
 
 import '../../main.dart';
 

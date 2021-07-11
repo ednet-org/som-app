@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/constants.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/constants.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class RazorPayScreen extends StatefulWidget {
   static String tag = '/RazorPayScreen';

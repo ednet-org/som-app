@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/utils/T4Colors.dart';
 
 import 'T4Constant.dart';
 

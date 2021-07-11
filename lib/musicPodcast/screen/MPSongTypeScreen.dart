@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPopularSongScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPPopularSongScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
 
 class MPSongTypeScreen extends StatefulWidget {
   static String tag = '/ MPSongScreen';

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/screen/BankingChangePasword.dart';
-import 'package:prokit_flutter/Banking/screen/BankingContact.dart';
-import 'package:prokit_flutter/Banking/screen/BankingLocation.dart';
-import 'package:prokit_flutter/Banking/screen/BankingNews.dart';
-import 'package:prokit_flutter/Banking/screen/BankingQuestionAnswer.dart';
-import 'package:prokit_flutter/Banking/screen/BankingRateInfo.dart';
-import 'package:prokit_flutter/Banking/screen/BankingShareInformation.dart';
-import 'package:prokit_flutter/Banking/screen/BankingTermsCondition.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/screen/BankingChangePasword.dart';
+import 'package:som/Banking/screen/BankingContact.dart';
+import 'package:som/Banking/screen/BankingLocation.dart';
+import 'package:som/Banking/screen/BankingNews.dart';
+import 'package:som/Banking/screen/BankingQuestionAnswer.dart';
+import 'package:som/Banking/screen/BankingRateInfo.dart';
+import 'package:som/Banking/screen/BankingShareInformation.dart';
+import 'package:som/Banking/screen/BankingTermsCondition.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 class BankingMenu extends StatefulWidget {
   static var tag = "/BankingMenu";

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/components/AboutMeWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/components/LatestWorkWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/components/ServicesWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/components/SkillWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/components/SoicalWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/portfolio3/components/AboutMeWidget.dart';
+import 'package:som/webApps/portfolios/portfolio3/components/LatestWorkWidget.dart';
+import 'package:som/webApps/portfolios/portfolio3/components/ServicesWidget.dart';
+import 'package:som/webApps/portfolios/portfolio3/components/SkillWidget.dart';
+import 'package:som/webApps/portfolios/portfolio3/components/SoicalWidget.dart';
 
 import 'components/ClientHappyWidget.dart';
 import 'components/DropMessageWidget.dart';

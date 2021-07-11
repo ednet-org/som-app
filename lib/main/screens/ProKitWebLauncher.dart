@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:prokit_flutter/integrations/utils/colors.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/Portfolio1Screen.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio2/Portfolio2Screen.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/Portfolio3Screen.dart';
+import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/integrations/utils/colors.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/Portfolio1Screen.dart';
+import 'package:som/webApps/portfolios/portfolio2/Portfolio2Screen.dart';
+import 'package:som/webApps/portfolios/portfolio3/Portfolio3Screen.dart';
 
 import '../../main.dart';
 import 'SettingScreen.dart';

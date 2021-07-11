@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/utils/SocialConstant.dart';
 
 import 'SocialColors.dart';
 

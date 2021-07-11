@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryDataGenerator.dart';
-import 'package:prokit_flutter/grocery/utils/snapping_sheet.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryDataGenerator.dart';
+import 'package:som/grocery/utils/snapping_sheet.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GroceryCategoryList.dart';
 import 'GroceryProductDescription.dart';

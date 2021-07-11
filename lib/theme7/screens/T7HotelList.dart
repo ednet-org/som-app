@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7DataGenerator.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7DataGenerator.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 import '../../main.dart';
 

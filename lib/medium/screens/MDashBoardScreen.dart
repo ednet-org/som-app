@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/screens/MAudioArticlesScreen.dart';
-import 'package:prokit_flutter/medium/screens/MExploreTopicScreen.dart';
-import 'package:prokit_flutter/medium/screens/MSearchScreen.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
-import 'package:prokit_flutter/medium/utils/MWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/screens/MAudioArticlesScreen.dart';
+import 'package:som/medium/screens/MExploreTopicScreen.dart';
+import 'package:som/medium/screens/MSearchScreen.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
+import 'package:som/medium/utils/MWidget.dart';
 
 class MDashBoardScreen extends StatefulWidget {
   static String tag = '/MDashBoardScreen';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/ScoreboardAvailableModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/smartDeck/ModelClass/ScoreboardAvailableModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
 
 class SDExamCompletionBoardScreen extends StatefulWidget {
   @override

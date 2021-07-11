@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
 
 class ToDoWidget extends StatefulWidget {
   static String tag = '/ToDoScreen';

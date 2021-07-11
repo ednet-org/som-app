@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Images.dart';
 
 class T14ProfileScreen3 extends StatefulWidget {
   @override

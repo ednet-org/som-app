@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 class OPTransactionDetailsScreen extends StatefulWidget {
   @override

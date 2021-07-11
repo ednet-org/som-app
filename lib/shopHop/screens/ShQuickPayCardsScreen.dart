@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:prokit_flutter/shopHop/models/ShPaymentCard.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/shopHop/models/ShPaymentCard.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'ShAddCardScreen.dart';
 import 'package:nb_utils/nb_utils.dart';

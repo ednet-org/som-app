@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/integrations/utils/colors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/model/T8Models.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Constant.dart';
-import 'package:prokit_flutter/theme8/utils/T8Strings.dart';
-import 'package:prokit_flutter/theme8/utils/T8Widget.dart';
+import 'package:som/integrations/utils/colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/model/T8Models.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Constant.dart';
+import 'package:som/theme8/utils/T8Strings.dart';
+import 'package:som/theme8/utils/T8Widget.dart';
 
 import '../../main.dart';
 

@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/muvi/models/flix_response.dart';
 
 List<HomeSlider> getSliders() {
   List<HomeSlider> list = [];

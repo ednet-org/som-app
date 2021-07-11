@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14SubscriptionScreen6 extends StatefulWidget {
   @override

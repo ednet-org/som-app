@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
-import 'package:prokit_flutter/shopHop/models/ShProduct.dart';
-import 'package:prokit_flutter/shopHop/screens/ShSubCategory.dart';
-import 'package:prokit_flutter/shopHop/screens/ShViewAllProducts.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShExtension.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
-import 'package:prokit_flutter/shopHop/utils/ShWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/shopHop/models/ShCategory.dart';
+import 'package:som/shopHop/models/ShProduct.dart';
+import 'package:som/shopHop/screens/ShSubCategory.dart';
+import 'package:som/shopHop/screens/ShViewAllProducts.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShExtension.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
+import 'package:som/shopHop/utils/ShWidget.dart';
 
 class ShHomeFragment extends StatefulWidget {
   static String tag = '/ShHomeFragment';

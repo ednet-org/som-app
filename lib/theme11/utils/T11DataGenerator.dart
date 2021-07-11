@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/theme11/models/T11Models.dart';
-import 'package:prokit_flutter/theme11/utils/T11Images.dart';
+import 'package:som/theme11/models/T11Models.dart';
+import 'package:som/theme11/utils/T11Images.dart';
 
 List<Theme11ListProfile> theme11List() {
   List<Theme11ListProfile> list = [];

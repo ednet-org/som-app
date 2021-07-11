@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/model/T1_model.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
-import 'package:prokit_flutter/theme1/utils/T1Constant.dart';
-import 'package:prokit_flutter/theme1/utils/T1DataGenerator.dart';
-import 'package:prokit_flutter/theme1/utils/T1Strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/model/T1_model.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
+import 'package:som/theme1/utils/T1Constant.dart';
+import 'package:som/theme1/utils/T1DataGenerator.dart';
+import 'package:som/theme1/utils/T1Strings.dart';
 
 class T1Listing extends StatefulWidget {
   static var tag = "/T1Listing";

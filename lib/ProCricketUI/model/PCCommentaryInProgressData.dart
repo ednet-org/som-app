@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/ProCricketUI/model/PCSummaryData.dart';
+import 'package:som/ProCricketUI/model/PCSummaryData.dart';
 
 class PCCommentaryInProgressData {
   String? alerts;

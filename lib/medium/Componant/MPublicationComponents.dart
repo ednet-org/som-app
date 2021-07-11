@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
-import 'package:prokit_flutter/medium/utils/MWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
+import 'package:som/medium/utils/MWidget.dart';
 
 class MPublicationComponents extends StatefulWidget {
   static String tag = '/MPublicationComponents';

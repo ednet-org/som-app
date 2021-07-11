@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodString.dart';
 
 import '../utils/FoodImages.dart';
 import 'FoodAddAddress.dart';

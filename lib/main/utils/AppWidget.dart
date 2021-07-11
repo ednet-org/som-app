@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/common.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
+import 'package:som/integrations/utils/common.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/ListModels.dart';
 
 import 'AppColors.dart';
 import 'AppConstant.dart';

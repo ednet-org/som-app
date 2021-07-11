@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/models/T4Models.dart';
-import 'package:prokit_flutter/theme4/utils/T4Constant.dart';
-import 'package:prokit_flutter/theme4/utils/T4DataGenerator.dart';
-import 'package:prokit_flutter/theme4/utils/T4Images.dart';
-import 'package:prokit_flutter/theme4/utils/T4Widgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/models/T4Models.dart';
+import 'package:som/theme4/utils/T4Constant.dart';
+import 'package:som/theme4/utils/T4DataGenerator.dart';
+import 'package:som/theme4/utils/T4Images.dart';
+import 'package:som/theme4/utils/T4Widgets.dart';
 
 import '../../main.dart';
 

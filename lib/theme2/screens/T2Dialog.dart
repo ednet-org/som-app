@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme2/screens/T2Profile.dart';
-import 'package:prokit_flutter/theme2/utils/T2Colors.dart';
-import 'package:prokit_flutter/theme2/utils/T2Images.dart';
-import 'package:prokit_flutter/theme2/utils/T2Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme2/screens/T2Profile.dart';
+import 'package:som/theme2/utils/T2Colors.dart';
+import 'package:som/theme2/utils/T2Images.dart';
+import 'package:som/theme2/utils/T2Strings.dart';
 
 import '../../main.dart';
 

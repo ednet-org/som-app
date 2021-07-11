@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
-import 'package:prokit_flutter/theme4/utils/T4Images.dart';
-import 'package:prokit_flutter/theme4/utils/T4Strings.dart';
-import 'package:prokit_flutter/theme4/utils/widgets/T4Button.dart';
-import 'package:prokit_flutter/theme4/utils/widgets/T4EditText.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/utils/T4Colors.dart';
+import 'package:som/theme4/utils/T4Images.dart';
+import 'package:som/theme4/utils/T4Strings.dart';
+import 'package:som/theme4/utils/widgets/T4Button.dart';
+import 'package:som/theme4/utils/widgets/T4EditText.dart';
 
 class T4SignUp extends StatefulWidget {
   static String tag = '/T4SignUp';

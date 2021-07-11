@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDWalkThroughScreen.dart';
+import 'package:som/smartDeck/Screens/SDWalkThroughScreen.dart';
 
 class SDSplashScreen extends StatefulWidget {
   static String tag = '/SDSplashScreen';

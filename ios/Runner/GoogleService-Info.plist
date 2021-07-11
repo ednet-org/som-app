@@ -3,36 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>390414775798-3r3pnimk1j59ihshvfhgppf72tfs79e0.apps.googleusercontent.com</string>
+	<string>547812221971-v7bfa2ica856f6nnbpo5mhc77i3r75s1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.390414775798-3r3pnimk1j59ihshvfhgppf72tfs79e0</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>390414775798-2ibul2qkkkmba1ob0r1cjnkbiq4lnrpg.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.547812221971-v7bfa2ica856f6nnbpo5mhc77i3r75s1</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCXwrvHeNNlPATLzslJq8uiekfe-inNs4E</string>
+	<string>AIzaSyAzj1xEdzmtalNBAhURkWaK7tD5OMnMSog</string>
 	<key>GCM_SENDER_ID</key>
-	<string>390414775798</string>
+	<string>547812221971</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.iqonic.prokitflutter1</string>
+	<string>com.ednet.som</string>
 	<key>PROJECT_ID</key>
-	<string>prokit-flutter</string>
+	<string>smart-offer-management</string>
 	<key>STORAGE_BUCKET</key>
-	<string>prokit-flutter.appspot.com</string>
+	<string>smart-offer-management.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:390414775798:ios:8fcdfd0c8c0607f2aa03d7</string>
-	<key>DATABASE_URL</key>
-	<string>https://prokit-flutter.firebaseio.com</string>
+	<string>1:547812221971:ios:1297feee40dd78ae208be6</string>
 </dict>
 </plist>

@@ -8,7 +8,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 enum BankingBottomNavigationBarType {

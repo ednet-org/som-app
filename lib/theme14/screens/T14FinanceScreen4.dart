@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/panel.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/bezierChart/bezier_chart_config.dart';
-import 'package:prokit_flutter/theme14/utils/bezierChart/bezier_chart_widget.dart';
-import 'package:prokit_flutter/theme14/utils/bezierChart/bezier_line.dart';
+import 'package:som/grocery/utils/panel.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/bezierChart/bezier_chart_config.dart';
+import 'package:som/theme14/utils/bezierChart/bezier_chart_widget.dart';
+import 'package:som/theme14/utils/bezierChart/bezier_line.dart';
 
 class T14FinanceScreen4 extends StatefulWidget {
   @override

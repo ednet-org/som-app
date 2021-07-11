@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/screen/BankingInvoiceDetail.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/screen/BankingInvoiceDetail.dart';
 
 import '../utils/BankingColors.dart';
 import '../utils/BankingContants.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBSignInScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/screen/NBSignInScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
 
 class NBWalkThroughScreen extends StatefulWidget {
   static String tag = '/NBWalkThroughScreen';

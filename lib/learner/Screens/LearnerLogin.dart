@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerSignUp.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/learner/utils/LearnerWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/LearnerSignUp.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/learner/utils/LearnerWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerLogin extends StatefulWidget {
   static String tag = '/LearnerModrenMedicine';

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/hairSalon/screens/BHWalkThroughScreen.dart';
+import 'package:som/hairSalon/screens/BHWalkThroughScreen.dart';
 
 class BHSplashScreen extends StatefulWidget {
   static String tag = '/BHSplashScreen';

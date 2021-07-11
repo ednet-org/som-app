@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/social/model/SocialModel.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialDataGenerator.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/social/model/SocialModel.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialDataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
-import 'package:prokit_flutter/social/utils/SocialWidget.dart';
+import 'package:som/social/utils/SocialImages.dart';
+import 'package:som/social/utils/SocialStrings.dart';
+import 'package:som/social/utils/SocialWidget.dart';
 
 import 'SocialVerify.dart';
 import 'package:nb_utils/nb_utils.dart';

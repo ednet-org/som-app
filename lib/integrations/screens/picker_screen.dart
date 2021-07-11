@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/colors.dart';
-import 'package:prokit_flutter/integrations/utils/common.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/integrations/utils/constants.dart';
-import 'package:prokit_flutter/integrations/utils/styles.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart' as aw;
+import 'package:som/integrations/utils/colors.dart';
+import 'package:som/integrations/utils/common.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/constants.dart';
+import 'package:som/integrations/utils/styles.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart' as aw;
 
 class PickerScreen extends StatefulWidget {
   static String tag = '/PickerScreen';

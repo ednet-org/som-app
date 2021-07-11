@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBSettingScreen extends StatefulWidget {
   static String tag = '/NBSettingScreen';

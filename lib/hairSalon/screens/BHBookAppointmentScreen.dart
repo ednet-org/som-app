@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/hairSalon/utils/BHWidgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class BHBookAppointmentScreen extends StatefulWidget {
   static String tag = '/BookAppointmentScreen';

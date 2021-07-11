@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'MWStepperWidget/MWStepperScreen1.dart';
 import 'MWStepperWidget/MWStepperScreen2.dart';

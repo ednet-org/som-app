@@ -1,7 +1,7 @@
-import 'package:prokit_flutter/ProCricketUI/model/PCDashboardModel.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCLiveMatchesData.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/model/PCDashboardModel.dart';
+import 'package:som/ProCricketUI/model/PCLiveMatchesData.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
 
 // ignore: non_constant_identifier_names
 List<PCDashboardModel> CricketDashboardList() {

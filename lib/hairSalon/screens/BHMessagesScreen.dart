@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
 
 import 'BHChatScreen.dart';
 import 'BHVideoCallingScreen.dart';

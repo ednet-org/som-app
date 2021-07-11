@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/integrations/utils/folding_cell_widget.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/folding_cell_widget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class FoldingCellScreen extends StatefulWidget {
   static String tag = '/FoldingCellScreen';

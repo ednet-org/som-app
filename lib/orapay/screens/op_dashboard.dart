@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/orapay/screens/op_transfer_screen.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/screens/op_transfer_screen.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 import 'op_atm_location_screen.dart';
 import 'op_home_fragment.dart';

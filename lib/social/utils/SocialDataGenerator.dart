@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/social/model/SocialModel.dart';
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
+import 'package:som/social/model/SocialModel.dart';
+import 'package:som/social/utils/SocialImages.dart';
 
 List<SocialUser> addChatData() {
   List<SocialUser> mList = [];

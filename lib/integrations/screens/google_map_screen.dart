@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/clusteringGoogleMaps/clustering_helper.dart';
-import 'package:prokit_flutter/main/utils/clusteringGoogleMaps/lat_lang_geohash.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/clusteringGoogleMaps/clustering_helper.dart';
+import 'package:som/main/utils/clusteringGoogleMaps/lat_lang_geohash.dart';
 
 class GoogleMapScreen extends StatefulWidget {
   static String tag = '/GoogleMapScreen';

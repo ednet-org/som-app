@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/muvi/fragments/flix_sub_home_fragment.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/fragments/flix_sub_home_fragment.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
 class HomeFragment extends StatefulWidget {
   static String tag = '/HomeFragment';

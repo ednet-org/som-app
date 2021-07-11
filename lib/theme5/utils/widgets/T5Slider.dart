@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5SliderWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/widgets/T5SliderWidget.dart';
 
 import '../T5Colors.dart';
 import '../T5Constant.dart';

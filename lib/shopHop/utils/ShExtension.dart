@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:prokit_flutter/shopHop/models/ShAddress.dart';
-import 'package:prokit_flutter/shopHop/models/ShAttribute.dart';
-import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
-import 'package:prokit_flutter/shopHop/models/ShOrder.dart';
-import 'package:prokit_flutter/shopHop/models/ShProduct.dart';
+import 'package:som/shopHop/models/ShAddress.dart';
+import 'package:som/shopHop/models/ShAttribute.dart';
+import 'package:som/shopHop/models/ShCategory.dart';
+import 'package:som/shopHop/models/ShOrder.dart';
+import 'package:som/shopHop/models/ShProduct.dart';
 
 Future<String> loadContentAsset(String path) async {
   return await rootBundle.loadString(path);

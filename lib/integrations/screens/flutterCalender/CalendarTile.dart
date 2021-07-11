@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:intl/intl.dart";
-import 'package:prokit_flutter/integrations/screens/flutterCalender/date_utils.dart';
+import 'package:som/integrations/screens/flutterCalender/date_utils.dart';
 
 class CalendarTile extends StatelessWidget {
   final VoidCallback? onDateSelected;

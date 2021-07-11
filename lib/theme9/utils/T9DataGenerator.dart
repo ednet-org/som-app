@@ -1,6 +1,6 @@
-import 'package:prokit_flutter/theme9/models/T9Models.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-import 'package:prokit_flutter/theme9/utils/T9Images.dart';
+import 'package:som/theme9/models/T9Models.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
+import 'package:som/theme9/utils/T9Images.dart';
 
 List<T9PeopleModel> t9GetRecommended() {
   List<T9PeopleModel> list = [];

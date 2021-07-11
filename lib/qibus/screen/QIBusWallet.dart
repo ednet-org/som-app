@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusWallet extends StatefulWidget {
   static String tag = '/QIBusWallet';

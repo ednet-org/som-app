@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Colors.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/confetti/confetti.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/confetti/confetti.dart';
 
 class CHomePage extends StatefulWidget {
   static String tag = '/CHomePage';

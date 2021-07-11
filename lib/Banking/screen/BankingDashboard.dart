@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/Banking/screen/BankingHome1.dart';
-import 'package:prokit_flutter/Banking/screen/BankingMenu.dart';
-import 'package:prokit_flutter/Banking/screen/BankingPayment.dart';
-import 'package:prokit_flutter/Banking/screen/BankingSaving.dart';
-import 'package:prokit_flutter/Banking/screen/BankingTransfer.dart';
-import 'package:prokit_flutter/Banking/utils/BankingBottomNavigationBar.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/screen/BankingHome1.dart';
+import 'package:som/Banking/screen/BankingMenu.dart';
+import 'package:som/Banking/screen/BankingPayment.dart';
+import 'package:som/Banking/screen/BankingSaving.dart';
+import 'package:som/Banking/screen/BankingTransfer.dart';
+import 'package:som/Banking/utils/BankingBottomNavigationBar.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
 
 class BankingDashboard extends StatefulWidget {
   static var tag = "/BankingDashboard";

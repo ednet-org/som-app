@@ -2,15 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/screens/flix_signin.dart';
-import 'package:prokit_flutter/muvi/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/screens/flix_signin.dart';
+import 'package:som/muvi/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_strings.dart';
 
 class MuviOnBoardingScreen extends StatefulWidget {
   static String tag = '/OnBoardingScreen';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/like_button/like_button.dart';
-import 'package:prokit_flutter/main/utils/like_button/utils/like_button_model.dart';
-import 'package:prokit_flutter/main/utils/like_button/utils/like_button_typedef.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/like_button/like_button.dart';
+import 'package:som/main/utils/like_button/utils/like_button_model.dart';
+import 'package:som/main/utils/like_button/utils/like_button_typedef.dart';
 
 import '../../../main.dart';
 

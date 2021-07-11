@@ -2,9 +2,9 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/data_provider.dart';
-import 'package:prokit_flutter/main/model/ExpenseData.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/data_provider.dart';
+import 'package:som/main/model/ExpenseData.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StackedChart1Screen extends StatefulWidget {

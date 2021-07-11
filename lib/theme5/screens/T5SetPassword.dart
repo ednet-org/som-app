@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme5/screens/T5SetFingerPrint.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/theme5/screens/T5SetFingerPrint.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 import '../../main.dart';
 

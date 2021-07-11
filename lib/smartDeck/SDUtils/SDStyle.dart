@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
 
 BoxDecoration boxDecorations({double radius = 8, Color color = Colors.transparent, Color bgColor = Colors.white, var showShadow = false}) {
   return BoxDecoration(

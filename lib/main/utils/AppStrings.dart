@@ -1,4 +1,4 @@
-const appLblDashboardHeading = "ProKit";
+const appLblDashboardHeading = "SOM";
 const appLblDashboardSubHeading = "Best Material UI Design";
 const appLblWidgets = "Widgets";
 const appLblFullApps = "Full Apps";

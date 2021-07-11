@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBNewsDetailsScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBNewsDetailsScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
 
 class NBNewsComponent extends StatefulWidget {
   static String tag = '/NBNewsComponent';

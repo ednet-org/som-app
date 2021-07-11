@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
 class FaqScreen extends StatefulWidget {
   static String tag = '/FaqScreen';

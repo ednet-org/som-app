@@ -2,7 +2,7 @@ import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodColors.dart';
 
 class DefaultLayout extends StatefulWidget {
   final String? title, description, imageLink;

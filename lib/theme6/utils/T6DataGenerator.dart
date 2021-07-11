@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/theme6/models/T6Models.dart';
-import 'package:prokit_flutter/theme6/utils/T6Images.dart';
+import 'package:som/theme6/models/T6Models.dart';
+import 'package:som/theme6/utils/T6Images.dart';
 
 List<T6LogModel> getList() {
   List<T6LogModel> list = [];

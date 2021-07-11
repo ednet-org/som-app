@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSCopyAndMoveComponents.dart';
-import 'package:prokit_flutter/cloudStorage/model/CSDataModel.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSUpgradeAccountScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/cloudStorage/components/CSCopyAndMoveComponents.dart';
+import 'package:som/cloudStorage/model/CSDataModel.dart';
+import 'package:som/cloudStorage/screens/CSUpgradeAccountScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/main.dart';
 import 'package:share/share.dart';
 
 Future showBottomSheetForFileAndFolderEditingOption(BuildContext context, CSDataModel dataModel) {

@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7Images.dart';
 
 List<T7CategoryDataModel> generateCategories() {
   List<T7CategoryDataModel> categories = [];

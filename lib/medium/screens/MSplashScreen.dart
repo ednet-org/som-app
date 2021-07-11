@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/medium/screens/MSignUpScreen.dart';
-import 'package:prokit_flutter/medium/utils/MImages.dart';
+import 'package:som/main.dart';
+import 'package:som/medium/screens/MSignUpScreen.dart';
+import 'package:som/medium/utils/MImages.dart';
 
 class MSplashScreen extends StatefulWidget {
   static String tag = '/MSplashScreen';

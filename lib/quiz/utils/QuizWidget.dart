@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
 
 import 'QuizConstant.dart';
 

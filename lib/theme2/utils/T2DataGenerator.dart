@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/theme2/models/models.dart';
-import 'package:prokit_flutter/theme2/utils/T2Strings.dart';
+import 'package:som/theme2/models/models.dart';
+import 'package:som/theme2/utils/T2Strings.dart';
 
 import 'T2Images.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizResult.dart';
-import 'package:prokit_flutter/quiz/utils/QuizCard.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/quiz/Screens/QuizResult.dart';
+import 'package:som/quiz/utils/QuizCard.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
 
 class QuizCards extends StatefulWidget {
   static String tag = '/QuizCards';

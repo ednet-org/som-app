@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/dashboard/model/db1/Db1Model.dart';
-import 'package:prokit_flutter/dashboard/utils/DbColors.dart';
-import 'package:prokit_flutter/dashboard/utils/DbDataGenerator.dart';
-import 'package:prokit_flutter/dashboard/utils/DbImages.dart';
-import 'package:prokit_flutter/dashboard/utils/DbStrings.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/dashboard/model/db1/Db1Model.dart';
+import 'package:som/dashboard/utils/DbColors.dart';
+import 'package:som/dashboard/utils/DbDataGenerator.dart';
+import 'package:som/dashboard/utils/DbImages.dart';
+import 'package:som/dashboard/utils/DbStrings.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 class Dashboard1 extends StatefulWidget {
   static String tag = '/Dashboard1';

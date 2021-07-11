@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPWalkThroughScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/screen/MPWalkThroughScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
 
 class MPSplashScreen extends StatefulWidget {
   static String tag = '/MPSplashScreen';

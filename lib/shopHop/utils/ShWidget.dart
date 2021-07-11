@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/shopHop/models/ShProduct.dart';
-import 'package:prokit_flutter/shopHop/screens/ShCartScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShProductDetail.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShExtension.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/shopHop/models/ShProduct.dart';
+import 'package:som/shopHop/screens/ShCartScreen.dart';
+import 'package:som/shopHop/screens/ShProductDetail.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShExtension.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
 
 import 'ShConstant.dart';
 import 'ShStrings.dart';

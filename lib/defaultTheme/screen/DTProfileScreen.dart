@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTAboutScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTPaymentScreen.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTAboutScreen.dart';
+import 'package:som/defaultTheme/screen/DTPaymentScreen.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';

@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 class T7HotelDetail extends StatefulWidget {
   static String tag = '/T7HotelDetail';

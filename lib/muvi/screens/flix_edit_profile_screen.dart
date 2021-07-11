@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_strings.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static String tag = '/ProfileScreen';

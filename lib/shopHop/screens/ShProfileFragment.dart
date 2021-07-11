@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
 
 class ShProfileFragment extends StatefulWidget {
   static String tag = '/ShProfileFragment';

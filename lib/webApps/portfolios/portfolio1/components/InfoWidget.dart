@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class InfoWidget extends StatefulWidget {
   static String tag = '/InfoScreen';

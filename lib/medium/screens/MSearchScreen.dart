@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/screens/MAudioArticlesScreen.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/screens/MAudioArticlesScreen.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
 
 class MSearchScreen extends StatefulWidget {
   static String tag = '/MSearchScreen';

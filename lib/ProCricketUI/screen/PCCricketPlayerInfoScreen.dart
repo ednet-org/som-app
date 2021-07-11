@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCPlayerInfoData.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCPlayerInfoData.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketPlayerInfoScreen extends StatefulWidget {
   static String tag = '/CricketPlayerInfo';

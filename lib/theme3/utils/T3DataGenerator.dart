@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/utils/T3Images.dart';
 
 List<T3DashboardSliderModel> getDashboardSlider() {
   List<T3DashboardSliderModel> list = [];

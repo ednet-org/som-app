@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/theme1/model/T1_model.dart';
-import 'package:prokit_flutter/theme1/utils/T1Images.dart';
+import 'package:som/theme1/model/T1_model.dart';
+import 'package:som/theme1/utils/T1Images.dart';
 
 List<T1Model> getListings() {
   List<T1Model> list = [];

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/component/NBAudioNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/component/NBAudioNewsComponent.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
 
 class NBAudioArticleScreen extends StatefulWidget {
   static String tag = '/NBAudioArticleScreen';

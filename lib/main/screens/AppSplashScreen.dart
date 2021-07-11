@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:prokit_flutter/main/screens/ProKitLauncher.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/main/screens/ProKitLauncher.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 class AppSplashScreen extends StatefulWidget {
   static String tag = '/ProkitSplashScreen';
@@ -30,19 +30,15 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
     }
 
     await Future.delayed(Duration(seconds: 3));
-    if (isWeb) {
-      DTDashboardScreen().launch(context, isNewTask: true);
-    } else {
-      ProKitLauncher().launch(context, isNewTask: true);
-    }
+    DTDashboardScreen().launch(context, isNewTask: true);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: getColorFromHex('#FFFDF1'),
+      backgroundColor: Color(0xFF1D2939),
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset('images/app/app_icon.png', height: 200, fit: BoxFit.fitHeight),
+        child: Image.asset('images/som/logo.png', height: 300, fit: BoxFit.fitHeight),
       ),
     );
   }

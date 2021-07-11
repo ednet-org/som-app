@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
 
 const app_name = "Flix";
 

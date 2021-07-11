@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/integrations/utils/src/rect_clipper.dart';
+import 'package:som/integrations/utils/src/rect_clipper.dart';
 
 class BeforeAfter extends StatefulWidget {
   final Widget beforeImage;

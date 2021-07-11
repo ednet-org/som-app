@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/theme10/models/T10Models.dart';
+import 'package:som/theme10/models/T10Models.dart';
 
 import 'T10Images.dart';
 
