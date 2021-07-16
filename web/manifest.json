@@ -1,11 +1,11 @@
 {
-    "name": "som",
-    "short_name": "som",
+    "name": "Smart Offer Management",
+    "short_name": "SOM",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Smart offer manager",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
