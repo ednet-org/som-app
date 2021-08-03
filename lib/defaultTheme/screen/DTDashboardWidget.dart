@@ -4,15 +4,12 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/CategoryModel.dart';
 import 'package:som/defaultTheme/model/DTProductModel.dart';
-import 'package:som/defaultTheme/screen/DTCartScreen.dart';
 import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
 import 'package:som/defaultTheme/screen/DTSearchScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
 import 'package:som/defaultTheme/utils/DTDataProvider.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 import 'package:som/main/utils/rating_bar.dart';
 
@@ -185,7 +182,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
               ],
             ),
           ).onTap(() async {
-            int? index =
+            int index =
                 await DTProductDetailScreen(productModel: data).launch(context);
             if (index != null) appStore.setDrawerItemIndex(index);
           });
@@ -250,14 +247,16 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
     }
 
     Widget webWidget() {
+      double cardWidth = (dynamicWidth(context)) / 2;
+      double cardHeight = context.height() / 5;
+
       return SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 60),
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Smart Offer Management', style: boldTextStyle())
-                  .paddingAll(8),
+              Text('Smart Offer Management', style: boldTextStyle()).paddingAll(8),
             ],
           ),
         ),
