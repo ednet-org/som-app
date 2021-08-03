@@ -1,11 +1,11 @@
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
 
 import '../model/BankingModel.dart';
 
 List<BankingShareInfoModel> bankingInfoList() {
-  List<BankingShareInfoModel> list = List<BankingShareInfoModel>();
+  List<BankingShareInfoModel> list = [];
 
   var list1 = BankingShareInfoModel(Banking_ic_Skype);
   list.add(list1);
@@ -26,7 +26,7 @@ List<BankingShareInfoModel> bankingInfoList() {
 }
 
 List<BankingShareInfoModel> bankingNewsList() {
-  List<BankingShareInfoModel> list = List<BankingShareInfoModel>();
+  List<BankingShareInfoModel> list = [];
 
   var list1 = BankingShareInfoModel(Banking_ic_walk1);
   list.add(list1);
@@ -41,7 +41,7 @@ List<BankingShareInfoModel> bankingNewsList() {
 }
 
 List<BankingQuesAnsModel> bankingQuestionList() {
-  List<BankingQuesAnsModel> list = List<BankingQuesAnsModel>();
+  List<BankingQuesAnsModel> list = [];
 
   var list1 = BankingQuesAnsModel("Question: lorem ipsum doller sit ?");
   list.add(list1);
@@ -65,7 +65,7 @@ List<BankingQuesAnsModel> bankingQuestionList() {
 }
 
 List<BankingSavingModel> bankingSavingList() {
-  List<BankingSavingModel> list = List<BankingSavingModel>();
+  List<BankingSavingModel> list = [];
 
   var list1 = BankingSavingModel(title: "Saving 1", date: "22 Apr 2020", rs: "\$12,000", interest: "Interest 8 % - 8 Months");
   list.add(list1);
@@ -77,7 +77,7 @@ List<BankingSavingModel> bankingSavingList() {
 }
 
 List<BankingPaymentModel> bankingPaymentList() {
-  List<BankingPaymentModel> list = List<BankingPaymentModel>();
+  List<BankingPaymentModel> list = [];
 
   var list1 = BankingPaymentModel(title: "Payment Electricity", img: Banking_ic_Electricity, color: Banking_Primary);
   list.add(list1);
@@ -116,7 +116,7 @@ List<BankingPaymentModel> bankingPaymentList() {
 }
 
 List<BankingPaymentModel> bankingPaymentDetailList() {
-  List<BankingPaymentModel> list = List<BankingPaymentModel>();
+  List<BankingPaymentModel> list = [];
 
   var list1 = BankingPaymentModel(title: "Pay New Invoice", img: Banking_ic_Voice, color: Banking_Primary);
   list.add(list1);
@@ -128,8 +128,7 @@ List<BankingPaymentModel> bankingPaymentDetailList() {
 }
 
 List<BankingCardModel> bankingCardList() {
-  List<BankingCardModel> list = List<BankingCardModel>();
-
+  List<BankingCardModel> list = [];
   var list1 = BankingCardModel(name: "Laura Smith", bank: "The Same Bank", rs: "12,500");
   list.add(list1);
 
@@ -143,7 +142,7 @@ List<BankingCardModel> bankingCardList() {
 }
 
 List<BankingPaymentHistoryModel> bankingHistoryList1() {
-  List<BankingPaymentHistoryModel> list = List<BankingPaymentHistoryModel>();
+  List<BankingPaymentHistoryModel> list = [];
 
   var list1 = BankingPaymentHistoryModel(title: "Payment Invoice # 7783", rs: "-\$200 USD");
   list.add(list1);
@@ -155,7 +154,7 @@ List<BankingPaymentHistoryModel> bankingHistoryList1() {
 }
 
 List<BankingRateInfoModel> bankingRateInformationList() {
-  List<BankingRateInfoModel> list = List<BankingRateInfoModel>();
+  List<BankingRateInfoModel> list = [];
 
   var list1 = BankingRateInfoModel(currency: "Euro", flag: Banking_ic_Euro, buy: "1,123", sell: "3,799");
   list.add(list1);
@@ -185,8 +184,7 @@ List<BankingRateInfoModel> bankingRateInformationList() {
 }
 
 List<BankingHomeModel> bankingHomeList1() {
-  List<BankingHomeModel> list = List<BankingHomeModel>();
-
+  List<BankingHomeModel> list = [];
   var list1 = BankingHomeModel(title: "Default Account", color: Banking_BalanceColor, bal: "+\$50 USD");
   list.add(list1);
 
@@ -197,7 +195,7 @@ List<BankingHomeModel> bankingHomeList1() {
 }
 
 List<BankingHomeModel2> bankingHomeList2() {
-  List<BankingHomeModel2> list = List<BankingHomeModel2>();
+  List<BankingHomeModel2> list = [];
 
   var list1 = BankingHomeModel2(title: "Payment form Paypal", icon: Banking_ic_Paypal, color: Banking_greenLightColor, charge: "+\$50 USD");
   list.add(list1);
@@ -212,7 +210,7 @@ List<BankingHomeModel2> bankingHomeList2() {
 }
 
 List<BankingLocationModel> bankingLocationList() {
-  List<BankingLocationModel> list = List<BankingLocationModel>();
+  List<BankingLocationModel> list = [];
 
   var list1 = BankingLocationModel(location: "Branch Canyon", m: "800m");
   list.add(list1);

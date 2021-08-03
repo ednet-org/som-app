@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerDescription.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/LearnerDescription.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'LearnerModrenMedicine.dart';
 
@@ -17,7 +17,7 @@ class LearnerChart extends StatefulWidget {
 }
 
 class _LearnerChartState extends State<LearnerChart> {
-  List<LearnerCoursesModel> mList1;
+  late List<LearnerCoursesModel> mList1;
 
   @override
   void initState() {
@@ -37,7 +37,6 @@ class _LearnerChartState extends State<LearnerChart> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(135),
               child: Container(
-                color: Colors.white,
                 child: SafeArea(
                   child: Container(
                     color: learner_layout_background,
@@ -139,9 +138,10 @@ class _LearnerChartState extends State<LearnerChart> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerCourses extends StatelessWidget {
-  LearnerCoursesModel model;
-  String tags;
+  late LearnerCoursesModel model;
+  late String tags;
 
   LearnerCourses(LearnerCoursesModel model, int pos, String tags) {
     this.model = model;
@@ -194,7 +194,7 @@ class LearnerCourses extends StatelessWidget {
             )
           ],
         ),
-      ).cornerRadiusWithClipRRect(10.0).withShadow(shadowColor: learner_ShadowColor).paddingOnly(top: 16, left: 16, right: 16),
+      ).cornerRadiusWithClipRRect(10.0).paddingOnly(top: 16, left: 16, right: 16),
     );
   }
 }

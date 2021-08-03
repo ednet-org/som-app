@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
-import 'package:prokit_flutter/theme11/utils/T11Constant.dart';
-import 'package:prokit_flutter/theme11/utils/T11Images.dart';
-import 'package:prokit_flutter/theme11/utils/T11Strings.dart';
-import 'package:prokit_flutter/theme11/utils/T11Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11Constant.dart';
+import 'package:som/theme11/utils/T11Images.dart';
+import 'package:som/theme11/utils/T11Strings.dart';
+import 'package:som/theme11/utils/T11Widget.dart';
 
 class T11SignIn extends StatefulWidget {
   static String tag = '/T11SignIn';
@@ -90,7 +90,7 @@ class _T11SignInState extends State<T11SignIn> {
         buttonStyle(t11_lbl_signIn).paddingAll(16),
         Text(t11_lbl_forgot_password, style: boldTextStyle(size: 18, color: t11_PrimaryColor)).onTap(() {}).paddingAll(16.0),
         MaterialButton(
-          child: Text(t11_lbl_create_account).withStyle(fontSize: 18, color: t11_PrimaryColor),
+          child: Text(t11_lbl_create_account,style: primaryTextStyle(size: 18,color: t11_PrimaryColor)),
           color: Colors.grey,
           minWidth: double.infinity,
           height: 50,

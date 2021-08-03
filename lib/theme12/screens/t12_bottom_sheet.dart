@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme12/utils/t12_colors.dart';
-import 'package:prokit_flutter/theme12/utils/t12_constant.dart';
-import 'package:prokit_flutter/theme12/utils/t12_images.dart';
-import 'package:prokit_flutter/theme12/utils/t12_widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme12/utils/t12_colors.dart';
+import 'package:som/theme12/utils/t12_constant.dart';
+import 'package:som/theme12/utils/t12_images.dart';
+import 'package:som/theme12/utils/t12_widget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +20,7 @@ class T12BottomSheet extends StatefulWidget {
 class T12BottomSheetState extends State<T12BottomSheet> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, "Electricity Bill"),
@@ -138,7 +138,7 @@ class T12BottomSheetState extends State<T12BottomSheet> {
                                                                   Container(
                                                                     decoration: boxDecoration(showShadow: true, bgColor: Color(0xffBBd2fc), radius: spacing_standard),
                                                                     child: Image.asset(
-                                                                      "",
+                                                                      t12_bill,
                                                                       width: 24,
                                                                       height: 24,
                                                                     ).paddingAll(spacing_standard_new),

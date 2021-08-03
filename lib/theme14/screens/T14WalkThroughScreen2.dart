@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14WalkThroughScreen2 extends StatefulWidget {
   @override
@@ -11,7 +11,7 @@ class T14WalkThroughScreen2 extends StatefulWidget {
 }
 
 class _T14WalkThroughScreen2State extends State<T14WalkThroughScreen2> with AfterLayoutMixin<T14WalkThroughScreen2> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController(viewportFraction: 0.7);
   List<Widget> pages = [];
   final _kDuration = Duration(milliseconds: 300);

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Constant.dart';
-import 'package:prokit_flutter/theme8/utils/T8Strings.dart';
-import 'package:prokit_flutter/theme8/utils/T8Widget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Constant.dart';
+import 'package:som/theme8/utils/T8Strings.dart';
+import 'package:som/theme8/utils/T8Widget.dart';
 
 class T8SignIn extends StatefulWidget {
   static String tag = '/T8SignIn';
@@ -18,7 +18,7 @@ class T8SignIn extends StatefulWidget {
 class T8SignInState extends State<T8SignIn> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Observer(
       builder: (_) => Scaffold(
         backgroundColor: appStore.scaffoldBackground,

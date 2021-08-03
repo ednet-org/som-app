@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTProductModel.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTProductModel.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTOrderSummaryScreen.dart';
 import 'DTProductDetailScreen.dart';
 
+// ignore: must_be_immutable
 class CartListView extends StatefulWidget {
   static String tag = '/CartListView';
 
-  bool mIsEditable;
-  bool isOrderSummary;
+  bool? mIsEditable;
+  bool? isOrderSummary;
 
   CartListView({this.mIsEditable, this.isOrderSummary});
 
@@ -46,7 +47,7 @@ class CartListViewState extends State<CartListView> {
     totalAmount = 0;
 
     data.forEach((element) {
-      subTotal += (element.discountPrice ?? element.price) * element.qty;
+      subTotal += (element.discountPrice ?? element.price)! * element.qty!;
     });
 
     shippingCharges = (subTotal * 10).toInt() ~/ 100;
@@ -64,7 +65,7 @@ class CartListViewState extends State<CartListView> {
   Widget build(BuildContext context) {
     Widget itemCart(DTProductModel data, int index) {
       return Container(
-        decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+        decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(8),
         child: Row(
@@ -74,7 +75,7 @@ class CartListViewState extends State<CartListView> {
               height: 100,
               width: 100,
               child: Image.network(
-                data.image,
+                data.image!,
                 fit: BoxFit.cover,
                 height: 100,
                 width: 100,
@@ -85,7 +86,7 @@ class CartListViewState extends State<CartListView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(data.name, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(data.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
                 4.height,
                 Row(
                   children: [
@@ -105,7 +106,7 @@ class CartListViewState extends State<CartListView> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.remove, color: whiteColor).onTap(() {
-                        var qty = data.qty;
+                        var qty = data.qty!;
                         if (qty <= 1) return;
                         var q = qty - 1;
                         data.qty = q;
@@ -116,7 +117,7 @@ class CartListViewState extends State<CartListView> {
                       Text(data.qty.toString(), style: boldTextStyle(color: whiteColor)),
                       6.width,
                       Icon(Icons.add, color: whiteColor).onTap(() {
-                        mainCount = data.qty + 1;
+                        mainCount = data.qty! + 1;
                         data.qty = mainCount;
 
                         calculate();
@@ -169,7 +170,7 @@ class CartListViewState extends State<CartListView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                totalAmountWidget(subTotal, shippingCharges, totalAmount).visible(widget.mIsEditable),
+                totalAmountWidget(subTotal, shippingCharges, totalAmount).visible(widget.mIsEditable!),
                 Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(12),
@@ -177,10 +178,10 @@ class CartListViewState extends State<CartListView> {
                   child: Text('Checkout', style: boldTextStyle(color: white)),
                 ).onTap(() {
                   DTOrderSummaryScreen(data).launch(context);
-                }).visible(widget.mIsEditable),
+                }).visible(widget.mIsEditable!),
               ],
             ),
-          ).expand(flex: 40).visible(!widget.isOrderSummary),
+          ).expand(flex: 40).visible(!widget.isOrderSummary!),
         ],
       ),
     );

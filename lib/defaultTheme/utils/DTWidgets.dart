@@ -1,15 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTSignUpScreen.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
+import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
-Widget priceWidget(int price,
-    {bool applyStrike = false, double fontSize, Color textColor}) {
+Widget priceWidget(int? price,
+    {bool applyStrike = false, double? fontSize, Color? textColor}) {
   return Text(
     applyStrike ? '$price' : '\$$price',
     style: TextStyle(
@@ -52,7 +52,7 @@ Gradient defaultThemeGradient() {
 
 Widget errorWidget(
     BuildContext context, String image, String title, String desc,
-    {bool showRetry = false, Function onRetry}) {
+    {bool showRetry = false, Function? onRetry}) {
   return Container(
     constraints: dynamicBoxConstraints(),
     height: context.height(),
@@ -87,13 +87,15 @@ Widget errorWidget(
                 Column(
                   children: [
                     30.height,
-                    RaisedButton(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        primary: white,
+                      ),
                       onPressed: () {
-                        onRetry();
+                        onRetry!();
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      color: white,
                       child: Text('RETRY',
                           style: primaryTextStyle(color: textPrimaryColor)),
                     )
@@ -205,9 +207,9 @@ Widget totalAmountWidget(int subTotal, int shippingCharges, int totalAmount) {
 
 class ChatMessageWidget extends StatelessWidget {
   const ChatMessageWidget({
-    Key key,
-    @required this.isMe,
-    @required this.data,
+    Key? key,
+    required this.isMe,
+    required this.data,
   }) : super(key: key);
 
   final bool isMe;
@@ -257,10 +259,10 @@ class ChatMessageWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
-                  child: Text(data.msg,
+                  child: Text(data.msg!,
                       style: primaryTextStyle(
                           color: !isMe ? white : appStore.textPrimaryColor))),
-              Text(data.time,
+              Text(data.time!,
                   style: secondaryTextStyle(
                       color: !isMe ? white : appStore.textSecondaryColor,
                       size: 12))

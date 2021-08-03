@@ -3,22 +3,21 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/common.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
+import 'package:som/integrations/utils/common.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/ListModels.dart';
 
 import 'AppColors.dart';
 import 'AppConstant.dart';
 import 'clusteringGoogleMaps/lat_lang_geohash.dart';
 
 Widget text(
-  String text, {
+  String? text, {
   var fontSize = textSizeLargeMedium,
-  Color textColor,
+  Color? textColor,
   var fontFamily,
   var isCentered = false,
   var maxLine = 1,
@@ -28,7 +27,7 @@ Widget text(
   bool lineThrough = false,
 }) {
   return Text(
-    textAllCaps ? text.toUpperCase() : text,
+    textAllCaps ? text!.toUpperCase() : text!,
     textAlign: isCentered ? TextAlign.center : TextAlign.start,
     maxLines: isLongText ? null : maxLine,
     overflow: TextOverflow.ellipsis,
@@ -38,37 +37,31 @@ Widget text(
       color: textColor ?? appStore.textSecondaryColor,
       height: 1.5,
       letterSpacing: latterSpacing,
-      decoration:
-          lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
+      decoration: lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
     ),
   );
 }
 
-BoxDecoration boxDecoration(
-    {double radius = 2,
-    Color color = Colors.transparent,
-    Color bgColor,
-    var showShadow = false}) {
+BoxDecoration boxDecoration({double radius = 2, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
   return BoxDecoration(
     color: bgColor ?? appStore.scaffoldBackground,
-    boxShadow: showShadow
-        ? defaultBoxShadow(shadowColor: shadowColorGlobal)
-        : [BoxShadow(color: Colors.transparent)],
+    boxShadow: showShadow ? defaultBoxShadow(shadowColor: shadowColorGlobal) : [BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
 }
 
-Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(
-    BuildContext context) async {
+Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(BuildContext context) async {
   try {
-    final fakeList = await loadDataFromJson(context);
-    List<LatLngAndGeohash> myPoints = List();
-    for (int i = 0; i < fakeList.length; i++) {
-      final fakePoint = fakeList[i];
+    final fakeList = await (loadDataFromJson(context));
+    List<LatLngAndGeohash> myPoints = [];
+    for (int i = 0; i < fakeList!.length; i++) {
+      //TODO Without NullSafety Geo coder
+      //final fakePoint = fakeList[i];
       final p = LatLngAndGeohash(
-        LatLng(fakePoint["LATITUDE"], fakePoint["LONGITUDE"]),
-      );
+          //TODO Without NullSafety Geo coder
+          // LatLng(fakePoint["LATITUDE"], fakePoint["LONGITUDE"]),
+          );
       myPoints.add(p);
     }
     return myPoints;
@@ -87,34 +80,30 @@ void changeStatusColor(Color color) async {
   }*/
 }
 
-Widget commonCacheImageWidget(String url, double height,
-    {double width, BoxFit fit}) {
+Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit? fit}) {
   if (url.validate().startsWith('http')) {
     if (isMobile) {
       return CachedNetworkImage(
-        placeholder: placeholderWidgetFn(),
+        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
         imageUrl: '$url',
         height: height,
         width: width,
         fit: fit,
+        errorWidget: (_, __, ___) {
+          return SizedBox(height: height, width: width);
+        },
       );
     } else {
-      return Image.network(url, height: height, width: width, fit: fit);
+      return Image.network(url!, height: height, width: width, fit: fit);
     }
   } else {
-    return Image.asset(url, height: height, width: width, fit: fit);
+    return Image.asset(url!, height: height, width: width, fit: fit);
   }
 }
 
-Widget settingItem(context, String text,
-    {Function onTap,
-    Widget detail,
-    Widget leading,
-    Color textColor,
-    int textSize,
-    double padding}) {
+Widget settingItem(context, String text, {Function? onTap, Widget? detail, Widget? leading, Color? textColor, int? textSize, double? padding}) {
   return InkWell(
-    onTap: onTap,
+    onTap: onTap as void Function()?,
     child: Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: padding ?? 8, bottom: padding ?? 8),
@@ -123,29 +112,19 @@ Widget settingItem(context, String text,
         children: <Widget>[
           Row(
             children: <Widget>[
-              Container(
-                  child: leading ?? SizedBox(),
-                  width: 30,
-                  alignment: Alignment.center),
+              Container(child: leading ?? SizedBox(), width: 30, alignment: Alignment.center),
               leading != null ? 10.width : SizedBox(),
-              Text(text,
-                      style: primaryTextStyle(
-                          size: textSize ?? 18,
-                          color: textColor ?? appStore.textPrimaryColor))
-                  .expand(),
+              Text(text, style: primaryTextStyle(size: textSize ?? 18, color: textColor ?? appStore.textPrimaryColor)).expand(),
             ],
           ).expand(),
-          detail ??
-              Icon(Icons.arrow_forward_ios,
-                  size: 16, color: appStore.textSecondaryColor),
+          detail ?? Icon(Icons.arrow_forward_ios, size: 16, color: appStore.textSecondaryColor),
         ],
       ).paddingOnly(left: 16, right: 16, top: 8, bottom: 8),
     ),
   );
 }
 
-Widget appBarTitleWidget(context, String title,
-    {Color color, Color textColor}) {
+Widget appBarTitleWidget(context, String title, {Color? color, Color? textColor}) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
@@ -154,21 +133,15 @@ Widget appBarTitleWidget(context, String title,
       children: <Widget>[
         Text(
           title,
-          style: boldTextStyle(
-              color: color ?? appStore.textPrimaryColor, size: 20),
+          style: boldTextStyle(color: color ?? appStore.textPrimaryColor, size: 20),
           maxLines: 1,
-        ),
+        ).expand(),
       ],
     ),
   );
 }
 
-Widget appBar(BuildContext context, String title,
-    {List<Widget> actions,
-    bool showBack = true,
-    Color color,
-    Color iconColor,
-    Color textColor}) {
+AppBar appBar(BuildContext context, String title, {List<Widget>? actions, bool showBack = true, Color? color, Color? iconColor, Color? textColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: color ?? appStore.appBarColor,
@@ -177,12 +150,10 @@ Widget appBar(BuildContext context, String title,
             onPressed: () {
               finish(context);
             },
-            icon:
-                Icon(Icons.arrow_back, color: iconColor ?? appStore.iconColor),
+            icon: Icon(Icons.arrow_back, color: appStore.isDarkModeOn ? white : black),
           )
         : null,
-    title:
-        appBarTitleWidget(context, title, textColor: textColor, color: color),
+    title: appBarTitleWidget(context, title, textColor: textColor, color: color),
     actions: actions,
   );
 }
@@ -192,8 +163,7 @@ class ExampleItemWidget extends StatelessWidget {
   final Function onTap;
   final bool showTrailing;
 
-  ExampleItemWidget(this.tabBarType,
-      {@required this.onTap, this.showTrailing = false});
+  ExampleItemWidget(this.tabBarType, {required this.onTap, this.showTrailing = false});
 
   @override
   Widget build(BuildContext context) {
@@ -204,11 +174,8 @@ class ExampleItemWidget extends StatelessWidget {
       shadowColor: Colors.black,
       child: ListTile(
         onTap: () => onTap(),
-        title: Text(tabBarType.name, style: boldTextStyle()),
-        trailing: showTrailing
-            ? Icon(Icons.arrow_forward_ios,
-                size: 15, color: appStore.textPrimaryColor)
-            : null,
+        title: Text(tabBarType.name!, style: boldTextStyle()),
+        trailing: showTrailing ? Icon(Icons.arrow_forward_ios, size: 15, color: appStore.textPrimaryColor) : null,
       ),
     );
   }
@@ -216,9 +183,7 @@ class ExampleItemWidget extends StatelessWidget {
 
 String convertDate(date) {
   try {
-    return date != null
-        ? DateFormat(dateFormat).format(DateTime.parse(date))
-        : '';
+    return date != null ? DateFormat(dateFormat).format(DateTime.parse(date)) : '';
   } catch (e) {
     print(e);
     return '';
@@ -226,9 +191,9 @@ String convertDate(date) {
 }
 
 class CustomTheme extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
-  CustomTheme({@required this.child});
+  CustomTheme({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -239,18 +204,16 @@ class CustomTheme extends StatelessWidget {
               backgroundColor: appStore.scaffoldBackground,
             )
           : ThemeData.light(),
-      child: child,
+      child: child!,
     );
   }
 }
 
-Function(BuildContext, String) placeholderWidgetFn() =>
-    (_, s) => placeholderWidget();
+Widget? Function(BuildContext, String) placeholderWidgetFn() => (_, s) => placeholderWidget();
 
-Widget placeholderWidget() =>
-    Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
+Widget placeholderWidget() => Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
 
-BoxConstraints dynamicBoxConstraints({double maxWidth}) {
+BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
   return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
 }
 
@@ -280,7 +243,7 @@ double dynamicWidth(BuildContext context) {
   }
 }*/
 
-String getBannerAdUnitId() {
+String? getBannerAdUnitId() {
   if (kReleaseMode) {
     if (Platform.isIOS) {
       return bannerAdIdForIos;
@@ -297,7 +260,7 @@ String getBannerAdUnitId() {
   return null;
 }
 
-String getInterstitialAdUnitId() {
+String? getInterstitialAdUnitId() {
   if (kReleaseMode) {
     if (Platform.isIOS) {
       return interstitialAdIdForIos;
@@ -314,14 +277,14 @@ String getInterstitialAdUnitId() {
   return null;
 }
 
-String parseHtmlString(String htmlString) {
-  return parse(parse(htmlString).body.text).documentElement.text;
+String parseHtmlString(String? htmlString) {
+  return parse(parse(htmlString).body!.text).documentElement!.text;
 }
 
 class ContainerX extends StatelessWidget {
-  final Widget mobile;
-  final Widget web;
-  final bool useFullWidth;
+  final Widget? mobile;
+  final Widget? web;
+  final bool? useFullWidth;
 
   ContainerX({this.mobile, this.web, this.useFullWidth});
 
@@ -335,9 +298,7 @@ class ContainerX extends StatelessWidget {
           return Container(
             alignment: Alignment.topCenter,
             child: Container(
-              constraints: useFullWidth.validate()
-                  ? null
-                  : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
+              constraints: useFullWidth.validate() ? null : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
               child: web ?? SizedBox(),
             ),
           );

@@ -2,17 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme6/models/T6Models.dart';
-import 'package:prokit_flutter/theme6/utils/T6CalendarStrip.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
-import 'package:prokit_flutter/theme6/utils/T6Constant.dart';
-import 'package:prokit_flutter/theme6/utils/T6DataGenerator.dart';
-import 'package:prokit_flutter/theme6/utils/T6Images.dart';
-import 'package:prokit_flutter/theme6/utils/T6Strings.dart';
-import 'package:prokit_flutter/theme6/utils/T6Widget.dart';
-import 'package:prokit_flutter/theme6/utils/Widget/T6Bar.dart';
-import 'package:prokit_flutter/theme6/utils/Widget/T6SliderWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme6/models/T6Models.dart';
+import 'package:som/theme6/utils/T6CalendarStrip.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
+import 'package:som/theme6/utils/T6Constant.dart';
+import 'package:som/theme6/utils/T6DataGenerator.dart';
+import 'package:som/theme6/utils/T6Images.dart';
+import 'package:som/theme6/utils/T6Strings.dart';
+import 'package:som/theme6/utils/T6Widget.dart';
+import 'package:som/theme6/utils/Widget/T6Bar.dart';
+import 'package:som/theme6/utils/Widget/T6SliderWidget.dart';
 
 import '../../main.dart';
 
@@ -29,8 +29,8 @@ class T6DashboardState extends State<T6Dashboard> {
   DateTime selectedDate = DateTime.now().subtract(Duration(days: 2));
   List<DateTime> markedDates = [DateTime.now().subtract(Duration(days: 1)), DateTime.now().subtract(Duration(days: 2)), DateTime.now().add(Duration(days: 4))];
   int selectedPos = 1;
-  List<T6Slider> mSliderList;
-  List<T6LogModel> mActivity;
+  List<T6Slider>? mSliderList;
+   List<T6LogModel>? mActivity;
 
   onSelect(data) {
     print("Selected Date -> $data");
@@ -83,7 +83,6 @@ class T6DashboardState extends State<T6Dashboard> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
       alignment: Alignment.center,
-      padding: EdgeInsets.only(top: 8, left: 5, right: 5, bottom: 5),
       decoration: BoxDecoration(
         color: !isSelectedDate ? Colors.transparent : t6view_color,
         borderRadius: BorderRadius.all(Radius.circular(60)),
@@ -137,7 +136,7 @@ class T6DashboardState extends State<T6Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -202,14 +201,14 @@ class T6DashboardState extends State<T6Dashboard> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.32,
                     child: ListView.builder(
                         padding: EdgeInsets.all(8),
                         scrollDirection: Axis.horizontal,
-                        itemCount: mActivity.length,
+                        itemCount: mActivity!.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return T6Activity(mActivity[index], index);
+                          return T6Activity(mActivity![index], index);
                         }),
                   ),
                   Container(
@@ -370,8 +369,9 @@ class T6DashboardState extends State<T6Dashboard> {
   }
 }
 
+// ignore: must_be_immutable
 class T6Activity extends StatelessWidget {
-  T6LogModel model;
+  late T6LogModel model;
 
   T6Activity(T6LogModel model, int pos) {
     this.model = model;

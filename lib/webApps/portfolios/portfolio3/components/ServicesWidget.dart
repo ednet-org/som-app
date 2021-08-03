@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -67,10 +67,10 @@ class ServicesWidgetState extends State<ServicesWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(e.title, style: boldTextStyle(color: Colors.white, size: 24), maxLines: 2),
+                                Text(e.title!, style: boldTextStyle(color: Colors.white, size: 24), maxLines: 2),
                                 8.height,
                                 Text(
-                                  e.subTitle,
+                                  e.subTitle!,
                                   style: secondaryTextStyle(color: Colors.white.withOpacity(0.7), size: 16),
                                   maxLines: 3,
                                 ),
@@ -114,7 +114,7 @@ class ServicesWidgetState extends State<ServicesWidget> {
                           padding: EdgeInsets.all(12),
                           margin: EdgeInsets.all(16),
                           width: context.width() * 0.25,
-                          decoration: boxDecorationRoundedWithShadow(10, backgroundColor: appStore.appBarColor),
+                          decoration: boxDecorationRoundedWithShadow(10, backgroundColor: appStore.appBarColor!),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -126,9 +126,9 @@ class ServicesWidgetState extends State<ServicesWidget> {
                                 child: Icon(MaterialCommunityIcons.laptop_mac, size: 30, color: portfolio3PrimaryColor),
                               ).cornerRadiusWithClipRRect(40),
                               16.height,
-                              Text(e.name, style: boldTextStyle(size: 24)),
+                              Text(e.name!, style: boldTextStyle(size: 24)),
                               16.height,
-                              Text(e.detail, style: secondaryTextStyle(size: 16)),
+                              Text(e.detail!, style: secondaryTextStyle(size: 16)),
                               32.height,
                             ],
                           ),

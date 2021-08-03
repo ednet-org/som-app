@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerChattingScreen extends StatefulWidget {
   @override
@@ -110,7 +110,7 @@ class _LearnerChattingScreenState extends State<LearnerChattingScreen> {
                 height: 60,
                 width: width,
                 margin: EdgeInsets.only(top: 8),
-                decoration: BoxDecoration(color: learner_white),
+                decoration: boxDecorationDefault(),
                 child: Row(
                   children: <Widget>[
                     Image.asset(learner_ic_smile, height: 30, width: 30).paddingAll(10),
@@ -145,7 +145,7 @@ class _LearnerChattingScreenState extends State<LearnerChattingScreen> {
                     }),
                   ],
                 ),
-              ).withShadow(shadowColor: learner_ShadowColor),
+              ),
             ),
           ],
         ),

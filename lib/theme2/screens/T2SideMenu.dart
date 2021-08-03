@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme2/screens/T2Dashboard.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme2/screens/T2Dashboard.dart';
 
 class T2SideMenu extends StatefulWidget {
   static var tag = "/T2SideMenu";
@@ -14,7 +14,7 @@ class T2SideMenu extends StatefulWidget {
 class T2SideMenuState extends State<T2SideMenu> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
@@ -26,7 +26,7 @@ class T2SideMenuState extends State<T2SideMenu> {
             child: IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
+                _scaffoldKey.currentState!.openDrawer();
               },
             ),
           ),

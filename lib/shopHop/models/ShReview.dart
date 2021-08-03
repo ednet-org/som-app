@@ -1,14 +1,18 @@
 class ShReview {
-  String date_created;
-  String date_created_gmt;
-  String email;
-  int id;
-  String name;
-  int product_id;
-  int rating;
-  String review;
-  bool verified;
+  // ignore: non_constant_identifier_names
+  String? date_created;
+  // ignore: non_constant_identifier_names
+  String? date_created_gmt;
+  String? email;
+  int? id;
+  String? name;
+  // ignore: non_constant_identifier_names
+  int? product_id;
+  int? rating;
+  String? review;
+  bool? verified;
 
+  // ignore: non_constant_identifier_names
   ShReview({this.date_created, this.date_created_gmt, this.email, this.id, this.name, this.product_id, this.rating, this.review, this.verified});
 
   factory ShReview.fromJson(Map<String, dynamic> json) {

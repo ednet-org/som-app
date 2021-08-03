@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Images.dart';
-import 'package:prokit_flutter/theme8/utils/T8Strings.dart';
-import 'package:prokit_flutter/theme8/utils/T8Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Images.dart';
+import 'package:som/theme8/utils/T8Strings.dart';
+import 'package:som/theme8/utils/T8Widget.dart';
 
 import '../../main.dart';
 
@@ -35,7 +35,7 @@ class T8BottomNavigationState extends State<T8BottomNavigation> {
             SvgPicture.asset(
               icon,
               width: MediaQuery.of(context).size.width * 0.07,
-              height: 24,
+              height: 20,
               color: isSelected == pos ? t8_colorPrimary : t8_icon_color,
             ),
             text(
@@ -50,7 +50,7 @@ class T8BottomNavigationState extends State<T8BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPArtistsDetailScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPArtistsDetailScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPArtistsScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
   MPArtistsScreen({this.name});
 
@@ -47,13 +47,13 @@ class MPArtistsScreenState extends State<MPArtistsScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white),
         ),
         backgroundColor: mpAppBackGroundColor,
         elevation: 0.0,
-        title: Text(widget.name, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
+        title: Text(widget.name!, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
         actions: [
           searchIconWidget(onPressed: () {
             MPSearchScreen().launch(context);
@@ -77,10 +77,10 @@ class MPArtistsScreenState extends State<MPArtistsScreen> {
                   children: [
                     commonCacheImageWidget(data.img, 100, width: 180, fit: BoxFit.cover).cornerRadiusWithClipRRect(12),
                     Container(height: 100, width: 180, color: black.withOpacity(0.7)).cornerRadiusWithClipRRect(12),
-                    Text(data.title, textAlign: TextAlign.center, style: boldTextStyle(color: white.withOpacity(0.9)))
+                    Text(data.title!, textAlign: TextAlign.center, style: boldTextStyle(color: white.withOpacity(0.9)))
                   ],
                 ).onTap(() {
-                  String img = data.img;
+                  String? img = data.img;
                   MPArtistsDetailScreen(img: img).launch(context);
                 });
               },

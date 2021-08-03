@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTPaymentProcessScreen.dart';
-import 'package:prokit_flutter/defaultTheme/utils/ExpirationTextField.dart';
-import 'package:prokit_flutter/defaultTheme/utils/FlipCard.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTPaymentProcessScreen.dart';
+import 'package:som/defaultTheme/utils/ExpirationTextField.dart';
+import 'package:som/defaultTheme/utils/FlipCard.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -39,7 +39,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
 
   init() async {
     securityCodeFocus.addListener(() {
-      cardKey.currentState.toggleCard();
+      cardKey.currentState!.toggleCard();
 
       setState(() {});
     });
@@ -52,7 +52,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
 
   @override
   void dispose() {
-    securityCodeFocus?.dispose();
+    securityCodeFocus.dispose();
     super.dispose();
   }
 
@@ -150,7 +150,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                       labelText: 'Card Number',
                       counterText: '',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                       labelStyle: secondaryTextStyle(),
                     ),
@@ -174,7 +174,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Expiry Date',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
@@ -212,7 +212,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Security Code',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
@@ -236,7 +236,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                     decoration: InputDecoration(
                       labelText: 'Card Holder',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
                       labelStyle: secondaryTextStyle(),
                     ),

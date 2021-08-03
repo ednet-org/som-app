@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 import 'QIBusSelectSeat.dart';
 
@@ -27,9 +27,9 @@ class QIBusSearchListState extends State<QIBusSearchList> {
   var now = new DateTime.now();
   var todayDate = DateTime.now();
   var formatter = new DateFormat('dd - MMM - yyyy');
-  String formatted;
+  String? formatted;
 
-  List<QIBusModel> mList;
+  late List<QIBusModel> mList;
 
   @override
   void initState() {
@@ -162,8 +162,9 @@ class QIBusSearchListState extends State<QIBusSearchList> {
   }
 }
 
+// ignore: must_be_immutable
 class BusList extends StatelessWidget {
-  QIBusModel model;
+  late QIBusModel model;
 
   BusList(QIBusModel model, int pos) {
     this.model = model;
@@ -218,7 +219,7 @@ class BusList extends StatelessWidget {
                           child: Opacity(
                             opacity: 0.2,
                             child: CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: qibus_ic_map,
                               fit: BoxFit.cover,
                               width: width * 0.4,

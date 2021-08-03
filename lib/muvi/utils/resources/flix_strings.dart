@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
 
 const app_name = "Flix";
 
@@ -10,7 +10,7 @@ const walk_sub_titles = [
   "Look back and reflect on your memories and growth over time"
 ];
 
-List<String> getGenders(context) {
+List<String?> getGenders(context) {
   return [
     keyString(context, "male"),
     keyString(context, "female"),

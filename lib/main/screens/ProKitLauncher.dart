@@ -5,14 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTWalkThoughScreen.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppDataProvider.dart';
-import 'package:prokit_flutter/main/utils/AppImages.dart';
-import 'package:prokit_flutter/main/utils/AppStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTWalkThoughScreen.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppDataProvider.dart';
+import 'package:som/main/utils/AppImages.dart';
+import 'package:som/main/utils/AppStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';
@@ -50,7 +50,7 @@ class ProKitLauncherState extends State<ProKitLauncher> with TickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     List<Color> colors = [appCat1, appCat2, appCat3];
 
     var width = MediaQuery.of(context).size.width;
@@ -76,7 +76,7 @@ class ProKitLauncherState extends State<ProKitLauncher> with TickerProviderState
       );
     }
 
-    Widget category(Color color, String img, String name, {bool isNew = false, String type = 'New', @required Function onTap}) {
+    Widget category(Color color, String img, String? name, {bool isNew = false, String? type = 'New', required Function onTap}) {
       return Container(
         width: 145,
         height: 110,
@@ -211,20 +211,20 @@ class ProKitLauncherState extends State<ProKitLauncher> with TickerProviderState
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      category(appCat5, app_ic_phone, snapshot.data.defaultTheme.name, type: snapshot.data.defaultTheme.type, onTap: () {
+                                      category(appCat5, app_ic_phone, snapshot.data!.defaultTheme!.name, type: snapshot.data!.defaultTheme!.type, onTap: () {
                                         DTWalkThoughScreen().launch(context);
                                       }),
-                                      category(appCat4, app_ic_phone, snapshot.data.widgets.name, type: snapshot.data.widgets.type, onTap: () {
-                                        ProKitScreenListing(snapshot.data.widgets).launch(context);
+                                      category(appCat4, app_ic_phone, snapshot.data!.widgets!.name, type: snapshot.data!.widgets!.type, onTap: () {
+                                        ProKitScreenListing(snapshot.data!.widgets).launch(context);
                                       }),
-                                      category(appCat1, app_ic_phone, appLblFullApps, isNew: true, type: snapshot.data.fullApp.type, onTap: () {
-                                        ProKitScreenListing(snapshot.data.fullApp).launch(context);
+                                      category(appCat1, app_ic_phone, appLblFullApps, isNew: true, type: snapshot.data!.fullApp!.type, onTap: () {
+                                        ProKitScreenListing(snapshot.data!.fullApp).launch(context);
                                       }),
-                                      category(appCat2, app_dashboard, appLblDashboard, type: snapshot.data.dashboard.type, onTap: () {
-                                        ProKitScreenListing(snapshot.data.dashboard).launch(context);
+                                      category(appCat2, app_dashboard, appLblDashboard, type: snapshot.data!.dashboard!.type, onTap: () {
+                                        ProKitScreenListing(snapshot.data!.dashboard).launch(context);
                                       }),
                                       category(appCat3, app_ic_phone, appLblIntegrations, onTap: () {
-                                        ProKitScreenListing(snapshot.data.integrations).launch(context);
+                                        ProKitScreenListing(snapshot.data!.integrations).launch(context);
                                       }, isNew: true),
                                     ],
                                   ),
@@ -261,8 +261,8 @@ class ProKitLauncherState extends State<ProKitLauncher> with TickerProviderState
                               controller: _controller,
                               physics: NeverScrollableScrollPhysics(),
                               children: <Widget>[
-                                ThemeList(snapshot.data.themes),
-                                ThemeList(snapshot.data.screenList),
+                                ThemeList(snapshot.data!.themes),
+                                ThemeList(snapshot.data!.screenList),
                               ],
                             ),
                           ),
@@ -316,13 +316,15 @@ class CustomDialog extends StatelessWidget {
               SizedBox(height: 6),
               Text("Love ProKit Flutter? Tap on download to buy ProKit Flutter.", style: secondaryTextStyle(size: 16), textAlign: TextAlign.center),
               SizedBox(height: 24),
-              RaisedButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: appColorPrimary,
+                ),
                 onPressed: () {
                   finish(context);
                   launch(SourceCodeUrl);
                 },
                 child: Text('Download', style: primaryTextStyle(color: white)),
-                color: appColorPrimary,
               ).paddingOnly(bottom: 24)
             ],
           ),

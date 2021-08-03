@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14WalkThroughScreen4 extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class T14WalkThroughScreen4 extends StatefulWidget {
 }
 
 class _T14WalkThroughScreen4State extends State<T14WalkThroughScreen4> with AfterLayoutMixin<T14WalkThroughScreen4> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController();
   List<Widget> pages = [];
   final _kDuration = Duration(milliseconds: 300);
@@ -92,7 +92,7 @@ class _T14WalkThroughScreen4State extends State<T14WalkThroughScreen4> with Afte
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DotIndicator(pageController: _pageController, pages: pages, indicatorColor: t14_colorBlue),
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         _pageController.nextPage(duration: _kDuration, curve: _kCurve);
                       },

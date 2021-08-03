@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7BottomNavigationBar.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7DataGenerator.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7BottomNavigationBar.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7DataGenerator.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
 
 import '../../main.dart';
 
@@ -23,8 +23,8 @@ class T7Dashboard extends StatefulWidget {
 }
 
 class T7DashboardState extends State<T7Dashboard> {
-  List<T7CategoryDataModel> mListings;
-  List<T7BestDestinationDataModel> mListings1;
+  late List<T7CategoryDataModel> mListings;
+  late List<T7BestDestinationDataModel> mListings1;
   var _selectedIndex = 0;
 
   @override
@@ -49,7 +49,7 @@ class T7DashboardState extends State<T7Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       bottomNavigationBar: Container(
@@ -148,7 +148,7 @@ class T7DashboardState extends State<T7Dashboard> {
                           alignment: Alignment.bottomCenter,
                           children: <Widget>[
                             CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: mListings1[index].image,
                             ),
                             Padding(
@@ -164,7 +164,7 @@ class T7DashboardState extends State<T7Dashboard> {
                                         padding: EdgeInsets.fromLTRB(10, 4, 10, 4),
                                         child: RichText(
                                           text: TextSpan(
-                                            style: Theme.of(context).textTheme.body1,
+                                            style: Theme.of(context).textTheme.bodyText2,
                                             children: [
                                               WidgetSpan(
                                                 child: Padding(
@@ -200,9 +200,9 @@ class T7DashboardState extends State<T7Dashboard> {
   }
 }
 
-// ignore: must_be_immutable
+// ignore: must_be_immutable, camel_case_types
 class category extends StatelessWidget {
-  T7CategoryDataModel model;
+  late T7CategoryDataModel model;
 
   category(T7CategoryDataModel model, int pos) {
     this.model = model;

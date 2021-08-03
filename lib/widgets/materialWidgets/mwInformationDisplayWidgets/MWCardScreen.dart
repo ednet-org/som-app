@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -151,7 +151,7 @@ class MWCardScreenState extends State<MWCardScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(color: appStore.appBarColor, offset: Offset(0, 3)),
+                BoxShadow(color: appStore.appBarColor!, offset: Offset(0, 3)),
               ],
             ),
             padding: EdgeInsets.all(8),

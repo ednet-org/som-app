@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 import 'QIBusDashboard.dart';
 
@@ -21,7 +21,7 @@ class QIBusVerification extends StatefulWidget {
 }
 
 class QIBusVerificationState extends State<QIBusVerification> {
-  Timer _timer;
+  late Timer _timer;
   int _start = 60;
 
   void startTimer() {
@@ -67,7 +67,7 @@ class QIBusVerificationState extends State<QIBusVerification> {
                 child: Column(
                   children: <Widget>[
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: qibus_ic_gr_mobile_otp,
                       fit: BoxFit.contain,
                       width: width * 0.5,

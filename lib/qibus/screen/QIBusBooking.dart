@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusBooking extends StatefulWidget {
   @override
@@ -18,8 +18,8 @@ class QIBusBooking extends StatefulWidget {
 
 class QIBusBookingState extends State<QIBusBooking> {
   int selectedPos = 1;
-  List<QIBusBookingModel> mList;
-  List<QIBusBookingModel> mList1;
+  late List<QIBusBookingModel> mList;
+  late List<QIBusBookingModel> mList1;
 
   @override
   void initState() {
@@ -133,7 +133,7 @@ class Booking extends StatefulWidget {
 
 class BookingState extends State<Booking> {
   bool visibility = false;
-  QIBusBookingModel model;
+  late QIBusBookingModel model;
 
   void _changed() {
     setState(() {
@@ -246,7 +246,7 @@ class BookingState extends State<Booking> {
                             Expanded(
                               flex: 1,
                               child: CachedNetworkImage(
-                                placeholder: placeholderWidgetFn(),
+                                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                 imageUrl: model.img,
                                 height: width * 0.25,
                                 width: width * 0.25,
@@ -301,7 +301,7 @@ class CancelBooking extends StatefulWidget {
 
 class CancelBookingState extends State<CancelBooking> {
   bool visibility = false;
-  QIBusBookingModel model;
+  late QIBusBookingModel model;
 
   void _changed() {
     setState(() {
@@ -404,7 +404,7 @@ class CancelBookingState extends State<CancelBooking> {
                             Expanded(
                               flex: 1,
                               child: CachedNetworkImage(
-                                placeholder: placeholderWidgetFn(),
+                                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                 imageUrl: model.img,
                                 height: width * 0.25,
                                 width: width * 0.25,

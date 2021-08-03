@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -16,7 +16,7 @@ class MWIconScreenState extends State<MWIconScreen> with SingleTickerProviderSta
   bool isPress = false;
   bool isBookMarkPress = true;
   List<bool> isSelected = [false, false, false];
-  AnimationController _animationController;
+  late AnimationController _animationController;
   bool isPlaying1 = false;
   bool isPlaying2 = false;
   bool isPlaying3 = false;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPodCastDetailScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPPodCastDetailScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPPodCastScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
   MPPodCastScreen({this.name});
 
@@ -49,11 +49,11 @@ class MPPodCastScreenState extends State<MPPodCastScreen> {
         leading: IconButton(
           icon: Icon(Icons.menu, color: white),
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
         ),
         elevation: 0.0,
-        title: Text(widget.name, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
+        title: Text(widget.name!, style: boldTextStyle(color: Colors.white.withOpacity(0.9))),
         actions: [
           searchIconWidget(onPressed: () {
             MPSearchScreen().launch(context);
@@ -78,13 +78,13 @@ class MPPodCastScreenState extends State<MPPodCastScreen> {
                   children: [
                     commonCacheImageWidget(data.img, 100, fit: BoxFit.cover, width: context.width() * 0.45).cornerRadiusWithClipRRect(16),
                     4.height,
-                    Text(data.title, maxLines: 1, style: boldTextStyle(color: white.withOpacity(0.9))),
+                    Text(data.title!, maxLines: 1, style: boldTextStyle(color: white.withOpacity(0.9))),
                     4.height,
-                    Text(data.subtitle, maxLines: 2, style: secondaryTextStyle(color: mpAppTextColor)),
+                    Text(data.subtitle!, maxLines: 2, style: secondaryTextStyle(color: mpAppTextColor)),
                   ],
                 ),
               ).onTap(() {
-                String img = data.img;
+                String? img = data.img;
                 MPPodCastDetailScreen(img: img).launch(context);
               });
             },

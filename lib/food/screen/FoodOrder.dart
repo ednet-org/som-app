@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/model/FoodModel.dart';
-import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/model/FoodModel.dart';
+import 'package:som/food/utils/FoodDataGenerator.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../utils/FoodColors.dart';
 
@@ -17,7 +17,7 @@ class FoodOrder extends StatefulWidget {
 }
 
 class FoodOrderState extends State<FoodOrder> {
-  List<FoodDish> mList2;
+  late List<FoodDish> mList2;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class FoodOrderState extends State<FoodOrder> {
 
 // ignore: must_be_immutable
 class Order extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   Order(FoodDish model, int pos) {
     this.model = model;
@@ -61,8 +61,6 @@ class Order extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return Container(
       margin: EdgeInsets.only(bottom: 16, left: 16, right: 16),
       child: Row(

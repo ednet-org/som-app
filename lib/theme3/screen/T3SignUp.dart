@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 import '../../main.dart';
 

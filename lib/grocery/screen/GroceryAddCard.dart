@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class GroceryAddCardScreen extends StatefulWidget {
   static String tag = '/GroceryAddCardScreen';
@@ -30,6 +30,7 @@ class _GroceryAddCardScreenState extends State<GroceryAddCardScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          decoration: boxDecorationDefault(),
           color: whiteColor,
           child: Column(
             children: <Widget>[
@@ -79,7 +80,7 @@ class _GroceryAddCardScreenState extends State<GroceryAddCardScreen> {
               ).paddingOnly(top: 16, bottom: 16),
             ],
           ).paddingOnly(left: 16, right: 16),
-        ).cornerRadiusWithClipRRect(15).withShadow().paddingOnly(bottom: 16),
+        ).cornerRadiusWithClipRRect(15).paddingOnly(bottom: 16),
       ),
     );
   }

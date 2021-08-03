@@ -14,7 +14,7 @@ typedef LikeButtonTapCallback = Future<bool> Function(bool isLiked);
 typedef LikeWidgetBuilder = Widget Function(bool isLiked);
 
 ///build widget when likeCount is changing
-typedef LikeCountWidgetBuilder = Widget Function(int likeCount, bool isLiked, String text);
+typedef LikeCountWidgetBuilder = Widget Function(int? likeCount, bool isLiked, String text);
 
 enum LikeCountAnimationType {
   //no animation
@@ -31,4 +31,4 @@ enum LikeCountAnimationType {
 enum CountPostion { left, right, top, bottom }
 
 ///return count widget with decoration
-typedef CountDecoration = Widget Function(Widget count, int likeCount);
+typedef CountDecoration = Widget Function(Widget count, int? likeCount);

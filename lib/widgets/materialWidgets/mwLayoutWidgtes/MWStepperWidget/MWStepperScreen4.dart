@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../../main.dart';
 
@@ -29,17 +29,17 @@ class _MWStepperScreen4State extends State<MWStepperScreen4> {
             steps: mSteps,
             type: StepperType.horizontal,
             currentStep: this.currStep,
-            controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
               return Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: onStepContinue,
                     child: Text('CONTINUE', style: secondaryTextStyle()),
                   ),
                   10.width,
-                  FlatButton(
+                  TextButton(
                     onPressed: onStepCancel,
                     child: Text('CANCEL', style: secondaryTextStyle()),
                   ),

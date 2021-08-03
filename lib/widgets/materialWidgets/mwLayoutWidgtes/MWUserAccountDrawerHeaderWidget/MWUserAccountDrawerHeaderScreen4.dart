@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWUserAccountDrawerHeaderScreen4 extends StatefulWidget {
   static const tag = '/MWUserAccountDrawerHeaderScreen4';
@@ -22,7 +22,7 @@ class _MWUserAccountDrawerHeaderScreen4State extends State<MWUserAccountDrawerHe
 
   init() async {
     await Future.delayed(Duration(milliseconds: 500));
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -33,7 +33,7 @@ class _MWUserAccountDrawerHeaderScreen4State extends State<MWUserAccountDrawerHe
       body: Center(
         child: GestureDetector(
           onTap: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
           child: Container(
             decoration: boxDecoration(bgColor: appColorPrimary, radius: 8),
@@ -66,21 +66,21 @@ class _MWUserAccountDrawerHeaderScreen4State extends State<MWUserAccountDrawerHe
               ListTile(
                 title: Text('My Account', style: primaryTextStyle()),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("My Account");
                 },
               ),
               ListTile(
                 title: Text('Setting', style: primaryTextStyle()),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Setting");
                 },
               ),
               ListTile(
                 title: Text('Logout', style: primaryTextStyle()),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Logout");
                 },
               )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBSingUpScreen extends StatefulWidget {
   static String tag = '/NBSingUpScreen';

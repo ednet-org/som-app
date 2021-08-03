@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 class T7WalkThrough extends StatefulWidget {
   static String tag = '/T7WalkThrough';
@@ -17,7 +17,7 @@ class T7WalkThrough extends StatefulWidget {
 
 class T7WalkThroughState extends State<T7WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
   var titles = [
     "Discover New Destination",
     "Best Flight Booking Service",
@@ -66,14 +66,14 @@ class WalkThrough extends StatelessWidget {
   final String title;
   final String info;
 
-  WalkThrough({Key key, @required this.textContent, @required this.title, @required this.info}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent, required this.title, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: textContent,
           fit: BoxFit.cover,
           width: (MediaQuery.of(context).size.width),

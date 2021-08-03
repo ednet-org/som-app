@@ -1,19 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/screens/flix_movie_detail_screen.dart';
-import 'package:prokit_flutter/muvi/utils/flix_percent_indicator.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/screens/flix_movie_detail_screen.dart';
+import 'package:som/muvi/utils/flix_percent_indicator.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
 import 'dots_indicator/dots_decorator.dart';
 import 'flix_app_localizations.dart';
 import 'flix_constants.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 /*Widget text(
   var text, {
@@ -51,7 +51,7 @@ import 'package:nb_utils/nb_utils.dart';
   );
 }*/
 
-Widget toolBarTitle(BuildContext context, String title) {
+Widget toolBarTitle(BuildContext context, String? title) {
   return text(title, fontSize: ts_large, textColor: muvi_textColorPrimary, fontFamily: font_bold);
 }
 
@@ -63,6 +63,7 @@ Widget itemSubTitle(BuildContext context, var titleText, {var fontFamily = font_
   return text(titleText, fontSize: fontsize, fontFamily: fontFamily, isLongText: isLongText, textColor: colorThird ? muvi_textColorThird : muvi_textColorSecondary);
 }
 
+// ignore: must_be_immutable
 class MoreLessText extends StatefulWidget {
   var titleText;
   var fontFamily = font_regular;
@@ -118,7 +119,7 @@ Widget headingWidViewAll(BuildContext context, var titleText, callback) {
   );
 }
 
-Widget appBarLayout(context, text, {darkBackground = true}) {
+AppBar appBarLayout(context, text, {darkBackground = true}) {
   return AppBar(
     elevation: 0,
     iconTheme: IconThemeData(color: muvi_colorPrimary),
@@ -127,9 +128,9 @@ Widget appBarLayout(context, text, {darkBackground = true}) {
   );
 }
 
-Widget networkImage(String image, {String aPlaceholder = "", double aWidth, double aHeight, BoxFit fit = BoxFit.fill}) {
+Widget networkImage(String? image, {String aPlaceholder = "", double? aWidth, double? aHeight, BoxFit fit = BoxFit.fill}) {
   return CachedNetworkImage(
-    placeholder: placeholderWidgetFn(),
+    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
     imageUrl: '$BaseUrl/$image',
     width: aWidth,
     height: aHeight,
@@ -227,8 +228,9 @@ Widget notificationIcon(context, cartCount) {
   );
 }
 
+// ignore: must_be_immutable
 class ItemHorizontalList extends StatelessWidget {
-  var list = List<Movie>();
+  List<Movie> list = [];
   var isHorizontal = false;
 
   ItemHorizontalList(this.list, {this.isHorizontal = false});
@@ -256,7 +258,7 @@ class ItemHorizontalList extends StatelessWidget {
                         alignment: Alignment.bottomLeft,
                         children: <Widget>[
                           networkImage(list[index].slideImage, aWidth: double.infinity, aHeight: double.infinity).cornerRadiusWithClipRRect(8),
-                          hdWidget(context).paddingRight(spacing_standard).visible(list[index].isHD).paddingAll(spacing_standard),
+                          hdWidget(context).paddingRight(spacing_standard).visible(list[index].isHD!).paddingAll(spacing_standard),
                         ],
                       ),
                     ),
@@ -296,8 +298,9 @@ class ItemHorizontalList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ItemProgressHorizontalList extends StatelessWidget {
-  var list = List<Movie>();
+  List<Movie> list = [];
 
   ItemProgressHorizontalList(this.list);
 
@@ -349,15 +352,15 @@ class ItemProgressHorizontalList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class MovieGridList extends StatelessWidget {
-  var list = List<Movie>();
+  List<Movie> list = [];
   var isHorizontal = false;
 
   MovieGridList(this.list);
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Container(
       child: GridView.builder(
         itemCount: list.length,
@@ -388,16 +391,15 @@ class MovieGridList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class AllMovieGridList extends StatelessWidget {
-  var list = List<Movie>();
+  List<Movie> list = [];
   var isHorizontal = false;
 
   AllMovieGridList(this.list);
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return Container(
       child: GridView.builder(
         itemCount: list.length,
@@ -467,12 +469,12 @@ Widget formField(
   isPasswordVisible = false,
   isPassword = false,
   keyboardType = TextInputType.text,
-  FormFieldValidator<String> validator,
+  FormFieldValidator<String>? validator,
   onSaved,
   textInputAction = TextInputAction.next,
-  FocusNode focusNode,
-  FocusNode nextFocus,
-  IconData suffixIcon,
+  FocusNode? focusNode,
+  FocusNode? nextFocus,
+  IconData? suffixIcon,
   maxLine = 1,
   suffixIconSelector,
 }) {

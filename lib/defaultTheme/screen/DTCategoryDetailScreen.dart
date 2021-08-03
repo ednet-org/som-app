@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/rating_bar.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/rating_bar.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -34,9 +34,6 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double cardWidth = (dynamicWidth(context)) / 2;
-    double cardHeight = context.height() / 5;
-
     return Scaffold(
       appBar: appBar(context, 'Grid View'),
       drawer: DTDrawerWidget(),
@@ -47,7 +44,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
           runAlignment: WrapAlignment.center,
           children: getProducts().map((data) {
             return Container(
-              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
               margin: EdgeInsets.all(8),
               //height: 200,
               width: 200,
@@ -60,7 +57,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                     child: Stack(
                       children: [
                         Image.network(
-                          data.image,
+                          data.image!,
                           fit: BoxFit.fitHeight,
                           height: isMobile ? 110 : 180,
                           width: context.width(),
@@ -79,7 +76,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(data.name, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(data.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
                       4.height,
                       Row(
                         children: [
@@ -87,7 +84,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                             onRatingChanged: (r) {},
                             filledIcon: Icons.star,
                             emptyIcon: Icons.star_border,
-                            initialRating: data.rating,
+                            initialRating: data.rating!,
                             maxRating: 5,
                             filledColor: Colors.yellow,
                             size: 14,
@@ -109,7 +106,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                 ],
               ),
             ).onTap(() async {
-              int index = await DTProductDetailScreen(productModel: data).launch(context);
+              int? index = await DTProductDetailScreen(productModel: data).launch(context);
               if (index != null) appStore.setDrawerItemIndex(index);
             });
           }).toList(),

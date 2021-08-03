@@ -1,9 +1,9 @@
-import 'package:prokit_flutter/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSDrawerComponents.dart';
-import 'package:prokit_flutter/cloudStorage/model/CSDataModel.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
+import 'package:som/cloudStorage/components/CSDrawerComponents.dart';
+import 'package:som/cloudStorage/model/CSDataModel.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/main.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -81,7 +81,7 @@ class CSOfflineScreenState extends State<CSOfflineScreen> {
                         Text("Files you make available offline will show up here.", textAlign: TextAlign.center, style: TextStyle(fontSize: 17)).paddingOnly(top: 10, bottom: 10),
                       ],
                     ),
-                    FlatButton(onPressed: () {}, child: Text("Learn more", style: TextStyle(color: CSDarkBlueColor)))
+                    TextButton(onPressed: () {}, child: Text("Learn more", style: TextStyle(color: CSDarkBlueColor)))
                   ],
                 ).center(),
         ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14RateScreen extends StatefulWidget {
   @override
@@ -27,8 +27,9 @@ class _T14RateScreenState extends State<T14RateScreen> {
     if (mounted) super.setState(fn);
   }
 
+  String? rateType;
+
   String getRate(double num) {
-    String rateType;
     if (num == 0) {
       return rateType = "Bad";
     } else if (num == 25) {
@@ -42,8 +43,9 @@ class _T14RateScreenState extends State<T14RateScreen> {
     }
   }
 
+  String? rateImg;
+
   String getRateImg(double num) {
-    String rateImg;
     if (num == 0) {
       return rateImg = t14_bad;
     } else if (num == 25) {

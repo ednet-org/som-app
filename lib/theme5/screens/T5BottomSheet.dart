@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5DataGenerator.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5GridListing.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5DataGenerator.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
+import 'package:som/theme5/utils/widgets/T5GridListing.dart';
 
 import '../../main.dart';
 
@@ -18,8 +18,8 @@ class T5BottomSheet extends StatefulWidget {
 }
 
 class T5BottomSheetState extends State<T5BottomSheet> {
-  GlobalKey<ScaffoldState> _scaffoldKey = null;
-  List<T5Category> mFavouriteList;
+  GlobalKey<ScaffoldState>? scaffoldKey = GlobalKey();
+  List<T5Category>? mFavouriteList;
 
   @override
   void initState() {
@@ -61,8 +61,8 @@ class T5BottomSheetState extends State<T5BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
-    _scaffoldKey = new GlobalKey<ScaffoldState>();
+    changeStatusColor(appStore.appBarColor!);
+    scaffoldKey = new GlobalKey<ScaffoldState>();
     Future.delayed(Duration(milliseconds: 1000), () {
       showSheet(context);
     });

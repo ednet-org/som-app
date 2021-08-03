@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/component/NBNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBShowMoreNewsScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/component/NBNewsComponent.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBShowMoreNewsScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
 
 class NBAllNewsComponent extends StatefulWidget {
   static String tag = '/NBAllNewsComponent';
@@ -14,7 +14,7 @@ class NBAllNewsComponent extends StatefulWidget {
 }
 
 class NBAllNewsComponentState extends State<NBAllNewsComponent> {
-  PageController pageController;
+  PageController? pageController;
   int pageIndex = 0;
 
   List<NBBannerItemModel> mBannerItems = nbGetBannerItems();
@@ -51,13 +51,13 @@ class NBAllNewsComponentState extends State<NBAllNewsComponent> {
             child: PageView(
               controller: pageController,
               children: List.generate(mBannerItems.length, (index) {
-                return Image.asset(mBannerItems[index].image, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).paddingRight(pageIndex < 2 ? 16 : 0);
+                return Image.asset(mBannerItems[index].image!, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).paddingRight(pageIndex < 2 ? 16 : 0);
               }),
               onPageChanged: (value) {},
             ),
           ),
           8.height,
-          DotIndicator(pageController: pageController, pages: mBannerItems, indicatorColor: NBPrimaryColor),
+          DotIndicator(pageController: pageController!, pages: mBannerItems, indicatorColor: NBPrimaryColor),
           16.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

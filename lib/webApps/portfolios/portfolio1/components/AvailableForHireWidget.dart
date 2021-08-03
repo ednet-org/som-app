@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class AvailableForHireWidget extends StatefulWidget {
   static String tag = '/AvailableForHireScreen';

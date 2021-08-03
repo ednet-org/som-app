@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme2/utils/T2Colors.dart';
-import 'package:prokit_flutter/theme2/utils/T2Images.dart';
-import 'package:prokit_flutter/theme2/utils/T2Strings.dart';
-import 'package:prokit_flutter/theme2/utils/T2Widgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme2/utils/T2Colors.dart';
+import 'package:som/theme2/utils/T2Images.dart';
+import 'package:som/theme2/utils/T2Strings.dart';
+import 'package:som/theme2/utils/T2Widgets.dart';
 
 import '../../main.dart';
 
@@ -18,7 +18,7 @@ class T2BottomSheet extends StatefulWidget {
 }
 
 class T2BottomSheetState extends State<T2BottomSheet> {
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class T2BottomSheetState extends State<T2BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     scaffoldKey = GlobalKey<ScaffoldState>();
     Future.delayed(Duration(milliseconds: 1000), () {

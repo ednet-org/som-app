@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-
 import 'colors.dart';
 
 class CurvedNavigationBar extends StatefulWidget {
   final List<Widget> items;
   final int initialIndex;
-  final Color color;
-  final Color buttonBackgroundColor;
-  final Color backgroundColor;
-  final ValueChanged<int> onTap;
+  final Color? color;
+  final Color? buttonBackgroundColor;
+  final Color? backgroundColor;
+  final ValueChanged<int>? onTap;
   final Curve animationCurve;
   final Duration animationDuration;
 
   CurvedNavigationBar(
-      {Key key,
-      @required this.items,
+      {Key? key,
+      required this.items,
       this.initialIndex = 0,
       this.color = Colors.white,
       this.buttonBackgroundColor,
@@ -23,8 +21,7 @@ class CurvedNavigationBar extends StatefulWidget {
       this.onTap,
       this.animationCurve = Curves.easeOut,
       this.animationDuration = const Duration(milliseconds: 600)})
-      : assert(items != null),
-        assert(items.length >= 2),
+      : assert(items.length >= 2),
         assert(0 <= initialIndex && initialIndex < items.length),
         super(key: key);
 
@@ -33,31 +30,31 @@ class CurvedNavigationBar extends StatefulWidget {
 }
 
 class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTickerProviderStateMixin {
-  double _startingPos;
+  double? _startingPos;
   int _endingIndex = 0;
-  double _pos;
+  double? _pos;
   double _buttonHide = 0;
-  Widget _icon;
-  AnimationController _animationController;
-  int _length;
+  Widget? _icon;
+  late AnimationController _animationController;
+  int? _length;
 
   @override
   void initState() {
     super.initState();
     _icon = widget.items[0];
     _length = widget.items.length;
-    _pos = widget.initialIndex / _length;
-    _startingPos = widget.initialIndex / _length;
+    _pos = widget.initialIndex / _length!;
+    _startingPos = widget.initialIndex / _length!;
     _animationController = AnimationController(vsync: this, value: _pos);
     _animationController.addListener(() {
       setState(() {
         _pos = _animationController.value;
         final endingPos = _endingIndex / widget.items.length;
-        final middle = (endingPos + _startingPos) / 2;
-        if ((endingPos - _pos).abs() < (_startingPos - _pos).abs()) {
+        final middle = (endingPos + _startingPos!) / 2;
+        if ((endingPos - _pos!).abs() < (_startingPos! - _pos!).abs()) {
           _icon = widget.items[_endingIndex];
         }
-        _buttonHide = (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
+        _buttonHide = (1 - ((middle - _pos!) / (_startingPos! - middle)).abs()).abs();
       });
     });
   }
@@ -73,8 +70,8 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTi
         children: <Widget>[
           Positioned(
             bottom: -40,
-            left: _pos * size.width,
-            width: size.width / _length,
+            left: _pos! * size.width,
+            width: size.width / _length!,
             child: Center(
               child: Transform.translate(
                 offset: Offset(
@@ -97,7 +94,7 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTi
           Align(
             alignment: Alignment.bottomCenter,
             child: CustomPaint(
-              painter: NavCustomPainter(_pos, _length, widget.color),
+              painter: NavCustomPainter(_pos!, _length!, widget.color),
               child: Container(
                 height: 75.0,
               ),
@@ -123,11 +120,11 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTi
     );
   }
 
-  void _buttonTap(int index) {
+  void _buttonTap(int? index) {
     if (widget.onTap != null) {
-      widget.onTap(index);
+      widget.onTap!(index!);
     }
-    final newPosition = index / _length;
+    final newPosition = index! / _length!;
     setState(() {
       _startingPos = _pos;
       _endingIndex = index;
@@ -137,30 +134,30 @@ class _CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTi
 }
 
 class NavButton extends StatelessWidget {
-  final double position;
-  final int length;
-  final int index;
-  final ValueChanged<int> onTap;
-  final Widget child;
+  final double? position;
+  final int? length;
+  final int? index;
+  final ValueChanged<int?>? onTap;
+  final Widget? child;
 
   NavButton({this.onTap, this.position, this.length, this.index, this.child});
 
   @override
   Widget build(BuildContext context) {
-    final desiredPosition = 1.0 / length * index;
-    final difference = (position - desiredPosition).abs();
-    final verticalAlignment = 1 - length * difference;
-    final opacity = length * difference;
+    final desiredPosition = 1.0 / length! * index!;
+    final difference = (position! - desiredPosition).abs();
+    final verticalAlignment = 1 - length! * difference;
+    final opacity = length! * difference;
     return Expanded(
       child: InkWell(
         onTap: () {
-          onTap(index);
+          onTap!(index);
         },
         child: Container(
             height: 75.0,
             child: Transform.translate(
-              offset: Offset(0, difference < 1.0 / length ? verticalAlignment * 40 : 0),
-              child: Opacity(opacity: difference < 1.0 / length * 0.99 ? opacity : 1.0, child: child),
+              offset: Offset(0, difference < 1.0 / length! ? verticalAlignment * 40 : 0),
+              child: Opacity(opacity: difference < 1.0 / length! * 0.99 ? opacity : 1.0, child: child),
             )),
       ),
     );
@@ -168,9 +165,9 @@ class NavButton extends StatelessWidget {
 }
 
 class NavCustomPainter extends CustomPainter {
-  double loc;
-  double s;
-  Color color;
+  late double loc;
+  late double s;
+  Color? color;
 
   NavCustomPainter(double startingLoc, int itemsLength, this.color) {
     final span = 1.0 / itemsLength;
@@ -181,7 +178,7 @@ class NavCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color
+      ..color = color!
       ..style = PaintingStyle.fill;
 
     final path = Path()

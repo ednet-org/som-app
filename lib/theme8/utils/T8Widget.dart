@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
 
 import '../../main.dart';
 import 'T8Constant.dart';
@@ -28,6 +28,7 @@ Divider d8Divider() {
   );
 }
 
+// ignore: must_be_immutable
 class T8Button extends StatefulWidget {
   var textContent;
 
@@ -35,8 +36,8 @@ class T8Button extends StatefulWidget {
   VoidCallback onPressed;
 
   T8Button({
-    @required this.textContent,
-    @required this.onPressed,
+    required this.textContent,
+    required this.onPressed,
     //   @required this.icon,
   });
 
@@ -80,6 +81,7 @@ class T8ButtonState extends State<T8Button> {
   }
 }
 
+// ignore: must_be_immutable, camel_case_types
 class t8TopBar extends StatefulWidget {
   var titleName;
 
@@ -91,6 +93,7 @@ class t8TopBar extends StatefulWidget {
   }
 }
 
+// ignore: camel_case_types
 class t8TopBarState extends State<t8TopBar> {
   @override
   Widget build(BuildContext context) {
@@ -121,8 +124,7 @@ class t8TopBarState extends State<t8TopBar> {
     );
   }
 
-  @override
-  State<StatefulWidget> createState() {
+  State<StatefulWidget>? createState() {
     return null;
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/Componant/MPeopleComponents.dart';
-import 'package:prokit_flutter/medium/Componant/MPublicationComponents.dart';
-import 'package:prokit_flutter/medium/Componant/MTopicComponents.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
-import 'package:prokit_flutter/medium/utils/MWidget.dart';
+import 'package:som/medium/Componant/MPeopleComponents.dart';
+import 'package:som/medium/Componant/MPublicationComponents.dart';
+import 'package:som/medium/Componant/MTopicComponents.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
+import 'package:som/medium/utils/MWidget.dart';
 
 class MInterestsScreen extends StatefulWidget {
   static String tag = '/MInterestsScreen';
@@ -17,7 +17,7 @@ class MInterestsScreen extends StatefulWidget {
 
 class MInterestsScreenState extends State<MInterestsScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  TabController tabController;
+  TabController? tabController;
   List<Widget> tabs = [];
   List<String> tabList = ['Topics', 'People', 'Publications'];
   List<MListModel> savingList = getSavingPostList();
@@ -43,7 +43,7 @@ class MInterestsScreenState extends State<MInterestsScreen> {
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override

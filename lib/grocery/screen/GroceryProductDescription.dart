@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 import 'GroceryReviews.dart';
 
@@ -29,7 +29,6 @@ class GroceryProductDescriptionState extends State<GroceryProductDescription> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(grocery_app_background);
-    double expandHeight = MediaQuery.of(context).size.width * 1.1;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: grocery_app_background,
@@ -133,7 +132,7 @@ class GroceryProductDescriptionState extends State<GroceryProductDescription> {
                     height: width * 0.35,
                     width: width * 0.6,
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: grocery_ic_carrot,
                       fit: BoxFit.fill,
                     ),

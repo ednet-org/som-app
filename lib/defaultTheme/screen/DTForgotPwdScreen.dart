@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 
@@ -46,7 +46,7 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
           alignment: Alignment.center,
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,11 +64,11 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
-                      if (s.trim().isEmpty) return errorThisFieldRequired;
+                      if (s!.trim().isEmpty) return errorThisFieldRequired;
                       if (!s.trim().validateEmail()) return 'Email is invalid';
                       return null;
                     },
@@ -81,8 +81,8 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
                     decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
                     child: Text('Send', style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
-                    if (formKey.currentState.validate()) {
-                      formKey.currentState.save();
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
                       finish(context);
                     } else {
                       autoValidate = true;

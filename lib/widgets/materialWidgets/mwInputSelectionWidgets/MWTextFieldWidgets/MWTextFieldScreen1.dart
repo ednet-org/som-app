@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWTextFieldScreen1 extends StatefulWidget {
   static String tag = "/MWTextFieldScreen1";
@@ -34,10 +34,10 @@ class _MWTextFieldScreen1State extends State<MWTextFieldScreen1> {
                 style: primaryTextStyle(),
                 decoration: InputDecoration(
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   labelText: 'Username',
                   labelStyle: primaryTextStyle(size: 14),
@@ -51,10 +51,10 @@ class _MWTextFieldScreen1State extends State<MWTextFieldScreen1> {
                 style: primaryTextStyle(),
                 decoration: InputDecoration(
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   labelText: "E-Mail",
                   labelStyle: primaryTextStyle(size: 14),
@@ -76,10 +76,10 @@ class _MWTextFieldScreen1State extends State<MWTextFieldScreen1> {
                     labelText: 'Password',
                     labelStyle: primaryTextStyle(size: 14),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: appStore.textPrimaryColor),
+                      borderSide: BorderSide(color: appStore.textPrimaryColor!),
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: appStore.textPrimaryColor),
+                      borderSide: BorderSide(color: appStore.textPrimaryColor!),
                     ),
                     filled: true,
                     suffixIcon: IconButton(
@@ -99,10 +99,10 @@ class _MWTextFieldScreen1State extends State<MWTextFieldScreen1> {
                 style: primaryTextStyle(),
                 decoration: InputDecoration(
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: appStore.textPrimaryColor),
+                    borderSide: BorderSide(color: appStore.textPrimaryColor!),
                   ),
                   labelText: "Phone Number",
                   labelStyle: primaryTextStyle(size: 14),
@@ -116,8 +116,8 @@ class _MWTextFieldScreen1State extends State<MWTextFieldScreen1> {
               TextField(
                 style: primaryTextStyle(),
                 decoration: InputDecoration(
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor)),
-                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor!)),
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor!)),
                   labelText: "Pincode",
                   labelStyle: primaryTextStyle(size: 14),
                   filled: true,

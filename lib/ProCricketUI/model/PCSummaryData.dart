@@ -1,18 +1,23 @@
 class PCSummaryData {
-  String alerts;
-  String data_path;
-  Header header;
-  String match_id;
-  Official official;
-  List<Player> players;
-  String series_id;
-  String series_name;
-  Team1 team1;
-  Team2 team2;
-  Toss toss;
-  Url url;
-  Venue venue;
+  String? alerts;
+  // ignore: non_constant_identifier_names
+  String? data_path;
+  Header? header;
+  // ignore: non_constant_identifier_names
+  String? match_id;
+  Official? official;
+  List<Player>? players;
+  // ignore: non_constant_identifier_names
+  String? series_id;
+  // ignore: non_constant_identifier_names
+  String? series_name;
+  Team1? team1;
+  Team2? team2;
+  Toss? toss;
+  Url? url;
+  Venue? venue;
 
+  // ignore: non_constant_identifier_names
   PCSummaryData({this.alerts, this.data_path, this.header, this.match_id, this.official, this.players, this.series_id, this.series_name, this.team1, this.team2, this.toss, this.url, this.venue});
 
   factory PCSummaryData.fromJson(Map<String, dynamic> json) {
@@ -41,35 +46,35 @@ class PCSummaryData {
     data['series_id'] = this.series_id;
     data['series_name'] = this.series_name;
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.official != null) {
-      data['official'] = this.official.toJson();
+      data['official'] = this.official!.toJson();
     }
     if (this.players != null) {
-      data['players'] = this.players.map((v) => v.toJson()).toList();
+      data['players'] = this.players!.map((v) => v.toJson()).toList();
     }
     if (this.team1 != null) {
-      data['team1'] = this.team1.toJson();
+      data['team1'] = this.team1!.toJson();
     }
     if (this.team2 != null) {
-      data['team2'] = this.team2.toJson();
+      data['team2'] = this.team2!.toJson();
     }
     if (this.toss != null) {
-      data['toss'] = this.toss.toJson();
+      data['toss'] = this.toss!.toJson();
     }
     if (this.url != null) {
-      data['url'] = this.url.toJson();
+      data['url'] = this.url!.toJson();
     }
     if (this.venue != null) {
-      data['venue'] = this.venue.toJson();
+      data['venue'] = this.venue!.toJson();
     }
     return data;
   }
 }
 
 class Url {
-  String match;
+  String? match;
 
   Url({this.match});
 
@@ -87,11 +92,11 @@ class Url {
 }
 
 class Venue {
-  String lat;
-  String location;
-  String long;
-  String name;
-  String timezone;
+  String? lat;
+  String? location;
+  String? long;
+  String? name;
+  String? timezone;
 
   Venue({this.lat, this.location, this.long, this.name, this.timezone});
 
@@ -117,13 +122,16 @@ class Venue {
 }
 
 class Team1 {
-  String flag;
-  String id;
-  String name;
-  String s_name;
-  List<int> squad;
-  List<int> squad_bench;
+  String? flag;
+  String? id;
+  String? name;
+  // ignore: non_constant_identifier_names
+  String? s_name;
+  List<int>? squad;
+  // ignore: non_constant_identifier_names
+  List<int>? squad_bench;
 
+  // ignore: non_constant_identifier_names
   Team1({this.flag, this.id, this.name, this.s_name, this.squad, this.squad_bench});
 
   factory Team1.fromJson(Map<String, dynamic> json) {
@@ -154,15 +162,19 @@ class Team1 {
 }
 
 class Player {
-  String bat_style;
-  String bowl_style;
-  String f_name;
-  String id;
-  String image;
-  String name;
-  String role;
-  String speciality;
+  // ignore: non_constant_identifier_names
+  String? bat_style;
+  // ignore: non_constant_identifier_names
+  String? bowl_style;
+  // ignore: non_constant_identifier_names
+  String? f_name;
+  String? id;
+  String? image;
+  String? name;
+  String? role;
+  String? speciality;
 
+  // ignore: non_constant_identifier_names
   Player({this.bat_style, this.bowl_style, this.f_name, this.id, this.image, this.name, this.role, this.speciality});
 
   factory Player.fromJson(Map<String, dynamic> json) {
@@ -193,8 +205,8 @@ class Player {
 }
 
 class Toss {
-  String decision;
-  String winner;
+  String? decision;
+  String? winner;
 
   Toss({this.decision, this.winner});
 
@@ -214,10 +226,10 @@ class Toss {
 }
 
 class Official {
-  Referee referee;
-  Umpire1 umpire1;
-  Umpire2 umpire2;
-  Umpire3 umpire3;
+  Referee? referee;
+  Umpire1? umpire1;
+  Umpire2? umpire2;
+  Umpire3? umpire3;
 
   Official({this.referee, this.umpire1, this.umpire2, this.umpire3});
 
@@ -233,25 +245,25 @@ class Official {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.referee != null) {
-      data['referee'] = this.referee.toJson();
+      data['referee'] = this.referee!.toJson();
     }
     if (this.umpire1 != null) {
-      data['umpire1'] = this.umpire1.toJson();
+      data['umpire1'] = this.umpire1!.toJson();
     }
     if (this.umpire2 != null) {
-      data['umpire2'] = this.umpire2.toJson();
+      data['umpire2'] = this.umpire2!.toJson();
     }
     if (this.umpire3 != null) {
-      data['umpire3'] = this.umpire3.toJson();
+      data['umpire3'] = this.umpire3!.toJson();
     }
     return data;
   }
 }
 
 class Referee {
-  String country;
-  String id;
-  String name;
+  String? country;
+  String? id;
+  String? name;
 
   Referee({this.country, this.id, this.name});
 
@@ -273,9 +285,9 @@ class Referee {
 }
 
 class Umpire3 {
-  String country;
-  String id;
-  String name;
+  String? country;
+  String? id;
+  String? name;
 
   Umpire3({this.country, this.id, this.name});
 
@@ -297,9 +309,9 @@ class Umpire3 {
 }
 
 class Umpire2 {
-  String country;
-  String id;
-  String name;
+  String? country;
+  String? id;
+  String? name;
 
   Umpire2({this.country, this.id, this.name});
 
@@ -321,9 +333,9 @@ class Umpire2 {
 }
 
 class Umpire1 {
-  String country;
-  String id;
-  String name;
+  String? country;
+  String? id;
+  String? name;
 
   Umpire1({this.country, this.id, this.name});
 
@@ -345,18 +357,24 @@ class Umpire1 {
 }
 
 class Header {
-  String end_time;
-  String match_desc;
-  List<int> mom;
-  List<String> momNames;
-  String start_time;
-  String state;
-  String state_title;
-  String status;
-  String toss;
-  String type;
-  int winning_team_id;
+  // ignore: non_constant_identifier_names
+  String? end_time;
+  // ignore: non_constant_identifier_names
+  String? match_desc;
+  List<int>? mom;
+  List<String>? momNames;
+  // ignore: non_constant_identifier_names
+  String? start_time;
+  String? state;
+  // ignore: non_constant_identifier_names
+  String? state_title;
+  String? status;
+  String? toss;
+  String? type;
+  // ignore: non_constant_identifier_names
+  int? winning_team_id;
 
+  // ignore: non_constant_identifier_names
   Header({this.end_time, this.match_desc, this.mom, this.momNames, this.start_time, this.state, this.state_title, this.status, this.toss, this.type, this.winning_team_id});
 
   factory Header.fromJson(Map<String, dynamic> json) {
@@ -397,13 +415,16 @@ class Header {
 }
 
 class Team2 {
-  String flag;
-  String id;
-  String name;
-  String s_name;
-  List<int> squad;
-  List<int> squad_bench;
+  String? flag;
+  String? id;
+  String? name;
+  // ignore: non_constant_identifier_names
+  String? s_name;
+  List<int>? squad;
+  // ignore: non_constant_identifier_names
+  List<int>? squad_bench;
 
+  // ignore: non_constant_identifier_names
   Team2({this.flag, this.id, this.name, this.s_name, this.squad, this.squad_bench});
 
   factory Team2.fromJson(Map<String, dynamic> json) {

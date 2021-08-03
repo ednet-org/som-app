@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCPlayerInfoData.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCPlayerInfoData.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketPlayerInfoScreen extends StatefulWidget {
   static String tag = '/CricketPlayerInfo';
@@ -18,7 +18,7 @@ class PCCricketPlayerInfoScreen extends StatefulWidget {
 }
 
 class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
-  List<OdiStats> odiStateModel = List();
+  List<OdiStats> odiStateModel = [];
   PCPlayerInfoData cricketPlayerInfoData = PCPlayerInfoData(odiStats: OdiStats());
 
   @override
@@ -41,6 +41,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
         preferredSize: Size(context.width(), 350),
         child: headerView("Virat Kholi", context),
       ),
+      // ignore: unnecessary_null_comparison
       body: cricketPlayerInfoData != null
           ? SingleChildScrollView(
               child: Column(
@@ -101,7 +102,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
-                                        Text("${cricketPlayerInfoData.odiStats.runs}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                        Text("${cricketPlayerInfoData.odiStats!.runs}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                         4.width,
                                         Text("Runs", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                       ],
@@ -111,7 +112,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
-                                          Text("${cricketPlayerInfoData.odiStats.highestScore}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                          Text("${cricketPlayerInfoData.odiStats!.highestScore}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                           4.width,
                                           Text("H.Score", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                         ],
@@ -134,7 +135,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                       children: <Widget>[
                                         Text("100s", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                         4.height,
-                                        Text("${cricketPlayerInfoData.odiStats.hundreds}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                        Text("${cricketPlayerInfoData.odiStats!.hundreds}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                       ],
                                     ),
                                     Padding(
@@ -144,7 +145,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                         children: <Widget>[
                                           Text("50s", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                           4.height,
-                                          Text("${cricketPlayerInfoData.odiStats.fifties}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                          Text("${cricketPlayerInfoData.odiStats!.fifties}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                         ],
                                       ),
                                     )
@@ -165,7 +166,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("${cricketPlayerInfoData.odiStats.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                  Text("${cricketPlayerInfoData.odiStats!.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                   Text("Matches", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontMedium)),
                                 ],
                               ),
@@ -187,7 +188,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
-                                          Text("${cricketPlayerInfoData.odiStats.batAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                          Text("${cricketPlayerInfoData.odiStats!.batAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                           4.width,
                                           Text("Avg", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular))
                                         ],
@@ -196,7 +197,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
-                                        Text("${cricketPlayerInfoData.odiStats.batStrikeRate}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                        Text("${cricketPlayerInfoData.odiStats!.batStrikeRate}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                         4.width,
                                         Text("S.Rate", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                       ],
@@ -220,7 +221,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                         children: <Widget>[
                                           Text("Sixes", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                           4.width,
-                                          Text("${cricketPlayerInfoData.odiStats.sixes}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                          Text("${cricketPlayerInfoData.odiStats!.sixes}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                         ],
                                       ),
                                     ),
@@ -229,7 +230,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                                       children: <Widget>[
                                         Text("Fours", style: primaryTextStyle(color: Cricket_textColorSecondary, size: 16, fontFamily: fontRegular)),
                                         4.width,
-                                        Text("${cricketPlayerInfoData.odiStats.fours}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
+                                        Text("${cricketPlayerInfoData.odiStats!.fours}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)),
                                       ],
                                     )
                                   ],
@@ -252,7 +253,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Matches", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -265,7 +266,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Innings", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.innings}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.innings}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -278,7 +279,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Runs", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.runs}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.runs}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -291,7 +292,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Highest Score", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.highestScore}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.highestScore}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -304,7 +305,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Bat Average", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.batAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.batAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -317,7 +318,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Bat Strike Rate", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.batStrikeRate}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.batStrikeRate}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -330,7 +331,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Hundreds", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.hundreds}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.hundreds}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -343,7 +344,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Fifties", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.fifties}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.fifties}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -356,7 +357,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Sixes", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.sixes}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.sixes}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -369,7 +370,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Fours", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.fours}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.fours}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -390,7 +391,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Matches", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.matches}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -403,7 +404,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Innings", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.bowlInnings}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.bowlInnings}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -416,7 +417,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Wicket Taken", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.wicketsTaken}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.wicketsTaken}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -441,7 +442,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Economy", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.economy}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.economy}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -454,7 +455,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Five Wickets", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.fiveWicket}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.fiveWicket}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -467,7 +468,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Four Wickets", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.fourWicket}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.fourWicket}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -480,7 +481,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Maidens", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.maidens}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.maidens}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),
@@ -493,7 +494,7 @@ class _PCCricketPlayerInfoScreenState extends State<PCCricketPlayerInfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text("Bowl Average", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontRegular)).paddingOnly(left: 8, top: 4, bottom: 4),
-                                Text("${cricketPlayerInfoData.odiStats.bowlAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                                Text("${cricketPlayerInfoData.odiStats!.bowlAverage}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                     .paddingOnly(left: 8, right: 8, top: 4, bottom: 4),
                               ],
                             ),

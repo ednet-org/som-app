@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme9/models/T9Models.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-import 'package:prokit_flutter/theme9/utils/T9Constant.dart';
-import 'package:prokit_flutter/theme9/utils/T9DataGenerator.dart';
-import 'package:prokit_flutter/theme9/utils/T9Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme9/models/T9Models.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
+import 'package:som/theme9/utils/T9Constant.dart';
+import 'package:som/theme9/utils/T9DataGenerator.dart';
+import 'package:som/theme9/utils/T9Strings.dart';
 
 import '../../main.dart';
 
@@ -18,8 +18,8 @@ class T9List extends StatefulWidget {
 }
 
 class T9ListState extends State<T9List> {
-  List<T9PeopleModel> mList1;
-  List<T9BadgeModel> mList2;
+  late List<T9PeopleModel> mList1;
+  late List<T9BadgeModel> mList2;
 
   @override
   void initState() {
@@ -110,8 +110,9 @@ class T9ListState extends State<T9List> {
   }
 }
 
+// ignore: must_be_immutable
 class T9Badges extends StatelessWidget {
-  T9BadgeModel model;
+  late T9BadgeModel model;
 
   T9Badges(T9BadgeModel model, int pos) {
     this.model = model;
@@ -133,19 +134,21 @@ class T9Badges extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: model.img,
                 ),
               ),
             ),
             SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                text(model.name, textColor: appStore.textPrimaryColor, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
-                SizedBox(width: 4),
-                text(model.comment, textColor: appStore.textSecondaryColor),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  text(model.name, textColor: appStore.textPrimaryColor, fontFamily: fontMedium, fontSize: textSizeLargeMedium),
+                  SizedBox(width: 4),
+                  text(model.comment, textColor: appStore.textSecondaryColor,maxLine: 1),
+                ],
+              ),
             )
           ],
         ),
@@ -182,8 +185,9 @@ class T9Badges extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class T9LeaderBoard extends StatelessWidget {
-  T9PeopleModel model;
+  late T9PeopleModel model;
 
   T9LeaderBoard(T9PeopleModel model, int pos) {
     this.model = model;

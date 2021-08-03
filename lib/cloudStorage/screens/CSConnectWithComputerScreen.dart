@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSDashboardScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/screens/CSDashboardScreen.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
 
 class CSConnectWithComputerScreen extends StatefulWidget {
   static String tag = '/CSConnectWithComputerScreen';

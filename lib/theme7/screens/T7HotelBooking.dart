@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 import '../../main.dart';
 
@@ -23,7 +23,6 @@ class T7HotelBookingState extends State<T7HotelBooking> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
-    final Size cardSize = Size(width, width / 1.8);
     changeStatusColor(Colors.transparent);
     return Scaffold(
       body: Stack(
@@ -31,7 +30,7 @@ class T7HotelBookingState extends State<T7HotelBooking> {
           Container(
             height: MediaQuery.of(context).size.width / 1.5,
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: t7_ic_thailand_beach,
               fit: BoxFit.fill,
             ),
@@ -125,10 +124,10 @@ Container t7EditTextStyle(var hintText) {
         hintText: hintText,
         hintStyle: primaryTextStyle(),
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+          borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0),
+          borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
         ),
       ),
     ),

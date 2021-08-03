@@ -1,7 +1,7 @@
 library dots_indicator;
 
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/src/dots_decorator.dart';
+import 'package:som/main/utils/dots_indicator/src/dots_decorator.dart';
 
 class DotsIndicator extends StatelessWidget {
   final int dotsCount;
@@ -9,13 +9,12 @@ class DotsIndicator extends StatelessWidget {
   final DotsDecorator decorator;
 
   DotsIndicator({
-    Key key,
-    @required this.dotsCount,
+    Key? key,
+    required this.dotsCount,
     this.position = 0,
     this.decorator = const DotsDecorator(),
-  })  : assert(dotsCount != null && dotsCount > 0),
-        assert(position != null && position >= 0),
-        assert(decorator != null),
+  })  : assert(dotsCount > 0),
+        assert(position >= 0),
         assert(
           position < dotsCount,
           "Position must be inferior than dotsCount",

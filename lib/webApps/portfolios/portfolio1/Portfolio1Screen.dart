@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/AvailableForHireWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/InfoWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/IntroductionWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/MySiteWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/SocialWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/components/ToDoWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/AvailableForHireWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/InfoWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/IntroductionWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/MySiteWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/SocialWidget.dart';
+import 'package:som/webApps/portfolios/portfolio1/components/ToDoWidget.dart';
 
 import 'components/GuideLineWidget.dart';
 

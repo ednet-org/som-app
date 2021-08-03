@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 import '../../main.dart';
 import 'T5Dialog.dart';
@@ -26,7 +26,7 @@ class T5SignInState extends State<T5SignIn> {
     changeStatusColor(t5White);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryDataGenerator.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryDataGenerator.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GroceryCheckOut.dart';
 
@@ -19,7 +19,7 @@ class GrocerySaveCart extends StatefulWidget {
 }
 
 class GrocerySaveCartState extends State<GrocerySaveCart> {
-  List<CartModel> mList;
+  late List<CartModel> mList;
 
   @override
   void initState() {
@@ -30,8 +30,6 @@ class GrocerySaveCartState extends State<GrocerySaveCart> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(grocery_colorPrimary);
-    var width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: grocery_app_background,
       appBar: PreferredSize(
@@ -52,8 +50,9 @@ class GrocerySaveCartState extends State<GrocerySaveCart> {
   }
 }
 
+// ignore: must_be_immutable
 class SaveCart extends StatelessWidget {
-  CartModel model;
+  late CartModel model;
 
   SaveCart(CartModel model, int pos) {
     this.model = model;
@@ -62,7 +61,7 @@ class SaveCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    Widget mRemoveItem() {
+    Widget? mRemoveItem() {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,

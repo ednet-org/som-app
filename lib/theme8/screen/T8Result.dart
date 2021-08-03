@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Constant.dart';
-import 'package:prokit_flutter/theme8/utils/T8Images.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Constant.dart';
+import 'package:som/theme8/utils/T8Images.dart';
 
 class T8Result extends StatefulWidget {
   static String tag = '/T8Result';
 
   const T8Result({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class T8Result extends StatefulWidget {
 class T8ResultState extends State<T8Result> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

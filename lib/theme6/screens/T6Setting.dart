@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
-import 'package:prokit_flutter/theme6/utils/T6Constant.dart';
-import 'package:prokit_flutter/theme6/utils/T6Strings.dart';
-import 'package:prokit_flutter/theme6/utils/T6Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
+import 'package:som/theme6/utils/T6Constant.dart';
+import 'package:som/theme6/utils/T6Strings.dart';
+import 'package:som/theme6/utils/T6Widget.dart';
 
 import '../../main.dart';
 
@@ -16,13 +16,15 @@ class T6Setting extends StatefulWidget {
 }
 
 class T6SettingState extends State<T6Setting> {
+  // ignore: non_constant_identifier_names
   bool mSwitched_On = false;
+  // ignore: non_constant_identifier_names
   bool isSwitched_Sync = false;
-  String _selectedLocation = '10 Sec';
+  String? _selectedLocation = '10 Sec';
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

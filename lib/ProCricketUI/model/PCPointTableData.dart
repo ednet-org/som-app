@@ -1,13 +1,18 @@
 class PCPointTableData {
-  bool consider_group;
-  Group group;
-  List<String> header;
-  MinQual min_qual;
-  List<String> order;
-  String series_id;
-  String series_name;
-  List<String> title;
+  // ignore: non_constant_identifier_names
+  bool? consider_group;
+  Group? group;
+  List<String>? header;
+  // ignore: non_constant_identifier_names
+  MinQual? min_qual;
+  List<String>? order;
+  // ignore: non_constant_identifier_names
+  String? series_id;
+  // ignore: non_constant_identifier_names
+  String? series_name;
+  List<String>? title;
 
+  // ignore: non_constant_identifier_names
   PCPointTableData({this.consider_group, this.group, this.header, this.min_qual, this.order, this.series_id, this.series_name, this.title});
 
   factory PCPointTableData.fromJson(Map<String, dynamic> json) {
@@ -29,13 +34,13 @@ class PCPointTableData {
     data['series_id'] = this.series_id;
     data['series_name'] = this.series_name;
     if (this.group != null) {
-      data['group'] = this.group.toJson();
+      data['group'] = this.group!.toJson();
     }
     if (this.header != null) {
       data['header'] = this.header;
     }
     if (this.min_qual != null) {
-      data['min_qual'] = this.min_qual.toJson();
+      data['min_qual'] = this.min_qual!.toJson();
     }
     if (this.order != null) {
       data['order'] = this.order;
@@ -48,7 +53,7 @@ class PCPointTableData {
 }
 
 class MinQual {
-  String teams;
+  String? teams;
 
   MinQual({this.teams});
 
@@ -66,7 +71,7 @@ class MinQual {
 }
 
 class Group {
-  List<Team> teams;
+  List<Team>? teams;
 
   Group({this.teams});
 
@@ -79,23 +84,23 @@ class Group {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.teams != null) {
-      data['teams'] = this.teams.map((v) => v.toJson()).toList();
+      data['teams'] = this.teams!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Team {
-  String id;
-  String l;
-  String name;
-  String sName;
-  String nr;
-  String nrr;
-  String p;
-  String points;
-  String t;
-  String w;
+  String? id;
+  String? l;
+  String? name;
+  String? sName;
+  String? nr;
+  String? nrr;
+  String? p;
+  String? points;
+  String? t;
+  String? w;
 
   Team({this.id, this.l, this.name, this.sName, this.nr, this.nrr, this.p, this.points, this.t, this.w});
 

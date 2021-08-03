@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 class OPTransferReviewScreen extends StatefulWidget {
   @override
@@ -88,12 +88,14 @@ class _OPTransferReviewScreenState extends State<OPTransferReviewScreen> {
                   margin: EdgeInsets.all(16),
                   width: double.infinity,
                   height: 50,
-                  child: RaisedButton(
-                    color: opPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: opPrimaryColor,
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
-                    elevation: 1,
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -103,7 +105,7 @@ class _OPTransferReviewScreenState extends State<OPTransferReviewScreen> {
                             title: Image.asset('images/orapay/opthanks.png'),
                             actions: <Widget>[
                               // usually buttons at the bottom of the dialog
-                              FlatButton(
+                              TextButton(
                                 child: new Text("CLOSE"),
                                 onPressed: () {
                                   Navigator.of(context).pop();

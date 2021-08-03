@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryDataGenerator.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryDataGenerator.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GrocerySubCategoryList.dart';
 
@@ -18,7 +18,7 @@ class GroceryCategoryList extends StatefulWidget {
 }
 
 class GroceryCategoryListState extends State<GroceryCategoryList> {
-  List<CategoryOptionModel> mOptionList;
+  late List<CategoryOptionModel> mOptionList;
 
   @override
   void initState() {
@@ -37,10 +37,7 @@ class GroceryCategoryListState extends State<GroceryCategoryList> {
             Container(
               width: width,
               height: expandHeight * 0.32,
-              child: Image.asset(
-                grocery_ic_bg_drinks,
-                fit: BoxFit.fill,
-              ),
+              child: commonCacheImageWidget(grocery_ic_bg_drinks, context.width() * 0.7),
             ),
             SafeArea(
               child: Container(
@@ -160,8 +157,9 @@ class GroceryCategoryListState extends State<GroceryCategoryList> {
   }
 }
 
+// ignore: must_be_immutable
 class CategoryList extends StatelessWidget {
-  CategoryOptionModel model;
+  late CategoryOptionModel model;
 
   CategoryList(CategoryOptionModel model, int pos) {
     this.model = model;

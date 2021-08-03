@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class BHNotificationScreen extends StatefulWidget {
   static String tag = '/NotificationScreen';
@@ -60,19 +59,19 @@ class BHNotificationScreenState extends State<BHNotificationScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(notificationList[index].name, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
+                      Text(notificationList[index].name!, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
                       8.height,
-                      Text(notificationList[index].msg, style: TextStyle(fontSize: 12, color: BHGreyColor)),
+                      Text(notificationList[index].msg!, style: TextStyle(fontSize: 12, color: BHGreyColor)),
                     ],
                   ).expand(),
                   Column(
                     children: [
-                      Text(notificationList[index].status, style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary)),
+                      Text(notificationList[index].status!, style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary)),
                       8.height,
                       Padding(
                         padding: EdgeInsets.only(right: 8),
                         child: Image.asset(
-                          notificationList[index].callInfo,
+                          notificationList[index].callInfo!,
                           color: BHColorPrimary,
                           height: 25,
                           width: 25,

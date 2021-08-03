@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWMaterialButtonScreen extends StatefulWidget {
   static String tag = '/MWMaterialButtonScreen';
@@ -44,7 +44,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 ),
               ),
               Divider(),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     toast('Material button with icon');
                   },
@@ -65,7 +65,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 ),
               ),
               Divider(),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: null,
                   icon: Icon(
                     Icons.add,
@@ -80,7 +80,7 @@ class _MWMaterialButtonScreenState extends State<MWMaterialButtonScreen> {
                 onPressed: () {
                   toast('Border Material button');
                 },
-                shape: Border.all(color: appStore.iconColor),
+                shape: Border.all(color: appStore.iconColor!),
                 child: Text(
                   'Border Material button',
                   style: primaryTextStyle(),

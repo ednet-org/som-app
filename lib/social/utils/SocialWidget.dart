@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/utils/SocialConstant.dart';
 
 import 'SocialColors.dart';
 
+// ignore: must_be_immutable
 class SocialAppButton extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  SocialAppButton({@required this.textContent, @required this.onPressed});
+  SocialAppButton({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -22,12 +23,14 @@ class SocialAppButton extends StatefulWidget {
 class SocialAppButtonState extends State<SocialAppButton> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: widget.onPressed,
-      textColor: social_white,
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      padding: const EdgeInsets.all(0.0),
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: social_white),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        padding: const EdgeInsets.all(0.0),
+      ),
       child: Container(
         decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.0)), color: social_colorPrimary),
         child: Center(
@@ -50,7 +53,8 @@ class SocialAppButtonState extends State<SocialAppButton> {
   }
 }
 
-Widget SocialOption(BuildContext context, var color, var icon, var value, var subValue, {Function onTap}) {
+// ignore: non_constant_identifier_names
+Widget SocialOption(BuildContext context, var color, var icon, var value, var subValue, {Function? onTap}) {
   var width = MediaQuery.of(context).size.width;
   return GestureDetector(
     onTap: () {
@@ -77,7 +81,7 @@ Widget SocialOption(BuildContext context, var color, var icon, var value, var su
   );
 }
 
-Widget mToolbar(BuildContext context, var title, var icon, {@required Function onTap}) {
+Widget mToolbar(BuildContext context, var title, var icon, {required Function onTap}) {
   var width = MediaQuery.of(context).size.width;
   return Container(
     width: MediaQuery.of(context).size.width,
@@ -148,11 +152,12 @@ Widget mTop(BuildContext context, var title, {var tags}) {
   );
 }
 
+// ignore: must_be_immutable
 class SocialBtn extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  SocialBtn({@required this.textContent, @required this.onPressed});
+  SocialBtn({required this.textContent, required this.onPressed});
 
   @override
   State<StatefulWidget> createState() {
@@ -163,12 +168,14 @@ class SocialBtn extends StatefulWidget {
 class SocialBtnState extends State<SocialBtn> {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: widget.onPressed,
-      textColor: social_white,
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      padding: const EdgeInsets.all(0.0),
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: social_white),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        padding: const EdgeInsets.all(0.0),
+      ),
       child: Container(
         decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.0)), color: social_colorPrimary),
         child: Center(

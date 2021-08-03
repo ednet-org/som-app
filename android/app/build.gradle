@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.iqonic.prokitflutter"
+        applicationId "com.ednet.som"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 24

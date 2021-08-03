@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/dashboard/model/db2/Db2Model.dart';
-import 'package:prokit_flutter/dashboard/utils/DbColors.dart';
-import 'package:prokit_flutter/dashboard/utils/DbDataGenerator.dart';
-import 'package:prokit_flutter/dashboard/utils/DbImages.dart';
-import 'package:prokit_flutter/dashboard/utils/DbStrings.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/dashboard/model/db2/Db2Model.dart';
+import 'package:som/dashboard/utils/DbColors.dart';
+import 'package:som/dashboard/utils/DbDataGenerator.dart';
+import 'package:som/dashboard/utils/DbImages.dart';
+import 'package:som/dashboard/utils/DbStrings.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class Dashboard2 extends StatefulWidget {
   static String tag = '/Dashboard2';
@@ -20,9 +20,9 @@ const CURVE_HEIGHT = 100.0;
 const AVATAR_RADIUS = CURVE_HEIGHT * 0.8;
 
 class Dashboard2State extends State<Dashboard2> {
-  List<Db2ShopModel> mListings;
-  List<Db2ShopModel> mListings1;
-  List<Db2ShopModel> mListings2;
+  late List<Db2ShopModel> mListings;
+  late List<Db2ShopModel> mListings1;
+  late List<Db2ShopModel> mListings2;
 
   @override
   void initState() {
@@ -226,7 +226,7 @@ class Dashboard2State extends State<Dashboard2> {
 
 // ignore: must_be_immutable
 class Db2Category extends StatelessWidget {
-  Db2ShopModel model;
+  late Db2ShopModel model;
 
   Db2Category(Db2ShopModel model, int pos) {
     this.model = model;
@@ -252,7 +252,7 @@ class Db2Category extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Db2Product extends StatelessWidget {
-  Db2ShopModel model;
+  late Db2ShopModel model;
 
   Db2Product(Db2ShopModel model, int pos) {
     this.model = model;
@@ -294,7 +294,7 @@ class Db2Product extends StatelessWidget {
 class Db2Slider extends StatelessWidget {
   final String file;
 
-  Db2Slider({Key key, @required this.file}) : super(key: key);
+  Db2Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

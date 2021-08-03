@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'FoodCreateAccount.dart';
 
@@ -56,7 +56,7 @@ class FoodSignInState extends State<FoodSignIn> {
       body: Stack(
         children: <Widget>[
           CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: food_ic_login,
             height: width * 0.6,
             fit: BoxFit.cover,

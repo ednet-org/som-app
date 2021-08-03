@@ -1,10 +1,10 @@
-import 'package:prokit_flutter/cloudStorage/screens/CSCreateAccountScreenByEmail.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSDashboardScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignInScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignUpScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSCreateAccountScreenByEmail.dart';
+import 'package:som/cloudStorage/screens/CSDashboardScreen.dart';
+import 'package:som/cloudStorage/screens/CSSignInScreen.dart';
+import 'package:som/cloudStorage/screens/CSSignUpScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 

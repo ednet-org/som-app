@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 const ic_logo_bottom = "images/muvi/icons/ic_logo_bottom.png";
 const ic_logo = "images/muvi/icons/ic_logo.png";

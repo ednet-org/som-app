@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 const mPImage_1 = "images/mpmusic/image1.png";
 const mPLogo = "images/mpmusic/image1.png";

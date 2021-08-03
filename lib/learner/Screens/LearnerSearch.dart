@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerInstructorsDetails.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/LearnerInstructorsDetails.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerSearch extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class LearnerSearch extends StatefulWidget {
 }
 
 class _LearnerSearchState extends State<LearnerSearch> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerPeopleModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerPeopleModel> mList2;
 
   @override
   void initState() {
@@ -107,8 +107,9 @@ class _LearnerSearchState extends State<LearnerSearch> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerInstructor extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerInstructor(LearnerPeopleModel model, int pos) {
     this.model = model;
@@ -152,8 +153,9 @@ class LearnerInstructor extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerRecommended extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerRecommended(LearnerPeopleModel model, int pos) {
     this.model = model;

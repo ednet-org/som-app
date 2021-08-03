@@ -1,117 +1,187 @@
-import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
+import 'package:som/shopHop/models/ShCategory.dart';
 
 class ShProduct {
-  int id;
-  String name;
-  String date_created;
-  String date_created_gmt;
-  String date_modified;
-  String date_modified_gmt;
-  String type;
-  String status;
-  bool featured;
-  String catalog_visibility;
-  String description;
-  String short_description;
-  String sku;
-  String price;
-  String regular_price;
-  String sale_price;
-  String price_html;
-  bool on_sale;
-  bool purchasable;
-  int total_sales;
-  bool virtual;
-  bool downloadable;
-  List<dynamic> downloads;
-  int download_limit;
-  int download_expiry;
-  String external_url;
-  String button_text;
-  String tax_status;
-  String tax_class;
-  bool manage_stock;
-  int stock_quantity;
-  String stock_status;
-  String backorders;
-  bool backorders_allowed;
-  bool backordered;
-  bool sold_individually;
-  String weight;
-  Dimensions dimensions;
-  bool shipping_required;
-  bool shipping_taxable;
-  String shipping_class;
-  int shipping_class_id;
-  bool reviews_allowed;
-  String average_rating;
-  int rating_count;
-  List<dynamic> related_ids;
-  List<dynamic> upsell_ids;
-  List<dynamic> cross_sell_ids;
-  int parent_id;
-  String purchase_note;
-  List<ShCategory> categories;
-  List<dynamic> tags;
-  List<ShImage> images;
-  List<Attribute> attributes;
-  List<dynamic> default_attributes;
+  int? id;
+  String? name;
+  // ignore: non_constant_identifier_names
+  String? date_created;
+  // ignore: non_constant_identifier_names
+  String? date_created_gmt;
+  // ignore: non_constant_identifier_names
+  String? date_modified;
+  // ignore: non_constant_identifier_names
+  String? date_modified_gmt;
+  String? type;
+  String? status;
+  bool? featured;
+  // ignore: non_constant_identifier_names
+  String? catalog_visibility;
+  String? description;
+  // ignore: non_constant_identifier_names
+  String? short_description;
+  String? sku;
+  String? price;
+  // ignore: non_constant_identifier_names
+  String? regular_price;
+  // ignore: non_constant_identifier_names
+  String? sale_price;
+  // ignore: non_constant_identifier_names
+  String? price_html;
+  // ignore: non_constant_identifier_names
+  bool? on_sale;
+  bool? purchasable;
+  // ignore: non_constant_identifier_names
+  int? total_sales;
+  bool? virtual;
+  bool? downloadable;
+  List<dynamic>? downloads;
+  // ignore: non_constant_identifier_names
+  int? download_limit;
+  // ignore: non_constant_identifier_names
+  int? download_expiry;
+  // ignore: non_constant_identifier_names
+  String? external_url;
+  // ignore: non_constant_identifier_names
+  String? button_text;
+  // ignore: non_constant_identifier_names
+  String? tax_status;
+  // ignore: non_constant_identifier_names
+  String? tax_class;
+  // ignore: non_constant_identifier_names
+  bool? manage_stock;
+  // ignore: non_constant_identifier_names
+  int? stock_quantity;
+  // ignore: non_constant_identifier_names
+  String? stock_status;
+  String? backorders;
+  // ignore: non_constant_identifier_names
+  bool? backorders_allowed;
+  bool? backordered;
+  // ignore: non_constant_identifier_names
+  bool? sold_individually;
+  String? weight;
+  Dimensions? dimensions;
+  // ignore: non_constant_identifier_names
+  bool? shipping_required;
+  // ignore: non_constant_identifier_names
+  bool? shipping_taxable;
+  // ignore: non_constant_identifier_names
+  String? shipping_class;
+  // ignore: non_constant_identifier_names
+  int? shipping_class_id;
+  // ignore: non_constant_identifier_names
+  bool? reviews_allowed;
+  // ignore: non_constant_identifier_names
+  String? average_rating;
+  // ignore: non_constant_identifier_names
+  int? rating_count;
+  // ignore: non_constant_identifier_names
+  List<dynamic>? related_ids;
+  // ignore: non_constant_identifier_names
+  List<dynamic>? upsell_ids;
+  // ignore: non_constant_identifier_names
+  List<dynamic>? cross_sell_ids;
+  // ignore: non_constant_identifier_names
+  int? parent_id;
+  // ignore: non_constant_identifier_names
+  String? purchase_note;
+  List<ShCategory>? categories;
+  List<dynamic>? tags;
+  List<ShImage>? images;
+  List<Attribute>? attributes;
+  // ignore: non_constant_identifier_names
+  List<dynamic>? default_attributes;
 
   ShProduct(
       {this.id,
       this.name,
+      // ignore: non_constant_identifier_names
       this.date_created,
+      // ignore: non_constant_identifier_names
       this.date_created_gmt,
+      // ignore: non_constant_identifier_names
       this.date_modified,
+      // ignore: non_constant_identifier_names
       this.date_modified_gmt,
       this.type,
       this.status,
       this.featured,
+      // ignore: non_constant_identifier_names
       this.catalog_visibility,
       this.description,
+      // ignore: non_constant_identifier_names
       this.short_description,
       this.sku,
       this.price,
+      // ignore: non_constant_identifier_names
       this.regular_price,
+      // ignore: non_constant_identifier_names
       this.sale_price,
+      // ignore: non_constant_identifier_names
       this.price_html,
+      // ignore: non_constant_identifier_names
       this.on_sale,
       this.purchasable,
+      // ignore: non_constant_identifier_names
       this.total_sales,
       this.virtual,
       this.downloadable,
       this.downloads,
+      // ignore: non_constant_identifier_names
       this.download_limit,
+      // ignore: non_constant_identifier_names
       this.download_expiry,
+      // ignore: non_constant_identifier_names
       this.external_url,
+      // ignore: non_constant_identifier_names
       this.button_text,
+      // ignore: non_constant_identifier_names
       this.tax_status,
+      // ignore: non_constant_identifier_names
       this.tax_class,
+      // ignore: non_constant_identifier_names
       this.manage_stock,
+      // ignore: non_constant_identifier_names
       this.stock_quantity,
+      // ignore: non_constant_identifier_names
       this.stock_status,
       this.backorders,
+      // ignore: non_constant_identifier_names
       this.backorders_allowed,
       this.backordered,
+      // ignore: non_constant_identifier_names
       this.sold_individually,
       this.weight,
       this.dimensions,
+      // ignore: non_constant_identifier_names
       this.shipping_required,
+      // ignore: non_constant_identifier_names
       this.shipping_taxable,
+      // ignore: non_constant_identifier_names
       this.shipping_class,
+      // ignore: non_constant_identifier_names
       this.shipping_class_id,
+      // ignore: non_constant_identifier_names
       this.reviews_allowed,
+      // ignore: non_constant_identifier_names
       this.average_rating,
+      // ignore: non_constant_identifier_names
       this.rating_count,
+      // ignore: non_constant_identifier_names
       this.related_ids,
+      // ignore: non_constant_identifier_names
       this.upsell_ids,
+      // ignore: non_constant_identifier_names
       this.cross_sell_ids,
+      // ignore: non_constant_identifier_names
       this.parent_id,
+      // ignore: non_constant_identifier_names
       this.purchase_note,
       this.categories,
       this.tags,
       this.images,
       this.attributes,
+      // ignore: non_constant_identifier_names
       this.default_attributes});
 
   factory ShProduct.fromJson(Map<String, dynamic> json) {
@@ -170,15 +240,20 @@ class ShProduct {
 }
 
 class ShImage {
-  int id;
-  String date_created;
-  String date_created_gmt;
-  String date_modified;
-  String date_modified_gmt;
-  String src;
-  String name;
-  String alt;
+  int? id;
+  // ignore: non_constant_identifier_names
+  String? date_created;
+  // ignore: non_constant_identifier_names
+  String? date_created_gmt;
+  // ignore: non_constant_identifier_names
+  String? date_modified;
+  // ignore: non_constant_identifier_names
+  String? date_modified_gmt;
+  String? src;
+  String? name;
+  String? alt;
 
+  // ignore: non_constant_identifier_names
   ShImage({this.id, this.date_created, this.date_created_gmt, this.date_modified, this.date_modified_gmt, this.src, this.name, this.alt});
 
   factory ShImage.fromJson(Map<String, dynamic> json) {
@@ -209,12 +284,12 @@ class ShImage {
 }
 
 class Attribute {
-  int id;
-  String name;
-  int position;
-  bool visible;
-  bool variation;
-  List<String> options;
+  int? id;
+  String? name;
+  int? position;
+  bool? visible;
+  bool? variation;
+  List<String>? options;
 
   Attribute({this.id, this.name, this.position, this.visible, this.variation, this.options});
 
@@ -244,9 +319,9 @@ class Attribute {
 }
 
 class Dimensions {
-  String length;
-  String width;
-  String height;
+  String? length;
+  String? width;
+  String? height;
 
   Dimensions({this.length, this.width, this.height});
 

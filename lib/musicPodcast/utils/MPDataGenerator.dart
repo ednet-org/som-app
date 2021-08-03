@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPAlbumsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPArtistsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPEventsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNewsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPlayListScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPPodCastScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSettingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPAlbumsScreen.dart';
+import 'package:som/musicPodcast/screen/MPArtistsScreen.dart';
+import 'package:som/musicPodcast/screen/MPEventsScreen.dart';
+import 'package:som/musicPodcast/screen/MPNewsScreen.dart';
+import 'package:som/musicPodcast/screen/MPPlayListScreen.dart';
+import 'package:som/musicPodcast/screen/MPPodCastScreen.dart';
+import 'package:som/musicPodcast/screen/MPProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPSettingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongsScreen.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 List<DrawerList> getDrawerList() {
-  List<DrawerList> drawerList = List();
+  List<DrawerList> drawerList = [];
   drawerList.add(DrawerList(name: "Profile", widget: MPProfileScreen(isTab: true)));
   drawerList.add(DrawerList(name: "Songs", widget: MPSongsScreen()));
   drawerList.add(DrawerList(name: "Artists", widget: MPArtistsScreen(name: 'Artists')));
@@ -28,7 +28,7 @@ List<DrawerList> getDrawerList() {
 }
 
 List<NewsList> getNewsList() {
-  List<NewsList> newsList = List();
+  List<NewsList> newsList = [];
   newsList.add(NewsList(img: mpImages_1, name: lipsum.createWord(numWords: 2), description: lipsum.createSentence(numSentences: 2)));
   newsList.add(NewsList(img: mpImages_3, name: lipsum.createWord(numWords: 2), description: lipsum.createSentence(numSentences: 2)));
   newsList.add(NewsList(img: mpImages_5, name: lipsum.createWord(numWords: 2), description: lipsum.createSentence(numSentences: 2)));

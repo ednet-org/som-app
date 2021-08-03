@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCDashboardModel.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCLiveMatchesData.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketHistoryScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketMatchDetailScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketMatchInPreviewScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPointTableScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketRankingScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketScheduleScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketTeamsScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketVenueScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCDashboardModel.dart';
+import 'package:som/ProCricketUI/model/PCLiveMatchesData.dart';
+import 'package:som/ProCricketUI/screen/PCCricketHistoryScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketMatchDetailScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketMatchInPreviewScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPointTableScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketRankingScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketScheduleScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketTeamsScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketVenueScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCDashBoardScreen extends StatefulWidget {
   static String tag = '/CricketDashBoard';
@@ -27,8 +27,8 @@ class PCDashBoardScreen extends StatefulWidget {
 }
 
 class _PCDashBoardScreenState extends State<PCDashBoardScreen> {
-  List<PCLiveMatchesModel> mList1;
-  List<PCDashboardModel> mList2;
+  late List<PCLiveMatchesModel> mList1;
+  late List<PCDashboardModel> mList2;
 
   @override
   void initState() {

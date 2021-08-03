@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSDashboardScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignUpScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSDashboardScreen.dart';
+import 'package:som/cloudStorage/screens/CSSignUpScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSSignInScreen extends StatefulWidget {
   static String tag = '/CSSignInScreen';
@@ -22,7 +22,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
     init();
   }
 
-  init() async {
+  Future<void> init() async {
     //
   }
 
@@ -46,7 +46,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
                 children: [
                   TextFormField(
                     validator: (val) {
-                      if (val.isEmpty) {
+                      if (val!.isEmpty) {
                         return "Please enter email address";
                       } else if (!val.validateEmail()) {
                         return "Please enter valid email address";
@@ -59,7 +59,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
                   20.height,
                   TextFormField(
                     validator: (val) {
-                      if (val.isEmpty) {
+                      if (val!.isEmpty) {
                         return "Please enter password";
                       }
                       return null;
@@ -70,7 +70,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
                   ),
                   20.height,
                   authButtonWidget("Sign In").onTap(() {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       CSDashboardScreen().launch(context);
                     }
                   }),
@@ -79,7 +79,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
                   15.height,
                   appleSignInWidget(),
                   20.height,
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       CSSignUpScreen().launch(context);
                     },
@@ -92,7 +92,7 @@ class CSSignInScreenState extends State<CSSignInScreen> {
                     ),
                   ),
                   20.height,
-                  FlatButton(
+                  TextButton(
                     onPressed: () {},
                     child: Text(
                       "Having trouble signing in?",

@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/dashboard/model/db4/Db4Model.dart';
-import 'package:prokit_flutter/dashboard/utils/Db4BubbleBotoomBar.dart';
-import 'package:prokit_flutter/dashboard/utils/Db4SliderWidget.dart';
-import 'package:prokit_flutter/dashboard/utils/DbColors.dart';
-import 'package:prokit_flutter/dashboard/utils/DbDataGenerator.dart';
-import 'package:prokit_flutter/dashboard/utils/DbImages.dart';
-import 'package:prokit_flutter/dashboard/utils/DbStrings.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/dashboard/model/db4/Db4Model.dart';
+import 'package:som/dashboard/utils/Db4BubbleBotoomBar.dart';
+import 'package:som/dashboard/utils/Db4SliderWidget.dart';
+import 'package:som/dashboard/utils/DbColors.dart';
+import 'package:som/dashboard/utils/DbDataGenerator.dart';
+import 'package:som/dashboard/utils/DbImages.dart';
+import 'package:som/dashboard/utils/DbStrings.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class Dashboard4 extends StatefulWidget {
   static String tag = '/Dashboard4';
@@ -23,8 +23,8 @@ class Dashboard4State extends State<Dashboard4> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<Db4Category> mFavouriteList;
-  List<Db4Slider> mSliderList;
+  List<Db4Category>? mFavouriteList;
+  List<Db4Slider>? mSliderList;
 
   @override
   void initState() {
@@ -130,7 +130,7 @@ class Db4BottomBarState extends State<Db4BottomBar> {
 
 // ignore: must_be_immutable
 class Db4SliderWidget extends StatelessWidget {
-  List<Db4Slider> mSliderList;
+  List<Db4Slider>? mSliderList;
 
   Db4SliderWidget(this.mSliderList);
 
@@ -145,7 +145,7 @@ class Db4SliderWidget extends StatelessWidget {
       height: cardSize.height,
       enlargeCenterPage: true,
       scrollDirection: Axis.horizontal,
-      items: mSliderList.map((slider) {
+      items: mSliderList!.map((slider) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
@@ -194,7 +194,7 @@ class Db4SliderWidget extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Db4GridListing extends StatelessWidget {
-  List<Db4Category> mFavouriteList;
+  List<Db4Category>? mFavouriteList;
   var isScrollable = false;
 
   Db4GridListing(this.mFavouriteList, this.isScrollable);
@@ -205,7 +205,7 @@ class Db4GridListing extends StatelessWidget {
     return GridView.builder(
         scrollDirection: Axis.vertical,
         physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
-        itemCount: mFavouriteList.length,
+        itemCount: mFavouriteList!.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 16, mainAxisSpacing: 16),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -221,14 +221,14 @@ class Db4GridListing extends StatelessWidget {
                     width: width / 7.5,
                     margin: EdgeInsets.only(bottom: 4, top: 8),
                     padding: EdgeInsets.all(width / 30),
-                    decoration: BoxDecoration(color: mFavouriteList[index].color, borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(color: mFavouriteList![index].color, borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: SvgPicture.asset(
-                      mFavouriteList[index].icon,
+                      mFavouriteList![index].icon,
                       color: white,
                     ),
                   ),
                   Text(
-                    mFavouriteList[index].name,
+                    mFavouriteList![index].name,
                     style: secondaryTextStyle(size: 14),
                   )
                 ],

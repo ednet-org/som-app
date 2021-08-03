@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/CategoryModel.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTProductModel.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTCartScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTSearchScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTSignInScreen.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/rating_bar.dart';
+import 'package:som/defaultTheme/model/CategoryModel.dart';
+import 'package:som/defaultTheme/model/DTProductModel.dart';
+import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
+import 'package:som/defaultTheme/screen/DTSearchScreen.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/rating_bar.dart';
 
 import 'DTProductDetailScreen.dart';
 
@@ -90,11 +87,11 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: appColorPrimary),
-                    child: Image.asset(e.icon,
+                    child: Image.asset(e.icon!,
                         height: 30, width: 30, color: white),
                   ),
                   4.height,
-                  Text(e.name,
+                  Text(e.name!,
                       style: primaryTextStyle(size: 12),
                       maxLines: 1,
                       textAlign: TextAlign.center,
@@ -117,7 +114,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
 
           return Container(
             decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor: appStore.appBarColor),
+                backgroundColor: appStore.appBarColor!),
             width: 220,
             margin: EdgeInsets.only(right: 8),
             child: Column(
@@ -128,7 +125,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                 Stack(
                   children: [
                     Image.network(
-                      data.image,
+                      data.image!,
                       fit: BoxFit.fitHeight,
                       height: 180,
                       width: context.width(),
@@ -148,7 +145,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(data.name,
+                    Text(data.name!,
                         style: primaryTextStyle(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis),
@@ -160,7 +157,7 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                             onRatingChanged: (r) {},
                             filledIcon: Icons.star,
                             emptyIcon: Icons.star_border,
-                            initialRating: data.rating,
+                            initialRating: data.rating!,
                             maxRating: 5,
                             filledColor: Colors.yellow,
                             size: 14,

@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/screen/T1Listing.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
-import 'package:prokit_flutter/theme1/utils/T1Constant.dart';
-import 'package:prokit_flutter/theme1/utils/T1DataGenerator.dart';
-import 'package:prokit_flutter/theme1/utils/T1Images.dart';
-import 'package:prokit_flutter/theme1/utils/T1Strings.dart';
-import 'package:prokit_flutter/theme1/utils/T1Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/screen/T1Listing.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
+import 'package:som/theme1/utils/T1Constant.dart';
+import 'package:som/theme1/utils/T1DataGenerator.dart';
+import 'package:som/theme1/utils/T1Images.dart';
+import 'package:som/theme1/utils/T1Strings.dart';
+import 'package:som/theme1/utils/T1Widget.dart';
 
 import '../../main.dart';
 
@@ -27,7 +27,7 @@ class T1Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       appBar: appBar(context, t1_card_title),
       body: Observer(

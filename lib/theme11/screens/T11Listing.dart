@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme11/models/T11Models.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
-import 'package:prokit_flutter/theme11/utils/T11DataGenerator.dart';
-import 'package:prokit_flutter/theme11/utils/T11Strings.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme11/models/T11Models.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11DataGenerator.dart';
+import 'package:som/theme11/utils/T11Strings.dart';
 
 class T11List extends StatefulWidget {
   static String tag = '/T11List';
@@ -16,7 +16,7 @@ class T11List extends StatefulWidget {
 }
 
 class _T11ListState extends State<T11List> {
-  List<Theme11SongsList> mList1;
+  late List<Theme11SongsList> mList1;
 
   void initState() {
     super.initState();
@@ -38,7 +38,7 @@ class _T11ListState extends State<T11List> {
                 height: 350,
                 width: MediaQuery.of(context).size.width - 24,
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mList1[index].img,
                   fit: BoxFit.fill,
                 ).cornerRadiusWithClipRRect(20).paddingTop(16),

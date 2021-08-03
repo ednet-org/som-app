@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTFAQDetailScreen.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTFAQDetailScreen.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -17,7 +17,7 @@ class DTFAQScreen extends StatefulWidget {
 }
 
 class DTFAQScreenState extends State<DTFAQScreen> {
-  var categories = List<String>();
+  var categories =[];
   int selectIndex = 0;
 
   @override
@@ -129,7 +129,7 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                                   padding: EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
                                   margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                                   decoration: BoxDecoration(
-                                    gradient: selectIndex == index ? defaultThemeGradient() : LinearGradient(colors: [appStore.appBarColor, appStore.appBarColor]),
+                                    gradient: selectIndex == index ? defaultThemeGradient() : LinearGradient(colors: [appStore.appBarColor!, appStore.appBarColor!]),
                                     borderRadius: BorderRadius.all(Radius.circular(30)),
                                     border: Border.all(color: Colors.black12, width: 0.5),
                                   ),

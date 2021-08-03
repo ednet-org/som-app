@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
 
 import 'BHVerificationScreen.dart';
 
@@ -64,14 +64,16 @@ class BHForgotPasswordScreenState extends State<BHForgotPasswordScreen> {
                     16.height,
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(12),
+                          primary: BHColorPrimary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        ),
                         onPressed: () {
                           finish(context);
                           BHVerificationScreen().launch(context);
                         },
-                        color: BHColorPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           BHBtnSend,
                           style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold),

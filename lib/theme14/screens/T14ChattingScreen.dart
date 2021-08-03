@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14ChattingScreen extends StatefulWidget {
-  final String img;
-  final String name;
+  final String? img;
+  final String? name;
 
   T14ChattingScreen({this.img, this.name});
 
@@ -56,7 +56,7 @@ class _T14ChattingScreenState extends State<T14ChattingScreen> {
 
       msgController.text = '';
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
       FocusScope.of(context).requestFocus(msgFocusNode);
       setState(() {});
 
@@ -64,7 +64,7 @@ class _T14ChattingScreenState extends State<T14ChattingScreen> {
 
       msgListing.insert(0, msgModel1);
 
-      if (mounted) scrollController?.animToTop();
+      if (mounted) scrollController.animToTop();
     } else {
       FocusScope.of(context).requestFocus(msgFocusNode);
     }
@@ -86,9 +86,9 @@ class _T14ChattingScreenState extends State<T14ChattingScreen> {
         ),
         title: Row(
           children: <Widget>[
-            CircleAvatar(backgroundImage: AssetImage(widget.img), radius: 16),
+            CircleAvatar(backgroundImage: AssetImage(widget.img!), radius: 16),
             8.width,
-            Text(widget.name, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16)),
+            Text(widget.name!, style: TextStyle(color: BHAppTextColorPrimary, fontSize: 16)),
           ],
         ),
         actions: [Padding(padding: EdgeInsets.only(right: 16), child: Icon(Icons.call, color: BHAppTextColorPrimary, size: 20))],

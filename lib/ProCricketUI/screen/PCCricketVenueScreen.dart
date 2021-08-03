@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCDashboardModel.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketMatchListScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCDashboardModel.dart';
+import 'package:som/ProCricketUI/screen/PCCricketMatchListScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketVenueScreen extends StatefulWidget {
   static String tag = '/CricketVenue';
@@ -17,9 +17,10 @@ class PCCricketVenueScreen extends StatefulWidget {
 }
 
 class _PCCricketVenueScreenState extends State<PCCricketVenueScreen> {
-  List<CricketGroundModel> mList1;
+  late List<CricketGroundModel> mList1;
 
   @override
+  // ignore: must_call_super
   void initState() {
     mList1 = cricketVenueList();
   }

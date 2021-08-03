@@ -3,20 +3,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCCommentaryPreviewData.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCCommentaryPreviewData.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
+// ignore: must_be_immutable
 class PCCricketMatchInPreviewScreen extends StatefulWidget {
   static String tag = '/CricketMatchInPreview';
 
-  String team1 = "";
-  String team2 = "";
+  String? team1 = "";
+  String? team2 = "";
 
   PCCricketMatchInPreviewScreen({this.team1, this.team2});
 
@@ -25,8 +26,8 @@ class PCCricketMatchInPreviewScreen extends StatefulWidget {
 }
 
 class _PCCricketMatchInPreviewScreenState extends State<PCCricketMatchInPreviewScreen> {
-  List<CommLine> commLineModel = List();
-  PCCommentaryPreviewData cricketMatchInPreviewData;
+  List<CommLine> commLineModel = [];
+  late PCCommentaryPreviewData cricketMatchInPreviewData;
 
   @override
   void initState() {
@@ -38,15 +39,13 @@ class _PCCricketMatchInPreviewScreenState extends State<PCCricketMatchInPreviewS
     String json = await rootBundle.loadString('assets/cricket_data/CommentaryPreview.json');
     cricketMatchInPreviewData = PCCommentaryPreviewData.fromJson(jsonDecode(json));
 
-    commLineModel.addAll(cricketMatchInPreviewData.comm_lines);
+    commLineModel.addAll(cricketMatchInPreviewData.comm_lines!);
 
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(

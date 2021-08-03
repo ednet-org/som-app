@@ -28,13 +28,13 @@ mixin _$AppStore on AppStoreBase, Store {
       Atom(name: 'AppStoreBase.scaffoldBackground');
 
   @override
-  Color get scaffoldBackground {
+  Color? get scaffoldBackground {
     _$scaffoldBackgroundAtom.reportRead();
     return super.scaffoldBackground;
   }
 
   @override
-  set scaffoldBackground(Color value) {
+  set scaffoldBackground(Color? value) {
     _$scaffoldBackgroundAtom.reportWrite(value, super.scaffoldBackground, () {
       super.scaffoldBackground = value;
     });
@@ -43,13 +43,13 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$backgroundColorAtom = Atom(name: 'AppStoreBase.backgroundColor');
 
   @override
-  Color get backgroundColor {
+  Color? get backgroundColor {
     _$backgroundColorAtom.reportRead();
     return super.backgroundColor;
   }
 
   @override
-  set backgroundColor(Color value) {
+  set backgroundColor(Color? value) {
     _$backgroundColorAtom.reportWrite(value, super.backgroundColor, () {
       super.backgroundColor = value;
     });
@@ -59,13 +59,13 @@ mixin _$AppStore on AppStoreBase, Store {
       Atom(name: 'AppStoreBase.backgroundSecondaryColor');
 
   @override
-  Color get backgroundSecondaryColor {
+  Color? get backgroundSecondaryColor {
     _$backgroundSecondaryColorAtom.reportRead();
     return super.backgroundSecondaryColor;
   }
 
   @override
-  set backgroundSecondaryColor(Color value) {
+  set backgroundSecondaryColor(Color? value) {
     _$backgroundSecondaryColorAtom
         .reportWrite(value, super.backgroundSecondaryColor, () {
       super.backgroundSecondaryColor = value;
@@ -75,13 +75,13 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$textPrimaryColorAtom = Atom(name: 'AppStoreBase.textPrimaryColor');
 
   @override
-  Color get textPrimaryColor {
+  Color? get textPrimaryColor {
     _$textPrimaryColorAtom.reportRead();
     return super.textPrimaryColor;
   }
 
   @override
-  set textPrimaryColor(Color value) {
+  set textPrimaryColor(Color? value) {
     _$textPrimaryColorAtom.reportWrite(value, super.textPrimaryColor, () {
       super.textPrimaryColor = value;
     });
@@ -91,13 +91,13 @@ mixin _$AppStore on AppStoreBase, Store {
       Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
 
   @override
-  Color get appColorPrimaryLightColor {
+  Color? get appColorPrimaryLightColor {
     _$appColorPrimaryLightColorAtom.reportRead();
     return super.appColorPrimaryLightColor;
   }
 
   @override
-  set appColorPrimaryLightColor(Color value) {
+  set appColorPrimaryLightColor(Color? value) {
     _$appColorPrimaryLightColorAtom
         .reportWrite(value, super.appColorPrimaryLightColor, () {
       super.appColorPrimaryLightColor = value;
@@ -108,13 +108,13 @@ mixin _$AppStore on AppStoreBase, Store {
       Atom(name: 'AppStoreBase.textSecondaryColor');
 
   @override
-  Color get textSecondaryColor {
+  Color? get textSecondaryColor {
     _$textSecondaryColorAtom.reportRead();
     return super.textSecondaryColor;
   }
 
   @override
-  set textSecondaryColor(Color value) {
+  set textSecondaryColor(Color? value) {
     _$textSecondaryColorAtom.reportWrite(value, super.textSecondaryColor, () {
       super.textSecondaryColor = value;
     });
@@ -123,13 +123,13 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$appBarColorAtom = Atom(name: 'AppStoreBase.appBarColor');
 
   @override
-  Color get appBarColor {
+  Color? get appBarColor {
     _$appBarColorAtom.reportRead();
     return super.appBarColor;
   }
 
   @override
-  set appBarColor(Color value) {
+  set appBarColor(Color? value) {
     _$appBarColorAtom.reportWrite(value, super.appBarColor, () {
       super.appBarColor = value;
     });
@@ -138,13 +138,13 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$iconColorAtom = Atom(name: 'AppStoreBase.iconColor');
 
   @override
-  Color get iconColor {
+  Color? get iconColor {
     _$iconColorAtom.reportRead();
     return super.iconColor;
   }
 
   @override
-  set iconColor(Color value) {
+  set iconColor(Color? value) {
     _$iconColorAtom.reportWrite(value, super.iconColor, () {
       super.iconColor = value;
     });
@@ -154,13 +154,13 @@ mixin _$AppStore on AppStoreBase, Store {
       Atom(name: 'AppStoreBase.iconSecondaryColor');
 
   @override
-  Color get iconSecondaryColor {
+  Color? get iconSecondaryColor {
     _$iconSecondaryColorAtom.reportRead();
     return super.iconSecondaryColor;
   }
 
   @override
-  set iconSecondaryColor(Color value) {
+  set iconSecondaryColor(Color? value) {
     _$iconSecondaryColorAtom.reportWrite(value, super.iconSecondaryColor, () {
       super.iconSecondaryColor = value;
     });
@@ -201,7 +201,7 @@ mixin _$AppStore on AppStoreBase, Store {
       AsyncAction('AppStoreBase.toggleDarkMode');
 
   @override
-  Future<void> toggleDarkMode({bool value}) {
+  Future<void> toggleDarkMode({bool? value}) {
     return _$toggleDarkModeAsyncAction
         .run(() => super.toggleDarkMode(value: value));
   }

@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/model/FoodModel.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/food/utils/FoodWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/model/FoodModel.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodDataGenerator.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class FoodFavourite extends StatefulWidget {
   static String tag = '/FoodFavourite';
@@ -17,7 +17,7 @@ class FoodFavourite extends StatefulWidget {
 }
 
 class FoodFavouriteState extends State<FoodFavourite> {
-  List<FoodDish> mList1;
+  late List<FoodDish> mList1;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class FoodFavouriteState extends State<FoodFavourite> {
 
 // ignore: must_be_immutable
 class Favourite extends StatelessWidget {
-  FoodDish model;
+  late FoodDish model;
 
   Favourite(FoodDish model, int pos) {
     this.model = model;
@@ -75,7 +75,7 @@ class Favourite extends StatelessWidget {
               topLeft: Radius.circular(10),
             ),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.image,
               height: width * 0.3,
               width: width,

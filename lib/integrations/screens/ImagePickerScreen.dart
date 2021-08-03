@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class ImagePickerScreen extends StatefulWidget {
   static String tag = '/ImagePickerScreen';
@@ -14,7 +14,7 @@ class ImagePickerScreen extends StatefulWidget {
 }
 
 class ImagePickerScreenState extends State<ImagePickerScreen> {
-  PickedFile pickImage;
+  PickedFile? pickImage;
   String fileName = '', filePath = '';
 
   @override
@@ -30,8 +30,8 @@ class ImagePickerScreenState extends State<ImagePickerScreen> {
   Future getImage() async {
     pickImage = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickImage != null) {
-      fileName = pickImage.path.split('/').last;
-      filePath = pickImage.path;
+      fileName = pickImage!.path.split('/').last;
+      filePath = pickImage!.path;
       setState(() {});
     }
   }
@@ -62,10 +62,12 @@ class ImagePickerScreenState extends State<ImagePickerScreen> {
                 Container(
                   width: context.width() * 0.9,
                   height: 500,
-                  child: Image.file(File(pickImage.path), fit: BoxFit.cover),
+                  child: Image.file(File(pickImage!.path), fit: BoxFit.cover),
                 ).center(),
-              RaisedButton(
-                color: appColorPrimary,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: appColorPrimary,
+                ),
                 onPressed: () async {
                   await getImage();
                 },

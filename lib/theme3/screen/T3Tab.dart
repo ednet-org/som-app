@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/utils/FlutterSlider.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3Tab extends StatefulWidget {
   static String tag = '/T3Tab';
@@ -17,12 +16,14 @@ class T3Tab extends StatefulWidget {
 }
 
 class T3TabState extends State<T3Tab> {
-  double _lowerValue = 50;
-  double _upperValue = 180;
+  double lowerValue = 50;
+  double upperValue = 180;
+  double value = 0.0;
+  RangeValues currentRangeValues = const RangeValues(20, 60);
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return SafeArea(
       child: Observer(
@@ -51,19 +52,21 @@ class T3TabState extends State<T3Tab> {
             body: TabBarView(
               children: <Widget>[
                 Center(child: ChefCheckboxWidget()),
-                Container(
-                  margin: EdgeInsets.only(top: 50, left: 16, right: 16),
-                  child: FlutterSlider(
-                    values: [30, 420],
-                    rangeSlider: true,
-                    max: 500,
-                    min: 0,
-                    onDragging: (handlerIndex, lowerValue, upperValue) {
-                      _lowerValue = lowerValue;
-                      _upperValue = upperValue;
-                      setState(() {});
-                    },
+                RangeSlider(
+                  activeColor: Colors.redAccent,
+                  values: currentRangeValues,
+                  min: 0,
+                  max: 100,
+                  divisions: 10,
+                  labels: RangeLabels(
+                    currentRangeValues.start.round().toString(),
+                    currentRangeValues.end.round().toString(),
                   ),
+                  onChanged: (RangeValues values) {
+                    setState(() {
+                      currentRangeValues = values;
+                    });
+                  },
                 ),
                 Center(child: CheckboxWidget()),
               ],
@@ -82,7 +85,7 @@ class CheckboxWidget extends StatefulWidget {
 
 class CheckboxWidgetState extends State {
   var a = "";
-  Map<String, bool> values = {
+  Map<String, bool?> values = {
     'Vegetrain': false,
     'Vegan': false,
     'Non-Vegetrain': false,
@@ -92,7 +95,7 @@ class CheckboxWidgetState extends State {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [BoxShadow(color: appStore.scaffoldBackground, blurRadius: 2, spreadRadius: 1)],
+        boxShadow: [BoxShadow(color: appStore.scaffoldBackground!, blurRadius: 2, spreadRadius: 1)],
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50.0), bottomLeft: Radius.circular(50.0)),
       ),
       child: Column(children: <Widget>[
@@ -105,7 +108,7 @@ class CheckboxWidgetState extends State {
                   value: values[key],
                   activeColor: t3_colorPrimary,
                   checkColor: Colors.white,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     setState(() {
                       values[key] = value;
                     });
@@ -133,7 +136,7 @@ class ChefCheckboxWidget extends StatefulWidget {
 
 class ChefCheckboxWidgetState extends State {
   var a = "";
-  Map<String, bool> values = {
+  Map<String, bool?> values = {
     'John Smith': false,
     'Lee': false,
     'Alexender Cinah': false,
@@ -144,7 +147,7 @@ class ChefCheckboxWidgetState extends State {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(color: appStore.scaffoldBackground, blurRadius: 2, spreadRadius: 1),
+          BoxShadow(color: appStore.scaffoldBackground!, blurRadius: 2, spreadRadius: 1),
         ],
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50.0), bottomLeft: Radius.circular(50.0)),
       ),
@@ -159,7 +162,7 @@ class ChefCheckboxWidgetState extends State {
                     value: values[key],
                     activeColor: t3_colorPrimary,
                     checkColor: Colors.white,
-                    onChanged: (bool value) {
+                    onChanged: (bool? value) {
                       values[key] = value;
                       setState(() {});
                     },

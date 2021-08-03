@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLoginScreen.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDLoginScreen.dart';
 
 class SDVerficationScreen extends StatefulWidget {
   @override

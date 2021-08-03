@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5DataGenerator.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5BottomBar.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5GridListing.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5Slider.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5DataGenerator.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/widgets/T5BottomBar.dart';
+import 'package:som/theme5/utils/widgets/T5GridListing.dart';
+import 'package:som/theme5/utils/widgets/T5Slider.dart';
 
 import '../../main.dart';
 
@@ -28,8 +28,8 @@ class T5DashboardState extends State<T5Dashboard> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<T5Category> mFavouriteList;
-  List<T5Slider> mSliderList;
+  List<T5Category>? mFavouriteList;
+  List<T5Slider>? mSliderList;
 
   @override
   void initState() {

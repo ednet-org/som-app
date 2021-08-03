@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/utils/MColors.dart';
 
 import '../../main.dart';
 
@@ -38,13 +38,13 @@ class MSettingScreenState extends State<MSettingScreen> {
       title: Text("Confirmation", style: boldTextStyle(color: white)),
       content: Text("Are you sure you want to logout?", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text("Yes", style: primaryTextStyle(color: mLimeColor)),
           onPressed: () {
             finish(context);
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text("No", style: primaryTextStyle(color: mLimeColor)),
           onPressed: () {
             finish(context);

@@ -23,7 +23,9 @@ class T7HotelDataModel {
   var name = "";
   var rating = "";
   var address = "";
+  // ignore: non_constant_identifier_names
   var room_detail = "";
+  // ignore: non_constant_identifier_names
   var hotel_review = "";
   var image = "";
   var price = "";

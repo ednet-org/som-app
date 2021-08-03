@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSDrawerComponents.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/components/CSDrawerComponents.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 
 class CSPhotosScreen extends StatefulWidget {
   static String tag = '/CSPhotosScreen';
@@ -14,8 +14,8 @@ class CSPhotosScreen extends StatefulWidget {
 }
 
 class CSPhotosScreenState extends State<CSPhotosScreen> {
-  List<Asset> images = List<Asset>();
-  String _error = 'No Error Detected';
+  List<Asset> images = [];
+  String error1 = 'No Error Detected';
   bool isIconShowingOrNot = false;
 
   @override
@@ -50,10 +50,10 @@ class CSPhotosScreenState extends State<CSPhotosScreen> {
 
   Future<void> loadAssets() async {
     setState(() {
-      images = List<Asset>();
+      images = [];
     });
 
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList = [];
     String error = 'No Error Dectected';
 
     try {
@@ -77,7 +77,7 @@ class CSPhotosScreenState extends State<CSPhotosScreen> {
 
     setState(() {
       images = resultList;
-      _error = error;
+      error1 = error;
     });
   }
 

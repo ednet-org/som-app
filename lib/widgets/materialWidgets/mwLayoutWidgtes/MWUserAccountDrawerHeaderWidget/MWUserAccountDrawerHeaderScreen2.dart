@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWUserAccountDrawerHeaderScreen2 extends StatefulWidget {
   static const tag = '/MWUserAccountDrawerHeaderScreen2';
@@ -22,7 +22,7 @@ class _MWUserAccountDrawerHeaderScreen2State extends State<MWUserAccountDrawerHe
 
   init() async {
     await Future.delayed(Duration(milliseconds: 500));
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
@@ -45,7 +45,7 @@ class _MWUserAccountDrawerHeaderScreen2State extends State<MWUserAccountDrawerHe
                 leading: Icon(Icons.category, color: appStore.iconColor),
                 title: Text('Category', style: primaryTextStyle()),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Category");
                 },
                 trailing: Container(
@@ -61,7 +61,7 @@ class _MWUserAccountDrawerHeaderScreen2State extends State<MWUserAccountDrawerHe
                   child: Icon(Icons.chevron_right, color: appStore.iconColor),
                 ),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Account");
                 },
               ),
@@ -73,7 +73,7 @@ class _MWUserAccountDrawerHeaderScreen2State extends State<MWUserAccountDrawerHe
                   child: Icon(Icons.chevron_right, color: appStore.iconColor),
                 ),
                 onTap: () {
-                  scaffoldKey.currentState.openEndDrawer();
+                  scaffoldKey.currentState!.openEndDrawer();
                   toast("Balance");
                 },
               ),
@@ -84,7 +84,7 @@ class _MWUserAccountDrawerHeaderScreen2State extends State<MWUserAccountDrawerHe
       body: Center(
         child: GestureDetector(
           onTap: () {
-            scaffoldKey.currentState.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
           child: Container(
             decoration: boxDecoration(bgColor: appColorPrimary, radius: 8),

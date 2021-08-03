@@ -3,20 +3,21 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_all_movies_screen.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_movie_screen.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/screens/flix_view_all_movies_screen.dart';
+import 'package:som/muvi/screens/flix_view_movie_screen.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class MovieDetailScreen extends StatefulWidget {
   static String tag = '/MovieDetailScreen';
-  var title = "";
+  String? title = "";
 
   MovieDetailScreen({this.title});
 
@@ -25,10 +26,10 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class MovieDetailScreenState extends State<MovieDetailScreen> with WidgetsBindingObserver {
-  var mMovieList = List<Movie>();
-  var mMovieOriginalsList = List<Movie>();
+  List<Movie> mMovieList = [];
+  List<Movie> mMovieOriginalsList = [];
   var trailerVideo;
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   var isloaded = false;
 
   @override
@@ -46,7 +47,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> with WidgetsBindin
   void initState() {
     super.initState();
     getData();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
 
     _controller = VideoPlayerController.network('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4');
 
@@ -70,7 +71,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> with WidgetsBindin
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
@@ -108,7 +109,10 @@ class MovieDetailScreenState extends State<MovieDetailScreen> with WidgetsBindin
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[headingText(context, "Watch Movie"), itemTitle(context, "2 hr 30 min")],
+                children: <Widget>[
+                  headingText(context, "Watch Movie"),
+                  itemTitle(context, "2 hr 30 min"),
+                ],
               ).paddingLeft(spacing_standard)
             ],
           ).paddingAll(spacing_standard)
@@ -152,7 +156,7 @@ class MovieDetailScreenState extends State<MovieDetailScreen> with WidgetsBindin
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             moviePoster,
-            headingText(context, "Man of Steel ").paddingOnly(left: spacing_standard_new, right: spacing_standard_new),
+            headingText(context, "Man of Steel").paddingOnly(left: spacing_standard_new, right: spacing_standard_new),
             MoreLessText(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.")
                 .paddingOnly(left: spacing_standard_new, right: spacing_standard_new),

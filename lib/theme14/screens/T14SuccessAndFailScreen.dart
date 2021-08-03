@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14SuccessAndFailScreen extends StatefulWidget {
   @override
@@ -12,11 +12,9 @@ class T14SuccessAndFailScreen extends StatefulWidget {
 }
 
 class _T14SuccessAndFailScreenState extends State<T14SuccessAndFailScreen> with AfterLayoutMixin<T14SuccessAndFailScreen> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController();
   List<Widget> pages = [];
-  final _kDuration = Duration(milliseconds: 300);
-  final _kCurve = Curves.ease;
 
   @override
   void initState() {

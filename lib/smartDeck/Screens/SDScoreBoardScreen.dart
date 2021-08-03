@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/ScoreboardAvailableModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/smartDeck/ModelClass/ScoreboardAvailableModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
 
 class SDExamCompletionBoardScreen extends StatefulWidget {
   @override
@@ -13,8 +13,8 @@ class SDExamCompletionBoardScreen extends StatefulWidget {
 }
 
 class _SDExamCompletionBoardScreenState extends State<SDExamCompletionBoardScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  List tabs;
+  TabController? _tabController;
+  late List tabs;
   int _currentIndex = 0;
 
   List<ScoreboardModel> scoreboardAvailable = [
@@ -93,18 +93,18 @@ class _SDExamCompletionBoardScreenState extends State<SDExamCompletionBoardScree
 
     tabs = ['Available', 'Passed'];
     _tabController = TabController(length: tabs.length, vsync: this);
-    _tabController.addListener(_handleTabControllerTick);
+    _tabController!.addListener(_handleTabControllerTick);
   }
 
   void _handleTabControllerTick() {
     setState(() {
-      _currentIndex = _tabController.index;
+      _currentIndex = _tabController!.index;
     });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -170,20 +170,20 @@ class _SDExamCompletionBoardScreenState extends State<SDExamCompletionBoardScree
                               child: FadeInImage(
                                 fit: BoxFit.cover,
                                 placeholder: AssetImage('Loading'),
-                                image: Image.asset(scoreboardAvailable[index].image, height: 35, width: 20).image,
+                                image: Image.asset(scoreboardAvailable[index].image!, height: 35, width: 20).image,
                               ),
                             ),
                           ),
-                          title: Text(scoreboardAvailable[index].title, style: boldTextStyle(size: 16)),
+                          title: Text(scoreboardAvailable[index].title!, style: boldTextStyle(size: 16)),
                           subtitle: Container(
                             margin: EdgeInsets.only(top: 5),
-                            child: Text(scoreboardAvailable[index].subtitle, style: secondaryTextStyle(size: 10)),
+                            child: Text(scoreboardAvailable[index].subtitle!, style: secondaryTextStyle(size: 10)),
                           ),
                           trailing: CircularPercentIndicator(
                             radius: 30.0,
                             lineWidth: 3.0,
                             animation: true,
-                            percent: scoreboardAvailable[index].status.toDouble(),
+                            percent: scoreboardAvailable[index].status!.toDouble(),
                             backgroundColor: sdViewColor,
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: sdPrimaryColor,
@@ -220,19 +220,19 @@ class _SDExamCompletionBoardScreenState extends State<SDExamCompletionBoardScree
                               child: FadeInImage(
                                 fit: BoxFit.cover,
                                 placeholder: AssetImage('Loading'),
-                                image: Image.asset(scoreboardPassed[index].image, height: 35, width: 20).image,
+                                image: Image.asset(scoreboardPassed[index].image!, height: 35, width: 20).image,
                               ),
                             ),
                           ),
-                          title: Text(scoreboardPassed[index].title, style: boldTextStyle(size: 16)),
+                          title: Text(scoreboardPassed[index].title!, style: boldTextStyle(size: 16)),
                           subtitle: Container(
                             margin: EdgeInsets.only(top: 5),
-                            child: Text(scoreboardPassed[index].subtitle, style: secondaryTextStyle(size: 10)),
+                            child: Text(scoreboardPassed[index].subtitle!, style: secondaryTextStyle(size: 10)),
                           ),
                           trailing: CircleAvatar(
                             radius: 15,
-                            backgroundColor: (scoreboardPassed[index].status > 70) ? sdSecondaryColorGreen.withOpacity(0.7) : sdSecondaryColorYellow.withOpacity(0.7),
-                            child: Text(scoreboardPassed[index].status.toInt().toString(), style: boldTextStyle(color: Colors.white, size: 16)),
+                            backgroundColor: (scoreboardPassed[index].status! > 70) ? sdSecondaryColorGreen.withOpacity(0.7) : sdSecondaryColorYellow.withOpacity(0.7),
+                            child: Text(scoreboardPassed[index].status!.toInt().toString(), style: boldTextStyle(color: Colors.white, size: 16)),
                           ),
                         ),
                       );

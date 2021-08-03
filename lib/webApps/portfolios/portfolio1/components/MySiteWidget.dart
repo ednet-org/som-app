@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 
@@ -63,7 +63,7 @@ class MySiteWidgetState extends State<MySiteWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(e.title, style: boldTextStyle(size: 14)),
+                    Text(e.title!, style: boldTextStyle(size: 14)),
                     8.height,
                     LinearProgressIndicator(
                       value: e.percentage, // percent filled

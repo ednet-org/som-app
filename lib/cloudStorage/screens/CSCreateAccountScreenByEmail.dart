@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSignInScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSWalkthroughScreen1.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSSignInScreen.dart';
+import 'package:som/cloudStorage/screens/CSWalkthroughScreen1.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSCreateAccountScreenByEmail extends StatefulWidget {
   static String tag = '/CSCreateAccountScreenByEmail';
@@ -14,7 +14,7 @@ class CSCreateAccountScreenByEmail extends StatefulWidget {
 }
 
 class CSCreateAccountScreenByEmailState extends State<CSCreateAccountScreenByEmail> {
-  bool checked = false;
+  bool? checked = false;
 
   @override
   void initState() {
@@ -93,13 +93,13 @@ class CSCreateAccountScreenByEmailState extends State<CSCreateAccountScreenByEma
               padding: EdgeInsets.all(10),
               alignment: Alignment.center,
               width: context.width() * 0.9,
-              decoration: boxDecorationRoundedWithShadow(5, backgroundColor: checked ? CSDarkBlueColor : CSGreyColor, spreadRadius: 1, blurRadius: 0, shadowColor: Colors.grey, offset: Offset(0, 1)),
+              decoration: boxDecorationRoundedWithShadow(5, backgroundColor: checked! ? CSDarkBlueColor : CSGreyColor, spreadRadius: 1, blurRadius: 0, shadowColor: Colors.grey, offset: Offset(0, 1)),
               height: context.width() * 0.13,
               child: Text("Create Account", style: boldTextStyle(color: Colors.white)),
             ).onTap(() {
               CSWalkthroughScreen1().launch(context);
             }).paddingTop(10),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 CSSignInScreen().launch(context);
                 finish(context);

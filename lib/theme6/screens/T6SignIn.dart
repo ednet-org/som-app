@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
-import 'package:prokit_flutter/theme6/utils/T6Constant.dart';
-import 'package:prokit_flutter/theme6/utils/T6Images.dart';
-import 'package:prokit_flutter/theme6/utils/T6Strings.dart';
-import 'package:prokit_flutter/theme6/utils/T6Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
+import 'package:som/theme6/utils/T6Constant.dart';
+import 'package:som/theme6/utils/T6Images.dart';
+import 'package:som/theme6/utils/T6Strings.dart';
+import 'package:som/theme6/utils/T6Widget.dart';
 
 import '../../main.dart';
 
@@ -21,7 +21,7 @@ class T6SignIn extends StatefulWidget {
 class T6SignInState extends State<T6SignIn> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -37,7 +37,7 @@ class T6SignInState extends State<T6SignIn> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.center,
-                  child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t6_ic_logo, width: width / 2.2),
+                  child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t6_ic_logo, width: width / 2.2),
                 ),
                 SizedBox(
                   height: 30,

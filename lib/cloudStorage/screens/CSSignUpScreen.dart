@@ -1,5 +1,5 @@
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -11,7 +11,7 @@ class CSSignUpScreen extends StatefulWidget {
 }
 
 class CSSignUpScreenState extends State<CSSignUpScreen> {
-  bool checked = false;
+  bool? checked = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -45,7 +45,7 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                 children: [
                   TextFormField(
                     validator: (val) {
-                      if (val.isEmpty) return "Please enter first name";
+                      if (val!.isEmpty) return "Please enter first name";
                       return null;
                     },
                     keyboardType: TextInputType.text,
@@ -54,7 +54,7 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                   20.height,
                   TextFormField(
                     validator: (val) {
-                      if (val.isEmpty) return "Please enter last name";
+                      if (val!.isEmpty) return "Please enter last name";
                       return null;
                     },
                     keyboardType: TextInputType.text,
@@ -65,7 +65,7 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: buildInputDecoration("Email"),
                       validator: (val) {
-                        if (val.isEmpty) {
+                        if (val!.isEmpty) {
                           return "Please enter email address";
                         } else if (!val.validateEmail()) {
                           return "Please enter valid email address";
@@ -75,7 +75,7 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                   20.height,
                   TextFormField(
                     validator: (val) {
-                      if (val.isEmpty) {
+                      if (val!.isEmpty) {
                         return "Please enter password";
                       }
                       return null;
@@ -131,7 +131,7 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                     width: context.width() * 0.9,
                     decoration: boxDecorationRoundedWithShadow(
                       5,
-                      backgroundColor: checked ? CSDarkBlueColor : CSGreyColor,
+                      backgroundColor: checked! ? CSDarkBlueColor : CSGreyColor,
                       spreadRadius: 1,
                       blurRadius: 0,
                       shadowColor: Colors.grey,
@@ -140,14 +140,14 @@ class CSSignUpScreenState extends State<CSSignUpScreen> {
                     height: context.width() * 0.13,
                     child: Text("Sign Up", style: boldTextStyle(color: Colors.white)),
                   ).onTap(() {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       toastLong("Done");
                     }
                   }),
                   20.height,
                   googleSignInWidget(),
                   20.height,
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       finish(context);
                     },

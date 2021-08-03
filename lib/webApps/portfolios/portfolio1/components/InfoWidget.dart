@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class InfoWidget extends StatefulWidget {
   static String tag = '/InfoScreen';
@@ -62,11 +62,11 @@ class InfoWidgetState extends State<InfoWidget> {
                               Container(
                                   padding: EdgeInsets.only(top: 4, bottom: 4, right: 12, left: 12),
                                   decoration: boxDecoration(color: Colors.green, bgColor: Colors.transparent),
-                                  child: Text(data.date, style: primaryTextStyle(color: white, size: 14))),
+                                  child: Text(data.date!, style: primaryTextStyle(color: white, size: 14))),
                               16.height,
-                              Text(data.title, style: primaryTextStyle(color: white)),
+                              Text(data.title!, style: primaryTextStyle(color: white)),
                               8.height,
-                              Text(data.subTitle, style: secondaryTextStyle()),
+                              Text(data.subTitle!, style: secondaryTextStyle()),
                               16.height,
                               Divider(height: 0.5, color: Colors.white),
                               16.height,
@@ -98,11 +98,11 @@ class InfoWidgetState extends State<InfoWidget> {
                               Container(
                                   padding: EdgeInsets.only(top: 4, bottom: 4, right: 12, left: 12),
                                   decoration: boxDecoration(color: Colors.green, bgColor: Colors.transparent),
-                                  child: Text(data.date, style: primaryTextStyle(color: white, size: 14))),
+                                  child: Text(data.date!, style: primaryTextStyle(color: white, size: 14))),
                               16.height,
-                              Text(data.title, style: primaryTextStyle(color: white)),
+                              Text(data.title!, style: primaryTextStyle(color: white)),
                               8.height,
-                              Text(data.subTitle, style: secondaryTextStyle()),
+                              Text(data.subTitle!, style: secondaryTextStyle()),
                               16.height,
                               Divider(height: 0.5, color: Colors.white),
                               16.height,

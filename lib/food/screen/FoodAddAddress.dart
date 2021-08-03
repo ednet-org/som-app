@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/food/utils/FoodWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../utils/FoodColors.dart';
 
@@ -16,7 +16,7 @@ class FoodAddAddress extends StatefulWidget {
 }
 
 class FoodAddAddressState extends State<FoodAddAddress> {
-  String _selectedLocation = 'Home';
+  String? _selectedLocation = 'Home';
 
   @override
   Widget build(BuildContext context) {

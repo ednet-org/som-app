@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'CWTabBarWidgets/CWTabBarScreen1.dart';
 import 'CWTabBarWidgets/CWTabBarScreen2.dart';
@@ -47,16 +47,18 @@ class CWTabBarScreenState extends State<CWTabBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, 'TabBar Example'),
-        body: ListView.builder(
-            itemCount: example.length == null ? 0 : example.length,
-            itemBuilder: (BuildContext context, index) {
-              return ExampleItemWidget(
-                example[index],
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
-                },
-              );
-            }));
+      appBar: appBar(context, 'TabBar Example'),
+      body: ListView.builder(
+        itemCount: example.length,
+        itemBuilder: (BuildContext context, index) {
+          return ExampleItemWidget(
+            example[index],
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
+            },
+          );
+        },
+      ),
+    );
   }
 }

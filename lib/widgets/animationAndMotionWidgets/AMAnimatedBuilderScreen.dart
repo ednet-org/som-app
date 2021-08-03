@@ -2,8 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class AMAnimatedBuilderScreen extends StatefulWidget {
   static String tag = '/AMAnimatedBuilderScreen';
@@ -13,9 +13,10 @@ class AMAnimatedBuilderScreen extends StatefulWidget {
 }
 
 class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation _FavouriteAnimation;
-  AnimationController _arrowAnimationController, _favouriteAnimationController;
+  late AnimationController _controller;
+  // ignore: non_constant_identifier_names
+  late Animation _FavouriteAnimation;
+  AnimationController? _arrowAnimationController, _favouriteAnimationController;
 
   @override
   void initState() {
@@ -30,11 +31,11 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
     )..repeat();
 
     _favouriteAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200))..repeat();
-    _FavouriteAnimation = Tween(begin: 80.0, end: 100.0).animate(CurvedAnimation(curve: Curves.bounceOut, parent: _favouriteAnimationController));
+    _FavouriteAnimation = Tween(begin: 80.0, end: 100.0).animate(CurvedAnimation(curve: Curves.bounceOut, parent: _favouriteAnimationController!));
 
-    _favouriteAnimationController.addStatusListener((AnimationStatus status) {
+    _favouriteAnimationController!.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
-        _favouriteAnimationController.repeat();
+        _favouriteAnimationController!.repeat();
       }
     });
   }
@@ -76,7 +77,7 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
                     height: 150,
                     width: 150,
                   ),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return Transform.rotate(
                       angle: _controller.value * 2.0 * math.pi,
                       child: child,
@@ -92,7 +93,7 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
                     height: 150,
                     child: FlutterLogo(),
                   ),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return Transform.rotate(
                       angle: _controller.value - math.pi / 12.0,
                       child: child,
@@ -106,7 +107,7 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
                 ).paddingBottom(16),
                 16.height,
                 AnimatedBuilder(
-                  animation: _favouriteAnimationController,
+                  animation: _favouriteAnimationController!,
                   builder: (context, child) {
                     return Icon(
                       Icons.favorite,

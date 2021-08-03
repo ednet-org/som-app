@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 class LearnerModrenMedicine extends StatefulWidget {
   static String tag = '/LearnerModrenMedicine';
@@ -23,8 +23,8 @@ class _LearnerModrenMedicineState extends State<LearnerModrenMedicine> {
   Color indicatorColor = learner_textColorPrimary;
   Color labelColor = learner_textColorPrimary;
 
-  List<LearnerPeopleModel> mList1;
-  List<LearnerLectureModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerLectureModel> mList2;
 
   @override
   void initState() {
@@ -66,12 +66,14 @@ class _LearnerModrenMedicineState extends State<LearnerModrenMedicine> {
           text(learner_lbl_Article, textColor: learner_textColorSecondary, fontSize: textSizeMedium, fontFamily: fontMedium).paddingOnly(bottom: 16),
           text(learner_sample_long_text, textColor: learner_textColorSecondary, fontFamily: fontSemibold, maxLine: 5, isCentered: true).paddingOnly(left: 8, right: 8),
           SizedBox(height: 16),
-          RaisedButton(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 4,
+              primary: learner_colorPrimary,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+              padding: const EdgeInsets.all(0.0),
+            ),
             onPressed: () {},
-            elevation: 4,
-            color: learner_colorPrimary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-            padding: const EdgeInsets.all(0.0),
             child: Container(
               width: 120,
               decoration: const BoxDecoration(
@@ -320,7 +322,7 @@ class _LearnerModrenMedicineState extends State<LearnerModrenMedicine> {
                         Row(
                           children: <Widget>[
                             CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: learner_ic_Profile,
                               height: 30,
                               width: 30,

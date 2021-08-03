@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/screens/flix_movie_detail_screen_2.dart';
-import 'package:prokit_flutter/muvi/screens/flix_series_detail_screen.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_all_movies_screen.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
-import 'package:prokit_flutter/muvi/utils/flix_slider_widget.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/screens/flix_movie_detail_screen_2.dart';
+import 'package:som/muvi/screens/flix_series_detail_screen.dart';
+import 'package:som/muvi/screens/flix_view_all_movies_screen.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/utils/flix_slider_widget.dart';
 
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+// ignore: must_be_immutable
 class HomeCategoryFragment extends StatefulWidget {
   static String tag = '/SubHomeFragment';
   var type;
@@ -24,12 +25,12 @@ class HomeCategoryFragment extends StatefulWidget {
 }
 
 class HomeCategoryFragmentState extends State<HomeCategoryFragment> {
-  var mSliderList = List<HomeSlider>();
-  var mMovieList = List<Movie>();
-  var mCinemaMovieList = List<Movie>();
-  var mcontinueList = List<Movie>();
-  var mTrendingMuviList = List<Movie>();
-  var mMadeForYouList = List<Movie>();
+  List<HomeSlider> mSliderList =  [];
+  List<Movie> mMovieList = [];
+  List<Movie> mCinemaMovieList = [];
+  List<Movie> mcontinueList = [];
+  List<Movie> mTrendingMuviList = [];
+  List<Movie> mMadeForYouList = [];
   bool isLoading = false;
 
   showLoading(bool show) {
@@ -120,6 +121,7 @@ class HomeCategoryFragmentState extends State<HomeCategoryFragment> {
   }
 }
 
+// ignore: must_be_immutable
 class HomeSliderWidget extends StatelessWidget {
   List<HomeSlider> mSliderList;
 
@@ -129,39 +131,33 @@ class HomeSliderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     width = width - 36;
-    final Size cardSize = Size(width, width / 1.6);
+    final Size cardSize = Size(width, width / 1.5);
     return SliderWidget(
-      viewportFraction: 0.92,
       height: cardSize.height,
       enlargeCenterPage: true,
       scrollDirection: Axis.horizontal,
       items: mSliderList.map((slider) {
         return Builder(
           builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: cardSize.height,
-              decoration: BoxDecoration(borderRadius: radius(8)),
-              child: Stack(
-                alignment: Alignment.bottomLeft,
-                children: <Widget>[
-                  networkImage(slider.slideImage, aWidth: cardSize.width, aHeight: cardSize.height, fit: BoxFit.cover).cornerRadiusWithClipRRect(8).paddingOnly(left: 8, right: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          hdWidget(context).paddingRight(spacing_standard).visible(slider.isHD),
-                          itemSubTitle(context, "2018"),
-                          itemSubTitle(context, "17+").paddingLeft(spacing_standard)
-                        ],
-                      ).paddingTop(spacing_control_half)
-                    ],
-                  ).paddingOnly(left: spacing_standard, bottom: spacing_standard_new)
-                ],
-              ).paddingBottom(spacing_control),
-            ).onTap(() {
+            return Stack(
+              alignment: Alignment.bottomLeft,
+              children: <Widget>[
+                networkImage(slider.slideImage, aWidth: cardSize.width, aHeight: cardSize.height, fit: BoxFit.cover).cornerRadiusWithClipRRect(8),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        hdWidget(context).paddingRight(spacing_standard).visible(slider.isHD!),
+                        itemSubTitle(context, "2018"),
+                        itemSubTitle(context, "17+").paddingLeft(spacing_standard)
+                      ],
+                    ).paddingTop(spacing_control_half)
+                  ],
+                ).paddingOnly(left: spacing_standard, bottom: spacing_standard_new)
+              ],
+            ).paddingBottom(spacing_control).onTap(() {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SeriesDetailScreen()));
             });
           },
@@ -171,6 +167,7 @@ class HomeSliderWidget extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class VerticalSliderWidget extends StatelessWidget {
   List<Movie> mSliderList;
 

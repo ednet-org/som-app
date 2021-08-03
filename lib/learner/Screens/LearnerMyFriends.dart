@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/Screens/learnerFriendDetail.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/Screens/learnerFriendDetail.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerMyFriends extends StatefulWidget {
   @override
@@ -16,8 +16,8 @@ class LearnerMyFriends extends StatefulWidget {
 }
 
 class _LearnerMyFriendsState extends State<LearnerMyFriends> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerPeopleModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerPeopleModel> mList2;
 
   @override
   void initState() {
@@ -130,8 +130,9 @@ class _LearnerMyFriendsState extends State<LearnerMyFriends> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerPending extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerPending(LearnerPeopleModel model, int pos) {
     this.model = model;
@@ -187,7 +188,7 @@ class LearnerPending extends StatelessWidget {
                       learner_ic_uncheck,
                       height: 40,
                       width: 40,
-                    ).withShadow(shadowColor: learner_ShadowColor, blurRadius: 10.0, spreadRadius: 4.0).paddingOnly(right: 16).onTap(() {
+                    ).paddingOnly(right: 16).onTap(() {
                       print("uncheck");
                     }),
                     Image.asset(
@@ -211,8 +212,9 @@ class LearnerPending extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerAccepted extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerAccepted(LearnerPeopleModel model, int pos) {
     this.model = model;

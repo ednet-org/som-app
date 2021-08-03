@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/screens/flix_home_screen.dart';
-import 'package:prokit_flutter/muvi/screens/flix_signup.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/screens/flix_home_screen.dart';
+import 'package:som/muvi/screens/flix_signup.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
 class SignInScreen extends StatefulWidget {
   static String tag = '/SignInScreen';
@@ -22,9 +22,9 @@ class SignInScreenState extends State<SignInScreen> {
   FocusNode passFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  bool _autoValidate = false;
+  String? email;
+  String? password;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
 
@@ -38,7 +38,7 @@ class SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     var form = Form(
       key: _formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -51,7 +51,7 @@ class SignInScreenState extends State<SignInScreen> {
               if (!value.validateEmail()) return keyString(context, "error_invalid_email");
               return null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               email = value;
             },
             textInputAction: TextInputAction.next,
@@ -65,10 +65,10 @@ class SignInScreenState extends State<SignInScreen> {
             isPassword: true,
             isPasswordVisible: passwordVisible,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_pwd_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_pwd_requires") : null;
             },
             focusNode: passFocus,
-            onSaved: (String value) {
+            onSaved: (String? value) {
               password = value;
             },
             textInputAction: TextInputAction.done,

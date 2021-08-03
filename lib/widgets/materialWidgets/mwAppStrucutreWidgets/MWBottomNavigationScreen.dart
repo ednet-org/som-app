@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'mwBottomNavigationWidgets/MWBottomNavigationScreen1.dart';
 import 'mwBottomNavigationWidgets/MWBottomNavigationScreen2.dart';

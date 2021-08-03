@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
 
 import 'QIBusBooking.dart';
 import 'QIBusHome.dart';

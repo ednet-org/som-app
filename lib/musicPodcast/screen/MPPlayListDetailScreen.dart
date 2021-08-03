@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPPlayListDetailScreen extends StatefulWidget {
-  final MusicModel data;
+  final MusicModel? data;
 
   MPPlayListDetailScreen({this.data});
 
@@ -65,7 +65,7 @@ class MPPlayListDetailScreenState extends State<MPPlayListDetailScreen> {
           children: [
             Stack(
               children: [
-                commonCacheImageWidget(widget.data.img, 240, width: context.width(), fit: BoxFit.cover),
+                commonCacheImageWidget(widget.data!.img, 240, width: context.width(), fit: BoxFit.cover),
                 Positioned(
                   bottom: 0,
                   right: 0,
@@ -80,7 +80,7 @@ class MPPlayListDetailScreenState extends State<MPPlayListDetailScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.data.title, style: boldTextStyle(color: white.withOpacity(0.9))),
+                            Text(widget.data!.title!, style: boldTextStyle(color: white.withOpacity(0.9))),
                             4.height,
                             Text('23 Songs', style: secondaryTextStyle(color: white.withOpacity(0.5))),
                           ],
@@ -131,9 +131,9 @@ class MPPlayListDetailScreenState extends State<MPPlayListDetailScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.title, style: boldTextStyle(color: white.withOpacity(0.9))),
+                          Text(data.title!, style: boldTextStyle(color: white.withOpacity(0.9))),
                           4.height,
-                          Text(data.subtitle, style: secondaryTextStyle(color: white.withOpacity(0.5), size: 14)),
+                          Text(data.subtitle!, style: secondaryTextStyle(color: white.withOpacity(0.5), size: 14)),
                         ],
                       ).expand(),
                       Icon(Icons.more_horiz, color: white.withOpacity(0.9)),

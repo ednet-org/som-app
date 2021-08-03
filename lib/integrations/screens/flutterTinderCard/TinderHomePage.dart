@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'TinderCard.dart';
 
@@ -56,10 +56,10 @@ class _TinderHomePageState extends State<TinderHomePage> {
                 swipeDown: false,
                 // Restrict the stack from swiping upside if its false
                 swipeUp: false,
-                swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+                swipeUpdateCallback: (DragUpdateDetails? details, Alignment? align) {
                   //  Get swiping card's alignment.
-                  print(details.localPosition);
-                  if (align.x < 0) {
+                  print(details!.localPosition);
+                  if (align!.x < 0) {
                     //  Card is LEFT swiping.
                   } else if (align.x > 0) {
                     //  Card is RIGHT swiping
@@ -84,7 +84,7 @@ class _TinderHomePageState extends State<TinderHomePage> {
                               image: DecorationImage(
                                   image: FadeInImage(
                                     placeholder: Image.asset('images/LikeButton/image/grey.jpg').image,
-                                    image: Image.network(user[index].image).image,
+                                    image: Image.network(user[index].image!).image,
                                   ).image,
                                   fit: BoxFit.cover),
                               color: Colors.white),
@@ -98,12 +98,12 @@ class _TinderHomePageState extends State<TinderHomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(user[index].name, style: TextStyle(fontSize: 20, color: Colors.white)),
+                                    Text(user[index].name!, style: TextStyle(fontSize: 20, color: Colors.white)),
                                     Container(margin: EdgeInsets.only(left: 10), child: Text(user[index].age.toString(), style: TextStyle(fontSize: 20, color: Colors.white)))
                                   ],
                                 ),
                               ),
-                              Container(alignment: Alignment.bottomLeft, child: Text(user[index].city, style: TextStyle(fontSize: 18, color: Colors.white))),
+                              Container(alignment: Alignment.bottomLeft, child: Text(user[index].city!, style: TextStyle(fontSize: 18, color: Colors.white))),
                             ],
                           )),
                       Align(
@@ -170,10 +170,10 @@ class _TinderHomePageState extends State<TinderHomePage> {
 }
 
 class UserDetails {
-  String name;
-  String image;
-  int age;
-  String city;
+  String? name;
+  String? image;
+  int? age;
+  String? city;
 
   UserDetails({
     this.name,

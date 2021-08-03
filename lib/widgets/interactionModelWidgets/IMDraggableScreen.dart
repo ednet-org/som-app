@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IMDraggableScreen extends StatefulWidget {
   static String tag = '/IMDraggableScreen';
@@ -46,7 +46,7 @@ class _IMDraggableScreenState extends State<IMDraggableScreen> with TickerProvid
               return ExampleItemWidget(
                 example[index],
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
                 },
               );
             }));

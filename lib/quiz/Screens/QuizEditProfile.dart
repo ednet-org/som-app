@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/quiz/utils/QuizImages.dart';
-import 'package:prokit_flutter/quiz/utils/QuizStrings.dart';
-import 'package:prokit_flutter/quiz/utils/QuizWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
+import 'package:som/quiz/utils/QuizImages.dart';
+import 'package:som/quiz/utils/QuizStrings.dart';
+import 'package:som/quiz/utils/QuizWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class QuizEditProfile extends StatefulWidget {
   static String tag = '/QuizEditProfile';
@@ -18,6 +18,7 @@ class QuizEditProfile extends StatefulWidget {
 class _QuizEditProfileState extends State<QuizEditProfile> {
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
     final Imgview = Container(
       child: Column(
         children: <Widget>[

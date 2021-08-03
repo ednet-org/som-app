@@ -5,12 +5,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/utils/T5BubbleBotoomBar.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/utils/T5BubbleBotoomBar.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
 
 class T5Profile extends StatefulWidget {
   static var tag = "/T5Profile";
@@ -20,7 +20,7 @@ class T5Profile extends StatefulWidget {
 }
 
 class T5ProfileState extends State<T5Profile> {
-  double width;
+  double? width;
 
   @override
   void initState() {
@@ -39,16 +39,16 @@ class T5ProfileState extends State<T5Profile> {
 
   Widget gridItem(int pos) {
     return Container(
-        width: (width - (16 * 3)) / 2,
-        height: (width - (16 * 3)) / 2,
+        width: (width! - (16 * 3)) / 2,
+        height: (width! - (16 * 3)) / 2,
         decoration: boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SvgPicture.asset(
               iconList[pos],
-              width: width / 7,
-              height: width / 7,
+              width: width! / 7,
+              height: width! / 7,
               color: black,
             ),
             text(nameList[pos], fontSize: textSizeNormal, textColor: t5TextColorPrimary, fontFamily: fontSemibold)

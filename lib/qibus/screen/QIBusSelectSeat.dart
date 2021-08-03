@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/screen/QIBusPickDrop.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/screen/QIBusPickDrop.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class QIBusSelectSeat extends StatefulWidget {
@@ -21,7 +21,7 @@ class QIBusSelectSeat extends StatefulWidget {
 }
 
 class QIBusSelectSeatState extends State<QIBusSelectSeat> {
-  List<QIBusSeatModel> mlist;
+  late List<QIBusSeatModel> mlist;
 
   @override
   void initState() {
@@ -184,7 +184,7 @@ class QIBusSeatSelection extends StatefulWidget {
 
 class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
   bool visibility = false;
-  QIBusSeatModel model;
+  late QIBusSeatModel model;
 
   Widget mSeat(var color) {
     return Container(
@@ -201,7 +201,7 @@ class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
     });
   }
 
-  int index;
+  int? index;
 
   QIBusSeatSelectionState(QIBusSeatModel model, int index) {
     this.model = model;
@@ -259,7 +259,7 @@ class QIBusSeatSelectionState extends State<QIBusSeatSelection> {
 
 Widget mBookNow(BuildContext context) {
   return Container(
-    height: MediaQuery.of(context).size.width * 0.4,
+    height: MediaQuery.of(context).size.height * 0.2,
     decoration: boxDecoration(showShadow: true, radius: 0.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,

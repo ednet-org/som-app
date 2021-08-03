@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5DataGenerator.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5DataGenerator.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 import '../../main.dart';
 
@@ -19,8 +19,8 @@ class T5Search extends StatefulWidget {
 }
 
 class T5SearchState extends State<T5Search> {
-  List<T5Contact> mRecentContact = List<T5Contact>();
-  List<T5Contact> mOtherContact = List<T5Contact>();
+  List<T5Contact> mRecentContact = [];
+  List<T5Contact> mOtherContact = [];
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class T5SearchState extends State<T5Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: Container(

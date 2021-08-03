@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme6/models/T6Models.dart';
-import 'package:prokit_flutter/theme6/utils/T6DataGenerator.dart';
-import 'package:prokit_flutter/theme6/utils/T6Widget.dart';
-import 'package:prokit_flutter/theme6/utils/Widget/T6SliderWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme6/models/T6Models.dart';
+import 'package:som/theme6/utils/T6DataGenerator.dart';
+import 'package:som/theme6/utils/T6Widget.dart';
+import 'package:som/theme6/utils/Widget/T6SliderWidget.dart';
 
 import '../../main.dart';
 
@@ -17,7 +17,7 @@ class T6ImageSlider extends StatefulWidget {
 
 class T6ImageSliderState extends State<T6ImageSlider> {
   int selectedPos = 1;
-  List<T6Slider> mSliderList;
+  List<T6Slider>? mSliderList;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class T6ImageSliderState extends State<T6ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: Container(

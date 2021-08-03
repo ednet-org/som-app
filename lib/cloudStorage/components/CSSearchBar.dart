@@ -1,13 +1,13 @@
-import 'package:prokit_flutter/cloudStorage/components/CSFileAndFolderEditingComponents.dart';
-import 'package:prokit_flutter/cloudStorage/model/CSDataModel.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/components/CSFileAndFolderEditingComponents.dart';
+import 'package:som/cloudStorage/model/CSDataModel.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CSSearchBar extends SearchDelegate {
-  final String hintText;
-  final List<CSDataModel> listData;
+  final String? hintText;
+  final List<CSDataModel>? listData;
 
   CSSearchBar({this.hintText, this.listData}) : super(textInputAction: TextInputAction.search, keyboardType: TextInputType.text);
 
@@ -32,7 +32,7 @@ class CSSearchBar extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final resultList = query.isEmpty ? [] : listData.where((element) => element.fileName.toLowerCase().contains(query.toLowerCase())).toList();
+    final resultList = query.isEmpty ? [] : listData!.where((element) => element.fileName!.toLowerCase().contains(query.toLowerCase())).toList();
     return resultList.length != 0
         ? Container(
             child: ListView.builder(

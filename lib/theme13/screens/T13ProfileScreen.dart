@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme13/model/T13Model.dart';
-import 'package:prokit_flutter/theme13/utils/T13Colors.dart';
-import 'package:prokit_flutter/theme13/utils/T13Constant.dart';
-import 'package:prokit_flutter/theme13/utils/T13DataGenerator.dart';
-import 'package:prokit_flutter/theme13/utils/T13Images.dart';
-import 'package:prokit_flutter/theme13/utils/T13Strings.dart';
-import 'package:prokit_flutter/theme13/utils/T13Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme13/model/T13Model.dart';
+import 'package:som/theme13/utils/T13Colors.dart';
+import 'package:som/theme13/utils/T13Constant.dart';
+import 'package:som/theme13/utils/T13DataGenerator.dart';
+import 'package:som/theme13/utils/T13Images.dart';
+import 'package:som/theme13/utils/T13Strings.dart';
+import 'package:som/theme13/utils/T13Widget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +20,7 @@ class T13ProfileScreen extends StatefulWidget {
 }
 
 class T13ProfileScreenState extends State<T13ProfileScreen> {
-  List<Home> mList;
+  late List<Home> mList;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T13ProfileScreenState extends State<T13ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
 
     var mProfileHeader = Container(
@@ -132,8 +132,9 @@ class T13ProfileScreenState extends State<T13ProfileScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Properties extends StatelessWidget {
-  Home model;
+  late Home model;
 
   Properties(Home model, int pos) {
     this.model = model;

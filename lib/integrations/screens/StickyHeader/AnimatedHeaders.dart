@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/sticky_header/sticky_headers/widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/sticky_header/sticky_headers/widget.dart';
 
 class AnimatedHeaders extends StatelessWidget {
   static String tag = '/AnimatedHeaders';
@@ -33,7 +33,8 @@ class AnimatedHeaders extends StatelessWidget {
                       opacity: stuckAmount,
                       child: IconButton(
                         icon: Icon(Icons.favorite, color: Colors.white),
-                        onPressed: () => Scaffold.of(context).showSnackBar(SnackBar(content: Text('Favorite #$index'))),
+
+                        onPressed: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Favorite #$index'))),
                       ),
                     ),
                   ),

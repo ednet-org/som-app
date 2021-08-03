@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 import '../Colors.dart';
 
@@ -59,12 +59,14 @@ class ProjectDetailWidgetState extends State<ProjectDetailWidget> {
                   textAlign: TextAlign.center)
               .withWidth(context.width() * 0.7),
           24.height,
-          FlatButton(
+          TextButton(
             onPressed: () {},
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 32, right: 32),
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+              primary: portfolio2PrimaryColor,
+              padding: EdgeInsets.only(top: 20, bottom: 20, left: 32, right: 32),
+            ),
             child: Text('View my project', style: boldTextStyle(color: Colors.white)),
-            color: portfolio2PrimaryColor,
           ),
           32.height
         ],

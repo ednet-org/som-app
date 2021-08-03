@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 const t11_ic_Inst = "images/theme11/T11_ic_Inst.png";
 const t11_ic_Youtube = "images/theme11/T11_ic_Youtube.png";

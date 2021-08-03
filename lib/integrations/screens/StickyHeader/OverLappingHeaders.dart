@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/sticky_header/sticky_headers/widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/sticky_header/sticky_headers/widget.dart';
 
 class OverLappingHeaders extends StatelessWidget {
   static String tag = '/OverLappingHeaders';
@@ -17,7 +17,7 @@ class OverLappingHeaders extends StatelessWidget {
             return Container(
               height: 50.0,
               // Set the color and opacity of the header
-              color: Colors.grey[900].withOpacity(0.6 + stuckAmount * 0.4),
+              color: Colors.grey[900]!.withOpacity(0.6 + stuckAmount * 0.4),
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               alignment: Alignment.centerLeft,
               child: Text(

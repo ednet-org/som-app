@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'BHResetPasswordScreen.dart';
@@ -24,12 +24,12 @@ class BHVerificationScreenState extends State<BHVerificationScreen> {
   FocusNode fifthDigit = FocusNode();
 
   int _counter = 10;
-  Timer _timer;
+  Timer? _timer;
 
   void _startTimer() {
     _counter = 10;
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
     }
     _timer = Timer.periodic(
       Duration(seconds: 1),
@@ -47,7 +47,7 @@ class BHVerificationScreenState extends State<BHVerificationScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     super.dispose();
   }
 
@@ -214,14 +214,16 @@ class BHVerificationScreenState extends State<BHVerificationScreen> {
                     16.height,
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          padding: EdgeInsets.all(12),
+                          primary: BHColorPrimary,
+                        ),
                         onPressed: () {
                           finish(context);
                           BHResetPasswordScreen().launch(context);
                         },
-                        color: BHColorPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         child: Text(BHBtnContinue, style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
                     ),

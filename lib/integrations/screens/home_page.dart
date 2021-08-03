@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/models/ContentModel.dart';
-import 'package:prokit_flutter/integrations/utils/data_provider.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/models/ContentModel.dart';
+import 'package:som/integrations/utils/data_provider.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IntegrationHomePage extends StatefulWidget {
   static String tag = '/HomePage';
@@ -16,7 +16,7 @@ class IntegrationHomePage extends StatefulWidget {
 }
 
 class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayoutMixin<IntegrationHomePage> {
-  List<ContentModel> list = List();
+  List<ContentModel> list = [];
   var isEnglishSelected = true;
   var isDarkThemeSelected = false;
 
@@ -43,7 +43,7 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
             Container(
               alignment: Alignment.centerLeft,
               decoration: boxDecorationWithShadow(
-                backgroundColor: appStore.scaffoldBackground,
+                backgroundColor: appStore.scaffoldBackground!,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -138,7 +138,7 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
               ),
             ),
             trailing: SizedBox(),
-            children: item.items.map(buildExpandedTile).toList(),
+            children: item.items!.map(buildExpandedTile).toList(),
           ),
         ),
       );

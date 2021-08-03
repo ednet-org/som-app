@@ -3,17 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_all_movies_screen.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_series_episodes_screen.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
-import 'package:prokit_flutter/muvi/utils/flix_duration_formatter.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/screens/flix_view_all_movies_screen.dart';
+import 'package:som/muvi/screens/flix_view_series_episodes_screen.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/utils/flix_duration_formatter.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 import 'package:video_player/video_player.dart';
 
 class SeriesDetailScreen extends StatefulWidget {
@@ -24,16 +24,16 @@ class SeriesDetailScreen extends StatefulWidget {
 }
 
 class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBindingObserver {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   var isloaded = false;
   bool showOverLay = false;
   bool isFullScreen = false;
   int _currentPosition = 0;
   int _duration = 0;
   bool isBuffering = false;
-  var actors = List<Movie>();
-  var episodes = List<Movie>();
-  var mMovieOriginalsList = List<Movie>();
+  List<Movie> actors = [];
+  List<Movie> episodes = [];
+  List<Movie> mMovieOriginalsList = [];
   var isExpanded = false;
 
   @override
@@ -50,7 +50,7 @@ class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBind
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     getData();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -71,7 +71,8 @@ class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBind
     _controller.addListener(
       () {
         isBuffering = _controller.value.isBuffering;
-        if (_controller.value.duration == null || _controller.value.position == null) {
+        // ignore: unnecessary_null_comparison
+        if (_controller.value.duration == null) {
           return;
         }
         if (mounted) {
@@ -89,7 +90,7 @@ class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBind
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
@@ -201,7 +202,7 @@ class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBind
                     radius: width * 0.1,
                     child: CircleAvatar(
                       radius: width * 0.09,
-                      backgroundImage: actors[index].slideImage != null ? CachedNetworkImageProvider(actors[index].slideImage) : CachedNetworkImageProvider(ic_profile),
+                      backgroundImage: actors[index].slideImage != null ? CachedNetworkImageProvider(actors[index].slideImage!) : CachedNetworkImageProvider(ic_profile),
                     ),
                     onTap: () {},
                   ),
@@ -432,10 +433,10 @@ class SeriesDetailScreenState extends State<SeriesDetailScreen> with WidgetsBind
   }
 }
 
-class _PlayPauseOverlay extends StatelessWidget {
-  const _PlayPauseOverlay({Key key, this.controller}) : super(key: key);
+class PlayPauseOverlay extends StatelessWidget {
+  const PlayPauseOverlay({Key? key, this.controller}) : super(key: key);
 
-  final VideoPlayerController controller;
+  final VideoPlayerController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -444,7 +445,7 @@ class _PlayPauseOverlay extends StatelessWidget {
         AnimatedSwitcher(
           duration: Duration(milliseconds: 50),
           reverseDuration: Duration(milliseconds: 200),
-          child: controller.value.isPlaying
+          child: controller!.value.isPlaying
               ? SizedBox.shrink()
               : Container(
                   color: Colors.black26,
@@ -459,7 +460,7 @@ class _PlayPauseOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
+            controller!.value.isPlaying ? controller!.pause() : controller!.play();
           },
         ),
       ],

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/model/FoodModel.dart';
-import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/model/FoodModel.dart';
+import 'package:som/food/utils/FoodDataGenerator.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../utils/FoodColors.dart';
 import 'FoodRestaurantsDescription.dart';
@@ -17,7 +17,7 @@ class FoodReview extends StatefulWidget {
 }
 
 class FoodReviewState extends State<FoodReview> {
-  List<ReviewModel> mReviewList;
+  late List<ReviewModel> mReviewList;
 
   @override
   void initState() {

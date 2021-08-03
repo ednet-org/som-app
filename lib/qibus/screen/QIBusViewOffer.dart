@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusViewOffer extends StatefulWidget {
   static String tag = '/QIBusViewOffer';
@@ -18,7 +18,7 @@ class QIBusViewOffer extends StatefulWidget {
 }
 
 class QIBusViewOfferState extends State<QIBusViewOffer> {
-  List<QIBusNewOfferModel> mOfferList;
+  late List<QIBusNewOfferModel> mOfferList;
 
   @override
   void initState() {
@@ -54,8 +54,9 @@ class QIBusViewOfferState extends State<QIBusViewOffer> {
   }
 }
 
+// ignore: must_be_immutable
 class NewOffer extends StatelessWidget {
-  QIBusNewOfferModel model;
+  late QIBusNewOfferModel model;
 
   NewOffer(QIBusNewOfferModel model, int pos) {
     this.model = model;
@@ -80,7 +81,7 @@ class NewOffer extends StatelessWidget {
                   Container(
                     color: model.color,
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: model.img,
                       height: width * 0.3,
                       fit: BoxFit.none,

@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme9/models/T9Models.dart';
-import 'package:prokit_flutter/theme9/utils/T9BottomNavigationBar.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-import 'package:prokit_flutter/theme9/utils/T9Constant.dart';
-import 'package:prokit_flutter/theme9/utils/T9DataGenerator.dart';
-import 'package:prokit_flutter/theme9/utils/T9Images.dart';
-import 'package:prokit_flutter/theme9/utils/T9Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme9/models/T9Models.dart';
+import 'package:som/theme9/utils/T9BottomNavigationBar.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
+import 'package:som/theme9/utils/T9Constant.dart';
+import 'package:som/theme9/utils/T9DataGenerator.dart';
+import 'package:som/theme9/utils/T9Images.dart';
+import 'package:som/theme9/utils/T9Strings.dart';
 
 import '../../main.dart';
 
@@ -21,8 +21,8 @@ class T9Dashboard extends StatefulWidget {
 }
 
 class T9DashboardState extends State<T9Dashboard> {
-  List<T9FeaturedModel> mList1;
-  List<T9CategoryModel> mList2;
+  late List<T9FeaturedModel> mList1;
+  late List<T9CategoryModel> mList2;
   var _selectedIndex = 0;
 
   @override
@@ -41,7 +41,7 @@ class T9DashboardState extends State<T9Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -128,8 +128,9 @@ class T9DashboardState extends State<T9Dashboard> {
   }
 }
 
+// ignore: must_be_immutable
 class T9Featured extends StatelessWidget {
-  T9FeaturedModel model;
+  late T9FeaturedModel model;
 
   T9Featured(T9FeaturedModel model, int pos) {
     this.model = model;
@@ -147,7 +148,7 @@ class T9Featured extends StatelessWidget {
           ClipRRect(
             borderRadius: new BorderRadius.circular(8.0),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.img,
               fit: BoxFit.cover,
               height: w * 0.4,
@@ -174,8 +175,9 @@ class T9Featured extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class T9Category extends StatelessWidget {
-  T9CategoryModel model;
+  late T9CategoryModel model;
 
   T9Category(T9CategoryModel model, int pos) {
     this.model = model;
@@ -196,7 +198,7 @@ class T9Category extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(12.0),
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: model.img,
                     height: 70,
                     width: MediaQuery.of(context).size.width,

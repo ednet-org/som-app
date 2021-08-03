@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme2/utils/T2Colors.dart';
-import 'package:prokit_flutter/theme2/utils/T2Images.dart';
-import 'package:prokit_flutter/theme2/utils/T2Strings.dart';
-import 'package:prokit_flutter/theme2/utils/T2Widgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme2/utils/T2Colors.dart';
+import 'package:som/theme2/utils/T2Images.dart';
+import 'package:som/theme2/utils/T2Strings.dart';
+import 'package:som/theme2/utils/T2Widgets.dart';
 
 class T2Profile extends StatefulWidget {
   static var tag = "/T2Profile";
@@ -18,7 +18,7 @@ class T2Profile extends StatefulWidget {
 }
 
 class T2ProfileState extends State<T2Profile> {
-  String _selectedLocation = 'Male';
+  String? _selectedLocation = 'Male';
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
@@ -45,7 +45,7 @@ class T2ProfileState extends State<T2Profile> {
           builder: (_) => Stack(
             children: <Widget>[
               CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: t2_profile_cover_page_54,
                 width: width,
                 height: height / 2.5,
@@ -85,7 +85,7 @@ class T2ProfileState extends State<T2Profile> {
                                         SizedBox(width: 16),
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(16),
-                                          child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t2_profile, width: 80, height: 80),
+                                          child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t2_profile, width: 80, height: 80),
                                         ),
                                         SizedBox(width: 24),
                                         Container(

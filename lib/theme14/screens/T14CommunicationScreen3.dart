@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14CommunicationScreen3 extends StatefulWidget {
   @override
@@ -74,17 +74,17 @@ class _T14CommunicationScreen3State extends State<T14CommunicationScreen3> {
                                           children: [
                                             ClipRRect(
                                               borderRadius: BorderRadius.all(Radius.circular(16)),
-                                              child: Image.asset(data.img, height: 70, width: 70, fit: BoxFit.cover),
+                                              child: Image.asset(data.img!, height: 70, width: 70, fit: BoxFit.cover),
                                             ),
                                             Positioned(
                                               right: -10,
                                               bottom: 45,
-                                              child: Icon(Entypo.dot_single, color: data.isActive ? t14_TextField_BgColor : Colors.transparent, size: 35),
+                                              child: Icon(Entypo.dot_single, color: data.isActive! ? t14_TextField_BgColor : Colors.transparent, size: 35),
                                             ),
                                           ],
                                         ),
                                         8.height,
-                                        Text(data.name, style: boldTextStyle(color: t14_colorBlue, size: 14)),
+                                        Text(data.name!, style: boldTextStyle(color: t14_colorBlue, size: 14)),
                                       ],
                                     ),
                                   );
@@ -125,7 +125,7 @@ class _T14CommunicationScreen3State extends State<T14CommunicationScreen3> {
                                     height: 40,
                                     width: 40,
                                     decoration: boxDecorationWithShadow(
-                                      decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                                      decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                                       boxShape: BoxShape.circle,
                                     ),
                                   ),
@@ -135,14 +135,14 @@ class _T14CommunicationScreen3State extends State<T14CommunicationScreen3> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text(data.name, style: boldTextStyle(color: t14_colorBlue, size: 14)),
-                                          Icon(Entypo.dot_single, color: data.isActive ? Colors.green : Colors.transparent, size: 35),
+                                          Text(data.name!, style: boldTextStyle(color: t14_colorBlue, size: 14)),
+                                          Icon(Entypo.dot_single, color: data.isActive! ? Colors.green : Colors.transparent, size: 35),
                                         ],
                                       ),
-                                      Text(data.message, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
+                                      Text(data.message!, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
                                     ],
                                   ).expand(),
-                                  Text(data.lastSeen, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
+                                  Text(data.lastSeen!, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
                                 ],
                               ),
                             );

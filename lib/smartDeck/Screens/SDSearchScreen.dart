@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDSearchModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/ModelClass/SDSearchModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
 
 class SDSearchScreen extends StatefulWidget {
   @override
@@ -54,7 +54,7 @@ class _SDSearchScreenState extends State<SDSearchScreen> {
                 child: Text("Search history", style: secondaryTextStyle()),
               ),
               ListView.builder(
-                itemCount: searchList == null ? 0 : searchList.length,
+                itemCount:  searchList.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.only(top: 16),
                 physics: NeverScrollableScrollPhysics(),
@@ -76,7 +76,7 @@ class _SDSearchScreenState extends State<SDSearchScreen> {
                                   child: Icon(Icons.star, color: Colors.white, size: 12),
                                 ),
                                 SizedBox(width: 16),
-                                Text(searchList[index].value, style: primaryTextStyle(size: 16, color: sdTextPrimaryColor)),
+                                Text(searchList[index].value!, style: primaryTextStyle(size: 16, color: sdTextPrimaryColor)),
                               ],
                             ),
                             Icon(Icons.keyboard_arrow_right, color: sdIconColor)

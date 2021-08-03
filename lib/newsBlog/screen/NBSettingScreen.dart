@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBSettingScreen extends StatefulWidget {
   static String tag = '/NBSettingScreen';
@@ -15,7 +15,7 @@ class NBSettingScreen extends StatefulWidget {
 
 class NBSettingScreenState extends State<NBSettingScreen> {
   List<NBSettingsItemModel> mSettingList = nbGetSettingItems();
-  NBLanguageItemModel result = NBLanguageItemModel(NBEnglishFlag, 'English');
+  NBLanguageItemModel? result = NBLanguageItemModel(NBEnglishFlag, 'English');
 
   @override
   void initState() {
@@ -54,9 +54,9 @@ class NBSettingScreenState extends State<NBSettingScreen> {
               index == 0
                   ? Row(
                       children: [
-                        commonCacheImageWidget('${result.image}', 30),
+                        commonCacheImageWidget('${result!.image}', 30),
                         8.width,
-                        Text('${result.name}', style: primaryTextStyle()),
+                        Text('${result!.name}', style: primaryTextStyle()),
                         Icon(Icons.navigate_next).paddingAll(8),
                       ],
                     )

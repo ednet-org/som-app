@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/theme13/utils/T13Colors.dart';
-import 'package:prokit_flutter/theme13/utils/T13Strings.dart';
-import 'package:prokit_flutter/theme13/utils/T13Widget.dart';
-import 'package:prokit_flutter/theme13/utils/T13Constant.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme13/model/T13Model.dart';
-import 'package:prokit_flutter/theme13/utils/T13DataGenerator.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/theme13/utils/T13Colors.dart';
+import 'package:som/theme13/utils/T13Strings.dart';
+import 'package:som/theme13/utils/T13Constant.dart';
+import 'package:som/theme13/model/T13Model.dart';
+import 'package:som/theme13/utils/T13DataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +18,7 @@ class T13ListingScreen extends StatefulWidget {
 }
 
 class T13ListingScreenState extends State<T13ListingScreen> {
-  List<Currency> mList;
+  late List<Currency> mList;
 
   @override
   void initState() {
@@ -30,7 +28,7 @@ class T13ListingScreenState extends State<T13ListingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       appBar: appBar(context, t13_lbl_list),
@@ -52,8 +50,9 @@ class T13ListingScreenState extends State<T13ListingScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class ListInfo extends StatelessWidget {
-  Currency model;
+  late Currency model;
 
   ListInfo(Currency model, int pos) {
     this.model = model;

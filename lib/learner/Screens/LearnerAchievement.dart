@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerAchievements extends StatefulWidget {
   @override
@@ -14,8 +14,8 @@ class LearnerAchievements extends StatefulWidget {
 }
 
 class _LearnerAchievementsState extends State<LearnerAchievements> {
-  List<LearnerPeopleModel> mList1;
-  List<LearnerBadgeModel> mList2;
+  late List<LearnerPeopleModel> mList1;
+  late List<LearnerBadgeModel> mList2;
 
   @override
   void initState() {
@@ -113,8 +113,9 @@ class _LearnerAchievementsState extends State<LearnerAchievements> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerBadges extends StatelessWidget {
-  LearnerBadgeModel model;
+  late LearnerBadgeModel model;
 
   LearnerBadges(LearnerBadgeModel model, int pos) {
     this.model = model;
@@ -176,8 +177,9 @@ class LearnerBadges extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerLeaderBoard extends StatelessWidget {
-  LearnerPeopleModel model;
+  late LearnerPeopleModel model;
 
   LearnerLeaderBoard(LearnerPeopleModel model, int pos) {
     this.model = model;

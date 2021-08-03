@@ -2,13 +2,13 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/muvi/fragments/flix_home_fragment.dart';
-import 'package:prokit_flutter/muvi/fragments/flix_more_fragment.dart';
-import 'package:prokit_flutter/muvi/fragments/flix_my_files_fragment.dart';
-import 'package:prokit_flutter/muvi/fragments/flix_search_fragment.dart';
-import 'package:prokit_flutter/muvi/utils/flix_bottom_navigation.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/fragments/flix_home_fragment.dart';
+import 'package:som/muvi/fragments/flix_more_fragment.dart';
+import 'package:som/muvi/fragments/flix_my_files_fragment.dart';
+import 'package:som/muvi/fragments/flix_search_fragment.dart';
+import 'package:som/muvi/utils/flix_bottom_navigation.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
 
 class HomeScreen extends StatefulWidget {
   static String tag = '/HomeScreen';
@@ -23,7 +23,7 @@ class HomeScreenState extends State<HomeScreen> {
   var searchFragment = SearchFragment();
   var myFilesFragment = MyFilesFragment();
   var moreFragment = MoreFragment();
-  List<Widget> viewContainer;
+  late List<Widget> viewContainer;
   ListQueue<int> _navigationQueue = ListQueue();
 
   @override

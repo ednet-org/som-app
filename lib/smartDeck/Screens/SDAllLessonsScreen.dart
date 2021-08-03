@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDLessonDetailModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDSortScreen.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/smartDeck/ModelClass/SDLessonDetailModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/Screens/SDLessonsChapterDetailsScreen.dart';
+import 'package:som/smartDeck/Screens/SDSortScreen.dart';
 
 class SDLessons extends StatefulWidget {
   @override
@@ -121,15 +121,15 @@ class _SDLessonsState extends State<SDLessons> {
                           leading: CircleAvatar(
                             radius: 25,
                             backgroundColor: Colors.white,
-                            child: Image.asset(subject[index].image, height: 60, width: 60),
+                            child: Image.asset(subject[index].image!, height: 60, width: 60),
                           ),
-                          title: Text(subject[index].subjectName),
-                          subtitle: Container(margin: EdgeInsets.only(top: 5), child: Text(subject[index].totalChapter)),
+                          title: Text(subject[index].subjectName!),
+                          subtitle: Container(margin: EdgeInsets.only(top: 5), child: Text(subject[index].totalChapter!)),
                           trailing: CircularPercentIndicator(
                             radius: 30.0,
                             lineWidth: 3.0,
                             animation: true,
-                            percent: subject[index].status.toDouble(),
+                            percent: subject[index].status!.toDouble(),
                             backgroundColor: sdViewColor,
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: sdPrimaryColor,

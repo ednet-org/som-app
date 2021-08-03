@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/screens/MDashBoardScreen.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/screens/MDashBoardScreen.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
 
 class MSelectTopicScreen extends StatefulWidget {
   static String tag = '/MSelectTopicScreen';
@@ -64,7 +64,7 @@ class MSelectTopicScreenState extends State<MSelectTopicScreen> {
                     decoration: boxDecoration(color: data.isSelected ? Colors.transparent : appDividerColor, bgColor: data.isSelected ? mLimeColor : Colors.transparent, radius: 25),
                     margin: EdgeInsets.all(4),
                     padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16),
-                    child: Text(data.topicName, style: primaryTextStyle(color: white, size: 14)),
+                    child: Text(data.topicName!, style: primaryTextStyle(color: white, size: 14)),
                     //height: 200,
                   ).onTap(() {
                     data.isSelected = !data.isSelected;

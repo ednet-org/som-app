@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/screens/ShowViewCase/SVCHomePage.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/integrations/screens/ShowViewCase/SVCHomePage.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
 
 class SDEditProfileScreen extends StatefulWidget {
   @override
@@ -11,8 +11,8 @@ class SDEditProfileScreen extends StatefulWidget {
 class _SDEditProfileScreenState extends State<SDEditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    String _selectedLocation = 'Female';
-    String _selectedValue = '12th Grade';
+    String? _selectedLocation = 'Female';
+    String? _selectedValue = '12th Grade';
 
     Widget mInput(var mLabel) {
       return Padding(

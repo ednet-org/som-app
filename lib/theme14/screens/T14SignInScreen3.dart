@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14SignInScreen3 extends StatefulWidget {
   @override
@@ -21,12 +21,12 @@ class _T14SignInScreen3State extends State<T14SignInScreen3> {
   FocusNode forthDigit = FocusNode();
 
   int _counter = 59;
-  Timer _timer;
+  Timer? _timer;
 
   void _startTimer() {
     _counter = 59;
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
     }
     _timer = Timer.periodic(
       Duration(seconds: 1),
@@ -44,7 +44,7 @@ class _T14SignInScreen3State extends State<T14SignInScreen3> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     super.dispose();
   }
 

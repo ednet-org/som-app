@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPPodCastDetailScreen extends StatefulWidget {
-  final String img;
+  final String? img;
 
   MPPodCastDetailScreen({this.img});
 
@@ -58,7 +58,6 @@ class MPPodCastDetailScreenState extends State<MPPodCastDetailScreen> {
           children: [
             Stack(
               fit: StackFit.passthrough,
-              overflow: Overflow.clip,
               children: [
                 commonCacheImageWidget(widget.img, 250, width: context.width(), fit: BoxFit.cover),
                 Container(color: black.withOpacity(0.7), height: 250, width: context.width()),
@@ -130,9 +129,9 @@ class MPPodCastDetailScreenState extends State<MPPodCastDetailScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.title, style: boldTextStyle(color: white)),
+                              Text(data.title!, style: boldTextStyle(color: white)),
                               4.height,
-                              Text(data.subtitle, style: secondaryTextStyle(color: mpAppTextColor1)),
+                              Text(data.subtitle!, style: secondaryTextStyle(color: mpAppTextColor1)),
                             ],
                           ).expand(),
                           Text(data.number1.toString(), style: secondaryTextStyle(color: Colors.white)),

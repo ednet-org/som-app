@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:prokit_flutter/integrations/utils/DefaultLayout.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:som/integrations/utils/DefaultLayout.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
 
 class LiquidSwipeScreen extends StatefulWidget {
   static String tag = '/LiquidSwipeScreen';

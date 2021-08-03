@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/main.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14SubscriptionScreen3 extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _T14SubscriptionScreen3State extends State<T14SubscriptionScreen3> {
   List<CheckBoxTextModel> checkBoxTxtList = getCheckBoxTxtList();
   List<ChoosePlanModel> choosePlanList = getChoosePlanList();
 
-  int i;
+  int? i;
 
   @override
   void initState() {
@@ -69,9 +69,9 @@ class _T14SubscriptionScreen3State extends State<T14SubscriptionScreen3> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(data.title, style: boldTextStyle(color: t14_colorBlue, size: 16)),
+                      Text(data.title!, style: boldTextStyle(color: t14_colorBlue, size: 16)),
                       8.height,
-                      Text(data.subTitle, style: secondaryTextStyle(size: 14)),
+                      Text(data.subTitle!, style: secondaryTextStyle(size: 14)),
                     ],
                   ),
                 ).onTap(() {
@@ -98,10 +98,10 @@ class _T14SubscriptionScreen3State extends State<T14SubscriptionScreen3> {
                         width: 25,
                         height: 25,
                         decoration: BoxDecoration(
-                            color: data.checkBox ? t14_btn_checkBoxColor : Colors.transparent,
+                            color: data.checkBox! ? t14_btn_checkBoxColor : Colors.transparent,
                             border: Border.all(
                               width: 1,
-                              color: data.checkBox ? Colors.transparent : appStore.textPrimaryColor,
+                              color: data.checkBox! ? Colors.transparent : appStore.textPrimaryColor!,
                             ),
                             shape: BoxShape.circle),
                         child: Theme(
@@ -110,7 +110,7 @@ class _T14SubscriptionScreen3State extends State<T14SubscriptionScreen3> {
                             value: data.checkBox,
                             onChanged: (state) {
                               setState(() {
-                                return data.checkBox = state;
+                                 data.checkBox = state;
                               });
                             },
                             activeColor: Colors.transparent,
@@ -120,11 +120,11 @@ class _T14SubscriptionScreen3State extends State<T14SubscriptionScreen3> {
                         ),
                       ),
                       16.width,
-                      Text(data.name, style: secondaryTextStyle()),
+                      Text(data.name!, style: secondaryTextStyle()),
                     ],
                   ),
                 ).onTap(() {
-                  data.checkBox = !data.checkBox;
+                  data.checkBox = !data.checkBox!;
                   setState(() {});
                 });
               }).expand(),

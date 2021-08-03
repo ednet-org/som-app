@@ -6,14 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme2/models/models.dart';
-import 'package:prokit_flutter/theme2/utils/T2BubbleBotoomBar.dart';
-import 'package:prokit_flutter/theme2/utils/T2Colors.dart';
-import 'package:prokit_flutter/theme2/utils/T2DataGenerator.dart';
-import 'package:prokit_flutter/theme2/utils/T2Images.dart';
-import 'package:prokit_flutter/theme2/utils/T2Slider.dart';
-import 'package:prokit_flutter/theme2/utils/T2Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme2/models/models.dart';
+import 'package:som/theme2/utils/T2BubbleBotoomBar.dart';
+import 'package:som/theme2/utils/T2Colors.dart';
+import 'package:som/theme2/utils/T2DataGenerator.dart';
+import 'package:som/theme2/utils/T2Images.dart';
+import 'package:som/theme2/utils/T2Slider.dart';
+import 'package:som/theme2/utils/T2Strings.dart';
 
 import '../../main.dart';
 
@@ -28,8 +28,8 @@ class T2DashboardState extends State<T2Dashboard> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<T2Favourite> mFavouriteList;
-  List<T2Slider> mSliderList;
+  late List<T2Favourite> mFavouriteList;
+  List<T2Slider>? mSliderList;
   var currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -49,7 +49,7 @@ class T2DashboardState extends State<T2Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
     return Observer(
       builder: (_) => Scaffold(
@@ -90,7 +90,7 @@ class T2DashboardState extends State<T2Dashboard> {
                           child: Row(
                             children: <Widget>[
                               CachedNetworkImage(
-                                placeholder: placeholderWidgetFn(),
+                                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                 imageUrl: mFavouriteList[position].image,
                                 width: width / 3,
                                 height: width / 2.4,

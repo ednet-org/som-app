@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusReferEarn extends StatefulWidget {
   static String tag = '/QIBusReferEarn';
@@ -20,7 +20,7 @@ class QIBusReferEarnState extends State<QIBusReferEarn> {
   Widget mImg(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return CachedNetworkImage(
-      placeholder: placeholderWidgetFn(),
+      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
       imageUrl: qibus_ic_refer_and_earn,
       width: width * 0.4,
       height: width * 0.4,
@@ -64,7 +64,6 @@ class QIBusReferEarnState extends State<QIBusReferEarn> {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: qIBus_app_background,
         body: Column(

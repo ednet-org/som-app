@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWTextFormFieldScreen extends StatefulWidget {
   static String tag = '/MWTextFormFieldScreen';
@@ -55,7 +55,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
           child: SingleChildScrollView(
             child: Form(
               key: formKey,
-              autovalidate: autoValidate,
+              autovalidateMode: AutovalidateMode.always,
               child: Column(
                 children: [
                   TextFormField(
@@ -69,11 +69,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       labelText: 'Username*',
                       labelStyle: primaryTextStyle(),
@@ -81,7 +81,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     cursorColor: appStore.isDarkModeOn ? white : blackColor,
                     keyboardType: TextInputType.name,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Usermame is required';
+                      if (s!.trim().isEmpty) return 'Usermame is required';
                       if (!s.trim().isAlpha()) return 'Username is not valid';
                       return null;
                     },
@@ -98,11 +98,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       labelText: 'Email',
                       labelStyle: primaryTextStyle(),
@@ -110,7 +110,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     cursorColor: appStore.isDarkModeOn ? white : blackColor,
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Email is required';
+                      if (s!.trim().isEmpty) return 'Email is required';
                       if (!s.trim().validateEmail()) return 'Email is not valid';
                       return null;
                     },
@@ -128,11 +128,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       counterStyle: secondaryTextStyle(),
                       labelText: 'Mobile Number*',
@@ -141,7 +141,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     cursorColor: appStore.isDarkModeOn ? white : blackColor,
                     keyboardType: TextInputType.number,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Mobile is required';
+                      if (s!.trim().isEmpty) return 'Mobile is required';
                       if (!s.trim().validatePhone()) return 'Mobile is not valid';
                       return null;
                     },
@@ -158,11 +158,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       labelText: 'Address',
                       labelStyle: primaryTextStyle(),
@@ -172,7 +172,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     cursorColor: appStore.isDarkModeOn ? white : blackColor,
                     keyboardType: TextInputType.multiline,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Address is required';
+                      if (s!.trim().isEmpty) return 'Address is required';
                       return null;
                     },
                   ),
@@ -188,11 +188,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       labelText: 'PinCode',
                       labelStyle: primaryTextStyle(),
@@ -201,7 +201,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     keyboardType: TextInputType.number,
                     maxLength: 6,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Pin is required';
+                      if (s!.trim().isEmpty) return 'Pin is required';
                       if (!s.trim().isDigit()) return 'Pin is not valid';
                       return null;
                     },
@@ -214,11 +214,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: appStore.iconColor),
+                        borderSide: BorderSide(color: appStore.iconColor!),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                        borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                       ),
                       prefixIcon: Icon(
                         Icons.web,
@@ -235,7 +235,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     cursorColor: appStore.isDarkModeOn ? white : blackColor,
                     keyboardType: TextInputType.url,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'URL is required';
+                      if (s!.trim().isEmpty) return 'URL is required';
                       if (!s.trim().validateURL()) return 'URL is not valid';
                       return null;
                     },
@@ -250,11 +250,11 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: appStore.iconColor),
+                          borderSide: BorderSide(color: appStore.iconColor!),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(width: 1, color: appStore.iconColor),
+                          borderSide: BorderSide(width: 1, color: appStore.iconColor!),
                         ),
                         labelText: 'Donate',
                         prefixText: '\₹ ',
@@ -264,7 +264,7 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                         suffixStyle: boldTextStyle(color: Colors.green)),
                     maxLines: 1,
                     validator: (s) {
-                      if (s.trim().isEmpty) return 'Donate amount is required';
+                      if (s!.trim().isEmpty) return 'Donate amount is required';
                       if (!s.trim().isDigit()) return 'Donate amount is not valid';
                       return null;
                     },
@@ -273,8 +273,8 @@ class MWTextFormFieldScreenState extends State<MWTextFormFieldScreen> {
                     child: MaterialButton(
                       color: Colors.blue,
                       onPressed: () {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                         } else {
                           autoValidate = true;
                         }

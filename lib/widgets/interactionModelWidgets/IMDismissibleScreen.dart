@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IMDismissibleScreen extends StatefulWidget {
   static String tag = '/IMDismissibleScreen';
@@ -41,10 +41,10 @@ class _IMDismissibleScreenState extends State<IMDismissibleScreen> {
           backgroundColor: appStore.scaffoldBackground,
           appBar: appBar(context, 'Dismissible'),
           body: ListView.builder(
-              itemCount: example.length == null ? 0 : example.length,
+              itemCount:  example.length,
               itemBuilder: (BuildContext context, index) {
                 return ExampleItemWidget(example[index], onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
                 });
               })),
     );
@@ -57,7 +57,7 @@ Widget mDismissibleList(UserModel mUserModel) {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(radius: 20, backgroundColor: appColorPrimary, child: Text(mUserModel.tag, style: primaryTextStyle(color: Colors.white))),
+        CircleAvatar(radius: 20, backgroundColor: appColorPrimary, child: Text(mUserModel.tag!, style: primaryTextStyle(color: Colors.white))),
         10.width,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,13 +66,13 @@ Widget mDismissibleList(UserModel mUserModel) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  mUserModel.name,
+                  mUserModel.name!,
                   style: boldTextStyle(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  mUserModel.duration,
+                  mUserModel.duration!,
                   style: secondaryTextStyle(),
                 )
               ],
@@ -98,9 +98,9 @@ Widget mDismissibleList(UserModel mUserModel) {
 }
 
 class UserModel {
-  String tag;
-  String name;
-  String duration;
+  String? tag;
+  String? name;
+  String? duration;
 
   UserModel({
     this.tag,

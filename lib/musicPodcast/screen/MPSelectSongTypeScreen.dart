@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPSelectSongTypeScreen extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class MPSelectSongTypeScreenState extends State<MPSelectSongTypeScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white),
         ),
@@ -78,7 +78,7 @@ class MPSelectSongTypeScreenState extends State<MPSelectSongTypeScreen> {
                   ),
                   Container(color: Colors.black.withOpacity(data.isSelect ? 0.8 : 0.5), height: 120),
                   Icon(Icons.done, color: data.isSelect ? mpAppButtonColor : Colors.transparent, size: 30),
-                  Text(data.title, style: boldTextStyle(color: data.isSelect ? Colors.transparent : white.withOpacity(0.9)))
+                  Text(data.title!, style: boldTextStyle(color: data.isSelect ? Colors.transparent : white.withOpacity(0.9)))
                 ],
               ).cornerRadiusWithClipRRect(10),
             ).cornerRadiusWithClipRRect(10).onTap(() {

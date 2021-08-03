@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5DataGenerator.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5DataGenerator.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 import '../../main.dart';
 
@@ -19,7 +19,7 @@ class T5Listing extends StatefulWidget {
 
 class T5ListingState extends State<T5Listing> {
   int selectedPos = 1;
-  List<T5Bill> mListings;
+  late List<T5Bill> mListings;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T5ListingState extends State<T5Listing> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

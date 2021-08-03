@@ -4,15 +4,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/models/T4Models.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
-import 'package:prokit_flutter/theme4/utils/T4Constant.dart';
-import 'package:prokit_flutter/theme4/utils/T4DataGenerator.dart';
-import 'package:prokit_flutter/theme4/utils/T4Images.dart';
-import 'package:prokit_flutter/theme4/utils/T4Widgets.dart';
-import 'package:prokit_flutter/theme4/utils/widgets/T4BottomNavigationBar.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/models/T4Models.dart';
+import 'package:som/theme4/utils/T4Colors.dart';
+import 'package:som/theme4/utils/T4Constant.dart';
+import 'package:som/theme4/utils/T4DataGenerator.dart';
+import 'package:som/theme4/utils/T4Images.dart';
+import 'package:som/theme4/utils/T4Widgets.dart';
+import 'package:som/theme4/utils/widgets/T4BottomNavigationBar.dart';
 
 class T4Dashboard extends StatefulWidget {
   static var tag = "/T4Dashboard";
@@ -23,9 +23,9 @@ class T4Dashboard extends StatefulWidget {
 
 class T4DashboardState extends State<T4Dashboard> {
   int selectedPos = 1;
-  List<T4NewsModel> mCategories;
-  List<T4NewsModel> mHorizontalListings;
-  List<T4NewsModel> mListings;
+  late List<T4NewsModel> mCategories;
+  late List<T4NewsModel> mHorizontalListings;
+  late List<T4NewsModel> mListings;
   int _selectedIndex = 0;
 
   @override
@@ -48,8 +48,7 @@ class T4DashboardState extends State<T4Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -96,7 +95,7 @@ class T4DashboardState extends State<T4Dashboard> {
                                   children: <Widget>[
                                     ClipRRect(
                                       child: CachedNetworkImage(
-                                        placeholder: placeholderWidgetFn(),
+                                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                         imageUrl: mHorizontalListings[index].image,
                                         height: width * 0.5,
                                         width: width * 0.8,
@@ -154,7 +153,7 @@ class T4DashboardState extends State<T4Dashboard> {
                               children: <Widget>[
                                 ClipRRect(
                                   child: CachedNetworkImage(
-                                    placeholder: placeholderWidgetFn(),
+                                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                     imageUrl: mListings[index].image,
                                   ),
                                   borderRadius: BorderRadius.circular(4),

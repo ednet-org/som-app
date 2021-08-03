@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/shopHop/screens/ShWalkThroughScreen.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/shopHop/screens/ShWalkThroughScreen.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
 
 class ShSplashScreen extends StatefulWidget {
   static String tag = '/ShophopSplash';

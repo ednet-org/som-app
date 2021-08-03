@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/component/NBAudioNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/component/NBNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBFollowingScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/component/NBAudioNewsComponent.dart';
+import 'package:som/newsBlog/component/NBNewsComponent.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBFollowingScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
 
 class NBProfileScreen extends StatefulWidget {
   static String tag = '/NBProfileScreen';
@@ -16,7 +16,7 @@ class NBProfileScreen extends StatefulWidget {
 }
 
 class NBProfileScreenState extends State<NBProfileScreen> with SingleTickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
 
   List<NBNewsDetailsModel> newsList = nbGetNewsDetails();
 
@@ -37,7 +37,7 @@ class NBProfileScreenState extends State<NBProfileScreen> with SingleTickerProvi
 
   @override
   void dispose() {
-    tabController.dispose();
+    tabController!.dispose();
     super.dispose();
   }
 

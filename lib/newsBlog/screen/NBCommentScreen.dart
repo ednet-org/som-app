@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBCommentScreen extends StatefulWidget {
   static String tag = '/NBCommentScreen';
 
-  final NBNewsDetailsModel newsDetails;
+  final NBNewsDetailsModel? newsDetails;
 
   NBCommentScreen(this.newsDetails);
 
@@ -58,12 +58,12 @@ class NBCommentScreenState extends State<NBCommentScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.newsDetails.categoryName, style: boldTextStyle(color: NBPrimaryColor)),
-                        Text(widget.newsDetails.title, style: boldTextStyle()),
+                        Text(widget.newsDetails!.categoryName!, style: boldTextStyle(color: NBPrimaryColor)),
+                        Text(widget.newsDetails!.title!, style: boldTextStyle()),
                       ],
                     ).expand(flex: 2),
                     4.width,
-                    Image.asset(widget.newsDetails.image, height: 90, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).expand(flex: 1),
+                    Image.asset(widget.newsDetails!.image!, height: 90, fit: BoxFit.fill).cornerRadiusWithClipRRect(16).expand(flex: 1),
                   ],
                 ),
                 16.height,
@@ -75,7 +75,7 @@ class NBCommentScreenState extends State<NBCommentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage(commentList[index].image),
+                          backgroundImage: AssetImage(commentList[index].image!),
                           radius: 30,
                         ),
                         16.width,

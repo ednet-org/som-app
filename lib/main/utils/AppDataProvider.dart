@@ -1,346 +1,356 @@
-import 'package:prokit_flutter/Banking/screen/BankingSplash.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCSplashScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSSplashScreen.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard1.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard2.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard3.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard4.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard5.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard6.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard7.dart';
-import 'package:prokit_flutter/dashboard/screen/Dashboard8.dart';
-import 'package:prokit_flutter/food/screen/FoodWalkThrough.dart';
-import 'package:prokit_flutter/grocery/screen/GrocerySplash.dart';
-import 'package:prokit_flutter/hairSalon/screens/BHSplashScreen.dart';
-import 'package:prokit_flutter/integrations/screens/FilePickerScreen.dart';
-import 'package:prokit_flutter/integrations/screens/FingerprintAuthentication.dart';
-import 'package:prokit_flutter/integrations/screens/ImagePickerScreen.dart';
-import 'package:prokit_flutter/integrations/screens/LikeButton/LBHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/LocalNotificationScreen.dart';
-import 'package:prokit_flutter/integrations/screens/Marquee/MHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/Shimmer/SHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/ShowViewCase/SVCHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/StickyHeader/AnimatedHeaders.dart';
-import 'package:prokit_flutter/integrations/screens/StickyHeader/OverLappingHeaders.dart';
-import 'package:prokit_flutter/integrations/screens/StickyHeader/SimpleHeaders.dart';
-import 'package:prokit_flutter/integrations/screens/VideoPickerScreen.dart';
-import 'package:prokit_flutter/integrations/screens/api/get_method_api_integration.dart';
-import 'package:prokit_flutter/integrations/screens/api/post_method_api_integration.dart';
-import 'package:prokit_flutter/integrations/screens/before_after_image_screen.dart';
-import 'package:prokit_flutter/integrations/screens/button_screen.dart';
-import 'package:prokit_flutter/integrations/screens/confetti/CHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/fluid_slider_screen.dart';
-import 'package:prokit_flutter/integrations/screens/flutterCalender/CalenderHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/flutterTinderCard/TinderHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/folding_cell_screen.dart';
-import 'package:prokit_flutter/integrations/screens/google_map_screen.dart';
-import 'package:prokit_flutter/integrations/screens/google_signin_screen.dart';
-import 'package:prokit_flutter/integrations/screens/liquid_pull_to_refresh_screen.dart';
-import 'package:prokit_flutter/integrations/screens/liquid_swipe_screen.dart';
-import 'package:prokit_flutter/integrations/screens/picker_screen.dart';
-import 'package:prokit_flutter/integrations/screens/razorpay_screen.dart';
-import 'package:prokit_flutter/integrations/screens/shader_mask_screen.dart';
-import 'package:prokit_flutter/integrations/screens/singature_screen.dart';
-import 'package:prokit_flutter/integrations/screens/sliding_panel_screen.dart';
-import 'package:prokit_flutter/integrations/screens/wave_screen.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerWalkThrough.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/medium/screens/MSplashScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSplashScreen.dart';
-import 'package:prokit_flutter/muvi/screens/flix_splash_screen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBSplashScreen.dart';
-import 'package:prokit_flutter/orapay/screens/op_splash_screen.dart';
-import 'package:prokit_flutter/qibus/screen/QIBusSplash.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizSignIn.dart';
-import 'package:prokit_flutter/shopHop/screens/ShSplashScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDSplashScreen.dart';
-import 'package:prokit_flutter/social/screen/SocialWalkThrough.dart';
-import 'package:prokit_flutter/theme1/screen/T1BottomNavigation.dart';
-import 'package:prokit_flutter/theme1/screen/T1BottomSheet.dart';
-import 'package:prokit_flutter/theme1/screen/T1Card.dart';
-import 'package:prokit_flutter/theme1/screen/T1Dashboard.dart';
-import 'package:prokit_flutter/theme1/screen/T1Dialog.dart';
-import 'package:prokit_flutter/theme1/screen/T1ImageSlider.dart';
-import 'package:prokit_flutter/theme1/screen/T1Listing.dart';
-import 'package:prokit_flutter/theme1/screen/T1Login.dart';
-import 'package:prokit_flutter/theme1/screen/T1Profile.dart';
-import 'package:prokit_flutter/theme1/screen/T1Search.dart';
-import 'package:prokit_flutter/theme1/screen/T1Sidemenu.dart';
-import 'package:prokit_flutter/theme1/screen/T1Signup.dart';
-import 'package:prokit_flutter/theme1/screen/T1WalkThrough.dart';
-import 'package:prokit_flutter/theme10/screens/T10Cards.dart';
-import 'package:prokit_flutter/theme10/screens/T10Dashboard.dart';
-import 'package:prokit_flutter/theme10/screens/T10Description.dart';
-import 'package:prokit_flutter/theme10/screens/T10Dialog.dart';
-import 'package:prokit_flutter/theme10/screens/T10Listing.dart';
-import 'package:prokit_flutter/theme10/screens/T10Profile.dart';
-import 'package:prokit_flutter/theme10/screens/T10SideMenu.dart';
-import 'package:prokit_flutter/theme10/screens/T10SignIn.dart';
-import 'package:prokit_flutter/theme10/screens/T10SignUp.dart';
-import 'package:prokit_flutter/theme11/screens/T11BottomSheet.dart';
-import 'package:prokit_flutter/theme11/screens/T11Dashboard.dart';
-import 'package:prokit_flutter/theme11/screens/T11Description.dart';
-import 'package:prokit_flutter/theme11/screens/T11Listing.dart';
-import 'package:prokit_flutter/theme11/screens/T11Profile.dart';
-import 'package:prokit_flutter/theme11/screens/T11Search.dart';
-import 'package:prokit_flutter/theme11/screens/T11Setting.dart';
-import 'package:prokit_flutter/theme11/screens/T11SignIn.dart';
-import 'package:prokit_flutter/theme11/screens/T11SignUp.dart';
-import 'package:prokit_flutter/theme12/screens/t12_bottom_sheet.dart';
-import 'package:prokit_flutter/theme12/screens/t12_cards.dart';
-import 'package:prokit_flutter/theme12/screens/t12_dashboard.dart';
-import 'package:prokit_flutter/theme12/screens/t12_dialog.dart';
-import 'package:prokit_flutter/theme12/screens/t12_listing.dart';
-import 'package:prokit_flutter/theme12/screens/t12_profile.dart';
-import 'package:prokit_flutter/theme12/screens/t12_search.dart';
-import 'package:prokit_flutter/theme12/screens/t12_signin.dart';
-import 'package:prokit_flutter/theme12/screens/t12_signup.dart';
-import 'package:prokit_flutter/theme12/screens/t12_walkthrough.dart';
-import 'package:prokit_flutter/theme13/screens/T13BottomNavigationScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13CardScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13DashboardScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13DescriptionScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13DialogScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13FilterScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13ListingScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13ProfileScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13SearchScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13SettingScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13SignInScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13SignUpScreen.dart';
-import 'package:prokit_flutter/theme13/screens/T13WalkThroughScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14AllMessagesListScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14AutorisationScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14CalendarScreen1.dart';
-import 'package:prokit_flutter/theme14/screens/T14CalendarScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14CommunicationScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14CommunicationScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14FinanceScreen1.dart';
-import 'package:prokit_flutter/theme14/screens/T14FinanceScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14FinanceScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14FinanceScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14FinanceScreen5.dart';
-import 'package:prokit_flutter/theme14/screens/T14ProfileScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14RateScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignInScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignInScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignInScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignInScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignUpScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14SignUpScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen5.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen6.dart';
-import 'package:prokit_flutter/theme14/screens/T14SubscriptionScreen7.dart';
-import 'package:prokit_flutter/theme14/screens/T14SuccessAndFailScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14TravelDetailScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14TravelScreen.dart';
-import 'package:prokit_flutter/theme14/screens/T14TravelScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14TravelScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14TravelScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen1.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen2.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen3.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen4.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen5.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen6.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen7.dart';
-import 'package:prokit_flutter/theme14/screens/T14WalkThroughScreen8.dart';
-import 'package:prokit_flutter/theme2/screens/T2BottomNavigation.dart';
-import 'package:prokit_flutter/theme2/screens/T2BottomSheet.dart';
-import 'package:prokit_flutter/theme2/screens/T2Cards.dart';
-import 'package:prokit_flutter/theme2/screens/T2Dashboard.dart';
-import 'package:prokit_flutter/theme2/screens/T2Dialog.dart';
-import 'package:prokit_flutter/theme2/screens/T2ImageSlider.dart';
-import 'package:prokit_flutter/theme2/screens/T2Listing.dart';
-import 'package:prokit_flutter/theme2/screens/T2Profile.dart';
-import 'package:prokit_flutter/theme2/screens/T2Search.dart';
-import 'package:prokit_flutter/theme2/screens/T2SideMenu.dart';
-import 'package:prokit_flutter/theme2/screens/T2SignIn.dart';
-import 'package:prokit_flutter/theme2/screens/T2SignUp.dart';
-import 'package:prokit_flutter/theme2/screens/T2Walkthrough.dart';
-import 'package:prokit_flutter/theme3/screen/T3BottomNavigation.dart';
-import 'package:prokit_flutter/theme3/screen/T3BottomSheet.dart';
-import 'package:prokit_flutter/theme3/screen/T3Cards.dart';
-import 'package:prokit_flutter/theme3/screen/T3Dashboard.dart';
-import 'package:prokit_flutter/theme3/screen/T3Description.dart';
-import 'package:prokit_flutter/theme3/screen/T3Dialog.dart';
-import 'package:prokit_flutter/theme3/screen/T3ImageSlider.dart';
-import 'package:prokit_flutter/theme3/screen/T3Listing.dart';
-import 'package:prokit_flutter/theme3/screen/T3Profile.dart';
-import 'package:prokit_flutter/theme3/screen/T3Search.dart';
-import 'package:prokit_flutter/theme3/screen/T3Setting.dart';
-import 'package:prokit_flutter/theme3/screen/T3SideMenu.dart';
-import 'package:prokit_flutter/theme3/screen/T3SignIn.dart';
-import 'package:prokit_flutter/theme3/screen/T3SignUp.dart';
-import 'package:prokit_flutter/theme3/screen/T3Tab.dart';
-import 'package:prokit_flutter/theme3/screen/T3Walkthrough.dart';
-import 'package:prokit_flutter/theme4/screens/T4BottomNavigation.dart';
-import 'package:prokit_flutter/theme4/screens/T4Cards.dart';
-import 'package:prokit_flutter/theme4/screens/T4Dashboard.dart';
-import 'package:prokit_flutter/theme4/screens/T4Detail.dart';
-import 'package:prokit_flutter/theme4/screens/T4Dialog.dart';
-import 'package:prokit_flutter/theme4/screens/T4ImageSlider.dart';
-import 'package:prokit_flutter/theme4/screens/T4Listing.dart';
-import 'package:prokit_flutter/theme4/screens/T4Profile.dart';
-import 'package:prokit_flutter/theme4/screens/T4SignIn.dart';
-import 'package:prokit_flutter/theme4/screens/T4SignUp.dart';
-import 'package:prokit_flutter/theme4/screens/T4Walkthrough.dart';
-import 'package:prokit_flutter/theme5/screens/T5BottomNavigation.dart';
-import 'package:prokit_flutter/theme5/screens/T5BottomSheet.dart';
-import 'package:prokit_flutter/theme5/screens/T5Cards.dart';
-import 'package:prokit_flutter/theme5/screens/T5Dashboard.dart';
-import 'package:prokit_flutter/theme5/screens/T5Dialog.dart';
-import 'package:prokit_flutter/theme5/screens/T5ImageSlider.dart';
-import 'package:prokit_flutter/theme5/screens/T5Listing.dart';
-import 'package:prokit_flutter/theme5/screens/T5Profile.dart';
-import 'package:prokit_flutter/theme5/screens/T5Search.dart';
-import 'package:prokit_flutter/theme5/screens/T5Settings.dart';
-import 'package:prokit_flutter/theme5/screens/T5SignIn.dart';
-import 'package:prokit_flutter/theme5/screens/T5SignUp.dart';
-import 'package:prokit_flutter/theme5/screens/T5Walkthrough.dart';
-import 'package:prokit_flutter/theme6/screens/T6BottomNavigation.dart';
-import 'package:prokit_flutter/theme6/screens/T6Cards.dart';
-import 'package:prokit_flutter/theme6/screens/T6Dashboard.dart';
-import 'package:prokit_flutter/theme6/screens/T6Dialog.dart';
-import 'package:prokit_flutter/theme6/screens/T6ImageSlider.dart';
-import 'package:prokit_flutter/theme6/screens/T6List.dart';
-import 'package:prokit_flutter/theme6/screens/T6Setting.dart';
-import 'package:prokit_flutter/theme6/screens/T6SignIn.dart';
-import 'package:prokit_flutter/theme6/screens/T6SignUp.dart';
-import 'package:prokit_flutter/theme6/screens/T6WalkThrough.dart';
-import 'package:prokit_flutter/theme7/screens/T7BottomSheet.dart';
-import 'package:prokit_flutter/theme7/screens/T7Dashboard.dart';
-import 'package:prokit_flutter/theme7/screens/T7HotelBooking.dart';
-import 'package:prokit_flutter/theme7/screens/T7HotelDetail.dart';
-import 'package:prokit_flutter/theme7/screens/T7HotelList.dart';
-import 'package:prokit_flutter/theme7/screens/T7PlaceDetail.dart';
-import 'package:prokit_flutter/theme7/screens/T7Search.dart';
-import 'package:prokit_flutter/theme7/screens/T7SignIn.dart';
-import 'package:prokit_flutter/theme7/screens/T7SocialLogin.dart';
-import 'package:prokit_flutter/theme7/screens/T7WalkThrough.dart';
-import 'package:prokit_flutter/theme8/screen/T8BottomNavigation.dart';
-import 'package:prokit_flutter/theme8/screen/T8Cards.dart';
-import 'package:prokit_flutter/theme8/screen/T8Dashboard.dart';
-import 'package:prokit_flutter/theme8/screen/T8Listing.dart';
-import 'package:prokit_flutter/theme8/screen/T8Result.dart';
-import 'package:prokit_flutter/theme8/screen/T8Search.dart';
-import 'package:prokit_flutter/theme8/screen/T8Settings.dart';
-import 'package:prokit_flutter/theme8/screen/T8SignIn.dart';
-import 'package:prokit_flutter/theme8/screen/T8SignUp.dart';
-import 'package:prokit_flutter/theme9/screens/T9BottomNavigation.dart';
-import 'package:prokit_flutter/theme9/screens/T9Cards.dart';
-import 'package:prokit_flutter/theme9/screens/T9Dashboard.dart';
-import 'package:prokit_flutter/theme9/screens/T9Description.dart';
-import 'package:prokit_flutter/theme9/screens/T9List.dart';
-import 'package:prokit_flutter/theme9/screens/T9Profile.dart';
-import 'package:prokit_flutter/theme9/screens/T9Search.dart';
-import 'package:prokit_flutter/theme9/screens/T9SignIn.dart';
-import 'package:prokit_flutter/theme9/screens/T9SingUp.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio1/Portfolio1Screen.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio2/Portfolio2Screen.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio3/Portfolio3Screen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedBuilderScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedContainerScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedCrossFadeScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedOpacityScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedPositionedScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMAnimatedSizeScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMFadeTransitionScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMHeroScreen.dart';
-import 'package:prokit_flutter/widgets/animationAndMotionWidgets/AMScaleTransitionScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWActionSheetScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWActivityIndicatorScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWAlertDialogScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWButtonScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWContextMenuScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWDialogScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWNavigationBarScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWPickerScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWSegmentedControlScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWSliderScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWSlidingSegmentedControlScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWSwitchScreen.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen1.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen2.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen3.dart';
-import 'package:prokit_flutter/widgets/cupertinoWidgets/CWTextFieldScreen.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/IMGestureDetectorScreen.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imDismissibleWidgets/IMDismissibleScreen1.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imDismissibleWidgets/IMDismissibleScreen2.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imDraggableWidgets/IMDraggableScreen1.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imDraggableWidgets/IMDraggableScreen2.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen1.dart';
-import 'package:prokit_flutter/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWAppBarScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen3.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen4.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen3.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWDropDownButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWFlatButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWFloatingActionButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWIconButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWMaterialButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWOutlineButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWPopupMenuButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwButtonWidgets/MWRaisedButtonScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWAlertDialogScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWBottomSheetScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWExpansionPanelScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSimpleDialogScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSnackBarScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWToastScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWCardScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWChipScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWDataTableScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWGridViewScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWIconScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWImageScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen3.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen4.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen5.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWProgressBarScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWRichTextScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInformationDisplayWidgets/MWTooltipScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWCheckboxScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWDatetimePickerScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWRadioScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWSliderScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWSwitchScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFormFieldScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWDividerScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWListTileScreen.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen3.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen4.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen1.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen2.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen3.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen4.dart';
-import 'package:prokit_flutter/widgets/otherWidgets/InteractiveViewerScreen.dart';
-import 'package:prokit_flutter/widgets/otherWidgets/OpenContainerTransformScreen.dart';
-import 'package:prokit_flutter/widgets/paintingAndEffectWidgets/PEBackdropFilterScreen.dart';
-import 'package:prokit_flutter/widgets/paintingAndEffectWidgets/PEClipOvalScreen.dart';
-import 'package:prokit_flutter/widgets/paintingAndEffectWidgets/PEOpacityScreen.dart';
-import 'package:prokit_flutter/widgets/paintingAndEffectWidgets/PERotatedBoxScreen.dart';
-import 'package:prokit_flutter/widgets/paintingAndEffectWidgets/PETransformScreen.dart';
+import 'package:som/Banking/screen/BankingSplash.dart';
+import 'package:som/ProCricketUI/screen/PCSplashScreen.dart';
+import 'package:som/cloudStorage/screens/CSSplashScreen.dart';
+import 'package:som/dashboard/screen/Dashboard1.dart';
+import 'package:som/dashboard/screen/Dashboard2.dart';
+import 'package:som/dashboard/screen/Dashboard3.dart';
+import 'package:som/dashboard/screen/Dashboard4.dart';
+import 'package:som/dashboard/screen/Dashboard5.dart';
+import 'package:som/dashboard/screen/Dashboard6.dart';
+import 'package:som/dashboard/screen/Dashboard7.dart';
+import 'package:som/dashboard/screen/Dashboard8.dart';
+import 'package:som/food/screen/FoodWalkThrough.dart';
+import 'package:som/grocery/screen/GrocerySplash.dart';
+import 'package:som/hairSalon/screens/BHSplashScreen.dart';
+import 'package:som/integrations/screens/BarChart1Screen.dart';
+import 'package:som/integrations/screens/BarChart2Screen.dart';
+import 'package:som/integrations/screens/FilePickerScreen.dart';
+import 'package:som/integrations/screens/FingerprintAuthentication.dart';
+import 'package:som/integrations/screens/ImagePickerScreen.dart';
+import 'package:som/integrations/screens/LikeButton/LBHomePage.dart';
+import 'package:som/integrations/screens/LineChartScreen.dart';
+import 'package:som/integrations/screens/LocalNotificationScreen.dart';
+import 'package:som/integrations/screens/Marquee/MHomePage.dart';
+import 'package:som/integrations/screens/MonthlySale1Screen.dart';
+import 'package:som/integrations/screens/MonthlySale2Screen.dart';
+import 'package:som/integrations/screens/PieChartScreen.dart';
+import 'package:som/integrations/screens/Shimmer/SHomePage.dart';
+import 'package:som/integrations/screens/ShowViewCase/SVCHomePage.dart';
+import 'package:som/integrations/screens/StackedChart1Screen.dart';
+import 'package:som/integrations/screens/StackedChart2Screen.dart';
+import 'package:som/integrations/screens/StackedChart3Screen.dart';
+import 'package:som/integrations/screens/StackedChart4Screen.dart';
+import 'package:som/integrations/screens/StackedChart5Screen.dart';
+import 'package:som/integrations/screens/StackedChart6Screen.dart';
+import 'package:som/integrations/screens/StickyHeader/AnimatedHeaders.dart';
+import 'package:som/integrations/screens/StickyHeader/OverLappingHeaders.dart';
+import 'package:som/integrations/screens/StickyHeader/SimpleHeaders.dart';
+import 'package:som/integrations/screens/TransactionScreen.dart';
+import 'package:som/integrations/screens/VideoPickerScreen.dart';
+import 'package:som/integrations/screens/api/get_method_api_integration.dart';
+import 'package:som/integrations/screens/api/post_method_api_integration.dart';
+import 'package:som/integrations/screens/before_after_image_screen.dart';
+import 'package:som/integrations/screens/button_screen.dart';
+import 'package:som/integrations/screens/confetti/CHomePage.dart';
+import 'package:som/integrations/screens/fluid_slider_screen.dart';
+import 'package:som/integrations/screens/flutterCalender/CalenderHomePage.dart';
+import 'package:som/integrations/screens/flutterTinderCard/TinderHomePage.dart';
+import 'package:som/integrations/screens/folding_cell_screen.dart';
+import 'package:som/integrations/screens/google_signin_screen.dart';
+import 'package:som/integrations/screens/liquid_pull_to_refresh_screen.dart';
+import 'package:som/integrations/screens/liquid_swipe_screen.dart';
+import 'package:som/integrations/screens/picker_screen.dart';
+import 'package:som/integrations/screens/shader_mask_screen.dart';
+import 'package:som/integrations/screens/singature_screen.dart';
+import 'package:som/integrations/screens/wave_screen.dart';
+import 'package:som/learner/Screens/LearnerWalkThrough.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/medium/screens/MSplashScreen.dart';
+import 'package:som/musicPodcast/screen/MPSplashScreen.dart';
+import 'package:som/muvi/screens/flix_splash_screen.dart';
+import 'package:som/newsBlog/screen/NBSplashScreen.dart';
+import 'package:som/orapay/screens/op_splash_screen.dart';
+import 'package:som/qibus/screen/QIBusSplash.dart';
+import 'package:som/quiz/Screens/QuizSignIn.dart';
+import 'package:som/shopHop/screens/ShSplashScreen.dart';
+import 'package:som/smartDeck/Screens/SDSplashScreen.dart';
+import 'package:som/social/screen/SocialWalkThrough.dart';
+import 'package:som/theme1/screen/T1BottomNavigation.dart';
+import 'package:som/theme1/screen/T1BottomSheet.dart';
+import 'package:som/theme1/screen/T1Card.dart';
+import 'package:som/theme1/screen/T1Dashboard.dart';
+import 'package:som/theme1/screen/T1Dialog.dart';
+import 'package:som/theme1/screen/T1ImageSlider.dart';
+import 'package:som/theme1/screen/T1Listing.dart';
+import 'package:som/theme1/screen/T1Login.dart';
+import 'package:som/theme1/screen/T1Profile.dart';
+import 'package:som/theme1/screen/T1Search.dart';
+import 'package:som/theme1/screen/T1Sidemenu.dart';
+import 'package:som/theme1/screen/T1Signup.dart';
+import 'package:som/theme1/screen/T1WalkThrough.dart';
+import 'package:som/theme10/screens/T10Cards.dart';
+import 'package:som/theme10/screens/T10Dashboard.dart';
+import 'package:som/theme10/screens/T10Description.dart';
+import 'package:som/theme10/screens/T10Dialog.dart';
+import 'package:som/theme10/screens/T10Listing.dart';
+import 'package:som/theme10/screens/T10Profile.dart';
+import 'package:som/theme10/screens/T10SideMenu.dart';
+import 'package:som/theme10/screens/T10SignIn.dart';
+import 'package:som/theme10/screens/T10SignUp.dart';
+import 'package:som/theme11/screens/T11BottomSheet.dart';
+import 'package:som/theme11/screens/T11Dashboard.dart';
+import 'package:som/theme11/screens/T11Description.dart';
+import 'package:som/theme11/screens/T11Listing.dart';
+import 'package:som/theme11/screens/T11Profile.dart';
+import 'package:som/theme11/screens/T11Search.dart';
+import 'package:som/theme11/screens/T11Setting.dart';
+import 'package:som/theme11/screens/T11SignIn.dart';
+import 'package:som/theme11/screens/T11SignUp.dart';
+import 'package:som/theme12/screens/t12_bottom_sheet.dart';
+import 'package:som/theme12/screens/t12_cards.dart';
+import 'package:som/theme12/screens/t12_dashboard.dart';
+import 'package:som/theme12/screens/t12_dialog.dart';
+import 'package:som/theme12/screens/t12_listing.dart';
+import 'package:som/theme12/screens/t12_profile.dart';
+import 'package:som/theme12/screens/t12_search.dart';
+import 'package:som/theme12/screens/t12_signin.dart';
+import 'package:som/theme12/screens/t12_signup.dart';
+import 'package:som/theme12/screens/t12_walkthrough.dart';
+import 'package:som/theme13/screens/T13BottomNavigationScreen.dart';
+import 'package:som/theme13/screens/T13CardScreen.dart';
+import 'package:som/theme13/screens/T13DashboardScreen.dart';
+import 'package:som/theme13/screens/T13DescriptionScreen.dart';
+import 'package:som/theme13/screens/T13DialogScreen.dart';
+import 'package:som/theme13/screens/T13FilterScreen.dart';
+import 'package:som/theme13/screens/T13ListingScreen.dart';
+import 'package:som/theme13/screens/T13ProfileScreen.dart';
+import 'package:som/theme13/screens/T13SearchScreen.dart';
+import 'package:som/theme13/screens/T13SettingScreen.dart';
+import 'package:som/theme13/screens/T13SignInScreen.dart';
+import 'package:som/theme13/screens/T13SignUpScreen.dart';
+import 'package:som/theme13/screens/T13WalkThroughScreen.dart';
+import 'package:som/theme14/screens/T14AllMessagesListScreen.dart';
+import 'package:som/theme14/screens/T14AutorisationScreen.dart';
+import 'package:som/theme14/screens/T14CalendarScreen1.dart';
+import 'package:som/theme14/screens/T14CalendarScreen2.dart';
+import 'package:som/theme14/screens/T14CommunicationScreen3.dart';
+import 'package:som/theme14/screens/T14CommunicationScreen4.dart';
+import 'package:som/theme14/screens/T14FinanceScreen1.dart';
+import 'package:som/theme14/screens/T14FinanceScreen2.dart';
+import 'package:som/theme14/screens/T14FinanceScreen3.dart';
+import 'package:som/theme14/screens/T14FinanceScreen4.dart';
+import 'package:som/theme14/screens/T14FinanceScreen5.dart';
+import 'package:som/theme14/screens/T14ProfileScreen.dart';
+import 'package:som/theme14/screens/T14RateScreen.dart';
+import 'package:som/theme14/screens/T14SignInScreen.dart';
+import 'package:som/theme14/screens/T14SignInScreen2.dart';
+import 'package:som/theme14/screens/T14SignInScreen3.dart';
+import 'package:som/theme14/screens/T14SignInScreen4.dart';
+import 'package:som/theme14/screens/T14SignUpScreen.dart';
+import 'package:som/theme14/screens/T14SignUpScreen2.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen2.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen3.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen4.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen5.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen6.dart';
+import 'package:som/theme14/screens/T14SubscriptionScreen7.dart';
+import 'package:som/theme14/screens/T14SuccessAndFailScreen.dart';
+import 'package:som/theme14/screens/T14TravelDetailScreen.dart';
+import 'package:som/theme14/screens/T14TravelScreen.dart';
+import 'package:som/theme14/screens/T14TravelScreen2.dart';
+import 'package:som/theme14/screens/T14TravelScreen3.dart';
+import 'package:som/theme14/screens/T14TravelScreen4.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen1.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen2.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen3.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen4.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen5.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen6.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen7.dart';
+import 'package:som/theme14/screens/T14WalkThroughScreen8.dart';
+import 'package:som/theme2/screens/T2BottomNavigation.dart';
+import 'package:som/theme2/screens/T2BottomSheet.dart';
+import 'package:som/theme2/screens/T2Cards.dart';
+import 'package:som/theme2/screens/T2Dashboard.dart';
+import 'package:som/theme2/screens/T2Dialog.dart';
+import 'package:som/theme2/screens/T2ImageSlider.dart';
+import 'package:som/theme2/screens/T2Listing.dart';
+import 'package:som/theme2/screens/T2Profile.dart';
+import 'package:som/theme2/screens/T2Search.dart';
+import 'package:som/theme2/screens/T2SideMenu.dart';
+import 'package:som/theme2/screens/T2SignIn.dart';
+import 'package:som/theme2/screens/T2SignUp.dart';
+import 'package:som/theme2/screens/T2Walkthrough.dart';
+import 'package:som/theme3/screen/T3BottomNavigation.dart';
+import 'package:som/theme3/screen/T3BottomSheet.dart';
+import 'package:som/theme3/screen/T3Cards.dart';
+import 'package:som/theme3/screen/T3Dashboard.dart';
+import 'package:som/theme3/screen/T3Description.dart';
+import 'package:som/theme3/screen/T3Dialog.dart';
+import 'package:som/theme3/screen/T3ImageSlider.dart';
+import 'package:som/theme3/screen/T3Listing.dart';
+import 'package:som/theme3/screen/T3Profile.dart';
+import 'package:som/theme3/screen/T3Search.dart';
+import 'package:som/theme3/screen/T3Setting.dart';
+import 'package:som/theme3/screen/T3SideMenu.dart';
+import 'package:som/theme3/screen/T3SignIn.dart';
+import 'package:som/theme3/screen/T3SignUp.dart';
+import 'package:som/theme3/screen/T3Tab.dart';
+import 'package:som/theme3/screen/T3Walkthrough.dart';
+import 'package:som/theme4/screens/T4BottomNavigation.dart';
+import 'package:som/theme4/screens/T4Cards.dart';
+import 'package:som/theme4/screens/T4Dashboard.dart';
+import 'package:som/theme4/screens/T4Detail.dart';
+import 'package:som/theme4/screens/T4Dialog.dart';
+import 'package:som/theme4/screens/T4ImageSlider.dart';
+import 'package:som/theme4/screens/T4Listing.dart';
+import 'package:som/theme4/screens/T4Profile.dart';
+import 'package:som/theme4/screens/T4SignIn.dart';
+import 'package:som/theme4/screens/T4SignUp.dart';
+import 'package:som/theme4/screens/T4Walkthrough.dart';
+import 'package:som/theme5/screens/T5BottomNavigation.dart';
+import 'package:som/theme5/screens/T5BottomSheet.dart';
+import 'package:som/theme5/screens/T5Cards.dart';
+import 'package:som/theme5/screens/T5Dashboard.dart';
+import 'package:som/theme5/screens/T5Dialog.dart';
+import 'package:som/theme5/screens/T5ImageSlider.dart';
+import 'package:som/theme5/screens/T5Listing.dart';
+import 'package:som/theme5/screens/T5Profile.dart';
+import 'package:som/theme5/screens/T5Search.dart';
+import 'package:som/theme5/screens/T5Settings.dart';
+import 'package:som/theme5/screens/T5SignIn.dart';
+import 'package:som/theme5/screens/T5SignUp.dart';
+import 'package:som/theme5/screens/T5Walkthrough.dart';
+import 'package:som/theme6/screens/T6BottomNavigation.dart';
+import 'package:som/theme6/screens/T6Cards.dart';
+import 'package:som/theme6/screens/T6Dashboard.dart';
+import 'package:som/theme6/screens/T6Dialog.dart';
+import 'package:som/theme6/screens/T6ImageSlider.dart';
+import 'package:som/theme6/screens/T6List.dart';
+import 'package:som/theme6/screens/T6Setting.dart';
+import 'package:som/theme6/screens/T6SignIn.dart';
+import 'package:som/theme6/screens/T6SignUp.dart';
+import 'package:som/theme6/screens/T6WalkThrough.dart';
+import 'package:som/theme7/screens/T7BottomSheet.dart';
+import 'package:som/theme7/screens/T7Dashboard.dart';
+import 'package:som/theme7/screens/T7HotelBooking.dart';
+import 'package:som/theme7/screens/T7HotelDetail.dart';
+import 'package:som/theme7/screens/T7HotelList.dart';
+import 'package:som/theme7/screens/T7PlaceDetail.dart';
+import 'package:som/theme7/screens/T7Search.dart';
+import 'package:som/theme7/screens/T7SignIn.dart';
+import 'package:som/theme7/screens/T7SocialLogin.dart';
+import 'package:som/theme7/screens/T7WalkThrough.dart';
+import 'package:som/theme8/screen/T8BottomNavigation.dart';
+import 'package:som/theme8/screen/T8Cards.dart';
+import 'package:som/theme8/screen/T8Dashboard.dart';
+import 'package:som/theme8/screen/T8Listing.dart';
+import 'package:som/theme8/screen/T8Result.dart';
+import 'package:som/theme8/screen/T8Search.dart';
+import 'package:som/theme8/screen/T8Settings.dart';
+import 'package:som/theme8/screen/T8SignIn.dart';
+import 'package:som/theme8/screen/T8SignUp.dart';
+import 'package:som/theme9/screens/T9BottomNavigation.dart';
+import 'package:som/theme9/screens/T9Cards.dart';
+import 'package:som/theme9/screens/T9Dashboard.dart';
+import 'package:som/theme9/screens/T9Description.dart';
+import 'package:som/theme9/screens/T9List.dart';
+import 'package:som/theme9/screens/T9Profile.dart';
+import 'package:som/theme9/screens/T9Search.dart';
+import 'package:som/theme9/screens/T9SignIn.dart';
+import 'package:som/theme9/screens/T9SingUp.dart';
+import 'package:som/webApps/portfolios/portfolio1/Portfolio1Screen.dart';
+import 'package:som/webApps/portfolios/portfolio2/Portfolio2Screen.dart';
+import 'package:som/webApps/portfolios/portfolio3/Portfolio3Screen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedBuilderScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedContainerScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedCrossFadeScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedOpacityScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedPositionedScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedSizeScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMFadeTransitionScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMHeroScreen.dart';
+import 'package:som/widgets/animationAndMotionWidgets/AMScaleTransitionScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWActionSheetScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWActivityIndicatorScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWAlertDialogScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWButtonScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWContextMenuScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWDialogScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWNavigationBarScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWPickerScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWSegmentedControlScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWSliderScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWSlidingSegmentedControlScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWSwitchScreen.dart';
+import 'package:som/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen1.dart';
+import 'package:som/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen2.dart';
+import 'package:som/widgets/cupertinoWidgets/CWTabBarWidgets/CWTabBarScreen3.dart';
+import 'package:som/widgets/cupertinoWidgets/CWTextFieldScreen.dart';
+import 'package:som/widgets/interactionModelWidgets/IMGestureDetectorScreen.dart';
+import 'package:som/widgets/interactionModelWidgets/imDismissibleWidgets/IMDismissibleScreen1.dart';
+import 'package:som/widgets/interactionModelWidgets/imDismissibleWidgets/IMDismissibleScreen2.dart';
+import 'package:som/widgets/interactionModelWidgets/imDraggableWidgets/IMDraggableScreen1.dart';
+import 'package:som/widgets/interactionModelWidgets/imDraggableWidgets/IMDraggableScreen2.dart';
+import 'package:som/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen1.dart';
+import 'package:som/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWAppBarScreen.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen3.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen4.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen3.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWDropDownButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWFlatButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWFloatingActionButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWIconButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWMaterialButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWOutlineButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWPopupMenuButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwButtonWidgets/MWRaisedButtonScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWAlertDialogScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWBottomSheetScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWExpansionPanelScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSimpleDialogScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSnackBarScreen.dart';
+import 'package:som/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWToastScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWCardScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWChipScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWDataTableScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWGridViewScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWIconScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWImageScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen3.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen4.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen5.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWProgressBarScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWRichTextScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInformationDisplayWidgets/MWTooltipScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWCheckboxScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWDatetimePickerScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWRadioScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWSliderScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWSwitchScreen.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFormFieldScreen.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWDividerScreen.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWListTileScreen.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen3.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen4.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen1.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen2.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen3.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen4.dart';
+import 'package:som/widgets/otherWidgets/InteractiveViewerScreen.dart';
+import 'package:som/widgets/otherWidgets/OpenContainerTransformScreen.dart';
+import 'package:som/widgets/paintingAndEffectWidgets/PEBackdropFilterScreen.dart';
+import 'package:som/widgets/paintingAndEffectWidgets/PEClipOvalScreen.dart';
+import 'package:som/widgets/paintingAndEffectWidgets/PEOpacityScreen.dart';
+import 'package:som/widgets/paintingAndEffectWidgets/PERotatedBoxScreen.dart';
+import 'package:som/widgets/paintingAndEffectWidgets/PETransformScreen.dart';
 
 Future<AppTheme> getAllAppsAndThemes() async {
   AppTheme appTheme = AppTheme();
@@ -464,7 +474,7 @@ List<ProTheme> getDiamondKit() {
 }
 
 List<ProTheme> getMusicStreaming() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T11SignIn()));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T11SignUp()));
@@ -479,7 +489,7 @@ List<ProTheme> getMusicStreaming() {
 }
 
 List<ProTheme> getECommerce() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T10SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T10SignUp(), darkThemeSupported: true));
@@ -495,7 +505,7 @@ List<ProTheme> getECommerce() {
 }
 
 List<ProTheme> getLearner() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T9SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T9SignUp(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile', is_theme: true, type: '', widget: T9Profile(), darkThemeSupported: true));
@@ -510,7 +520,7 @@ List<ProTheme> getLearner() {
 }
 
 List<ProTheme> getQuiz() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T8SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', is_theme: true, type: '', widget: T8SignUp(), darkThemeSupported: true));
@@ -526,7 +536,7 @@ List<ProTheme> getQuiz() {
 }
 
 List<ProTheme> getHotelBooking() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T7WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Social Login', is_theme: true, type: '', widget: T7SocialLogin(), darkThemeSupported: true));
@@ -543,7 +553,7 @@ List<ProTheme> getHotelBooking() {
 }
 
 List<ProTheme> getGymApp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T6WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T6SignIn(), darkThemeSupported: true));
@@ -560,7 +570,7 @@ List<ProTheme> getGymApp() {
 }
 
 List<ProTheme> getEWallet() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T5WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T5SignIn(), darkThemeSupported: true));
@@ -579,7 +589,7 @@ List<ProTheme> getEWallet() {
 }
 
 List<ProTheme> getFeedApp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T4WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T4SignIn(), darkThemeSupported: true));
@@ -597,7 +607,7 @@ List<ProTheme> getFeedApp() {
 }
 
 List<ProTheme> getFoodRecipe() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T3WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T3SignIn(), darkThemeSupported: true));
@@ -620,7 +630,7 @@ List<ProTheme> getFoodRecipe() {
 }
 
 List<ProTheme> getExerciseTips() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T2WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T2SignIn(), darkThemeSupported: true));
@@ -640,7 +650,7 @@ List<ProTheme> getExerciseTips() {
 }
 
 List<ProTheme> getFileManageScreens() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'WalkThrough', is_theme: true, type: '', widget: T1WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', is_theme: true, type: '', widget: T1Login(), darkThemeSupported: true));
@@ -662,7 +672,7 @@ List<ProTheme> getFileManageScreens() {
 
 //region ScreenList
 List<ProTheme> getScreenList() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'WalkThrough', title_name: 'WalkThrough Screens', type: '', show_cover: true, sub_kits: getWalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In', title_name: 'Sign In Screens', type: '', show_cover: true, sub_kits: getSignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up', title_name: 'Sign Up Screens', type: '', show_cover: true, sub_kits: getSignUp(), darkThemeSupported: true));
@@ -683,7 +693,7 @@ List<ProTheme> getScreenList() {
 }
 
 List<ProTheme> getWalkThrough() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'WalkThrough 1', is_theme: true, type: '', widget: T1WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'WalkThrough 2', is_theme: true, type: '', widget: T2WalkThrough(), darkThemeSupported: true));
   list.add(ProTheme(name: 'WalkThrough 3', is_theme: true, type: '', widget: T3WalkThrough(), darkThemeSupported: true));
@@ -695,7 +705,7 @@ List<ProTheme> getWalkThrough() {
 }
 
 List<ProTheme> getSignIn() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign In 1', is_theme: true, type: '', widget: T1Login(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In 2', is_theme: true, type: '', widget: T2SignIn(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign In 3', is_theme: true, type: '', widget: T3SignIn(), darkThemeSupported: true));
@@ -711,7 +721,7 @@ List<ProTheme> getSignIn() {
 }
 
 List<ProTheme> getSignUp() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Sign Up 1', is_theme: true, type: '', widget: T1Signup(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up 2', is_theme: true, type: '', widget: T2SignUp(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Sign Up 3', is_theme: true, type: '', widget: T3SignUp(), darkThemeSupported: true));
@@ -726,7 +736,7 @@ List<ProTheme> getSignUp() {
 }
 
 List<ProTheme> getProfile() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Profile 1', is_theme: true, type: '', widget: T1Profile(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile 2', is_theme: true, type: '', widget: T2Profile(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Profile 3', is_theme: true, type: '', widget: T3Profile(), darkThemeSupported: true));
@@ -738,7 +748,7 @@ List<ProTheme> getProfile() {
 }
 
 List<ProTheme> getDashboard() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dashboard 1', is_theme: true, type: '', widget: T1Dashboard(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dashboard 2', is_theme: true, type: '', widget: T2Dashboard(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dashboard 3', is_theme: true, type: '', widget: T3Dashboard(), darkThemeSupported: true));
@@ -754,7 +764,7 @@ List<ProTheme> getDashboard() {
 }
 
 List<ProTheme> getSideMenu() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Side Menu 1', is_theme: true, type: '', widget: T1SideMenu(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Side Menu 2', is_theme: true, type: '', widget: T2SideMenu(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Side Menu 3', is_theme: true, type: '', widget: T3SideMenu(), darkThemeSupported: true));
@@ -763,7 +773,7 @@ List<ProTheme> getSideMenu() {
 }
 
 List<ProTheme> getBottomNavigation() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Bottom Navigation 1', is_theme: true, type: '', widget: T1BottomNavigation(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Navigation 2', is_theme: true, type: '', widget: T2BottomNavigation(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Navigation 3', is_theme: true, type: '', widget: T3BottomNavigation(), darkThemeSupported: true));
@@ -776,7 +786,7 @@ List<ProTheme> getBottomNavigation() {
 }
 
 List<ProTheme> getDetailScreen() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Detail Screen 1', is_theme: true, type: '', widget: T3Description(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Detail Screen 2', is_theme: true, type: '', widget: T4Detail(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Detail Screen 3', is_theme: true, type: '', widget: T7PlaceDetail(), darkThemeSupported: true));
@@ -787,7 +797,7 @@ List<ProTheme> getDetailScreen() {
 }
 
 List<ProTheme> getImageSlider() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Image Slider 1', is_theme: true, type: '', widget: T1ImageSlider(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Image Slider 2', is_theme: true, type: '', widget: T2ImageSlider(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Image Slider 3', is_theme: true, type: '', widget: T3ImageSlider(), darkThemeSupported: true));
@@ -798,7 +808,7 @@ List<ProTheme> getImageSlider() {
 }
 
 List<ProTheme> getBottomSheet() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Bottom Sheet 1', is_theme: true, type: '', widget: T1BottomSheet(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Sheet 2', is_theme: true, type: '', widget: T2BottomSheet(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Bottom Sheet 3', is_theme: true, type: '', widget: T3BottomSheet(), darkThemeSupported: true));
@@ -809,7 +819,7 @@ List<ProTheme> getBottomSheet() {
 }
 
 List<ProTheme> getSearch() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Search 1', is_theme: true, type: '', widget: T1Search(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Search 2', is_theme: true, type: '', widget: T2Search(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Search 3', is_theme: true, type: '', widget: T3Search(), darkThemeSupported: true));
@@ -822,7 +832,7 @@ List<ProTheme> getSearch() {
 }
 
 List<ProTheme> getListing() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Listing 1', is_theme: true, type: '', widget: T1Listing(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Listing 2', is_theme: true, type: '', widget: T2Listing(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Listing 3', is_theme: true, type: '', widget: T3Listing(), darkThemeSupported: true));
@@ -838,7 +848,7 @@ List<ProTheme> getListing() {
 }
 
 List<ProTheme> getCards() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Cards 1', is_theme: true, type: '', widget: T1Card(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Cards 2', is_theme: true, type: '', widget: T2Cards(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Cards 3', is_theme: true, type: '', widget: T3Cards(), darkThemeSupported: true));
@@ -852,7 +862,7 @@ List<ProTheme> getCards() {
 }
 
 List<ProTheme> getDialog() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dialog 1', is_theme: true, type: '', widget: T1Dialog(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 2', is_theme: true, type: '', widget: T2Dialog(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 3', is_theme: true, type: '', widget: T3Dialog(), darkThemeSupported: true));
@@ -864,7 +874,7 @@ List<ProTheme> getDialog() {
 }
 
 List<ProTheme> getSettings() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
   list.add(ProTheme(name: 'Dialog 1', is_theme: true, type: '', widget: T3Setting(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 2', is_theme: true, type: '', widget: T5Settings(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Dialog 3', is_theme: true, type: '', widget: T6Setting(), darkThemeSupported: true));
@@ -887,7 +897,7 @@ ProTheme getDashboards() {
   list.add(ProTheme(name: 'Medical', type: '', widget: Dashboard7()));
   list.add(ProTheme(name: 'Home automation', type: '', widget: Dashboard8()));
 
-  theme.sub_kits.addAll(list);
+  theme.sub_kits!.addAll(list);
   return theme;
 }
 
@@ -916,7 +926,7 @@ ProTheme getFullApps() {
   list.add(ProTheme(name: 'Flix App', type: '', widget: MuviSplashScreen()));
   list.add(ProTheme(name: 'Smart Deck', type: '', widget: SDSplashScreen()));
 
-  theme.sub_kits.addAll(list);
+  theme.sub_kits!.addAll(list);
   return theme;
 }
 
@@ -1200,13 +1210,13 @@ ProTheme getDefaultTheme() {
 ProTheme getIntegrations() {
   List<ProTheme> list = [];
 
+  list.add(ProTheme(name: 'Chart', title_name: 'Integrations', show_cover: false, sub_kits: getChartList(), darkThemeSupported: true, type: 'New'));
   list.add(ProTheme(name: 'Integration', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getIntegration(), darkThemeSupported: true));
   list.add(ProTheme(name: 'UI Interactions', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getUI(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Lists', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getLists(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Maps', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getMaps(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Payment Gateways', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getPayment(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Maps', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getMaps(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Payment Gateways', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getPayment(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Rest API Integration', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getRestAPi(), darkThemeSupported: true));
-
   return ProTheme(name: 'Integration', title_name: 'Integration', type: '', show_cover: false, sub_kits: list);
 }
 
@@ -1268,8 +1278,8 @@ List<ProTheme> getSubStickyHeader() {
 List<ProTheme> getMaps() {
   List<ProTheme> list = [];
 
-  list.add(ProTheme(name: 'Google Maps with Clustering', type: '', show_cover: false, widget: GoogleMapScreen(), darkThemeSupported: true));
-  list.add(ProTheme(name: 'Google Maps with Slipping Panel', type: '', show_cover: false, widget: SlidingPanelScreen(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Google Maps with Clustering', type: '', show_cover: false, widget: GoogleMapScreen(), darkThemeSupported: true));
+  //list.add(ProTheme(name: 'Google Maps with Slipping Panel', type: '', show_cover: false, widget: SlidingPanelScreen(), darkThemeSupported: true));
 
   return list;
 }
@@ -1277,7 +1287,7 @@ List<ProTheme> getMaps() {
 List<ProTheme> getPayment() {
   List<ProTheme> list = [];
 
-  list.add(ProTheme(name: 'RazorPay Payment', type: '', show_cover: false, widget: RazorPayScreen(), darkThemeSupported: true));
+  // list.add(ProTheme(name: 'RazorPay Payment', type: '', show_cover: false, widget: RazorPayScreen(), darkThemeSupported: true));
 
   return list;
 }
@@ -1303,7 +1313,7 @@ ProTheme getWebApps() {
 }
 
 List<ProTheme> getPortfolioSites() {
-  List<ProTheme> list = List();
+  List<ProTheme> list = [];
 
   list.add(ProTheme(name: 'Portfolio 1', type: '', show_cover: false, widget: Portfolio1Screen(), darkThemeSupported: true));
   list.add(ProTheme(name: 'Portfolio 2', type: '', show_cover: false, widget: Portfolio2Screen(), darkThemeSupported: true));
@@ -1312,4 +1322,22 @@ List<ProTheme> getPortfolioSites() {
   return list;
 }
 
+List<ProTheme> getChartList() {
+  List<ProTheme> list = [];
+  list.add(ProTheme(name: 'Pie Chart', type: 'New', show_cover: false, widget: PieChartScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Line Chart', type: 'New', show_cover: false, widget: LineChartScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Monthly Sale Chart1', type: 'New', show_cover: false, widget: MonthlySale1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Monthly Sale Chart2', type: 'New', show_cover: false, widget: MonthlySale2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Bar Chart 1', type: 'New', show_cover: false, widget: BarChart1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Bar Chart 2', type: 'New', show_cover: false, widget: BarChart2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Transaction Chart', type: 'New', show_cover: false, widget: TransactionScreen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 1', type: 'New', show_cover: false, widget: StackedChart1Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 2', type: 'New', show_cover: false, widget: StackedChart2Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 3', type: 'New', show_cover: false, widget: StackedChart3Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 4', type: 'New', show_cover: false, widget: StackedChart4Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 5', type: 'New', show_cover: false, widget: StackedChart5Screen(), darkThemeSupported: true));
+  list.add(ProTheme(name: 'Stacked Chart 6', type: 'New', show_cover: false, widget: StackedChart6Screen(), darkThemeSupported: true));
+
+  return list;
+}
 //endregion

@@ -1,6 +1,6 @@
-import 'package:prokit_flutter/cloudStorage/screens/CSConnectWithComputerScreen.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/screens/CSConnectWithComputerScreen.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -27,7 +27,7 @@ class CSWalkthroughScreen2 extends StatelessWidget {
               Container(
                 height: 50,
                 decoration: BoxDecoration(color: CSDarkBlueColor),
-                child: Text('Setup', style: boldTextStyle(color: Colors.white, size: 17)).center().expand(),
+                child: Text('Setup', style: boldTextStyle(color: Colors.white, size: 17)).center(),
               ).paddingTop(30).onTap(() {
                 CSConnectWithComputerScreen().launch(context);
               }),

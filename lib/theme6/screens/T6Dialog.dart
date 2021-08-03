@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme6/screens/T6SignIn.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
-import 'package:prokit_flutter/theme6/utils/T6Constant.dart';
-import 'package:prokit_flutter/theme6/utils/T6Images.dart';
-import 'package:prokit_flutter/theme6/utils/T6Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme6/screens/T6SignIn.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
+import 'package:som/theme6/utils/T6Constant.dart';
+import 'package:som/theme6/utils/T6Images.dart';
+import 'package:som/theme6/utils/T6Strings.dart';
 
 import '../../main.dart';
 
@@ -86,7 +86,7 @@ dialogContent(BuildContext context) {
             Container(
               alignment: Alignment.center,
               child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: t6_ic_work4,
                 height: 110,
               ),

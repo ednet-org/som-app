@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
 
+// ignore: non_constant_identifier_names
 BoxDecoration PCboxDecoration({double radius = 1.0, Color color = Colors.transparent, Color bgColor = Cricket_white, double borderWidth = 1.0, var showShadow = false}) {
   return BoxDecoration(
       color: bgColor,
@@ -38,7 +39,7 @@ Widget headerView(var title, BuildContext context) {
                   ).paddingAll(6).onTap(() {
                     Navigator.of(context).pop();
                   }),
-                  Text(title, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)).paddingOnly(left: 8, right: 8),
+                  Text(title, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium),maxLines: 1,overflow: TextOverflow.ellipsis).paddingOnly(left: 8, right: 8),
                 ],
               ).paddingOnly(left: 8, right: 16),
             )
@@ -49,7 +50,7 @@ Widget headerView(var title, BuildContext context) {
   );
 }
 
-getTeamName(String strCountry) {
+getTeamName(String? strCountry) {
   var strName = '';
   if (strCountry == 'ENG') {
     strName = "England";
@@ -75,7 +76,7 @@ getTeamName(String strCountry) {
   return strName;
 }
 
-getBgFlag(String strCountry) {
+getBgFlag(String? strCountry) {
   var strFlag = '';
   if (strCountry == 'eng') {
     strFlag = Cricket_flag_eng;
@@ -101,7 +102,7 @@ getBgFlag(String strCountry) {
   return strFlag;
 }
 
-getLightColor(String strCountry) {
+getLightColor(String? strCountry) {
   var strColor = '';
   if (strCountry == 'eng') {
     strColor = '#b41020';
@@ -129,7 +130,7 @@ getLightColor(String strCountry) {
   return strColor;
 }
 
-getDarkColor(String strCountry) {
+getDarkColor(String? strCountry) {
   var strColor = '';
   if (strCountry == 'eng') {
     strColor = '#ce1124';
@@ -157,7 +158,7 @@ getDarkColor(String strCountry) {
   return strColor;
 }
 
-getHeaderFlag(String strCountry) {
+getHeaderFlag(String? strCountry) {
   var strFlag = '';
   if (strCountry == 'ENG') {
     strFlag = Cricket_head_flag_eng;
@@ -183,7 +184,7 @@ getHeaderFlag(String strCountry) {
   return strFlag;
 }
 
-getHistoryTeamImg(String strChampion) {
+getHistoryTeamImg(String? strChampion) {
   var strYear = '';
   if (strChampion == '1975') {
     strYear = Cricket_history1975;

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/shopHop/models/ShProduct.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShExtension.dart';
-import 'package:prokit_flutter/shopHop/utils/ShWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/shopHop/models/ShProduct.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShExtension.dart';
+import 'package:som/shopHop/utils/ShWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'ShProductDetail.dart';
 
@@ -19,7 +19,7 @@ class ShSearchScreen extends StatefulWidget {
 
 class ShSearchScreenState extends State<ShSearchScreen> {
   TextEditingController searchController = TextEditingController();
-  var list = List<ShProduct>();
+  List<ShProduct> list = [];
   bool isLoadingMoreData = false;
   bool isEmpty = false;
   var searchText = "";
@@ -31,9 +31,9 @@ class ShSearchScreenState extends State<ShSearchScreen> {
 
   fetchData() async {
     List<ShProduct> porducts = await loadProducts();
-    var filteredList = List<ShProduct>();
+    List<ShProduct> filteredList = [];
     porducts.forEach((product) {
-      if (product.name.contains(searchText)) {
+      if (product.name!.contains(searchText)) {
         filteredList.add(product);
       }
     });
@@ -65,7 +65,7 @@ class ShSearchScreenState extends State<ShSearchScreen> {
                   Container(
                     padding: EdgeInsets.all(1),
                     decoration: BoxDecoration(border: Border.all(color: sh_view_color, width: 1)),
-                    child: Image.asset("images/shophop/img/products" + list[index].images[0].src, fit: BoxFit.cover, height: width * 0.35, width: width * 0.29),
+                    child: Image.asset("images/shophop/img/products" + list[index].images![0].src!, fit: BoxFit.cover, height: width * 0.35, width: width * 0.29),
                   ),
                   SizedBox(width: 10),
                   Expanded(
@@ -76,13 +76,13 @@ class ShSearchScreenState extends State<ShSearchScreen> {
                         SizedBox(height: 4),
                         Row(
                           children: <Widget>[
-                            text(list[index].on_sale ? list[index].sale_price.toString().toCurrencyFormat() : list[index].price.toString().toCurrencyFormat(),
+                            text(list[index].on_sale! ? list[index].sale_price.toString().toCurrencyFormat() : list[index].price.toString().toCurrencyFormat(),
                                 textColor: sh_colorPrimary, fontFamily: fontMedium, fontSize: textSizeNormal),
                             SizedBox(
                               width: spacing_control,
                             ),
                             Text(
-                              list[index].regular_price.toString().toCurrencyFormat(),
+                              list[index].regular_price.toString().toCurrencyFormat()!,
                               style: TextStyle(color: sh_textColorSecondary, fontFamily: fontRegular, fontSize: textSizeSmall, decoration: TextDecoration.lineThrough),
                             ),
                           ],
@@ -90,7 +90,7 @@ class ShSearchScreenState extends State<ShSearchScreen> {
                         SizedBox(
                           height: spacing_standard,
                         ),
-                        Row(children: colorWidget(list[index].attributes)),
+                        Row(children: colorWidget(list[index].attributes!)),
                         SizedBox(height: 4),
                         Expanded(
                           child: Align(
@@ -99,7 +99,7 @@ class ShSearchScreenState extends State<ShSearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 RatingBar(
-                                  initialRating: double.parse(list[index].average_rating),
+                                  initialRating: double.parse(list[index].average_rating!),
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
                                   tapOnlyMode: true,

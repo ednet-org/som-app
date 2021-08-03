@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -14,7 +14,7 @@ class MWChipScreen extends StatefulWidget {
 
 class MWChipScreenState extends State<MWChipScreen> {
   var isSelected = false;
-  int _value = 1;
+  int? _value = 1;
   int _value1 = 1;
   int _value2 = 1;
 
@@ -33,7 +33,7 @@ class MWChipScreenState extends State<MWChipScreen> {
     "Task 2",
     "Task 3",
   ];
-  List<String> selectedProgrammingList = List();
+  List<String> selectedProgrammingList = [];
 
   @override
   void setState(fn) {
@@ -200,7 +200,7 @@ class MWChipScreenState extends State<MWChipScreen> {
 
 class MultiSelectChip extends StatefulWidget {
   final List<String> reportList;
-  final Function(List<String>) onSelectionChanged;
+  final Function(List<String>)? onSelectionChanged;
 
   MultiSelectChip(this.reportList, {this.onSelectionChanged});
 
@@ -209,10 +209,10 @@ class MultiSelectChip extends StatefulWidget {
 }
 
 class _MultiSelectChipState extends State<MultiSelectChip> {
-  List<String> selectedChoices = List();
+  List<String> selectedChoices = [];
 
   _buildChoiceList() {
-    List<Widget> choices = List();
+    List<Widget> choices = [];
     widget.reportList.forEach((item) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
@@ -222,7 +222,7 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
           onSelected: (selected) {
             setState(() {
               selectedChoices.contains(item) ? selectedChoices.remove(item) : selectedChoices.add(item);
-              widget.onSelectionChanged(selectedChoices);
+              widget.onSelectionChanged!(selectedChoices);
             });
           },
         ),

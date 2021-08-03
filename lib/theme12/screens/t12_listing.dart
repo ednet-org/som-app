@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme12/models/T12Models.dart';
-import 'package:prokit_flutter/theme12/utils/t12_colors.dart';
-import 'package:prokit_flutter/theme12/utils/t12_constant.dart';
-import 'package:prokit_flutter/theme12/utils/t12_data_generator.dart';
-import 'package:prokit_flutter/theme12/utils/t12_widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme12/models/T12Models.dart';
+import 'package:som/theme12/utils/t12_colors.dart';
+import 'package:som/theme12/utils/t12_constant.dart';
+import 'package:som/theme12/utils/t12_data_generator.dart';
+import 'package:som/theme12/utils/t12_widget.dart';
 
 import '../../main.dart';
 
@@ -19,7 +19,7 @@ class T12TransactionList extends StatefulWidget {
 
 class T12TransactionListState extends State<T12TransactionList> {
   var selectedTab = 0;
-  var list = List<T12Transactions>();
+  List<T12Transactions> list = [];
 
   @override
   void initState() {

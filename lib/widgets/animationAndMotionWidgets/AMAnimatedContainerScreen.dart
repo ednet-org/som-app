@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -32,7 +32,7 @@ class AnimatedContainerDemo extends StatefulWidget {
 }
 
 class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with TickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
   bool selected = false;
   bool mShapeSelected = false;
   bool mProgressSelected = false;
@@ -80,7 +80,7 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
           ).paddingBottom(16),
           AnimatedBuilder(
               animation: _controller,
-              builder: (BuildContext context, Widget child) {
+              builder: (BuildContext context, Widget? child) {
                 return AnimatedContainer(
                   color: mColorPrimary,
                   duration: Duration(seconds: 2),

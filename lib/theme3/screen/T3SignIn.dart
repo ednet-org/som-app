@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3SignIn extends StatefulWidget {
   static var tag = "/T3SignIn";
@@ -19,7 +19,7 @@ class T3SignIn extends StatefulWidget {
 
 class T3SignInState extends State<T3SignIn> {
   bool passwordVisible = false;
-  bool isRemember = false;
+  bool? isRemember = false;
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class T3SignInState extends State<T3SignIn> {
                           focusColor: t3_colorPrimary,
                           activeColor: t3_colorPrimary,
                           value: isRemember,
-                          onChanged: (bool value) {
+                          onChanged: (bool? value) {
                             setState(() {
                               isRemember = value;
                             });

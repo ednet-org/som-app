@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCHistoryData.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCHistoryData.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketHistoryScreen extends StatefulWidget {
   static String tag = '/CricketHistory';
@@ -19,7 +19,7 @@ class PCCricketHistoryScreen extends StatefulWidget {
 }
 
 class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
-  List<History> historyModel = List();
+  List<History>? historyModel = [];
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
     String json = await rootBundle.loadString('assets/cricket_data/history.json');
     PCHistoryData cricketHistoryData = PCHistoryData.fromJson(jsonDecode(json));
     historyModel = cricketHistoryData.history;
-    print(historyModel.length);
+    print(historyModel!.length);
     setState(() {});
   }
 
@@ -44,7 +44,7 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
         physics: ScrollPhysics(),
         child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: historyModel.length,
+          itemCount: historyModel!.length,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
@@ -56,11 +56,11 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
                     flex: 1,
                     child: Column(
                       children: <Widget>[
-                        Text(historyModel[index].year, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4),
+                        Text(historyModel![index].year!, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4),
                         Align(alignment: Alignment.center, child: Container(width: 1.0, height: 60, decoration: PCboxDecoration(bgColor: Colors.redAccent))),
                         RotatedBox(
                             quarterTurns: -1,
-                            child: Text("${historyModel[index].champion} vs ${historyModel[index].runnersUp}", style: primaryTextStyle(color: Cricket_Primary, size: 12, fontFamily: fontRegular))),
+                            child: Text("${historyModel![index].champion} vs ${historyModel![index].runnersUp}", style: primaryTextStyle(color: Cricket_Primary, size: 12, fontFamily: fontRegular))),
                         Align(alignment: Alignment.center, child: Container(width: 1.0, height: 60, decoration: PCboxDecoration(bgColor: Colors.redAccent))),
                       ],
                     ),
@@ -75,7 +75,7 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
                             child: Stack(
                               children: <Widget>[
                                 ClipRRect(
-                                  child: commonCacheImageWidget(getHistoryTeamImg(historyModel[index].year), 200, width: context.width(), fit: BoxFit.cover),
+                                  child: commonCacheImageWidget(getHistoryTeamImg(historyModel![index].year), 200, width: context.width(), fit: BoxFit.cover),
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
                                 ),
                                 Align(
@@ -83,7 +83,7 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
                                   child: Container(
                                     width: context.width(),
                                     decoration: PCboxDecoration(radius: 0, bgColor: Cricket_BlackColor.withOpacity(0.75)),
-                                    child: Text(historyModel[index].result, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontRegular)),
+                                    child: Text(historyModel![index].result!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontRegular)),
                                   ),
                                 ),
                               ],
@@ -97,15 +97,15 @@ class _PCCricketHistoryScreenState extends State<PCCricketHistoryScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(historyModel[index].champion, style: primaryTextStyle(size: 16)),
-                                    Text(historyModel[index].teamOneScore, style: primaryTextStyle(size: 16)),
+                                    Text(historyModel![index].champion!, style: primaryTextStyle(size: 16)),
+                                    Text(historyModel![index].teamOneScore!, style: primaryTextStyle(size: 16)),
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(historyModel[index].runnersUp, style: primaryTextStyle(size: 16)),
-                                    Text(historyModel[index].teamTwoScore, style: primaryTextStyle(size: 16)),
+                                    Text(historyModel![index].runnersUp!, style: primaryTextStyle(size: 16)),
+                                    Text(historyModel![index].teamTwoScore!, style: primaryTextStyle(size: 16)),
                                   ],
                                 )
                               ],

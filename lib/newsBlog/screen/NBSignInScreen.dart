@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBForgotPasswordScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBHomeScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBSingUpScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/screen/NBForgotPasswordScreen.dart';
+import 'package:som/newsBlog/screen/NBHomeScreen.dart';
+import 'package:som/newsBlog/screen/NBSingUpScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBSignInScreen extends StatefulWidget {
   static String tag = '/NBSignInScreen';

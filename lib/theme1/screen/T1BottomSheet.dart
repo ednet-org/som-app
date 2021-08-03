@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
-import 'package:prokit_flutter/theme1/utils/T1Images.dart';
-import 'package:prokit_flutter/theme1/utils/T1Strings.dart';
-import 'package:prokit_flutter/theme1/utils/T1Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
+import 'package:som/theme1/utils/T1Images.dart';
+import 'package:som/theme1/utils/T1Strings.dart';
+import 'package:som/theme1/utils/T1Widget.dart';
 
 import '../../main.dart';
 
@@ -18,8 +18,6 @@ class T1BottomSheet extends StatefulWidget {
 }
 
 class T1BottomSheetState extends State<T1BottomSheet> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   @override
   void initState() {
     super.initState();
@@ -100,7 +98,7 @@ class T1BottomSheetState extends State<T1BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     Future.delayed(
       Duration(milliseconds: 1000),

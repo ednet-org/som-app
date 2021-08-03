@@ -1,11 +1,9 @@
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class BankingCarouselSlider extends StatefulWidget {
   BankingCarouselSlider(
-      {@required this.items,
+      {required List<Widget> this.items,
       this.height,
       this.aspectRatio: 16 / 9,
       this.viewportFraction: 0.8,
@@ -26,14 +24,14 @@ class BankingCarouselSlider extends StatefulWidget {
         this.itemCount = items.length,
         this.itemBuilder = null,
         this.pageController = PageController(
-          viewportFraction: viewportFraction,
-          initialPage: enableInfiniteScroll ? realPage + initialPage : initialPage,
+          viewportFraction: viewportFraction as double,
+          initialPage: enableInfiniteScroll ? realPage + (initialPage as int) : initialPage as int,
         );
 
   /// The on demand item builder constructor
   BankingCarouselSlider.builder(
-      {@required this.itemCount,
-      @required this.itemBuilder,
+      {required this.itemCount,
+      required this.itemBuilder,
       this.height,
       this.aspectRatio: 16 / 9,
       this.viewportFraction: 0.8,
@@ -53,21 +51,21 @@ class BankingCarouselSlider extends StatefulWidget {
       : this.realPage = enableInfiniteScroll ? realPage + initialPage : initialPage,
         this.items = null,
         this.pageController = PageController(
-          viewportFraction: viewportFraction,
-          initialPage: enableInfiniteScroll ? realPage + initialPage : initialPage,
+          viewportFraction: viewportFraction as double,
+          initialPage: enableInfiniteScroll ? realPage + (initialPage as int) : initialPage as int,
         );
 
   /// The widgets to be shown in the carousel of default constructor
-  final List<Widget> items;
+  final List<Widget>? items;
 
   /// The widget item builder that will be used to build item on demand
-  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder? itemBuilder;
 
   /// The widgets count that should be shown at carousel
   final int itemCount;
 
   /// Set carousel height and overrides any existing [aspectRatio].
-  final double height;
+  final double? height;
 
   /// Aspect ratio is used if no height have been declared.
   ///
@@ -127,7 +125,7 @@ class BankingCarouselSlider extends StatefulWidget {
   /// the given [Duration].
   ///
   /// Touch Detection is only active if [autoPlay] is true.
-  final Duration pauseAutoPlayOnTouch;
+  final Duration? pauseAutoPlayOnTouch;
 
   /// Determines if current page should be larger then the side images,
   /// creating a feeling of depth in the carousel.
@@ -141,7 +139,7 @@ class BankingCarouselSlider extends StatefulWidget {
   final Axis scrollDirection;
 
   /// Called whenever the page in the center of the viewport changes.
-  final Function(int index) onPageChanged;
+  final Function(int index)? onPageChanged;
 
   /// How the carousel should respond to user input.
   ///
@@ -152,7 +150,7 @@ class BankingCarouselSlider extends StatefulWidget {
   /// [PageScrollPhysics] prior to being used.
   ///
   /// Defaults to matching platform conventions.
-  final ScrollPhysics scrollPhysics;
+  final ScrollPhysics? scrollPhysics;
 
   /// [pageController] is created using the properties passed to the constructor
   /// and can be used to control the [PageView] it is passed to.
@@ -162,7 +160,7 @@ class BankingCarouselSlider extends StatefulWidget {
   ///
   /// The animation lasts for the given duration and follows the given curve.
   /// The returned [Future] resolves when the animation completes.
-  Future<void> nextPage({Duration duration, Curve curve}) {
+  Future<void> nextPage({required Duration duration, required Curve curve}) {
     return pageController.nextPage(duration: duration, curve: curve);
   }
 
@@ -170,7 +168,7 @@ class BankingCarouselSlider extends StatefulWidget {
   ///
   /// The animation lasts for the given duration and follows the given curve.
   /// The returned [Future] resolves when the animation completes.
-  Future<void> previousPage({Duration duration, Curve curve}) {
+  Future<void> previousPage({required Duration duration, required Curve curve}) {
     return pageController.previousPage(duration: duration, curve: curve);
   }
 
@@ -179,17 +177,17 @@ class BankingCarouselSlider extends StatefulWidget {
   /// Jumps the page position from its current value to the given value,
   /// without animation, and without checking if the new value is in range.
   void jumpToPage(int page) {
-    final index = _getRealIndex(pageController.page.toInt(), realPage - initialPage, itemCount);
-    return pageController.jumpToPage(pageController.page.toInt() + page - index);
+    final index = _getRealIndex(pageController.page!.toInt(), realPage - initialPage as int, itemCount);
+    return pageController.jumpToPage(pageController.page!.toInt() + page - index);
   }
 
   /// Animates the controlled [BankingCarouselSlider] from the current page to the given page.
   ///
   /// The animation lasts for the given duration and follows the given curve.
   /// The returned [Future] resolves when the animation completes.
-  Future<void> animateToPage(int page, {Duration duration, Curve curve}) {
-    final index = _getRealIndex(pageController.page.toInt(), realPage - initialPage, itemCount);
-    return pageController.animateToPage(pageController.page.toInt() + page - index, duration: duration, curve: curve);
+  Future<void> animateToPage(int page, {required Duration duration, required Curve curve}) {
+    final index = _getRealIndex(pageController.page!.toInt(), realPage - initialPage as int, itemCount);
+    return pageController.animateToPage(pageController.page!.toInt() + page - index, duration: duration, curve: curve);
   }
 
   @override
@@ -197,7 +195,7 @@ class BankingCarouselSlider extends StatefulWidget {
 }
 
 class _BankingCarouselSliderState extends State<BankingCarouselSlider> with TickerProviderStateMixin {
-  Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
@@ -205,7 +203,7 @@ class _BankingCarouselSliderState extends State<BankingCarouselSlider> with Tick
     timer = getTimer();
   }
 
-  Timer getTimer() {
+  Timer? getTimer() {
     return widget.autoPlay
         ? Timer.periodic(widget.autoPlayInterval, (_) {
             widget.pageController.nextPage(duration: widget.autoPlayAnimationDuration, curve: widget.autoPlayCurve);
@@ -214,8 +212,8 @@ class _BankingCarouselSliderState extends State<BankingCarouselSlider> with Tick
   }
 
   void pauseOnTouch() {
-    timer.cancel();
-    timer = Timer(widget.pauseAutoPlayOnTouch, () {
+    timer!.cancel();
+    timer = Timer(widget.pauseAutoPlayOnTouch!, () {
       timer = getTimer();
     });
   }
@@ -247,21 +245,22 @@ class _BankingCarouselSliderState extends State<BankingCarouselSlider> with Tick
       reverse: widget.reverse,
       itemCount: widget.enableInfiniteScroll ? null : widget.itemCount,
       onPageChanged: (int index) {
-        int currentPage = _getRealIndex(index + widget.initialPage, widget.realPage, widget.itemCount);
+        int currentPage = _getRealIndex(index + (widget.initialPage as int), widget.realPage as int, widget.itemCount);
         if (widget.onPageChanged != null) {
-          widget.onPageChanged(currentPage);
+          widget.onPageChanged!(currentPage);
         }
       },
       itemBuilder: (BuildContext context, int i) {
-        final int index = _getRealIndex(i + widget.initialPage, widget.realPage, widget.itemCount);
+        final int index = _getRealIndex(i + (widget.initialPage as int), widget.realPage as int, widget.itemCount);
 
         return AnimatedBuilder(
           animation: widget.pageController,
-          child: (widget.items != null) ? widget.items[index] : widget.itemBuilder(context, index),
+          child: (widget.items != null) ? widget.items![index] : widget.itemBuilder!(context, index),
           builder: (BuildContext context, child) {
             // on the first render, the pageController.page is null,
             // this is a dirty hack
-            if (widget.pageController.position.minScrollExtent == null || widget.pageController.position.maxScrollExtent == null) {
+            // ignore: unnecessary_null_comparison
+            if (widget.pageController.position.minScrollExtent == null) {
               Future.delayed(Duration(microseconds: 1), () {
                 if (this.mounted) {
                   setState(() {});
@@ -269,7 +268,7 @@ class _BankingCarouselSliderState extends State<BankingCarouselSlider> with Tick
               });
               return Container();
             }
-            double value = widget.pageController.page - i;
+            double value = widget.pageController.page! - i;
             value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
 
             final double height = widget.height ?? MediaQuery.of(context).size.width * (1 / widget.aspectRatio);

@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme9/utils/T9Colors.dart';
-import 'package:prokit_flutter/theme9/utils/T9Images.dart';
-import 'package:prokit_flutter/theme9/utils/T9Strings.dart';
-import 'package:prokit_flutter/theme9/utils/T9Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme9/utils/T9Colors.dart';
+import 'package:som/theme9/utils/T9Images.dart';
+import 'package:som/theme9/utils/T9Strings.dart';
+import 'package:som/theme9/utils/T9Widget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +20,7 @@ class T9SignIn extends StatefulWidget {
 class T9SignInState extends State<T9SignIn> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,

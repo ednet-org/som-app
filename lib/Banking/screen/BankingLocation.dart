@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/Banking/utils/BankingDataGenerator.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/Banking/utils/BankingDataGenerator.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 class BankingLocation extends StatefulWidget {
   static var tag = "/BankingLocation";
@@ -16,10 +16,10 @@ class BankingLocation extends StatefulWidget {
 }
 
 class _BankingLocationState extends State<BankingLocation> {
-  List<BankingLocationModel> mList1;
+  late List<BankingLocationModel> mList1;
 
-  bool isSelected;
-  String txtHeader;
+  bool? isSelected;
+  String? txtHeader;
 
   @override
   void initState() {
@@ -80,10 +80,10 @@ class _BankingLocationState extends State<BankingLocation> {
                               children: [
                                 Image.asset(Banking_ic_Pin, color: Banking_Primary, height: 30, width: 30),
                                 16.width,
-                                Text(mList1[index].location, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
+                                Text(mList1[index].location!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
                               ],
                             ),
-                            Text(mList1[index].m, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
+                            Text(mList1[index].m!, style: primaryTextStyle(color: Banking_TextColorPrimary, size: 16, fontFamily: fontRegular)),
                           ],
                         ),
                       ).onTap(

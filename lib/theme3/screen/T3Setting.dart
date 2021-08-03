@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 import '../../main.dart';
 
@@ -23,7 +23,7 @@ class T3SettingState extends State<T3Setting> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, t3_lbl_setting),

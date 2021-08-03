@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/Banking/utils/BankingDataGenerator.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/Banking/utils/BankingDataGenerator.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 class BankingHome1 extends StatefulWidget {
   static String tag = '/BankingHome1';
@@ -20,10 +20,10 @@ class BankingHome1 extends StatefulWidget {
 
 class BankingHome1State extends State<BankingHome1> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
 
-  List<BankingHomeModel> mList1;
-  List<BankingHomeModel2> mList2;
+  late List<BankingHomeModel> mList1;
+  late List<BankingHomeModel2> mList2;
 
   @override
   void initState() {
@@ -179,7 +179,7 @@ class BankingHome1State extends State<BankingHome1> {
                           Icon(Icons.account_balance_wallet, size: 30, color: mList1[index].color),
                           10.width,
                           Text('${mList1[index].title}', style: primaryTextStyle(size: 16, color: mList1[index].color, fontFamily: fontMedium)).expand(),
-                          Text(mList1[index].bal, style: primaryTextStyle(color: mList1[index].color, size: 16)),
+                          Text(mList1[index].bal!, style: primaryTextStyle(color: mList1[index].color, size: 16)),
                         ],
                       ),
                     );
@@ -202,10 +202,10 @@ class BankingHome1State extends State<BankingHome1> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(data.icon, height: 30, width: 30, color: index == 2 ? Banking_Primary : Banking_Primary),
+                          Image.asset(data.icon!, height: 30, width: 30, color: index == 2 ? Banking_Primary : Banking_Primary),
                           10.width,
-                          Text(data.title, style: primaryTextStyle(size: 16, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
-                          Align(alignment: Alignment.centerRight, child: Text(data.charge, style: primaryTextStyle(color: data.color, size: 16)))
+                          Text(data.title!, style: primaryTextStyle(size: 16, color: Banking_TextColorPrimary, fontFamily: fontRegular)).expand(),
+                          Align(alignment: Alignment.centerRight, child: Text(data.charge!, style: primaryTextStyle(color: data.color, size: 16)))
                         ],
                       ),
                     );

@@ -2,15 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/model/FoodModel.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/food/utils/FoodWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/model/FoodModel.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodDataGenerator.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'FoodBookDetail.dart';
 import 'FoodDescription.dart';
@@ -25,8 +24,9 @@ class FoodRestaurantsDescription extends StatefulWidget {
 }
 
 class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> {
-  List<ReviewModel> mReviewList;
-  List<FoodDish> mList2;
+  List<DataFilter> list = getAllData();
+  late List<ReviewModel> mReviewList;
+  late List<FoodDish> mList2;
   var mPeopleList, mCuisine;
 
   @override
@@ -118,87 +118,93 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
     }
 
     // ignore: missing_return
-    Widget reviewBottomSheet() {
+    Widget? reviewBottomSheet() {
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              child: IntrinsicHeight(
-                  child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)), color: food_white),
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(food_lbl_rate_your_Experience, style: primaryTextStyle()),
-                    Tags(
-                      itemCount: mCuisine.length,
-                      spacing: 16,
-                      alignment: WrapAlignment.start,
-                      itemBuilder: (int index) {
-                        return Tooltip(
-                          textStyle: TextStyle(fontSize: 16),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: food_colorPrimary),
-                          padding: EdgeInsets.all(8),
-                          message: mCuisine[index],
-                          child: ItemTags(
-                            title: mCuisine[index],
-                            activeColor: food_colorPrimary_light,
-                            color: food_colorPrimary,
-                            textColor: food_white,
-                            textActiveColor: food_textColorPrimary,
-                            padding: EdgeInsets.all(8),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            highlightColor: food_colorAccent,
-                            index: index, // required
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    Text(food_lbl_what_did_you_like, style: primaryTextStyle()),
-                    GridView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: mPeopleList.length,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                mTime = index;
-                              });
+          return StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) setState) {
+              return IntrinsicHeight(
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)), color: food_white),
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.all(16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(food_lbl_rate_your_Experience, style: primaryTextStyle()),
+                        Wrap(
+                          children: list
+                              .asMap()
+                              .map((i, e) => MapEntry(
+                                    i,
+                                    Tooltip(
+                                      textStyle: TextStyle(fontSize: 16),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: food_colorPrimary, boxShadow: defaultBoxShadow()),
+                                      padding: EdgeInsets.all(8),
+                                      message: e.name!,
+                                      child: InkWell(
+                                        onTap: () {
+                                          e.isCheck = !e.isCheck;
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: e.isCheck ? food_colorPrimary : food_view_color),
+                                          margin: EdgeInsets.all(4),
+                                          padding: EdgeInsets.all(8),
+                                          child: Text(e.name!, style: secondaryTextStyle(color: e.isCheck ? white : black), textAlign: TextAlign.center),
+                                        ),
+                                      ),
+                                    ),
+                                  ))
+                              .values
+                              .toList(),
+                        ),
+                        SizedBox(height: 16),
+                        Text(food_lbl_what_did_you_like, style: primaryTextStyle()),
+                        GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: mPeopleList.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    mTime = index;
+                                  });
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: mTime == index ? food_colorPrimary : food_view_color,
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                  child: Text(mPeopleList[index], style: primaryTextStyle(color: mTime == index ? food_white : food_textColorPrimary)).center(),
+                                ),
+                              );
                             },
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: mTime == index ? food_colorPrimary : food_view_color,
-                              ),
-                              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                              child: Text(mPeopleList[index], style: primaryTextStyle(color: mTime == index ? food_white : food_textColorPrimary)).center(),
-                            ),
-                          );
-                        },
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 2.0)),
-                    SizedBox(height: 16),
-                    Text(food_lbl_anything_else_you_want_to_add, style: primaryTextStyle()),
-                    foodEditTextStyle(food_hint_description),
-                    SizedBox(height: 16),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50), boxShadow: defaultBoxShadow()),
-                      child: Text(food_lbl_submit, style: primaryTextStyle(color: white)).center(),
-                    )
-                  ],
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 2.0)),
+                        SizedBox(height: 16),
+                        Text(food_lbl_anything_else_you_want_to_add, style: primaryTextStyle()),
+                        foodEditTextStyle(food_hint_description),
+                        SizedBox(height: 16),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          decoration: BoxDecoration(color: food_colorPrimary, borderRadius: BorderRadius.circular(50), boxShadow: defaultBoxShadow()),
+                          child: Text(food_lbl_submit, style: primaryTextStyle(color: white)).center(),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              )),
-            ),
+              );
+            },
           );
         },
       );
@@ -248,7 +254,7 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
                     alignment: Alignment.bottomRight,
                     children: <Widget>[
                       CachedNetworkImage(
-                        placeholder: placeholderWidgetFn(),
+                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                         imageUrl: food_ic_popular4,
                         width: width,
                         fit: BoxFit.cover,
@@ -493,8 +499,9 @@ class FoodRestaurantsDescriptionState extends State<FoodRestaurantsDescription> 
   }
 }
 
+// ignore: must_be_immutable
 class Review extends StatelessWidget {
-  ReviewModel model;
+  late ReviewModel model;
 
   Review(ReviewModel model, int pos) {
     this.model = model;

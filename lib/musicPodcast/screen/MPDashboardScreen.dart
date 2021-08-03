@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPAlbumsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPDiscoverScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongTypeScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPAlbumsScreen.dart';
+import 'package:som/musicPodcast/screen/MPDiscoverScreen.dart';
+import 'package:som/musicPodcast/screen/MPProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongTypeScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 class MPDashboardScreen extends StatefulWidget {
   static String tag = '/MPDashboardScreen';
@@ -18,6 +18,9 @@ class MPDashboardScreen extends StatefulWidget {
 }
 
 class MPDashboardScreenState extends State<MPDashboardScreen> {
+
+  TextEditingController searchController = TextEditingController();
+
   List<DrawerList> drawerList = getDrawerList();
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -59,7 +62,7 @@ class MPDashboardScreenState extends State<MPDashboardScreen> {
           leading: IconButton(
             icon: Icon(Icons.menu, color: white),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
           ),
           title: Container(
@@ -78,7 +81,7 @@ class MPDashboardScreenState extends State<MPDashboardScreen> {
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25.7)),
                 enabledBorder: UnderlineInputBorder(borderRadius: BorderRadius.circular(25.7)),
               ),
-              controller: null,
+              controller: searchController,
             ),
           ),
           actions: [

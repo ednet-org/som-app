@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IMDraggableScreen2 extends StatefulWidget {
   static String tag = '/IMDraggableScreen2';
@@ -95,7 +94,7 @@ class _IMDraggableScreen2State extends State<IMDraggableScreen2> with TickerProv
                     ),
                   ),
             DragTarget(
-              builder: (context, List<int> candidateData, rejectedData) {
+              builder: (context, List<int?> candidateData, rejectedData) {
                 return AnimatedCrossFade(
                   duration: Duration(seconds: 0),
                   firstChild: Image.asset(
@@ -115,7 +114,7 @@ class _IMDraggableScreen2State extends State<IMDraggableScreen2> with TickerProv
               onAccept: (data) {
                 if (data == 5) {
                   mValue = false;
-                  scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Done")));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Done")));
                   setState(() {
                     _mStatus = true;
                   });

@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
-import 'package:prokit_flutter/social/utils/SocialWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialImages.dart';
+import 'package:som/social/utils/SocialStrings.dart';
+import 'package:som/social/utils/SocialWidget.dart';
 
 import 'SocialProfileInfo.dart';
 
@@ -19,7 +19,7 @@ class SocialProfile extends StatefulWidget {
 }
 
 class SocialProfileState extends State<SocialProfile> {
-  Widget mOption(var value, var icon, {@required Function onTap}) {
+  Widget mOption(var value, var icon, {required Function onTap}) {
     return GestureDetector(
       onTap: () {
         onTap();
@@ -62,7 +62,7 @@ class SocialProfileState extends State<SocialProfile> {
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
           child: CachedNetworkImage(
-            placeholder: placeholderWidgetFn(),
+            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
             imageUrl: social_ic_user1,
             height: width * 0.25,
             width: width * 0.25,

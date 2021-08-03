@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNowPlayingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPNowPlayingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongsScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPOurChoicesScreen extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class MPOurChoicesScreen extends StatefulWidget {
 }
 
 class MPOurChoicesScreenState extends State<MPOurChoicesScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   List<MusicModel> trendList1 = getTrendList1();
@@ -46,7 +46,7 @@ class MPOurChoicesScreenState extends State<MPOurChoicesScreen> with SingleTicke
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white),
         ),
@@ -120,9 +120,9 @@ class MPOurChoicesScreenState extends State<MPOurChoicesScreen> with SingleTicke
                           children: [
                             commonCacheImageWidget(data.img, 120, width: 250, fit: BoxFit.cover).cornerRadiusWithClipRRect(12),
                             8.height,
-                            Text(data.title, style: boldTextStyle(color: white)),
+                            Text(data.title!, style: boldTextStyle(color: white)),
                             4.height,
-                            Text(data.subtitle, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
+                            Text(data.subtitle!, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
                           ],
                         ),
                       ).onTap(() {
@@ -160,9 +160,9 @@ class MPOurChoicesScreenState extends State<MPOurChoicesScreen> with SingleTicke
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.title, style: boldTextStyle(color: white)),
+                              Text(data.title!, style: boldTextStyle(color: white)),
                               4.height,
-                              Text(data.subtitle, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
+                              Text(data.subtitle!, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
                             ],
                           ).expand(),
                           Icon(Icons.play_circle_outline, color: mpAppButtonColor),
@@ -193,9 +193,9 @@ class MPOurChoicesScreenState extends State<MPOurChoicesScreen> with SingleTicke
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.title, style: boldTextStyle(color: white)),
+                          Text(data.title!, style: boldTextStyle(color: white)),
                           4.height,
-                          Text(data.subtitle, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
+                          Text(data.subtitle!, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
                         ],
                       ).expand(),
                       Icon(Icons.play_circle_outline, color: mpAppButtonColor),

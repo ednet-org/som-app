@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MColors.dart';
 
 class MBecomeAMemberScreen extends StatelessWidget {
   @override
@@ -71,7 +71,7 @@ class MBecomeAMemberScreen extends StatelessWidget {
               width: context.width() * 0.7,
               decoration: boxDecorationWithRoundedCorners(backgroundColor: black, border: Border.all(color: white), borderRadius: BorderRadius.circular(3)),
               // ignore: deprecated_member_use
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: Text(
                   "Start your free trial",

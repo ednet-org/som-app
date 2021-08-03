@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNowPlayingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSelectSongTypeScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSongsScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPNowPlayingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSelectSongTypeScreen.dart';
+import 'package:som/musicPodcast/screen/MPSongsScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
 
 class MPDiscoverScreen extends StatefulWidget {
   static String tag = '/MPDiscoverScreen';
@@ -60,9 +60,9 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 130, width: 250, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                         4.height,
-                        Text(data.title, style: primaryTextStyle(color: Colors.white)),
+                        Text(data.title!, style: primaryTextStyle(color: Colors.white)),
                         4.height,
-                        Text(data.subtitle, style: secondaryTextStyle(color: Colors.grey)),
+                        Text(data.subtitle!, style: secondaryTextStyle(color: Colors.grey)),
                       ],
                     ).paddingOnly(left: 8, right: 8).onTap(() {
                       MPSelectSongTypeScreen().launch(context);
@@ -102,7 +102,7 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                             MPNowPlayingScreen(data: data).launch(context);
                           }),
                           4.height,
-                          Text(data.title, style: boldTextStyle(color: Colors.white), maxLines: 1),
+                          Text(data.title!, style: boldTextStyle(color: Colors.white), maxLines: 1),
                           4.height,
                           Container(
                             child: Row(
@@ -120,7 +120,7 @@ class MPDiscoverScreenState extends State<MPDiscoverScreen> {
                                 6.width,
                                 Icon(Icons.add_circle_outline_rounded, color: mpAppButtonColor, size: 20),
                                 4.width,
-                                Text(data.subtitle, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
+                                Text(data.subtitle!, style: secondaryTextStyle(color: Colors.white.withOpacity(0.5))),
                               ],
                             ),
                           )

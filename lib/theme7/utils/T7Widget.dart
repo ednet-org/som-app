@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/percent_indicator/circular_percent_indicator.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/percent_indicator/circular_percent_indicator.dart';
 
 import '../../main.dart';
 import 'T7Colors.dart';
 import 'T7Constant.dart';
 
+// ignore: must_be_immutable
 class T7Button extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
   Color bgColor = t7white;
 
   T7Button({
-    @required this.textContent,
-    @required this.onPressed,
-    @required this.bgColor,
+    required this.textContent,
+    required this.onPressed,
+    required this.bgColor,
   });
 
   @override
@@ -61,6 +62,7 @@ Widget starText(var text, var txtColor) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Container T7EditTextStyle(var hintText, var text, {isPassword = false}) {
   return Container(
     child: TextFormField(
@@ -142,6 +144,7 @@ TextFormField editTextStyle(var hintText, {isPassword = true}) {
   );
 }
 
+// ignore: must_be_immutable
 class TopBar extends StatefulWidget {
   var titleName;
 
@@ -176,8 +179,7 @@ class TopBarState extends State<TopBar> {
     );
   }
 
-  @override
-  State<StatefulWidget> createState() {
+  State<StatefulWidget>? createState() {
     return null;
   }
 }
@@ -213,7 +215,7 @@ Widget ring(String description) {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

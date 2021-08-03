@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 
@@ -55,7 +55,7 @@ class DTAboutScreenState extends State<DTAboutScreen> {
                     children: [
                       Text('Version:', style: secondaryTextStyle()),
                       5.width,
-                      Text(snap.data, style: primaryTextStyle(size: 18)),
+                      Text(snap.data!, style: primaryTextStyle(size: 18)),
                     ],
                   );
                 return SizedBox();

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Constant.dart';
-import 'package:prokit_flutter/theme8/utils/T8Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Constant.dart';
+import 'package:som/theme8/utils/T8Strings.dart';
 
 import '../../main.dart';
 
@@ -17,7 +17,7 @@ class T8Setting extends StatefulWidget {
 class T8SettingState extends State<T8Setting> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -77,6 +77,7 @@ class T8SettingState extends State<T8Setting> {
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget T8SettingOptionPattern1(var settingIcon, var heading, var info) {
   return Padding(
     padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
@@ -108,6 +109,7 @@ Widget T8SettingOptionPattern1(var settingIcon, var heading, var info) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget T8SettingOptionPattern2(var icon, var heading) {
   bool isSwitched1 = false;
 
@@ -142,6 +144,7 @@ Widget T8SettingOptionPattern2(var icon, var heading) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget T8SettingOptionPattern3(var icon, var heading) {
   return Padding(
     padding: EdgeInsets.fromLTRB(16, 10, 16, 10),

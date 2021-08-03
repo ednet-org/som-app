@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusSlider.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusSlider.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 import 'QIBusViewPackage.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -26,7 +26,7 @@ class QIBusPackages extends StatefulWidget {
 class QIBusPackagesState extends State<QIBusPackages> {
   var currentIndexPage = 0;
 
-  List<QIBusNewPackageModel> mList1;
+  late List<QIBusNewPackageModel> mList1;
 
   @override
   void initState() {
@@ -52,10 +52,10 @@ class QIBusPackagesState extends State<QIBusPackages> {
     );
   }
 
-  Widget mPackages() {
+  Widget mPackages(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
-    final Size cardSize = Size(width, width * 0.62);
+    width = width - 30;
+    final Size cardSize = Size(width, width * 0.71);
 
     return QiBusCarouselSlider(
       viewportFraction: 0.8,
@@ -75,13 +75,13 @@ class QIBusPackagesState extends State<QIBusPackages> {
                   ClipRRect(
                     borderRadius: BorderRadius.only(topRight: Radius.circular(spacing_middle), topLeft: Radius.circular(spacing_middle)),
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: list.image,
                       height: width * 0.32,
                       width: width,
                       fit: BoxFit.fill,
                     ),
-                  ),
+                  ).expand(),
                   Padding(
                     padding: EdgeInsets.all(spacing_middle),
                     child: Column(
@@ -170,13 +170,13 @@ class QIBusPackagesState extends State<QIBusPackages> {
                 child: Column(
                   children: <Widget>[
                     mHeading(QIBus_txt_new_package, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                     mHeading(QIBus_txt_popular_package, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                     mHeading(QIBus_text_trending_packages, QIBus_txt_view_all),
-                    mPackages(),
+                    mPackages(context),
                     SizedBox(height: spacing_standard_new),
                   ],
                 ),

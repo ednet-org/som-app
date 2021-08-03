@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/dashboard/model/db7/Db7Model.dart';
-import 'package:prokit_flutter/dashboard/utils/Db7BottomNavigationBar.dart';
-import 'package:prokit_flutter/dashboard/utils/DbColors.dart';
-import 'package:prokit_flutter/dashboard/utils/DbDataGenerator.dart';
-import 'package:prokit_flutter/dashboard/utils/DbImages.dart';
-import 'package:prokit_flutter/dashboard/utils/DbStrings.dart';
+import 'package:som/dashboard/model/db7/Db7Model.dart';
+import 'package:som/dashboard/utils/Db7BottomNavigationBar.dart';
+import 'package:som/dashboard/utils/DbColors.dart';
+import 'package:som/dashboard/utils/DbDataGenerator.dart';
+import 'package:som/dashboard/utils/DbImages.dart';
+import 'package:som/dashboard/utils/DbStrings.dart';
 
 class Dashboard7 extends StatefulWidget {
   static String tag = '/Dashboard7';
@@ -17,7 +17,7 @@ class Dashboard7 extends StatefulWidget {
 }
 
 class Dashboard7State extends State<Dashboard7> {
-  List<DB7Topic> mList;
+  late List<DB7Topic> mList;
   var _selectedIndex = 0;
 
   @override
@@ -164,8 +164,9 @@ class Dashboard7State extends State<Dashboard7> {
   }
 }
 
+// ignore: must_be_immutable
 class Topic extends StatelessWidget {
-  DB7Topic model;
+  late DB7Topic model;
 
   Topic(DB7Topic model, int pos) {
     this.model = model;
@@ -234,7 +235,7 @@ class Topic extends StatelessWidget {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

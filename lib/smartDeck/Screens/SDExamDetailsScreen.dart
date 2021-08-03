@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDExamModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDCongratulationsScreen.dart';
+import 'package:som/smartDeck/ModelClass/SDExamModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/Screens/SDCongratulationsScreen.dart';
 
 class SDExamDetailsScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class SDExamDetailsScreen extends StatefulWidget {
 
 class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
   int _counter = 30;
-  Timer _timer;
+  Timer? _timer;
   var selectedSize = -1;
 
   int pageChanged = 0;
@@ -30,7 +30,7 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
           if (_counter > 0) {
             _counter--;
           } else {
-            _timer.cancel();
+            _timer!.cancel();
           }
         });
       },
@@ -38,6 +38,7 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     _startTimer();
   }
@@ -119,7 +120,7 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
               child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: mQuestionList?.length,
+                  itemCount: mQuestionList.length,
                   padding: EdgeInsets.only(top: 16.0),
                   itemBuilder: (_, index) {
                     return Container(
@@ -139,7 +140,7 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
                               child: selectedSize == index ? Icon(Icons.check_circle, color: Colors.white, size: 22) : Icon(Icons.radio_button_unchecked, color: sdPrimaryColor, size: 22),
                             ),
                             SizedBox(width: 16),
-                            Text(mQuestionList[index].value, style: primaryTextStyle(color: selectedSize == index ? Colors.white : sdTextPrimaryColor)),
+                            Text(mQuestionList[index].value!, style: primaryTextStyle(color: selectedSize == index ? Colors.white : sdTextPrimaryColor)),
                           ],
                         ),
                       ),
@@ -173,7 +174,7 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
-                        if (pageChanged >= 0) {
+                        if (pageChanged-1 >= 0) {
                           pageChanged = pageChanged - 1;
                           pageController.animateToPage(pageChanged, duration: Duration(milliseconds: 500), curve: Curves.ease);
                         }
@@ -208,9 +209,9 @@ class _SDExamDetailsScreenState extends State<SDExamDetailsScreen> {
 
 class Question extends StatefulWidget {
   final String textContent;
-  final String question;
+  final String? question;
 
-  Question({Key key, @required this.textContent, this.question}) : super(key: key);
+  Question({Key? key, required this.textContent, this.question}) : super(key: key);
 
   @override
   _QuestionState createState() => _QuestionState();
@@ -230,7 +231,7 @@ class _QuestionState extends State<Question> {
         ),
         Container(
           margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-          child: Text(widget.question, style: primaryTextStyle(size: 16)),
+          child: Text(widget.question!, style: primaryTextStyle(size: 16)),
         ),
       ],
     );

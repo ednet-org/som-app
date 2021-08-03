@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7DataGenerator.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7DataGenerator.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +20,7 @@ class T7HotelList extends StatefulWidget {
 }
 
 class T7HotelListState extends State<T7HotelList> {
-  List<T7HotelDataModel> mListings;
+  late List<T7HotelDataModel> mListings;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class T7HotelListState extends State<T7HotelList> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: ListView(
@@ -71,7 +71,7 @@ class T7HotelListState extends State<T7HotelList> {
                               ClipRRect(
                                 borderRadius: new BorderRadius.circular(12.0),
                                 child: CachedNetworkImage(
-                                  placeholder: placeholderWidgetFn(),
+                                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                   imageUrl: mListings[index].image,
                                   fit: BoxFit.fill,
                                   height: width * 0.32,

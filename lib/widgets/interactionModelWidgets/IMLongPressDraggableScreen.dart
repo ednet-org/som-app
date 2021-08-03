@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class IMLongPressDraggableScreen extends StatefulWidget {
   static String tag = '/IMLongPressDraggableScreen';
@@ -49,7 +49,7 @@ class _IMLongPressDraggableScreenState extends State<IMLongPressDraggableScreen>
                 return ExampleItemWidget(
                   example[index],
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
                   },
                 );
               })),

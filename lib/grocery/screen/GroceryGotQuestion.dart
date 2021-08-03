@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class GroceryGotQuestionScreen extends StatefulWidget {
   static String tag = '/GroceryGotQuestionScreen';
@@ -33,13 +33,14 @@ class _GroceryGotQuestionScreenState extends State<GroceryGotQuestionScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          decoration: boxDecorationDefault(),
           color: grocery_color_white,
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: Grocery_ic_Profile,
                     height: 70,
                     width: 70,
@@ -70,7 +71,7 @@ class _GroceryGotQuestionScreenState extends State<GroceryGotQuestionScreen> {
               ).paddingOnly(left: 16, right: 16)
             ],
           ).paddingOnly(bottom: 16),
-        ).cornerRadiusWithClipRRect(15).withShadow().paddingOnly(bottom: 16),
+        ).cornerRadiusWithClipRRect(15).paddingOnly(bottom: 16),
       ),
     );
   }

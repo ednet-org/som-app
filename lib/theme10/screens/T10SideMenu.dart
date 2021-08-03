@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme10/utils/T10Colors.dart';
-import 'package:prokit_flutter/theme10/utils/T10Constant.dart';
-import 'package:prokit_flutter/theme10/utils/T10Images.dart';
-import 'package:prokit_flutter/theme10/utils/T10Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme10/utils/T10Colors.dart';
+import 'package:som/theme10/utils/T10Constant.dart';
+import 'package:som/theme10/utils/T10Images.dart';
+import 'package:som/theme10/utils/T10Strings.dart';
 
 import '../../main.dart';
 
@@ -19,7 +19,7 @@ class T10SideMenu extends StatefulWidget {
 class T10SideMenuState extends State<T10SideMenu> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -31,7 +31,7 @@ class T10SideMenuState extends State<T10SideMenu> {
           child: IconButton(
             icon: Icon(Icons.menu, color: appStore.iconColor),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
           ),
         ),

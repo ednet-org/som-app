@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWPopupMenuButtonScreen extends StatefulWidget {
   static String tag = '/MWPopupMenuButtonScreen';
@@ -50,11 +50,11 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>> list = [];
                         list.add(
                           PopupMenuItem(
                             child: Text("Mark as read"),
@@ -89,12 +89,12 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       offset: Offset(0, 100),
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>>  list = [];
                         list.add(
                           PopupMenuItem(
                             child: Text("Select Language"),
@@ -151,12 +151,12 @@ class MWPopupMenuButtonScreenState extends State<MWPopupMenuButtonScreen> {
                         Icons.more_vert,
                         color: appStore.textPrimaryColor,
                       ),
-                      onSelected: (value) {
+                      onSelected: (dynamic value) {
                         toast(value);
                       },
                       offset: Offset(0, 100),
                       itemBuilder: (context) {
-                        var list = List<PopupMenuEntry<Object>>();
+                        List<PopupMenuEntry<Object>> list = [];
                         list.add(
                           PopupMenuItem(
                             child: ListTile(

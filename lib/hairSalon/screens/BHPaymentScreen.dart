@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'BHFinishedAppoScreen.dart';
 
@@ -17,9 +17,9 @@ class BHPaymentScreen extends StatefulWidget {
 }
 
 class BookAppointmentScreenState extends State<BHPaymentScreen> {
-  int _radioValue1 = 0;
+  int? _radioValue1 = 0;
 
-  void something(int value) {
+  void something(int? value) {
     setState(() {
       _radioValue1 = value;
       print(_radioValue1);
@@ -70,7 +70,7 @@ class BookAppointmentScreenState extends State<BHPaymentScreen> {
                         ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: CachedNetworkImage(
-                            placeholder: placeholderWidgetFn(),
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                             imageUrl: BHDashedBoardImage4,
                             height: 70,
                             width: 130,
@@ -170,7 +170,7 @@ class BookAppointmentScreenState extends State<BHPaymentScreen> {
                       value: 0,
                       groupValue: _radioValue1,
                       activeColor: BHColorPrimary,
-                      onChanged: (value) => something(value),
+                      onChanged: (dynamic value) => something(value),
                     ),
                   ],
                 ),
@@ -198,7 +198,7 @@ class BookAppointmentScreenState extends State<BHPaymentScreen> {
                       groupValue: _radioValue1,
                       activeColor: BHColorPrimary,
                       focusColor: BHAppTextColorSecondary,
-                      onChanged: (value) => something(value),
+                      onChanged: (dynamic value) => something(value),
                     ),
                   ],
                 ),
@@ -219,13 +219,15 @@ class BookAppointmentScreenState extends State<BHPaymentScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(vertical: 8),
-                child: RaisedButton(
-                  padding: EdgeInsets.all(12),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(12),
+                    primary: BHColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                  ),
                   onPressed: () {
                     BHFinishedAppScreen().launch(context);
                   },
-                  color: BHColorPrimary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                   child: Text('Confirm Payment', style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                 ),
               ),

@@ -1,20 +1,20 @@
-import 'package:prokit_flutter/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
-import 'package:prokit_flutter/cloudStorage/components/CSSearchBar.dart';
-import 'package:prokit_flutter/cloudStorage/model/CSDataModel.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/cloudStorage/components/CSDisplayDataInListViewComponents.dart';
+import 'package:som/cloudStorage/components/CSSearchBar.dart';
+import 'package:som/cloudStorage/model/CSDataModel.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/main.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CSCopyAndMoveComponents extends StatefulWidget {
   static String tag = '/CSCopyAndMoveComponents';
 
-  final List<CSDataModel> listOfData;
-  final String appBarTitle;
+  final List<CSDataModel>? listOfData;
+  final String? appBarTitle;
 
-  const CSCopyAndMoveComponents({Key key, this.listOfData, this.appBarTitle}) : super(key: key);
+  const CSCopyAndMoveComponents({Key? key, this.listOfData, this.appBarTitle}) : super(key: key);
 
   @override
   CSCopyAndMoveComponentsState createState() => CSCopyAndMoveComponentsState();
@@ -46,7 +46,7 @@ class CSCopyAndMoveComponentsState extends State<CSCopyAndMoveComponents> {
             onPressed: () {
               finish(context);
             }),
-        title: Text(widget.appBarTitle),
+        title: Text(widget.appBarTitle!),
         actions: [
           IconButton(
               icon: Icon(Icons.search, color: CSDarkBlueColor),

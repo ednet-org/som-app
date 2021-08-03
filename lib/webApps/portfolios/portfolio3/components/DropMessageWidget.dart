@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Colors.dart';
@@ -142,12 +142,14 @@ class DropMessageWidgetState extends State<DropMessageWidget> {
                       maxLines: 5,
                     ),
                     24.height,
-                    FlatButton(
+                    TextButton(
                       onPressed: () {},
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                      padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        primary: portfolio3PrimaryColor,
+                      ),
                       child: Text('SEND', style: boldTextStyle(color: Colors.white, size: 18)),
-                      color: portfolio3PrimaryColor,
                     ),
                     24.height,
                   ],

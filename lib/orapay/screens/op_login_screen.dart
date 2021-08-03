@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 import 'op_user_detail.dart';
 
@@ -81,12 +81,14 @@ class _OPLoginScreenState extends State<OPLoginScreen> {
                 margin: EdgeInsets.only(left: 16, right: 16),
                 width: size.width - 32,
                 height: 50,
-                child: RaisedButton(
-                  color: opPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: opPrimaryColor,
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
-                  elevation: 1,
                   onPressed: () {
                     finish(context);
                     Navigator.push(

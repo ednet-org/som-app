@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -11,8 +11,8 @@ class AMScaleTransitionScreen extends StatefulWidget {
 }
 
 class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen> with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {

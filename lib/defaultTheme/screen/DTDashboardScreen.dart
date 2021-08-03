@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTWorkInProgressScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-// import 'package:prokit_flutter/defaultTheme/screen/DTDashboardWidget.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
+import 'DTWorkInProgressScreen.dart';
 
 class DTDashboardScreen extends StatefulWidget {
   static String tag = '/DTDashboardScreen';

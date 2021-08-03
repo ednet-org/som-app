@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDNotidicationModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/smartDeck/ModelClass/SDNotidicationModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
 
 class SDNotificationScreen extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class _SDNotificationScreenState extends State<SDNotificationScreen> {
   Widget build(BuildContext context) {
     Widget mPopup() => PopupMenuButton(
           itemBuilder: (context) {
-            var list = List<PopupMenuEntry<Object>>();
+            List<PopupMenuEntry<Object>> list = [];
             list.add(
               PopupMenuItem(child: Text("Mark as read"), value: 1),
             );
@@ -107,7 +108,7 @@ class _SDNotificationScreenState extends State<SDNotificationScreen> {
           automaticallyImplyLeading: false,
         ),
         body: ListView.builder(
-          itemCount: notification == null ? 0 : notification.length,
+          itemCount: notification.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             return Container(
@@ -119,17 +120,13 @@ class _SDNotificationScreenState extends State<SDNotificationScreen> {
                   width: 40,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40),
-                    child: FadeInImage(
-                      fit: BoxFit.cover,
-                      placeholder: Image.asset(notification[index].images, height: 35, width: 10).image,
-                      image: Image.network(notification[index].images, height: 35, width: 10).image,
-                    ),
+                    child: commonCacheImageWidget(notification[index].images!,  35, width: 10,fit: BoxFit.cover),
                   ),
                 ),
-                title: Text(notification[index].notificationmessage, style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                title: Text(notification[index].notificationmessage!, style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
                 subtitle: Container(
                   margin: EdgeInsets.only(top: 4),
-                  child: Text(notification[index].time, style: secondaryTextStyle()),
+                  child: Text(notification[index].time!, style: secondaryTextStyle()),
                 ),
                 trailing: Container(
                   padding: EdgeInsets.only(right: 4),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -14,7 +14,7 @@ class MWAppBarScreen extends StatefulWidget {
 class MWAppBarScreenState extends State<MWAppBarScreen> {
   FocusNode focusNode = FocusNode();
 
-  bool _isSearching = false;
+  bool isSearching = false;
   Widget appBarTitle = Text("Search Toolbar", style: boldTextStyle(color: appStore.textPrimaryColor));
 
   Icon actionIcon = Icon(
@@ -26,7 +26,7 @@ class MWAppBarScreenState extends State<MWAppBarScreen> {
   @override
   void initState() {
     super.initState();
-    _isSearching = false;
+    isSearching = false;
   }
 
   init() async {}
@@ -111,13 +111,13 @@ class MWAppBarScreenState extends State<MWAppBarScreen> {
                             ),
                           );
                           setState(() {
-                            _isSearching = true;
+                            isSearching = true;
                           });
                         } else {
                           setState(() {
                             this.actionIcon = Icon(Icons.search, color: appStore.textPrimaryColor);
                             this.appBarTitle = Text("Search Toolbar", style: boldTextStyle(color: appStore.textPrimaryColor));
-                            _isSearching = false;
+                            isSearching = false;
                           });
                         }
                         FocusScope.of(context).requestFocus(focusNode);

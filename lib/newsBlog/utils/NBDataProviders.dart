@@ -1,14 +1,14 @@
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBAudioArticleScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBBookmarkScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBChangePasswordScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBCreateNewArticleScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBEditProfileScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBLanguageScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBMembershipScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBNotificationSettingScreen.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBSettingScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBAudioArticleScreen.dart';
+import 'package:som/newsBlog/screen/NBBookmarkScreen.dart';
+import 'package:som/newsBlog/screen/NBChangePasswordScreen.dart';
+import 'package:som/newsBlog/screen/NBCreateNewArticleScreen.dart';
+import 'package:som/newsBlog/screen/NBEditProfileScreen.dart';
+import 'package:som/newsBlog/screen/NBLanguageScreen.dart';
+import 'package:som/newsBlog/screen/NBMembershipScreen.dart';
+import 'package:som/newsBlog/screen/NBNotificationSettingScreen.dart';
+import 'package:som/newsBlog/screen/NBSettingScreen.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
 
 String details = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
     'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,'

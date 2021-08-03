@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/model/FoodModel.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodDataGenerator.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/food/utils/FoodWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/model/FoodModel.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodDataGenerator.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'FoodAddAddress.dart';
 import 'FoodBookCart.dart';
@@ -30,12 +30,12 @@ class FoodDashboard extends StatefulWidget {
 class FoodDashboardState extends State<FoodDashboard> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  List<DashboardCollections> mCollectionList;
-  List<Restaurants> mBakeryList;
-  List<Restaurants> mDeliveryList;
-  List<Restaurants> mDineOutList;
-  List<DashboardCollections> mExperienceList;
-  List<Restaurants> mCafeList;
+  late List<DashboardCollections> mCollectionList;
+  late List<Restaurants> mBakeryList;
+  late List<Restaurants> mDeliveryList;
+  late List<Restaurants> mDineOutList;
+  late List<DashboardCollections> mExperienceList;
+  late List<Restaurants> mCafeList;
 
   @override
   void initState() {
@@ -89,7 +89,7 @@ class FoodDashboardState extends State<FoodDashboard> {
                   IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () {
-                      _scaffoldKey.currentState.openDrawer();
+                      _scaffoldKey.currentState!.openDrawer();
                     },
                   ),
                   Text(food_app_name, style: boldTextStyle(size: 18)),
@@ -302,8 +302,9 @@ class FoodDashboardState extends State<FoodDashboard> {
   }
 }
 
+// ignore: must_be_immutable
 class Item extends StatelessWidget {
-  Restaurants model;
+  late Restaurants model;
 
   Item(Restaurants model, int pos) {
     this.model = model;
@@ -328,7 +329,7 @@ class Item extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: model.image,
                     height: width * 0.3,
                     width: width * 0.4,
@@ -370,7 +371,7 @@ class Item extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Collection extends StatelessWidget {
-  DashboardCollections model;
+  late DashboardCollections model;
 
   Collection(DashboardCollections model, int pos) {
     this.model = model;
@@ -390,7 +391,7 @@ class Collection extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: model.image,
                 width: width * 0.5,
                 height: 250,

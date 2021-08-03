@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3Search extends StatefulWidget {
   static var tag = "/T3Search";
@@ -19,7 +19,7 @@ class T3Search extends StatefulWidget {
 }
 
 class T3SearchState extends State<T3Search> {
-  List<Theme3Dish> mListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class T3SearchState extends State<T3Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: Container(
@@ -114,7 +114,7 @@ class T3SearchState extends State<T3Search> {
 
 // ignore: must_be_immutable
 class T3SearchList extends StatelessWidget {
-  Theme3Dish model;
+  late Theme3Dish model;
 
   T3SearchList(Theme3Dish model, int pos) {
     this.model = model;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWListTileScreen extends StatefulWidget {
   static String tag = '/MWListTileScreen';
@@ -44,16 +44,16 @@ class MWListTileScreenState extends State<MWListTileScreen> {
                 onTap: () {
                   toast(userList[index].name);
                 },
-                leading: CircleAvatar(radius: 20, backgroundImage: Image.asset(userList[index].images).image),
+                leading: CircleAvatar(radius: 20, backgroundImage: Image.asset(userList[index].images!).image),
                 title: Text(
-                  userList[index].name,
+                  userList[index].name!,
                   style: boldTextStyle(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Container(
                   margin: EdgeInsets.only(top: 4),
-                  child: Text(userList[index].value, style: secondaryTextStyle()),
+                  child: Text(userList[index].value!, style: secondaryTextStyle()),
                 ),
                 trailing: Container(
                   padding: EdgeInsets.only(right: 4),
@@ -69,9 +69,9 @@ class MWListTileScreenState extends State<MWListTileScreen> {
 }
 
 class UserModel {
-  String images;
-  String name;
-  String value;
+  String? images;
+  String? name;
+  String? value;
 
   UserModel({
     this.images,

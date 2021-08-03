@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/screen/BankingDashboard.dart';
-import 'package:prokit_flutter/Banking/screen/BankingForgotPassword.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingImages.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/screen/BankingDashboard.dart';
+import 'package:som/Banking/screen/BankingForgotPassword.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingImages.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 class BankingSignIn extends StatefulWidget {
   static var tag = "/BankingSignIn";

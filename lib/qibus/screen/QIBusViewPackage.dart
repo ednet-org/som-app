@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusViewPackage extends StatefulWidget {
   static String tag = '/QIBusViewPackage';
@@ -19,7 +19,7 @@ class QIBusViewPackage extends StatefulWidget {
 }
 
 class QIBusViewPackageState extends State<QIBusViewPackage> {
-  List<QIBusNewPackageModel> mList1;
+  late List<QIBusNewPackageModel> mList1;
 
   @override
   void initState() {
@@ -52,8 +52,9 @@ class QIBusViewPackageState extends State<QIBusViewPackage> {
   }
 }
 
+// ignore: must_be_immutable
 class ViewPackage extends StatelessWidget {
-  QIBusNewPackageModel model;
+  late QIBusNewPackageModel model;
 
   ViewPackage(QIBusNewPackageModel model, int pos) {
     this.model = model;
@@ -70,7 +71,7 @@ class ViewPackage extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.only(topRight: Radius.circular(spacing_middle), topLeft: Radius.circular(spacing_middle)),
-            child: Image.asset(
+            child: Image.network(
               model.image,
               height: width * 0.32,
               width: width,

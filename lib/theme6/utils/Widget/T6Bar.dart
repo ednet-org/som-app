@@ -16,7 +16,7 @@ class Bar extends StatelessWidget {
     return PlayAnimation(
       duration: Duration(milliseconds: (height * _baseDurationMs).round()),
       tween: Tween(begin: 0.0, end: height),
-      builder: (context, child, animatedHeight) {
+      builder: (context, child, dynamic animatedHeight) {
         return Column(
           children: <Widget>[
             Container(

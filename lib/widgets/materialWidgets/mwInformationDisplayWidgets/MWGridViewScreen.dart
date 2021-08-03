@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -12,7 +12,7 @@ class MWGridViewScreen extends StatefulWidget {
 }
 
 class MWGridViewScreenState extends State<MWGridViewScreen> {
-  List<ItemModel> mListing;
+  late List<ItemModel> mListing;
 
   @override
   void initState() {
@@ -52,8 +52,9 @@ class MWGridViewScreenState extends State<MWGridViewScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Product extends StatelessWidget {
-  ItemModel model;
+  late ItemModel model;
 
   Product(ItemModel model, int pos) {
     this.model = model;
@@ -98,7 +99,7 @@ class ItemModel {
 }
 
 List<ItemModel> getData() {
-  List<ItemModel> popularArrayList = List<ItemModel>();
+  List<ItemModel> popularArrayList = [];
   ItemModel item1 = ItemModel();
   item1.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item3.jpg';
   item1.name = "Black Jacket";

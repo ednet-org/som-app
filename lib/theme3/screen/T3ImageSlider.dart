@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 import 'T3Dashboard.dart';
 
@@ -17,7 +17,7 @@ class T3ImageSlider extends StatefulWidget {
 }
 
 class T3ImageSliderState extends State<T3ImageSlider> {
-  List<T3DashboardSliderModel> mSliderListings;
+  late List<T3DashboardSliderModel> mSliderListings;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class T3ImageSliderState extends State<T3ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, t3_slider_title),

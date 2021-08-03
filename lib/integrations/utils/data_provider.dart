@@ -1,33 +1,34 @@
-import 'package:prokit_flutter/integrations/models/ContentModel.dart';
-import 'package:prokit_flutter/integrations/screens/FingerprintAuthentication.dart';
-import 'package:prokit_flutter/integrations/screens/LikeButton/LBHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/Marquee/MHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/Shimmer/SHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/ShowViewCase/SVCHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/StickyHeader/stickyHeaderHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/api/get_method_api_integration.dart';
-import 'package:prokit_flutter/integrations/screens/api/post_method_api_integration.dart';
-import 'package:prokit_flutter/integrations/screens/before_after_image_screen.dart';
-import 'package:prokit_flutter/integrations/screens/button_screen.dart';
-import 'package:prokit_flutter/integrations/screens/confetti/CHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/fluid_slider_screen.dart';
-import 'package:prokit_flutter/integrations/screens/flutterCalender/CalenderHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/flutterTinderCard/TinderHomePage.dart';
-import 'package:prokit_flutter/integrations/screens/folding_cell_screen.dart';
-import 'package:prokit_flutter/integrations/screens/google_map_screen.dart';
-import 'package:prokit_flutter/integrations/screens/google_signin_screen.dart';
-import 'package:prokit_flutter/integrations/screens/liquid_pull_to_refresh_screen.dart';
-import 'package:prokit_flutter/integrations/screens/liquid_swipe_screen.dart';
-import 'package:prokit_flutter/integrations/screens/picker_screen.dart';
-import 'package:prokit_flutter/integrations/screens/razorpay_screen.dart';
-import 'package:prokit_flutter/integrations/screens/shader_mask_screen.dart';
-import 'package:prokit_flutter/integrations/screens/singature_screen.dart';
-import 'package:prokit_flutter/integrations/screens/sliding_panel_screen.dart';
-import 'package:prokit_flutter/integrations/screens/wave_screen.dart';
-import 'package:prokit_flutter/integrations/utils/colors.dart';
+import 'package:som/integrations/models/ContentModel.dart';
+import 'package:som/integrations/screens/FingerprintAuthentication.dart';
+import 'package:som/integrations/screens/LikeButton/LBHomePage.dart';
+import 'package:som/integrations/screens/Marquee/MHomePage.dart';
+import 'package:som/integrations/screens/Shimmer/SHomePage.dart';
+import 'package:som/integrations/screens/ShowViewCase/SVCHomePage.dart';
+import 'package:som/integrations/screens/StickyHeader/stickyHeaderHomePage.dart';
+import 'package:som/integrations/screens/api/get_method_api_integration.dart';
+import 'package:som/integrations/screens/api/post_method_api_integration.dart';
+import 'package:som/integrations/screens/before_after_image_screen.dart';
+import 'package:som/integrations/screens/button_screen.dart';
+import 'package:som/integrations/screens/confetti/CHomePage.dart';
+import 'package:som/integrations/screens/fluid_slider_screen.dart';
+import 'package:som/integrations/screens/flutterCalender/CalenderHomePage.dart';
+import 'package:som/integrations/screens/flutterTinderCard/TinderHomePage.dart';
+import 'package:som/integrations/screens/folding_cell_screen.dart';
+import 'package:som/integrations/screens/google_map_screen.dart';
+import 'package:som/integrations/screens/google_signin_screen.dart';
+import 'package:som/integrations/screens/liquid_pull_to_refresh_screen.dart';
+import 'package:som/integrations/screens/liquid_swipe_screen.dart';
+import 'package:som/integrations/screens/picker_screen.dart';
+import 'package:som/integrations/screens/razorpay_screen.dart';
+import 'package:som/integrations/screens/shader_mask_screen.dart';
+import 'package:som/integrations/screens/singature_screen.dart';
+import 'package:som/integrations/screens/sliding_panel_screen.dart';
+import 'package:som/integrations/screens/wave_screen.dart';
+import 'package:som/integrations/utils/colors.dart';
+import 'package:som/main/model/ExpenseData.dart';
 
 Future<List<ContentModel>> getContents(context) async {
-  List<ContentModel> list = List();
+  List<ContentModel> list = [];
 
   var cat1Item1 = ContentModel(title: 'Before After Image', pageName: BeforeAfterImageScreen());
   var cat1Item2 = ContentModel(title: 'Google Sign In', pageName: GoogleSignInScreen());
@@ -99,5 +100,17 @@ Future<List<ContentModel>> getContents(context) async {
       tag: 'New',
     ),
   );
+  return list;
+}
+
+List<ExpenseData> getChartData() {
+  List<ExpenseData> list = [];
+  list.add(ExpenseData(expanseCategory: 'Food', father: 55, mother: 48, daughter: 45, son: 10));
+  list.add(ExpenseData(expanseCategory: 'Transport', father: 33, mother: 45, daughter: 54, son: 28));
+  list.add(ExpenseData(expanseCategory: 'Medical', father: 40, mother: 23, daughter: 20, son: 34));
+  list.add(ExpenseData(expanseCategory: 'Clothes', father: 75, mother: 54, daughter: 23, son: 54));
+  list.add(ExpenseData(expanseCategory: 'Books', father: 12, mother: 18, daughter: 43, son: 55));
+  list.add(ExpenseData(expanseCategory: 'Other', father: 23, mother: 54, daughter: 33, son: 23));
+
   return list;
 }

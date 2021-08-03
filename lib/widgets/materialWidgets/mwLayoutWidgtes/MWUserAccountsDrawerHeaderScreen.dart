@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen4.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen4.dart';
 
 import 'MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen1.dart';
 import 'MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen2.dart';
@@ -60,7 +60,7 @@ class MWUserAccountsDrawerHeaderScreenState extends State<MWUserAccountsDrawerHe
                 return ExampleItemWidget(
                   example[index],
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
                   },
                 );
               })),

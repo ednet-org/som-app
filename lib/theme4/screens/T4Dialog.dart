@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/screens/T4SignIn.dart';
-import 'package:prokit_flutter/theme4/utils/T4Constant.dart';
-import 'package:prokit_flutter/theme4/utils/T4Strings.dart';
-import 'package:prokit_flutter/theme4/utils/widgets/T4Button.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/screens/T4SignIn.dart';
+import 'package:som/theme4/utils/T4Constant.dart';
+import 'package:som/theme4/utils/T4Strings.dart';
+import 'package:som/theme4/utils/widgets/T4Button.dart';
 
 import '../../main.dart';
 

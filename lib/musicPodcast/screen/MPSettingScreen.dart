@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPEditProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPProfileScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPTermsConditionScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPEditProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPProfileScreen.dart';
+import 'package:som/musicPodcast/screen/MPTermsConditionScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
 
 class MPSettingScreen extends StatefulWidget {
   static String tag = '/MPSettingScreen';
@@ -74,7 +74,7 @@ class MPSettingScreenState extends State<MPSettingScreen> {
 
                 return Row(
                   children: [
-                    Text(data.title, style: primaryTextStyle(color: Colors.white)).paddingOnly(left: 16, top: 8, bottom: 8).expand(),
+                    Text(data.title!, style: primaryTextStyle(color: Colors.white)).paddingOnly(left: 16, top: 8, bottom: 8).expand(),
                     data.isShow
                         ? Icon(data.icon, color: Colors.grey)
                         : Switch(

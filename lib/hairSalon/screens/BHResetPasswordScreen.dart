@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:prokit_flutter/hairSalon/screens/BHLoginScreen.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/hairSalon/screens/BHLoginScreen.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
 
 class BHResetPasswordScreen extends StatefulWidget {
   static String tag = '/ResetPasswordScreen';
@@ -41,7 +41,7 @@ class BHResetPasswordScreenState extends State<BHResetPasswordScreen> {
               actions: [
                 Container(
                   width: 80,
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       finish(context);
                       finish(context);
@@ -161,13 +161,16 @@ class BHResetPasswordScreenState extends State<BHResetPasswordScreen> {
                     16.height,
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            primary: BHColorPrimary),
                         onPressed: () {
                           _showDialog();
                         },
-                        color: BHColorPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         child: Text(BHBtnSend, style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
                     ),

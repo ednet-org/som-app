@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/integrations/models/follower_model.dart';
+import 'package:som/integrations/models/follower_model.dart';
 
 import 'network_utils.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme12/utils/t12_colors.dart';
-import 'package:prokit_flutter/theme12/utils/t12_constant.dart';
-import 'package:prokit_flutter/theme12/utils/t12_widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme12/utils/t12_colors.dart';
+import 'package:som/theme12/utils/t12_constant.dart';
+import 'package:som/theme12/utils/t12_widget.dart';
 
 import '../../main.dart';
 
@@ -19,16 +19,16 @@ class T12SignInState extends State<T12SignIn> {
   FocusNode phoneNumberFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String phone;
-  String password;
-  bool _autoValidate = false;
+  String? phone;
+  String? password;
+  bool autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
   bool isRemember = false;
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -51,15 +51,14 @@ class T12SignInState extends State<T12SignIn> {
                       ),
                       Form(
                         key: _formKey,
-                        autovalidate: _autoValidate,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+                          children: [
                             formField(context, "Phone Number", prefixIcon: Icons.phone_iphone, focusNode: phoneNumberFocus, textInputAction: TextInputAction.next, nextFocus: passwordFocus,
-                                onSaved: (String value) {
-                              setState(() {
-                                phone = value;
-                              });
+                                onSaved: (String? value) {
+                              phone = value;
+                              setState(() {});
                             }).paddingBottom(spacing_standard_new),
                             formField(
                               context,
@@ -68,10 +67,10 @@ class T12SignInState extends State<T12SignIn> {
                               isPassword: true,
                               isPasswordVisible: passwordVisible,
                               validator: (value) {
-                                return value.isEmpty ? "Password Required" : null;
+                                return value!.isEmpty ? "Password Required" : '';
                               },
                               focusNode: passwordFocus,
-                              onSaved: (String value) {
+                              onSaved: (String? value) {
                                 password = value;
                               },
                               textInputAction: TextInputAction.done,
@@ -109,7 +108,7 @@ class T12SignInState extends State<T12SignIn> {
                           child: text("Login", textColor: Colors.white, fontFamily: fontMedium),
                           shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(spacing_standard)),
                           color: t12_primary_color,
-                          onPressed: () => {},
+                          onPressed: () {},
                         ),
                       ).paddingAll(spacing_standard_new),
                     ],

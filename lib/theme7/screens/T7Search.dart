@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7DataGenerator.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7DataGenerator.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
 
 class T7Search extends StatefulWidget {
   static String tag = '/T7Search';
@@ -117,8 +117,8 @@ class Search extends StatefulWidget {
 }
 
 class SearchState extends State<Search> {
-  List<T7RecentSearchDataModel> mListings;
-  List<T7RecentSearchDataModel> mListings1;
+  late List<T7RecentSearchDataModel> mListings;
+  late List<T7RecentSearchDataModel> mListings1;
 
   @override
   void initState() {
@@ -129,7 +129,7 @@ class SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(20.0),
@@ -139,7 +139,7 @@ class SearchState extends State<Search> {
             SizedBox(height: 16),
             RichText(
               text: TextSpan(
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText2,
                 children: [
                   WidgetSpan(
                     child: Padding(
@@ -172,7 +172,7 @@ class SearchState extends State<Search> {
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: RichText(
                       text: TextSpan(
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText2,
                         children: [
                           WidgetSpan(
                             child: Padding(

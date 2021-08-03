@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme4/models/T4Models.dart';
-import 'package:prokit_flutter/theme4/utils/T4Colors.dart';
-import 'package:prokit_flutter/theme4/utils/T4Constant.dart';
-import 'package:prokit_flutter/theme4/utils/T4DataGenerator.dart';
-import 'package:prokit_flutter/theme4/utils/T4Images.dart';
-import 'package:prokit_flutter/theme4/utils/T4Strings.dart';
-import 'package:prokit_flutter/theme4/utils/T4Widgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme4/models/T4Models.dart';
+import 'package:som/theme4/utils/T4Colors.dart';
+import 'package:som/theme4/utils/T4Constant.dart';
+import 'package:som/theme4/utils/T4DataGenerator.dart';
+import 'package:som/theme4/utils/T4Images.dart';
+import 'package:som/theme4/utils/T4Strings.dart';
+import 'package:som/theme4/utils/T4Widgets.dart';
 
 class T4Profile extends StatefulWidget {
   static var tag = "/T4Profile";
@@ -22,7 +22,7 @@ class T4Profile extends StatefulWidget {
 
 class T4ProfileState extends State<T4Profile> {
   int selectedPos = 1;
-  List<T4NewsModel> mListings;
+  List<T4NewsModel>? mListings;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class T4ProfileState extends State<T4Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -79,7 +79,7 @@ class T4ProfileState extends State<T4Profile> {
                       child: Stack(
                         children: <Widget>[
                           CachedNetworkImage(
-                            placeholder: placeholderWidgetFn(),
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                             imageUrl: t4_profile_covr_page,
                             height: height * 0.3,
                             fit: BoxFit.fill,

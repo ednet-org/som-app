@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 /// Folding Cell Widget
 class SimpleFoldingCell extends StatefulWidget {
   SimpleFoldingCell(
-      {Key key,
-      @required this.frontWidget,
-      @required this.innerTopWidget,
-      @required this.innerBottomWidget,
+      {Key? key,
+      required this.frontWidget,
+      required Widget this.innerTopWidget,
+      required Widget this.innerBottomWidget,
       this.cellSize = const Size(100.0, 100.0),
       this.unfoldCell = false,
       this.skipAnimation = false,
@@ -17,22 +17,14 @@ class SimpleFoldingCell extends StatefulWidget {
       this.borderRadius = 0.0,
       this.onOpen,
       this.onClose})
-      : assert(frontWidget != null),
-        assert(innerTopWidget != null),
-        assert(innerBottomWidget != null),
-        assert(cellSize != null),
-        assert(unfoldCell != null),
-        assert(skipAnimation != null),
-        assert(padding != null),
-        assert(animationDuration != null),
-        assert(borderRadius != null && borderRadius >= 0.0),
+      : assert(borderRadius >= 0.0),
         innerWidget = null,
         super(key: key);
 
   SimpleFoldingCell.create(
-      {Key key,
-      @required this.frontWidget,
-      @required this.innerWidget,
+      {Key? key,
+      required this.frontWidget,
+      required Widget this.innerWidget,
       this.cellSize = const Size(100.0, 100.0),
       this.unfoldCell = false,
       this.skipAnimation = false,
@@ -41,14 +33,7 @@ class SimpleFoldingCell extends StatefulWidget {
       this.borderRadius = 0.0,
       this.onOpen,
       this.onClose})
-      : assert(frontWidget != null),
-        assert(innerWidget != null),
-        assert(cellSize != null),
-        assert(unfoldCell != null),
-        assert(skipAnimation != null),
-        assert(padding != null),
-        assert(animationDuration != null),
-        assert(borderRadius != null && borderRadius >= 0.0),
+      : assert(borderRadius >= 0.0),
         innerTopWidget = null,
         innerBottomWidget = null,
         super(key: key);
@@ -57,13 +42,13 @@ class SimpleFoldingCell extends StatefulWidget {
   final Widget frontWidget;
 
   /// Top Widget in unfolded cell
-  final Widget innerTopWidget;
+  final Widget? innerTopWidget;
 
   /// Bottom Widget in unfolded cell
-  final Widget innerBottomWidget;
+  final Widget? innerBottomWidget;
 
   /// Inner widget in unfolded cell
-  final Widget innerWidget;
+  final Widget? innerWidget;
 
   /// Size of cell
   final Size cellSize;
@@ -84,10 +69,10 @@ class SimpleFoldingCell extends StatefulWidget {
   final double borderRadius;
 
   /// Called when cell fold animations completes
-  final VoidCallback onOpen;
+  final VoidCallback? onOpen;
 
   /// Called when cell unfold animations completes
-  final VoidCallback onClose;
+  final VoidCallback? onClose;
 
   @override
   SimpleFoldingCellState createState() => SimpleFoldingCellState();
@@ -95,23 +80,23 @@ class SimpleFoldingCell extends StatefulWidget {
 
 class SimpleFoldingCellState extends State<SimpleFoldingCell> with SingleTickerProviderStateMixin {
   bool _isExpanded = false;
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   @override
   void initState() {
     super.initState();
 
     _animationController = AnimationController(vsync: this, duration: widget.animationDuration);
-    _animationController.addStatusListener((status) {
+    _animationController!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (widget.onOpen != null) widget.onOpen();
+        if (widget.onOpen != null) widget.onOpen!();
       } else if (status == AnimationStatus.dismissed) {
-        if (widget.onClose != null) widget.onClose();
+        if (widget.onClose != null) widget.onClose!();
       }
     });
 
     if (widget.unfoldCell) {
-      _animationController.value = 1;
+      _animationController!.value = 1;
       _isExpanded = true;
     }
   }
@@ -125,9 +110,9 @@ class SimpleFoldingCellState extends State<SimpleFoldingCell> with SingleTickerP
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _animationController,
+        animation: _animationController!,
         builder: (context, child) {
-          final angle = _animationController.value * pi;
+          final angle = _animationController!.value * pi;
           final cellWidth = widget.cellSize.width;
           final cellHeight = widget.cellSize.height;
 
@@ -136,7 +121,7 @@ class SimpleFoldingCellState extends State<SimpleFoldingCell> with SingleTickerP
             child: Container(
               color: Colors.transparent,
               width: cellWidth,
-              height: cellHeight + (cellHeight * _animationController.value),
+              height: cellHeight + (cellHeight * _animationController!.value),
               child: Stack(
                 children: <Widget>[
                   ClipRRect(
@@ -218,15 +203,15 @@ class SimpleFoldingCellState extends State<SimpleFoldingCell> with SingleTickerP
   void toggleFold() {
     if (_isExpanded) {
       if (widget.skipAnimation) {
-        _animationController.value = 0;
+        _animationController!.value = 0;
       } else {
-        _animationController.reverse();
+        _animationController!.reverse();
       }
     } else {
       if (widget.skipAnimation) {
-        _animationController.value = 1;
+        _animationController!.value = 1;
       } else {
-        _animationController.forward();
+        _animationController!.forward();
       }
     }
     _isExpanded = !_isExpanded;

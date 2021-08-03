@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -42,9 +42,9 @@ class CWPickerScreenState extends State<CWPickerScreen> {
     "Japan"
   ];
 
-  String selectedValue;
-  String time;
-  String date;
+  String? selectedValue;
+  String? time;
+  String? date;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class CWPickerScreenState extends State<CWPickerScreen> {
                     }),
                     Text('Done', style: primaryTextStyle(size: 18)).onTap(() {
                       finish(context, time);
-                      toast(time.isNotEmpty ? time : 'Please select time');
+                      toast(time!.isNotEmpty ? time : 'Please select time');
                     })
                   ],
                 ).paddingAll(8.0),
@@ -219,7 +219,7 @@ class CWPickerScreenState extends State<CWPickerScreen> {
                     }),
                     Text('Done', style: primaryTextStyle(size: 18)).onTap(() {
                       finish(context);
-                      toast(selectedValue.isNotEmpty ? selectedValue : 'Please select value');
+                      toast(selectedValue!.isNotEmpty ? selectedValue : 'Please select value');
                     })
                   ],
                 ).paddingAll(8.0),

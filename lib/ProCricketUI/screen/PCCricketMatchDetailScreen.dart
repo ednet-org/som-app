@@ -4,22 +4,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCCommentaryInProgressData.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCSummaryData.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketScoreCardScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCCommentaryInProgressData.dart';
+import 'package:som/ProCricketUI/model/PCSummaryData.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
+import 'package:som/ProCricketUI/screen/PCCricketScoreCardScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
+// ignore: must_be_immutable
 class PCCricketMatchDetailScreen extends StatefulWidget {
   static String tag = '/CricketMatchDetail';
-  String team1 = "";
-  String team2 = "";
+  String? team1 = "";
+  String? team2 = "";
 
   PCCricketMatchDetailScreen({this.team1, this.team2});
 
@@ -28,14 +29,14 @@ class PCCricketMatchDetailScreen extends StatefulWidget {
 }
 
 class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen> {
-  PCCommentaryInProgressData cricketCommentaryInProgressData;
-  PCSummaryData cricketSummaryData;
-  List momModel = List();
-  List<Player> playerModel = List();
-  List<Batsman> batsmenModel = List();
-  List<Bowler> bowlerModel = List();
-  List<Inning> inningsModel = List();
-  List<CommLine> commLineModel = List();
+  late PCCommentaryInProgressData cricketCommentaryInProgressData;
+  PCSummaryData? cricketSummaryData;
+  List momModel = [];
+  List<Player> playerModel = [];
+  List<Batsman> batsmenModel = [];
+  List<Bowler> bowlerModel = [];
+  List<Inning> inningsModel = [];
+  List<CommLine> commLineModel = [];
 
   @override
   void initState() {
@@ -49,19 +50,19 @@ class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen>
     cricketCommentaryInProgressData = PCCommentaryInProgressData.fromJson(jsonDecode(json1));
     String json2 = await rootBundle.loadString('assets/cricket_data/Summary.json');
     cricketSummaryData = PCSummaryData.fromJson(jsonDecode(json2));
-    playerModel.addAll(cricketSummaryData.players);
-    momModel.addAll(cricketSummaryData.header.momNames);
-    batsmenModel.addAll(cricketCommentaryInProgressData.batsman);
-    bowlerModel.addAll(cricketCommentaryInProgressData.bowler);
-    inningsModel.addAll(cricketCommentaryInProgressData.bat_team.innings);
-    commLineModel.addAll(cricketCommentaryInProgressData.comm_lines);
+    playerModel.addAll(cricketSummaryData!.players!);
+    momModel.addAll(cricketSummaryData!.header!.momNames!);
+    batsmenModel.addAll(cricketCommentaryInProgressData.batsman!);
+    bowlerModel.addAll(cricketCommentaryInProgressData.bowler!);
+    inningsModel.addAll(cricketCommentaryInProgressData.bat_team!.innings!);
+    commLineModel.addAll(cricketCommentaryInProgressData.comm_lines!);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    getPlayerName(String id) {
-      String playerName;
+    getPlayerName(String? id) {
+      String? playerName;
       for (int i = 0; i < playerModel.length; i++) {
         if (playerModel[i].id == id) {
           playerName = playerModel[i].f_name;
@@ -76,7 +77,7 @@ class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen>
         child: Scaffold(
           backgroundColor: Cricket_white,
           appBar: PreferredSize(
-            preferredSize: Size(context.width(), 340),
+            preferredSize: Size(context.width(), 370),
             child: cricketSummaryData != null
                 ? Column(
                     children: <Widget>[
@@ -103,86 +104,87 @@ class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen>
                         ],
                       ),
                       Container(
-                          height: 225,
-                          decoration: PCboxDecoration(bgColor: Cricket_white),
-                          child: Stack(
-                            children: <Widget>[
-                              commonCacheImageWidget(Cricket_ic_lord_london, 225, width: context.width(), fit: BoxFit.cover),
-                              Container(
-                                width: context.width(),
-                                decoration: PCboxDecoration(bgColor: Cricket_Primary.withOpacity(0.75)),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(cricketSummaryData.header.match_desc.validate(), style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)).paddingOnly(top: 8.0),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                commonCacheImageWidget(Cricket_ic_default_placeholder, 70, width: 70, fit: BoxFit.fill).paddingOnly(top: 16, left: 16),
-                                                Column(
-                                                  children: <Widget>[
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        Text(inningsModel[0].score, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                                        Text("-", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)).paddingOnly(left: 4.0, right: 4),
-                                                        Text(inningsModel[0].wkts, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
-                                                      ],
-                                                    ).paddingOnly(left: 2, top: 8.0),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        Text(inningsModel[0].overs, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                                        Text("over", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
-                                                      ],
-                                                    ).paddingOnly(left: 8.0),
-                                                  ],
-                                                ).paddingOnly(top: 8.0),
-                                              ],
-                                            ),
-                                            Text(cricketCommentaryInProgressData.bat_team.name, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
-                                                .paddingOnly(left: 24, top: 4),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("P'Ship:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                                Text(cricketCommentaryInProgressData.prtshp, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                              ],
-                                            ),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("CRR:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                                Text(cricketCommentaryInProgressData.crr, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                              ],
-                                            ),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("Target:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                                Text(cricketCommentaryInProgressData.target, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
-                                              ],
-                                            )
-                                          ],
-                                        ).paddingOnly(right: 8.0, top: 16),
-                                      ],
-                                    ),
-                                    Text(cricketSummaryData.header.status, style: boldTextStyle(color: Cricket_white, size: 16, fontFamily: fontMedium)).paddingOnly(),
-                                  ],
-                                ),
+                        height: 225,
+                        decoration: PCboxDecoration(bgColor: Cricket_white),
+                        child: Stack(
+                          children: <Widget>[
+                            commonCacheImageWidget(Cricket_ic_lord_london, 225, width: context.width(), fit: BoxFit.cover),
+                            Container(
+                              width: context.width(),
+                              decoration: PCboxDecoration(bgColor: Cricket_Primary.withOpacity(0.75)),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(cricketSummaryData!.header!.match_desc.validate(), style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)).paddingOnly(top: 8.0),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              commonCacheImageWidget(Cricket_ic_default_placeholder, 70, width: 70, fit: BoxFit.fill).paddingOnly(top: 16, left: 16),
+                                              Column(
+                                                children: <Widget>[
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text(inningsModel[0].score!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                                      Text("-", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)).paddingOnly(left: 4.0, right: 4),
+                                                      Text(inningsModel[0].wkts!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
+                                                    ],
+                                                  ).paddingOnly(left: 2, top: 8.0),
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text(inningsModel[0].overs!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                                      Text("over", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
+                                                    ],
+                                                  ).paddingOnly(left: 8.0),
+                                                ],
+                                              ).paddingOnly(top: 8.0),
+                                            ],
+                                          ),
+                                          Text(cricketCommentaryInProgressData.bat_team!.name!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium))
+                                              .paddingOnly(left: 24, top: 4),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("P'Ship:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                              Text(cricketCommentaryInProgressData.prtshp!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("CRR:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                              Text(cricketCommentaryInProgressData.crr!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("Target:", style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                              Text(cricketCommentaryInProgressData.target!, style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontMedium)),
+                                            ],
+                                          )
+                                        ],
+                                      ).paddingOnly(right: 8.0, top: 16),
+                                    ],
+                                  ),
+                                  Text(cricketSummaryData!.header!.status!, style: boldTextStyle(color: Cricket_white, size: 16, fontFamily: fontMedium)).paddingOnly(),
+                                ],
                               ),
-                            ],
-                          )),
+                            ),
+                          ],
+                        ),
+                      ),
                       Container(
                         child: Stack(
                           children: <Widget>[
@@ -260,16 +262,16 @@ class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen>
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (BuildContext context, int index) {
-                                      double strikeRate = (int.parse(batsmenModel[index].r) / int.parse(batsmenModel[index].b) * 100);
+                                      double strikeRate = (int.parse(batsmenModel[index].r!) / int.parse(batsmenModel[index].b!) * 100);
                                       return Container(
                                           padding: EdgeInsets.only(left: 16, top: 4.0, bottom: 4.0, right: 8.0),
                                           child: Row(
                                             children: <Widget>[
-                                              Text(getPlayerName(batsmenModel[index].id), style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
-                                              Text(batsmenModel[index].r, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                              Text(batsmenModel[index].b, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                              Text(batsmenModel[index].fours, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                              Text(batsmenModel[index].sixes, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                              Text(getPlayerName(batsmenModel[index].id)!, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
+                                              Text(batsmenModel[index].r!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                              Text(batsmenModel[index].b!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                              Text(batsmenModel[index].fours!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                              Text(batsmenModel[index].sixes!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
                                               Text(strikeRate.toStringAsFixed(2).toString(), style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1)
                                             ],
                                           )).onTap(() {
@@ -298,16 +300,16 @@ class _PCCricketMatchDetailScreenState extends State<PCCricketMatchDetailScreen>
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (BuildContext context, int index) {
-                                    double bEconomy = (int.parse(bowlerModel[index].r) / double.parse(bowlerModel[index].o));
+                                    double bEconomy = (int.parse(bowlerModel[index].r!) / double.parse(bowlerModel[index].o!));
                                     return Container(
                                         padding: EdgeInsets.only(left: 16, right: 8),
                                         child: Row(
                                           children: <Widget>[
-                                            Text(getPlayerName(bowlerModel[index].id), style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
-                                            Text(bowlerModel[index].o, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                            Text(bowlerModel[index].m, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                            Text(bowlerModel[index].r, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
-                                            Text(bowlerModel[index].w, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                            Text(getPlayerName(bowlerModel[index].id)!, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
+                                            Text(bowlerModel[index].o!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                            Text(bowlerModel[index].m!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                            Text(bowlerModel[index].r!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
+                                            Text(bowlerModel[index].w!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1),
                                             Text(bEconomy.toStringAsFixed(2).toString(), style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 1)
                                           ],
                                         ));

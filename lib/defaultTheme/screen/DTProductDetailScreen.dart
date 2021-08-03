@@ -3,24 +3,25 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTAddressListModel.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTProductModel.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTCartScreen.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTReviewScreen.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTAddressListModel.dart';
+import 'package:som/defaultTheme/model/DTProductModel.dart';
+import 'package:som/defaultTheme/screen/DTCartScreen.dart';
+import 'package:som/defaultTheme/screen/DTReviewScreen.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTAddressScreen.dart';
 import 'DTDrawerWidget.dart';
 import 'ReviewWidget.dart';
 
+// ignore: must_be_immutable
 class DTProductDetailScreen extends StatefulWidget {
   static String tag = '/DTProductDetailScreen';
-  DTProductModel productModel;
+  DTProductModel? productModel;
 
   DTProductDetailScreen({this.productModel});
 
@@ -31,7 +32,7 @@ class DTProductDetailScreen extends StatefulWidget {
 class DTProductDetailScreenState extends State<DTProductDetailScreen> {
   var discount = 0.0;
 
-  DTAddressListModel mSelectedAddress;
+  DTAddressListModel? mSelectedAddress;
 
   @override
   void initState() {
@@ -41,9 +42,9 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
 
   init() async {
     if (widget.productModel != null) {
-      if (widget.productModel.price.validate() > widget.productModel.discountPrice.validate()) {
-        double mrp = widget.productModel.price.validate().toDouble();
-        double discountPrice = widget.productModel.discountPrice.validate().toDouble();
+      if (widget.productModel!.price.validate() > widget.productModel!.discountPrice.validate()) {
+        double mrp = widget.productModel!.price.validate().toDouble();
+        double discountPrice = widget.productModel!.discountPrice.validate().toDouble();
         discount = (((mrp - discountPrice) / mrp) * 100);
 
         setState(() {});
@@ -104,14 +105,14 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.productModel.name, style: boldTextStyle(size: 18)),
+              Text(widget.productModel!.name!, style: boldTextStyle(size: 18)),
               10.height,
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  priceWidget(widget.productModel.discountPrice, fontSize: 28, textColor: appColorPrimary),
+                  priceWidget(widget.productModel!.discountPrice, fontSize: 28, textColor: appColorPrimary),
                   8.width,
-                  priceWidget(widget.productModel.price, applyStrike: true, fontSize: 18),
+                  priceWidget(widget.productModel!.price, applyStrike: true, fontSize: 18),
                   16.width,
                   Text('${discount.toInt()}% off', style: boldTextStyle(color: appColorPrimary)).visible(discount != 0.0),
                 ],
@@ -126,7 +127,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                       children: [
                         Icon(Icons.star_border, color: Colors.white, size: 14),
                         8.width,
-                        Text(widget.productModel.rating.toString(), style: primaryTextStyle(color: white)),
+                        Text(widget.productModel!.rating.toString(), style: primaryTextStyle(color: white)),
                       ],
                     ),
                   ).onTap(() {
@@ -152,7 +153,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                     children: [
                       Text('Deliver to', style: primaryTextStyle()),
                       10.width,
-                      Text(mSelectedAddress != null ? mSelectedAddress.name.validate() : 'John Doe', style: boldTextStyle()).expand(),
+                      Text(mSelectedAddress != null ? mSelectedAddress!.name.validate() : 'John Doe', style: boldTextStyle()).expand(),
                     ],
                   ).expand(),
                   Container(
@@ -172,7 +173,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                 ],
               ),
               4.height,
-              Text(mSelectedAddress != null ? mSelectedAddress.addressLine1.validate() : '4683 Stadium Drive, Cambridge, MA', style: secondaryTextStyle()),
+              Text(mSelectedAddress != null ? mSelectedAddress!.addressLine1.validate() : '4683 Stadium Drive, Cambridge, MA', style: secondaryTextStyle()),
               16.height,
               Divider(height: 0),
             ],
@@ -201,7 +202,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                 Container(
                   height: context.height() * 0.45,
                   child: Image.network(
-                    widget.productModel.image,
+                    widget.productModel!.image!,
                     width: context.width(),
                     height: context.height() * 0.45,
                     fit: BoxFit.cover,
@@ -232,7 +233,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                       height: context.height() * 0.45,
                       margin: EdgeInsets.all(8),
                       child: Image.network(
-                        widget.productModel.image,
+                        widget.productModel!.image!,
                         width: context.width(),
                         fit: BoxFit.fitHeight,
                       ),
@@ -258,7 +259,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
             ],
           ),
           16.height,
-          widget.productModel != null ? Text('${widget.productModel.name.validate()} Reviews', style: boldTextStyle()).paddingAll(16) : SizedBox(),
+          widget.productModel != null ? Text('${widget.productModel!.name.validate()} Reviews', style: boldTextStyle()).paddingAll(16) : SizedBox(),
           ReviewWidget(list: getReviewList()),
         ],
       );

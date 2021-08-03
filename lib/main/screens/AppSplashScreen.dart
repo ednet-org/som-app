@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:prokit_flutter/main/screens/ProKitLauncher.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/main/screens/ProKitLauncher.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 class AppSplashScreen extends StatefulWidget {
   static String tag = '/ProkitSplashScreen';
@@ -31,7 +31,6 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
 
     await Future.delayed(Duration(seconds: 3));
     DTDashboardScreen().launch(context, isNewTask: true);
-
   }
 
   Widget build(BuildContext context) {

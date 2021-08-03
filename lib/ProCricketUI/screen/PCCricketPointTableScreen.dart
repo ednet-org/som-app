@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCPointTableData.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCPointTableData.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketPointTableScreen extends StatefulWidget {
   static String tag = '/CricketPointTable';
@@ -20,7 +20,7 @@ class PCCricketPointTableScreen extends StatefulWidget {
 }
 
 class _PCCricketPointTableScreenState extends State<PCCricketPointTableScreen> {
-  List<Team> pointTable = List();
+  List<Team> pointTable = [];
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _PCCricketPointTableScreenState extends State<PCCricketPointTableScreen> {
   init() async {
     String json = await rootBundle.loadString('assets/cricket_data/pointtable.json');
     PCPointTableData cricketPointTableData = PCPointTableData.fromJson(jsonDecode(json));
-    pointTable.addAll(cricketPointTableData.group.teams);
+    pointTable.addAll(cricketPointTableData.group!.teams!);
     print(pointTable.length);
     setState(() {});
   }
@@ -87,15 +87,15 @@ class _PCCricketPointTableScreenState extends State<PCCricketPointTableScreen> {
                         children: <Widget>[
                           commonCacheImageWidget(getHeaderFlag(pointTable[index].sName), 25, width: 25, fit: BoxFit.cover).cornerRadiusWithClipRRect(15.0),
                           10.width,
-                          Expanded(child: Text(pointTable[index].name, style: boldTextStyle(color: Cricket_textColorPrimary, size: 16)))
+                          Expanded(child: Text(pointTable[index].name!, style: boldTextStyle(color: Cricket_textColorPrimary, size: 16)))
                         ],
                       ).expand(flex: 4),
-                      Expanded(flex: 1, child: Text(pointTable[index].p, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
-                      Expanded(flex: 1, child: Text(pointTable[index].w, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
-                      Expanded(flex: 1, child: Text(pointTable[index].l, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
-                      Expanded(flex: 1, child: Text(pointTable[index].t, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
-                      Expanded(flex: 2, child: Text(pointTable[index].nr, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
-                      Expanded(flex: 1, child: Text(pointTable[index].points, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16)))
+                      Expanded(flex: 1, child: Text(pointTable[index].p!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
+                      Expanded(flex: 1, child: Text(pointTable[index].w!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
+                      Expanded(flex: 1, child: Text(pointTable[index].l!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
+                      Expanded(flex: 1, child: Text(pointTable[index].t!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
+                      Expanded(flex: 2, child: Text(pointTable[index].nr!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16))),
+                      Expanded(flex: 1, child: Text(pointTable[index].points!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16)))
                     ],
                   ),
                 );

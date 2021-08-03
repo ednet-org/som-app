@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme11/models/T11Models.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
-import 'package:prokit_flutter/theme11/utils/T11DataGenerator.dart';
-import 'package:prokit_flutter/theme11/utils/T11Images.dart';
-import 'package:prokit_flutter/theme11/utils/T11Strings.dart';
+import 'package:som/theme11/models/T11Models.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11DataGenerator.dart';
+import 'package:som/theme11/utils/T11Images.dart';
+import 'package:som/theme11/utils/T11Strings.dart';
 
 class T11Profile extends StatefulWidget {
   static String tag = '/T11Profile';
@@ -15,7 +15,7 @@ class T11Profile extends StatefulWidget {
 }
 
 class _T11ProfileState extends State<T11Profile> {
-  List<Theme11ListProfile> mList1;
+  late List<Theme11ListProfile> mList1;
 
   @override
   void initState() {

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3Dashboard extends StatefulWidget {
   static var tag = "/T3Dashboard";
@@ -22,8 +22,8 @@ class T3Dashboard extends StatefulWidget {
 }
 
 class T3DashboardState extends State<T3Dashboard> {
-  List<T3DashboardSliderModel> mSliderListings;
-  List<Theme3Dish> mListings;
+  late List<T3DashboardSliderModel> mSliderListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -155,7 +155,7 @@ class T3DashboardState extends State<T3Dashboard> {
 
 // ignore: must_be_immutable
 class T3DashboardSlider extends StatelessWidget {
-  T3DashboardSliderModel model;
+  late T3DashboardSliderModel model;
 
   T3DashboardSlider(T3DashboardSliderModel model, int pos) {
     this.model = model;
@@ -229,7 +229,7 @@ class T3DashboardSlider extends StatelessWidget {
 
 // ignore: must_be_immutable
 class T3DashboardList extends StatelessWidget {
-  Theme3Dish model;
+  late Theme3Dish model;
 
   T3DashboardList(Theme3Dish model, int pos) {
     this.model = model;

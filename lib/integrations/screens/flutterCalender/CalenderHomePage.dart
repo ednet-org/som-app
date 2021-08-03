@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'CleanCalendar.dart';
 
@@ -12,7 +12,7 @@ class CalenderHomePage extends StatefulWidget {
 }
 
 class _CalenderHomePageState extends State<CalenderHomePage> {
-  List _selectedEvents;
+  late List _selectedEvents;
   DateTime _selectedDay = DateTime.now();
 
   // List of the event on particular date.
@@ -54,9 +54,8 @@ class _CalenderHomePageState extends State<CalenderHomePage> {
     setState(() {});
   }
 
-  @override
   // to check if the current date has any event or not.
-  void _handleNewDate(DateTime date) {
+  void handleNewDate(DateTime date) {
     setState(() {
       _selectedDay = date;
       _selectedEvents = _events[_selectedDay] ?? [];
@@ -86,7 +85,7 @@ class _CalenderHomePageState extends State<CalenderHomePage> {
                   // it will hide the Today icon in the header of calender
                   hideTodayIcon: false,
                   // it will highlight the today date and return thr events if there
-                  onDateSelected: (date) => _handleNewDate(date),
+                  onDateSelected: (date) => handleNewDate(date),
                   // you want to expand your calender or not(if not then it will show the current week)
                   isExpandable: true,
                   // color of the bottom bar

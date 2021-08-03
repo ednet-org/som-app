@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWRadioScreen extends StatefulWidget {
   static String tag = '/MWRadioScreen';
@@ -53,7 +53,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                     child: Radio(
                       value: 'Male',
                       groupValue: gender,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender = value;
                           toast("$gender Selected");
@@ -69,7 +69,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                     child: Radio(
                       value: 'Female',
                       groupValue: gender,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender = value;
                           toast("$gender Selected");
@@ -83,7 +83,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                     child: Radio(
                       value: 'Transgender',
                       groupValue: gender,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender = value;
                           toast("$gender Selected");
@@ -119,7 +119,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                       ),
                       value: 'Radio button tile',
                       groupValue: gender1,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender1 = value;
                           toast("$gender1 Selected");
@@ -147,7 +147,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                       ),
                       value: 'Radio Button on the trailing side',
                       groupValue: gender1,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender1 = value;
                           toast("Radio Button on the trailing side");
@@ -186,7 +186,7 @@ class MWRadioScreenState extends State<MWRadioScreen> {
                       ),
                       value: 'Female',
                       groupValue: gender1,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           gender1 = value;
                         });

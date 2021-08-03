@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/screens/flix_view_movie_screen.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/screens/flix_view_movie_screen.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
 
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
+// ignore: must_be_immutable
 class MovieDetail2Screen extends StatefulWidget {
   static String tag = '/MovieDetail2Screen';
-  var title = "";
+  String? title = "";
 
   MovieDetail2Screen({this.title});
 
@@ -26,8 +26,8 @@ class MovieDetail2Screen extends StatefulWidget {
 }
 
 class MovieDetail2ScreenState extends State<MovieDetail2Screen> {
-  var mMovieList = List<Movie>();
-  var mMovieOriginalsList = List<Movie>();
+  List<Movie> mMovieList = [];
+  List<Movie> mMovieOriginalsList = [];
   var trailerVideo;
   var isloaded = false;
   var isLoading = false;

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialImages.dart';
+import 'package:som/social/utils/SocialStrings.dart';
 
 class SocialNotification extends StatefulWidget {
   static String tag = '/SocialNotification';
@@ -57,7 +57,7 @@ class SocialNotificationState extends State<SocialNotification> {
 
   Widget mPopup() => PopupMenuButton(
         itemBuilder: (context) {
-          var list = List<PopupMenuEntry<Object>>();
+          List<PopupMenuEntry<Object>> list = [];
           list.add(
             PopupMenuItem(
               child: text(social_reset_settings),

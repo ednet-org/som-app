@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
-import 'package:prokit_flutter/medium/utils/MWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
+import 'package:som/medium/utils/MWidget.dart';
 
 class MStoriesScreen extends StatefulWidget {
   static String tag = '/MStoriesScreen';
@@ -27,7 +27,7 @@ class MStoriesScreenState extends State<MStoriesScreen> {
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   List<MStoriesModel> getListOfDraftStories() {

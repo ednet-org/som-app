@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/theme12/models/T12Models.dart';
-import 'package:prokit_flutter/theme12/utils/t12_colors.dart';
-import 'package:prokit_flutter/theme12/utils/t12_constant.dart';
-import 'package:prokit_flutter/theme12/utils/t12_data_generator.dart';
-import 'package:prokit_flutter/theme12/utils/t12_images.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/theme12/models/T12Models.dart';
+import 'package:som/theme12/utils/t12_colors.dart';
+import 'package:som/theme12/utils/t12_constant.dart';
+import 'package:som/theme12/utils/t12_data_generator.dart';
+import 'package:som/theme12/utils/t12_images.dart';
 
 import '../../main.dart';
 
@@ -19,9 +19,10 @@ class T12Profile extends StatefulWidget {
 }
 
 class T12ProfileState extends State<T12Profile> {
-  var cards = List<T12Slider>();
-  var accounts = List<T12Slider>();
+  List<T12Slider> cards = [];
+  List<T12Slider> accounts = [];
   var position = 0;
+  // ignore: non_constant_identifier_names
   var ac_position = 0;
 
   @override
@@ -34,7 +35,7 @@ class T12ProfileState extends State<T12Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var cardHight = (width - 48) * (9 / 16);
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       appBar: appBar(context, "Profile"),

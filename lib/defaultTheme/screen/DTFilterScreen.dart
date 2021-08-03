@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTFilter.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTFilterOption.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTFilter.dart';
+import 'package:som/defaultTheme/model/DTFilterOption.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -18,7 +18,7 @@ class DTFilterScreen extends StatefulWidget {
 }
 
 class DTFilterScreenState extends State<DTFilterScreen> {
-  var totalSelectedIndex = List<int>();
+  List<int> totalSelectedIndex = [];
 
   @override
   void initState() {
@@ -61,14 +61,16 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                   Text("products found", style: secondaryTextStyle()),
                 ],
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   toast("Apply");
                 },
-                color: appColorPrimary,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                style: ElevatedButton.styleFrom(
+                  primary: appColorPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                  padding: EdgeInsets.fromLTRB(50, 12, 50, 12),
+                ),
                 child: Text("Apply", style: primaryTextStyle(color: Colors.white)),
-                padding: EdgeInsets.fromLTRB(50, 12, 50, 12),
               )
             ],
           ),
@@ -104,7 +106,7 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              dataList[index].name,
+                              dataList[index].name!,
                               style: primaryTextStyle(color: selectedIndex == index ? appColorPrimary : appStore.textPrimaryColor),
                               maxLines: 1,
                             ),
@@ -142,10 +144,10 @@ List<DTFilterOptionModel> getCurrentList(int pos) {
   if (pos == 4) return mDiscount;
   if (pos == 5) return mAvailability;
 
-  return List<DTFilterOptionModel>();
+  return <DTFilterOptionModel>[];
 }
 
-Widget data(int pos, {int selectedItemCount}) {
+Widget data(int pos, {int? selectedItemCount}) {
   if (pos == 0) return mOption(mPrice);
   if (pos == 1) return mOption(mBrand);
   if (pos == 2) return mOption(mRating);
@@ -167,6 +169,7 @@ Widget mOption(List<DTFilterOptionModel> mList) {
   );
 }
 
+// ignore: must_be_immutable
 class Option extends StatefulWidget {
   DTFilterOptionModel model;
 
@@ -194,7 +197,7 @@ class _OptionState extends State<Option> {
           ),
           16.width,
           Text(
-            widget.model.name,
+            widget.model.name!,
             style: primaryTextStyle(
               color: widget.model.isSelected ? appColorPrimary : appStore.textPrimaryColor,
             ),

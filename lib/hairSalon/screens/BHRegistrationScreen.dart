@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class BHRegistrationScreen extends StatefulWidget {
   static String tag = '/NewRegistrationScreen';
@@ -159,13 +159,15 @@ class NewRegistrationScreenState extends State<BHRegistrationScreen> {
                     16.height,
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(12),
+                          primary: BHColorPrimary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        ),
                         onPressed: () {
                           finish(context);
                         },
-                        color: BHColorPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         child: Text(
                           BHBtnSignUp,
                           style: TextStyle(color: whiteColor, fontSize: 15, fontWeight: FontWeight.bold),

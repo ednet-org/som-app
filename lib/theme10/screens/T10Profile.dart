@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme10/models/T10Models.dart';
-import 'package:prokit_flutter/theme10/utils/T10Colors.dart';
-import 'package:prokit_flutter/theme10/utils/T10Constant.dart';
-import 'package:prokit_flutter/theme10/utils/T10DataGenerator.dart';
-import 'package:prokit_flutter/theme10/utils/T10Images.dart';
-import 'package:prokit_flutter/theme10/utils/T10Strings.dart';
-import 'package:prokit_flutter/theme10/utils/T10Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme10/models/T10Models.dart';
+import 'package:som/theme10/utils/T10Colors.dart';
+import 'package:som/theme10/utils/T10Constant.dart';
+import 'package:som/theme10/utils/T10DataGenerator.dart';
+import 'package:som/theme10/utils/T10Images.dart';
+import 'package:som/theme10/utils/T10Strings.dart';
+import 'package:som/theme10/utils/T10Widget.dart';
 
 import '../../main.dart';
 
@@ -20,7 +20,7 @@ class T10Profile extends StatefulWidget {
 }
 
 class T10ProfileState extends State<T10Profile> {
-  List<T10Images> mList;
+  late List<T10Images> mList;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class T10ProfileState extends State<T10Profile> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -54,7 +54,7 @@ class T10ProfileState extends State<T10Profile> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(topRight: Radius.circular(spacing_middle), bottomRight: Radius.circular(spacing_standard_new)),
                             child: CachedNetworkImage(
-                              placeholder: placeholderWidgetFn(),
+                              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                               imageUrl: t10_profile,
                               fit: BoxFit.cover,
                               height: width * 0.35,
@@ -150,7 +150,7 @@ class T10ProfileState extends State<T10Profile> {
                               return ClipRRect(
                                 borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
                                 child: CachedNetworkImage(
-                                  placeholder: placeholderWidgetFn(),
+                                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                   imageUrl: mList[index].img,
                                   fit: BoxFit.cover,
                                 ),

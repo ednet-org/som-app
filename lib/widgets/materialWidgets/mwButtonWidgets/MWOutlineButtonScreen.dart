@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWOutlineButtonScreen extends StatefulWidget {
   static String tag = '/MWOutlineButtonScreen';
@@ -37,11 +37,13 @@ class MWOutlineButtonScreenState extends State<MWOutlineButtonScreen> {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             children: [
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
                 ),
                 onPressed: () {
                   toast('Default Outline button');
@@ -52,11 +54,13 @@ class MWOutlineButtonScreenState extends State<MWOutlineButtonScreen> {
                 ),
               ),
               Divider(),
-              OutlineButton.icon(
-                  borderSide: BorderSide(
-                    color: appStore.textPrimaryColor, //Color of the border
-                    style: BorderStyle.solid, //Style of the border
-                    width: 0.8, //width of the border
+              OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                      color: appStore.textPrimaryColor!, //Color of the border
+                      style: BorderStyle.solid, //Style of the border
+                      width: 0.8, //width of the border
+                    ),
                   ),
                   onPressed: () {
                     toast('Outline button with icon');
@@ -70,26 +74,30 @@ class MWOutlineButtonScreenState extends State<MWOutlineButtonScreen> {
                     style: primaryTextStyle(),
                   )),
               Divider(),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
                 ),
-                onPressed: null,
+                onPressed: () {},
                 child: Text(
                   'Disable Outline button',
                   style: secondaryTextStyle(size: 16),
                 ),
               ),
               Divider(),
-              OutlineButton.icon(
-                  borderSide: BorderSide(
-                    color: appStore.textPrimaryColor, //Color of the border
-                    style: BorderStyle.solid, //Style of the border
-                    width: 0.8, //width of the border
+              OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                      color: appStore.textPrimaryColor!, //Color of the border
+                      style: BorderStyle.solid, //Style of the border
+                      width: 0.8, //width of the border
+                    ),
                   ),
-                  onPressed: null,
+                  onPressed: () {},
                   icon: Icon(
                     Icons.add,
                     color: appStore.iconSecondaryColor,
@@ -99,67 +107,83 @@ class MWOutlineButtonScreenState extends State<MWOutlineButtonScreen> {
                     style: secondaryTextStyle(size: 16),
                   )),
               Divider(),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    //shape: Border.all(color: appStore.iconColor!),
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
                 ),
                 onPressed: () {
                   toast('Border Outline button');
                 },
-                shape: Border.all(color: appStore.iconColor),
                 child: Text(
                   'Border Outline button',
                   style: primaryTextStyle(),
                 ),
               ),
               Divider(),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.green,
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   toast('Rounded Outline button');
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
-                      color: Colors.green,
-                    )),
                 child: Text(
                   'Rounded Outline button',
                   style: primaryTextStyle(),
                 ),
               ),
               Divider(),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: Colors.red,
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   toast('Customize Rounded Outline button');
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(
-                      color: Colors.red,
-                    )),
                 child: Text(
                   'Customize Rounded Outline button',
                   style: primaryTextStyle(),
                 ),
               ),
               Divider(),
-              OutlineButton(
-                borderSide: BorderSide(
-                  color: appStore.textPrimaryColor, //Color of the border
-                  style: BorderStyle.solid, //Style of the border
-                  width: 0.8, //width of the border
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    color: appStore.textPrimaryColor!, //Color of the border
+                    style: BorderStyle.solid, //Style of the border
+                    width: 0.8, //width of the border
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   toast('Customize Text Style of label');
@@ -172,11 +196,6 @@ class MWOutlineButtonScreenState extends State<MWOutlineButtonScreen> {
                     fontStyle: FontStyle.italic,
                   ),
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
-                      color: Colors.blue,
-                    )),
               ),
             ],
           ),

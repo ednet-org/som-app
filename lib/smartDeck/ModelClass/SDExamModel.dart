@@ -1,5 +1,5 @@
 class SDExamModel {
-  String value;
+  String? value;
   bool isSelected = false;
 
   SDExamModel({

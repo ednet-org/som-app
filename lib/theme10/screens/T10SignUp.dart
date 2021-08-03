@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme10/utils/T10Colors.dart';
-import 'package:prokit_flutter/theme10/utils/T10Constant.dart';
-import 'package:prokit_flutter/theme10/utils/T10Strings.dart';
-import 'package:prokit_flutter/theme10/utils/T10Widget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme10/utils/T10Colors.dart';
+import 'package:som/theme10/utils/T10Constant.dart';
+import 'package:som/theme10/utils/T10Strings.dart';
+import 'package:som/theme10/utils/T10Widget.dart';
 
 class T10SignUp extends StatefulWidget {
   static String tag = '/T10SignUp';
@@ -17,7 +17,7 @@ class T10SignUp extends StatefulWidget {
 class T10SignUpState extends State<T10SignUp> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
       body: SafeArea(

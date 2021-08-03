@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNewsDetailScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPNewsDetailScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPNewsScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
   MPNewsScreen({this.name});
 
@@ -42,7 +42,7 @@ class MPNewsScreenState extends State<MPNewsScreen> {
       backgroundColor: mpAppBackGroundColor,
       appBar: AppBar(
         backgroundColor: mpAppBackGroundColor,
-        title: Text(widget.name, style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
+        title: Text(widget.name!, style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
         centerTitle: true,
         automaticallyImplyLeading: true,
         iconTheme: IconThemeData(color: white.withOpacity(0.9)),
@@ -74,9 +74,9 @@ class MPNewsScreenState extends State<MPNewsScreen> {
                       children: [
                         commonCacheImageWidget(data.img, 150, width: 230, fit: BoxFit.cover).cornerRadiusWithClipRRect(10),
                         8.height,
-                        Text(data.name, style: boldTextStyle(color: white.withOpacity(0.9))),
+                        Text(data.name!, style: boldTextStyle(color: white.withOpacity(0.9))),
                         8.height,
-                        Text(data.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
+                        Text(data.description!, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
                       ],
                     ),
                   ).onTap(() {
@@ -108,9 +108,9 @@ class MPNewsScreenState extends State<MPNewsScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.name, style: boldTextStyle(color: white.withOpacity(0.9))),
+                          Text(data.name!, style: boldTextStyle(color: white.withOpacity(0.9))),
                           4.height,
-                          Text(data.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
+                          Text(data.description!, maxLines: 2, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: mpAppTextColor1)),
                         ],
                       ).expand()
                     ],

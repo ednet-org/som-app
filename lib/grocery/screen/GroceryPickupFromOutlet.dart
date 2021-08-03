@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class GroceryPickupFromOutlet extends StatefulWidget {
   static String tag = '/GroceryPickupFromOutlet';
@@ -15,7 +15,7 @@ class GroceryPickupFromOutlet extends StatefulWidget {
 }
 
 class _GroceryPickupFromOutletState extends State<GroceryPickupFromOutlet> {
-  String selectedLocation1 = "Pannipitiya";
+  String? selectedLocation1 = "Pannipitiya";
 
   List<String> location1 = ["Pannipitiya"];
 
@@ -86,7 +86,7 @@ class _GroceryPickupFromOutletState extends State<GroceryPickupFromOutlet> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation1 = newValue;
                         });

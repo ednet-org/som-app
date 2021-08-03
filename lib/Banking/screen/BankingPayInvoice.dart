@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/screen/BankingPaymentInvoice.dart';
+import 'package:som/Banking/screen/BankingPaymentInvoice.dart';
 
 import '../utils/BankingColors.dart';
 import '../utils/BankingContants.dart';
@@ -15,7 +15,6 @@ class BankingPayInvoice extends StatefulWidget {
 class _BankingPayInvoiceState extends State<BankingPayInvoice> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Banking_app_Background,
       body: Stack(

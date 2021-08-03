@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/orapay/utils/Colors.dart';
-import 'package:prokit_flutter/orapay/utils/Style.dart';
+import 'package:som/orapay/utils/Colors.dart';
+import 'package:som/orapay/utils/Style.dart';
 
 import 'op_dashboard.dart';
 
@@ -180,13 +180,13 @@ class _OPUserDetailsScreenState extends State<OPUserDetailsScreen> {
                     children: buildDotIndicator(),
                   ),
                   pageNumber != 3
-                      ? FlatButton(
+                      ? TextButton(
                           onPressed: () {
                             pageController.nextPage(duration: Duration(milliseconds: 250), curve: Curves.fastOutSlowIn);
                           },
                           child: Text('Next', style: primaryTextStyle(size: 16, color: opBackgroundColor)),
                         )
-                      : FlatButton(
+                      : TextButton(
                           onPressed: () {
                             finish(context);
                             Navigator.push(context, MaterialPageRoute(builder: (context) => OPBottomNavigationScreen()));

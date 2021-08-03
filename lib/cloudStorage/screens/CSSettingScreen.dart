@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSCameraUploadScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSManageDevicesScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSPasscodeScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSStartingScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSUpgradeAccountScreen.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSWalkthroughScreen2.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSConstants.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSWidgets.dart';
+import 'package:som/cloudStorage/screens/CSCameraUploadScreen.dart';
+import 'package:som/cloudStorage/screens/CSManageDevicesScreen.dart';
+import 'package:som/cloudStorage/screens/CSPasscodeScreen.dart';
+import 'package:som/cloudStorage/screens/CSStartingScreen.dart';
+import 'package:som/cloudStorage/screens/CSUpgradeAccountScreen.dart';
+import 'package:som/cloudStorage/screens/CSWalkthroughScreen2.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSConstants.dart';
+import 'package:som/cloudStorage/utils/CSWidgets.dart';
 
 class CSSettingScreen extends StatefulWidget {
   static String tag = '/CSSettingScreen';
@@ -144,11 +144,11 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                       trailing: Switch(
                         value: offlineFiles,
                         onChanged: (val) async {
-                          bool isOK = await buildCommonDialog(
+                          bool isOK = await (buildCommonDialog(
                             context,
                             title: "Update files on data plan?",
                             content: "Updating files using cellular data could incur data charges",
-                          );
+                          ));
                           offlineFiles = isOK ? true : false;
                           setState(() {});
                         },
@@ -200,7 +200,7 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                       builder: (_, snap) {
                         if (snap.hasError) return Text(snap.error.toString()).center();
                         if (snap.hasData) {
-                          return buildListTileForSetting(title: "App version", subTitle: snap.data.version);
+                          return buildListTileForSetting(title: "App version", subTitle: snap.data!.version);
                         }
                         return CircularProgressIndicator();
                       },
@@ -236,11 +236,11 @@ class CSSettingScreenState extends State<CSSettingScreen> {
                   title: "Sign out of this Cloudbox",
                   color: Colors.red.shade800,
                   onTap: () async {
-                    bool isSignOut = await buildCommonDialog(
+                    bool isSignOut = await (buildCommonDialog(
                       context,
                       posBtn: "Sign out",
                       content: "Are you sure you want to sign out from your $CSAppName account ?",
-                    );
+                    ));
                     if (isSignOut) {
                       finish(context);
                       CSStartingScreen().launch(context);

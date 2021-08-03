@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPickerScreen extends StatefulWidget {
@@ -15,9 +15,9 @@ class VideoPickerScreen extends StatefulWidget {
 }
 
 class VideoPickerScreenState extends State<VideoPickerScreen> {
-  PickedFile pickVideo;
+  PickedFile? pickVideo;
   String videoName = '', videoPath = '';
-  VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   bool isVideoPlay = false;
 
   @override
@@ -34,13 +34,13 @@ class VideoPickerScreenState extends State<VideoPickerScreen> {
     pickVideo = await ImagePicker().getVideo(source: ImageSource.gallery);
 
     if (pickVideo != null) {
-      videoName = pickVideo.path.split('/').last;
-      videoPath = pickVideo.path;
-      _controller = VideoPlayerController.file(File(pickVideo.path));
-      _controller.initialize().then(
+      videoName = pickVideo!.path.split('/').last;
+      videoPath = pickVideo!.path;
+      _controller = VideoPlayerController.file(File(pickVideo!.path));
+      _controller!.initialize().then(
         (value) {
           setState(() {
-            _controller.pause();
+            _controller!.pause();
           });
         },
       );
@@ -86,12 +86,14 @@ class VideoPickerScreenState extends State<VideoPickerScreen> {
                 Container(
                   height: context.height(),
                   child: AspectRatio(
-                    child: VideoPlayer(_controller),
-                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller!),
+                    aspectRatio: _controller!.value.aspectRatio,
                   ),
                 ).center(),
-              RaisedButton(
-                color: appColorPrimary,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: appColorPrimary,
+                ),
                 onPressed: () async {
                   await getVideo();
                   setState(() {});
@@ -105,7 +107,7 @@ class VideoPickerScreenState extends State<VideoPickerScreen> {
             ? FloatingActionButton(
                 backgroundColor: appColorPrimary,
                 onPressed: () {
-                  isVideoPlay ? _controller.pause() : _controller.play();
+                  isVideoPlay ? _controller!.pause() : _controller!.play();
                   isVideoPlay = !isVideoPlay;
                   setState(() {});
                 },

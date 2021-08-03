@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDSearchModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDStyle.dart';
+import 'package:som/smartDeck/ModelClass/SDSearchModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDStyle.dart';
 
 class SDSortScreen extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _SDSortScreenState extends State<SDSortScreen> {
             ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                itemCount: mFilterList?.length,
+                itemCount: mFilterList.length,
                 padding: EdgeInsets.only(top: 16.0),
                 itemBuilder: (_, index) {
                   return Padding(
@@ -49,7 +49,7 @@ class _SDSortScreenState extends State<SDSortScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(mFilterList[index].value, style: primaryTextStyle()),
+                              Text(mFilterList[index].value!, style: primaryTextStyle()),
                               Container(
                                 padding: EdgeInsets.all(4),
                                 child: mFilterList[index].isSelected

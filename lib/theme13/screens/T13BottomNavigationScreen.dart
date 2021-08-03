@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme13/utils/T13Colors.dart';
-import 'package:prokit_flutter/theme13/utils/T13Images.dart';
-import 'package:prokit_flutter/theme13/utils/T13Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme13/utils/T13Colors.dart';
+import 'package:som/theme13/utils/T13Images.dart';
+import 'package:som/theme13/utils/T13Strings.dart';
 
 import '../../main.dart';
 
@@ -50,7 +50,7 @@ class T13BottomNavigationScreenState extends State<T13BottomNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -61,7 +61,7 @@ class T13BottomNavigationScreenState extends State<T13BottomNavigationScreen> {
           Container(
             margin: EdgeInsets.all(16),
             height: 70,
-            decoration: boxDecoration(showShadow: true, color: appStore.appBarColor),
+            decoration: boxDecoration(showShadow: true, color: appStore.appBarColor!),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

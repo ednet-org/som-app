@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizMobileVerify.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/quiz/Screens/QuizMobileVerify.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
-import 'package:prokit_flutter/quiz/utils/QuizStrings.dart';
-import 'package:prokit_flutter/quiz/utils/QuizWidget.dart';
+import 'package:som/quiz/utils/QuizStrings.dart';
+import 'package:som/quiz/utils/QuizWidget.dart';
 
 class QuizCreatePassword extends StatefulWidget {
   static String tag = '/QuizCreatePassword';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14CommunicationScreen4 extends StatefulWidget {
   @override
@@ -66,7 +66,7 @@ class _T14CommunicationScreen4State extends State<T14CommunicationScreen4> {
                               height: 40,
                               width: 40,
                               decoration: boxDecorationWithShadow(
-                                decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                                decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                                 boxShape: BoxShape.circle,
                               ),
                             ),
@@ -74,8 +74,8 @@ class _T14CommunicationScreen4State extends State<T14CommunicationScreen4> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(data.name, style: boldTextStyle(color: t14_colorBlue, size: 14)),
-                                Text(data.message, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
+                                Text(data.name!, style: boldTextStyle(color: t14_colorBlue, size: 14)),
+                                Text(data.message!, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(color: t14_colorBlue, size: 12)),
                               ],
                             ).expand(),
                             Container(
@@ -83,8 +83,8 @@ class _T14CommunicationScreen4State extends State<T14CommunicationScreen4> {
                               width: 25,
                               alignment: Alignment.center,
                               decoration: boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: t14_msgCount_BgColor),
-                              child: Text(data.lastSeen, style: boldTextStyle(color: white, size: 12), textAlign: TextAlign.center),
-                            ).visible(data.isActive)
+                              child: Text(data.lastSeen!, style: boldTextStyle(color: white, size: 12), textAlign: TextAlign.center),
+                            ).visible(data.isActive!)
                           ],
                         ),
                       );

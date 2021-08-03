@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme10/utils/T10Colors.dart';
-import 'package:prokit_flutter/theme10/utils/T10Constant.dart';
-import 'package:prokit_flutter/theme10/utils/T10Images.dart';
-import 'package:prokit_flutter/theme10/utils/T10Strings.dart';
-import 'package:prokit_flutter/theme10/utils/T10Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme10/utils/T10Colors.dart';
+import 'package:som/theme10/utils/T10Constant.dart';
+import 'package:som/theme10/utils/T10Images.dart';
+import 'package:som/theme10/utils/T10Strings.dart';
+import 'package:som/theme10/utils/T10Widget.dart';
 
 import '../../main.dart';
 
@@ -21,7 +21,7 @@ class T10Description extends StatefulWidget {
 class T10DescriptionState extends State<T10Description> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     var width = MediaQuery.of(context).size.width;
 
     Widget mTag(var value) {
@@ -72,7 +72,7 @@ class T10DescriptionState extends State<T10Description> {
                       child: Column(
                         children: <Widget>[
                           CachedNetworkImage(
-                            placeholder: placeholderWidgetFn(),
+                            placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                             imageUrl: t10_slider_3,
                             width: width,
                             height: width * 0.4,

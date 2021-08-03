@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTDrawerWidget.dart';
@@ -16,8 +16,8 @@ class DTSearchScreen extends StatefulWidget {
 
 class _DTSearchScreenState extends State<DTSearchScreen> {
   var searchCont = TextEditingController();
-  var recentSearch = List<String>();
-  var trending = List<String>();
+  List<String> recentSearch = [];
+   List<String> trending = [];
 
   String searchText = '';
 
@@ -66,7 +66,7 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                 labelStyle: secondaryTextStyle(),
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appColorPrimary)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
               ),
               keyboardType: TextInputType.name,
               textInputAction: TextInputAction.done,

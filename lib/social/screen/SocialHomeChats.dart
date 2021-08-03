@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/social/model/SocialModel.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialDataGenerator.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/model/SocialModel.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialDataGenerator.dart';
+import 'package:som/social/utils/SocialStrings.dart';
 
 import 'SocialChatting.dart';
 import 'SocialViewChats.dart';
@@ -18,8 +18,8 @@ class SocialHomeChats extends StatefulWidget {
 }
 
 class SocialHomeChatsState extends State<SocialHomeChats> {
-  List<SocialUser> mList;
-  List<SocialUser> mList1;
+  late List<SocialUser> mList;
+  late List<SocialUser> mList1;
 
   @override
   void initState() {
@@ -112,8 +112,9 @@ class SocialHomeChatsState extends State<SocialHomeChats> {
   }
 }
 
+// ignore: must_be_immutable
 class Chats extends StatelessWidget {
-  SocialUser model;
+  late SocialUser model;
 
   Chats(SocialUser model, int pos) {
     this.model = model;
@@ -139,7 +140,7 @@ class Chats extends StatelessWidget {
                       child: Container(
                         color: social_dark_gray,
                         child: CachedNetworkImage(
-                          placeholder: placeholderWidgetFn(),
+                          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                           imageUrl: model.image,
                           height: width * 0.13,
                           width: width * 0.13,

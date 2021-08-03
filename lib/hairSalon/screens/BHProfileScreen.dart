@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'BHAccountInformationScreen.dart';
 import 'BHInviteFriendsScreen.dart';
@@ -32,13 +32,13 @@ class BHProfileScreenState extends State<BHProfileScreen> {
               title: Text(BHTxtLogoutDialog, style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary)),
               content: Text(BHTxtLogoutMsg, style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary)),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text(BHBtnYes, style: TextStyle(color: Colors.blue, fontSize: 14)),
                   onPressed: () {
                     finish(context);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(BHBtnNo, style: TextStyle(color: Colors.blue, fontSize: 14)),
                   onPressed: () {},
                 ),

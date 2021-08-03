@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/portfolio2/components/SnowWidget.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/portfolio2/components/SnowWidget.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class IntroductionScreen extends StatefulWidget {
   static String tag = '/IntroductionScreen';
@@ -78,19 +78,23 @@ class IntroductionScreenState extends State<IntroductionScreen> {
                   30.height,
                   Row(
                     children: [
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                          primary: Colors.white,
+                        ),
                         child: Text('My Work', style: boldTextStyle(color: Colors.black)),
-                        color: Colors.white,
                       ),
                       16.width,
-                      OutlineButton(
+                      OutlinedButton(
                         onPressed: () {},
-                        borderSide: BorderSide(color: Colors.white),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.white),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                          padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                        ),
                         child: Text('Hire Me', style: boldTextStyle(color: Colors.white)),
                       ),
                     ],

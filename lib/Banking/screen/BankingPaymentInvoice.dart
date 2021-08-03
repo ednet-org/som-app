@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/model/BankingModel.dart';
-import 'package:prokit_flutter/Banking/screen/BankingInvoiceDetail.dart';
+import 'package:som/Banking/model/BankingModel.dart';
+import 'package:som/Banking/screen/BankingInvoiceDetail.dart';
 
 import '../utils/BankingColors.dart';
 import '../utils/BankingContants.dart';
@@ -17,7 +17,7 @@ class BankingPaymentInvoice extends StatefulWidget {
 
 class _BankingPaymentInvoiceState extends State<BankingPaymentInvoice> {
   var currentIndexPage = 0;
-  List<BankingCardModel> mList;
+  List<BankingCardModel>? mList;
 
   @override
   Widget build(BuildContext context) {

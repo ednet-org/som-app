@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class BHAppointmentScreen extends StatefulWidget {
   static String tag = '/AppointmentBottomNavigationBarScreen';
@@ -18,10 +18,10 @@ class BHAppointmentScreen extends StatefulWidget {
 class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTickerProviderStateMixin {
   bool isSwitched = false;
 
-  DateTime date;
+  late DateTime date;
 
   _pickDate() async {
-    DateTime time = await showDatePicker(
+    DateTime? time = await showDatePicker(
       context: context,
       initialDate: date,
       firstDate: DateTime(DateTime.now().year - 5),
@@ -75,7 +75,7 @@ class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTic
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
+                        child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
                       ),
                       8.width,
                       Column(
@@ -167,7 +167,7 @@ class BHAppointmentScreenState extends State<BHAppointmentScreen> with SingleTic
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
+                        child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: BHDashedBoardImage4, height: 70, width: 130, fit: BoxFit.cover),
                       ),
                       8.width,
                       Column(

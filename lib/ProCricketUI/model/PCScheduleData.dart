@@ -1,5 +1,5 @@
 class PCScheduleData {
-  List<Schedule> schedule;
+  List<Schedule>? schedule;
 
   PCScheduleData({this.schedule});
 
@@ -12,44 +12,49 @@ class PCScheduleData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.schedule != null) {
-      data['schedule'] = this.schedule.map((v) => v.toJson()).toList();
+      data['schedule'] = this.schedule!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Schedule {
-  String alert;
-  String created_at;
-  String ddt;
-  String ddtcode;
-  String desc;
-  String dt;
-  int id;
-  String isTest;
-  String matchTypeId;
-  String matchid;
-  String mchState;
-  String mnth_yr;
-  String mom;
-  String nxt_day;
-  String result;
-  String seriesid;
-  int start;
-  String strtdt;
-  String strttm;
-  String team1;
-  String team1Key;
-  String team2;
-  String team2Key;
-  String tr;
-  int tw;
-  String updated_at;
-  String vnu;
-  int win;
+  String? alert;
+  // ignore: non_constant_identifier_names
+  String? created_at;
+  String? ddt;
+  String? ddtcode;
+  String? desc;
+  String? dt;
+  int? id;
+  String? isTest;
+  String? matchTypeId;
+  String? matchid;
+  String? mchState;
+  // ignore: non_constant_identifier_names
+  String? mnth_yr;
+  String? mom;
+  // ignore: non_constant_identifier_names
+  String? nxt_day;
+  String? result;
+  String? seriesid;
+  int? start;
+  String? strtdt;
+  String? strttm;
+  String? team1;
+  String? team1Key;
+  String? team2;
+  String? team2Key;
+  String? tr;
+  int? tw;
+  // ignore: non_constant_identifier_names
+  String? updated_at;
+  String? vnu;
+  int? win;
 
   Schedule(
       {this.alert,
+      // ignore: non_constant_identifier_names
       this.created_at,
       this.ddt,
       this.ddtcode,
@@ -60,8 +65,10 @@ class Schedule {
       this.matchTypeId,
       this.matchid,
       this.mchState,
+      // ignore: non_constant_identifier_names
       this.mnth_yr,
       this.mom,
+      // ignore: non_constant_identifier_names
       this.nxt_day,
       this.result,
       this.seriesid,
@@ -74,6 +81,7 @@ class Schedule {
       this.team2Key,
       this.tr,
       this.tw,
+      // ignore: non_constant_identifier_names
       this.updated_at,
       this.vnu,
       this.win});

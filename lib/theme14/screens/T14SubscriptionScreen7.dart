@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class T14SubscriptionScreen7 extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class T14SubscriptionScreen7 extends StatefulWidget {
 
 class _T14SubscriptionScreen7State extends State<T14SubscriptionScreen7> {
   List<ChoosePlanModel> subscription4DiscountList = getSubscription7DiscountList();
-  int i;
+  int? i;
 
   @override
   void initState() {
@@ -111,10 +111,10 @@ class _T14SubscriptionScreen7State extends State<T14SubscriptionScreen7> {
                                 width: 25,
                                 height: 25,
                                 decoration: new BoxDecoration(
-                                    color: data.checkBox ? t14_cBox_color : Colors.transparent,
+                                    color: data.checkBox! ? t14_cBox_color : Colors.transparent,
                                     border: Border.all(
                                       width: 1,
-                                      color: data.checkBox ? white : t14_colorBlue,
+                                      color: data.checkBox! ? white : t14_colorBlue,
                                     ),
                                     shape: BoxShape.circle),
                                 child: Theme(
@@ -125,7 +125,7 @@ class _T14SubscriptionScreen7State extends State<T14SubscriptionScreen7> {
                                     value: data.checkBox,
                                     onChanged: (state) {
                                       setState(() {
-                                        return data.checkBox = state;
+                                         data.checkBox = state;
                                       });
                                     },
                                     activeColor: Colors.transparent,
@@ -135,13 +135,13 @@ class _T14SubscriptionScreen7State extends State<T14SubscriptionScreen7> {
                                 ),
                               ),
                               16.width,
-                              Text(data.title, style: secondaryTextStyle(color: t14_colorBlue)).expand(),
-                              Text(data.subTitle, style: secondaryTextStyle(color: t14_colorBlue)),
+                              Text(data.title!, style: secondaryTextStyle(color: t14_colorBlue)).expand(),
+                              Text(data.subTitle!, style: secondaryTextStyle(color: t14_colorBlue)),
                             ],
                           ),
                         ).onTap(() {
                           // i = index;
-                          data.checkBox = !data.checkBox;
+                          data.checkBox = !data.checkBox!;
                           setState(() {});
                         });
                       }),

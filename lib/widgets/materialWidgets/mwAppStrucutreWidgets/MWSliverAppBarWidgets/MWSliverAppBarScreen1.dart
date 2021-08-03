@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MWSliverAppBarScreen1 extends StatefulWidget {
   static String tag = '/MWSliverAppBarScreen1';
@@ -52,7 +52,7 @@ class _MWSliverAppBarScreen1State extends State<MWSliverAppBarScreen1> {
                   centerTitle: true,
                   title: Text('SliverAppBar with ListView', style: primaryTextStyle(color: innerBoxIsScrolled ? appStore.textPrimaryColor : white)),
                   background: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: 'https://images.pexels.com/photos/443356/pexels-photo-443356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
                     fit: BoxFit.cover,
                   )),

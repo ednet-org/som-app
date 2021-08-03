@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/screen/T3Dashboard.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/screen/T3Dashboard.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class T3Dialog extends StatefulWidget {
@@ -52,7 +52,7 @@ dialogContent(BuildContext context) {
       child: Stack(
         children: <Widget>[
           ClipRRect(
-            child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t3_ic_pizza_dialog),
+            child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t3_ic_pizza_dialog),
             borderRadius: BorderRadius.circular(8),
           ),
           Column(

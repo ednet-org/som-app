@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
+
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -13,7 +14,7 @@ class AMHeroScreen extends StatefulWidget {
 }
 
 class AMHeroScreenState extends State<AMHeroScreen> {
-  List<ItemModel> mListing;
+  late List<ItemModel> mListing;
 
   @override
   void initState() {
@@ -52,8 +53,9 @@ class AMHeroScreenState extends State<AMHeroScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Product extends StatelessWidget {
-  ItemModel model;
+  late ItemModel model;
 
   Product(ItemModel model, int pos) {
     this.model = model;
@@ -111,7 +113,7 @@ class ItemModel {
 }
 
 List<ItemModel> getData() {
-  List<ItemModel> popularArrayList = List<ItemModel>();
+  List<ItemModel> popularArrayList = [];
   ItemModel item1 = ItemModel();
   item1.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item3.jpg';
   item1.name = "Black Jacket";
@@ -149,8 +151,8 @@ List<ItemModel> getData() {
 class DetailScreen extends StatefulWidget {
   DetailScreen({this.name, this.image});
 
-  final String name;
-  final String image;
+  final String? name;
+  final String? image;
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -169,11 +171,11 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Hero(
-                tag: widget.image,
+                tag: widget.image!,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
                   child: Image.asset(
-                    widget.image,
+                    widget.image!,
                     fit: BoxFit.cover,
                     height: 400,
                     width: MediaQuery.of(context).size.width,
@@ -181,7 +183,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
               16.height,
-              Text(widget.name, style: boldTextStyle()).paddingOnly(left: 16),
+              Text(widget.name!, style: boldTextStyle()).paddingOnly(left: 16),
               16.height,
               Text(
                 text,

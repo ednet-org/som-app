@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme8/model/T8Models.dart';
-import 'package:prokit_flutter/theme8/utils/T8Colors.dart';
-import 'package:prokit_flutter/theme8/utils/T8Constant.dart';
-import 'package:prokit_flutter/theme8/utils/T8DataGenerator.dart';
-import 'package:prokit_flutter/theme8/utils/T8Images.dart';
-import 'package:prokit_flutter/theme8/utils/T8Strings.dart';
-import 'package:prokit_flutter/theme8/utils/T8Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme8/model/T8Models.dart';
+import 'package:som/theme8/utils/T8Colors.dart';
+import 'package:som/theme8/utils/T8Constant.dart';
+import 'package:som/theme8/utils/T8DataGenerator.dart';
+import 'package:som/theme8/utils/T8Images.dart';
+import 'package:som/theme8/utils/T8Strings.dart';
+import 'package:som/theme8/utils/T8Widget.dart';
 
 import '../../main.dart';
 
@@ -22,7 +22,7 @@ class T8Dashboard extends StatefulWidget {
 }
 
 class T8DashboardState extends State<T8Dashboard> {
-  List<T8QuizModel> mListings;
+  late List<T8QuizModel> mListings;
   var isSelected = 1;
 
   @override
@@ -47,7 +47,7 @@ class T8DashboardState extends State<T8Dashboard> {
             SvgPicture.asset(
               icon,
               width: MediaQuery.of(context).size.width * 0.07,
-              height: 24,
+              height: 20,
               color: isSelected == pos ? t8_colorPrimary : t8_icon_color,
             ),
             text(
@@ -62,7 +62,7 @@ class T8DashboardState extends State<T8Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground);
+    changeStatusColor(appStore.scaffoldBackground!);
     return Observer(
       builder: (_) => Scaffold(
         backgroundColor: appStore.scaffoldBackground,
@@ -104,7 +104,7 @@ class T8DashboardState extends State<T8Dashboard> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.42,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: mListings.length,
@@ -148,8 +148,9 @@ class T8DashboardState extends State<T8Dashboard> {
   }
 }
 
+// ignore: must_be_immutable, camel_case_types
 class t8Quiz extends StatelessWidget {
-  T8QuizModel model;
+  late T8QuizModel model;
 
   t8Quiz(T8QuizModel model, int pos) {
     this.model = model;
@@ -174,7 +175,7 @@ class t8Quiz extends StatelessWidget {
                     topRight: Radius.circular(16.0),
                   ),
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: model.quizImage,
                     height: w * 0.4,
                     width: MediaQuery.of(context).size.width * 0.75,

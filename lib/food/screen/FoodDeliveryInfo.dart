@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 class FoodDeliveryInfo extends StatefulWidget {
   static String tag = '/FoodDeliveryInfo';

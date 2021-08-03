@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizDetails.dart';
-import 'package:prokit_flutter/quiz/model/QuizModels.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/quiz/utils/QuizDataGenerator.dart';
-import 'package:prokit_flutter/quiz/utils/QuizStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/quiz/Screens/QuizDetails.dart';
+import 'package:som/quiz/model/QuizModels.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
+import 'package:som/quiz/utils/QuizDataGenerator.dart';
+import 'package:som/quiz/utils/QuizStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class QuizAllList extends StatefulWidget {
   static String tag = '/QuizAllList';
@@ -18,7 +18,7 @@ class QuizAllList extends StatefulWidget {
 }
 
 class _QuizAllListState extends State<QuizAllList> {
-  List<NewQuizModel> mListings;
+  late List<NewQuizModel> mListings;
   int selectedPos = 1;
 
   @override
@@ -50,7 +50,7 @@ class _QuizAllListState extends State<QuizAllList> {
               ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mListings[index].quizImage,
                   height: width * 0.4,
                   width: MediaQuery.of(context).size.width / 0.25,
@@ -98,7 +98,7 @@ class _QuizAllListState extends State<QuizAllList> {
               ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: mListings[index].quizImage,
                   height: width * 0.4,
                   width: MediaQuery.of(context).size.width / 0.25,

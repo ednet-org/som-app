@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 import '../../main.dart';
 
@@ -21,7 +21,7 @@ class T3Listing extends StatefulWidget {
 }
 
 class T3ListingState extends State<T3Listing> {
-  List<Theme3Dish> mListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class T3ListingState extends State<T3Listing> {
 
 // ignore: must_be_immutable
 class T3List extends StatelessWidget {
-  Theme3Dish model;
+  late Theme3Dish model;
 
   T3List(Theme3Dish model, int pos) {
     this.model = model;
@@ -98,9 +98,8 @@ class T3List extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          child: Text(model.dishName, style: boldTextStyle(size: 18)),
+                          child: Text(model.dishName, style: boldTextStyle(size: 18),maxLines: 2,).expand(),
                         ),
-                        Image.asset(t3_ic_search),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -119,11 +118,13 @@ class T3List extends StatelessWidget {
                   ],
                 ),
               ),
-              RaisedButton(
-                textColor: t3_white,
-                elevation: 4,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0), bottomRight: Radius.circular(10.0))),
-                padding: EdgeInsets.all(0.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: t3_white,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0), bottomRight: Radius.circular(10.0))),
+                  padding: EdgeInsets.all(0.0),
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: <Color>[t3_colorPrimary, t3_colorPrimaryDark]),

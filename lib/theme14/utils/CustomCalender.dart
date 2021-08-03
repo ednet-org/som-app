@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/screens/flutterCalender/date_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
-import 'package:prokit_flutter/theme14/utils/T14Widget.dart';
+import 'package:som/integrations/screens/flutterCalender/date_utils.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Widget.dart';
 
 class CustomCalender extends StatefulWidget {
   @override
@@ -17,20 +17,20 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
   List<DateModel> monthList = [];
   List<DateModel> dayList = [];
   List<int> yearList = [];
-  int selectedDate;
+  int? selectedDate;
   DateTime today = DateTime.now();
-  int currentYear;
-  int currentMonth;
-  int selectedDay;
-  int selected;
+  int? currentYear;
+  int? currentMonth;
+  int? selectedDay;
+  int? selected;
   ScrollController scrollController = ScrollController();
 
   List<String> availableTimeList = ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM'];
-  int i;
+  int? i;
 
   void getNumberOfDays() {
     dayList.clear();
-    DateTime current = DateTime(currentYear, currentMonth + 1);
+    DateTime current = DateTime(currentYear!, currentMonth! + 1);
     var days = Utils.daysInRange(Utils.firstDayOfMonth(current), Utils.lastDayOfMonth(current).add(Duration(days: 1)));
     days.forEach((element) {
       DateModel dateModel = DateModel(id: element.day, monthName: getWeekDay(element.weekday), dateTime: element);
@@ -38,9 +38,8 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
     });
     setState(() {});
   }
-
+  String? weekName;
   String getWeekDay(int num) {
-    String weekName;
     if (num == 1) {
       return weekName = "Mon";
     } else if (num == 2) {
@@ -83,7 +82,7 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
 
   @override
   void afterFirstLayout(BuildContext context) {
-    scrollController.animateTo(selectedDay * 50.toDouble(), duration: Duration(milliseconds: 1), curve: Curves.easeOutCubic);
+    scrollController.animateTo(selectedDay! * 50.toDouble(), duration: Duration(milliseconds: 1), curve: Curves.easeOutCubic);
   }
 
   @override
@@ -108,7 +107,7 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
                 underline: 0.height,
                 value: currentMonth,
                 items: monthList.map((e) {
-                  return DropdownMenuItem<int>(child: Text(e.monthName), value: e.id);
+                  return DropdownMenuItem<int>(child: Text(e.monthName!), value: e.id);
                 }).toList(),
                 onChanged: (month) {
                   currentMonth = month;
@@ -159,7 +158,7 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
                   child: Column(
                     children: [
                       FittedBox(
-                        child: Text(data.monthName, style: boldTextStyle(size: 16, color: selectedDay == index ? t14_colorBlue : white)),
+                        child: Text(data.monthName!, style: boldTextStyle(size: 16, color: selectedDay == index ? t14_colorBlue : white)),
                       ),
                       10.height,
                       FittedBox(
@@ -206,7 +205,7 @@ class _CustomCalenderState extends State<CustomCalender> with AfterLayoutMixin<C
         30.height,
         t14AppButton(context, btnText: t14_txt_Save, bgColor: white, shape: 8.0, txtColor: t14_txt_BlueColor, onPress: () {
           finish(context);
-        }),
+        }, width: context.width()),
       ],
     );
   }

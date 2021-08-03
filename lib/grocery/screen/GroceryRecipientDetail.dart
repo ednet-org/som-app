@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/codePicker/country_code_picker.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/codePicker/country_code_picker.dart';
 
 class GroceryRecipientDetail extends StatefulWidget {
   static String tag = '/GroceryRecipientDetail';
@@ -47,7 +47,7 @@ class _GroceryRecipientDetailState extends State<GroceryRecipientDetail> {
                   Stack(
                     children: <Widget>[
                       CachedNetworkImage(
-                        placeholder: placeholderWidgetFn(),
+                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                         imageUrl: Grocery_ic_Profile,
                         height: 70,
                         width: 70,

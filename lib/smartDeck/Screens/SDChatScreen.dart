@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/ModelClass/SDChatsModel.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDChatPageViewScreen.dart';
+import 'package:som/smartDeck/ModelClass/SDChatsModel.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/Screens/SDChatPageViewScreen.dart';
 
 class SDChatScreen extends StatefulWidget {
   @override
@@ -10,13 +10,13 @@ class SDChatScreen extends StatefulWidget {
 }
 
 class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  List tabs;
+  TabController? _tabController;
+  late List tabs;
   int _currentIndex = 0;
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -25,12 +25,12 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
 
     tabs = ['Personal', 'Group'];
     _tabController = TabController(length: tabs.length, vsync: this);
-    _tabController.addListener(_handleTabControllerTick);
+    _tabController!.addListener(_handleTabControllerTick);
   }
 
   void _handleTabControllerTick() {
     setState(() {
-      _currentIndex = _tabController.index;
+      _currentIndex = _tabController!.index;
     });
   }
 
@@ -123,7 +123,7 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                   ),
                   if (_currentIndex == 0)
                     ListView.builder(
-                        itemCount: personalChats == null ? 0 : personalChats.length,
+                        itemCount: personalChats.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
@@ -131,14 +131,14 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                             children: <Widget>[
                               Expanded(
                                 child: ListTile(
-                                  leading: CircleAvatar(radius: 20, backgroundImage: NetworkImage(personalChats[index].profileImage)),
-                                  title: Text(personalChats[index].name, style: boldTextStyle(size: 16, color: Colors.black.withOpacity(0.8))),
-                                  subtitle: Text(personalChats[index].message, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)),
+                                  leading: CircleAvatar(radius: 20, backgroundImage: NetworkImage(personalChats[index].profileImage!)),
+                                  title: Text(personalChats[index].name!, style: boldTextStyle(size: 16, color: Colors.black.withOpacity(0.8))),
+                                  subtitle: Text(personalChats[index].message!, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)),
                                   trailing: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(personalChats[index].time, style: TextStyle(fontSize: 12)),
+                                      Text(personalChats[index].time!, style: TextStyle(fontSize: 12)),
                                       personalChats[index].pendingMessages != null
                                           ? Container(
                                               margin: const EdgeInsets.only(top: 5.0),
@@ -146,7 +146,7 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                                               width: 22,
                                               decoration: BoxDecoration(color: sdSecondaryColorRed, borderRadius: BorderRadius.all(Radius.circular(25.0))),
                                               child: Center(
-                                                child: Text(personalChats[index].pendingMessages, style: primaryTextStyle(size: 11, color: Colors.white)),
+                                                child: Text(personalChats[index].pendingMessages!, style: primaryTextStyle(size: 11, color: Colors.white)),
                                               ),
                                             )
                                           : SizedBox(),
@@ -165,7 +165,7 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                         })
                   else if (_currentIndex == 1)
                     ListView.builder(
-                      itemCount: groupChats == null ? 0 : groupChats.length,
+                      itemCount: groupChats.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
@@ -173,14 +173,14 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                             Expanded(
                               flex: 10,
                               child: ListTile(
-                                leading: CircleAvatar(radius: 20, backgroundImage: NetworkImage(groupChats[index].profileImage)),
-                                title: Text(groupChats[index].name, style: boldTextStyle(size: 16, color: Colors.black.withOpacity(0.8))),
-                                subtitle: Text(groupChats[index].message, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)),
+                                leading: CircleAvatar(radius: 20, backgroundImage: NetworkImage(groupChats[index].profileImage!)),
+                                title: Text(groupChats[index].name!, style: boldTextStyle(size: 16, color: Colors.black.withOpacity(0.8))),
+                                subtitle: Text(groupChats[index].message!, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)),
                                 trailing: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(groupChats[index].time, style: TextStyle(fontSize: 12)),
+                                    Text(groupChats[index].time!, style: TextStyle(fontSize: 12)),
                                     groupChats[index].pendingMessages != null
                                         ? Container(
                                             margin: const EdgeInsets.only(top: 5.0),
@@ -191,7 +191,7 @@ class _SDChatScreenState extends State<SDChatScreen> with SingleTickerProviderSt
                                               borderRadius: BorderRadius.all(Radius.circular(25.0)),
                                             ),
                                             child: Center(
-                                              child: Text(groupChats[index].pendingMessages, style: primaryTextStyle(size: 11, color: Colors.white)),
+                                              child: Text(groupChats[index].pendingMessages!, style: primaryTextStyle(size: 11, color: Colors.white)),
                                             ),
                                           )
                                         : SizedBox(),

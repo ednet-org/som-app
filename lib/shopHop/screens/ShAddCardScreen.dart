@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/shopHop/models/ShPaymentCard.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
-import 'package:prokit_flutter/shopHop/utils/ShWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/shopHop/models/ShPaymentCard.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
+import 'package:som/shopHop/utils/ShWidget.dart';
 
+// ignore: must_be_immutable
 class ShAddCardScreen extends StatefulWidget {
   static String tag = '/ShAddCardScreen';
-  ShPaymentCard paymentCard;
+  ShPaymentCard? paymentCard;
 
   ShAddCardScreen({this.paymentCard});
 
@@ -24,19 +25,19 @@ class ShAddCardScreenState extends State<ShAddCardScreen> {
   var cardNumberCont = TextEditingController();
   var months = ["", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   var years = ["", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031"];
-  var selectedMonth = "";
-  var selectedYear = "";
+  String? selectedMonth = "";
+  String? selectedYear = "";
 
   @override
   void initState() {
     super.initState();
     if (widget.paymentCard != null) {
       setState(() {
-        cvvCont.text = widget.paymentCard.cvv;
-        nameCont.text = widget.paymentCard.holderName;
-        cardNumberCont.text = widget.paymentCard.cardNo;
-        selectedMonth = widget.paymentCard.month;
-        selectedYear = widget.paymentCard.year;
+        cvvCont.text = widget.paymentCard!.cvv;
+        nameCont.text = widget.paymentCard!.holderName;
+        cardNumberCont.text = widget.paymentCard!.cardNo;
+        selectedMonth = widget.paymentCard!.month;
+        selectedYear = widget.paymentCard!.year;
       });
     }
   }

@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:prokit_flutter/theme6/utils/T6Colors.dart';
-import 'package:prokit_flutter/theme6/utils/T6Constant.dart';
-import 'package:prokit_flutter/theme6/utils/T6Images.dart';
-import 'package:prokit_flutter/theme6/utils/T6Strings.dart';
-import 'package:prokit_flutter/theme6/utils/T6Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/theme6/utils/T6Colors.dart';
+import 'package:som/theme6/utils/T6Constant.dart';
+import 'package:som/theme6/utils/T6Images.dart';
+import 'package:som/theme6/utils/T6Strings.dart';
+import 'package:som/theme6/utils/T6Widget.dart';
 
 class T6WalkThrough extends StatefulWidget {
   static String tag = '/T6WalkThrough';
@@ -18,7 +18,7 @@ class T6WalkThrough extends StatefulWidget {
 
 class T6WalkThroughState extends State<T6WalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
 
   var titles = [
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text ",
@@ -96,7 +96,7 @@ class WalkThrough extends StatelessWidget {
   final String textContent;
   final String title;
 
-  WalkThrough({Key key, @required this.textContent, @required this.title}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class WalkThrough extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: textContent,
               height: (MediaQuery.of(context).size.height) / 2.5,
             ),

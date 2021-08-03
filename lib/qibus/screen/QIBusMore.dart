@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 import 'QIBusCards.dart';
 import 'QIBusEditProfile.dart';
@@ -100,7 +100,7 @@ class QIBusMoreState extends State<QIBusMore> {
                       height: spacing_standard_new,
                     ),
                     CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: qibus_ic_buslogo,
                       width: width * 0.2,
                     ),
@@ -113,7 +113,7 @@ class QIBusMoreState extends State<QIBusMore> {
         ));
   }
 
-  Widget mOption(var icon, var lbl, {@required Function onTap}) {
+  Widget mOption(var icon, var lbl, {required Function onTap}) {
     return GestureDetector(
       onTap: () {
         onTap();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/main.dart';
 
 class MWTabBarScreen4 extends StatefulWidget {
   static String tag = "/MWTabBarScreen4";
@@ -168,7 +168,8 @@ class _MWTabBarScreen4State extends State<MWTabBarScreen4> {
     );
   }
 
-  Widget TabList({Widget icon, String title}) {
+  // ignore: non_constant_identifier_names
+  Widget TabList({Widget? icon, required String title}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

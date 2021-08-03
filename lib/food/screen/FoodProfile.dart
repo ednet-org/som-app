@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/utils/FoodColors.dart';
-import 'package:prokit_flutter/food/utils/FoodImages.dart';
-import 'package:prokit_flutter/food/utils/FoodString.dart';
-import 'package:prokit_flutter/food/utils/FoodWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/food/utils/FoodColors.dart';
+import 'package:som/food/utils/FoodImages.dart';
+import 'package:som/food/utils/FoodString.dart';
+import 'package:som/food/utils/FoodWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class FoodProfile extends StatefulWidget {
   static String tag = '/FoodProfile';
@@ -19,7 +19,7 @@ class FoodProfileState extends State<FoodProfile> {
   @override
   Widget build(BuildContext context) {
     //changeStatusColor(food_app_background);
-    String _selectedLocation = 'Female';
+    String? _selectedLocation = 'Female';
     return Scaffold(
       backgroundColor: food_white,
       appBar: appBar(context, food_lbl_profile),

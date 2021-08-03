@@ -36,8 +36,6 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
   }
 
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Container(
         color: Colors.white,

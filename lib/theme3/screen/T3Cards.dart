@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/screen/T3Listing.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/screen/T3Listing.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
 
 import '../../main.dart';
 
@@ -16,7 +16,7 @@ class T3Cards extends StatefulWidget {
 }
 
 class T3CardsState extends State<T3Cards> {
-  List<Theme3Dish> mListings;
+  late List<Theme3Dish> mListings;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class T3CardsState extends State<T3Cards> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     return Scaffold(
       appBar: appBar(context, 'Cards'),
       backgroundColor: appStore.scaffoldBackground,

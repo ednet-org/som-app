@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class GroceryHomeDelivery extends StatefulWidget {
   static String tag = '/GroceryHomeDelivery';
@@ -15,8 +15,8 @@ class GroceryHomeDelivery extends StatefulWidget {
 }
 
 class _GroceryHomeDeliveryState extends State<GroceryHomeDelivery> {
-  String selectedLocation1 = "Pannipitiya";
-  String selectedLocation2 = "Egodawatta";
+  String? selectedLocation1 = "Pannipitiya";
+  String? selectedLocation2 = "Egodawatta";
 
   List<String> location1 = ["Pannipitiya"];
 
@@ -89,7 +89,7 @@ class _GroceryHomeDeliveryState extends State<GroceryHomeDelivery> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation1 = newValue;
                         });
@@ -121,7 +121,7 @@ class _GroceryHomeDeliveryState extends State<GroceryHomeDelivery> {
                         Icons.arrow_drop_down,
                       ),
                       style: TextStyle(color: grocery_textColorPrimary, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedLocation2 = newValue;
                         });

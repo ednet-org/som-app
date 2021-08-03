@@ -1,10 +1,7 @@
-import 'dart:math';
-
-import 'package:geohash/geohash.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
 
 class LatLngAndGeohash {
-  final LatLng location;
+  // TODO Without NullSafety Geo hash
+/*  final LatLng location;
   String geohash;
 
   LatLngAndGeohash(this.location) {
@@ -17,5 +14,5 @@ class LatLngAndGeohash {
 
   getId() {
     return location.latitude.toString() + "_" + location.longitude.toString() + "_${Random().nextInt(10000)}";
-  }
+  }*/
 }

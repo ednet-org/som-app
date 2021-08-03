@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 part 'AppStore.g.dart';
 
@@ -13,31 +13,31 @@ abstract class AppStoreBase with Store {
   bool isDarkModeOn = false;
 
   @observable
-  Color scaffoldBackground;
+  Color? scaffoldBackground;
 
   @observable
-  Color backgroundColor;
+  Color? backgroundColor;
 
   @observable
-  Color backgroundSecondaryColor;
+  Color? backgroundSecondaryColor;
 
   @observable
-  Color textPrimaryColor;
+  Color? textPrimaryColor;
 
   @observable
-  Color appColorPrimaryLightColor;
+  Color? appColorPrimaryLightColor;
 
   @observable
-  Color textSecondaryColor;
+  Color? textSecondaryColor;
 
   @observable
-  Color appBarColor;
+  Color? appBarColor;
 
   @observable
-  Color iconColor;
+  Color? iconColor;
 
   @observable
-  Color iconSecondaryColor;
+  Color? iconSecondaryColor;
 
   @observable
   String selectedLanguage = 'en';
@@ -46,7 +46,7 @@ abstract class AppStoreBase with Store {
   var selectedDrawerItem = -1;
 
   @action
-  Future<void> toggleDarkMode({bool value}) async {
+  Future<void> toggleDarkMode({bool? value}) async {
     isDarkModeOn = value ?? !isDarkModeOn;
 
     if (isDarkModeOn) {

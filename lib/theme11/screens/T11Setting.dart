@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
-import 'package:prokit_flutter/theme11/utils/T11Constant.dart';
-import 'package:prokit_flutter/theme11/utils/T11Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11Constant.dart';
+import 'package:som/theme11/utils/T11Strings.dart';
 
 class T11Setting extends StatefulWidget {
   static String tag = '/T11Setting';
@@ -13,12 +13,11 @@ class T11Setting extends StatefulWidget {
 }
 
 class _T11SettingState extends State<T11Setting> {
-  @override
   bool isAutoPlay = true;
   bool isVolume = true;
   bool isDataServer = true;
-  String selectedValue = 'High';
-  String downloadSpeed = 'High';
+  String? selectedValue = 'High';
+  String? downloadSpeed = 'High';
 
   Widget build(BuildContext context) {
     final listView = Column(

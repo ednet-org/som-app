@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/newsBlog/component/NBNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/component/NBNewsComponent.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBShowMoreNewsScreen extends StatefulWidget {
   static String tag = '/NBShowMoreNewsScreen';

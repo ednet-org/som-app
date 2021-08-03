@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryDataGenerator.dart';
-import 'package:prokit_flutter/grocery/utils/snapping_sheet.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryDataGenerator.dart';
+import 'package:som/grocery/utils/snapping_sheet.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GroceryCategoryList.dart';
 import 'GroceryProductDescription.dart';
@@ -18,11 +18,13 @@ class GroceryStore extends StatefulWidget {
 }
 
 class _GroceryStoreState extends State<GroceryStore> with SingleTickerProviderStateMixin {
-  List<ProductModel> mStoreDealList;
+  late List<ProductModel> mStoreDealList;
   var _controller = SnappingSheetController();
-  AnimationController _arrowIconAnimationController;
-  Animation<double> _arrowIconAnimation;
-  double _moveAmount = 0.0;
+  late AnimationController _arrowIconAnimationController;
+  Animation<double>? arrowIconAnimation;
+
+  // ignore: non_constant_identifier_names
+  double MoveAmount = 0.0;
 
   @override
   void initState() {
@@ -30,7 +32,7 @@ class _GroceryStoreState extends State<GroceryStore> with SingleTickerProviderSt
     mStoreDealList = storeMemberItems();
 
     _arrowIconAnimationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _arrowIconAnimation = Tween(begin: 0.0, end: 0.5).animate(CurvedAnimation(curve: Curves.elasticOut, reverseCurve: Curves.elasticIn, parent: _arrowIconAnimationController));
+    arrowIconAnimation = Tween(begin: 0.0, end: 0.5).animate(CurvedAnimation(curve: Curves.elasticOut, reverseCurve: Curves.elasticIn, parent: _arrowIconAnimationController));
   }
 
   @override
@@ -74,7 +76,7 @@ class _GroceryStoreState extends State<GroceryStore> with SingleTickerProviderSt
         },
         onMove: (moveAmount) {
           setState(() {
-            _moveAmount = moveAmount;
+            MoveAmount = moveAmount!;
           });
         },
         snappingSheetController: _controller,
@@ -131,7 +133,7 @@ class Cateogry extends StatefulWidget {
 }
 
 class CateogryState extends State<Cateogry> {
-  List<CategoryModel> mStoreCategoryList;
+  late List<CategoryModel> mStoreCategoryList;
 
   @override
   void initState() {
@@ -172,7 +174,9 @@ class GrabSection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(blurRadius: 20.0, color: Colors.black.withOpacity(0.2))],
+        boxShadow: [
+          BoxShadow(blurRadius: 20.0, color: Colors.black.withOpacity(0.2)),
+        ],
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(15.0),
           bottomRight: Radius.circular(15.0),
@@ -193,8 +197,9 @@ class GrabSection extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class StoreDeal extends StatelessWidget {
-  ProductModel model;
+  late ProductModel model;
 
   StoreDeal(ProductModel model, int pos) {
     this.model = model;
@@ -230,7 +235,7 @@ class StoreDeal extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: CachedNetworkImage(
-                placeholder: placeholderWidgetFn(),
+                placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                 imageUrl: model.img,
                 fit: BoxFit.fill,
                 height: width * 0.25,
@@ -256,8 +261,9 @@ class StoreDeal extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class StoreCategory extends StatelessWidget {
-  CategoryModel model;
+  late CategoryModel model;
 
   StoreCategory(CategoryModel model, int pos) {
     this.model = model;
@@ -275,7 +281,9 @@ class StoreCategory extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(shape: BoxShape.circle, color: grocery_colorPrimary_light, boxShadow: [BoxShadow(color: grocery_ShadowColor, blurRadius: 10, spreadRadius: 2)]),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: grocery_colorPrimary_light, boxShadow: [
+                BoxShadow(color: grocery_ShadowColor, blurRadius: 10, spreadRadius: 2),
+              ]),
               width: width * 0.12,
               height: width * 0.12,
               padding: EdgeInsets.all(width * 0.03),

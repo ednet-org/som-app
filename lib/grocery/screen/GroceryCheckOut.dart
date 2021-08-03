@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/grocery/utils/panel.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/grocery/utils/panel.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GroceryPaymentMethod.dart';
 import 'GroceryRecipient.dart';
@@ -24,13 +24,13 @@ class GroceryCheckOut extends StatefulWidget {
 
 class GroceryCheckOutState extends State<GroceryCheckOut> {
   final double _initFabHeight = 90.0;
-  double _fabHeight;
-  double _panelHeightOpen;
+  double? fabHeight;
+  double? _panelHeightOpen;
 
   @override
   void initState() {
     super.initState();
-    _fabHeight = _initFabHeight;
+    fabHeight = _initFabHeight;
   }
 
   @override
@@ -115,7 +115,7 @@ class GroceryCheckOutState extends State<GroceryCheckOut> {
                   width: width,
                   color: Colors.white,
                   child: CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
+                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: grocery_ic_carts,
                     height: width * 0.38,
                     fit: BoxFit.contain,
@@ -221,7 +221,7 @@ class GroceryCheckOutState extends State<GroceryCheckOut> {
                 ),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
                 onPanelSlide: (double pos) => setState(() {
-                  _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) + _initFabHeight;
+                  fabHeight = pos * (_panelHeightOpen! - _panelHeightClosed) + _initFabHeight;
                 }),
               ),
             )

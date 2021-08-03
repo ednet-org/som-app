@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTReviewModel.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/defaultTheme/model/DTReviewModel.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 import 'DTDrawerWidget.dart';
 import 'ReviewWidget.dart';
@@ -151,7 +151,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
               decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
               child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
             ).onTap(() async {
-              DTReviewModel model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+              DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
               if (model != null) {
                 list.insert(0, model);
                 setState(() {});
@@ -277,7 +277,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                     decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
                     child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
                   ).onTap(() async {
-                    DTReviewModel model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+                    DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
                     if (model != null) {
                       list.insert(0, model);
                       setState(() {});
@@ -306,6 +306,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class WriteReviewDialog extends StatelessWidget {
   var reviewCont = TextEditingController();
   var reviewFocus = FocusNode();
@@ -380,7 +381,7 @@ class WriteReviewDialog extends StatelessWidget {
                   labelStyle: secondaryTextStyle(),
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                 ),
                 keyboardType: TextInputType.multiline,
                 minLines: 1,

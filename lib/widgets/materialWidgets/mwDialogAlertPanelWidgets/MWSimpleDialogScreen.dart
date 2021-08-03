@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -193,11 +193,11 @@ class FormDialogExample extends StatelessWidget {
                 contentPadding: EdgeInsets.fromLTRB(4, 8, 4, 8),
                 hintText: 'Enter Contact Number',
                 hintStyle: secondaryTextStyle(color: appStore.textSecondaryColor, size: 16),
-                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0)),
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor, width: 0.0)),
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0)),
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: appStore.textPrimaryColor!, width: 0.0)),
               ),
               keyboardType: TextInputType.number,
-              inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               style: primaryTextStyle(color: appStore.textPrimaryColor),
             ),
             30.height,

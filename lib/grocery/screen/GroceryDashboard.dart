@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/grocery/model/GroceryModel.dart';
-import 'package:prokit_flutter/grocery/utils/GeoceryStrings.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryColors.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryConstant.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryDataGenerator.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryImages.dart';
-import 'package:prokit_flutter/grocery/utils/GroceryWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/grocery/model/GroceryModel.dart';
+import 'package:som/grocery/utils/GeoceryStrings.dart';
+import 'package:som/grocery/utils/GroceryColors.dart';
+import 'package:som/grocery/utils/GroceryConstant.dart';
+import 'package:som/grocery/utils/GroceryDataGenerator.dart';
+import 'package:som/grocery/utils/GroceryImages.dart';
+import 'package:som/grocery/utils/GroceryWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'GroceryAddSaveCartName.dart';
 import 'GroceryCheckOut.dart';
@@ -32,8 +32,8 @@ class GroceryDashBoardScreen extends StatefulWidget {
 }
 
 class _GroceryDashBoardScreenState extends State<GroceryDashBoardScreen> {
-  List<ProductModel> mFavouriteList;
-  List<ProductModel> mCartList;
+  late List<ProductModel> mFavouriteList;
+  late List<ProductModel> mCartList;
 
   List<IconData> listImage = [Icons.insert_drive_file, Icons.location_on, Icons.shopping_cart, Icons.store, Icons.help, Icons.question_answer];
 
@@ -157,7 +157,7 @@ class _GroceryDashBoardScreenState extends State<GroceryDashBoardScreen> {
     final menu = IconButton(
       icon: Icon(Icons.menu),
       onPressed: () {
-        return showGeneralDialog(
+         showGeneralDialog(
           context: context,
           barrierDismissible: true,
           transitionDuration: Duration(milliseconds: 500),
@@ -272,8 +272,9 @@ class _GroceryDashBoardScreenState extends State<GroceryDashBoardScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class Cart extends StatelessWidget {
-  ProductModel model;
+  late ProductModel model;
 
   Cart(ProductModel model, int pos) {
     this.model = model;
@@ -282,7 +283,7 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    Widget mRemoveItem() {
+    Widget? mRemoveItem() {
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -353,7 +354,7 @@ class Cart extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: model.img,
                   fit: BoxFit.fill,
                   height: width * 0.25,
@@ -409,8 +410,9 @@ class Cart extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class Favourite extends StatelessWidget {
-  ProductModel model;
+  late ProductModel model;
 
   Favourite(ProductModel model, int pos) {
     this.model = model;

@@ -1,4 +1,4 @@
-const db_app_name = "Dashboard";
+        const db_app_name = "Dashboard";
 const db1_txt_view_all = "View All";
 const db1_lbl_popular = "Popular";
 const db1_lbl_filter_your_favourite = "Filter your favourite";

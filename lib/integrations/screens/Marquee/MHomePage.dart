@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/integrations/utils/MarqueeUtil.dart' as m;
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/MarqueeUtil.dart' as m;
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class MHomePage extends StatefulWidget {
   static String tag = '/MHomePage';
@@ -39,7 +39,7 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                   height: 40,
                   margin: EdgeInsets.only(top: 5),
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                   child: m.Marquee(
                     text: 'A life without suffering is a life without happiness.',
                     style: TextStyle(fontSize: 15, color: appStore.textPrimaryColor),
@@ -61,7 +61,7 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                   height: 40,
                   margin: EdgeInsets.only(top: 15),
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                   child: m.Marquee(
                     text: 'A life without suffering is a life without happiness.',
                     //  Style the text within the Marquee.
@@ -87,7 +87,7 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                     margin: EdgeInsets.only(top: 8),
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                     child: m.Marquee(
                       text: 'A life without suffering is a life without happiness.',
                       style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
@@ -115,7 +115,7 @@ class _MHomePageState extends State<MHomePage> {
                 ),
                 Container(
                   height: 40,
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                   child: m.Marquee(
                     text: 'A life without suffering is a life without happiness.',
                     style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
@@ -133,7 +133,7 @@ class _MHomePageState extends State<MHomePage> {
                 ),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
                       text: 'A life without suffering is a life without happiness.',
@@ -151,7 +151,7 @@ class _MHomePageState extends State<MHomePage> {
                     )),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
                       text: 'A life without suffering is a life without happiness.',
@@ -169,7 +169,7 @@ class _MHomePageState extends State<MHomePage> {
                     )),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
                       text: 'A life without suffering is a life without happiness.',
@@ -199,7 +199,7 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                     height: 150,
                     margin: EdgeInsets.only(top: 15),
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                     child: m.Marquee(
                       text: 'A life without suffering is a life without happiness. Stay Happy :)',
                       style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),

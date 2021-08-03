@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14TravelScreen2 extends StatefulWidget {
   @override
@@ -62,7 +62,7 @@ class _T14TravelScreen2State extends State<T14TravelScreen2> {
                         height: 40,
                         width: 40,
                         decoration: boxDecorationWithShadow(
-                          decorationImage: DecorationImage(image: Image.asset(data.img).image, fit: BoxFit.cover),
+                          decorationImage: DecorationImage(image: Image.asset(data.img!).image, fit: BoxFit.cover),
                           boxShape: BoxShape.circle,
                         ),
                       ),
@@ -87,16 +87,16 @@ class _T14TravelScreen2State extends State<T14TravelScreen2> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(30)),
-                              child: Image.asset(data.userImg, height: 30, width: 30, fit: BoxFit.cover),
+                              child: Image.asset(data.userImg!, height: 30, width: 30, fit: BoxFit.cover),
                             ),
                             8.width,
-                            Text(data.name, style: boldTextStyle(size: 14)),
+                            Text(data.name!, style: boldTextStyle(size: 14)),
                           ],
                         ),
                         16.height,
                         ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          child: Image.asset(data.img, width: context.width(), height: 350, fit: BoxFit.cover),
+                          child: Image.asset(data.img!, width: context.width(), height: 350, fit: BoxFit.cover),
                         ),
                       ],
                     ),

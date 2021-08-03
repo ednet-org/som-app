@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14WalkThroughScreen5 extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class T14WalkThroughScreen5 extends StatefulWidget {
 }
 
 class _T14WalkThroughScreen5State extends State<T14WalkThroughScreen5> with AfterLayoutMixin<T14WalkThroughScreen5> {
-  double currentPage = 0;
+  double? currentPage = 0;
   PageController _pageController = PageController();
   List<Widget> pages = [];
 
@@ -52,7 +52,6 @@ class _T14WalkThroughScreen5State extends State<T14WalkThroughScreen5> with Afte
     return Scaffold(
       backgroundColor: t14_WalkThrough5BgColor,
       body: Stack(
-        overflow: Overflow.visible,
         children: [
           PageView(
             controller: _pageController,
@@ -62,7 +61,7 @@ class _T14WalkThroughScreen5State extends State<T14WalkThroughScreen5> with Afte
             alignment: Alignment.bottomCenter,
             child: Container(
               padding: EdgeInsets.only(top: 8),
-              height: context.height() * 0.25,
+              height: context.height() * 0.30,
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                 backgroundColor: white,
@@ -76,16 +75,18 @@ class _T14WalkThroughScreen5State extends State<T14WalkThroughScreen5> with Afte
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
                         child: Text('Register', style: primaryTextStyle(color: t14_colorBlue)),
                       ),
                       DotIndicator(pageController: _pageController, indicatorColor: t14_colorBlue, pages: pages),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           _pageController.nextPage(duration: _kDuration, curve: _kCurve);
                         },
-                        padding: EdgeInsets.all(10),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.all(10),
+                        ),
                         child: Text(
                           currentPage == 2 ? t14_btn_WalkThrough2Start : 'Next',
                           style: primaryTextStyle(color: currentPage == 2 ? t14_colorBlue : Colors.grey),

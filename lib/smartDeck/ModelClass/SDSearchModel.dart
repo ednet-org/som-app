@@ -1,5 +1,5 @@
 class SDSearchModel {
-  String value;
+  String? value;
 
   SDSearchModel({
     this.value,
@@ -19,7 +19,7 @@ List<SDSearchModel> searchList = [
 ];
 
 class SDFilterModel {
-  String value;
+  String? value;
   bool isSelected = false;
 
   SDFilterModel({

@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/model/T3_Model.dart';
-import 'package:prokit_flutter/theme3/screen/T3Dashboard.dart';
-import 'package:prokit_flutter/theme3/utils/T3DataGenerator.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/model/T3_Model.dart';
+import 'package:som/theme3/screen/T3Dashboard.dart';
+import 'package:som/theme3/utils/T3DataGenerator.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3Profile extends StatefulWidget {
   static var tag = "/T3Profile";
@@ -19,8 +19,8 @@ class T3Profile extends StatefulWidget {
 }
 
 class T3ProfileState extends State<T3Profile> {
-  List<Theme3Dish> mListings;
-  List<Theme3Follower> mFollower;
+  late List<Theme3Dish> mListings;
+  late List<Theme3Follower> mFollower;
 
   @override
   void initState() {
@@ -187,7 +187,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
 // ignore: must_be_immutable
 class T3Followers extends StatelessWidget {
-  Theme3Follower model;
+  late Theme3Follower model;
 
   T3Followers(Theme3Follower model, int pos) {
     this.model = model;
@@ -210,7 +210,7 @@ class T3Followers extends StatelessWidget {
                 children: <Widget>[
                   ClipRRect(
                     child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn(),
+                      placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                       imageUrl: model.userImg,
                       width: width / 5.7,
                       height: width / 5.7,

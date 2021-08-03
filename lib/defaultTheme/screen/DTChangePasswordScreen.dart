@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 
@@ -53,7 +53,7 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
           alignment: Alignment.center,
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -71,7 +71,7 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                     suffix: Icon(!oldPassObscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
                       oldPassObscureText = !oldPassObscureText;
                       setState(() {});
@@ -79,7 +79,7 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                   ),
                   onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(newPassFocus),
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     return null;
                   },
                 ),
@@ -95,7 +95,7 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                     suffix: Icon(!newPassObscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
                       newPassObscureText = !newPassObscureText;
                       setState(() {});
@@ -103,7 +103,7 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                   ),
                   onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(confirmPassFocus),
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     return null;
                   },
                 ),
@@ -119,14 +119,14 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                     suffix: Icon(!confirmPassObscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
                       confirmPassObscureText = !confirmPassObscureText;
                       setState(() {});
                     }),
                   ),
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     if (s.trim() != newPassCont.text) {
                       return 'password does not match';
                     }
@@ -140,8 +140,8 @@ class DTChangePasswordScreenState extends State<DTChangePasswordScreen> {
                   decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
                   child: Text('Submit', style: boldTextStyle(color: white, size: 18)),
                 ).onTap(() {
-                  if (formKey.currentState.validate()) {
-                    formKey.currentState.save();
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
                     finish(context);
                   } else {
                     autoValidate = true;

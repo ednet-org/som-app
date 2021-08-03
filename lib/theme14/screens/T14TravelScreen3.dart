@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Images.dart';
 
 class T14TravelScreen3 extends StatefulWidget {
   @override
@@ -90,7 +90,7 @@ class _T14TravelScreen3State extends State<T14TravelScreen3> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(15)),
-                              child: Image.asset(data.img, width: 180, height: 250, fit: BoxFit.cover),
+                              child: Image.asset(data.img!, width: 180, height: 250, fit: BoxFit.cover),
                             ),
                             8.height,
                             Positioned(
@@ -106,9 +106,9 @@ class _T14TravelScreen3State extends State<T14TravelScreen3> {
                           ],
                         ),
                         8.height,
-                        Text(data.name, style: secondaryTextStyle(size: 14)),
+                        Text(data.name!, style: secondaryTextStyle(size: 14)),
                         4.height,
-                        Text(data.country, style: secondaryTextStyle(size: 14)),
+                        Text(data.country!, style: secondaryTextStyle(size: 14)),
                       ],
                     ),
                   );
@@ -132,18 +132,18 @@ class _T14TravelScreen3State extends State<T14TravelScreen3> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.all(Radius.circular(30)),
-                              child: Image.asset(data.userImg, height: 35, width: 35, fit: BoxFit.cover),
+                              child: Image.asset(data.userImg!, height: 35, width: 35, fit: BoxFit.cover),
                             ),
                             8.width,
-                            Text(data.name, style: boldTextStyle(size: 14)).expand(),
+                            Text(data.name!, style: boldTextStyle(size: 14)).expand(),
                             Icon(Icons.location_on_outlined, size: 18),
-                            Text(data.country, style: boldTextStyle(size: 14)),
+                            Text(data.country!, style: boldTextStyle(size: 14)),
                           ],
                         ),
                         16.height,
                         ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          child: Image.asset(data.img, width: context.width(), height: 350, fit: BoxFit.cover),
+                          child: Image.asset(data.img!, width: context.width(), height: 350, fit: BoxFit.cover),
                         ),
                       ],
                     ),

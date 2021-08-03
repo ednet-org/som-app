@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class CWSegmentedControlScreen extends StatefulWidget {
   static String tag = '/CWSegmentedControlScreen';
@@ -74,7 +74,7 @@ class CWSegmentedControlScreenState extends State<CWSegmentedControlScreen> {
               borderColor: appColorPrimary,
               selectedColor: appColorPrimary,
               groupValue: selectedValue,
-              onValueChanged: (val) {
+              onValueChanged: (dynamic val) {
                 setState(() {
                   selectedValue = val;
                 });

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/theme11/utils/T11Colors.dart';
+import 'package:som/theme11/utils/T11Colors.dart';
 
 SizedBox buttonStyle(var text) {
   return SizedBox(

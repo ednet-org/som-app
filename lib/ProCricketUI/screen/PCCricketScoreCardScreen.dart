@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCScoreCardData.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCSummaryData.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerInfoScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/ProCricketUI/model/PCScoreCardData.dart';
+import 'package:som/ProCricketUI/model/PCSummaryData.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerInfoScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
 
+// ignore: must_be_immutable
 class PCCricketScoreCardScreen extends StatefulWidget {
   static String tag = '/CricketScoreCard';
-  String strTeamName;
-  int index;
+  String? strTeamName;
+  int? index;
 
   PCCricketScoreCardScreen({this.strTeamName, this.index});
 
@@ -22,12 +23,12 @@ class PCCricketScoreCardScreen extends StatefulWidget {
 }
 
 class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
-  PCScoreCardData cricketScoreCardData;
-  PCSummaryData cricketSummaryData;
-  List<Batsmen> batsmenModel = List();
-  List<Bowler> bowlerModel = List();
-  List<Fow> fowModel = List();
-  List<Player> playerModel = List();
+  PCScoreCardData? cricketScoreCardData;
+  late PCSummaryData cricketSummaryData;
+  List<Batsmen> batsmenModel = [];
+  List<Bowler> bowlerModel = [];
+  List<Fow> fowModel = [];
+  List<Player> playerModel = [];
 
   @override
   void initState() {
@@ -40,17 +41,17 @@ class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
     cricketScoreCardData = PCScoreCardData.fromJson(jsonDecode(json));
     String json2 = await rootBundle.loadString('assets/cricket_data/Summary.json');
     cricketSummaryData = PCSummaryData.fromJson(jsonDecode(json2));
-    playerModel.addAll(cricketSummaryData.players);
-    batsmenModel.addAll(cricketScoreCardData.innings[widget.index].batsmen);
-    bowlerModel.addAll(cricketScoreCardData.innings[widget.index].bowlers);
-    fowModel.addAll(cricketScoreCardData.innings[widget.index].fow);
+    playerModel.addAll(cricketSummaryData.players!);
+    batsmenModel.addAll(cricketScoreCardData!.innings![widget.index!].batsmen!);
+    bowlerModel.addAll(cricketScoreCardData!.innings![widget.index!].bowlers!);
+    fowModel.addAll(cricketScoreCardData!.innings![widget.index!].fow!);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    getPlayerName(String id) {
-      String playerName;
+    getPlayerName(String? id) {
+      String? playerName;
       for (int i = 0; i < playerModel.length; i++) {
         if (playerModel[i].id == id) {
           playerName = playerModel[i].f_name;
@@ -96,17 +97,17 @@ class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text(getPlayerName(batsmenModel[index].id), style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
-                                    Text(batsmenModel[index].r, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(),
-                                    Text(batsmenModel[index].b, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(),
-                                    Text(batsmenModel[index].fours, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4).expand(),
-                                    Text(batsmenModel[index].sixes, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4).expand(),
-                                    Text((int.parse(batsmenModel[index].r) / int.parse(batsmenModel[index].b) * 100).toStringAsFixed(2).toString(),
+                                    Text(getPlayerName(batsmenModel[index].id)!, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
+                                    Text(batsmenModel[index].r!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(),
+                                    Text(batsmenModel[index].b!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(),
+                                    Text(batsmenModel[index].fours!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4).expand(),
+                                    Text(batsmenModel[index].sixes!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 4).expand(),
+                                    Text((int.parse(batsmenModel[index].r!) / int.parse(batsmenModel[index].b!) * 100).toStringAsFixed(2).toString(),
                                             style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                                         .expand(),
                                   ],
                                 ),
-                                Text(batsmenModel[index].out_desc, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(top: 4, bottom: 4),
+                                Text(batsmenModel[index].out_desc!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(top: 4, bottom: 4),
                                 Divider()
                               ],
                             )).onTap(
@@ -123,22 +124,22 @@ class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
                       child: Row(
                         children: <Widget>[
                           Text("Extras", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
-                          Text("T${cricketScoreCardData.innings[widget.index].extras.t}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("T${cricketScoreCardData!.innings![widget.index!].extras!.t}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 4)
                               .expand(),
-                          Text("b${cricketScoreCardData.innings[widget.index].extras.b}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("b${cricketScoreCardData!.innings![widget.index!].extras!.b}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 4)
                               .expand(),
-                          Text("lb${cricketScoreCardData.innings[widget.index].extras.lb}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("lb${cricketScoreCardData!.innings![widget.index!].extras!.lb}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 4)
                               .expand(),
-                          Text("w${cricketScoreCardData.innings[widget.index].extras.wd}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("w${cricketScoreCardData!.innings![widget.index!].extras!.wd}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 4)
                               .expand(),
-                          Text("nb${cricketScoreCardData.innings[widget.index].extras.nb}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("nb${cricketScoreCardData!.innings![widget.index!].extras!.nb}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 4)
                               .expand(),
-                          Text("p${cricketScoreCardData.innings[widget.index].extras.p}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
+                          Text("p${cricketScoreCardData!.innings![widget.index!].extras!.p}", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium))
                               .paddingOnly(left: 8)
                               .expand(),
                         ],
@@ -153,7 +154,7 @@ class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
                         children: <Widget>[
                           Text("Total", style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).expand(flex: 3),
                           Text(
-                            "${cricketScoreCardData.innings[widget.index].score}(${cricketScoreCardData.innings[widget.index].wkts}wkts,${cricketScoreCardData.innings[1].ovr} Ov)",
+                            "${cricketScoreCardData!.innings![widget.index!].score}(${cricketScoreCardData!.innings![widget.index!].wkts}wkts,${cricketScoreCardData!.innings![1].ovr} Ov)",
                             style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium),
                           )
                         ],
@@ -207,9 +208,9 @@ class _PCCricketScoreCardScreenState extends State<PCCricketScoreCardScreen> {
                             padding: EdgeInsets.only(top: 16, bottom: 16, left: 16),
                             child: Row(
                               children: <Widget>[
-                                Expanded(flex: 3, child: Text(getPlayerName(fowModel[index].id), style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium))),
-                                Expanded(flex: 1, child: Text(fowModel[index].score, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 24)),
-                                Expanded(flex: 0, child: Text(fowModel[index].over, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(right: 24)),
+                                Expanded(flex: 3, child: Text(getPlayerName(fowModel[index].id)!, style: primaryTextStyle(color: Cricket_Primary, size: 16, fontFamily: fontMedium))),
+                                Expanded(flex: 1, child: Text(fowModel[index].score!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(left: 24)),
+                                Expanded(flex: 0, child: Text(fowModel[index].over!, style: primaryTextStyle(color: Cricket_textColorPrimary, size: 16, fontFamily: fontMedium)).paddingOnly(right: 24)),
                               ],
                             ).paddingOnly(right: 4),
                           ),

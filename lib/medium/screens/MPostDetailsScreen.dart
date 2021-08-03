@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MColors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MPostDetailsScreen extends StatefulWidget {
@@ -17,8 +17,8 @@ class MPostDetailsScreen extends StatefulWidget {
 }
 
 class MPostDetailsScreenState extends State<MPostDetailsScreen> with SingleTickerProviderStateMixin {
-  WebViewController _webViewController;
-  double contentHeight = 0;
+  WebViewController? _webViewController;
+  double? contentHeight = 0;
 
   ScrollController _scrollController = ScrollController();
   bool isScrollingDown = false;
@@ -55,7 +55,7 @@ class MPostDetailsScreenState extends State<MPostDetailsScreen> with SingleTicke
 
   _loadHtmlFromAssets() async {
     String fileText = await rootBundle.loadString("assets/medium/mediumhtmlpage.html");
-    _webViewController.loadUrl(Uri.dataFromString(fileText, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
+    _webViewController!.loadUrl(Uri.dataFromString(fileText, mimeType: 'text/html', encoding: Encoding.getByName('utf-8')).toString());
   }
 
   void myScroll() async {
@@ -124,7 +124,7 @@ class MPostDetailsScreenState extends State<MPostDetailsScreen> with SingleTicke
             },
             onPageFinished: (_) async {
               if (_webViewController != null) {
-                contentHeight = double.tryParse(await _webViewController.evaluateJavascript("document.documentElement.scrollHeight;"));
+                contentHeight = double.tryParse(await _webViewController!.evaluateJavascript("document.documentElement.scrollHeight;"));
                 print("Height : $contentHeight");
                 setState(() {});
               }

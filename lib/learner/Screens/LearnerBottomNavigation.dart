@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/learner/utils/LearnerBottomNavigationBar.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/utils/LearnerBottomNavigationBar.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerBottomNavigation extends StatefulWidget {
   static String tag = '/T9BottomNavigation';
@@ -15,6 +15,7 @@ class LearnerBottomNavigation extends StatefulWidget {
 class LearnerBottomNavigationState extends State<LearnerBottomNavigation> {
   var _selectedIndex = 0;
 
+  // ignore: non_constant_identifier_names
   get learner_ic_home_navigation => null;
 
   @override

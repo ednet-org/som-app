@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDChatScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDDashboardScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDLeaderBoardScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDProfileScreen.dart';
-import 'package:prokit_flutter/smartDeck/Screens/SDScoreBoardScreen.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/Screens/SDChatScreen.dart';
+import 'package:som/smartDeck/Screens/SDDashboardScreen.dart';
+import 'package:som/smartDeck/Screens/SDLeaderBoardScreen.dart';
+import 'package:som/smartDeck/Screens/SDProfileScreen.dart';
+import 'package:som/smartDeck/Screens/SDScoreBoardScreen.dart';
 
 class SDHomePageScreen extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class SDHomePageScreen extends StatefulWidget {
 }
 
 class _SDHomePageScreenState extends State<SDHomePageScreen> {
-  int _currentIndex = 0;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _SDHomePageScreenState extends State<SDHomePageScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: sdAppBackground,
-        body: tab[_currentIndex],
+        body: tab[currentIndex],
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -47,22 +47,22 @@ class _SDHomePageScreenState extends State<SDHomePageScreen> {
               type: BottomNavigationBarType.fixed,
               showUnselectedLabels: false,
               showSelectedLabels: false,
-              currentIndex: _currentIndex,
+              currentIndex: currentIndex,
               items: [
                 BottomNavigationBarItem(
                   icon: Image.asset('images/smartDeck/images/sdhome.png', height: 28, width: 28, color: sdIconColor),
                   activeIcon: Image.asset('images/smartDeck/images/sdhome.png', height: 28, width: 28, color: sdPrimaryColor),
-                  title: Text('a'),
+                  label: 'a',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('images/smartDeck/images/sdexamcard.png', height: 28, width: 28, color: sdIconColor),
                   activeIcon: Image.asset('images/smartDeck/images/sdexamcard.png', height: 28, width: 28, color: sdPrimaryColor),
-                  title: Text('a'),
+                  label: 'a',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('images/smartDeck/images/sdleaderboard.png', height: 28, width: 28, color: sdIconColor),
                   activeIcon: Image.asset('images/smartDeck/images/sdleaderboard.png', height: 28, width: 28, color: sdPrimaryColor),
-                  title: Text('a'),
+                  label: 'a',
                 ),
                 BottomNavigationBarItem(
                   icon: Stack(
@@ -85,7 +85,7 @@ class _SDHomePageScreenState extends State<SDHomePageScreen> {
                       )
                     ],
                   ),
-                  title: Text('a'),
+                  label: 'a',
                 ),
                 BottomNavigationBarItem(
                   icon: Container(
@@ -95,7 +95,7 @@ class _SDHomePageScreenState extends State<SDHomePageScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(40),
                       child: CachedNetworkImage(
-                        placeholder: placeholderWidgetFn(),
+                        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                         imageUrl: 'https://i.insider.com/5de6dd81fd9db241b00c04d3?width=1100&format=jpeg&auto=webp',
                         fit: BoxFit.cover,
                         height: 35,
@@ -117,12 +117,12 @@ class _SDHomePageScreenState extends State<SDHomePageScreen> {
                       ),
                     ),
                   ),
-                  title: Text('a'),
+                  label: 'a',
                 ),
               ],
               onTap: (index) {
                 setState(() {
-                  _currentIndex = index;
+                  currentIndex = index;
                 });
               },
             ),

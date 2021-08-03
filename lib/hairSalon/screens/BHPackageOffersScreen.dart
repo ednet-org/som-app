@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'BHBookAppointmentScreen.dart';
 
@@ -19,7 +19,7 @@ class BHPackageOffersScreen extends StatefulWidget {
 }
 
 class BHPackageOffersScreenState extends State<BHPackageOffersScreen> {
-  List<BHIncludeServiceModel> includeServiceList;
+  late List<BHIncludeServiceModel> includeServiceList;
 
   @override
   void initState() {
@@ -129,14 +129,14 @@ class BHPackageOffersScreenState extends State<BHPackageOffersScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    includeServiceList[index].serviceName,
+                                    includeServiceList[index].serviceName!,
                                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: BHAppTextColorPrimary),
                                   ),
                                   8.height,
                                   Row(
                                     children: [
                                       Text(
-                                        includeServiceList[index].time,
+                                        includeServiceList[index].time!,
                                         style: TextStyle(fontSize: 14, color: BHAppTextColorSecondary),
                                       ),
                                       8.width,
@@ -155,15 +155,17 @@ class BHPackageOffersScreenState extends State<BHPackageOffersScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     width: MediaQuery.of(context).size.width,
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(12),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(12),
+                        primary: BHColorPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
                       onPressed: () {
                         BHBookAppointmentScreen().launch(context);
                       },
-                      color: BHColorPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
                       child: Text(BHBtnBookAppointment, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
                   ),

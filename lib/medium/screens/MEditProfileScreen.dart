@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MImages.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MImages.dart';
 
 class MEditProfileScreen extends StatefulWidget {
   static String tag = '/MEditProfileScreen';
-  final String name;
+  final String? name;
 
   MEditProfileScreen({this.name});
 
@@ -28,7 +28,7 @@ class MEditProfileScreenState extends State<MEditProfileScreen> {
   }
 
   init() async {
-    nameCont.text = widget.name;
+    nameCont.text = widget.name!;
   }
 
   @override

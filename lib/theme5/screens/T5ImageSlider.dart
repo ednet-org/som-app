@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme5/model/T5Models.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5DataGenerator.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
-import 'package:prokit_flutter/theme5/utils/widgets/T5Slider.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme5/model/T5Models.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5DataGenerator.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
+import 'package:som/theme5/utils/widgets/T5Slider.dart';
 
 import '../../main.dart';
 
@@ -18,7 +18,7 @@ class T5ImageSlider extends StatefulWidget {
 
 class T5ImageSliderState extends State<T5ImageSlider> {
   int selectedPos = 1;
-  List<T5Slider> mSliderList;
+  List<T5Slider>? mSliderList;
 
   @override
   void initState() {
@@ -29,9 +29,8 @@ class T5ImageSliderState extends State<T5ImageSlider> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     changeStatusColor(
-      appStore.appBarColor,
+      appStore.appBarColor!,
     );
 
     return Scaffold(

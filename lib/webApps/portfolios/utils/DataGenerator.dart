@@ -1,9 +1,9 @@
-import 'package:prokit_flutter/webApps/portfolios/models/Portfolio1SkillModel.dart';
-import 'package:prokit_flutter/webApps/portfolios/models/Portfolio2ServiceModel.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/models/Portfolio1SkillModel.dart';
+import 'package:som/webApps/portfolios/models/Portfolio2ServiceModel.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 List<Portfolio1SkillModel> getSkills() {
-  List<Portfolio1SkillModel> list = List<Portfolio1SkillModel>();
+  List<Portfolio1SkillModel> list = [];
 
   Portfolio1SkillModel model1 = Portfolio1SkillModel();
   model1.title = 'Design';
@@ -39,7 +39,7 @@ List<Portfolio1SkillModel> getSkills() {
 }
 
 List<Portfolio2ServiceModel> getPortfolio2Services() {
-  List<Portfolio2ServiceModel> list = List<Portfolio2ServiceModel>();
+  List<Portfolio2ServiceModel> list = [];
 
   Portfolio2ServiceModel model1 = Portfolio2ServiceModel();
   model1.name = 'Design';
@@ -81,7 +81,7 @@ List<Portfolio2ServiceModel> getPortfolio2Services() {
 }
 
 List<Portfolio1ToDolModel> getToDoList() {
-  List<Portfolio1ToDolModel> list = List<Portfolio1ToDolModel>();
+  List<Portfolio1ToDolModel> list = [];
 
   Portfolio1ToDolModel model1 = Portfolio1ToDolModel();
   model1.type = 'Illustration';
@@ -117,7 +117,7 @@ List<Portfolio1ToDolModel> getToDoList() {
 }
 
 List<Portfolio1ExperiencesModel> getExperienceDetail() {
-  List<Portfolio1ExperiencesModel> list = List<Portfolio1ExperiencesModel>();
+  List<Portfolio1ExperiencesModel> list = [];
 
   Portfolio1ExperiencesModel model1 = Portfolio1ExperiencesModel();
   model1.title = 'FullTime Freelancer';
@@ -144,7 +144,7 @@ List<Portfolio1ExperiencesModel> getExperienceDetail() {
 }
 
 List<Portfolio1ExperiencesModel> getEducationDetail() {
-  List<Portfolio1ExperiencesModel> list = List<Portfolio1ExperiencesModel>();
+  List<Portfolio1ExperiencesModel> list = [];
 
   Portfolio1ExperiencesModel model1 = Portfolio1ExperiencesModel();
   model1.title = 'Master of Design, University of California';
@@ -171,7 +171,7 @@ List<Portfolio1ExperiencesModel> getEducationDetail() {
 }
 
 List<GuideLinesModel> getGuideLineDetail1() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.name = 'Henry Nicholas';
@@ -201,7 +201,7 @@ List<GuideLinesModel> getGuideLineDetail1() {
 }
 
 List<Portfolio1ExperiencesModel> getServicesList() {
-  List<Portfolio1ExperiencesModel> list = List<Portfolio1ExperiencesModel>();
+  List<Portfolio1ExperiencesModel> list = [];
 
   Portfolio1ExperiencesModel model1 = Portfolio1ExperiencesModel();
   model1.title = 'Business Strategy';
@@ -229,7 +229,7 @@ List<Portfolio1ExperiencesModel> getServicesList() {
 }
 
 List<GuideLinesModel> getServiceList2() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.name = 'Unique design';
@@ -256,7 +256,7 @@ List<GuideLinesModel> getServiceList2() {
 }
 
 List<GuideLinesModel> getSkillList() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.name = 'Responsiveness';
@@ -298,7 +298,7 @@ List<GuideLinesModel> getSkillList() {
 }
 
 List<GuideLinesModel> getLatestWorkList() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.img = p2GalleryImg1;
@@ -328,7 +328,7 @@ List<GuideLinesModel> getLatestWorkList() {
 }
 
 List<GuideLinesModel> getLatestBlogList() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.name = 'Creative Photography';
@@ -355,7 +355,7 @@ List<GuideLinesModel> getLatestBlogList() {
 }
 
 List<GuideLinesModel> getClientHappyList() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.name = 'Elizabeth';
@@ -382,7 +382,7 @@ List<GuideLinesModel> getClientHappyList() {
 }
 
 List<GuideLinesModel> getGalleryImgList() {
-  List<GuideLinesModel> list = List<GuideLinesModel>();
+  List<GuideLinesModel> list = [];
 
   GuideLinesModel model1 = GuideLinesModel();
   model1.img = p2GalleryImg1;

@@ -3,18 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCPlayerListModel.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerInfoScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCConstant.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCImages.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCPlayerListModel.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerInfoScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCConstant.dart';
+import 'package:som/ProCricketUI/utils/PCImages.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
+// ignore: must_be_immutable
 class PCCricketPlayerListScreen extends StatefulWidget {
   static String tag = '/CricketPlayerList';
-  String teamName = "";
-  int index = 0;
+  String? teamName = "";
+  int? index = 0;
 
   PCCricketPlayerListScreen({this.teamName, this.index});
 
@@ -23,7 +24,7 @@ class PCCricketPlayerListScreen extends StatefulWidget {
 }
 
 class _PCCricketPlayerListScreenState extends State<PCCricketPlayerListScreen> {
-  PCPlayerListModel model = PCPlayerListModel(cricket_Team: List());
+  PCPlayerListModel model = PCPlayerListModel(cricket_Team: []);
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class _PCCricketPlayerListScreenState extends State<PCCricketPlayerListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    setIcon(String role, bool isCaption, bool isWk) {
+    setIcon(String? role, bool? isCaption, bool? isWk) {
       if (role == "Batsman" && isCaption == true)
         return Cricket_ic_Caption;
       else if (role == "Bowler" && isCaption == true)
@@ -72,11 +73,11 @@ class _PCCricketPlayerListScreenState extends State<PCCricketPlayerListScreen> {
         physics: ScrollPhysics(),
         child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: model.cricket_Team.isNotEmpty ? model?.cricket_Team[widget.index].teamPlayers.length : 0,
+          itemCount: model.cricket_Team!.isNotEmpty ? model.cricket_Team![widget.index!].teamPlayers!.length : 0,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            TeamPlayer player = model?.cricket_Team[widget.index].teamPlayers[index];
+            TeamPlayer player = model.cricket_Team![widget.index!].teamPlayers![index];
             return GestureDetector(
               onTap: () {
                 print(index);
@@ -99,7 +100,7 @@ class _PCCricketPlayerListScreenState extends State<PCCricketPlayerListScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(player.playerName.validate(), style: primaryTextStyle(color: Cricket_white, size: 18, fontFamily: fontSemiBold)).paddingOnly(left: 16),
-                          commonCacheImageWidget(setIcon(player.role, player.isCaptain, player.isWicketKeeper), 30, width: 30).center().paddingOnly(right: 8),
+                          commonCacheImageWidget(setIcon(player.role.validate(), player.isCaptain.validate(), player.isWicketKeeper.validate()), 30, width: 30).center().paddingOnly(right: 8),
                         ],
                       ),
                     ).paddingAll(8)

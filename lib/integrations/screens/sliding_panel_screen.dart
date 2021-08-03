@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/integrations/utils/panel.dart';
-import 'package:prokit_flutter/integrations/utils/styles.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/integrations/utils/panel.dart';
+import 'package:som/main/utils/AppColors.dart';
 
 class SlidingPanelScreen extends StatefulWidget {
   static String tag = '/SlidingPanelScreen';

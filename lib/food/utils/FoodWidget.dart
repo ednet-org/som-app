@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/food/screen/FoodAddAddress.dart';
-import 'package:prokit_flutter/main.dart';
+import 'package:som/food/screen/FoodAddAddress.dart';
+import 'package:som/main.dart';
 
 import 'FoodColors.dart';
 import 'FoodString.dart';
@@ -140,7 +140,7 @@ void mChangeAddress(BuildContext context) {
   );
 }
 
-Widget mViewAll(BuildContext context, var value, {@required Function onTap}) {
+Widget mViewAll(BuildContext context, var value, {required Function onTap}) {
   return GestureDetector(
     onTap: () {
       onTap();
@@ -287,7 +287,7 @@ Widget totalRatting(var value) {
   );
 }
 
-Widget bottomBillDetail(BuildContext context, var gColor1, var gColor2, var value, {@required Function onTap}) {
+Widget bottomBillDetail(BuildContext context, var gColor1, var gColor2, var value, {required Function onTap}) {
   return Container(
     height: 100,
     decoration: BoxDecoration(boxShadow: defaultBoxShadow(), border: Border.all(color: white), color: white),

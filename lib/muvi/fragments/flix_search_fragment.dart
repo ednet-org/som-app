@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
 
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class SearchFragment extends StatefulWidget {
@@ -21,8 +21,8 @@ class SearchFragment extends StatefulWidget {
 class SearchFragmentState extends State<SearchFragment> {
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
-  var popularMovieList = List<Movie>();
-  var searchResults = List<Movie>();
+  List<Movie> popularMovieList = [];
+  List<Movie> searchResults = [];
   var searchText = "";
 
   showLoading(bool show) {
@@ -171,7 +171,7 @@ class SearchFragmentState extends State<SearchFragment> {
     var searchResultLayout = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        headingText(context, keyString(context, "result_for") + " \'" + searchText + "\'").paddingOnly(left: spacing_standard_new, right: spacing_standard_new, top: spacing_standard_new, bottom: 12),
+        headingText(context, keyString(context, "result_for")! + " \'" + searchText + "\'").paddingOnly(left: spacing_standard_new, right: spacing_standard_new, top: spacing_standard_new, bottom: 12),
         Expanded(child: searchResultList)
       ],
     );

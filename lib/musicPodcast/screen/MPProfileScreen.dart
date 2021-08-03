@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPOurChoicesScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPImages.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPOurChoicesScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPImages.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 // ignore: must_be_immutable
 class MPProfileScreen extends StatefulWidget {
-  bool isTab = false;
+  bool? isTab = false;
 
   MPProfileScreen({this.isTab});
 
@@ -43,7 +43,7 @@ class MPProfileScreenState extends State<MPProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: widget.isTab
+        appBar: widget.isTab!
             ? AppBar(
                 backgroundColor: mpAppBackGroundColor,
                 title: Text("Profile", style: boldTextStyle(color: white.withOpacity(0.9), size: 18)),
@@ -117,7 +117,7 @@ class MPProfileScreenState extends State<MPProfileScreen> {
                             MPOurChoicesScreen().launch(context);
                           }),
                           8.height,
-                          Text(data.title, style: secondaryTextStyle(color: Colors.white)),
+                          Text(data.title!, style: secondaryTextStyle(color: Colors.white)),
                           8.height,
                         ],
                       ),

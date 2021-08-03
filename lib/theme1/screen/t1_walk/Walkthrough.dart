@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
-import 'package:prokit_flutter/theme1/utils/T1Constant.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
+import 'package:som/theme1/utils/T1Constant.dart';
 
 class Walkthrough extends StatefulWidget {
   final title;
@@ -38,7 +38,7 @@ class WalkthroughState extends State<Walkthrough> with SingleTickerProviderState
         text(widget.title, fontSize: textSizeLarge, fontFamily: fontSemibold, textColor: t1_colorPrimary),
         SizedBox(height: height / 30),
         CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: widget.imageIcon,
           width: height * 0.35,
           height: height * 0.35,

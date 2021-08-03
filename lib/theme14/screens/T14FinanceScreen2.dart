@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14DataGenerator.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14DataGenerator.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 class T14FinanceScreen2 extends StatefulWidget {
   @override
@@ -76,7 +76,6 @@ class _T14FinanceScreen2State extends State<T14FinanceScreen2> {
                             itemBuilder: (BuildContext context, int index) {
                               MessageListModel data = atmCardList[index];
                               return Stack(
-                                overflow: Overflow.visible,
                                 children: [
                                   Container(
                                     width: context.width() * 0.7,
@@ -88,7 +87,7 @@ class _T14FinanceScreen2State extends State<T14FinanceScreen2> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Image.asset(data.img, width: 200, height: 80, color: white),
+                                        Image.asset(data.img!, width: 200, height: 80, color: white),
                                         Row(
                                           children: [
                                             Icon(Entypo.dot_single, color: white, size: 20),
@@ -96,7 +95,7 @@ class _T14FinanceScreen2State extends State<T14FinanceScreen2> {
                                             Icon(Entypo.dot_single, color: white, size: 20),
                                             Icon(Entypo.dot_single, color: white, size: 20),
                                             8.width,
-                                            Text(data.name, style: boldTextStyle(size: 20, color: white))
+                                            Text(data.name!, style: boldTextStyle(size: 20, color: white))
                                           ],
                                         ).paddingOnly(left: 30),
                                       ],
@@ -105,7 +104,7 @@ class _T14FinanceScreen2State extends State<T14FinanceScreen2> {
                                   Positioned(
                                     bottom: -15,
                                     left: 110,
-                                    child: Icon(Entypo.dot_single, color: data.isActive ? t14_OppsColor1 : Colors.transparent, size: 50),
+                                    child: Icon(Entypo.dot_single, color: data.isActive! ? t14_OppsColor1 : Colors.transparent, size: 50),
                                   ),
                                 ],
                               );
@@ -195,10 +194,10 @@ class _T14FinanceScreen2State extends State<T14FinanceScreen2> {
                                 margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                                 child: Row(
                                   children: [
-                                    Text(data.img, style: boldTextStyle(size: 14, color: t14_SuccessTxtColor.withOpacity(0.5))),
+                                    Text(data.img!, style: boldTextStyle(size: 14, color: t14_SuccessTxtColor.withOpacity(0.5))),
                                     16.width,
-                                    Text(data.name, style: boldTextStyle(size: 14, color: t14_colorBlue)).expand(),
-                                    Text(data.message, style: boldTextStyle(size: 14, color: data.isActive ? t14_txt_trasactionColor : t14_OppsColor2)),
+                                    Text(data.name!, style: boldTextStyle(size: 14, color: t14_colorBlue)).expand(),
+                                    Text(data.message!, style: boldTextStyle(size: 14, color: data.isActive! ? t14_txt_trasactionColor : t14_OppsColor2)),
                                   ],
                                 ),
                               );

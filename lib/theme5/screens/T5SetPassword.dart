@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/theme5/screens/T5SetFingerPrint.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
-import 'package:prokit_flutter/theme5/utils/T5Widget.dart';
+import 'package:som/theme5/screens/T5SetFingerPrint.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
+import 'package:som/theme5/utils/T5Widget.dart';
 
 import '../../main.dart';
 
@@ -24,7 +24,7 @@ class T5SetPasswordState extends State<T5SetPassword> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     return Scaffold(
       body: Stack(
@@ -36,7 +36,7 @@ class T5SetPasswordState extends State<T5SetPassword> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
+                  CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
                   SizedBox(height: 30),
                   text(t5_lbl_set_pawd, textColor: appStore.textPrimaryColor, fontFamily: fontBold, fontSize: 22.0),
                   SizedBox(height: 30),

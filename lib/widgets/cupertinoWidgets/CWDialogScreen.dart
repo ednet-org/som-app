@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 import '../../main.dart';
 
@@ -55,7 +55,7 @@ class CWDialogScreenState extends State<CWDialogScreen> {
                                 ).paddingBottom(6),
                                 content: Text("Hey! I'm Coflutter!", style: primaryTextStyle(color: appStore.textSecondaryColor, size: 16)).paddingBottom(6),
                                 actions: <Widget>[
-                                  FlatButton(
+                                  TextButton(
                                     child: Text(
                                       'Close me!',
                                       style: primaryTextStyle(),

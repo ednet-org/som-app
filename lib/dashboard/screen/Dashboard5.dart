@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/dashboard/model/db5/Db5Model.dart';
-import 'package:prokit_flutter/dashboard/utils/Db5BottomNavigationBar.dart';
-import 'package:prokit_flutter/dashboard/utils/DbColors.dart';
-import 'package:prokit_flutter/dashboard/utils/DbDataGenerator.dart';
-import 'package:prokit_flutter/dashboard/utils/DbImages.dart';
-import 'package:prokit_flutter/dashboard/utils/DbStrings.dart';
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/dashboard/model/db5/Db5Model.dart';
+import 'package:som/dashboard/utils/Db5BottomNavigationBar.dart';
+import 'package:som/dashboard/utils/DbColors.dart';
+import 'package:som/dashboard/utils/DbDataGenerator.dart';
+import 'package:som/dashboard/utils/DbImages.dart';
+import 'package:som/dashboard/utils/DbStrings.dart';
+import 'package:som/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class Dashboard5 extends StatefulWidget {
   static String tag = '/Dashboard5';
@@ -20,8 +20,8 @@ class Dashboard5 extends StatefulWidget {
 }
 
 class Dashboard5State extends State<Dashboard5> {
-  List<Db5CategoryData> mListings;
-  List<Db6BestDestinationData> mListings1;
+  late List<Db5CategoryData> mListings;
+  late List<Db6BestDestinationData> mListings1;
   var _selectedIndex = 0;
 
   @override
@@ -184,8 +184,9 @@ class Dashboard5State extends State<Dashboard5> {
   }
 }
 
+// ignore: must_be_immutable, camel_case_types
 class category extends StatelessWidget {
-  Db5CategoryData model;
+  late Db5CategoryData model;
 
   category(Db5CategoryData model, int pos) {
     this.model = model;

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/model/ListModels.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/model/ListModels.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -60,7 +60,7 @@ class MWAlertDialogScreenState extends State<MWAlertDialogScreen> {
         style: secondaryTextStyle(color: appStore.textSecondaryColor),
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(
             "Yes",
             style: primaryTextStyle(color: appColorPrimary),
@@ -69,7 +69,7 @@ class MWAlertDialogScreenState extends State<MWAlertDialogScreen> {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text("No", style: primaryTextStyle(color: appColorPrimary)),
           onPressed: () {
             Navigator.of(context).pop();

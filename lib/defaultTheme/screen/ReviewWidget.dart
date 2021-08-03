@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTReviewModel.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/flutter_rating_bar.dart';
+import 'package:som/defaultTheme/model/DTReviewModel.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/flutter_rating_bar.dart';
 
 import '../../main.dart';
 
 class ReviewWidget extends StatefulWidget {
   static String tag = '/ReviewWidget';
-  final List<DTReviewModel> list;
-  final bool enableScrollPhysics;
+  final List<DTReviewModel>? list;
+  final bool? enableScrollPhysics;
 
   ReviewWidget({this.list, this.enableScrollPhysics});
 
@@ -37,14 +37,14 @@ class ReviewWidgetState extends State<ReviewWidget> {
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.only(bottom: 8, top: 16),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       itemBuilder: (_, index) {
-        DTReviewModel data = widget.list[index];
+        DTReviewModel data = widget.list![index];
 
         return Container(
           margin: EdgeInsets.all(8),
           padding: EdgeInsets.all(16),
-          decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+          decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,7 +57,7 @@ class ReviewWidgetState extends State<ReviewWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(data.name, style: boldTextStyle()),
+                  Text(data.name!, style: boldTextStyle()),
                   Row(
                     children: [
                       IgnorePointer(
@@ -72,7 +72,7 @@ class ReviewWidgetState extends State<ReviewWidget> {
                       Text(data.ratting.toString(), style: secondaryTextStyle()),
                     ],
                   ),
-                  Text(data.comment, style: secondaryTextStyle()),
+                  Text(data.comment!, style: secondaryTextStyle()),
                 ],
               ).expand(),
             ],

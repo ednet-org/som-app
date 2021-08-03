@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerDashboard.dart';
-import 'package:prokit_flutter/learner/Screens/LearnerLogin.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/learner/utils/LearnerWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/dots_indicator/dots_indicator.dart';
+import 'package:som/learner/Screens/LearnerDashboard.dart';
+import 'package:som/learner/Screens/LearnerLogin.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/learner/utils/LearnerWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/dots_indicator/dots_indicator.dart';
 
 class LearnerWalkThrough extends StatefulWidget {
   static String tag = '/LearnerWalkThrough';
@@ -21,7 +21,7 @@ class LearnerWalkThrough extends StatefulWidget {
 
 class _LearnerWalkThroughState extends State<LearnerWalkThrough> {
   int currentIndexPage = 0;
-  int pageLength;
+  int? pageLength;
   var titles = ['Welcome', 'Select Course', 'Learn Topics'];
   var subTitles = [
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text ",
@@ -29,7 +29,7 @@ class _LearnerWalkThroughState extends State<LearnerWalkThrough> {
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text"
   ];
 
-  List<LearnerWalk> mList1;
+  List<LearnerWalk>? mList1;
 
   @override
   void initState() {
@@ -136,7 +136,7 @@ class _LearnerWalkThroughState extends State<LearnerWalkThrough> {
 class WalkThrough extends StatelessWidget {
   final String textContent;
 
-  WalkThrough({Key key, @required this.textContent}) : super(key: key);
+  WalkThrough({Key? key, required this.textContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +153,7 @@ class WalkThrough extends StatelessWidget {
                 height: (MediaQuery.of(context).size.height) * 0.4,
                 alignment: Alignment.center,
                 child: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: textContent,
                   width: 300,
                   height: (MediaQuery.of(context).size.height) * 0.3,

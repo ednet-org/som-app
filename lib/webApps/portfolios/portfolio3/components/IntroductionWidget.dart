@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -39,7 +39,7 @@ class IntroductionWidgetState extends State<IntroductionWidget> {
           Container(
             height: 75,
             width: context.width(),
-            decoration: boxDecorationWithShadow(backgroundColor: appStore.scaffoldBackground),
+            decoration: boxDecorationWithShadow(backgroundColor: appStore.scaffoldBackground!),
             alignment: Alignment.center,
             padding: EdgeInsets.only(top: 8, bottom: 8),
             child: Row(
@@ -101,21 +101,25 @@ class IntroductionWidgetState extends State<IntroductionWidget> {
                       32.height,
                       Row(
                         children: [
-                          FlatButton(
+                          TextButton(
                             onPressed: () {},
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                            padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
                             child: Text('MY WORK', style: boldTextStyle(color: Colors.white, size: 18)),
-                            color: portfolio3PrimaryColor,
+                            style: TextButton.styleFrom(
+                              backgroundColor: portfolio3PrimaryColor,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                            ),
                           ),
                           16.width,
-                          OutlineButton(
+                          OutlinedButton(
                             onPressed: () {},
-                            borderSide: BorderSide(color: portfolio3PrimaryColor),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                            padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
                             child: Text('HIRE ME', style: boldTextStyle(color: portfolio3PrimaryColor, size: 18)),
-                            color: Colors.transparent,
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              side: BorderSide(color: portfolio3PrimaryColor),
+                            ),
                           ),
                         ],
                       ),

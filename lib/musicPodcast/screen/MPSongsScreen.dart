@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/musicPodcast/component/MPDrawerScreen.dart';
-import 'package:prokit_flutter/musicPodcast/models/MusicModel.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPNowPlayingScreen.dart';
-import 'package:prokit_flutter/musicPodcast/screen/MPSearchScreen.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPColors.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPDataGenerator.dart';
-import 'package:prokit_flutter/musicPodcast/utils/MPWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/musicPodcast/component/MPDrawerScreen.dart';
+import 'package:som/musicPodcast/models/MusicModel.dart';
+import 'package:som/musicPodcast/screen/MPNowPlayingScreen.dart';
+import 'package:som/musicPodcast/screen/MPSearchScreen.dart';
+import 'package:som/musicPodcast/utils/MPColors.dart';
+import 'package:som/musicPodcast/utils/MPDataGenerator.dart';
+import 'package:som/musicPodcast/utils/MPWidget.dart';
 
 class MPSongsScreen extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class MPSongsScreenState extends State<MPSongsScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
+            _scaffoldKey.currentState!.openDrawer();
           },
           icon: Icon(Icons.menu, color: white.withOpacity(0.9)),
         ),
@@ -85,8 +85,8 @@ class MPSongsScreenState extends State<MPSongsScreen> {
                               MPNowPlayingScreen(data: data).launch(context);
                             }),
                             8.height,
-                            Text(data.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: primaryTextStyle(color: Colors.white)),
-                            Text(data.subtitle, style: secondaryTextStyle(color: Colors.grey)),
+                            Text(data.title!, maxLines: 1, overflow: TextOverflow.ellipsis, style: primaryTextStyle(color: Colors.white)),
+                            Text(data.subtitle!, style: secondaryTextStyle(color: Colors.grey)),
                           ],
                         ).paddingOnly(left: 8, right: 8),
                       ).onTap(() {});
@@ -114,25 +114,25 @@ class MPSongsScreenState extends State<MPSongsScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data.title, style: boldTextStyle(color: white)),
+                              Text(data.title!, style: boldTextStyle(color: white)),
                               4.height,
-                              Text(data.subtitle, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
+                              Text(data.subtitle!, style: primaryTextStyle(color: white.withOpacity(0.5), size: 14)),
                             ],
                           ).expand(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Icon(
-                                data.like ? Icons.favorite_border : Icons.favorite,
-                                color: data.like ? mpAppButtonColor.withOpacity(0.5) : mpAppButtonColor,
+                                data.like! ? Icons.favorite_border : Icons.favorite,
+                                color: data.like! ? mpAppButtonColor.withOpacity(0.5) : mpAppButtonColor,
                               ).onTap(() {
                                 setState(() {
-                                  data.like = !data.like;
+                                  data.like = !data.like!;
                                 });
                               }),
                               8.height,
                               RatingBar.builder(
-                                initialRating: data.number1,
+                                initialRating: data.number1!,
                                 minRating: 1,
                                 itemSize: 15,
                                 direction: Axis.horizontal,

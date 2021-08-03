@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/theme14/model/T14Model.dart';
-import 'package:prokit_flutter/theme14/utils/T14Colors.dart';
-import 'package:prokit_flutter/theme14/utils/T14Images.dart';
-import 'package:prokit_flutter/theme14/utils/T14Strings.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/theme14/model/T14Model.dart';
+import 'package:som/theme14/utils/T14Colors.dart';
+import 'package:som/theme14/utils/T14Images.dart';
+import 'package:som/theme14/utils/T14Strings.dart';
 
 List<SubscriptionModel> getSubscriptionList() {
-  List<SubscriptionModel> subscriptionList = List<SubscriptionModel>();
+  List<SubscriptionModel> subscriptionList = [];
   subscriptionList.add(
     SubscriptionModel(name: 'platinum', img: t14_KingIcon, price: 15000, backgroundColor: t14_colorPink, bannerColor: t14_colorCream),
   );
@@ -21,7 +21,7 @@ List<SubscriptionModel> getSubscriptionList() {
 }
 
 List<SubscriptionModel> getTopTravelList() {
-  List<SubscriptionModel> topTravelList = List<SubscriptionModel>();
+  List<SubscriptionModel> topTravelList = [];
   topTravelList.add(SubscriptionModel(name: 'Great Wall of China', img: t14_travel1));
   topTravelList.add(SubscriptionModel(name: 'Angkor Wat, Cambodia', img: t14_travel2));
   topTravelList.add(SubscriptionModel(name: 'Kyiv ,Ukraine', img: t14_travel3));
@@ -35,7 +35,7 @@ List<SubscriptionModel> getTopTravelList() {
 }
 
 List<SubscriptionModel> getRecommendList() {
-  List<SubscriptionModel> recommendList = List<SubscriptionModel>();
+  List<SubscriptionModel> recommendList = [];
   recommendList.add(
     SubscriptionModel(name: 'England', img: t14_travel9),
   );
@@ -65,7 +65,7 @@ List<SubscriptionModel> getRecommendList() {
 }
 
 List<SubscriptionModel> getTravelStoryList() {
-  List<SubscriptionModel> travelStoryList = List<SubscriptionModel>();
+  List<SubscriptionModel> travelStoryList = [];
 
   travelStoryList.add(SubscriptionModel(img: t14_profile1));
   travelStoryList.add(SubscriptionModel(img: t14_profile2));
@@ -81,7 +81,7 @@ List<SubscriptionModel> getTravelStoryList() {
 }
 
 List<SubscriptionModel> getTravelStoryDetailList() {
-  List<SubscriptionModel> travelStoryDetailList = List<SubscriptionModel>();
+  List<SubscriptionModel> travelStoryDetailList = [];
 
   travelStoryDetailList.add(SubscriptionModel(img: t14_travel1, name: 'David Steward', userImg: t14_profile1));
   travelStoryDetailList.add(SubscriptionModel(img: t14_travel3, name: 'Burton Armstron', userImg: t14_profile3));
@@ -97,7 +97,7 @@ List<SubscriptionModel> getTravelStoryDetailList() {
 }
 
 List<SubscriptionModel> getMostPopularList() {
-  List<SubscriptionModel> mostPopular = List<SubscriptionModel>();
+  List<SubscriptionModel> mostPopular = [];
   mostPopular.add(
     SubscriptionModel(country: 'England', img: t14_travel1, name: 'Great Wall of Chin'),
   );
@@ -127,7 +127,7 @@ List<SubscriptionModel> getMostPopularList() {
 }
 
 List<SubscriptionModel> getTravel3StoryDetailList() {
-  List<SubscriptionModel> travelStoryDetailList = List<SubscriptionModel>();
+  List<SubscriptionModel> travelStoryDetailList = [];
 
   travelStoryDetailList.add(SubscriptionModel(img: t14_travel2, name: 'David Steward', userImg: t14_profile1, country: 'England'));
   travelStoryDetailList.add(SubscriptionModel(img: t14_travel4, name: 'Burton Armstrong', userImg: t14_profile2, country: 'Cambodia'));
@@ -143,7 +143,7 @@ List<SubscriptionModel> getTravel3StoryDetailList() {
 }
 
 List<TravelModel> getTravelList() {
-  List<TravelModel> travelList = List<TravelModel>();
+  List<TravelModel> travelList = [];
   travelList.add(
     TravelModel(
       img: t14_profile2,
@@ -208,7 +208,7 @@ List<TravelModel> getTravelList() {
 }
 
 List<CheckBoxTextModel> getCheckBoxTxtList() {
-  List<CheckBoxTextModel> checkBoxTxtList = List<CheckBoxTextModel>();
+  List<CheckBoxTextModel> checkBoxTxtList = [];
   checkBoxTxtList.add(CheckBoxTextModel(name: 'Unlock Over 30 courses'));
   checkBoxTxtList.add(CheckBoxTextModel(name: 'Unlock Over 30 education video'));
   checkBoxTxtList.add(CheckBoxTextModel(name: 'View more than 1000 tips'));
@@ -216,7 +216,7 @@ List<CheckBoxTextModel> getCheckBoxTxtList() {
 }
 
 List<CheckBoxTextModel> getSubscription4CheckBoxTxtList() {
-  List<CheckBoxTextModel> subscription4checkBoxTxtList = List<CheckBoxTextModel>();
+  List<CheckBoxTextModel> subscription4checkBoxTxtList = [];
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'Sentiment analyze and score'));
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'Highlights report'));
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'Data history'));
@@ -224,7 +224,7 @@ List<CheckBoxTextModel> getSubscription4CheckBoxTxtList() {
 }
 
 List<ChoosePlanModel> getChoosePlanList() {
-  List<ChoosePlanModel> choosePlanList = List<ChoosePlanModel>();
+  List<ChoosePlanModel> choosePlanList = [];
   choosePlanList.add(ChoosePlanModel(title: 'Free', subTitle: '7 days'));
   choosePlanList.add(ChoosePlanModel(title: '\$ 8', subTitle: '30 days'));
   choosePlanList.add(ChoosePlanModel(title: '\$ 14', subTitle: '3 monthes'));
@@ -234,7 +234,7 @@ List<ChoosePlanModel> getChoosePlanList() {
 }
 
 List<ChoosePlanModel> getSelectDayList() {
-  List<ChoosePlanModel> selectDayList = List<ChoosePlanModel>();
+  List<ChoosePlanModel> selectDayList = [];
   selectDayList.add(ChoosePlanModel(title: 'Day'));
   selectDayList.add(ChoosePlanModel(title: 'Week'));
   selectDayList.add(ChoosePlanModel(title: 'Month'));
@@ -244,7 +244,7 @@ List<ChoosePlanModel> getSelectDayList() {
 }
 
 List<ChoosePlanModel> getSubscription4ChoosePlanList() {
-  List<ChoosePlanModel> subscription4choosePlanList = List<ChoosePlanModel>();
+  List<ChoosePlanModel> subscription4choosePlanList = [];
   subscription4choosePlanList.add(ChoosePlanModel(title: 'Monthly', subTitle: '4,99\$ /month'));
   subscription4choosePlanList.add(ChoosePlanModel(title: 'Annual', subTitle: '2,99\$ /month'));
   subscription4choosePlanList.add(ChoosePlanModel(title: 'Free Trial', subTitle: '7 free days '));
@@ -253,7 +253,7 @@ List<ChoosePlanModel> getSubscription4ChoosePlanList() {
 }
 
 List<ChoosePlanModel> getSubscription5ChoosePlanList() {
-  List<ChoosePlanModel> subscription5choosePlanList = List<ChoosePlanModel>();
+  List<ChoosePlanModel> subscription5choosePlanList = [];
   subscription5choosePlanList.add(ChoosePlanModel(title: 'Monthly', subTitle: '4,99\$ /month'));
   subscription5choosePlanList.add(ChoosePlanModel(title: 'Annual', subTitle: '2,99\$ /month'));
   subscription5choosePlanList.add(ChoosePlanModel(title: 'Free Trial', subTitle: '7 free days '));
@@ -262,7 +262,7 @@ List<ChoosePlanModel> getSubscription5ChoosePlanList() {
 }
 
 List<ChoosePlanModel> getSubscription7DiscountList() {
-  List<ChoosePlanModel> subscription5choosePlanList = List<ChoosePlanModel>();
+  List<ChoosePlanModel> subscription5choosePlanList = [];
   subscription5choosePlanList.add(ChoosePlanModel(title: 'Higher yields', subTitle: 'up to 6%'));
   subscription5choosePlanList.add(ChoosePlanModel(title: 'More Case Backs', subTitle: 'up to 2%'));
 
@@ -270,7 +270,7 @@ List<ChoosePlanModel> getSubscription7DiscountList() {
 }
 
 List<MessageListModel> getUserList() {
-  List<MessageListModel> userList = List<MessageListModel>();
+  List<MessageListModel> userList = [];
   userList.add(MessageListModel(img: t14_profile1, name: 'Fletcher', isActive: true));
   userList.add(MessageListModel(img: t14_profile2, name: 'Jenkins', isActive: false));
   userList.add(MessageListModel(img: t14_profile3, name: 'David', isActive: true));
@@ -283,7 +283,7 @@ List<MessageListModel> getUserList() {
 }
 
 List<MessageListModel> getTransactionList() {
-  List<MessageListModel> transactionList = List<MessageListModel>();
+  List<MessageListModel> transactionList = [];
   transactionList.add(MessageListModel(img: '22.07', name: 'Remittance', message: '+\$20,000.00', isActive: true));
   transactionList.add(MessageListModel(img: '12.09', name: 'Utility costs', message: '-\$2,622.00', isActive: false));
   transactionList.add(MessageListModel(img: '54.10', name: 'Subsciptions', message: '+\$20,000.00', isActive: true));
@@ -299,7 +299,7 @@ List<MessageListModel> getTransactionList() {
 }
 
 List<MessageListModel> getMonthViseTransactionList() {
-  List<MessageListModel> monthViseTransactionList = List<MessageListModel>();
+  List<MessageListModel> monthViseTransactionList = [];
   monthViseTransactionList.add(MessageListModel(img: 'January', name: '23 transaction', message: '+\$20,000.00', isActive: false));
   monthViseTransactionList.add(MessageListModel(img: 'February', name: '50 transaction', message: '-\$2,622.00', isActive: true));
   monthViseTransactionList.add(MessageListModel(img: 'March', name: '11 transaction', message: '+\$20,000.00', isActive: false));
@@ -315,7 +315,7 @@ List<MessageListModel> getMonthViseTransactionList() {
 }
 
 List<MessageListModel> getAtmCardList() {
-  List<MessageListModel> atmCardList = List<MessageListModel>();
+  List<MessageListModel> atmCardList = [];
   atmCardList.add(MessageListModel(img: t14_visa, name: '2155', isActive: true));
   atmCardList.add(MessageListModel(img: t14_visa, name: '6578', isActive: false));
   atmCardList.add(MessageListModel(img: t14_visa, name: '7812', isActive: true));
@@ -331,7 +331,7 @@ List<MessageListModel> getAtmCardList() {
 }
 
 List<CheckBoxTextModel> getFinance1CheckBoxTxtList() {
-  List<CheckBoxTextModel> subscription4checkBoxTxtList = List<CheckBoxTextModel>();
+  List<CheckBoxTextModel> subscription4checkBoxTxtList = [];
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'Fletcher Jenkins', img: t14_profile1));
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'David Steward', img: t14_profile2));
   subscription4checkBoxTxtList.add(CheckBoxTextModel(name: 'Graham Murphy', img: t14_profile3));
@@ -347,7 +347,7 @@ List<CheckBoxTextModel> getFinance1CheckBoxTxtList() {
 }
 
 List<MessageListModel> getMessageCountList() {
-  List<MessageListModel> messageCountList = List<MessageListModel>();
+  List<MessageListModel> messageCountList = [];
 
   messageCountList.add(
     MessageListModel(img: t14_profile1, name: 'Fletcher Jenkins', message: 'I like these sweet morning of', lastSeen: "3", isActive: true),
@@ -385,7 +385,7 @@ List<MessageListModel> getMessageCountList() {
 }
 
 List<MessageListModel> getMessageList() {
-  List<MessageListModel> messageList = List<MessageListModel>();
+  List<MessageListModel> messageList = [];
   messageList.add(
     MessageListModel(img: t14_profile1, name: 'Fletcher Jenkins', message: 'I like these sweet morning of', lastSeen: "12:10", isActive: true),
   );
@@ -434,7 +434,7 @@ List<MessageListModel> getMessageList() {
 }
 
 List<BHMessageModel> getChatMsgData() {
-  List<BHMessageModel> list = List();
+  List<BHMessageModel> list = [];
 
   BHMessageModel c1 = BHMessageModel();
   c1.senderId = BHSender_id;
@@ -566,7 +566,7 @@ List<BHMessageModel> getChatMsgData() {
 }
 
 List<SpendingModel> getSpendingList() {
-  List<SpendingModel> spendingList = List<SpendingModel>();
+  List<SpendingModel> spendingList = [];
   spendingList.add(SpendingModel(color: t14_finance3_spending1, icon: MaterialCommunityIcons.food, name: 'Food & Bav.', rate: '\$8'));
   spendingList.add(SpendingModel(color: t14_TextField_BgColor, icon: FontAwesome.shopping_cart, name: 'Shopping', rate: '\$56'));
   spendingList.add(SpendingModel(color: t14_OppsColor, icon: MaterialCommunityIcons.ticket_confirmation, name: 'Subscription', rate: '\$12'));
@@ -578,7 +578,7 @@ List<SpendingModel> getSpendingList() {
 }
 
 List<CardTransactionModel> getCardTransactionList() {
-  List<CardTransactionModel> cardTransactionList = List<CardTransactionModel>();
+  List<CardTransactionModel> cardTransactionList = [];
   cardTransactionList.add(CardTransactionModel(
     color: t14_finance3_spending1,
     icon: Icons.emoji_transportation_outlined,

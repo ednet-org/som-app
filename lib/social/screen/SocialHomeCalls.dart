@@ -2,16 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/social/model/SocialModel.dart';
-import 'package:prokit_flutter/social/utils/SocialColors.dart';
-import 'package:prokit_flutter/social/utils/SocialConstant.dart';
-import 'package:prokit_flutter/social/utils/SocialDataGenerator.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-
-import 'package:prokit_flutter/social/utils/SocialImages.dart';
-import 'package:prokit_flutter/social/utils/SocialStrings.dart';
-import 'package:prokit_flutter/social/utils/SocialWidget.dart';
-
+import 'package:som/social/model/SocialModel.dart';
+import 'package:som/social/utils/SocialColors.dart';
+import 'package:som/social/utils/SocialConstant.dart';
+import 'package:som/social/utils/SocialDataGenerator.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/social/utils/SocialImages.dart';
+import 'package:som/social/utils/SocialStrings.dart';
 import 'SocialCall.dart';
 import 'SocialViewCalls.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -25,8 +22,8 @@ class SocialHomeCallsState extends State<SocialHomeCalls> {
   var mFriendsLabel = text(social_lbl_friends, fontFamily: fontMedium);
   var mGroupsLabel = text(social_lbl_groups, fontFamily: fontMedium);
 
-  List<SocialUser> mList;
-  List<SocialUser> mList1;
+  late List<SocialUser> mList;
+  late List<SocialUser> mList1;
 
   @override
   void initState() {
@@ -94,7 +91,6 @@ class SocialHomeCallsState extends State<SocialHomeCalls> {
               SizedBox(height: spacing_standard_new),
               Container(
                 decoration: boxDecoration(radius: spacing_middle),
-                padding: EdgeInsets.all(spacing_middle),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: mList1.length,
@@ -115,8 +111,9 @@ class SocialHomeCallsState extends State<SocialHomeCalls> {
   }
 }
 
+// ignore: must_be_immutable
 class Calls extends StatelessWidget {
-  SocialUser model;
+  late SocialUser model;
 
   Calls(SocialUser model, int pos) {
     this.model = model;
@@ -139,12 +136,12 @@ class Calls extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
                   child: Container(
-                      color: social_dark_gray, child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: model.image, height: width * 0.13, width: width * 0.13, fit: BoxFit.fill)),
+                      color: social_dark_gray, child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: model.image, height: width * 0.13, width: width * 0.13, fit: BoxFit.fill)),
                 ),
                 SizedBox(width: spacing_middle),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[text(model.name, fontFamily: fontMedium), text(model.info, textColor: social_textColorSecondary)],
+                  children: <Widget>[text(model.name, fontFamily: fontMedium,maxLine: 1), text(model.info, textColor: social_textColorSecondary,maxLine: 1)],
                 ),
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/Images.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/Images.dart';
 
 class SkillWidget extends StatefulWidget {
   static String tag = '/SkillWidget';
@@ -78,9 +78,9 @@ class SkillWidgetState extends State<SkillWidget> {
                           children: [
                             Icon(Icons.phone_android_sharp, size: 30, color: Colors.white),
                             8.height,
-                            Text(e.name, style: boldTextStyle(size: 20, color: white)),
+                            Text(e.name!, style: boldTextStyle(size: 20, color: white)),
                             16.height,
-                            Text(e.detail, style: secondaryTextStyle(size: 15, color: white)),
+                            Text(e.detail!, style: secondaryTextStyle(size: 15, color: white)),
                             16.height,
                           ],
                         ),

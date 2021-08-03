@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LocalNotificationScreen extends StatefulWidget {
   static String tag = '/LocalNotificationScreen';
@@ -15,9 +15,9 @@ class LocalNotificationScreen extends StatefulWidget {
 class LocalNotificationScreenState extends State<LocalNotificationScreen> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  AndroidInitializationSettings androidInitializationSettings;
-  IOSInitializationSettings iosInitializationSettings;
-  InitializationSettings initializationSettings;
+  AndroidInitializationSettings? androidInitializationSettings;
+  IOSInitializationSettings? iosInitializationSettings;
+  late InitializationSettings initializationSettings;
 
   @override
   void initState() {
@@ -46,29 +46,37 @@ class LocalNotificationScreenState extends State<LocalNotificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildSingleNotification();
               },
               child: Text("Simple notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(16),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildMultipleNotification();
               },
               child: Text("Multiple notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(8),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildBigPictureNotification();
               },
               child: Text("Big Picture notification", style: boldTextStyle(color: Colors.white, size: 16)),
             ).paddingAll(16),
-            RaisedButton(
-              color: appColorPrimary,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: appColorPrimary,
+              ),
               onPressed: () {
                 buildInboxStyleNotification();
               },
@@ -120,7 +128,7 @@ class LocalNotificationScreenState extends State<LocalNotificationScreen> {
 
     List<String> lines = ['user1', 'user2', 'user3'];
 
-    InboxStyleInformation inboxStyleInformation = InboxStyleInformation(lines, contentTitle: '${lines.length} messages', summaryText: 'prokit_flutter.com');
+    InboxStyleInformation inboxStyleInformation = InboxStyleInformation(lines, contentTitle: '${lines.length} messages', summaryText: 'som.com');
 
     AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'groupChannelId',
@@ -150,10 +158,10 @@ class LocalNotificationScreenState extends State<LocalNotificationScreen> {
     await flutterLocalNotificationsPlugin.show(4, 'New Notification', 'someone send Image', platformChannelSpecifics);
   }
 
-  Future<void> buildInboxStyleNotification() {
+  Future<void> buildInboxStyleNotification() async {
     InboxStyleInformation inboxInfo = InboxStyleInformation(
       ["this is a inbox style notification", "this is use to show an inbox style notification in flutter", "this is use for more show more text content in flutter"],
-      contentTitle: "Prokit Flutter",
+      contentTitle: "Smart Offer Manager",
     );
 
     AndroidNotificationDetails infoNotification = AndroidNotificationDetails('InboxChannelId', 'InboxChannelName', 'InboxChannelDescription', styleInformation: inboxInfo);

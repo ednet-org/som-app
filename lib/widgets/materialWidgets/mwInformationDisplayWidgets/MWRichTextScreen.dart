@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -61,7 +61,7 @@ class _MWRichTextScreenState extends State<MWRichTextScreen> {
               Text("Text With Icon", style: boldTextStyle(size: 18)).paddingOnly(top: 16, bottom: 16),
               RichText(
                 text: TextSpan(
-                  style: Theme.of(context).textTheme.body1,
+                  style: Theme.of(context).textTheme.bodyText2,
                   children: [
                     WidgetSpan(child: Padding(padding: EdgeInsets.only(right: 10), child: Icon(Icons.settings, size: 18))),
                     TextSpan(text: "Settings", style: primaryTextStyle(color: appStore.textPrimaryColor)),

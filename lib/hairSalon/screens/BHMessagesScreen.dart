@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHImages.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
+import 'package:som/hairSalon/utils/BHImages.dart';
 
 import 'BHChatScreen.dart';
 import 'BHVideoCallingScreen.dart';
@@ -20,8 +20,8 @@ class BHMessagesScreen extends StatefulWidget {
 }
 
 class BHMessagesScreenState extends State<BHMessagesScreen> with SingleTickerProviderStateMixin {
-  List<MessageModel> messageList;
-  List<BHCallModel> callList;
+  late List<MessageModel> messageList;
+  late List<BHCallModel> callList;
 
   @override
   void initState() {
@@ -72,13 +72,13 @@ class BHMessagesScreenState extends State<BHMessagesScreen> with SingleTickerPro
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    String img = messageList[index].img;
-                    String name = messageList[index].name;
+                    String? img = messageList[index].img;
+                    String? name = messageList[index].name;
                     BHChatScreen(img: img, name: name).launch(context);
                   },
                   child: Row(
                     children: [
-                      messageList[index].img.validate().startsWith('http') ? Image.network(messageList[index].img) : CircleAvatar(backgroundImage: AssetImage(messageList[index].img), radius: 25),
+                      messageList[index].img.validate().startsWith('http') ? Image.network(messageList[index].img!) : CircleAvatar(backgroundImage: AssetImage(messageList[index].img!), radius: 25),
                       8.width,
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,18 +86,18 @@ class BHMessagesScreenState extends State<BHMessagesScreen> with SingleTickerPro
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              messageList[index].name,
+                              messageList[index].name!,
                               style: TextStyle(fontSize: 14, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                             ),
                           ),
                           8.height,
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            child: Text(messageList[index].message, style: TextStyle(fontSize: 12, color: BHGreyColor)),
+                            child: Text(messageList[index].message!, style: TextStyle(fontSize: 12, color: BHGreyColor)),
                           ),
                         ],
                       ).expand(),
-                      Text(messageList[index].lastSeen, style: TextStyle(color: BHGreyColor, fontSize: 14)),
+                      Text(messageList[index].lastSeen!, style: TextStyle(color: BHGreyColor, fontSize: 14)),
                     ],
                   ),
                 );
@@ -143,20 +143,20 @@ class BHMessagesScreenState extends State<BHMessagesScreen> with SingleTickerPro
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     callList[index].img.validate().startsWith('http')
-                        ? Image.network(callList[index].img, height: 50, width: 50, fit: BoxFit.cover).cornerRadiusWithClipRRect(25)
-                        : CircleAvatar(backgroundImage: AssetImage(callList[index].img), radius: 25),
+                        ? Image.network(callList[index].img!, height: 50, width: 50, fit: BoxFit.cover).cornerRadiusWithClipRRect(25)
+                        : CircleAvatar(backgroundImage: AssetImage(callList[index].img!), radius: 25),
                     8.width,
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(callList[index].name, style: TextStyle(fontSize: 14, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
+                          Text(callList[index].name!, style: TextStyle(fontSize: 14, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold)),
                           8.height,
                           Row(
                             children: [
                               Icon(callList[index].callImg, size: 14),
                               8.width,
-                              Text(callList[index].callStatus, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
+                              Text(callList[index].callStatus!, style: TextStyle(color: BHAppTextColorSecondary, fontSize: 14)),
                             ],
                           ),
                         ],
@@ -165,12 +165,12 @@ class BHMessagesScreenState extends State<BHMessagesScreen> with SingleTickerPro
                     Row(
                       children: [
                         IconButton(
-                          icon: Image.asset(callList[index].videoCallIcon, height: 40, width: 40),
+                          icon: Image.asset(callList[index].videoCallIcon!, height: 40, width: 40),
                           onPressed: () {
                             BHVideoCallingScreen().launch(context);
                           },
                         ),
-                        IconButton(icon: Image.asset(callList[index].audioCallIcon, height: 40, width: 40), onPressed: () {})
+                        IconButton(icon: Image.asset(callList[index].audioCallIcon!, height: 40, width: 40), onPressed: () {})
                       ],
                     ),
                   ],

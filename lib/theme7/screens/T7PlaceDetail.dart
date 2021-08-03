@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme7/models/T7Models.dart';
-import 'package:prokit_flutter/theme7/utils/T7Colors.dart';
-import 'package:prokit_flutter/theme7/utils/T7Constant.dart';
-import 'package:prokit_flutter/theme7/utils/T7DataGenerator.dart';
-import 'package:prokit_flutter/theme7/utils/T7Images.dart';
-import 'package:prokit_flutter/theme7/utils/T7Strings.dart';
-import 'package:prokit_flutter/theme7/utils/T7Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme7/models/T7Models.dart';
+import 'package:som/theme7/utils/T7Colors.dart';
+import 'package:som/theme7/utils/T7Constant.dart';
+import 'package:som/theme7/utils/T7DataGenerator.dart';
+import 'package:som/theme7/utils/T7Images.dart';
+import 'package:som/theme7/utils/T7Strings.dart';
+import 'package:som/theme7/utils/T7Widget.dart';
 
 import '../../main.dart';
 
@@ -21,8 +21,8 @@ class T7PlaceDetail extends StatefulWidget {
 }
 
 class T7PlaceDetailState extends State<T7PlaceDetail> {
-  List<T7BestHotelDataModel> mListings;
-  List<T7BestHotelDataModel> mListings1;
+  late List<T7BestHotelDataModel> mListings;
+  late List<T7BestHotelDataModel> mListings1;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class T7PlaceDetailState extends State<T7PlaceDetail> {
         children: <Widget>[
           Container(
             width: context.width(),
-            child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t7_ic_thailand_beach, fit: BoxFit.cover),
+            child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t7_ic_thailand_beach, fit: BoxFit.cover),
           ),
           SingleChildScrollView(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.2),
@@ -106,8 +106,9 @@ class T7PlaceDetailState extends State<T7PlaceDetail> {
   }
 }
 
+// ignore: camel_case_types, must_be_immutable
 class hotels extends StatelessWidget {
-  T7BestHotelDataModel model;
+  late T7BestHotelDataModel model;
 
   hotels(T7BestHotelDataModel model, int pos) {
     this.model = model;
@@ -125,7 +126,7 @@ class hotels extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
-                child: CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: model.image, height: width * 0.28, fit: BoxFit.cover),
+                child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: model.image, height: width * 0.28, fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(8),
               ),
               //text(model.name),

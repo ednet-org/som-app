@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -41,15 +41,15 @@ class ServicesScreenState extends State<ServicesScreen> {
           return Container(
             width: context.width() * 0.25,
             height: 200,
-            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.computer_rounded, color: portfolio2PrimaryColor, size: 34),
                 16.height,
-                Text(e.name, style: boldTextStyle()),
+                Text(e.name!, style: boldTextStyle()),
                 4.height,
-                Text(e.desc, style: secondaryTextStyle(), textAlign: TextAlign.center, maxLines: 4).paddingOnly(left: 8, right: 8),
+                Text(e.desc!, style: secondaryTextStyle(), textAlign: TextAlign.center, maxLines: 4).paddingOnly(left: 8, right: 8),
               ],
             ),
           );

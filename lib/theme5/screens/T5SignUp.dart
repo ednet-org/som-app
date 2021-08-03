@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/codePicker/country_code_picker.dart';
-import 'package:prokit_flutter/theme5/screens/T5Verification.dart';
-import 'package:prokit_flutter/theme5/utils/T5Colors.dart';
-import 'package:prokit_flutter/theme5/utils/T5Constant.dart';
-import 'package:prokit_flutter/theme5/utils/T5Images.dart';
-import 'package:prokit_flutter/theme5/utils/T5Strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/codePicker/country_code_picker.dart';
+import 'package:som/theme5/screens/T5Verification.dart';
+import 'package:som/theme5/utils/T5Colors.dart';
+import 'package:som/theme5/utils/T5Constant.dart';
+import 'package:som/theme5/utils/T5Images.dart';
+import 'package:som/theme5/utils/T5Strings.dart';
 
 import '../../main.dart';
 
@@ -23,7 +23,7 @@ class T5SignUp extends StatefulWidget {
 class T5SignUpState extends State<T5SignUp> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -37,7 +37,7 @@ class T5SignUpState extends State<T5SignUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CachedNetworkImage(placeholder: placeholderWidgetFn(), imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
+              CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: t5_ragistration, width: width / 2.5, height: width / 2.5),
               text(t5_heading_login, textColor: appStore.textPrimaryColor, fontFamily: fontBold, fontSize: 22.0),
               Padding(
                 padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 16),

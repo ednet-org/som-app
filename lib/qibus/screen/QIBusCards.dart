@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/qibus/model/QiBusModel.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusColors.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusConstant.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusDataGenerator.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusImages.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusStrings.dart';
-import 'package:prokit_flutter/qibus/utils/QiBusWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/qibus/model/QiBusModel.dart';
+import 'package:som/qibus/utils/QiBusColors.dart';
+import 'package:som/qibus/utils/QiBusConstant.dart';
+import 'package:som/qibus/utils/QiBusDataGenerator.dart';
+import 'package:som/qibus/utils/QiBusImages.dart';
+import 'package:som/qibus/utils/QiBusStrings.dart';
+import 'package:som/qibus/utils/QiBusWidget.dart';
 
 class QIBusCards extends StatefulWidget {
   static String tag = '/QIBusCards';
@@ -18,7 +18,7 @@ class QIBusCards extends StatefulWidget {
 }
 
 class QIBusCardsState extends State<QIBusCards> {
-  List<QIBusCardModel> mCards;
+  late List<QIBusCardModel> mCards;
 
   @override
   void initState() {
@@ -51,8 +51,9 @@ class QIBusCardsState extends State<QIBusCards> {
   }
 }
 
+// ignore: must_be_immutable
 class Cards extends StatelessWidget {
-  QIBusCardModel model;
+  late QIBusCardModel model;
 
   Cards(QIBusCardModel model, int pos) {
     this.model = model;
@@ -68,7 +69,7 @@ class Cards extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(spacing_middle)),
             child: CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: model.cardBg,
               height: width * 0.5,
               fit: BoxFit.cover,

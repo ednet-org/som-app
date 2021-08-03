@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/model/AppModel.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppImages.dart';
-import 'package:prokit_flutter/main/utils/AppStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/model/AppModel.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppImages.dart';
+import 'package:som/main/utils/AppStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'ProKitScreenListing.dart';
 
 class ThemeList extends StatefulWidget {
-  final List<ProTheme> list;
+  final List<ProTheme>? list;
 
   ThemeList(this.list);
 
@@ -31,12 +31,11 @@ class ThemeListState extends State<ThemeList> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
 
     return AnimationLimiter(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: widget.list.length,
+        itemCount: widget.list!.length,
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
@@ -47,19 +46,19 @@ class ThemeListState extends State<ThemeList> {
               child: GestureDetector(
                 onTap: () {
                   if (appStore.isDarkModeOn) {
-                    appStore.toggleDarkMode(value: widget.list[index].darkThemeSupported.validate());
+                    appStore.toggleDarkMode(value: widget.list![index].darkThemeSupported.validate());
                   }
 
-                  if (widget.list[index].sub_kits == null || widget.list[index].sub_kits.isEmpty) {
-                    if (widget.list[index].widget != null) {
-                      log('Tag ${widget.list[index].widget.key}');
+                  if (widget.list![index].sub_kits == null || widget.list![index].sub_kits!.isEmpty) {
+                    if (widget.list![index].widget != null) {
+                      log('Tag ${widget.list![index].widget!.key}');
 
-                      widget.list[index].widget.launch(context);
+                      widget.list![index].widget.launch(context);
                     } else {
                       toast(appComingSoon);
                     }
                   } else {
-                    ProKitScreenListing(widget.list[index]).launch(context);
+                    ProKitScreenListing(widget.list![index]).launch(context);
                   }
                 },
                 child: Container(
@@ -90,11 +89,11 @@ class ThemeListState extends State<ThemeList> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('${widget.list[index].name.validate()}', style: boldTextStyle(), maxLines: 2),
+                                      Text('${widget.list![index].name.validate()}', style: boldTextStyle(), maxLines: 2),
                                       Text(
-                                        widget.list[index].title_name.validate(),
+                                        widget.list![index].title_name.validate(),
                                         style: secondaryTextStyle(),
-                                      ).visible(widget.list[index].title_name.validate().isNotEmpty),
+                                      ).visible(widget.list![index].title_name.validate().isNotEmpty),
                                     ],
                                   ).expand(),
                                   Container(
@@ -102,8 +101,8 @@ class ThemeListState extends State<ThemeList> {
                                     height: 25,
                                     margin: EdgeInsets.only(right: 8),
                                     padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    decoration: widget.list[index].type.validate().isNotEmpty ? boxDecoration(bgColor: appDarkRed, radius: 4) : BoxDecoration(),
-                                    child: text(widget.list[index].type.validate(), fontSize: 14.0, textColor: whiteColor),
+                                    decoration: widget.list![index].type.validate().isNotEmpty ? boxDecoration(bgColor: appDarkRed, radius: 4) : BoxDecoration(),
+                                    child: text(widget.list![index].type.validate(), fontSize: 14.0, textColor: whiteColor),
                                   )
                                 ],
                               ),
@@ -114,7 +113,7 @@ class ThemeListState extends State<ThemeList> {
                               height: 30,
                               child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
                               decoration: BoxDecoration(color: colors[index % colors.length], shape: BoxShape.circle),
-                            )
+                            ),
                           ],
                         ),
                       ),

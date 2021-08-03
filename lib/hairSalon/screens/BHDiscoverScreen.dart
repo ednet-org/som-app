@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/hairSalon/model/BHModel.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHColors.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHConstants.dart';
-import 'package:prokit_flutter/hairSalon/utils/BHDataProvider.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/hairSalon/model/BHModel.dart';
+import 'package:som/hairSalon/utils/BHColors.dart';
+import 'package:som/hairSalon/utils/BHConstants.dart';
+import 'package:som/hairSalon/utils/BHDataProvider.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'BHDetailScreen.dart';
 import 'BHNotificationScreen.dart';
@@ -20,10 +20,10 @@ class BHDiscoverScreen extends StatefulWidget {
 }
 
 class BHDiscoverScreenState extends State<BHDiscoverScreen> {
-  List<BHBestSpecialModel> bestSpecialList;
-  List<BHSpecialOfferModel> specialOfferList;
-  List<BHBestSpecialModel> bestSpecialNewList;
-  List<BHSpecialOfferModel> specialOfferNewList;
+  late List<BHBestSpecialModel> bestSpecialList;
+  late List<BHSpecialOfferModel> specialOfferList;
+  late List<BHBestSpecialModel> bestSpecialNewList;
+  late List<BHSpecialOfferModel> specialOfferNewList;
 
   @override
   void initState() {
@@ -144,14 +144,14 @@ class BHDiscoverScreenState extends State<BHDiscoverScreen> {
                             Padding(
                               padding: EdgeInsets.all(8),
                               child: Text(
-                                bestSpecialList[index].title,
+                                bestSpecialList[index].title!,
                                 style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 8, right: 8),
                               child: Text(
-                                bestSpecialList[index].subTitle,
+                                bestSpecialList[index].subTitle!,
                                 style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary),
                               ),
                             ),
@@ -199,14 +199,14 @@ class BHDiscoverScreenState extends State<BHDiscoverScreen> {
                             Padding(
                               padding: EdgeInsets.all(8),
                               child: Text(
-                                specialOfferList[index].title,
+                                specialOfferList[index].title!,
                                 style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                               child: Text(
-                                specialOfferList[index].subtitle,
+                                specialOfferList[index].subtitle!,
                                 style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary),
                               ),
                             ),
@@ -268,12 +268,12 @@ class BHDiscoverScreenState extends State<BHDiscoverScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    bestSpecialNewList[index].title,
+                                    bestSpecialNewList[index].title!,
                                     style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                                   ),
                                   5.height,
                                   Text(
-                                    bestSpecialNewList[index].subTitle,
+                                    bestSpecialNewList[index].subTitle!,
                                     style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary),
                                   ),
                                 ],
@@ -325,13 +325,13 @@ class BHDiscoverScreenState extends State<BHDiscoverScreen> {
                             Padding(
                               padding: EdgeInsets.all(8),
                               child: Text(
-                                specialOfferNewList[index].title,
+                                specialOfferNewList[index].title!,
                                 style: TextStyle(fontSize: 16, color: BHAppTextColorPrimary, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(right: 8, left: 8, bottom: 8),
-                              child: Text(specialOfferNewList[index].subtitle, style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary)),
+                              child: Text(specialOfferNewList[index].subtitle!, style: TextStyle(fontSize: 12, color: BHAppTextColorSecondary)),
                             ),
                           ],
                         ),

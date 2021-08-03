@@ -4,23 +4,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/shopHop/models/ShCategory.dart';
-import 'package:prokit_flutter/shopHop/screens/ShAccountScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShCartFragment.dart';
-import 'package:prokit_flutter/shopHop/screens/ShContactUsScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShFAQScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShHomeFragment.dart';
-import 'package:prokit_flutter/shopHop/screens/ShOrderListScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShProfileFragment.dart';
-import 'package:prokit_flutter/shopHop/screens/ShSearchScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShSettingsScreen.dart';
-import 'package:prokit_flutter/shopHop/screens/ShWishlistFragment.dart';
-import 'package:prokit_flutter/shopHop/utils/ShColors.dart';
-import 'package:prokit_flutter/shopHop/utils/ShConstant.dart';
-import 'package:prokit_flutter/shopHop/utils/ShExtension.dart';
-import 'package:prokit_flutter/shopHop/utils/ShImages.dart';
-import 'package:prokit_flutter/shopHop/utils/ShStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/shopHop/models/ShCategory.dart';
+import 'package:som/shopHop/screens/ShAccountScreen.dart';
+import 'package:som/shopHop/screens/ShCartFragment.dart';
+import 'package:som/shopHop/screens/ShContactUsScreen.dart';
+import 'package:som/shopHop/screens/ShFAQScreen.dart';
+import 'package:som/shopHop/screens/ShHomeFragment.dart';
+import 'package:som/shopHop/screens/ShOrderListScreen.dart';
+import 'package:som/shopHop/screens/ShProfileFragment.dart';
+import 'package:som/shopHop/screens/ShSearchScreen.dart';
+import 'package:som/shopHop/screens/ShSettingsScreen.dart';
+import 'package:som/shopHop/screens/ShWishlistFragment.dart';
+import 'package:som/shopHop/utils/ShColors.dart';
+import 'package:som/shopHop/utils/ShConstant.dart';
+import 'package:som/shopHop/utils/ShExtension.dart';
+import 'package:som/shopHop/utils/ShImages.dart';
+import 'package:som/shopHop/utils/ShStrings.dart';
 
 import 'ShSubCategory.dart';
 
@@ -32,12 +32,12 @@ class ShHomeScreen extends StatefulWidget {
 }
 
 class ShHomeScreenState extends State<ShHomeScreen> {
-  var list = List<ShCategory>();
+  List<ShCategory> list = [];
   var homeFragment = ShHomeFragment();
   var cartFragment = ShCartFragment();
   var wishlistFragment = ShWishlistFragment();
   var profileFragment = ShProfileFragment();
-  var fragments;
+  late var fragments;
   var selectedTab = 0;
 
   @override
@@ -67,7 +67,6 @@ class ShHomeScreenState extends State<ShHomeScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.width;
     var title = "Home";
 
     return Scaffold(
@@ -86,7 +85,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
       ),
       body: Stack(
         alignment: Alignment.bottomLeft,
-        children: <Widget>[
+        children: [
           fragments[selectedTab],
           Container(
             height: 58,
@@ -110,8 +109,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
               ],
             ),
           )
-        ],
-      ),
+        ]),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         height: MediaQuery.of(context).size.height,
@@ -256,7 +254,7 @@ class ShHomeScreenState extends State<ShHomeScreen> {
     );
   }
 
-  Widget getDrawerItem(String icon, String name, {VoidCallback callback}) {
+  Widget getDrawerItem(String? icon, String? name, {VoidCallback? callback}) {
     return InkWell(
       onTap: callback,
       child: Container(

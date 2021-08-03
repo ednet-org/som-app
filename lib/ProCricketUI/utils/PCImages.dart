@@ -1,4 +1,4 @@
-import 'package:prokit_flutter/main/utils/AppConstant.dart';
+import 'package:som/main/utils/AppConstant.dart';
 
 const Cricket_Logo = "images/ProCricketUI/Cricket_Logo.png";
 const Cricket_ic_fixtures = "images/ProCricketUI/Cricket_ic_fixtures.png";

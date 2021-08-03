@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBNewsDetailsScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBWidgets.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBNewsDetailsScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBWidgets.dart';
 
 class NBBookmarkScreen extends StatefulWidget {
   static String tag = '/NBBookmarkScreen';
@@ -18,7 +18,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
   List<NBNewsDetailsModel> newsList = nbGetNewsDetails();
   List<NBNewsDetailsModel> bookmarkNewsList = [];
 
-  String dropDownValue = 'Most Recent';
+  String? dropDownValue = 'Most Recent';
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
                             value: dropDownItems[index],
                           );
                         }),
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             dropDownValue = value;
                             toast(dropDownValue);
@@ -100,7 +100,7 @@ class NBBookmarkScreenState extends State<NBBookmarkScreen> {
                                   ),
                                 ];
                               },
-                              onSelected: (value) {
+                              onSelected: (dynamic value) {
                                 setState(() {
                                   if (value == 'Remove') {
                                     mData.isBookmark = !mData.isBookmark;

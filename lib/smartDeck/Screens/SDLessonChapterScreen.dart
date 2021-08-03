@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
+
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/smartDeck/SDUtils/SDColors.dart';
+import 'package:som/smartDeck/SDUtils/SDColors.dart';
 
 class SDLessonsDetailsScreen extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class SDLessonsDetailsScreen extends StatefulWidget {
 }
 
 class _SDLessonsDetailsScreenState extends State<SDLessonsDetailsScreen> {
-  var text;
+  late var text;
 
   @override
   void initState() {

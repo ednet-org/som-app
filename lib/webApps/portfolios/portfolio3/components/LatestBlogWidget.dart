@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/webApps/portfolios/utils/DataGenerator.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/webApps/portfolios/utils/DataGenerator.dart';
 
 import '../../../../main.dart';
 import '../Colors.dart';
@@ -62,20 +62,20 @@ class LatestBlogWidgetState extends State<LatestBlogWidget> {
                   return Container(
                     margin: EdgeInsets.all(12),
                     width: context.width() * 0.25,
-                    decoration: boxDecorationRoundedWithShadow(5, backgroundColor: appStore.isDarkModeOn ? appStore.appBarColor : Colors.transparent),
+                    decoration: boxDecorationRoundedWithShadow(5, backgroundColor: appStore.isDarkModeOn ? appStore.appBarColor! : Colors.transparent),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(e.img, width: context.width() * 0.3, height: context.height() * 0.35, fit: BoxFit.cover).cornerRadiusWithClipRRectOnly(topLeft: 5, topRight: 5),
+                        Image.network(e.img!, width: context.width() * 0.3, height: context.height() * 0.35, fit: BoxFit.cover).cornerRadiusWithClipRRectOnly(topLeft: 5, topRight: 5),
                         8.height,
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(e.name, style: boldTextStyle(size: 24), maxLines: 2),
+                            Text(e.name!, style: boldTextStyle(size: 24), maxLines: 2),
                             8.height,
-                            Text(e.type, style: secondaryTextStyle(size: 16)),
+                            Text(e.type!, style: secondaryTextStyle(size: 16)),
                             8.height,
-                            Text(e.detail, style: primaryTextStyle(size: 16), maxLines: 3, textAlign: TextAlign.start),
+                            Text(e.detail!, style: primaryTextStyle(size: 16), maxLines: 3, textAlign: TextAlign.start),
                             16.height,
                             Text(
                               'Read More',

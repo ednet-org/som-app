@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/learner/model/LearnerModels.dart';
-import 'package:prokit_flutter/learner/utils/LearnerColors.dart';
-import 'package:prokit_flutter/learner/utils/LearnerConstant.dart';
-import 'package:prokit_flutter/learner/utils/LearnerDataGenerator.dart';
-import 'package:prokit_flutter/learner/utils/LearnerImages.dart';
-import 'package:prokit_flutter/learner/utils/LearnerStrings.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/learner/model/LearnerModels.dart';
+import 'package:som/learner/utils/LearnerColors.dart';
+import 'package:som/learner/utils/LearnerConstant.dart';
+import 'package:som/learner/utils/LearnerDataGenerator.dart';
+import 'package:som/learner/utils/LearnerImages.dart';
+import 'package:som/learner/utils/LearnerStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class LearnerFriendDetail extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class LearnerFriendDetail extends StatefulWidget {
 }
 
 class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
-  List<LearnerBadgeModel> mList2;
+  late List<LearnerBadgeModel> mList2;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
           alignment: Alignment.topRight,
           children: <Widget>[
             CachedNetworkImage(
-              placeholder: placeholderWidgetFn(),
+              placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
               imageUrl: learner_ic_profile1,
               height: width * 0.3,
               width: width * 0.3,
@@ -53,11 +53,13 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
         SizedBox(
           height: 25,
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {},
           child: text("Add Friend", textColor: learner_colorPrimary, fontSize: textSizeMedium, fontFamily: fontSemibold).paddingAll(8),
-          textColor: learner_colorPrimary,
-          shape: RoundedRectangleBorder(side: BorderSide(color: learner_colorPrimary, width: 1.5, style: BorderStyle.solid), borderRadius: BorderRadius.circular(50)),
+          style: TextButton.styleFrom(
+            textStyle: TextStyle(color:learner_colorPrimary),
+            shape: RoundedRectangleBorder(side: BorderSide(color: learner_colorPrimary, width: 1.5, style: BorderStyle.solid), borderRadius: BorderRadius.circular(50)),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,8 +164,9 @@ class _LearnerFriendDetailState extends State<LearnerFriendDetail> {
   }
 }
 
+// ignore: must_be_immutable
 class LearnerBadges extends StatelessWidget {
-  LearnerBadgeModel model;
+  late LearnerBadgeModel model;
 
   LearnerBadges(LearnerBadgeModel model, int pos) {
     this.model = model;

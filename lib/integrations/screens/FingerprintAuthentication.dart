@@ -4,9 +4,9 @@ import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class FingerprintAuthentication extends StatefulWidget {
   static String tag = '/FingerprintAuthentication';
@@ -20,7 +20,8 @@ class _FingerprintAuthenticationState extends State<FingerprintAuthentication> {
 
   bool face = false;
   bool fingerprint = false;
-  String _authorized = 'Not Authorized';
+  // ignore: non_constant_identifier_names
+  String Authorized = 'Not Authorized';
   bool _isAuthenticating = false;
   bool authorized = false;
 
@@ -56,7 +57,7 @@ class _FingerprintAuthenticationState extends State<FingerprintAuthentication> {
     try {
       setState(() {
         _isAuthenticating = true;
-        _authorized = 'Authenticating';
+        Authorized = 'Authenticating';
       });
 
       authenticated = await auth.authenticate(
@@ -83,7 +84,7 @@ class _FingerprintAuthenticationState extends State<FingerprintAuthentication> {
       authorized = authenticated;
       setState(() {
         _isAuthenticating = false;
-        _authorized = 'Authenticating';
+        Authorized = 'Authenticating';
       });
     } on PlatformException catch (e) {
       showDialog(
@@ -100,7 +101,7 @@ class _FingerprintAuthenticationState extends State<FingerprintAuthentication> {
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
     setState(() {
       authorized = authenticated;
-      _authorized = message;
+      Authorized = message;
     });
     await Future.delayed(Duration(seconds: 3));
     setState(() {
@@ -214,8 +215,8 @@ class _FingerprintAuthenticationState extends State<FingerprintAuthentication> {
 }
 
 class HandleError extends StatelessWidget {
-  final String code;
-  final String message;
+  final String? code;
+  final String? message;
 
   HandleError({this.code, this.message});
 
@@ -254,7 +255,7 @@ class HandleError extends StatelessWidget {
               textAlign: TextAlign.justify,
             ).paddingOnly(left: 8, right: 8),
             16.height,
-            FlatButton(
+            TextButton(
               onPressed: () {
                 finish(context);
               },

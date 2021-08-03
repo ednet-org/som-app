@@ -1,17 +1,17 @@
-name: prokit-flutter
+name: som
 version: '1.0'
-summary: ProKit Flutter
-description: ProKit Flutter UI Kit
+summary: Smart Offer Manager
+description: Smart Offer Manager
 
 confinement: strict
 base: core18
 
 parts:
-  prokit-flutter:
+  som:
     plugin: flutter
     flutter-target: lib/main.dart
 
 apps:
-  prokit-flutter:
-    command: prokit_flutter
+  som:
+    command: som
     extensions: [flutter-master]

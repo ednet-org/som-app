@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme1/utils/T1Colors.dart';
-import 'package:prokit_flutter/theme1/utils/T1Constant.dart';
-import 'package:prokit_flutter/theme1/utils/T1Images.dart';
-import 'package:prokit_flutter/theme1/utils/T1Strings.dart';
-import 'package:prokit_flutter/theme1/utils/T1Widget.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme1/utils/T1Colors.dart';
+import 'package:som/theme1/utils/T1Constant.dart';
+import 'package:som/theme1/utils/T1Images.dart';
+import 'package:som/theme1/utils/T1Strings.dart';
+import 'package:som/theme1/utils/T1Widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../main.dart';
 
@@ -23,14 +23,14 @@ class T1Dashboard extends StatefulWidget {
 
 class T1DashboardState extends State<T1Dashboard> {
   var isSelected = 1;
-  var width;
-  var height;
+  late var width;
+  late var height;
 
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    changeStatusColor(appStore.appBarColor);
+    changeStatusColor(appStore.appBarColor!);
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
       backgroundColor: appStore.scaffoldBackground,
@@ -222,7 +222,7 @@ class T1DashboardState extends State<T1Dashboard> {
 class Slider extends StatelessWidget {
   final String file;
 
-  Slider({Key key, @required this.file}) : super(key: key);
+  Slider({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +237,7 @@ class Slider extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: CachedNetworkImage(
-          placeholder: placeholderWidgetFn(),
+          placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
           imageUrl: file,
           fit: BoxFit.fill,
         ), /*Image.asset(file, fit: BoxFit.fill),*/

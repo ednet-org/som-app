@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/theme3/utils/T3Images.dart';
-import 'package:prokit_flutter/theme3/utils/T3widgets.dart';
-import 'package:prokit_flutter/theme3/utils/colors.dart';
-import 'package:prokit_flutter/theme3/utils/strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/theme3/utils/T3Images.dart';
+import 'package:som/theme3/utils/T3widgets.dart';
+import 'package:som/theme3/utils/colors.dart';
+import 'package:som/theme3/utils/strings.dart';
 
 class T3Description extends StatefulWidget {
   static String tag = '/T3Description';
@@ -42,7 +42,7 @@ class T3DescriptionState extends State<T3Description> {
                 title: Text(t3_lbl_food_recipe_detail, style: boldTextStyle(color: white, size: 22)),
                 flexibleSpace: FlexibleSpaceBar(
                     background: CachedNetworkImage(
-                  placeholder: placeholderWidgetFn(),
+                  placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                   imageUrl: t3_ic_dish2,
                   fit: BoxFit.cover,
                 )),

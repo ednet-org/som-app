@@ -3,10 +3,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTWidgets.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTDrawerWidget.dart';
 
@@ -62,7 +62,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
             Container(
               margin: EdgeInsets.all(16),
               height: 50,
-              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.scaffoldBackground),
+              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.scaffoldBackground!),
               child: TextFormField(
                 controller: searchCont,
                 style: primaryTextStyle(),
@@ -77,7 +77,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 validator: (s) {
-                  if (s.trim().isEmpty) return errorThisFieldRequired;
+                  if (s!.trim().isEmpty) return errorThisFieldRequired;
                   if (!s.trim().validateEmail()) return 'Email is invalid';
                   return null;
                 },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/cloudStorage/screens/CSWalkthroughScreen2.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSColors.dart';
-import 'package:prokit_flutter/cloudStorage/utils/CSImages.dart';
+import 'package:som/cloudStorage/screens/CSWalkthroughScreen2.dart';
+import 'package:som/cloudStorage/utils/CSColors.dart';
+import 'package:som/cloudStorage/utils/CSImages.dart';
 
 class CSWalkthroughScreen1 extends StatelessWidget {
   @override
@@ -23,9 +23,9 @@ class CSWalkthroughScreen1 extends StatelessWidget {
               Container(
                 height: 50,
                 decoration: BoxDecoration(color: CSDarkBlueColor),
-                child: Text('Select photos to upload', style: boldTextStyle(color: Colors.white, size: 17)).center().expand(),
+                child: Text('Select photos to upload', style: boldTextStyle(color: Colors.white, size: 17)).center(),
               ).paddingTop(20).onTap(() {}),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   CSWalkthroughScreen2().launch(context);
                 },

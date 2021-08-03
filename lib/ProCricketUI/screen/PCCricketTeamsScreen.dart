@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/ProCricketUI/model/PCDashboardModel.dart';
-import 'package:prokit_flutter/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCColors.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCDataGenerator.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCStrings.dart';
-import 'package:prokit_flutter/ProCricketUI/utils/PCWidget.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/ProCricketUI/model/PCDashboardModel.dart';
+import 'package:som/ProCricketUI/screen/PCCricketPlayerListScreen.dart';
+import 'package:som/ProCricketUI/utils/PCColors.dart';
+import 'package:som/ProCricketUI/utils/PCDataGenerator.dart';
+import 'package:som/ProCricketUI/utils/PCStrings.dart';
+import 'package:som/ProCricketUI/utils/PCWidget.dart';
+import 'package:som/main/utils/AppWidget.dart';
 
 class PCCricketTeamsScreen extends StatefulWidget {
   static String tag = '/CricketTeams';
@@ -16,9 +16,10 @@ class PCCricketTeamsScreen extends StatefulWidget {
 }
 
 class _PCCricketTeamsScreenState extends State<PCCricketTeamsScreen> {
-  List<PCDashboardModel> mList1;
+  late List<PCDashboardModel> mList1;
 
   @override
+  // ignore: must_call_super
   void initState() {
     mList1 = cricketTeamList();
   }
@@ -54,7 +55,9 @@ class _PCCricketTeamsScreenState extends State<PCCricketTeamsScreen> {
                         padding: EdgeInsets.all(8),
                         width: context.width(),
                         decoration: boxDecorationWithRoundedCorners(
-                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)), backgroundColor: Colors.black.withOpacity(0.5)),
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                        ),
                         child: Text(mList1[index].title, style: boldTextStyle(color: Cricket_white, size: 18)),
                       ),
                     ),
@@ -63,7 +66,7 @@ class _PCCricketTeamsScreenState extends State<PCCricketTeamsScreen> {
               ),
             ).onTap(
               () {
-                PCCricketPlayerListScreen(teamName: mList1[index].title, index: index).launch(context);
+                index != 5 ? PCCricketPlayerListScreen(teamName: mList1[index].title, index: index).launch(context) : SizedBox();
                 setState(() {});
               },
             );

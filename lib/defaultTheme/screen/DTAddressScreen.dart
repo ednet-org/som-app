@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/defaultTheme/model/DTAddressListModel.dart';
-import 'package:prokit_flutter/defaultTheme/utils/DTDataProvider.dart';
-import 'package:prokit_flutter/main.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
+import 'package:som/defaultTheme/model/DTAddressListModel.dart';
+import 'package:som/defaultTheme/utils/DTDataProvider.dart';
+import 'package:som/main.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'DTDrawerWidget.dart';
@@ -51,7 +51,7 @@ class DTAddressScreenState extends State<DTAddressScreen> {
               decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
               child: Text('Add New Address', style: boldTextStyle(color: appColorPrimary)),
             ).onTap(() async {
-              DTAddressListModel model = await showInDialog(context, child: AddAddressDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+              DTAddressListModel? model = await showInDialog(context, child: AddAddressDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
 
               if (model != null) {
                 list.add(model);
@@ -67,7 +67,7 @@ class DTAddressScreenState extends State<DTAddressScreen> {
                 return Container(
                   padding: EdgeInsets.all(16),
                   margin: EdgeInsets.all(8),
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor),
+                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -77,7 +77,7 @@ class DTAddressScreenState extends State<DTAddressScreen> {
                         children: [
                           Row(
                             children: [
-                              Text(data.name, style: boldTextStyle(size: 18)),
+                              Text(data.name!, style: boldTextStyle(size: 18)),
                               10.width,
                               Container(
                                 child: Text(data.type.validate(), style: secondaryTextStyle(size: 10, color: appColorPrimary)),
@@ -91,8 +91,8 @@ class DTAddressScreenState extends State<DTAddressScreen> {
                           }),
                         ],
                       ),
-                      Text(data.addressLine1, style: primaryTextStyle()),
-                      Text(data.addressLine2, style: primaryTextStyle()),
+                      Text(data.addressLine1!, style: primaryTextStyle()),
+                      Text(data.addressLine2!, style: primaryTextStyle()),
                       6.height,
                     ],
                   ),
@@ -130,10 +130,10 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
   var formKey = GlobalKey<FormState>();
 
   validate() {
-    if (formKey.currentState.validate()) {
+    if (formKey.currentState!.validate()) {
       hideKeyboard(context);
       toast('Adding Successfully');
-      formKey.currentState.save();
+      formKey.currentState!.save();
 
       var addressData = DTAddressListModel();
       addressData.name = nameCont.text.validate();
@@ -170,7 +170,7 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min, // To make the card compact
@@ -197,11 +197,11 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                   ),
                   keyboardType: TextInputType.name,
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     return null;
                   },
                   onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(mobileFocus),
@@ -218,11 +218,11 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                   ),
                   keyboardType: TextInputType.phone,
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     if (!s.trim().validatePhone()) return 'Mobile is invalid';
                     return null;
                   },
@@ -240,13 +240,13 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                   ),
                   minLines: 1,
                   maxLines: 2,
                   keyboardType: TextInputType.multiline,
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     return null;
                   },
                   onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(addressLine2Focus),
@@ -263,13 +263,13 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     labelStyle: secondaryTextStyle(),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor)),
+                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
                   ),
                   minLines: 1,
                   maxLines: 2,
                   keyboardType: TextInputType.multiline,
                   validator: (s) {
-                    if (s.trim().isEmpty) return errorThisFieldRequired;
+                    if (s!.trim().isEmpty) return errorThisFieldRequired;
                     return null;
                   },
                   textInputAction: TextInputAction.newline, // when user presses enter it will adapt to it

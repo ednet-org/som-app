@@ -2,15 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizEditProfile.dart';
-import 'package:prokit_flutter/quiz/Screens/QuizSettings.dart';
-import 'package:prokit_flutter/quiz/model/QuizModels.dart';
-import 'package:prokit_flutter/quiz/utils/QuizColors.dart';
-import 'package:prokit_flutter/quiz/utils/QuizConstant.dart';
-import 'package:prokit_flutter/quiz/utils/QuizDataGenerator.dart';
-import 'package:prokit_flutter/quiz/utils/QuizImages.dart';
-import 'package:prokit_flutter/quiz/utils/QuizStrings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/quiz/Screens/QuizEditProfile.dart';
+import 'package:som/quiz/Screens/QuizSettings.dart';
+import 'package:som/quiz/model/QuizModels.dart';
+import 'package:som/quiz/utils/QuizColors.dart';
+import 'package:som/quiz/utils/QuizConstant.dart';
+import 'package:som/quiz/utils/QuizDataGenerator.dart';
+import 'package:som/quiz/utils/QuizImages.dart';
+import 'package:som/quiz/utils/QuizStrings.dart';
 
 class QuizProfile extends StatefulWidget {
   static String tag = '/QuizProfile';
@@ -20,8 +20,8 @@ class QuizProfile extends StatefulWidget {
 }
 
 class _QuizProfileState extends State<QuizProfile> {
-  List<QuizBadgesModel> mList;
-  List<QuizScoresModel> mList1;
+  late List<QuizBadgesModel> mList;
+  late List<QuizScoresModel> mList1;
 
   int selectedPos = 1;
 
@@ -175,7 +175,7 @@ class _QuizProfileState extends State<QuizProfile> {
                               child: Row(
                                 children: <Widget>[
                                   CachedNetworkImage(
-                                    placeholder: placeholderWidgetFn(),
+                                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                                     imageUrl: mList1[index].img,
                                     height: 50,
                                     width: 50,

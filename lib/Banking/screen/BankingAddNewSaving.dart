@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/Banking/screen/BankingSavingSuccessful.dart';
-import 'package:prokit_flutter/Banking/utils/BankingColors.dart';
-import 'package:prokit_flutter/Banking/utils/BankingContants.dart';
-import 'package:prokit_flutter/Banking/utils/BankingSlider.dart';
-import 'package:prokit_flutter/Banking/utils/BankingStrings.dart';
-import 'package:prokit_flutter/Banking/utils/BankingWidget.dart';
+import 'package:som/Banking/screen/BankingSavingSuccessful.dart';
+import 'package:som/Banking/utils/BankingColors.dart';
+import 'package:som/Banking/utils/BankingContants.dart';
+import 'package:som/Banking/utils/BankingSlider.dart';
+import 'package:som/Banking/utils/BankingStrings.dart';
+import 'package:som/Banking/utils/BankingWidget.dart';
 
 import '../model/BankingModel.dart';
 import '../utils/BankingColors.dart';
@@ -23,7 +23,7 @@ class BankingAddNewSaving extends StatefulWidget {
 
 class _BankingAddNewSavingState extends State<BankingAddNewSaving> {
   var currentIndexPage = 0;
-  List<BankingCardModel> mList;
+  List<BankingCardModel>? mList;
   var isTapped = false;
   var tapCount = 0;
 

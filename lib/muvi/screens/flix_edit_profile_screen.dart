@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_constants.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_images.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_strings.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_constants.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_images.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/utils/resources/flix_strings.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static String tag = '/ProfileScreen';
@@ -30,17 +30,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _contactController = new TextEditingController();
   FocusNode _nameFocusNode = FocusNode();
-  FocusNode _userNameFocusNode = FocusNode();
   FocusNode _emailFocusNode = FocusNode();
   FocusNode _contactFocusNode = FocusNode();
-  bool _autoValidate = false;
+  bool autoValidate = false;
   var contact;
   var name;
   var userProfile;
   var userName;
   var userEmail;
   var userId;
-  File imageFile;
+  late File imageFile;
   bool isLoading = false;
   bool loadFromFile = false;
   var selectedGender;
@@ -160,7 +159,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     final fields = Form(
       key: _formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -170,11 +169,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             controller: _emailController,
             focusNode: _emailFocusNode,
             nextFocus: _nameFocusNode,
-            validator: (String value) {
+            validator: (String? value) {
               if (!value.validateEmail()) return keyString(context, "error_invalid_email");
               return null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               userEmail = value;
             },
             suffixIcon: Icons.mail_outline,
@@ -186,9 +185,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             focusNode: _nameFocusNode,
             nextFocus: _contactFocusNode,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_name_required") : null;
+              return value!.isEmpty ? keyString(context, "error_name_required") : null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               name = value;
             },
             suffixIcon: Icons.person_outline,
@@ -201,9 +200,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.done,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_phone_requires") : null;
+              return value!.isEmpty ? keyString(context, "error_phone_requires") : null;
             },
-            onSaved: (String value) {
+            onSaved: (String? value) {
               contact = value;
             },
             suffixIcon: Icons.phone,
@@ -212,7 +211,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                keyString(context, "gender"),
+                keyString(context, "gender")!,
                 style: TextStyle(fontSize: ts_medium_small, fontFamily: font_regular, color: muvi_textColorPrimary),
               ),
               Theme(
@@ -220,7 +219,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: DropdownButton(
                   value: selectedGender,
                   isExpanded: true,
-                  onChanged: (newValue) {
+                  onChanged: (dynamic newValue) {
                     setState(() {
                       selectedGender = newValue;
                     });
@@ -260,12 +259,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       if (isLoading) {
                         return;
                       }
-                      final form = _formKey.currentState;
+                      final form = _formKey.currentState!;
                       if (form.validate()) {
                         form.save();
 //                      saveProfile(context);
                       } else {
-                        setState(() => _autoValidate = true);
+                        setState(() => autoValidate = true);
                       }
                     },
                   ).paddingOnly(top: 30, left: 18, right: 18, bottom: 30),

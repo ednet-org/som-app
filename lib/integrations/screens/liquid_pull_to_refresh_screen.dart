@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:som/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/main/utils/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/main/utils/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class LiquidPullToRefreshScreen extends StatefulWidget {
   static String tag = '/LiquidPullToRefreshScreen';
@@ -57,7 +57,7 @@ class LiquidPullToRefreshScreenState extends State<LiquidPullToRefreshScreen> {
       completer.complete();
     });
     return completer.future.then<void>((_) {
-      refreshIndicatorKey.currentState.show();
+      refreshIndicatorKey.currentState!.show();
     });
   }
 }

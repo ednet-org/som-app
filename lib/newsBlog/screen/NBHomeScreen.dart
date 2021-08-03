@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/newsBlog/component/NBAllNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/component/NBNewsComponent.dart';
-import 'package:prokit_flutter/newsBlog/model/NBModel.dart';
-import 'package:prokit_flutter/newsBlog/screen/NBProfileScreen.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBColors.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBDataProviders.dart';
-import 'package:prokit_flutter/newsBlog/utils/NBImages.dart';
+import 'package:som/newsBlog/component/NBAllNewsComponent.dart';
+import 'package:som/newsBlog/component/NBNewsComponent.dart';
+import 'package:som/newsBlog/model/NBModel.dart';
+import 'package:som/newsBlog/screen/NBProfileScreen.dart';
+import 'package:som/newsBlog/utils/NBColors.dart';
+import 'package:som/newsBlog/utils/NBDataProviders.dart';
+import 'package:som/newsBlog/utils/NBImages.dart';
 
 class NBHomeScreen extends StatefulWidget {
   static String tag = '/NBHomeScreen';
@@ -23,7 +23,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
   List<NBNewsDetailsModel> mNewsList = nbGetNewsDetails();
   List<NBNewsDetailsModel> mTechNewsList = [], mFashionNewsList = [], mSportsNewsList = [], mScienceNewsList = [];
 
-  TabController tabController;
+  TabController? tabController;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
 
   @override
   void dispose() {
-    tabController.dispose();
+    tabController!.dispose();
     super.dispose();
   }
 
@@ -65,7 +65,7 @@ class NBHomeScreenState extends State<NBHomeScreen> with SingleTickerProviderSta
         leading: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             }),
         title: Text('News Blog', style: boldTextStyle(color: black, size: 20)),
         backgroundColor: white,

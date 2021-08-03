@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/muvi/models/flix_response.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_localizations.dart';
-import 'package:prokit_flutter/muvi/utils/flix_app_widgets.dart';
-import 'package:prokit_flutter/muvi/utils/flix_data_generator.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_colors.dart';
-import 'package:prokit_flutter/muvi/utils/resources/flix_size.dart';
+import 'package:som/muvi/models/flix_response.dart';
+import 'package:som/muvi/utils/flix_app_localizations.dart';
+import 'package:som/muvi/utils/flix_app_widgets.dart';
+import 'package:som/muvi/utils/flix_data_generator.dart';
+import 'package:som/muvi/utils/resources/flix_colors.dart';
+import 'package:som/muvi/utils/resources/flix_size.dart';
 
 class FaqScreen extends StatefulWidget {
   static String tag = '/FaqScreen';
@@ -16,7 +16,7 @@ class FaqScreen extends StatefulWidget {
 }
 
 class FaqScreenState extends State<FaqScreen> {
-  var faqs = List<FAQ>();
+  List<FAQ> faqs = [];
   bool isLoading = false;
 
   showLoading(bool show) {
@@ -58,18 +58,18 @@ class FaqScreenState extends State<FaqScreen> {
                   children: <Widget>[
                     Expanded(child: itemTitle(context, faqs[index].title)),
                     Icon(
-                      faqs[index].isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      faqs[index].isExpanded! ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                       color: muvi_colorPrimary,
                       size: 22,
                     )
                   ],
                 ).paddingBottom(spacing_standard),
-                Text(faqs[index].subTitle, style: secondaryTextStyle()).visible(faqs[index].isExpanded)
+                Text(faqs[index].subTitle!, style: secondaryTextStyle()).visible(faqs[index].isExpanded!)
               ],
             ),
           ).onTap(() {
             setState(() {
-              faqs[index].isExpanded = !faqs[index].isExpanded;
+              faqs[index].isExpanded = !faqs[index].isExpanded!;
             });
           });
         });

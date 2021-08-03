@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:prokit_flutter/main/utils/AppColors.dart';
-import 'package:prokit_flutter/main/utils/AppWidget.dart';
-import 'package:prokit_flutter/medium/modal/MModel.dart';
-import 'package:prokit_flutter/medium/utils/MColors.dart';
-import 'package:prokit_flutter/medium/utils/MDataProvider.dart';
-import 'package:prokit_flutter/medium/utils/MWidget.dart';
+import 'package:som/main/utils/AppColors.dart';
+import 'package:som/main/utils/AppWidget.dart';
+import 'package:som/medium/modal/MModel.dart';
+import 'package:som/medium/utils/MColors.dart';
+import 'package:som/medium/utils/MDataProvider.dart';
+import 'package:som/medium/utils/MWidget.dart';
 
 class MReadingListScreen extends StatefulWidget {
   static String tag = '/MReadingListScreen';
@@ -17,8 +17,8 @@ class MReadingListScreen extends StatefulWidget {
 
 class MReadingListScreenState extends State<MReadingListScreen> with TickerProviderStateMixin, AfterLayoutMixin<MReadingListScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  TabController tabController;
-  List<Widget> tabs = List();
+  TabController? tabController;
+  List<Widget> tabs = [];
   List<String> tabList = ['Saved(2)', 'Archived', 'Recently Viewed', 'Highlighted'];
   List<MListModel> savingList = getSavingPostList();
   List<MListModel> archivedList = getArchivedList();
@@ -52,7 +52,7 @@ class MReadingListScreenState extends State<MReadingListScreen> with TickerProvi
   }
 
   openDrawer() {
-    scaffoldKey.currentState.openDrawer();
+    scaffoldKey.currentState!.openDrawer();
   }
 
   @override
