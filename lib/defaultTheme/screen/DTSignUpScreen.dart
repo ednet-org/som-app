@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
+import 'package:som/defaultTheme/screen/som/CRoleSelection.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
@@ -62,32 +63,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Please select role.'),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          style: style,
-                          onPressed: () {
-                            print('Buyer');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text('Buyer', style: boldTextStyle(size: 24)),
-                          )),
-                      10.width,
-                      ElevatedButton(
-                          onPressed: () {
-                            print('Provider');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Provider',
-                                style: boldTextStyle(size: 24)),
-                          )),
-                    ],
-                  ),
-
+                  CRoleSelection(),
                   30.height,
                   Row(children: <Widget>[
                     Expanded(
