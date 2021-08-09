@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/defaultTheme/screen/som/customer/Registration.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import '../../../main.dart';
+import '../../../../main.dart';
 
 class CRoleSelection extends StatefulWidget {
+  Roles selectedRole = Roles.Buyer;
+
+  CRoleSelection(Roles selectedRole);
+
   @override
   CRoleSelectionState createState() => CRoleSelectionState();
 }
 
 class CRoleSelectionState extends State<CRoleSelection> {
-  int selectIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,8 +29,10 @@ class CRoleSelectionState extends State<CRoleSelection> {
             children: [
               GestureDetector(
                 onTap: () {
-                  selectIndex = 0;
-                  setState(() {});
+                  setState(() {
+
+                    widget.selectedRole = Roles.Provider;
+                  });
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -35,7 +40,7 @@ class CRoleSelectionState extends State<CRoleSelection> {
                       EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
                   margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                   decoration: BoxDecoration(
-                    gradient: selectIndex == 0
+                    gradient: widget.selectedRole == Roles.Provider
                         ? defaultThemeGradient()
                         : LinearGradient(colors: [
                             appStore.appBarColor!,
@@ -48,7 +53,7 @@ class CRoleSelectionState extends State<CRoleSelection> {
                     'Provider',
                     style: primaryTextStyle(
                         size: 14,
-                        color: selectIndex == 0
+                        color: widget.selectedRole == Roles.Provider
                             ? white
                             : appStore.textPrimaryColor),
                     textAlign: TextAlign.center,
@@ -57,8 +62,9 @@ class CRoleSelectionState extends State<CRoleSelection> {
               ),
               GestureDetector(
                 onTap: () {
-                  selectIndex = 1;
-                  setState(() {});
+                  setState(() {
+                    widget.selectedRole = Roles.Buyer;
+                  });
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -66,7 +72,7 @@ class CRoleSelectionState extends State<CRoleSelection> {
                       EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
                   margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
                   decoration: BoxDecoration(
-                    gradient: selectIndex == 1
+                    gradient: widget.selectedRole == Roles.Buyer
                         ? defaultThemeGradient()
                         : LinearGradient(colors: [
                             appStore.appBarColor!,
@@ -79,7 +85,7 @@ class CRoleSelectionState extends State<CRoleSelection> {
                     'Buyer',
                     style: primaryTextStyle(
                         size: 14,
-                        color: selectIndex == 1
+                        color: widget.selectedRole == Roles.Buyer
                             ? white
                             : appStore.textPrimaryColor),
                     textAlign: TextAlign.center,

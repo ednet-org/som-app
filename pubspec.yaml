@@ -22,7 +22,7 @@ dependencies:
   html: ^0.15.0
   share: ^2.0.4
   mobx: ^2.0.1
-  flutter_mobx: ^2.0.0
+  flutter_mobx: ^2.0.1
   flutter_vector_icons: ^1.0.0
   package_info: ^2.0.2
 
