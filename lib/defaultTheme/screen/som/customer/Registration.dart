@@ -1,43 +1,41 @@
 import 'package:flutter/material.dart';
 
 import 'RoleSelection.dart';
+import 'Roles.dart';
 
 class CCustomerRegistration extends StatefulWidget {
-  Roles selectedRole = Roles.Buyer;
-
   @override
   createState() => CCustomerRegistrationState();
 }
 
-enum Roles {
-  Buyer,
-  Provider,
-}
 
 class CCustomerRegistrationState extends State<CCustomerRegistration> {
+  Roles selectedRole = Roles.Buyer;
+
+  void selectRole(Roles role) {
+    setState(() {
+      selectedRole = role;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CRoleSelection(widget.selectedRole),
-        CRegistrationForm(widget.selectedRole),
+        CRoleSelection(selectRole, selectedRole),
+        CRegistrationForm(selectedRole),
       ],
     );
   }
 }
 
-class CRegistrationForm extends StatefulWidget {
-  Roles selectedRole = Roles.Buyer;
+class CRegistrationForm extends StatelessWidget {
+  final Roles selectedRole;
 
-  CRegistrationForm(selectedRole);
+  CRegistrationForm(this.selectedRole);
 
-  @override
-  State<CRegistrationForm> createState() => CRegistrationFormState();
-}
-
-class CRegistrationFormState extends State<CRegistrationForm> {
   Widget build(BuildContext context) {
-    return widget.selectedRole == Roles.Buyer ? buyerForm() : providerForm();
+    return this.selectedRole == Roles.Buyer ? buyerForm() : providerForm();
   }
 
   providerForm() {
@@ -45,6 +43,6 @@ class CRegistrationFormState extends State<CRegistrationForm> {
   }
 
   buyerForm() {
-    return Text('buyer');
+    return Text('buyer or not');
   }
 }
