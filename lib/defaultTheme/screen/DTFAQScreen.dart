@@ -17,7 +17,7 @@ class DTFAQScreen extends StatefulWidget {
 }
 
 class DTFAQScreenState extends State<DTFAQScreen> {
-  var categories =[];
+  var categories = [];
   int selectIndex = 0;
 
   @override
@@ -60,14 +60,16 @@ class DTFAQScreenState extends State<DTFAQScreen> {
             child: Container(
               padding: EdgeInsets.all(8),
               margin: EdgeInsets.only(top: 8, bottom: 8),
-              decoration: BoxDecoration(color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
+              decoration: BoxDecoration(
+                  color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
               width: context.width(),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
-                    child: Text(LoremText, style: primaryTextStyle(size: 14), maxLines: 2),
+                    child: Text(LoremText,
+                        style: primaryTextStyle(size: 14), maxLines: 2),
                   ),
                   Icon(Icons.chevron_right, color: appStore.iconColor)
                 ],
@@ -94,7 +96,9 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                   decoration: BoxDecoration(gradient: defaultThemeGradient()),
                   padding: EdgeInsets.only(left: 20, right: 20),
                   alignment: Alignment.center,
-                  child: Text('How can we help you?', textAlign: TextAlign.center, style: boldTextStyle(size: 26, color: white)),
+                  child: Text('How can we help you?',
+                      textAlign: TextAlign.center,
+                      style: boldTextStyle(size: 26, color: white)),
                 ),
               ),
               Positioned(
@@ -104,14 +108,17 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                   height: context.height() - 268,
                   decoration: BoxDecoration(
                     color: appStore.scaffoldBackground,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14)),
                   ),
                   child: SingleChildScrollView(
                     padding: EdgeInsets.only(bottom: 30, top: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Top Questions', style: primaryTextStyle(size: 18)).paddingOnly(left: 8, right: 8),
+                        Text('Top Questions', style: primaryTextStyle(size: 18))
+                            .paddingOnly(left: 8, right: 8),
                         16.height,
                         Container(
                           height: 50,
@@ -126,16 +133,29 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
-                                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
-                                  margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                                  padding: EdgeInsets.only(
+                                      top: 8, bottom: 8, left: 12, right: 12),
+                                  margin: EdgeInsets.only(
+                                      left: 8, right: 8, top: 4, bottom: 4),
                                   decoration: BoxDecoration(
-                                    gradient: selectIndex == index ? defaultThemeGradient() : LinearGradient(colors: [appStore.appBarColor!, appStore.appBarColor!]),
-                                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                                    border: Border.all(color: Colors.black12, width: 0.5),
+                                    gradient: selectIndex == index
+                                        ? defaultThemeGradient()
+                                        : LinearGradient(colors: [
+                                            appStore.appBarColor!,
+                                            appStore.appBarColor!
+                                          ]),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
+                                    border: Border.all(
+                                        color: Colors.black12, width: 0.5),
                                   ),
                                   child: Text(
                                     categories[index],
-                                    style: primaryTextStyle(size: 14, color: selectIndex == index ? white : appStore.textPrimaryColor),
+                                    style: primaryTextStyle(
+                                        size: 14,
+                                        color: selectIndex == index
+                                            ? white
+                                            : appStore.textPrimaryColor),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
