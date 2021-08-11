@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/som/customer/Roles.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
+import 'package:som/main/utils/AppConstant.dart';
 import '../../../../main.dart';
 
 class Role extends StatelessWidget {
@@ -18,6 +19,8 @@ class Role extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var roleTitle = role.toString().splitAfter('.');
+
     return GestureDetector(
       onTap: () {
         selectRole(role);
@@ -35,12 +38,10 @@ class Role extends StatelessWidget {
           border: Border.all(color: Colors.black12, width: 0.5),
         ),
         child: Text(
-          role.toString(),
+          roleTitle,
           style: primaryTextStyle(
-              size: 14,
-              color: selectedRole == role
-                  ? white
-                  : appStore.textPrimaryColor),
+              size: textSizeXLarge.toInt(),
+              color: selectedRole == role ? white : appStore.textPrimaryColor),
           textAlign: TextAlign.center,
         ),
       ),
