@@ -5,7 +5,7 @@ import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTForgotPwdScreen extends StatefulWidget {
   static String tag = '/DTForgotPwdScreen';
@@ -38,7 +38,7 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Forgot Password'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Container(

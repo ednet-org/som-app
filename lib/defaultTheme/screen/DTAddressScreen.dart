@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTAddressScreen extends StatefulWidget {
   static String tag = '/DTAddressScreen';
@@ -38,7 +38,7 @@ class DTAddressScreenState extends State<DTAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Address Manager'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(8),
         child: Column(

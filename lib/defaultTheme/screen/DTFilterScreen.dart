@@ -6,7 +6,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 int selectedIndex = 0;
 
@@ -40,7 +40,7 @@ class DTFilterScreenState extends State<DTFilterScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: appBar(context, 'Filter'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         bottomNavigationBar: Container(
           width: dynamicWidth(context),
           decoration: BoxDecoration(

@@ -6,7 +6,7 @@ import 'package:som/main/utils/AppWidget.dart';
 import 'package:som/main/utils/rating_bar.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'DTProductDetailScreen.dart';
 
 class DTCategoryDetailScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Grid View'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: SingleChildScrollView(
         child: Wrap(
           alignment: WrapAlignment.center,

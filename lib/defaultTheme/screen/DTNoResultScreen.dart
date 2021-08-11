@@ -3,7 +3,7 @@ import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTNoResultScreen extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _DTNoResultScreenState extends State<DTNoResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'No Result'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: errorWidget(
         context,
         'images/defaultTheme/no_result.png',

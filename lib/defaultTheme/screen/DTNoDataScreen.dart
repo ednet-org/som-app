@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTNoDataScreen extends StatefulWidget {
   static String tag = '/DTNoDataScreen';
@@ -31,7 +31,7 @@ class DTNoDataScreenState extends State<DTNoDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'No Data'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: errorWidget(
         context,
         'images/defaultTheme/no_data.png',

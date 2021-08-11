@@ -10,7 +10,7 @@ import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTChatScreen extends StatefulWidget {
   static String tag = '/DTChatScreen';
@@ -224,7 +224,7 @@ class DTChatScreenState extends State<DTChatScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'Chat'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: ContainerX(
         mobile: mobileWidget(),
         web: webWidget(),

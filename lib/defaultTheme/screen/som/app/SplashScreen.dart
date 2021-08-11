@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
 import 'package:som/main/screens/ProKitLauncher.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
-class AppSplashScreen extends StatefulWidget {
-  static String tag = '/ProkitSplashScreen';
+class SplashScreen extends StatefulWidget {
+  static String tag = '/SplashScreen';
 
   @override
-  _AppSplashScreenState createState() => _AppSplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProv
     }
 
     await Future.delayed(Duration(seconds: 3));
-    DTDashboardScreen().launch(context, isNewTask: true);
+    DashboardScreen().launch(context, isNewTask: true);
   }
 
   Widget build(BuildContext context) {

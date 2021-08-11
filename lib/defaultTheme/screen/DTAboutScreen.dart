@@ -4,7 +4,7 @@ import 'package:package_info/package_info.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTAboutScreen extends StatefulWidget {
   static String tag = '/DTAboutScreen';
@@ -33,7 +33,7 @@ class DTAboutScreenState extends State<DTAboutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'About'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: Container(
         padding: EdgeInsets.all(16),
         alignment: Alignment.center,

@@ -5,17 +5,17 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
-import 'DTWorkInProgressScreen.dart';
+import 'MainMenu.dart';
+import '../../DTWorkInProgressScreen.dart';
 
-class DTDashboardScreen extends StatefulWidget {
-  static String tag = '/DTDashboardScreen';
+class DashboardScreen extends StatefulWidget {
+  static String tag = '/DashboardScreen';
 
   @override
-  DTDashboardScreenState createState() => DTDashboardScreenState();
+  DashboardScreenState createState() => DashboardScreenState();
 }
 
-class DTDashboardScreenState extends State<DTDashboardScreen> {
+class DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class DTDashboardScreenState extends State<DTDashboardScreen> {
             },
           ).paddingLeft(16.0),
           floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-          drawer: DTDrawerWidget(),
+          drawer: MainMenu(),
           body: DTWorkInProgressScreen(),
           // body: DTDashboardWidget(),
         ),

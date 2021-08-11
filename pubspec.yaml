@@ -115,7 +115,8 @@ flutter:
     - assets/defaultTheme/
     - assets/cricket_data/
     - lang/en.json
-    - lang/hi.json
+    - lang/de.json
+    - lang/sr.json
 
     # som
     - images/som/

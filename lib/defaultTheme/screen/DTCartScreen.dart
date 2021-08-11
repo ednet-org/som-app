@@ -5,7 +5,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import 'CartListView.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'DTOrderSummaryScreen.dart';
 
 class DTCartScreen extends StatefulWidget {
@@ -63,7 +63,7 @@ class DTCartScreenState extends State<DTCartScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'Cart'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: ContainerX(
         mobile: mobileWidget(),
         web: webWidget(),

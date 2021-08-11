@@ -15,7 +15,7 @@ import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
 import 'DTAddressScreen.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'ReviewWidget.dart';
 
 // ignore: must_be_immutable
@@ -267,7 +267,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'Detail'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: ContainerX(
         mobile: mobileWidget(),
         web: SingleChildScrollView(child: webWidget()),

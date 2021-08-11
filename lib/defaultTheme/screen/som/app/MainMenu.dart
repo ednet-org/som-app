@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
 import 'package:som/defaultTheme/utils/DTDataProvider.dart';
 import 'package:som/main/model/ListModels.dart';
-import 'package:som/main/screens/ProKitLauncher.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
 
-import '../../main.dart';
+import '../../../../main.dart';
 
-class DTDrawerWidget extends StatefulWidget {
-  static String tag = '/DTDrawerWidget';
+class MainMenu extends StatefulWidget {
+  static String tag = '/MainMenu';
 
   @override
-  DTDrawerWidgetState createState() => DTDrawerWidgetState();
+  MainMenuState createState() => MainMenuState();
 }
 
-class DTDrawerWidgetState extends State<DTDrawerWidget> {
+class MainMenuState extends State<MainMenu> {
   List<ListModel> drawerItems = getDrawerItems();
   var scrollController = ScrollController();
 
@@ -79,7 +78,7 @@ class DTDrawerWidgetState extends State<DTDrawerWidget> {
                         style: boldTextStyle(color: appColorPrimary)),
                   ).onTap(() {
                     appStore.setDrawerItemIndex(-1);
-                    DTDashboardScreen().launch(context, isNewTask: true);
+                    DashboardScreen().launch(context, isNewTask: true);
                   }),
                   Divider(height: 16, color: viewLineColor),
                   ListView.builder(

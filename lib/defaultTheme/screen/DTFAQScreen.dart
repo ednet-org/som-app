@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTFAQScreen extends StatefulWidget {
   static String tag = '/DTFAQScreen';
@@ -83,7 +83,7 @@ class DTFAQScreenState extends State<DTFAQScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: appBar(context, 'FAQ'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         body: Observer(
           builder: (_) => Stack(
             fit: StackFit.expand,

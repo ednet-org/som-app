@@ -8,7 +8,7 @@ import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTContactUsScreen extends StatefulWidget {
   static String tag = '/DTContactUsScreen';
@@ -40,7 +40,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
     return Observer(
       builder: (_) => Scaffold(
         appBar: appBar(context, 'Contact Us'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         body: Stack(
           children: [
             isMobile

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
-import 'package:som/defaultTheme/screen/DTDrawerWidget.dart';
+import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/MainMenu.dart';
 import 'package:som/defaultTheme/screen/DTForgotPwdScreen.dart';
 import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
 import 'package:som/main.dart';
@@ -47,7 +47,7 @@ class DTSignInScreenState extends State<DTSignInScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context, 'Sign In'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: Center(
         child: Container(
           width: dynamicWidth(context),
@@ -123,7 +123,7 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     child: Text('Sign In', style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
-                    DTDashboardScreen().launch(context);
+                    DashboardScreen().launch(context);
 
                     /// Remove comment if you want enable validation
                     /*if (formKey.currentState.validate()) {

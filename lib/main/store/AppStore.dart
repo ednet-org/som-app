@@ -40,7 +40,7 @@ abstract class AppStoreBase with Store {
   Color? iconSecondaryColor;
 
   @observable
-  String selectedLanguage = 'en';
+  String selectedLanguage = 'de';
 
   @observable
   var selectedDrawerItem = -1;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
 import 'package:som/integrations/utils/colors.dart';
 import 'package:som/main/model/AppModel.dart';
 import 'package:som/main/utils/AppImages.dart';
@@ -30,7 +30,7 @@ class ProKitWebLauncherState extends State<ProKitWebLauncher> {
   }
 
   init() async {
-    list.add(ProTheme(name: 'Default Theme', type: '', show_cover: false, widget: DTDashboardScreen(), darkThemeSupported: true));
+    list.add(ProTheme(name: 'Default Theme', type: '', show_cover: false, widget: DashboardScreen(), darkThemeSupported: true));
     list.add(ProTheme(name: 'Portfolio 1', type: '', show_cover: false, widget: Portfolio1Screen(), darkThemeSupported: true));
     list.add(ProTheme(name: 'Portfolio 2', type: '', show_cover: false, widget: Portfolio2Screen(), darkThemeSupported: true));
     list.add(ProTheme(name: 'Portfolio 3', type: '', show_cover: false, widget: Portfolio3Screen(), darkThemeSupported: true));

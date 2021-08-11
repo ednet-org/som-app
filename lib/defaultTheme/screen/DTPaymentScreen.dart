@@ -8,7 +8,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTPaymentScreen extends StatefulWidget {
   static String tag = '/DTPaymentScreen';
@@ -61,7 +61,7 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
     return Observer(
       builder: (_) => Scaffold(
         appBar: appBar(context, 'Payment'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         body: Align(
           alignment: Alignment.topCenter,
           child: Container(

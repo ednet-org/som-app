@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'DTSignInScreen.dart';
 
 class DTWalkThoughScreen extends StatefulWidget {
@@ -75,7 +75,7 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'WalkThrough'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: Container(
         child: Stack(
           children: [

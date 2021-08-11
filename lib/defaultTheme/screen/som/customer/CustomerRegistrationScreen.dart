@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'RoleSelection.dart';
 import 'Roles.dart';
 
-class CCustomerRegistration extends StatefulWidget {
+class CustomerRegistrationScreen extends StatefulWidget {
   @override
-  createState() => CCustomerRegistrationState();
+  createState() => CustomerRegistrationScreenState();
 }
 
 

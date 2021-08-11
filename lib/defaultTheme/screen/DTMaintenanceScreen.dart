@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTMaintenanceScreen extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _DTMaintenanceScreenState extends State<DTMaintenanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Maintenance'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: errorWidget(
         context,
         'images/defaultTheme/maintenance.png',

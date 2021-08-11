@@ -7,13 +7,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/cloudStorage/model/CSDataModel.dart';
-import 'package:som/main/screens/AppSplashScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/SplashScreen.dart';
 import 'package:som/main/store/AppStore.dart';
 import 'package:som/main/utils/AppTheme.dart';
 import 'package:som/routes.dart';
 
 import 'main/utils/AppConstant.dart';
-import 'muvi/utils/flix_app_localizations.dart';
+import 'main/utils/intl/som_localizations.dart';
 //endregion
 
 /// This variable is used to get dynamic colors when theme mode is changed
@@ -50,13 +50,13 @@ class MyApp extends StatelessWidget {
     return Observer(
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [MuviAppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+        localizationsDelegates: [SomLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
         localeResolutionCallback: (locale, supportedLocales) => Locale(appStore.selectedLanguage),
         locale: Locale(appStore.selectedLanguage),
         supportedLocales: [Locale('en', 'de')],
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-        home: AppSplashScreen(),
+        home: SplashScreen(),
         theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
         builder: scrollBehaviour(),
       ),

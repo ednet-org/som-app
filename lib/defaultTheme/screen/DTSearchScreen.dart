@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTSearchScreen extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Search'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(

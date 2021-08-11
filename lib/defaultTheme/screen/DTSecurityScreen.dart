@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTChangePasswordScreen.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTSecurityScreen extends StatefulWidget {
   static String tag = '/DTSecurityScreen';
@@ -33,7 +33,7 @@ class DTSecurityScreenState extends State<DTSecurityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Security'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: Column(
         children: [
           settingItem(context, 'Change Password', onTap: () {

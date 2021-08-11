@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';
 import 'CartListView.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 // ignore: must_be_immutable
 class DTOrderSummaryScreen extends StatefulWidget {
@@ -218,7 +218,7 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'Order Summary'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: ContainerX(
         mobile: mobileWidget(),
         web: webWidget(),

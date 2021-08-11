@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/som/customer/Registration.dart';
+import 'package:som/defaultTheme/screen/som/customer/CustomerRegistrationScreen.dart';
 import 'package:som/defaultTheme/screen/som/customer/RoleSelection.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTSignUpScreen extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
@@ -51,8 +51,8 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context, 'Customer registration'),
-      drawer: DTDrawerWidget(),
-      body: Center(child: CCustomerRegistration()),
+      drawer: MainMenu(),
+      body: Center(child: CustomerRegistrationScreen()),
     );
   }
 

@@ -10,7 +10,7 @@ import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'DTNotificationSettingScreen.dart';
 import 'DTSecurityScreen.dart';
 
@@ -98,7 +98,7 @@ class DTProfileScreenState extends State<DTProfileScreen> {
     return Observer(
       builder: (_) => Scaffold(
         appBar: appBar(context, 'Profile'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         body: ContainerX(
           mobile: SingleChildScrollView(
             padding: EdgeInsets.only(top: 16),

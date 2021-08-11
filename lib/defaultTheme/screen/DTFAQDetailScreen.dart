@@ -5,7 +5,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTFAQDetailScreen extends StatefulWidget {
   static String tag = '/DTFAQDetailScreen';
@@ -35,7 +35,7 @@ class _DTFAQDetailScreenState extends State<DTFAQDetailScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: appBar(context, 'What is Airbnb plus and how to different?'),
-        drawer: DTDrawerWidget(),
+        drawer: MainMenu(),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16),
           child: Column(

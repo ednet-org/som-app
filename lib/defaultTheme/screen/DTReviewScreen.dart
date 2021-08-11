@@ -11,7 +11,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 import 'package:som/main/utils/flutter_rating_bar.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 import 'ReviewWidget.dart';
 
 class DTReviewScreen extends StatefulWidget {
@@ -297,7 +297,7 @@ class DTReviewScreenState extends State<DTReviewScreen> {
 
     return Scaffold(
       appBar: appBar(context, 'Review & Rating'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: ContainerX(
         mobile: mobileWidget(),
         web: webWidget(),

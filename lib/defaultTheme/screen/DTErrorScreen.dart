@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'DTDrawerWidget.dart';
+import 'som/app/MainMenu.dart';
 
 class DTErrorScreen extends StatefulWidget {
   static String tag = '/DTErrorScreen';
@@ -32,7 +32,7 @@ class DTErrorScreenState extends State<DTErrorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, 'Error'),
-      drawer: DTDrawerWidget(),
+      drawer: MainMenu(),
       body: errorWidget(
         context,
         'images/defaultTheme/error.png',

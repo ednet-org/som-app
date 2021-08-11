@@ -13,7 +13,7 @@ import 'package:som/defaultTheme/screen/DTCartScreen.dart';
 import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
 import 'package:som/defaultTheme/screen/DTChatScreen.dart';
 import 'package:som/defaultTheme/screen/DTContactUsScreen.dart';
-import 'package:som/defaultTheme/screen/DTDashboardScreen.dart';
+import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
 import 'package:som/defaultTheme/screen/DTErrorScreen.dart';
 import 'package:som/defaultTheme/screen/DTFAQScreen.dart';
 import 'package:som/defaultTheme/screen/DTFilterScreen.dart';
