@@ -21,6 +21,16 @@ class CRoleSelection extends StatelessWidget {
             .paddingOnly(left: 8, top: 20, right: 8),
         16.height,
         Container(
+          height: 300,
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Card(
+            child: Row(children: [
+              Text('HMMMMM'),
+            ]),
+          ),
+        ),
+        16.height,
+        Container(
           height: 150,
           child: selectionCards,
         ),
@@ -35,10 +45,15 @@ class CRoleSelection extends StatelessWidget {
       children: Roles.values
           .map(
             (roleValue) => InkWell(
-              child: Role(
-                selectRole: selectRole,
-                selectedRole: selectedRole,
-                role: roleValue,
+              onTap: () {
+                selectRole(selectedRole);
+              },
+              child: Card(
+                child: Role(
+                  selectRole: selectRole,
+                  selectedRole: selectedRole,
+                  role: roleValue,
+                ),
               ),
             ),
           )

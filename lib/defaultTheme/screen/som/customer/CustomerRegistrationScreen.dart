@@ -8,11 +8,10 @@ class CustomerRegistrationScreen extends StatefulWidget {
   createState() => CustomerRegistrationScreenState();
 }
 
+class CustomerRegistrationScreenState extends State<CustomerRegistrationScreen> {
+  var selectedRole = Roles.Buyer;
 
-class CCustomerRegistrationState extends State<CCustomerRegistration> {
-  Roles selectedRole = Roles.Buyer;
-
-  void selectRole(Roles role) {
+  selectRole(var role) {
     setState(() {
       selectedRole = role;
     });
@@ -34,8 +33,21 @@ class CRegistrationForm extends StatelessWidget {
 
   CRegistrationForm(this.selectedRole);
 
+  // candidate for state management layer
   Widget build(BuildContext context) {
-    return this.selectedRole == Roles.Buyer ? buyerForm() : providerForm();
+    if (this.selectedRole == Roles.Buyer) {
+      return buyerForm();
+    }
+
+    if (this.selectedRole == Roles.Provider) {
+      return providerForm();
+    }
+
+    if (this.selectedRole == Roles.ProviderAndBuyer) {
+      return providerAndBuyerForm();
+    }
+
+    throw Exception('NotImplemented');
   }
 
   providerForm() {
@@ -44,5 +56,9 @@ class CRegistrationForm extends StatelessWidget {
 
   buyerForm() {
     return Text('buyer or not');
+  }
+
+  providerAndBuyerForm() {
+    return Text('Both roles are assumed.');
   }
 }
