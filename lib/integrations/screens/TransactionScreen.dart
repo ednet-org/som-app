@@ -54,7 +54,7 @@ class TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  cardColor,
+      backgroundColor: cardColor,
       appBar: appBar(context, 'Transaction Chart'),
       body: Container(
         height: 300,
@@ -65,8 +65,8 @@ class TransactionScreenState extends State<TransactionScreen> {
                 touchTooltipData: BarTouchTooltipData(
                   tooltipBgColor: grey,
                 ),
-                touchCallback: (response) {
-                  if (response.spot == null) {
+                touchCallback: (flTouchEvent, response) {
+                  if (response?.spot == null) {
                     setState(() {
                       touchedGroupIndex = -1;
                       showingBarGroups = List.of(rawBarGroups);
@@ -74,23 +74,29 @@ class TransactionScreenState extends State<TransactionScreen> {
                     return;
                   }
 
-                  touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+                  touchedGroupIndex = response!.spot!.touchedBarGroupIndex;
 
                   setState(() {
-                    if (response.touchInput is PointerExitEvent || response.touchInput is PointerUpEvent) {
+                    if (flTouchEvent is PointerExitEvent ||
+                        flTouchEvent is PointerUpEvent) {
                       touchedGroupIndex = -1;
                       showingBarGroups = List.of(rawBarGroups);
                     } else {
                       showingBarGroups = List.of(rawBarGroups);
                       if (touchedGroupIndex != -1) {
                         double sum = 0.0;
-                        for (var rod in showingBarGroups[touchedGroupIndex].barRods) {
+                        for (var rod
+                            in showingBarGroups[touchedGroupIndex].barRods) {
                           sum += rod.y;
                         }
-                        final avg = sum / showingBarGroups[touchedGroupIndex].barRods.length;
+                        final avg = sum /
+                            showingBarGroups[touchedGroupIndex].barRods.length;
 
-                        showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
-                          barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
+                        showingBarGroups[touchedGroupIndex] =
+                            showingBarGroups[touchedGroupIndex].copyWith(
+                          barRods: showingBarGroups[touchedGroupIndex]
+                              .barRods
+                              .map((rod) {
                             return rod.copyWith(y: avg);
                           }).toList(),
                         );
@@ -102,7 +108,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               show: true,
               bottomTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) => boldTextStyle(color: borderText),
+                getTextStyles: (value, a) => boldTextStyle(color: borderText),
                 margin: 20,
                 getTitles: (double value) {
                   switch (value.toInt()) {
@@ -127,7 +133,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               ),
               leftTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) => boldTextStyle(color: borderText),
+                getTextStyles: (value, a) => boldTextStyle(color: borderText),
                 margin: 32,
                 reservedSize: 14,
                 getTitles: (value) {

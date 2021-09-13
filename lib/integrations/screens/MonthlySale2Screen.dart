@@ -47,7 +47,7 @@ class MonthlySale2ScreenState extends State<MonthlySale2Screen> {
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
         ),
-        touchCallback: (LineTouchResponse touchResponse) {},
+        touchCallback: (flTouchEvent, touchResponse) {},
         handleBuiltInTouches: true,
       ),
       gridData: FlGridData(
@@ -56,7 +56,7 @@ class MonthlySale2ScreenState extends State<MonthlySale2Screen> {
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) {
+          getTextStyles: (value, a) {
             return boldTextStyle(color: TransactionRight);
           },
           margin: 10,
@@ -75,7 +75,7 @@ class MonthlySale2ScreenState extends State<MonthlySale2Screen> {
         leftTitles: SideTitles(
           margin: 10,
           showTitles: true,
-          getTextStyles: (value) => boldTextStyle(color: TransactionRight),
+          getTextStyles: (value, a) => boldTextStyle(color: TransactionRight),
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/integrations/utils/colors.dart';
@@ -9,7 +8,6 @@ import 'package:som/main/utils/AppWidget.dart';
 
 // ignore: must_be_immutable
 class BarChart1Screen extends StatefulWidget {
-
   List<Color> availableColors = [
     purple,
     yellow,
@@ -18,6 +16,7 @@ class BarChart1Screen extends StatefulWidget {
     orchid,
     violet,
   ];
+
   @override
   State<StatefulWidget> createState() => BarChart1ScreenState();
 }
@@ -29,8 +28,6 @@ class BarChart1ScreenState extends State<BarChart1Screen> {
   int touchedIndex = -1;
 
   bool isPlaying = false;
-
-
 
   @override
   void initState() {
@@ -189,10 +186,10 @@ class BarChart1ScreenState extends State<BarChart1Screen> {
                 ],
               );
             }),
-        touchCallback: (barTouchResponse) {
+        touchCallback: (a, barTouchResponse) {
           setState(() {
-            if (barTouchResponse.spot != null && barTouchResponse.touchInput is! PointerUpEvent && barTouchResponse.touchInput is! PointerExitEvent) {
-              touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
+            if (barTouchResponse?.spot != null && a is FlTapUpEvent) {
+              touchedIndex = barTouchResponse!.spot!.touchedBarGroupIndex;
             } else {
               touchedIndex = -1;
             }
@@ -203,7 +200,7 @@ class BarChart1ScreenState extends State<BarChart1Screen> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => boldTextStyle(color: TransactionRight),
+          getTextStyles: (value, a) => boldTextStyle(color: TransactionRight),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {
@@ -246,7 +243,7 @@ class BarChart1ScreenState extends State<BarChart1Screen> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => boldTextStyle(color: TransactionRight),
+          getTextStyles: (value, a) => boldTextStyle(color: TransactionRight),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {
@@ -279,19 +276,33 @@ class BarChart1ScreenState extends State<BarChart1Screen> {
       barGroups: List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(0, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 1:
-            return makeGroupData(1, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(1, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 2:
-            return makeGroupData(2, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(2, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 3:
-            return makeGroupData(3, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(3, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 4:
-            return makeGroupData(4, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(4, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 5:
-            return makeGroupData(5, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(5, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           case 6:
-            return makeGroupData(6, Random().nextInt(15).toDouble() + 6, barColor: widget.availableColors[Random().nextInt(widget.availableColors.length)]);
+            return makeGroupData(6, Random().nextInt(15).toDouble() + 6,
+                barColor: widget.availableColors[
+                    Random().nextInt(widget.availableColors.length)]);
           default:
             return throw Error();
         }

@@ -38,7 +38,8 @@ class BarChart2ScreenState extends State<BarChart2Screen> {
               show: true,
               topTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) =>  boldTextStyle(size: 10,color: white),
+                getTextStyles: (value, a) =>
+                    boldTextStyle(size: 10, color: white),
                 margin: 10,
                 rotateAngle: 0,
                 getTitles: (double value) {
@@ -64,7 +65,8 @@ class BarChart2ScreenState extends State<BarChart2Screen> {
               ),
               bottomTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) =>  boldTextStyle(color: white,size: 10),
+                getTextStyles: (value, a) =>
+                    boldTextStyle(color: white, size: 10),
                 margin: 10,
                 rotateAngle: 0,
                 getTitles: (double value) {
@@ -90,7 +92,8 @@ class BarChart2ScreenState extends State<BarChart2Screen> {
               ),
               leftTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) =>  boldTextStyle(color: white,size: 10),
+                getTextStyles: (value, a) =>
+                    boldTextStyle(color: white, size: 10),
                 rotateAngle: 45,
                 getTitles: (double value) {
                   if (value == 0) {
@@ -104,7 +107,8 @@ class BarChart2ScreenState extends State<BarChart2Screen> {
               ),
               rightTitles: SideTitles(
                 showTitles: true,
-                getTextStyles: (value) =>  boldTextStyle(color: white,size: 10),
+                getTextStyles: (value, a) =>
+                    boldTextStyle(color: white, size: 10),
                 rotateAngle: 90,
                 getTitles: (double value) {
                   if (value == 0) {

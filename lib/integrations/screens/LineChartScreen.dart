@@ -52,7 +52,8 @@ class LineChartScreenState extends State<LineChartScreen> {
                   );
                 },
                 drawVerticalLine: true),
-            borderData: FlBorderData(border: Border.all(color: borderText, width: 1)),
+            borderData:
+                FlBorderData(border: Border.all(color: borderText, width: 1)),
             lineBarsData: [
               LineChartBarData(
                 spots: [
@@ -86,7 +87,7 @@ class LineTitles {
   static getTitleData() => FlTitlesData(
         leftTitles: SideTitles(
             showTitles: true,
-            getTextStyles: (val) => primaryTextStyle(color: borderText),
+            getTextStyles: (val, a) => primaryTextStyle(color: borderText),
             getTitles: (val) {
               switch (val.toInt()) {
                 case 2:
@@ -101,7 +102,7 @@ class LineTitles {
             reservedSize: 35),
         show: true,
         bottomTitles: SideTitles(
-          getTextStyles: (value) => boldTextStyle(color: borderText),
+          getTextStyles: (value, a) => boldTextStyle(color: borderText),
           showTitles: true,
           margin: 8,
           reservedSize: 38,

@@ -28,10 +28,11 @@ class FilePickerScreenState extends State<FilePickerScreen> {
   }
 
   Future getFiles() async {
-    FilePickerResult? _result = await FilePicker.platform.pickFiles(type: FileType.any);
+    FilePickerResult? _result =
+        await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (_result != null) {
-      file = File(_result.files.single.path!);
+      file = File(_result.files.single.path);
       fileName = file!.path.split('/').last;
       filePath = file!.path;
     }
@@ -51,11 +52,21 @@ class FilePickerScreenState extends State<FilePickerScreen> {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text("File Name:", style: boldTextStyle(size: 18)), 8.width, if (file != null) Text("$fileName", style: primaryTextStyle()).expand()],
+            children: [
+              Text("File Name:", style: boldTextStyle(size: 18)),
+              8.width,
+              if (file != null)
+                Text("$fileName", style: primaryTextStyle()).expand()
+            ],
           ).paddingAll(16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text("File Path:", style: boldTextStyle(size: 18)), 8.width, if (file != null) Text("$filePath", style: primaryTextStyle()).expand()],
+            children: [
+              Text("File Path:", style: boldTextStyle(size: 18)),
+              8.width,
+              if (file != null)
+                Text("$filePath", style: primaryTextStyle()).expand()
+            ],
           ).paddingAll(16),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -65,7 +76,8 @@ class FilePickerScreenState extends State<FilePickerScreen> {
               await getFiles();
               setState(() {});
             },
-            child: Text("Pick File", style: boldTextStyle(color: Colors.white, size: 18)),
+            child: Text("Pick File",
+                style: boldTextStyle(color: Colors.white, size: 18)),
           ).paddingOnly(left: 16).center(),
         ],
       ),
