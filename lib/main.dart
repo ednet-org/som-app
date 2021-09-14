@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/cloudStorage/model/CSDataModel.dart';
 import 'package:som/defaultTheme/screen/som/app/SplashScreen.dart';
 import 'package:som/main/store/AppStore.dart';
 import 'package:som/main/utils/AppTheme.dart';
@@ -19,8 +18,6 @@ import 'main/utils/intl/som_localizations.dart';
 /// This variable is used to get dynamic colors when theme mode is changed
 AppStore appStore = AppStore();
 
-List<CSDataModel> getCloudboxList = getCloudboxData();
-List<CSDrawerModel> getCSDrawerList = getCSDrawer();
 int currentIndex = 0;
 
 void main() async {
@@ -50,14 +47,21 @@ class MyApp extends StatelessWidget {
     return Observer(
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [SomLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
-        localeResolutionCallback: (locale, supportedLocales) => Locale(appStore.selectedLanguage),
+        localizationsDelegates: [
+          SomLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        localeResolutionCallback: (locale, supportedLocales) =>
+            Locale(appStore.selectedLanguage),
         locale: Locale(appStore.selectedLanguage),
-        supportedLocales: [Locale('en', 'de')],
+        supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
         home: SplashScreen(),
-        theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
+        theme: !appStore.isDarkModeOn
+            ? AppThemeData.lightTheme
+            : AppThemeData.darkTheme,
         builder: scrollBehaviour(),
       ),
     );
