@@ -9,7 +9,6 @@ import 'package:som/dashboard/screen/Dashboard5.dart';
 import 'package:som/dashboard/screen/Dashboard6.dart';
 import 'package:som/dashboard/screen/Dashboard7.dart';
 import 'package:som/dashboard/screen/Dashboard8.dart';
-import 'package:som/food/screen/FoodWalkThrough.dart';
 import 'package:som/grocery/screen/GrocerySplash.dart';
 import 'package:som/hairSalon/screens/BHSplashScreen.dart';
 import 'package:som/integrations/screens/BarChart1Screen.dart';
@@ -920,7 +919,6 @@ ProTheme getFullApps() {
   list.add(ProTheme(name: 'Online Quiz', type: '', widget: QuizSignIn()));
   list.add(ProTheme(name: 'Social', type: '', widget: SocialWalkThrough()));
   list.add(ProTheme(name: 'Shop hop', type: '', widget: ShSplashScreen()));
-  list.add(ProTheme(name: 'Food App', type: '', widget: FoodWalkThrough()));
   list.add(ProTheme(name: 'Grocery', type: '', widget: GrocerySplashScreen()));
   list.add(ProTheme(name: 'Orapay', type: '', widget: OPSplashScreen()));
   list.add(ProTheme(name: 'Flix App', type: '', widget: MuviSplashScreen()));

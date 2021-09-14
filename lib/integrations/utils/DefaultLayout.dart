@@ -2,7 +2,6 @@ import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/food/utils/FoodColors.dart';
 
 class DefaultLayout extends StatefulWidget {
   final String? title, description, imageLink;
@@ -42,7 +41,9 @@ class _DefaultLayoutState extends State<DefaultLayout> {
                   arcType: ArcType.CONVEX,
                   edge: Edge.BOTTOM,
                   height: (MediaQuery.of(context).size.width) / 20,
-                  child: new Container(height: (MediaQuery.of(context).size.height) / 1.7, width: MediaQuery.of(context).size.width, color: food_colorPrimary_light),
+                  child: new Container(
+                      height: (MediaQuery.of(context).size.height) / 1.7,
+                      width: MediaQuery.of(context).size.width),
                 ),
                 SafeArea(
                   child: Container(
