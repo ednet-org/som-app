@@ -1,21 +1,6 @@
-import 'package:som/dashboard/screen/Dashboard1.dart';
-import 'package:som/dashboard/screen/Dashboard2.dart';
-import 'package:som/dashboard/screen/Dashboard3.dart';
-import 'package:som/dashboard/screen/Dashboard4.dart';
-import 'package:som/dashboard/screen/Dashboard5.dart';
-import 'package:som/dashboard/screen/Dashboard6.dart';
-import 'package:som/dashboard/screen/Dashboard7.dart';
-import 'package:som/dashboard/screen/Dashboard8.dart';
-
 import 'package:som/integrations/screens/MonthlySale1Screen.dart';
-
 import 'package:som/integrations/screens/Shimmer/SHomePage.dart';
 import 'package:som/main/model/AppModel.dart';
-import 'package:som/main/utils/AppConstant.dart';
-
-import 'package:som/webApps/portfolios/portfolio1/Portfolio1Screen.dart';
-import 'package:som/webApps/portfolios/portfolio2/Portfolio2Screen.dart';
-import 'package:som/webApps/portfolios/portfolio3/Portfolio3Screen.dart';
 import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedBuilderScreen.dart';
 import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedContainerScreen.dart';
 import 'package:som/widgets/animationAndMotionWidgets/AMAnimatedCrossFadeScreen.dart';
@@ -125,6 +110,7 @@ Future<AppTheme> getAllAppsAndThemes() async {
 
   return appTheme;
 }
+
 //region Dashboard
 ProTheme getDashboards() {
   ProTheme theme = ProTheme(
@@ -134,15 +120,6 @@ ProTheme getDashboards() {
       show_cover: true,
       type: '');
   List<ProTheme> list = [];
-  list.add(ProTheme(name: 'Food', type: '', widget: Dashboard1()));
-  list.add(ProTheme(name: 'E-Commerce', type: '', widget: Dashboard2()));
-  list.add(ProTheme(name: 'Furniture', type: '', widget: Dashboard3()));
-  list.add(ProTheme(name: 'e-Wallet', type: '', widget: Dashboard4()));
-  list.add(ProTheme(name: 'Hotel Booking', type: '', widget: Dashboard5()));
-  list.add(ProTheme(name: 'Laundry', type: '', widget: Dashboard6()));
-  list.add(ProTheme(name: 'Medical', type: '', widget: Dashboard7()));
-  list.add(ProTheme(name: 'Home automation', type: '', widget: Dashboard8()));
-
   theme.sub_kits!.addAll(list);
   return theme;
 }
@@ -1151,45 +1128,12 @@ List<ProTheme> getRestAPi() {
 ProTheme getWebApps() {
   List<ProTheme> list = [];
 
-  list.add(ProTheme(
-      name: 'Portfolio',
-      title_name: 'Single Page Websites',
-      type: '',
-      show_cover: false,
-      sub_kits: getPortfolioSites(),
-      darkThemeSupported: true));
-
   return ProTheme(
       name: 'Web',
       title_name: 'Flutter Web Apps',
       type: '',
       show_cover: false,
       sub_kits: list);
-}
-
-List<ProTheme> getPortfolioSites() {
-  List<ProTheme> list = [];
-
-  list.add(ProTheme(
-      name: 'Portfolio 1',
-      type: '',
-      show_cover: false,
-      widget: Portfolio1Screen(),
-      darkThemeSupported: true));
-  list.add(ProTheme(
-      name: 'Portfolio 2',
-      type: '',
-      show_cover: false,
-      widget: Portfolio2Screen(),
-      darkThemeSupported: true));
-  list.add(ProTheme(
-      name: 'Portfolio 3',
-      type: '',
-      show_cover: false,
-      widget: Portfolio3Screen(),
-      darkThemeSupported: true));
-
-  return list;
 }
 
 List<ProTheme> getChartList() {
