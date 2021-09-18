@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/DTWalkThoughScreen.dart';
+import 'package:som/defaultTheme/screen/template/DTWalkThoughScreen.dart';
 import 'package:som/main/model/AppModel.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppConstant.dart';
