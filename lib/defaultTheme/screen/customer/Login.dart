@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/customer/CustomerRegistrationScreen.dart';
+import 'package:som/defaultTheme/screen/customer/Registration.dart';
 import 'package:som/defaultTheme/screen/customer/RoleSelection.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
@@ -50,7 +50,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar(context, 'Customer registration'),
+      appBar: appBar(context, 'Login <- Customer registration'),
       drawer: MainMenu(),
       body: Center(child: CustomerRegistrationScreen()),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'Role.dart';
-import 'Roles.dart';
+import '../../../domain/model/customer-management/roles.dart';
 
 class CRoleSelection extends StatelessWidget {
   final Roles selectedRole;

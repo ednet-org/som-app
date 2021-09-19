@@ -5,7 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
 import 'package:som/defaultTheme/screen/app/MainMenu.dart';
 import 'package:som/defaultTheme/screen/template/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTSignUpScreen.dart';
+import 'package:som/defaultTheme/screen/customer/Login.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';

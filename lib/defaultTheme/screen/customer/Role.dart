@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/customer/Roles.dart';
+import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import '../../../../main.dart';

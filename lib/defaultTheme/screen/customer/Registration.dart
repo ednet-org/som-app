@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'RoleSelection.dart';
-import 'Roles.dart';
+import '../../../domain/model/customer-management/roles.dart';
 
 class CustomerRegistrationScreen extends StatefulWidget {
   @override
@@ -35,6 +35,12 @@ class CRegistrationForm extends StatelessWidget {
 
   // candidate for state management layer
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('Nesxta')
+      ],
+    );
+
     if (this.selectedRole == Roles.Buyer) {
       return buyerForm();
     }

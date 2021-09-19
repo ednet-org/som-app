@@ -28,7 +28,7 @@ import 'package:som/defaultTheme/screen/template/DTProfileScreen.dart';
 import 'package:som/defaultTheme/screen/template/DTReviewScreen.dart';
 import 'package:som/defaultTheme/screen/template/DTSearchScreen.dart';
 import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTSignUpScreen.dart';
+import 'package:som/defaultTheme/screen/customer/Login.dart';
 import 'package:som/defaultTheme/screen/template/DTWalkThoughScreen.dart';
 import 'package:som/main/model/ListModels.dart';
 import 'package:som/main/utils/AppConstant.dart';

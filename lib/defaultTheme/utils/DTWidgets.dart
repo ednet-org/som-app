@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:som/defaultTheme/screen/template/DTSignUpScreen.dart';
+import 'package:som/defaultTheme/screen/customer/Login.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
