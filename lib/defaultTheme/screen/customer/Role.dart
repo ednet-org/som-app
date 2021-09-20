@@ -40,7 +40,7 @@ class Role extends StatelessWidget {
         child: Text(
           roleTitle,
           style: primaryTextStyle(
-              size: textSizeXLarge.toInt(),
+              size: textSizeMedium.toInt(),
               color: selectedRole == role ? white : appStore.textPrimaryColor),
           textAlign: TextAlign.center,
         ),

@@ -21,7 +21,6 @@ class CRoleSelection extends StatelessWidget {
             .paddingOnly(left: 8, top: 20, right: 8),
         16.height,
         Container(
-          height: 300,
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           child: Card(
             child: Row(children: [
@@ -31,7 +30,7 @@ class CRoleSelection extends StatelessWidget {
         ),
         16.height,
         Container(
-          height: 150,
+          height: 100,
           child: selectionCards,
         ),
         8.height,

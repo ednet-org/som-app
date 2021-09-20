@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'RoleSelection.dart';
 import '../../../domain/model/customer-management/roles.dart';
+import 'RoleSelection.dart';
 
 class CustomerRegistrationScreen extends StatefulWidget {
   @override
   createState() => CustomerRegistrationScreenState();
 }
 
-class CustomerRegistrationScreenState extends State<CustomerRegistrationScreen> {
+class CustomerRegistrationScreenState
+    extends State<CustomerRegistrationScreen> {
   var selectedRole = Roles.Buyer;
 
   selectRole(var role) {
@@ -33,14 +34,7 @@ class CRegistrationForm extends StatelessWidget {
 
   CRegistrationForm(this.selectedRole);
 
-  // candidate for state management layer
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Nesxta')
-      ],
-    );
-
     if (this.selectedRole == Roles.Buyer) {
       return buyerForm();
     }
@@ -56,15 +50,24 @@ class CRegistrationForm extends StatelessWidget {
     throw Exception('NotImplemented');
   }
 
-  providerForm() {
-    return Text('provider');
-  }
+  providerForm() => company(
+        Text('provider'),
+      );
 
-  buyerForm() {
-    return Text('buyer or not');
-  }
+  buyerForm() => company(
+        Text('buyer or not'),
+      );
 
-  providerAndBuyerForm() {
-    return Text('Both roles are assumed.');
+  providerAndBuyerForm() => company(
+        Text('Both roles are assumed.'),
+      );
+
+  company(data) {
+    return Column(
+      children: [
+        Text('lorem ipsum'),
+        data,
+      ],
+    );
   }
 }

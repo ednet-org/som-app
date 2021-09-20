@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
-import 'package:som/main/screens/ProKitLauncher.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -99,4 +99,7 @@ abstract class AppStoreBase with Store {
   void setDrawerItemIndex(int aIndex) {
     selectedDrawerItem = aIndex;
   }
+
+  @observable
+  bool isUserAuthenticated = false;
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
 import 'package:som/defaultTheme/screen/customer/Registration.dart';
-import 'package:som/defaultTheme/screen/customer/RoleSelection.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
@@ -48,11 +46,13 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: appBar(context, 'Login <- Customer registration'),
-      drawer: MainMenu(),
-      body: Center(child: CustomerRegistrationScreen()),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: appBar(context, 'Login <- Customer registration'),
+        drawer: MainMenu(),
+        body: Center(child: CustomerRegistrationScreen()),
+      ),
     );
   }
 
