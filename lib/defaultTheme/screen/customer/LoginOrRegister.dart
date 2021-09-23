@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/customer/Registration.dart';
 import 'package:som/main/utils/AppColors.dart';
-import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
-import '../app/MainMenu.dart';
 
 class LoginOrRegister extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
@@ -49,9 +47,7 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBar(context, 'Login <- Customer registration'),
-        drawer: MainMenu(),
-        body: Center(child: CustomerRegistrationScreen()),
+        body: Center(child: Registration()),
       ),
     );
   }

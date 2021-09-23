@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppConstant.dart';
-import 'Role.dart';
-import '../../../domain/model/customer-management/roles.dart';
 
-class CRoleSelection extends StatelessWidget {
+import '../../../domain/model/customer-management/roles.dart';
+import 'Role.dart';
+
+class RoleSelection extends StatelessWidget {
   final Roles selectedRole;
   final Function selectRole;
 
-  CRoleSelection(this.selectRole, this.selectedRole);
+  RoleSelection(this.selectRole, this.selectedRole);
 
   @override
   Widget build(BuildContext context) {

@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../domain/model/customer-management/roles.dart';
 import 'RoleSelection.dart';
 
-class CustomerRegistrationScreen extends StatefulWidget {
+class Registration extends StatefulWidget {
   @override
-  createState() => CustomerRegistrationScreenState();
+  createState() => RegistrationState();
 }
 
-class CustomerRegistrationScreenState
-    extends State<CustomerRegistrationScreen> {
+class RegistrationState extends State<Registration> {
   var selectedRole = Roles.Buyer;
 
   selectRole(var role) {
@@ -22,17 +21,17 @@ class CustomerRegistrationScreenState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CRoleSelection(selectRole, selectedRole),
-        CRegistrationForm(selectedRole),
+        RoleSelection(selectRole, selectedRole),
+        RegistrationForm(selectedRole),
       ],
     );
   }
 }
 
-class CRegistrationForm extends StatelessWidget {
+class RegistrationForm extends StatelessWidget {
   final Roles selectedRole;
 
-  CRegistrationForm(this.selectedRole);
+  RegistrationForm(this.selectedRole);
 
   Widget build(BuildContext context) {
     if (this.selectedRole == Roles.Buyer) {
