@@ -197,6 +197,22 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
+  final _$isUserAuthenticatedAtom =
+      Atom(name: 'AppStoreBase.isUserAuthenticated');
+
+  @override
+  bool get isUserAuthenticated {
+    _$isUserAuthenticatedAtom.reportRead();
+    return super.isUserAuthenticated;
+  }
+
+  @override
+  set isUserAuthenticated(bool value) {
+    _$isUserAuthenticatedAtom.reportWrite(value, super.isUserAuthenticated, () {
+      super.isUserAuthenticated = value;
+    });
+  }
+
   final _$toggleDarkModeAsyncAction =
       AsyncAction('AppStoreBase.toggleDarkMode');
 
@@ -244,7 +260,8 @@ appBarColor: ${appBarColor},
 iconColor: ${iconColor},
 iconSecondaryColor: ${iconSecondaryColor},
 selectedLanguage: ${selectedLanguage},
-selectedDrawerItem: ${selectedDrawerItem}
+selectedDrawerItem: ${selectedDrawerItem},
+isUserAuthenticated: ${isUserAuthenticated}
     ''';
   }
 }
