@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:som/defaultTheme/screen/customer/Login.dart';
+import 'package:som/defaultTheme/screen/customer/LoginOrRegister.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
@@ -147,7 +147,7 @@ Widget actionInfoWidget(BuildContext context, String image, String title,
                         text: actionText,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
-                            DTSignUpScreen().launch(context);
+                            LoginOrRegister().launch(context);
                           },
                         style: primaryTextStyle(color: Colors.blue),
                       ),

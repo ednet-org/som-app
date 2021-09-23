@@ -7,14 +7,14 @@ import 'package:som/main/utils/AppWidget.dart';
 import '../../../main.dart';
 import '../app/MainMenu.dart';
 
-class DTSignUpScreen extends StatefulWidget {
+class LoginOrRegister extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
 
   @override
-  DTSignUpScreenState createState() => DTSignUpScreenState();
+  LoginOrRegisterState createState() => LoginOrRegisterState();
 }
 
-class DTSignUpScreenState extends State<DTSignUpScreen> {
+class LoginOrRegisterState extends State<LoginOrRegister> {
   bool obscureText = true;
   bool autoValidate = false;
   var formKey = GlobalKey<FormState>();

@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/customer/LoginOrRegister.dart';
 import 'package:som/main/utils/AppConstant.dart';
+
+import '../../../main.dart';
+import 'DashboardScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   static String tag = '/SplashScreen';
@@ -14,7 +17,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -29,7 +33,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     }
 
     await Future.delayed(Duration(seconds: 3));
-    DashboardScreen().launch(context, isNewTask: true);
+
+    if (!appStore.isUserAuthenticated) {
+      return LoginOrRegister().launch(context, isNewTask: true);
+    }
+    return DashboardScreen().launch(context, isNewTask: true);
   }
 
   Widget build(BuildContext context) {
@@ -37,7 +45,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       backgroundColor: Color(0xFF1D2939),
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset('images/som/logo.png', height: 300, fit: BoxFit.fitHeight),
+        child: Image.asset('images/som/logo.png',
+            height: 300, fit: BoxFit.fitHeight),
       ),
     );
   }

@@ -1,35 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/DTAddressListModel.dart';
 import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
 import 'package:som/defaultTheme/model/DTChatModel.dart';
 import 'package:som/defaultTheme/model/DTProductModel.dart';
 import 'package:som/defaultTheme/model/DTReviewModel.dart';
-import 'package:som/defaultTheme/screen/template/DTAboutScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTAddressScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTCartScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTCategoryDetailScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTChatScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTContactUsScreen.dart';
-import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTErrorScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTFAQScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTFilterScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTMaintenanceScreen.dart';
 import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
 import 'package:som/defaultTheme/screen/template/DTNoResultScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTOrderSummaryScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTPaymentScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTProductDetailScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTProfileScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTReviewScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTSearchScreen.dart';
-import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/customer/Login.dart';
-import 'package:som/defaultTheme/screen/template/DTWalkThoughScreen.dart';
 import 'package:som/main/model/ListModels.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
