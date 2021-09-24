@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/customer/Login.dart';
-import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
 
@@ -29,29 +28,38 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
   @override
   Widget build(BuildContext context) {
     print(context.width());
+    print(MediaQuery.of(context).size.width);
+    print(MediaQuery.of(context).size.height);
     return Container(
-      constraints: dynamicBoxConstraints(),
-      height: context.height(),
+      alignment: Alignment.center,
+      // constraints: dynamicBoxConstraints(),
+      // width: context.width() * 0.5,
+      // height: context.height(),
       child: Stack(
         children: [
           Positioned(
-            left: 1,
-            top: 1,
-            child: Image.asset(
-              'images/defaultTheme/maintenance.png',
-              width: context.width(),
-              fit: BoxFit.scaleDown,
+            child: Container(
+              constraints: BoxConstraints(minWidth: 100, maxWidth: 500),
+              // decoration: BoxDecoration(
+              //     border: Border.all(
+              //   color: Colors.lightGreenAccent,
+              // )),
+              child: Image.asset(
+                'images/defaultTheme/maintenance.png',
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.2,
+            // bottom: MediaQuery.of(context).size.height * 0.5,
             left: 0,
-            right: 20,
+            right: 0,
+            top: MediaQuery.of(context).size.height * 0.005,
             child: Container(
               decoration: boxDecorationRoundedWithShadow(12,
                   backgroundColor:
                       appStore.isDarkModeOn ? Colors.black54 : Colors.white70),
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
