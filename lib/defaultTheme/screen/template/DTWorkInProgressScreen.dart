@@ -39,10 +39,10 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
         children: [
           Positioned(
             child: Container(
-              constraints: BoxConstraints(minWidth: 100, maxWidth: 500),
+              constraints: BoxConstraints(minWidth: 100, maxWidth: 800),
               // decoration: BoxDecoration(
               //     border: Border.all(
-              //   color: Colors.lightGreenAccent,
+              //   color: Col222222222222222ors.lightGreenAccent,
               // )),
               child: Image.asset(
                 'images/defaultTheme/maintenance.png',
@@ -84,9 +84,15 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
                           text: ' ',
                         ),
                         TextSpan(
-                            text:
-                                'so that you can be notified when lunch is ready, Thank you for your interest.',
+                            text: 'so that you can be notified on time.',
                             style: secondaryTextStyle(size: 16)),
+                        TextSpan(
+                          text: '\n\nThank you for your interest.',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              DTSignUpScreen().launch(context);
+                            },
+                        ),
                       ],
                     ),
                   ),

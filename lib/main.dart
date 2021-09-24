@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/app/SplashScreen.dart';
+import 'package:som/domain/application/customer-store.dart';
 import 'package:som/main/store/AppStore.dart';
 import 'package:som/main/utils/AppTheme.dart';
 import 'package:som/routes.dart';
@@ -16,7 +17,8 @@ import 'main/utils/intl/som_localizations.dart';
 //endregion
 
 /// This variable is used to get dynamic colors when theme mode is changed
-AppStore appStore = AppStore();
+var appStore = AppStore();
+var customerStore = CustomerStore();
 
 int currentIndex = 0;
 
