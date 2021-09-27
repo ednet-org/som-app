@@ -27,9 +27,6 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(context.width());
-    print(MediaQuery.of(context).size.width);
-    print(MediaQuery.of(context).size.height);
     return Container(
       alignment: Alignment.center,
       // constraints: dynamicBoxConstraints(),

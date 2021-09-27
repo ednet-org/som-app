@@ -45,7 +45,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
   Widget build(BuildContext context) {
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-
+    print('ouuuuuuuut');
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

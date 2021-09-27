@@ -14,8 +14,7 @@ class RegisteringCustomer {
   @observable
   String uuid = DateTime.now().toString();
 
-  @observable
-  String? firstName;
+  @observable  String? firstName;
 
   @observable
   String? lastName;
@@ -31,7 +30,7 @@ class RegisteringCustomer {
 
   @action
   void selectRole(selectedRole) {
-    print('selected Role: $selectedRole');
+    print('selected Role set fired: $selectedRole');
     role = selectedRole;
   }
 }

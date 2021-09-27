@@ -89,7 +89,6 @@ class DTChatScreenState extends State<DTChatScreen> {
 
           return GestureDetector(
             onTap: () {
-              print(context.width());
               if (context.width() > 540 && !isMobile) {
                 personName = data.name;
 

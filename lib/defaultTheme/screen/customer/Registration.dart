@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:som/main.dart';
+import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
 
 import '../../../domain/model/customer-management/roles.dart';
+import '../../../main.dart';
 import 'RoleSelection.dart';
 
 var registeringCustomer = customerStore.registeringCustomer;
@@ -19,43 +20,37 @@ class CustomerRegistrationScreenState
     return Column(
       children: [
         CRoleSelection(),
-        CRegistrationForm(),
+        Observer(builder: (_) {
+          print('\n\nyou hit me !! \n\n');
+          print(registeringCustomer.fullName);
+          print('\n\n');
+          if (registeringCustomer.role == Roles.Buyer) {
+            return buyerForm();
+          }
+
+          if (registeringCustomer.role == Roles.Provider) {
+            return providerForm();
+          }
+
+          if (registeringCustomer.role == Roles.ProviderAndBuyer) {
+            return providerAndBuyerForm();
+          }
+
+          return DTNoDataScreen();
+        }),
       ],
     );
   }
-}
 
-class CRegistrationForm extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Observer(builder: (_) => {
-    if (registeringCustomer.role == Roles.Buyer) {
-        return buyerForm();
-  }
-
-    if (registeringCustomer.role == Roles.Provider) {
-    return providerForm();
-    }
-
-    if (registeringCustomer.role == Roles.ProviderAndBuyer) {
-    return providerAndBuyerForm();
-    }
-
-    throw Exception('NotImplemented');
-    });
-  }
-
-  Widget providerForm() =>
-      company(
+  Widget providerForm() => company(
         Text('provider'),
       );
 
-  Widget buyerForm() =>
-      company(
+  Widget buyerForm() => company(
         Text('buyer or not'),
       );
 
-  Widget providerAndBuyerForm() =>
-      company(
+  Widget providerAndBuyerForm() => company(
         Text('Both roles are assumed.'),
       );
 

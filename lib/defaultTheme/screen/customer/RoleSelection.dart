@@ -8,7 +8,6 @@ import '../../../main.dart';
 import 'Role.dart';
 
 class CRoleSelection extends StatelessWidget {
-  var registeringCustomer = customerStore.registeringCustomer;
 
   CRoleSelection();
 
@@ -47,7 +46,6 @@ class CRoleSelection extends StatelessWidget {
             (roleValue) => InkWell(
               child: Card(
                 child: Role(
-                  registeringCustomer: registeringCustomer,
                   role: roleValue,
                 ),
               ),

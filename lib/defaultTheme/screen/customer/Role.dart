@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
-import 'package:som/domain/application/customer-store.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 import '../../../../main.dart';
+var registeringCustomer = customerStore.registeringCustomer;
 
 class Role extends StatelessWidget {
-  final RegisteringCustomer registeringCustomer;
   final Roles role;
 
-  const Role({required this.role, required this.registeringCustomer, Key? key})
+  const Role({required this.role, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var roleTitle = role.toString().splitAfter('.');
-    print('registeringCustomer.role ');
+    print('registeringCustomer.role registeringCustomer.role == role');
     print(registeringCustomer.role);
+    print(registeringCustomer.role == role);
+
     return GestureDetector(
       onTap: () {
         registeringCustomer.selectRole(role);
