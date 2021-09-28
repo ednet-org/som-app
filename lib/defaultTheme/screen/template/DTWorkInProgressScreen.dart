@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/customer/Login.dart';
 
 import '../../../main.dart';
+import 'DTSignUpScreen_next.dart';
 
 class DTWorkInProgressScreen extends StatefulWidget {
   @override

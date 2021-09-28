@@ -7,14 +7,10 @@ class CustomerStore = CustomerStoreBase with _$CustomerStore;
 
 abstract class CustomerStoreBase with Store {
   @observable
-  RegisteringCustomer registeringCustomer = RegisteringCustomer();
-}
-
-class RegisteringCustomer {
-  @observable
   String uuid = DateTime.now().toString();
 
-  @observable  String? firstName;
+  @observable
+  String? firstName;
 
   @observable
   String? lastName;

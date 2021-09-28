@@ -4,9 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 import '../../../domain/model/customer-management/roles.dart';
-import '../../../main.dart';
-import 'Role.dart';
-import 'Role.dart';
+import 'RoleSelector.dart';
 
 class RoleSelection extends StatelessWidget {
 
@@ -46,7 +44,7 @@ class RoleSelection extends StatelessWidget {
           .map(
             (roleValue) => InkWell(
               child: Card(
-                child: Role(
+                child: RoleSelector(
                   role: roleValue,
                 ),
               ),

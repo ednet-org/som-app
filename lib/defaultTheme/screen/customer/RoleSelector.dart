@@ -6,32 +6,27 @@ import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 import '../../../../main.dart';
-var registeringCustomer = customerStore.registeringCustomer;
 
-class Role extends StatelessWidget {
+class RoleSelector extends StatelessWidget {
   final Roles role;
 
-  const Role({required this.role, Key? key})
-      : super(key: key);
+  const RoleSelector({required this.role, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var roleTitle = role.toString().splitAfter('.');
-    print('registeringCustomer.role registeringCustomer.role == role');
-    print(registeringCustomer.role);
-    print(registeringCustomer.role == role);
 
-    return GestureDetector(
-      onTap: () {
-        registeringCustomer.selectRole(role);
-      },
-      child: Observer(
-        builder: (_) => Container(
+    return Observer(
+      builder: (_) => GestureDetector(
+        onTap: () {
+          customerStore.selectRole(role);
+        },
+        child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
           margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
           decoration: BoxDecoration(
-            gradient: registeringCustomer.role == role
+            gradient: customerStore.role == role
                 ? defaultThemeGradient()
                 : LinearGradient(
                     colors: [appStore.appBarColor!, appStore.appBarColor!]),
@@ -42,7 +37,7 @@ class Role extends StatelessWidget {
             roleTitle,
             style: primaryTextStyle(
                 size: textSizeMedium.toInt(),
-                color: registeringCustomer.role == role
+                color: customerStore.role == role
                     ? white
                     : appStore.textPrimaryColor),
             textAlign: TextAlign.center,

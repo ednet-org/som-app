@@ -6,8 +6,6 @@ import '../../../domain/model/customer-management/roles.dart';
 import '../../../main.dart';
 import 'RoleSelection.dart';
 
-var registeringCustomer = customerStore.registeringCustomer;
-
 class Registration extends StatefulWidget {
   @override
   createState() => RegistrationState();
@@ -18,20 +16,20 @@ class RegistrationState extends State<Registration> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CRoleSelection(),
+        RoleSelection(),
         Observer(builder: (_) {
           print('\n\nyou hit me !! \n\n');
-          print(registeringCustomer.fullName);
+          print(customerStore.fullName);
           print('\n\n');
-          if (registeringCustomer.role == Roles.Buyer) {
+          if (customerStore.role == Roles.Buyer) {
             return buyerForm();
           }
 
-          if (registeringCustomer.role == Roles.Provider) {
+          if (customerStore.role == Roles.Provider) {
             return providerForm();
           }
 
-          if (registeringCustomer.role == Roles.ProviderAndBuyer) {
+          if (customerStore.role == Roles.ProviderAndBuyer) {
             return providerAndBuyerForm();
           }
 
