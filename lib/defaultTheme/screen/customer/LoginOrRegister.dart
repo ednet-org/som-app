@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/customer/Registration.dart';
+import 'package:som/integrations/utils/constants.dart';
 import 'package:som/main/utils/AppColors.dart';
 
 import '../../../main.dart';
@@ -47,7 +48,20 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Center(child: Registration()),
+        body: Center(
+            child: Column(
+          children: [
+            Text('Smart offer management'.toUpperCase(),
+                    style: primaryTextStyle(size: textSizeXXLarge.toInt()))
+                .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
+            Container(
+              alignment: Alignment.center,
+              child: Image.asset('images/som/logo.png',
+                  height: 300, fit: BoxFit.fitHeight),
+            ),
+            Registration(),
+          ],
+        )),
       ),
     );
   }
