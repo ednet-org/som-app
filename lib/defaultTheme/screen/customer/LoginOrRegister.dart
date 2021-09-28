@@ -5,6 +5,7 @@ import 'package:som/integrations/utils/constants.dart';
 import 'package:som/main/utils/AppColors.dart';
 
 import '../../../main.dart';
+import 'Login.dart';
 
 class LoginOrRegister extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
@@ -49,18 +50,21 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Center(
-            child: Column(
-          children: [
-            Text('Smart offer management'.toUpperCase(),
-                    style: primaryTextStyle(size: textSizeXXLarge.toInt()))
-                .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
-            Container(
-              alignment: Alignment.center,
-              child: Image.asset('images/som/logo.png',
-                  height: 300, fit: BoxFit.fitHeight),
-            ),
-            Registration(),
-          ],
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text('Smart offer management'.toUpperCase(),
+                      style: primaryTextStyle(size: textSizeXXLarge.toInt()))
+                  .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
+              Container(
+                alignment: Alignment.center,
+                child: Image.asset('images/som/logo.png',
+                    height: 300, fit: BoxFit.fitHeight),
+              ),
+              Login(),
+              Registration(),
+            ],
+          ),
         )),
       ),
     );
