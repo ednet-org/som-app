@@ -45,13 +45,13 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
   Widget build(BuildContext context) {
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-    print('ouuuuuuuut');
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Center(
-            child: SingleChildScrollView(
+        body: SingleChildScrollView(
+            child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text('Smart offer management'.toUpperCase(),
                       style: primaryTextStyle(size: textSizeXXLarge.toInt()))
@@ -59,11 +59,11 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
               Container(
                 alignment: Alignment.center,
                 child: Image.asset('images/som/logo.png',
-                    height: 300, fit: BoxFit.fitHeight),
+                    height: 300, fit: BoxFit.fitWidth),
               ),
               Login(),
               Registration(),
-            ],
+                ],
           ),
         )),
       ),

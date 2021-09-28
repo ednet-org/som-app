@@ -19,7 +19,7 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
     changeStatusColor(appStore.appBarColor!);
     return Container(
-      height: MediaQuery.of(context).size.height,
+      // height: MediaQuery.of(context).size.height,
       color: context.scaffoldBackgroundColor,
       margin: EdgeInsets.only(left: spacing_large, right: spacing_large),
       child: Column(
