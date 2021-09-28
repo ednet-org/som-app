@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
 
 import '../../../domain/model/customer-management/roles.dart';
+import '../../../main.dart';
 import 'RoleSelection.dart';
+
+var registeringCustomer = customerStore.registeringCustomer;
 
 class Registration extends StatefulWidget {
   @override
@@ -9,59 +14,46 @@ class Registration extends StatefulWidget {
 }
 
 class RegistrationState extends State<Registration> {
-  var selectedRole = Roles.Buyer;
-
-  selectRole(var role) {
-    setState(() {
-      selectedRole = role;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RoleSelection(selectRole, selectedRole),
-        RegistrationForm(selectedRole),
+        CRoleSelection(),
+        Observer(builder: (_) {
+          print('\n\nyou hit me !! \n\n');
+          print(registeringCustomer.fullName);
+          print('\n\n');
+          if (registeringCustomer.role == Roles.Buyer) {
+            return buyerForm();
+          }
+
+          if (registeringCustomer.role == Roles.Provider) {
+            return providerForm();
+          }
+
+          if (registeringCustomer.role == Roles.ProviderAndBuyer) {
+            return providerAndBuyerForm();
+          }
+
+          return DTNoDataScreen();
+        }),
       ],
     );
   }
-}
 
-class RegistrationForm extends StatelessWidget {
-  final Roles selectedRole;
-
-  RegistrationForm(this.selectedRole);
-
-  Widget build(BuildContext context) {
-    if (this.selectedRole == Roles.Buyer) {
-      return buyerForm();
-    }
-
-    if (this.selectedRole == Roles.Provider) {
-      return providerForm();
-    }
-
-    if (this.selectedRole == Roles.ProviderAndBuyer) {
-      return providerAndBuyerForm();
-    }
-
-    throw Exception('NotImplemented');
-  }
-
-  providerForm() => company(
+  Widget providerForm() => company(
         Text('provider'),
       );
 
-  buyerForm() => company(
+  Widget buyerForm() => company(
         Text('buyer or not'),
       );
 
-  providerAndBuyerForm() => company(
+  Widget providerAndBuyerForm() => company(
         Text('Both roles are assumed.'),
       );
 
-  company(data) {
+  Widget company(data) {
     return Column(
       children: [
         Text('lorem ipsum'),
