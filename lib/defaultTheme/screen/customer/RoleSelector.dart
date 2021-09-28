@@ -23,7 +23,7 @@ class RoleSelector extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
           margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
           decoration: BoxDecoration(
             gradient: customerStore.role == role
@@ -36,7 +36,7 @@ class RoleSelector extends StatelessWidget {
           child: Text(
             roleTitle,
             style: primaryTextStyle(
-                size: textSizeMedium.toInt(),
+                size: textSizeXXLarge.toInt(),
                 color: customerStore.role == role
                     ? white
                     : appStore.textPrimaryColor),
