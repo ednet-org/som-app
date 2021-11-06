@@ -68,7 +68,7 @@ class MonthlySale1ScreenState extends State<MonthlySale1Screen> {
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => boldTextStyle(color: borderText),
+          getTextStyles: (value, a) => boldTextStyle(color: borderText),
           getTitles: (value) {
             switch (value.toInt()) {
               case 2:
@@ -83,7 +83,7 @@ class MonthlySale1ScreenState extends State<MonthlySale1Screen> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => boldTextStyle(color: borderText),
+          getTextStyles: (value, a) => boldTextStyle(color: borderText),
           getTitles: (value) {
             switch (value.toInt()) {
               case 1:

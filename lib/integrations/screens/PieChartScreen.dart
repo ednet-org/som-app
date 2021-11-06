@@ -5,7 +5,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/integrations/utils/colors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-
 class PieChartScreen extends StatefulWidget {
   static String tag = '/WaveScreen';
 
@@ -39,11 +38,15 @@ class PieChartScreenState extends State<PieChartScreen> {
               height: 300,
               child: PieChart(
                 PieChartData(
-                  pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                  pieTouchData: PieTouchData(
+                      touchCallback: (flTouchEvent, pieTouchResponse) {
                     setState(() {
-                      final desiredTouch = pieTouchResponse.touchInput is! PointerExitEvent && pieTouchResponse.touchInput is! PointerUpEvent;
-                      if (desiredTouch && pieTouchResponse.touchedSection != null) {
-                        touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                      final desiredTouch = flTouchEvent is! PointerExitEvent &&
+                          flTouchEvent is! PointerUpEvent;
+                      if (desiredTouch &&
+                          pieTouchResponse!.touchedSection != null) {
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!.touchedSectionIndex;
                       } else {
                         touchedIndex = -1;
                       }
@@ -58,13 +61,13 @@ class PieChartScreenState extends State<PieChartScreen> {
             ),
             Column(
               children: [
-                dataPieChart(name: 'Tech',color: darkOrchid),
+                dataPieChart(name: 'Tech', color: darkOrchid),
                 16.height,
-                dataPieChart(name: 'Food',color: mediumSpringGreen),
+                dataPieChart(name: 'Food', color: mediumSpringGreen),
                 16.height,
-                dataPieChart(name: 'Rent',color: crimson),
+                dataPieChart(name: 'Rent', color: crimson),
                 16.height,
-                dataPieChart(name: 'Travel',color: dodgerBlue),
+                dataPieChart(name: 'Travel', color: dodgerBlue),
               ],
             ).paddingOnly(left: 32)
           ],
@@ -116,7 +119,7 @@ class PieChartScreenState extends State<PieChartScreen> {
     });
   }
 
-  Widget dataPieChart({required Color color,required String name}) {
+  Widget dataPieChart({required Color color, required String name}) {
     return Row(
       children: [
         Container(height: 25, width: 25, color: color),

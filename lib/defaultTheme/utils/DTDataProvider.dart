@@ -1,35 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/DTAddressListModel.dart';
 import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
 import 'package:som/defaultTheme/model/DTChatModel.dart';
 import 'package:som/defaultTheme/model/DTProductModel.dart';
 import 'package:som/defaultTheme/model/DTReviewModel.dart';
-import 'package:som/defaultTheme/screen/DTAboutScreen.dart';
-import 'package:som/defaultTheme/screen/DTAddressScreen.dart';
-import 'package:som/defaultTheme/screen/DTCartScreen.dart';
-import 'package:som/defaultTheme/screen/DTCategoryDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTChatScreen.dart';
-import 'package:som/defaultTheme/screen/DTContactUsScreen.dart';
-import 'package:som/defaultTheme/screen/som/app/DashboardScreen.dart';
-import 'package:som/defaultTheme/screen/DTErrorScreen.dart';
-import 'package:som/defaultTheme/screen/DTFAQScreen.dart';
-import 'package:som/defaultTheme/screen/DTFilterScreen.dart';
-import 'package:som/defaultTheme/screen/DTForgotPwdScreen.dart';
-import 'package:som/defaultTheme/screen/DTMaintenanceScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoDataScreen.dart';
-import 'package:som/defaultTheme/screen/DTNoResultScreen.dart';
-import 'package:som/defaultTheme/screen/DTOrderSummaryScreen.dart';
-import 'package:som/defaultTheme/screen/DTPaymentScreen.dart';
-import 'package:som/defaultTheme/screen/DTProductDetailScreen.dart';
-import 'package:som/defaultTheme/screen/DTProfileScreen.dart';
-import 'package:som/defaultTheme/screen/DTReviewScreen.dart';
-import 'package:som/defaultTheme/screen/DTSearchScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignInScreen.dart';
-import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
-import 'package:som/defaultTheme/screen/DTWalkThoughScreen.dart';
+import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
+import 'package:som/defaultTheme/screen/template/DTNoResultScreen.dart';
 import 'package:som/main/model/ListModels.dart';
 import 'package:som/main/utils/AppConstant.dart';
 

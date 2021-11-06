@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/model/DTChatMessageModel.dart';
-import 'package:som/defaultTheme/screen/DTSignUpScreen.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
@@ -105,61 +103,6 @@ Widget errorWidget(
             ),
           ),
         )
-      ],
-    ),
-  ).center();
-}
-
-Widget actionInfoWidget(BuildContext context, String image, String title,
-    String desc, String actionText, String restText) {
-  return Container(
-    constraints: dynamicBoxConstraints(),
-    height: context.height(),
-    child: Stack(
-      children: [
-        Image.asset(
-          image,
-          height: context.height(),
-          width: context.width(),
-          fit: BoxFit.fitWidth,
-        ),
-        Positioned(
-          bottom: 50,
-          left: 20,
-          right: 20,
-          child: Container(
-            decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor:
-                    appStore.isDarkModeOn ? Colors.black26 : Colors.white70),
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(title, style: boldTextStyle(size: 24)),
-                4.height,
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(text: desc, style: secondaryTextStyle(size: 14)),
-                      TextSpan(
-                        text: actionText,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            DTSignUpScreen().launch(context);
-                          },
-                        style: primaryTextStyle(color: Colors.blue),
-                      ),
-                      TextSpan(
-                          text: restText, style: secondaryTextStyle(size: 14)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     ),
   ).center();
