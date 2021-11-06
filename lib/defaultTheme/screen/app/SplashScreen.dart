@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     await Future.delayed(Duration(seconds: 3));
 
-    if (!appStore.isUserAuthenticated) {
+    if (!appStore.isAuthenticated) {
       return LoginOrRegister().launch(context, isNewTask: true);
     }
     return DashboardScreen().launch(context, isNewTask: true);

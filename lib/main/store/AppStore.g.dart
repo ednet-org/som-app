@@ -197,19 +197,18 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$isUserAuthenticatedAtom =
-      Atom(name: 'AppStoreBase.isUserAuthenticated');
+  final _$isAuthenticatedAtom = Atom(name: 'AppStoreBase.isAuthenticated');
 
   @override
-  bool get isUserAuthenticated {
-    _$isUserAuthenticatedAtom.reportRead();
-    return super.isUserAuthenticated;
+  bool get isAuthenticated {
+    _$isAuthenticatedAtom.reportRead();
+    return super.isAuthenticated;
   }
 
   @override
-  set isUserAuthenticated(bool value) {
-    _$isUserAuthenticatedAtom.reportWrite(value, super.isUserAuthenticated, () {
-      super.isUserAuthenticated = value;
+  set isAuthenticated(bool value) {
+    _$isAuthenticatedAtom.reportWrite(value, super.isAuthenticated, () {
+      super.isAuthenticated = value;
     });
   }
 
@@ -247,6 +246,28 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   @override
+  void setAuthenticatedUser() {
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(
+        name: 'AppStoreBase.setAuthenticatedUser');
+    try {
+      return super.setAuthenticatedUser();
+    } finally {
+      _$AppStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic logout() {
+    final _$actionInfo =
+        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
+    try {
+      return super.logout();
+    } finally {
+      _$AppStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isDarkModeOn: ${isDarkModeOn},
@@ -261,7 +282,7 @@ iconColor: ${iconColor},
 iconSecondaryColor: ${iconSecondaryColor},
 selectedLanguage: ${selectedLanguage},
 selectedDrawerItem: ${selectedDrawerItem},
-isUserAuthenticated: ${isUserAuthenticated}
+isAuthenticated: ${isAuthenticated}
     ''';
   }
 }

@@ -10,9 +10,12 @@ import '../../../../main.dart';
 
 class Login extends StatefulWidget {
   static String tag = '/Loginx';
+  bool showWelcomeMessage;
 
   @override
   LoginState createState() => LoginState();
+
+  Login({this.showWelcomeMessage = true});
 }
 
 class LoginState extends State<Login> {
@@ -27,34 +30,8 @@ class LoginState extends State<Login> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           SizedBox(height: spacing_large),
-          AutoSizeText.rich(
-            TextSpan(text: static["welcome"]),
-            maxLines: 8,
-            overflow: TextOverflow.ellipsis,
-            // TODO impl read more able components
-          ),
-          SizedBox(height: spacing_large),
-          Container(
-            width: 300,
-            child: Column(
-              children: [
-                EditText(
-                  text: static["username"],
-                  isPassword: false,
-                ),
-                SizedBox(height: spacing_standard_new),
-                EditText(
-                  text: static["password"],
-                  isSecure: true,
-                ),
-                SizedBox(height: spacing_xlarge),
-                AppButtons(
-                  onPressed: () {},
-                  textContent: static["button.login"],
-                )
-              ],
-            ),
-          ),
+          if (widget.showWelcomeMessage) welcomeMessage(),
+          loginForm(),
           SizedBox(height: spacing_large),
           text(static["link.forgottenPassword"],
               textColor: Colors.amber, fontFamily: fontMedium),
@@ -77,7 +54,47 @@ class LoginState extends State<Login> {
       ),
     );
   }
+
+  loginForm() {
+    return Container(
+      width: 300,
+      child: Column(
+        children: [
+          EditText(
+            text: static["username"],
+            isPassword: false,
+          ),
+          SizedBox(height: spacing_standard_new),
+          EditText(
+            text: static["password"],
+            isSecure: true,
+          ),
+          SizedBox(height: spacing_xlarge),
+          AppButtons(
+            onPressed: () {},
+            textContent: static["button.login"],
+          )
+        ],
+      ),
+    );
+  }
+
+  welcomeMessage() {
+    return Column(
+      children: [
+        AutoSizeText.rich(
+          TextSpan(text: static["welcome"]),
+          maxLines: 8,
+          overflow: TextOverflow.ellipsis,
+          // TODO impl read more able components
+        ),
+        SizedBox(height: spacing_large),
+      ],
+    );
+  }
 }
+
+
 
 void changeStatusColor(Color color) async {
   setStatusBarColor(color);

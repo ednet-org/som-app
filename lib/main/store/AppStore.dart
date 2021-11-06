@@ -101,5 +101,15 @@ abstract class AppStoreBase with Store {
   }
 
   @observable
-  bool isUserAuthenticated = false;
+  bool isAuthenticated = false;
+
+  @action
+  void setAuthenticatedUser() {
+    isAuthenticated = true;
+  }
+
+  @action
+  logout() {
+    isAuthenticated = false;
+  }
 }
