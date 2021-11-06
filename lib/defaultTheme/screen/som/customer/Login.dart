@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
 import 'package:som/defaultTheme/utils/EditText.dart';
 import 'package:som/integrations/utils/constants.dart';
 import 'package:som/main/utils/AppWidget.dart';
@@ -71,7 +72,9 @@ class LoginState extends State<Login> {
           ),
           SizedBox(height: spacing_xlarge),
           AppButtons(
-            onPressed: () {},
+            onPressed: () {
+              DashboardScreen().launch(context, isNewTask: true);
+            },
             textContent: static["button.login"],
           )
         ],
@@ -93,8 +96,6 @@ class LoginState extends State<Login> {
     );
   }
 }
-
-
 
 void changeStatusColor(Color color) async {
   setStatusBarColor(color);
