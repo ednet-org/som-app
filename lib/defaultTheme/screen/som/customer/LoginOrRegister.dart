@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/customer/Registration.dart';
 import 'package:som/integrations/utils/constants.dart';
 import 'package:som/main/utils/AppColors.dart';
 
-import '../../../main.dart';
+import '../../../../main.dart';
 import 'Login.dart';
+import 'Registration.dart';
 
 class LoginOrRegister extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
@@ -48,21 +48,32 @@ class LoginOrRegisterState extends State<LoginOrRegister> {
     print('ouuuuuuuut');
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Center(
             child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Smart offer management'.toUpperCase(),
-                      style: primaryTextStyle(size: textSizeXXLarge.toInt()))
-                  .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
+              SizedBox(height: spacing_large),
               Container(
                 alignment: Alignment.center,
                 child: Image.asset('images/som/logo.png',
-                    height: 300, fit: BoxFit.fitHeight),
+                    height:150, fit: BoxFit.fitHeight),
               ),
-              Login(),
-              Registration(),
+              Text('Smart offer management'.toUpperCase(),
+                      style: primaryTextStyle(size: textSizeLarge.toInt()))
+                  .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
+              Container(
+                width: 800,
+                child: Column(children: [
+                  Login(),
+                ]),
+              ),
+              Container(
+                width: 800,
+                child: Column(children: [
+                  Registration(),
+                ]),
+              ),
             ],
           ),
         )),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/customer/LoginOrRegister.dart';
+import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 import '../../../main.dart';

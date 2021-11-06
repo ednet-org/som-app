@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
 
-import '../../../domain/model/customer-management/roles.dart';
-import '../../../main.dart';
+import '../../../../domain/model/customer-management/roles.dart';
+import '../../../../main.dart';
 import 'RoleSelection.dart';
 
 class Registration extends StatefulWidget {

@@ -10,10 +10,10 @@ abstract class CustomerStoreBase with Store {
   String uuid = DateTime.now().toString();
 
   @observable
-  String? firstName;
+  String? firstName = "Pera Kojot";
 
   @observable
-  String? lastName;
+  String? lastName = "Genije";
 
   @computed
   String get fullName => '$firstName, $lastName';

@@ -4,7 +4,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
 import 'package:som/defaultTheme/screen/app/MainMenu.dart';
-import 'package:som/defaultTheme/screen/customer/LoginOrRegister.dart';
+import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
 import 'package:som/defaultTheme/screen/template/DTForgotPwdScreen.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
