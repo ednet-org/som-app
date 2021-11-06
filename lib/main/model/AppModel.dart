@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  List<ProTheme>? themes;
-  List<ProTheme>? screenList;
-  ProTheme? dashboard;
-  ProTheme? fullApp;
-  ProTheme? widgets;
-  ProTheme? defaultTheme;
-  ProTheme? integrations;
-  ProTheme? webApps;
+  List<ThemeConfiguration>? themes;
+  List<ThemeConfiguration>? screenList;
+  ThemeConfiguration? dashboard;
+  ThemeConfiguration? fullApp;
+  ThemeConfiguration? widgets;
+  ThemeConfiguration? defaultTheme;
+  ThemeConfiguration? integrations;
+  ThemeConfiguration? webApps;
 
   AppTheme({this.themes, this.screenList, this.dashboard, this.fullApp, this.widgets, this.defaultTheme, this.integrations, this.webApps});
 
   factory AppTheme.fromJson(Map<String, dynamic> json) {
     return AppTheme(
-      themes: json['themes'] != null ? (json['themes'] as List).map((i) => ProTheme.fromJson(i)).toList() : null,
-      screenList: json['screen_list'] != null ? (json['screen_list'] as List).map((i) => ProTheme.fromJson(i)).toList() : null,
-      dashboard: json['dashboard'] != null ? ProTheme.fromJson(json['dashboard']) : null,
-      fullApp: json['fullapp'] != null ? ProTheme.fromJson(json['fullapp']) : null,
-      widgets: json['widgets'] != null ? ProTheme.fromJson(json['widgets']) : null,
-      defaultTheme: json['defaultTheme'] != null ? ProTheme.fromJson(json['defaultTheme']) : null,
-      integrations: json['integrations'] != null ? ProTheme.fromJson(json['integrations']) : null,
-      webApps: json['webApps'] != null ? ProTheme.fromJson(json['webApps']) : null,
+      themes: json['themes'] != null ? (json['themes'] as List).map((i) => ThemeConfiguration.fromJson(i)).toList() : null,
+      screenList: json['screen_list'] != null ? (json['screen_list'] as List).map((i) => ThemeConfiguration.fromJson(i)).toList() : null,
+      dashboard: json['dashboard'] != null ? ThemeConfiguration.fromJson(json['dashboard']) : null,
+      fullApp: json['fullapp'] != null ? ThemeConfiguration.fromJson(json['fullapp']) : null,
+      widgets: json['widgets'] != null ? ThemeConfiguration.fromJson(json['widgets']) : null,
+      defaultTheme: json['defaultTheme'] != null ? ThemeConfiguration.fromJson(json['defaultTheme']) : null,
+      integrations: json['integrations'] != null ? ThemeConfiguration.fromJson(json['integrations']) : null,
+      webApps: json['webApps'] != null ? ThemeConfiguration.fromJson(json['webApps']) : null,
     );
   }
 
@@ -34,12 +34,12 @@ class AppTheme {
   }
 }
 
-class ProTheme {
+class ThemeConfiguration {
   String? name;
   // ignore: non_constant_identifier_names
   bool? show_cover;
   // ignore: non_constant_identifier_names
-  List<ProTheme>? sub_kits;
+  List<ThemeConfiguration>? sub_kits;
   // ignore: non_constant_identifier_names
   String? title_name;
   String? type;
@@ -51,17 +51,17 @@ class ProTheme {
   Widget? widget;
 
   // ignore: non_constant_identifier_names
-  ProTheme({this.name, this.icon, this.is_theme, this.tag, this.type, this.show_cover, this.sub_kits, this.title_name, this.darkThemeSupported, this.widget});
+  ThemeConfiguration({this.name, this.icon, this.is_theme, this.tag, this.type, this.show_cover, this.sub_kits, this.title_name, this.darkThemeSupported, this.widget});
 
-  factory ProTheme.fromJson(Map<String, dynamic> json) {
-    return ProTheme(
+  factory ThemeConfiguration.fromJson(Map<String, dynamic> json) {
+    return ThemeConfiguration(
       name: json['name'],
       icon: json['icon'],
       is_theme: json['is_theme'],
       tag: json['tag'],
       type: json['type'],
       show_cover: json['show_cover'],
-      sub_kits: json['sub_kits'] != null ? (json['sub_kits'] as List).map((i) => ProTheme.fromJson(i)).toList() : null,
+      sub_kits: json['sub_kits'] != null ? (json['sub_kits'] as List).map((i) => ThemeConfiguration.fromJson(i)).toList() : null,
       title_name: json['title_name'],
       darkThemeSupported: json['darkThemeSupported'],
       widget: json['widget'],

@@ -112,61 +112,61 @@ Future<AppTheme> getAllAppsAndThemes() async {
 }
 
 //region Dashboard
-ProTheme getDashboards() {
-  ProTheme theme = ProTheme(
+ThemeConfiguration getDashboards() {
+  ThemeConfiguration theme = ThemeConfiguration(
       sub_kits: [],
       name: 'Dashboard',
       title_name: 'Dashboard Screens',
       show_cover: true,
       type: '');
-  List<ProTheme> list = [];
+  List<ThemeConfiguration> list = [];
   theme.sub_kits!.addAll(list);
   return theme;
 }
 
 // endregion
 //region Widgets
-ProTheme getWidgets() {
-  List<ProTheme> list = [];
+ThemeConfiguration getWidgets() {
+  List<ThemeConfiguration> list = [];
 
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Material Widgets',
       type: '',
       show_cover: false,
       sub_kits: getMaterialWidgets(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Widgets',
       type: '',
       show_cover: false,
       sub_kits: getCupertinoWidgets(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Painting and effect Widgets',
       type: '',
       show_cover: false,
       sub_kits: getPaintingAndEffectWidgets(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animation and motion Widgets',
       type: '',
       show_cover: false,
       sub_kits: getAnimationAndMotionWidgets(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Interaction Model Widgets',
       type: '',
       show_cover: false,
       sub_kits: getInteractionModelWidgets(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Other Widgets',
       type: '',
       show_cover: false,
       sub_kits: getOtherWidgets(),
       darkThemeSupported: true));
 
-  return ProTheme(
+  return ThemeConfiguration(
       name: 'Widgets',
       title_name: 'Widgets',
       type: '',
@@ -176,39 +176,39 @@ ProTheme getWidgets() {
 //endregion
 //region Material
 
-List<ProTheme> getMaterialWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getMaterialWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'App Structure',
       show_cover: false,
       type: '',
       sub_kits: getAppStructure(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Buttons',
       show_cover: false,
       type: '',
       sub_kits: getButtons(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Input & Selection',
       show_cover: false,
       type: '',
       sub_kits: getInputSelection(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Dialogs, Alerts & Panels',
       show_cover: false,
       type: '',
       sub_kits: getDialogs(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Information Display',
       show_cover: false,
       type: '',
       sub_kits: getInformationDisplay(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Layout',
       show_cover: false,
       type: '',
@@ -218,33 +218,33 @@ List<ProTheme> getMaterialWidgets() {
 }
 
 //region subMaterialWidgets
-List<ProTheme> getAppStructure() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getAppStructure() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'AppBar',
       show_cover: false,
       type: '',
       widget: MWAppBarScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Bottom Navigation Bar',
       show_cover: false,
       type: '',
       sub_kits: getBottomNavigationBar(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Drawer',
       show_cover: false,
       type: '',
       sub_kits: getDrawer(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'SliverAppBar',
       show_cover: false,
       type: '',
       sub_kits: getSliverAppBar(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'TabBar',
       show_cover: false,
       type: '',
@@ -253,21 +253,21 @@ List<ProTheme> getAppStructure() {
   return list;
 }
 
-List<ProTheme> getBottomNavigationBar() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getBottomNavigationBar() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'With Icon and Label',
       show_cover: false,
       type: '',
       widget: MWBottomNavigationScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'With Custom Image',
       show_cover: false,
       type: '',
       widget: MWBottomNavigationScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'With Shifting Label',
       show_cover: false,
       type: '',
@@ -276,15 +276,15 @@ List<ProTheme> getBottomNavigationBar() {
   return list;
 }
 
-List<ProTheme> getDrawer() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getDrawer() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'With Multiple Account Selection ',
       show_cover: false,
       type: '',
       widget: MWDrawerScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'With Custom Shape ',
       show_cover: false,
       type: '',
@@ -293,15 +293,15 @@ List<ProTheme> getDrawer() {
   return list;
 }
 
-List<ProTheme> getSliverAppBar() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getSliverAppBar() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Sliver AppBar with ListView',
       show_cover: false,
       type: '',
       widget: MWSliverAppBarScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Parallax Sliver AppBar',
       show_cover: false,
       type: '',
@@ -311,27 +311,27 @@ List<ProTheme> getSliverAppBar() {
   return list;
 }
 
-List<ProTheme> getTabBar() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getTabBar() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Simple TabBar',
       show_cover: false,
       type: '',
       widget: MWTabBarScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'TabBar with Title and Icon',
       show_cover: false,
       type: '',
       widget: MWTabBarScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'TabBar with Icon',
       show_cover: false,
       type: '',
       widget: MWTabBarScreen3(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Scrollable Tab',
       show_cover: false,
       type: '',
@@ -340,51 +340,51 @@ List<ProTheme> getTabBar() {
   return list;
 }
 
-List<ProTheme> getButtons() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getButtons() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'DropDownButton',
       show_cover: false,
       type: '',
       widget: MWDropDownButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'MaterialButton',
       show_cover: false,
       type: '',
       widget: MWMaterialButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'FlatButton',
       show_cover: false,
       type: '',
       widget: MWFlatButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'FloatingActionButton',
       show_cover: false,
       type: '',
       widget: MWFloatingActionButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'IconButton',
       show_cover: false,
       type: '',
       widget: MWIconButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'OutlineButton',
       show_cover: false,
       type: '',
       widget: MWOutlineButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'PopupMenuButton',
       show_cover: false,
       type: '',
       widget: MWPopupMenuButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'RaisedButton',
       show_cover: false,
       type: '',
@@ -393,45 +393,45 @@ List<ProTheme> getButtons() {
   return list;
 }
 
-List<ProTheme> getInputSelection() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getInputSelection() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Checkbox',
       show_cover: false,
       type: '',
       widget: MWCheckboxScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Datetime Picker',
       show_cover: false,
       type: '',
       widget: MWDatetimePickerScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Radio',
       show_cover: false,
       type: '',
       widget: MWRadioScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Slider',
       show_cover: false,
       type: '',
       widget: MWSliderScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Switch',
       show_cover: false,
       type: '',
       widget: MWSwitchScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'TextField',
       show_cover: false,
       type: '',
       sub_kits: getTextField(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'TextFormField',
       show_cover: false,
       type: '',
@@ -440,15 +440,15 @@ List<ProTheme> getInputSelection() {
   return list;
 }
 
-List<ProTheme> getTextField() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getTextField() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Simple TextField ',
       show_cover: false,
       type: '',
       widget: MWTextFieldScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Rounded Border TextField ',
       show_cover: false,
       type: '',
@@ -457,39 +457,39 @@ List<ProTheme> getTextField() {
   return list;
 }
 
-List<ProTheme> getDialogs() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getDialogs() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'AlertDialog',
       show_cover: false,
       type: '',
       widget: MWAlertDialogScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'BottomSheet',
       show_cover: false,
       type: '',
       widget: MWBottomSheetScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'ExpansionPanel',
       show_cover: false,
       type: '',
       widget: MWExpansionPanelScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Simple Dialog',
       show_cover: false,
       type: '',
       widget: MWSimpleDialogScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'SnackBar',
       show_cover: false,
       type: '',
       widget: MWSnackBarScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Toast',
       show_cover: false,
       type: '',
@@ -498,63 +498,63 @@ List<ProTheme> getDialogs() {
   return list;
 }
 
-List<ProTheme> getInformationDisplay() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getInformationDisplay() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Card',
       show_cover: false,
       type: '',
       widget: MWCardScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Chip',
       show_cover: false,
       type: '',
       widget: MWChipScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Progress Bar',
       show_cover: false,
       type: '',
       widget: MWProgressBarScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Data Table',
       show_cover: false,
       type: '',
       widget: MWDataTableScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Grid View',
       show_cover: false,
       type: '',
       widget: MWGridViewScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'List View',
       show_cover: false,
       type: '',
       sub_kits: getListView(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Rich Text',
       show_cover: false,
       type: '',
       widget: MWRichTextScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Icon',
       show_cover: false,
       type: '',
       widget: MWIconScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Image (assets,Network,Placeholders)',
       show_cover: false,
       type: '',
       widget: MWImageScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Tooltip',
       show_cover: false,
       type: '',
@@ -563,33 +563,33 @@ List<ProTheme> getInformationDisplay() {
   return list;
 }
 
-List<ProTheme> getListView() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getListView() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Simple List View',
       show_cover: false,
       type: '',
       widget: MWListViewScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'List Wheel ScrollView',
       show_cover: false,
       type: '',
       widget: MWListViewScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Horizontal List View',
       show_cover: false,
       type: '',
       widget: MWListViewScreen3(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Bouncing Scroll List View',
       show_cover: false,
       type: '',
       widget: MWListViewScreen4(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Reorderable List View',
       show_cover: false,
       type: '',
@@ -598,27 +598,27 @@ List<ProTheme> getListView() {
   return list;
 }
 
-List<ProTheme> getLayout() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getLayout() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Divider',
       show_cover: false,
       type: '',
       widget: MWDividerScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'ListTile',
       show_cover: false,
       type: '',
       widget: MWListTileScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Stepper',
       show_cover: false,
       type: '',
       sub_kits: getStepper(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'User Accounts Drawer Header',
       show_cover: false,
       type: '',
@@ -627,27 +627,27 @@ List<ProTheme> getLayout() {
   return list;
 }
 
-List<ProTheme> getStepper() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getStepper() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Horizontal Stepper with Form',
       show_cover: false,
       type: '',
       widget: MWStepperScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Vertical Stepper',
       show_cover: false,
       type: '',
       widget: MWStepperScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Vertical Stepper with Form',
       show_cover: false,
       type: '',
       widget: MWStepperScreen3(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Simple Horizontal Stepper',
       show_cover: false,
       type: '',
@@ -656,27 +656,27 @@ List<ProTheme> getStepper() {
   return list;
 }
 
-List<ProTheme> getUserAccountsDrawerHeader() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getUserAccountsDrawerHeader() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'With Custom UI',
       show_cover: false,
       type: '',
       widget: MWUserAccountDrawerHeaderScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Simple User Account Drawer Header',
       show_cover: false,
       type: '',
       widget: MWUserAccountDrawerHeaderScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'With Multiple Account Selection',
       show_cover: false,
       type: '',
       widget: MWUserAccountDrawerHeaderScreen3(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'With Custom Background',
       show_cover: false,
       type: '',
@@ -688,87 +688,87 @@ List<ProTheme> getUserAccountsDrawerHeader() {
 
 //endregion
 //region Cupertino
-List<ProTheme> getCupertinoWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getCupertinoWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Cupertino Action Sheet',
       show_cover: false,
       type: '',
       widget: CWActionSheetScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Activity Indicator',
       show_cover: false,
       type: '',
       widget: CWActivityIndicatorScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Alert Dialog',
       show_cover: false,
       type: '',
       widget: CWAlertDialogScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Button',
       show_cover: false,
       type: '',
       widget: CWButtonScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Context Menu',
       show_cover: false,
       type: '',
       widget: CWContextMenuScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Dialog',
       show_cover: false,
       type: '',
       widget: CWDialogScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Navigation Bar',
       show_cover: false,
       type: '',
       widget: CWNavigationBarScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Picker',
       show_cover: false,
       type: '',
       widget: CWPickerScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Segmented Control',
       show_cover: false,
       type: '',
       widget: CWSegmentedControlScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Slider',
       show_cover: false,
       type: '',
       widget: CWSliderScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Sliding Segmented Control',
       show_cover: false,
       type: '',
       widget: CWSlidingSegmentedControlScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino Switch',
       show_cover: false,
       type: '',
       widget: CWSwitchScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino TabBar',
       show_cover: false,
       type: '',
       sub_kits: getCupertinoTabBar(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Cupertino TextField',
       show_cover: false,
       type: '',
@@ -777,21 +777,21 @@ List<ProTheme> getCupertinoWidgets() {
   return list;
 }
 
-List<ProTheme> getCupertinoTabBar() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getCupertinoTabBar() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Tab Bar with Icon ',
       show_cover: false,
       type: '',
       widget: CWTabBarScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Tab Bar with Icon and Label ',
       show_cover: false,
       type: '',
       widget: CWTabBarScreen2(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Tab Bar with Custom Image ',
       show_cover: false,
       type: '',
@@ -802,33 +802,33 @@ List<ProTheme> getCupertinoTabBar() {
 
 //endregion
 //region PaintingAndEffectWidgets
-List<ProTheme> getPaintingAndEffectWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getPaintingAndEffectWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Backdrop Filter',
       show_cover: false,
       type: '',
       widget: PEBackdropFilterScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Clip Widget Demo',
       show_cover: false,
       type: '',
       widget: PEClipOvalScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Opacity',
       show_cover: false,
       type: '',
       widget: PEOpacityScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Rotated Box',
       show_cover: false,
       type: '',
       widget: PERotatedBoxScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Transform',
       show_cover: false,
       type: '',
@@ -839,57 +839,57 @@ List<ProTheme> getPaintingAndEffectWidgets() {
 
 //endregion
 //region AnimationAndMotionWidgets
-List<ProTheme> getAnimationAndMotionWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getAnimationAndMotionWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Animated Builder',
       show_cover: false,
       type: '',
       widget: AMAnimatedBuilderScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animated Container',
       show_cover: false,
       type: '',
       widget: AMAnimatedContainerScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animated Cross Fade',
       show_cover: false,
       type: '',
       widget: AMAnimatedCrossFadeScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animated Opacity',
       show_cover: false,
       type: '',
       widget: AMAnimatedOpacityScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Fade Transition',
       show_cover: false,
       type: '',
       widget: AMFadeTransitionScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Hero Transition',
       show_cover: false,
       type: '',
       widget: AMHeroScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Scale Transition',
       show_cover: false,
       type: '',
       widget: AMScaleTransitionScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animated Size',
       show_cover: false,
       type: '',
       widget: AMAnimatedSizeScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Animated Positioned',
       show_cover: false,
       type: '',
@@ -900,27 +900,27 @@ List<ProTheme> getAnimationAndMotionWidgets() {
 
 //endregion
 //region interaction
-List<ProTheme> getInteractionModelWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getInteractionModelWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Dismissible',
       show_cover: false,
       type: '',
       sub_kits: getDismissible(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Gesture Detector',
       show_cover: false,
       type: '',
       widget: IMGestureDetectorScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Draggable',
       show_cover: false,
       type: '',
       sub_kits: getDraggable(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Long Press Draggable',
       show_cover: false,
       type: '',
@@ -929,15 +929,15 @@ List<ProTheme> getInteractionModelWidgets() {
   return list;
 }
 
-List<ProTheme> getDismissible() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getDismissible() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Dismissible with Both Side ',
       show_cover: false,
       type: '',
       widget: IMDismissibleScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Dismissible with One Side',
       show_cover: false,
       type: '',
@@ -946,15 +946,15 @@ List<ProTheme> getDismissible() {
   return list;
 }
 
-List<ProTheme> getDraggable() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getDraggable() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Simple Draggable',
       show_cover: false,
       type: '',
       widget: IMDraggableScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Draggable with Target',
       show_cover: false,
       type: '',
@@ -963,15 +963,15 @@ List<ProTheme> getDraggable() {
   return list;
 }
 
-List<ProTheme> getLongPressDraggable() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getLongPressDraggable() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Simple Long Press Draggable ',
       show_cover: false,
       type: '',
       widget: IMLongPressDraggableScreen1(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Long Press Draggable with Target',
       show_cover: false,
       type: '',
@@ -983,15 +983,15 @@ List<ProTheme> getLongPressDraggable() {
 //endregion
 
 //region Other Widgets
-List<ProTheme> getOtherWidgets() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getOtherWidgets() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Interactive Viewer',
       show_cover: false,
       type: '',
       widget: InteractiveViewerScreen(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Open Container Transform Demo',
       show_cover: false,
       type: '',
@@ -1003,8 +1003,8 @@ List<ProTheme> getOtherWidgets() {
 //endregion
 
 //region Default Theme
-ProTheme getDefaultTheme() {
-  return ProTheme(
+ThemeConfiguration getDefaultTheme() {
+  return ThemeConfiguration(
       name: "Default Theme",
       title_name: 'Default Theme',
       type: '',
@@ -1014,31 +1014,31 @@ ProTheme getDefaultTheme() {
 //endregion
 
 //region Interactions
-ProTheme getIntegrations() {
-  List<ProTheme> list = [];
+ThemeConfiguration getIntegrations() {
+  List<ThemeConfiguration> list = [];
 
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Chart',
       title_name: 'Integrations',
       show_cover: false,
       sub_kits: getChartList(),
       darkThemeSupported: true,
       type: 'New'));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Integration',
       title_name: 'Integrations',
       type: '',
       show_cover: false,
       sub_kits: getIntegration(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'UI Interactions',
       title_name: 'Integrations',
       type: '',
       show_cover: false,
       sub_kits: getUI(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Lists',
       title_name: 'Integrations',
       type: '',
@@ -1047,14 +1047,14 @@ ProTheme getIntegrations() {
       darkThemeSupported: true));
   //list.add(ProTheme(name: 'Maps', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getMaps(), darkThemeSupported: true));
   //list.add(ProTheme(name: 'Payment Gateways', title_name: 'Integrations', type: '', show_cover: false, sub_kits: getPayment(), darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Rest API Integration',
       title_name: 'Integrations',
       type: '',
       show_cover: false,
       sub_kits: getRestAPi(),
       darkThemeSupported: true));
-  return ProTheme(
+  return ThemeConfiguration(
       name: 'Integration',
       title_name: 'Integration',
       type: '',
@@ -1062,28 +1062,28 @@ ProTheme getIntegrations() {
       sub_kits: list);
 }
 
-List<ProTheme> getIntegration() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getIntegration() {
+  List<ThemeConfiguration> list = [];
 
   return list;
 }
 
-List<ProTheme> getUI() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getUI() {
+  List<ThemeConfiguration> list = [];
 
   return list;
 }
 
-List<ProTheme> getLists() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getLists() {
+  List<ThemeConfiguration> list = [];
 
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Shimmer',
       type: '',
       show_cover: false,
       widget: SHomePage(),
       darkThemeSupported: true));
-  list.add(ProTheme(
+  list.add(ThemeConfiguration(
       name: 'Sticky Header',
       type: '',
       show_cover: false,
@@ -1093,14 +1093,14 @@ List<ProTheme> getLists() {
   return list;
 }
 
-List<ProTheme> getSubStickyHeader() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getSubStickyHeader() {
+  List<ThemeConfiguration> list = [];
 
   return list;
 }
 
-List<ProTheme> getMaps() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getMaps() {
+  List<ThemeConfiguration> list = [];
 
   //list.add(ProTheme(name: 'Google Maps with Clustering', type: '', show_cover: false, widget: GoogleMapScreen(), darkThemeSupported: true));
   //list.add(ProTheme(name: 'Google Maps with Slipping Panel', type: '', show_cover: false, widget: SlidingPanelScreen(), darkThemeSupported: true));
@@ -1108,16 +1108,16 @@ List<ProTheme> getMaps() {
   return list;
 }
 
-List<ProTheme> getPayment() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getPayment() {
+  List<ThemeConfiguration> list = [];
 
   // list.add(ProTheme(name: 'RazorPay Payment', type: '', show_cover: false, widget: RazorPayScreen(), darkThemeSupported: true));
 
   return list;
 }
 
-List<ProTheme> getRestAPi() {
-  List<ProTheme> list = [];
+List<ThemeConfiguration> getRestAPi() {
+  List<ThemeConfiguration> list = [];
 
   return list;
 }
@@ -1125,10 +1125,10 @@ List<ProTheme> getRestAPi() {
 
 //region Flutter Web
 
-ProTheme getWebApps() {
-  List<ProTheme> list = [];
+ThemeConfiguration getWebApps() {
+  List<ThemeConfiguration> list = [];
 
-  return ProTheme(
+  return ThemeConfiguration(
       name: 'Web',
       title_name: 'Flutter Web Apps',
       type: '',
@@ -1136,9 +1136,9 @@ ProTheme getWebApps() {
       sub_kits: list);
 }
 
-List<ProTheme> getChartList() {
-  List<ProTheme> list = [];
-  list.add(ProTheme(
+List<ThemeConfiguration> getChartList() {
+  List<ThemeConfiguration> list = [];
+  list.add(ThemeConfiguration(
       name: 'Monthly Sale Chart1',
       type: 'New',
       show_cover: false,

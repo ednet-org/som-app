@@ -8,10 +8,10 @@ import 'package:som/main/utils/AppImages.dart';
 import 'package:som/main/utils/AppStrings.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'ProKitScreenListing.dart';
+import 'ScreenListing.dart';
 
 class ThemeList extends StatefulWidget {
-  final List<ProTheme>? list;
+  final List<ThemeConfiguration>? list;
 
   ThemeList(this.list);
 
@@ -58,7 +58,7 @@ class ThemeListState extends State<ThemeList> {
                       toast(appComingSoon);
                     }
                   } else {
-                    ProKitScreenListing(widget.list![index]).launch(context);
+                    ScreenListing(widget.list![index]).launch(context);
                   }
                 },
                 child: Container(
