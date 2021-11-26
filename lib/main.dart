@@ -25,6 +25,8 @@ int currentIndex = 0;
 void main() async {
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
+  print('appStore.isAuthenticated:');
+  print(appStore.isAuthenticated);
 
   await initialize();
 
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-        home: SplashScreen(),
+        home: SplashScreen(isAuthenticated: appStore.isAuthenticated),
         theme: !appStore.isDarkModeOn
             ? AppThemeData.lightTheme
             : AppThemeData.darkTheme,

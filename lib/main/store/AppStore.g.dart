@@ -246,22 +246,22 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   @override
-  void setAuthenticatedUser() {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setAuthenticatedUser');
+  dynamic logout() {
+    final _$actionInfo =
+        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
     try {
-      return super.setAuthenticatedUser();
+      return super.logout();
     } finally {
       _$AppStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic logout() {
+  dynamic login() {
     final _$actionInfo =
-        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
+        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
     try {
-      return super.logout();
+      return super.login();
     } finally {
       _$AppStoreBaseActionController.endAction(_$actionInfo);
     }

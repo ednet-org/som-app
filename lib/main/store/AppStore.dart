@@ -104,12 +104,12 @@ abstract class AppStoreBase with Store {
   bool isAuthenticated = false;
 
   @action
-  void setAuthenticatedUser() {
-    isAuthenticated = true;
+  logout() {
+    isAuthenticated = false;
   }
 
   @action
-  logout() {
-    isAuthenticated = false;
+  login() {
+    isAuthenticated = true;
   }
 }

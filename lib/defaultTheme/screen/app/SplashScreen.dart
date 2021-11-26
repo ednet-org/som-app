@@ -7,11 +7,13 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
-import '../../../main.dart';
 import 'DashboardScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   static String tag = '/SplashScreen';
+  bool isAuthenticated;
+
+  SplashScreen({this.isAuthenticated = false});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -34,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     await Future.delayed(Duration(seconds: 3));
 
-    if (!appStore.isAuthenticated) {
-      return LoginOrRegister().launch(context, isNewTask: true);
+    if (!widget.isAuthenticated) {
+      return LoginOrRegister().launch(context);
     }
-    return DashboardScreen().launch(context, isNewTask: true);
+    return DashboardScreen().launch(context);
   }
 
   Widget build(BuildContext context) {

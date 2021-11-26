@@ -73,6 +73,7 @@ class LoginState extends State<Login> {
           SizedBox(height: spacing_xlarge),
           AppButtons(
             onPressed: () {
+              appStore.login();
               DashboardScreen().launch(context, isNewTask: true);
             },
             textContent: static["button.login"],
