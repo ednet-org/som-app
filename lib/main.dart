@@ -20,12 +20,11 @@ import 'main/utils/intl/som_localizations.dart';
 var appStore = AppStore();
 var customerStore = CustomerStore();
 
-int currentIndex = 0;
-
 void main() async {
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
 
+  // nb_utils - Must be initialize before using shared preference
   await initialize();
 
   // Lets start with default dark mode till we solve logo transparency
@@ -33,10 +32,9 @@ void main() async {
   // appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 
   if (isMobile) {
-    await Firebase.initializeApp();
-    MobileAds.instance.initialize();
-
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    // await Firebase.initializeApp();
+    //
+    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
 
   runApp(MyApp());
@@ -48,7 +46,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => MaterialApp(
-        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           SomLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
