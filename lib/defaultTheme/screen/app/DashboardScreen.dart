@@ -5,7 +5,6 @@ import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../template/DTWorkInProgressScreen.dart';
 import 'MainMenu.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -33,6 +32,17 @@ class DashboardScreenState extends State<DashboardScreen> {
     if (mounted) super.setState(fn);
   }
 
+  userMenuItem() {
+    return Row(children: [
+      CircleAvatar(
+        backgroundColor: Colors.grey.shade800,
+        backgroundImage: AssetImage(
+            'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
+      ).paddingRight(10.0),
+      Text('Fritzchen der Käufer').paddingRight(50),
+    ]);
+  }
+
   Widget build(BuildContext context) {
     return appStore.isAuthenticated
         ? SafeArea(
@@ -44,15 +54,10 @@ class DashboardScreenState extends State<DashboardScreen> {
                   iconTheme: IconThemeData(color: appStore.iconColor),
                   actions: [
                     PopupMenuButton(
-                      child: Row(children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey.shade800,
-                          backgroundImage: AssetImage(
-                              'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
-                        ).paddingRight(15.0),
-                        Text('Fritzchen der Käufer').paddingRight(50),
-                      ]),
+                      color: appStore.appBarColor,
+                      child: userMenuItem(),
                       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                        PopupMenuItem(child: userMenuItem()),
                         PopupMenuItem(
                           child: ListTile(
                             leading: Icon(Icons.notifications),
@@ -87,7 +92,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
                 drawer: MainMenu(),
-                body: DTWorkInProgressScreen(),
+                body: Text(''),
                 // body: DTDashboardWidget(),
               ),
             ),
@@ -95,59 +100,60 @@ class DashboardScreenState extends State<DashboardScreen> {
         : LoginOrRegister();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return SafeArea(
-  //     child: Observer(
-  //       builder: (context) => Scaffold(
-  //         appBar: AppBar(
-  //             backgroundColor: appStore.appBarColor,
-  //             title: appBarTitleWidget(context, 'Dashboard'),
-  //             iconTheme: IconThemeData(color: appStore.iconColor)),
-  //         floatingActionButton: userMenu(),
-  //         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-  //         drawer: MainMenu(),
-  //         body: DTWorkInProgressScreen(),
-  //         // body: DTDashboardWidget(),
-  //       ),
-  //     ),
-  //   );
-  // }
+// @override
+// Widget build(BuildContext context) {
+//   return SafeArea(
+//     child: Observer(
+//       builder: (context) => Scaffold(
+//         appBar: AppBar(
+//             backgroundColor: appStore.appBarColor,
+//             title: appBarTitleWidget(context, 'Dashboard'),
+//             iconTheme: IconThemeData(color: appStore.iconColor)),
+//         floatingActionButton: userMenu(),
+//         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+//         drawer: MainMenu(),
+//         body: DTWorkInProgressScreen(),
+//         // body: DTDashboardWidget(),
+//       ),
+//     ),
+//   );
+// }
 
-  userMenu() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          children: [
-            ActionChip(
-              avatar: CircleAvatar(
-                  backgroundColor: Colors.grey.shade800,
-                  backgroundImage: AssetImage(
-                      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg')),
-              label: Text('Fritzchen der Käufer'),
-              onPressed: () {
-                setState(() {
-                  isUserMenuExpanded = !isUserMenuExpanded;
-                });
-              },
-            ),
-            Positioned(
-              top: 200,
-              child: SizedBox(
-                height: 300,
-                child: Positioned(
-                    top: 200,
-                    child: Container(
-                        height: 300,
-                        color: Colors.amber,
-                        child: Text("BOlje juce nego sutra"))),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
+// userMenu() {
+//   return LayoutBuilder(
+//     builder: (context, constraints) {
+//       return Stack(
+//         children: [
+//           ActionChip(
+//             avatar: CircleAvatar(
+//                     backgroundColor: Colors.grey.shade800,
+//                     backgroundImage: AssetImage(
+//                         'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'))
+//                 .paddingAll(8),
+//             label: Text('Fritzchen der Käufer'),
+//             onPressed: () {
+//               setState(() {
+//                 isUserMenuExpanded = !isUserMenuExpanded;
+//               });
+//             },
+//           ),
+//           Positioned(
+//             top: 200,
+//             child: SizedBox(
+//               height: 300,
+//               child: Positioned(
+//                   top: 200,
+//                   child: Container(
+//                       height: 300,
+//                       color: Colors.amber,
+//                       child: Text("BOlje juce nego sutra"))),
+//             ),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 }
 //
 // class ItemTile extends StatefulWidget {
