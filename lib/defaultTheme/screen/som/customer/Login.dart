@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/template/DTSignUpScreen_next.dart';
 import 'package:som/defaultTheme/utils/EditText.dart';
 import 'package:som/integrations/utils/constants.dart';
 import 'package:som/main/utils/AppWidget.dart';
@@ -39,16 +40,28 @@ class LoginState extends State<Login> {
           SizedBox(
             width: spacing_control,
           ),
-          AutoSizeText.rich(
-            TextSpan(children: [
-              TextSpan(text: static["text.notRegistered"]),
-              TextSpan(text: static["link.notRegistered"])
-            ]),
-            maxLines: 3,
-            overflow: TextOverflow.fade,
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                color: Colors.amber, fontSize: 15, fontFamily: fontMedium),
-            // TODO impl read more able components
+          GestureDetector(
+            onTap: () {
+              DTSignUpScreen().launch(context);
+            },
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: AutoSizeText.rich(
+                  TextSpan(children: [
+                    TextSpan(text: static["text.notRegistered"]),
+                    TextSpan(text: static["link.notRegistered"])
+                  ]),
+                  maxLines: 3,
+                  overflow: TextOverflow.fade,
+                  style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: Colors.amber,
+                      fontSize: 15,
+                      fontFamily: fontMedium),
+                  // TODO impl read more able components
+                ),
+              ),
+            ).paddingTop(20),
           ),
           SizedBox(height: spacing_large),
         ],
@@ -156,5 +169,5 @@ const static = {
   "button.login": "Login",
   "link.forgottenPassword": "Forgotten password?",
   "text.notRegistered": "If you don't have account",
-  "link.notRegistered": " register here please, easy and quickly, smart way :)",
+  "link.notRegistered": " register here please, easy and quickly.",
 };
