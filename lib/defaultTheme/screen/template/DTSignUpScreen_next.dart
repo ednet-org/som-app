@@ -43,8 +43,11 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 20), primary: appCat1);
+    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 20),
+        primary: appIconTint_mustard_yellow);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -66,7 +69,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                   Row(
                     children: [
                       ElevatedButton(
-                          style: style,
+                          style: buyerStyle,
                           onPressed: () {
                             print('Buyer');
                           },
@@ -77,6 +80,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                           )),
                       10.width,
                       ElevatedButton(
+                          style: providerStyle,
                           onPressed: () {
                             print('Provider');
                           },
