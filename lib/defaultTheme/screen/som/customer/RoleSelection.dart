@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
-import '../../../../domain/model/customer-management/roles.dart';
-import 'RoleSelector.dart';
-
 class RoleSelection extends StatelessWidget {
-
   RoleSelection();
 
   @override
@@ -20,16 +17,6 @@ class RoleSelection extends StatelessWidget {
             .paddingOnly(left: 8, top: 20, right: 8),
         16.height,
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Card(
-            child: Row(children: [
-              Text('HMMMMM'),
-            ]),
-          ),
-        ),
-        16.height,
-        Container(
-          height: 100,
           child: selectionCards,
         ),
         8.height,
@@ -38,19 +25,48 @@ class RoleSelection extends StatelessWidget {
   }
 
   Widget get selectionCards {
+    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 20), primary: appCat1);
+    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 20),
+        primary: appIconTint_mustard_yellow);
+    final ButtonStyle bothStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 20),
+        primary: appDark_parrot_green);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: Roles.values
-          .map(
-            (roleValue) => InkWell(
-              child: Card(
-                child: RoleSelector(
-                  role: roleValue,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
+      children: [
+        ElevatedButton(
+            style: buyerStyle,
+            onPressed: () {
+              print('Buyer');
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Buyer', style: boldTextStyle(size: 24)),
+            )),
+        10.width,
+        ElevatedButton(
+            style: providerStyle,
+            onPressed: () {
+              print('Provider');
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Provider', style: boldTextStyle(size: 24)),
+            )),
+        10.width,
+        ElevatedButton(
+            style: bothStyle,
+            onPressed: () {
+              print('Both');
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Both', style: boldTextStyle(size: 24)),
+            )),
+      ],
+    ).paddingTop(500);
   }
 }

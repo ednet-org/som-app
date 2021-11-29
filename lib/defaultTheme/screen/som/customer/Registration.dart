@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/template/DTNoDataScreen.dart';
+import 'package:som/main/utils/AppColors.dart';
 
 import '../../../../domain/model/customer-management/roles.dart';
 import '../../../../main.dart';
@@ -12,6 +14,17 @@ class Registration extends StatefulWidget {
 }
 
 class RegistrationState extends State<Registration> {
+  bool obscureText = true;
+  bool autoValidate = false;
+  var formKey = GlobalKey<FormState>();
+
+  var emailCont = TextEditingController();
+  var passCont = TextEditingController();
+  var companyNameCont = TextEditingController();
+
+  var emailFocus = FocusNode();
+  var passFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,31 +52,159 @@ class RegistrationState extends State<Registration> {
     );
   }
 
-  Widget providerForm() =>
-      company(
+  Widget providerForm() => company(
         Text('provider'),
       );
 
-  Widget buyerForm() =>
-      company(
+  Widget buyerForm() => company(
         Text('buyer or not'),
       );
 
-  Widget providerAndBuyerForm() =>
-      company(
+  Widget providerAndBuyerForm() => company(
         Text('Both roles are assumed.'),
       );
 
   Widget company(data) {
     return Column(
       children: [
-        Text('lorem ipsum'),
+        // DIVIDER
+        Row(children: <Widget>[
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+          Text("Company details"),
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+        ]),
+
+// Company name
+        TextFormField(
+          controller: companyNameCont,
+          style: primaryTextStyle(),
+          decoration: buildInputDecoration('Company name'),
+          keyboardType: TextInputType.text,
+          validator: (s) {
+            if (s!.trim().isEmpty) return errorThisFieldRequired;
+            return null;
+          },
+          onFieldSubmitted: (s) =>
+              FocusScope.of(context).requestFocus(emailFocus),
+          textInputAction: TextInputAction.next,
+        ),
+        16.height,
+// E-mail
+        TextFormField(
+          controller: emailCont,
+          focusNode: emailFocus,
+          style: primaryTextStyle(),
+          decoration: buildInputDecoration('E-mail'),
+          keyboardType: TextInputType.emailAddress,
+          validator: (s) {
+            if (s!.trim().isEmpty) return errorThisFieldRequired;
+            if (!s.trim().validateEmail()) return 'Email is invalid';
+            return null;
+          },
+          onFieldSubmitted: (s) =>
+              FocusScope.of(context).requestFocus(passFocus),
+          textInputAction: TextInputAction.next,
+        ),
+        16.height,
+        Row(children: <Widget>[
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+          Text("Company address"),
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+        ]),
+// City
+        TextFormField(
+          decoration: buildInputDecoration('Country'),
+        ),
+        16.height, // City
+        TextFormField(
+          decoration: buildInputDecoration('City'),
+        ),
+        16.height,
+// Street
+        TextFormField(
+          decoration: buildInputDecoration('Street'),
+        ),
+        16.height,
+// Number
+        TextFormField(
+          decoration: buildInputDecoration('Number'),
+        ),
+        16.height,
+// Zip
+        TextFormField(
+          decoration: buildInputDecoration('Zip'),
+        ),
+        16.height,
+        Row(children: <Widget>[
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+          Expanded(
+            child: new Container(
+                margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 36,
+                )),
+          ),
+        ]),
         data,
       ],
     );
   }
-}
 
+  InputDecoration buildInputDecoration(
+    String labelText, {
+    Icon? suffixIcon,
+  }) {
+    return InputDecoration(
+      labelText: labelText,
+      contentPadding: EdgeInsets.all(16),
+      labelStyle: secondaryTextStyle(),
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appColorPrimary)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+      suffix: suffixIcon,
+    );
+  }
+}
 
 // InputDecoration buildInputDecoration(
 //   String labelText, {

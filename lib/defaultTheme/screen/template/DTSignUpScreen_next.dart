@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/defaultTheme/screen/som/customer/Registration.dart';
 import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
@@ -43,12 +44,6 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20), primary: appCat1);
-    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20),
-        primary: appIconTint_mustard_yellow);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context, 'Customer registration'),
@@ -65,187 +60,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Please select role.'),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          style: buyerStyle,
-                          onPressed: () {
-                            print('Buyer');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                Text('Buyer', style: boldTextStyle(size: 24)),
-                          )),
-                      10.width,
-                      ElevatedButton(
-                          style: providerStyle,
-                          onPressed: () {
-                            print('Provider');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Provider',
-                                style: boldTextStyle(size: 24)),
-                          )),
-                    ],
-                  ),
-
-                  30.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Company details"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-
-                  // Company name
-                  TextFormField(
-                    controller: companyNameCont,
-                    style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Company name'),
-                    keyboardType: TextInputType.text,
-                    validator: (s) {
-                      if (s!.trim().isEmpty) return errorThisFieldRequired;
-                      return null;
-                    },
-                    onFieldSubmitted: (s) =>
-                        FocusScope.of(context).requestFocus(emailFocus),
-                    textInputAction: TextInputAction.next,
-                  ),
-                  16.height,
-                  // E-mail
-                  TextFormField(
-                    controller: emailCont,
-                    focusNode: emailFocus,
-                    style: primaryTextStyle(),
-                    decoration: buildInputDecoration('E-mail'),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (s) {
-                      if (s!.trim().isEmpty) return errorThisFieldRequired;
-                      if (!s.trim().validateEmail()) return 'Email is invalid';
-                      return null;
-                    },
-                    onFieldSubmitted: (s) =>
-                        FocusScope.of(context).requestFocus(passFocus),
-                    textInputAction: TextInputAction.next,
-                  ),
-                  16.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Company address"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-                  // City
-                  TextFormField(
-                    decoration: buildInputDecoration('City'),
-                  ),
-                  16.height,
-                  // Street
-                  TextFormField(
-                    decoration: buildInputDecoration('Street'),
-                  ),
-                  16.height,
-                  // Number
-                  TextFormField(
-                    decoration: buildInputDecoration('Number'),
-                  ),
-                  16.height,
-                  // Zip
-                  TextFormField(
-                    decoration: buildInputDecoration('Zip'),
-                  ),
-                  16.height,
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 10.0, right: 20.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                    Text("Users"),
-                    Expanded(
-                      child: new Container(
-                          margin:
-                              const EdgeInsets.only(left: 20.0, right: 10.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 36,
-                          )),
-                    ),
-                  ]),
-                  // Password
-                  TextFormField(
-                    obscureText: obscureText,
-                    focusNode: passFocus,
-                    controller: passCont,
-                    style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Password',
-                        suffixIcon: Icon(!obscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off)
-                          ..onTap(() {
-                            obscureText = !obscureText;
-                            setState(() {});
-                          })),
-                    validator: (s) {
-                      if (s!.trim().isEmpty) return errorThisFieldRequired;
-                      return null;
-                    },
-                  ),
-                  16.height,
-                  // Password
-                  TextFormField(
-                    obscureText: obscureText,
-                    style: primaryTextStyle(),
-                    decoration: buildInputDecoration('Repeat password',
-                        suffixIcon: Icon(!obscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off)
-                          ..onTap(() {
-                            obscureText = !obscureText;
-                            setState(() {});
-                          })),
-                    validator: (s) {
-                      if (s!.trim().isEmpty) return errorThisFieldRequired;
-                      return null;
-                    },
-                  ),
+                  Registration(),
                   20.height,
                   Container(
                     alignment: Alignment.center,
@@ -284,22 +99,159 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
     );
   }
 
-  InputDecoration buildInputDecoration(
-    String labelText, {
-    Icon? suffixIcon,
-  }) {
-    return InputDecoration(
-      labelText: labelText,
-      contentPadding: EdgeInsets.all(16),
-      labelStyle: secondaryTextStyle(),
-      border: OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: appColorPrimary)),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-      suffix: suffixIcon,
-    );
-  }
+
 }
+
+// Row(children: <Widget>[
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 10.0, right: 20.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+//   Text("Company details"),
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 20.0, right: 10.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+// ]),
+//
+// // Company name
+// TextFormField(
+//   controller: companyNameCont,
+//   style: primaryTextStyle(),
+//   decoration: buildInputDecoration('Company name'),
+//   keyboardType: TextInputType.text,
+//   validator: (s) {
+//     if (s!.trim().isEmpty) return errorThisFieldRequired;
+//     return null;
+//   },
+//   onFieldSubmitted: (s) =>
+//       FocusScope.of(context).requestFocus(emailFocus),
+//   textInputAction: TextInputAction.next,
+// ),
+// 16.height,
+// // E-mail
+// TextFormField(
+//   controller: emailCont,
+//   focusNode: emailFocus,
+//   style: primaryTextStyle(),
+//   decoration: buildInputDecoration('E-mail'),
+//   keyboardType: TextInputType.emailAddress,
+//   validator: (s) {
+//     if (s!.trim().isEmpty) return errorThisFieldRequired;
+//     if (!s.trim().validateEmail()) return 'Email is invalid';
+//     return null;
+//   },
+//   onFieldSubmitted: (s) =>
+//       FocusScope.of(context).requestFocus(passFocus),
+//   textInputAction: TextInputAction.next,
+// ),
+// 16.height,
+// Row(children: <Widget>[
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 10.0, right: 20.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+//   Text("Company address"),
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 20.0, right: 10.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+// ]),
+// // City
+// TextFormField(
+//   decoration: buildInputDecoration('City'),
+// ),
+// 16.height,
+// // Street
+// TextFormField(
+//   decoration: buildInputDecoration('Street'),
+// ),
+// 16.height,
+// // Number
+// TextFormField(
+//   decoration: buildInputDecoration('Number'),
+// ),
+// 16.height,
+// // Zip
+// TextFormField(
+//   decoration: buildInputDecoration('Zip'),
+// ),
+// 16.height,
+// Row(children: <Widget>[
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 10.0, right: 20.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+//   Text("Users"),
+//   Expanded(
+//     child: new Container(
+//         margin:
+//             const EdgeInsets.only(left: 20.0, right: 10.0),
+//         child: Divider(
+//           color: Colors.black,
+//           height: 36,
+//         )),
+//   ),
+// ]),
+// // Password
+// TextFormField(
+//   obscureText: obscureText,
+//   focusNode: passFocus,
+//   controller: passCont,
+//   style: primaryTextStyle(),
+//   decoration: buildInputDecoration('Password',
+//       suffixIcon: Icon(!obscureText
+//           ? Icons.visibility
+//           : Icons.visibility_off)
+//         ..onTap(() {
+//           obscureText = !obscureText;
+//           setState(() {});
+//         })),
+//   validator: (s) {
+//     if (s!.trim().isEmpty) return errorThisFieldRequired;
+//     return null;
+//   },
+// ),
+// 16.height,
+// // Password
+// TextFormField(
+//   obscureText: obscureText,
+//   style: primaryTextStyle(),
+//   decoration: buildInputDecoration('Repeat password',
+//       suffixIcon: Icon(!obscureText
+//           ? Icons.visibility
+//           : Icons.visibility_off)
+//         ..onTap(() {
+//           obscureText = !obscureText;
+//           setState(() {});
+//         })),
+//   validator: (s) {
+//     if (s!.trim().isEmpty) return errorThisFieldRequired;
+//     return null;
+//   },
+// ),
