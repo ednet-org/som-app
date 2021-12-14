@@ -57,7 +57,7 @@ class RegistrationState extends State<Registration> {
       );
 
   Widget buyerForm() => company(
-        Text('buyer or not'),
+        Text('buyer'),
       );
 
   Widget providerAndBuyerForm() => company(
@@ -67,253 +67,237 @@ class RegistrationState extends State<Registration> {
   Widget company(data) {
     return Container(
       width: 800,
-      child: Row(
+      child: Column(
         children: [
           Container(
-            width: 300,
-            child: Column(
-              children: [
-                // DIVIDER
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Text("Company details"),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-
-// Company name
-                TextFormField(
-                  controller: companyNameCont,
-                  style: primaryTextStyle(),
-                  decoration: buildInputDecoration('Company name'),
-                  keyboardType: TextInputType.text,
-                  validator: (s) {
-                    if (s!.trim().isEmpty) return errorThisFieldRequired;
-                    return null;
-                  },
-                  onFieldSubmitted: (s) =>
-                      FocusScope.of(context).requestFocus(emailFocus),
-                  textInputAction: TextInputAction.next,
-                ),
-                16.height,
-// E-mail
-                TextFormField(
-                  controller: emailCont,
-                  focusNode: emailFocus,
-                  style: primaryTextStyle(),
-                  decoration: buildInputDecoration('E-mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (s) {
-                    if (s!.trim().isEmpty) return errorThisFieldRequired;
-                    if (!s.trim().validateEmail()) return 'Email is invalid';
-                    return null;
-                  },
-                  onFieldSubmitted: (s) =>
-                      FocusScope.of(context).requestFocus(passFocus),
-                  textInputAction: TextInputAction.next,
-                ),
-                16.height,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Text("Company address"),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-// City
-                TextFormField(
-                  decoration: buildInputDecoration('Country'),
-                ),
-                16.height, // City
-                TextFormField(
-                  decoration: buildInputDecoration('City'),
-                ),
-                16.height,
-// Street
-                TextFormField(
-                  decoration: buildInputDecoration('Street'),
-                ),
-                16.height,
-// Number
-                TextFormField(
-                  decoration: buildInputDecoration('Number'),
-                ),
-                16.height,
-// Zip
-                TextFormField(
-                  decoration: buildInputDecoration('Zip'),
-                ),
-                16.height,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                data,
-              ],
-            ),
+            width: 616,
+            child: Row(children: <Widget>[
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 36,
+                    )),
+              ),
+              Text("Company details"),
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 36,
+                    )),
+              ),
+            ]),
           ),
-          20.width,
-          Container(
-            width: 300,
-            child: Column(
-              children: [
-                // DIVIDER
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Text("Company details"),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-
+          Row(
+            children: [
+              Container(
+                width: 300,
+                child: Column(
+                  children: [
 // Company name
-                TextFormField(
-                  controller: companyNameCont,
-                  style: primaryTextStyle(),
-                  decoration: buildInputDecoration('Company name'),
-                  keyboardType: TextInputType.text,
-                  validator: (s) {
-                    if (s!.trim().isEmpty) return errorThisFieldRequired;
-                    return null;
-                  },
-                  onFieldSubmitted: (s) =>
-                      FocusScope.of(context).requestFocus(emailFocus),
-                  textInputAction: TextInputAction.next,
-                ),
-                16.height,
+                    TextFormField(
+                      controller: companyNameCont,
+                      style: primaryTextStyle(),
+                      decoration: buildInputDecoration('Company name'),
+                      keyboardType: TextInputType.text,
+                      validator: (s) {
+                        if (s!.trim().isEmpty) return errorThisFieldRequired;
+                        return null;
+                      },
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(emailFocus),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    16.height,
 // E-mail
-                TextFormField(
-                  controller: emailCont,
-                  focusNode: emailFocus,
-                  style: primaryTextStyle(),
-                  decoration: buildInputDecoration('E-mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (s) {
-                    if (s!.trim().isEmpty) return errorThisFieldRequired;
-                    if (!s.trim().validateEmail()) return 'Email is invalid';
-                    return null;
-                  },
-                  onFieldSubmitted: (s) =>
-                      FocusScope.of(context).requestFocus(passFocus),
-                  textInputAction: TextInputAction.next,
-                ),
-                16.height,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Text("Company address"),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
+                    TextFormField(
+                      controller: emailCont,
+                      focusNode: emailFocus,
+                      style: primaryTextStyle(),
+                      decoration: buildInputDecoration('E-mail'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (s) {
+                        if (s!.trim().isEmpty) return errorThisFieldRequired;
+                        if (!s.trim().validateEmail())
+                          return 'Email is invalid';
+                        return null;
+                      },
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(passFocus),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    16.height,
+                    Row(children: <Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 20.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                      Text("Company address"),
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 10.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                    ]),
 // City
-                TextFormField(
-                  decoration: buildInputDecoration('Country'),
-                ),
-                16.height, // City
-                TextFormField(
-                  decoration: buildInputDecoration('City'),
-                ),
-                16.height,
+                    TextFormField(
+                      decoration: buildInputDecoration('Country'),
+                    ),
+                    16.height, // City
+                    TextFormField(
+                      decoration: buildInputDecoration('City'),
+                    ),
+                    16.height,
 // Street
-                TextFormField(
-                  decoration: buildInputDecoration('Street'),
-                ),
-                16.height,
+                    TextFormField(
+                      decoration: buildInputDecoration('Street'),
+                    ),
+                    16.height,
 // Number
-                TextFormField(
-                  decoration: buildInputDecoration('Number'),
-                ),
-                16.height,
+                    TextFormField(
+                      decoration: buildInputDecoration('Number'),
+                    ),
+                    16.height,
 // Zip
-                TextFormField(
-                  decoration: buildInputDecoration('Zip'),
+                    TextFormField(
+                      decoration: buildInputDecoration('Zip'),
+                    ),
+                    16.height,
+                    Row(children: <Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 10.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                    ]),
+                    data,
+                  ],
                 ),
-                16.height,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.black,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                data,
-              ],
-            ),
-          )
+              ),
+              20.width,
+              Container(
+                width: 300,
+                child: Column(
+                  children: [
+// Company name
+                    TextFormField(
+                      controller: companyNameCont,
+                      style: primaryTextStyle(),
+                      decoration: buildInputDecoration('UID Number'),
+                      keyboardType: TextInputType.text,
+                      validator: (s) {
+                        if (s!.trim().isEmpty) return errorThisFieldRequired;
+                        return null;
+                      },
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(emailFocus),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    16.height,
+// E-mail
+                    TextFormField(
+                      controller: emailCont,
+                      focusNode: emailFocus,
+                      style: primaryTextStyle(),
+                      decoration: buildInputDecoration('Registration number'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (s) {
+                        if (s!.trim().isEmpty) return errorThisFieldRequired;
+                        if (!s.trim().validateEmail())
+                          return 'Email is invalid';
+                        return null;
+                      },
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(passFocus),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    16.height,
+                    TextFormField(
+                      decoration: buildInputDecoration('Company size'),
+                    ),
+                    16.height, // City
+                    TextFormField(
+                      decoration: buildInputDecoration('Website URL'),
+                    ),
+                    16.height,
+// Street
+                    Row(children: <Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 20.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                      Text("Bank details"),
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 10.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                    ]),
+
+                    TextFormField(
+                      decoration: buildInputDecoration('IBAN'),
+                    ),
+                    16.height,
+// Number
+                    TextFormField(
+                      decoration: buildInputDecoration('BIC'),
+                    ),
+                    16.height,
+// Zip
+                    TextFormField(
+                      decoration: buildInputDecoration('Account owner'),
+                    ),
+                    16.height,
+                    Row(children: <Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 20.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 10.0),
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            )),
+                      ),
+                    ]),
+                  ],
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );
