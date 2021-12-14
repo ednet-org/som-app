@@ -4,23 +4,35 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
-class RoleSelection extends StatelessWidget {
+class RoleSelection extends StatefulWidget {
   RoleSelection();
 
   @override
+  State<RoleSelection> createState() => _RoleSelectionState();
+}
+
+class _RoleSelectionState extends State<RoleSelection> {
+  bool isProvider = false;
+  bool isBuyer = true;
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Please select role.',
-                style: primaryTextStyle(size: textSizeXLarge.toInt()))
-            .paddingOnly(left: 8, top: 20, right: 8),
-        16.height,
-        Container(
-          child: selectionCards,
-        ),
-        8.height,
-      ],
+    return Container(
+      width: 800,
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Please select rolea.',
+                  style: primaryTextStyle(size: textSizeXLarge.toInt()))
+              .paddingOnly(left: 8, top: 20, right: 8),
+          16.height,
+          Container(
+            child: selectionCards,
+          ),
+          8.height,
+        ],
+      ),
     );
   }
 
@@ -30,43 +42,58 @@ class RoleSelection extends StatelessWidget {
     final ButtonStyle providerStyle = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 20),
         primary: appIconTint_mustard_yellow);
-    final ButtonStyle bothStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20),
-        primary: appDark_parrot_green);
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ElevatedButton(
             style: buyerStyle,
             onPressed: () {
-              print('Buyer');
+              setState(() {
+                isBuyer = !isBuyer;
+              });
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Buyer', style: boldTextStyle(size: 24)),
+              child: Row(
+                children: [
+                  Text('Buyer', style: boldTextStyle(size: 24)),
+                  Switch(
+                      value: isBuyer,
+                      onChanged: (value) {
+                        setState(() {
+                          isBuyer = value;
+                          print(isBuyer);
+                        });
+                      }),
+                ],
+              ),
             )),
         10.width,
         ElevatedButton(
             style: providerStyle,
             onPressed: () {
-              print('Provider');
+              setState(() {
+                isProvider = !isProvider;
+              });
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Provider', style: boldTextStyle(size: 24)),
-            )),
-        10.width,
-        ElevatedButton(
-            style: bothStyle,
-            onPressed: () {
-              print('Both');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Both', style: boldTextStyle(size: 24)),
+              child: Row(
+                children: [
+                  Text('Provider', style: boldTextStyle(size: 24)),
+                  Switch(
+                      value: isProvider,
+                      onChanged: (value) {
+                        setState(() {
+                          isProvider = value;
+                          print(isProvider);
+                        });
+                      }),
+                ],
+              ),
             )),
       ],
-    ).paddingTop(500);
+    );
   }
 }

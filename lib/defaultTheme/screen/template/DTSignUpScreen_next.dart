@@ -57,7 +57,7 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Registration(),
