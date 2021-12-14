@@ -53,7 +53,6 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
           width: dynamicWidth(context),
           child: Form(
             key: formKey,
-            autovalidate: autoValidate,
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
