@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/pages/SplashScreen.dart';
+import 'package:som/defaultTheme/screen/pages/SplashPage.dart';
 import 'package:som/domain/application/customer-store.dart';
 import 'package:som/main/store/AppStore.dart';
 import 'package:som/main/utils/AppTheme.dart';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-        home: SplashScreen(isAuthenticated: appStore.isAuthenticated),
+        home: SplashPage(isAuthenticated: appStore.isAuthenticated),
         theme: !appStore.isDarkModeOn
             ? AppThemeData.lightTheme
             : AppThemeData.darkTheme,

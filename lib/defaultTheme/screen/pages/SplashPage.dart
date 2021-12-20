@@ -9,17 +9,17 @@ import 'package:som/main/utils/AppConstant.dart';
 
 import 'DashboardPage.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
   bool isAuthenticated;
 
-  SplashScreen({this.isAuthenticated = false});
+  SplashPage({this.isAuthenticated = false});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
