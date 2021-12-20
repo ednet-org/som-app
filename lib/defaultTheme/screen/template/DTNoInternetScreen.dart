@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 
 class DTNoInternetScreen extends StatefulWidget {
   static String tag = '/DTNoInternetScreen';

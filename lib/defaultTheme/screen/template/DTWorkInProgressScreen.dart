@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
-import '../som/pages/CustomerRegistrationPage.dart';
+import '../pages/CustomerRegistrationPage.dart';
 
 class DTWorkInProgressScreen extends StatefulWidget {
   @override

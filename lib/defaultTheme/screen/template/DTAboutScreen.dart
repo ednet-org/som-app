@@ -4,7 +4,7 @@ import 'package:package_info/package_info.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 
 class DTAboutScreen extends StatefulWidget {
   static String tag = '/DTAboutScreen';
@@ -43,7 +43,7 @@ class DTAboutScreenState extends State<DTAboutScreen> {
             Container(
               padding: EdgeInsets.all(8),
               decoration: boxDecoration(showShadow: true),
-              child: Image.asset('images/app/app_icon.png', height: 100),
+              child: Image.asset('images/pages/app_icon.png', height: 100),
             ).cornerRadiusWithClipRRect(50),
             20.height,
             FutureBuilder<String>(

@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/app/SplashScreen.dart';
+import 'package:som/defaultTheme/screen/pages/SplashScreen.dart';
 import 'package:som/domain/application/customer-store.dart';
 import 'package:som/main/store/AppStore.dart';
 import 'package:som/main/utils/AppTheme.dart';

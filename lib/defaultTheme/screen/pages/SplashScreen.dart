@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
+import 'package:som/defaultTheme/screen/pages/CustomerLoginPage.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
 import 'DashboardScreen.dart';
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     await Future.delayed(Duration(seconds: 3));
 
     if (!widget.isAuthenticated) {
-      return LoginOrRegister().launch(context);
+      return CustomerLoginPage().launch(context);
     }
     return DashboardScreen().launch(context);
   }

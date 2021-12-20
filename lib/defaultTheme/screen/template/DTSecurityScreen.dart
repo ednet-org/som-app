@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import 'DTChangePasswordScreen.dart';
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 
 class DTSecurityScreen extends StatefulWidget {
   static String tag = '/DTSecurityScreen';

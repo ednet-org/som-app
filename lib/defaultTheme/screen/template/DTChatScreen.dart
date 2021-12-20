@@ -10,7 +10,7 @@ import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 
 class DTChatScreen extends StatefulWidget {
   static String tag = '/DTChatScreen';

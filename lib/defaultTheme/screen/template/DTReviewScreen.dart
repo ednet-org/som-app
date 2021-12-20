@@ -11,7 +11,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 import 'package:som/main/utils/flutter_rating_bar.dart';
 
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 import 'ReviewWidget.dart';
 
 class DTReviewScreen extends StatefulWidget {

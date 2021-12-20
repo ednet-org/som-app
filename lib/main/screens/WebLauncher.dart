@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/pages/DashboardScreen.dart';
 import 'package:som/integrations/utils/colors.dart';
 import 'package:som/main/model/AppModel.dart';
 import 'package:som/main/utils/AppImages.dart';

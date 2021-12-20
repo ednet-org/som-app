@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 
 class DTFAQScreen extends StatefulWidget {
   static String tag = '/DTFAQScreen';

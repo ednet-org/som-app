@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/integrations/utils/constants.dart';
 
-import 'Login.dart';
+import '../som/customer/Login.dart';
 
-class LoginOrRegister extends StatefulWidget {
+class CustomerLoginPage extends StatefulWidget {
   static String tag = '/DTLogin';
 
   @override
-  LoginOrRegisterState createState() => LoginOrRegisterState();
+  CustomerLoginPageState createState() => CustomerLoginPageState();
 }
 
-class LoginOrRegisterState extends State<LoginOrRegister> {
+class CustomerLoginPageState extends State<CustomerLoginPage> {
   bool obscureText = true;
   bool autoValidate = false;
   var formKey = GlobalKey<FormState>();

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/app/DashboardScreen.dart';
-import 'package:som/defaultTheme/screen/app/MainMenu.dart';
-import 'package:som/defaultTheme/screen/som/customer/LoginOrRegister.dart';
+import 'package:som/defaultTheme/screen/pages/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/pages/MainMenu.dart';
+import 'package:som/defaultTheme/screen/pages/CustomerLoginPage.dart';
 import 'package:som/defaultTheme/screen/template/DTForgotPwdScreen.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
@@ -141,7 +141,7 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
                     child: Text('Sign Up', style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
-                    LoginOrRegister().launch(context);
+                    CustomerLoginPage().launch(context);
                   }),
                   10.height,
                   Text('OR', style: boldTextStyle(size: 22)).center(),

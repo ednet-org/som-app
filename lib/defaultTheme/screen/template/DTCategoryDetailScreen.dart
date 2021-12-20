@@ -6,7 +6,7 @@ import 'package:som/main/utils/AppWidget.dart';
 import 'package:som/main/utils/rating_bar.dart';
 
 import '../../../main.dart';
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 import 'DTProductDetailScreen.dart';
 
 class DTCategoryDetailScreen extends StatefulWidget {

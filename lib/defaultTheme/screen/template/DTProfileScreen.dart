@@ -10,7 +10,7 @@ import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../main.dart';
-import '../app/MainMenu.dart';
+import '../pages/MainMenu.dart';
 import 'DTNotificationSettingScreen.dart';
 import 'DTSecurityScreen.dart';
 
