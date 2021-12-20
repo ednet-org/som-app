@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/screen/template/DTNoDataScreen.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
+import 'package:som/template_storage/screen/template/DTNoDataScreen.dart';
 
 import '../../../../../domain/model/customer-management/roles.dart';
 import '../../../../../main.dart';
@@ -92,6 +92,7 @@ class RegistrationState extends State<Registration> {
             ]),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 300,
