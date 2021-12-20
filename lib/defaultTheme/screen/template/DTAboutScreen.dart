@@ -4,7 +4,7 @@ import 'package:package_info/package_info.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTAboutScreen extends StatefulWidget {
   static String tag = '/DTAboutScreen';

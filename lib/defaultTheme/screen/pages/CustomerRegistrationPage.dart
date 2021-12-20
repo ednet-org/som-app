@@ -6,7 +6,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
-import 'MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class CustomerRegistrationPage extends StatefulWidget {
   static String tag = '/DTSignUpScreen';

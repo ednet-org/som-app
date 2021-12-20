@@ -5,7 +5,7 @@ import 'package:som/main.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTForgotPwdScreen extends StatefulWidget {
   static String tag = '/DTForgotPwdScreen';

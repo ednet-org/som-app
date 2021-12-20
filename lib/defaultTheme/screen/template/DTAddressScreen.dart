@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTAddressScreen extends StatefulWidget {
   static String tag = '/DTAddressScreen';

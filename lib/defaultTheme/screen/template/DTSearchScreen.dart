@@ -7,7 +7,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTSearchScreen extends StatefulWidget {
   @override

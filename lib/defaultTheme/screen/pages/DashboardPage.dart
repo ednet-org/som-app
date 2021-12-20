@@ -5,16 +5,16 @@ import 'package:som/defaultTheme/screen/pages/CustomerLoginPage.dart';
 import 'package:som/main.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import 'MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
   static String tag = '/DashboardScreen';
 
   @override
-  DashboardScreenState createState() => DashboardScreenState();
+  DashboardPageState createState() => DashboardPageState();
 }
 
-class DashboardScreenState extends State<DashboardScreen> {
+class DashboardPageState extends State<DashboardPage> {
   bool isUserMenuExpanded = false;
 
   @override

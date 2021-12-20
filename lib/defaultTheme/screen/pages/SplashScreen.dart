@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/screen/pages/CustomerLoginPage.dart';
 import 'package:som/main/utils/AppConstant.dart';
 
-import 'DashboardScreen.dart';
+import 'DashboardPage.dart';
 
 class SplashScreen extends StatefulWidget {
   static String tag = '/SplashScreen';
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (!widget.isAuthenticated) {
       return CustomerLoginPage().launch(context);
     }
-    return DashboardScreen().launch(context);
+    return DashboardPage().launch(context);
   }
 
   Widget build(BuildContext context) {

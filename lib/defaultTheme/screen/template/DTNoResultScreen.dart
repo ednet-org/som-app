@@ -3,7 +3,7 @@ import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppConstant.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTNoResultScreen extends StatefulWidget {
   @override

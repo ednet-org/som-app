@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 import 'DTSignInScreen.dart';
 
 class DTWalkThoughScreen extends StatefulWidget {

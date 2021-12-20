@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/pages/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/pages/DashboardPage.dart';
 import 'package:som/defaultTheme/utils/DTDataProvider.dart';
 import 'package:som/main/model/ListModels.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
 
-import '../../../../main.dart';
+import '../../../../../main.dart';
 
 class MainMenu extends StatefulWidget {
   static String tag = '/MainMenu';
@@ -78,7 +78,7 @@ class MainMenuState extends State<MainMenu> {
                         style: boldTextStyle(color: appColorPrimary)),
                   ).onTap(() {
                     appStore.setDrawerItemIndex(-1);
-                    DashboardScreen().launch(context, isNewTask: true);
+                    DashboardPage().launch(context, isNewTask: true);
                   }),
                   Divider(height: 16, color: viewLineColor),
                   ListView.builder(

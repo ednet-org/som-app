@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../main.dart';
 import 'CartListView.dart';
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 // ignore: must_be_immutable
 class DTOrderSummaryScreen extends StatefulWidget {

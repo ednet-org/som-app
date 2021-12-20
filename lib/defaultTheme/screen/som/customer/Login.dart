@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/pages/DashboardScreen.dart';
+import 'package:som/defaultTheme/screen/pages/DashboardPage.dart';
 import 'package:som/defaultTheme/screen/pages/CustomerRegistrationPage.dart';
 import 'package:som/defaultTheme/utils/EditText.dart';
 import 'package:som/integrations/utils/constants.dart';
@@ -87,7 +87,7 @@ class LoginState extends State<Login> {
           AppButtons(
             onPressed: () {
               appStore.login();
-              DashboardScreen().launch(context, isNewTask: true);
+              DashboardPage().launch(context, isNewTask: true);
             },
             textContent: static["button.login"],
           )

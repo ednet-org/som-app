@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/defaultTheme/screen/pages/DashboardScreen.dart';
-import 'package:som/defaultTheme/screen/pages/MainMenu.dart';
+import 'package:som/defaultTheme/screen/pages/DashboardPage.dart';
+import 'package:som/defaultTheme/screen/som/components/MainMenu.dart';
 import 'package:som/defaultTheme/screen/pages/CustomerLoginPage.dart';
 import 'package:som/defaultTheme/screen/template/DTForgotPwdScreen.dart';
 import 'package:som/main.dart';
@@ -123,7 +123,7 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     child: Text('Sign In', style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
-                    DashboardScreen().launch(context);
+                    DashboardPage().launch(context);
 
                     /// Remove comment if you want enable validation
                     /*if (formKey.currentState.validate()) {

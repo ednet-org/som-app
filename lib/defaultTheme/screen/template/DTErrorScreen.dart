@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/defaultTheme/utils/DTWidgets.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 
 class DTErrorScreen extends StatefulWidget {
   static String tag = '/DTErrorScreen';

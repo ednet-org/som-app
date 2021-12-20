@@ -5,7 +5,7 @@ import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
 import 'CartListView.dart';
-import '../pages/MainMenu.dart';
+import '../som/components/MainMenu.dart';
 import 'DTOrderSummaryScreen.dart';
 
 class DTCartScreen extends StatefulWidget {
