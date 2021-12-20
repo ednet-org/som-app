@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 
-import 'customer/Login.dart';
+import '../components/Login.dart';
 
 class CustomerLoginPage extends StatefulWidget {
   static String tag = '/DTLogin';

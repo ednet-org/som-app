@@ -8,7 +8,7 @@ import 'package:som/template_storage/integrations/utils/constants.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/auto_size_text/auto_size_text.dart';
 
-import '../../../../main.dart';
+import '../../../main.dart';
 
 class Login extends StatefulWidget {
   static String tag = '/Loginx';

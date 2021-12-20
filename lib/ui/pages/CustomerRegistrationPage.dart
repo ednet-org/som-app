@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/customer/Registration.dart';
+import 'package:som/ui/pages/customer/registration/Registration.dart';
 import 'package:som/template_storage/screen/template/DTSignInScreen.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';

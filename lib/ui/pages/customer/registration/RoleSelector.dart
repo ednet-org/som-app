@@ -5,7 +5,7 @@ import 'package:som/ui/components/utils/DTWidgets.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 
-import '../../../../../main.dart';
+import '../../../../../../main.dart';
 
 class RoleSelector extends StatelessWidget {
   final Roles role;

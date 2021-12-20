@@ -4,8 +4,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/screen/template/DTNoDataScreen.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 
-import '../../../../domain/model/customer-management/roles.dart';
-import '../../../../main.dart';
+import '../../../../../domain/model/customer-management/roles.dart';
+import '../../../../../main.dart';
 import 'RoleSelection.dart';
 
 class Registration extends StatefulWidget {
