@@ -5,17 +5,17 @@ import 'package:som/defaultTheme/screen/template/DTSignInScreen.dart';
 import 'package:som/main/utils/AppColors.dart';
 import 'package:som/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-import '../app/MainMenu.dart';
+import '../../../../main.dart';
+import '../../app/MainMenu.dart';
 
-class DTSignUpScreen extends StatefulWidget {
+class CustomerRegistrationPage extends StatefulWidget {
   static String tag = '/DTSignUpScreen';
 
   @override
-  DTSignUpScreenState createState() => DTSignUpScreenState();
+  CustomerRegistrationPageState createState() => CustomerRegistrationPageState();
 }
 
-class DTSignUpScreenState extends State<DTSignUpScreen> {
+class CustomerRegistrationPageState extends State<CustomerRegistrationPage> {
   bool obscureText = true;
   bool autoValidate = false;
   var formKey = GlobalKey<FormState>();
@@ -72,15 +72,6 @@ class DTSignUpScreenState extends State<DTSignUpScreen> {
                         style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
-
-                    /// Remove comment if you want enable validation
-                    /* if (formKey.currentState.validate()) {
-                        formKey.currentState.save();
-                        finish(context);
-                      } else {
-                        autoValidate = true;
-                      }
-                      setState(() {});*/
                   }),
                   20.height,
                   Text('Already Registered?',

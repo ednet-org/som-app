@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
-import 'DTSignUpScreen_next.dart';
+import '../som/pages/CustomerRegistrationPage.dart';
 
 class DTWorkInProgressScreen extends StatefulWidget {
   @override
@@ -73,7 +73,7 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
                           text: 'Sign Up',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              DTSignUpScreen().launch(context);
+                              CustomerRegistrationPage().launch(context);
                             },
                           style: primaryTextStyle(color: Colors.blue, size: 24),
                         ),
@@ -87,7 +87,7 @@ class _DTWorkInProgressScreenState extends State<DTWorkInProgressScreen> {
                           text: '\n\nThank you for your interest.',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              DTSignUpScreen().launch(context);
+                              CustomerRegistrationPage().launch(context);
                             },
                         ),
                       ],

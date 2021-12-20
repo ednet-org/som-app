@@ -57,7 +57,7 @@ class _RoleSelectionState extends State<RoleSelection> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text('Buyer', style: boldTextStyle(size: 24)),
+                  Text('TATA', style: boldTextStyle(size: 24)),
                   Switch(
                       value: isBuyer,
                       onChanged: (value) {
