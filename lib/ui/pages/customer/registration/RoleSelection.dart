@@ -23,9 +23,9 @@ class _RoleSelectionState extends State<RoleSelection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Please select rolea.',
-                  style: primaryTextStyle(size: textSizeXLarge.toInt()))
-              .paddingOnly(left: 8, top: 20, right: 8),
+          Text('Please select which type of company are you registering:',
+                  style: primaryTextStyle(size: textSizeLarge.toInt()))
+              .paddingOnly(left: 8, top: 50, right: 8),
           16.height,
           Container(
             child: selectionCards,
@@ -57,7 +57,7 @@ class _RoleSelectionState extends State<RoleSelection> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text('TATA', style: boldTextStyle(size: 24)),
+                  Text('Buyer ', style: boldTextStyle(size: 24)),
                   Switch(
                       value: isBuyer,
                       onChanged: (value) {
