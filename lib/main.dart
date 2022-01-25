@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       builder: (_) => MaterialApp(
         localizationsDelegates: [
           SomLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
           GlobalWidgetsLocalizations.delegate
         ],
         localeResolutionCallback: (locale, supportedLocales) =>
