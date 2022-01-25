@@ -31,8 +31,8 @@ class FilePickerScreenState extends State<FilePickerScreen> {
     FilePickerResult? _result =
         await FilePicker.platform.pickFiles(type: FileType.any);
 
-    if (_result != null) {
-      file = File(_result.files.single.path);
+    if (_result != null && _result.files.single.path != null) {
+      file = File(_result.files.single.path!);
       fileName = file!.path.split('/').last;
       filePath = file!.path;
     }

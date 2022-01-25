@@ -29,18 +29,18 @@ class _MWStepperScreen4State extends State<MWStepperScreen4> {
             steps: mSteps,
             type: StepperType.horizontal,
             currentStep: this.currStep,
-            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+            controlsBuilder: (BuildContext context, ControlsDetails details) {
               return Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   TextButton(
-                    onPressed: onStepContinue,
+                    onPressed: details.onStepContinue,
                     child: Text('CONTINUE', style: secondaryTextStyle()),
                   ),
                   10.width,
                   TextButton(
-                    onPressed: onStepCancel,
+                    onPressed: details.onStepCancel,
                     child: Text('CANCEL', style: secondaryTextStyle()),
                   ),
                 ],
