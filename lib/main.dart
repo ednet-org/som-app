@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => MaterialApp(
-        localizationsDelegates: [
+        localizationsDelegates: const [
           SomLocalizations.delegate,
           ...GlobalMaterialLocalizations.delegates,
           GlobalWidgetsLocalizations.delegate
