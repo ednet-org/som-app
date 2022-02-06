@@ -17,8 +17,16 @@ class _MWStepperScreen4State extends State<MWStepperScreen4> {
   @override
   Widget build(BuildContext context) {
     List<Step> mSteps = [
-      Step(title: Text("Step 1"), content: Text("This is our Step 1 example.", style: secondaryTextStyle(color: appStore.textSecondaryColor)), isActive: currStep == 0, state: StepState.complete),
-      Step(title: Text("Step 2"), content: Text("This is our Step 2 example.", style: secondaryTextStyle(color: appStore.textSecondaryColor)), isActive: currStep == 1, state: StepState.disabled),
+      Step(title: Text("Step 1"),
+          content: Text("This is our Step 1 example.",
+              style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+          isActive: currStep == 0,
+          state: StepState.complete),
+      Step(title: Text("Step 2"),
+          content: Text("This is our Step 2 example.",
+              style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+          isActive: currStep == 1,
+          state: StepState.disabled),
     ];
 
     return SafeArea(
