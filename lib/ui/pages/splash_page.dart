@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/CustomerLoginPage.dart';
+import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 
-import 'DashboardPage.dart';
+import 'dashboard_page.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';

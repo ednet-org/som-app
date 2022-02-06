@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/DashboardPage.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';

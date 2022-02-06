@@ -6,7 +6,7 @@ import 'package:som/template_storage/main/model/AppModel.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/main.dart';
-import 'package:som/ui/pages/DashboardPage.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 
 import 'SettingScreen.dart';
 

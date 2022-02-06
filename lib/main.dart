@@ -7,7 +7,7 @@ import 'package:som/domain/application/customer-store.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/AppStore.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
-import 'package:som/ui/pages/SplashPage.dart';
+import 'package:som/ui/pages/splash_page.dart';
 
 import 'template_storage/main/utils/AppConstant.dart';
 import 'template_storage/main/utils/intl/som_localizations.dart';

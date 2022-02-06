@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/DashboardPage.dart';
-import 'package:som/ui/pages/CustomerRegistrationPage.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
+import 'package:som/ui/pages/customer_registration_page.dart';
 import 'package:som/ui/components/utils/EditText.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';

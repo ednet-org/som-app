@@ -35,11 +35,21 @@ android {
         versionCode 24
         versionName "5.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [applicationName: "som"]
+        manifestPlaceholders += [applicationName: "som"]
         multiDexEnabled true
     }
 
     buildTypes {
+        release {
+            manifestPlaceholders = [applicationName: "som"]
+        }
+
+        debug {
+            manifestPlaceholders = [applicationName: "som"]
+        }
+        build {
+            manifestPlaceholders = [applicationName: "som"]
+        }
         release {
             signingConfig signingConfigs.debug
         }
