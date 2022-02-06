@@ -19,7 +19,7 @@ const textSizeXXLarge = 35.0;
 const appOpenCount = 'appOpenCount';
 
 /// Linux - for linux, you have to change default window width in linux/my_application.cc
-const applicationMaxWidth = 300.0;
+const applicationMaxWidth = 686.0;
 
 const profileImage =
     'images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/profile.png';

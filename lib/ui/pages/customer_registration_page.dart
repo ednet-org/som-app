@@ -21,7 +21,7 @@ class _CustomerRegistrationPageState extends State<CustomerRegistrationPage> {
   Widget build(BuildContext context) {
     List<Step> mSteps = [
       Step(
-          title: Text("Role selection"),
+          title: Text("Kole selection"),
           content: Text("ROLE",
               style: secondaryTextStyle(color: appStore.textSecondaryColor)),
           isActive: currStep == 0,

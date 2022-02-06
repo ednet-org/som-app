@@ -9,6 +9,8 @@ import 'package:som/ui/pages/customer_login_page.dart';
 class DashboardPage extends StatefulWidget {
   static String tag = '/DashboardScreen';
 
+  const DashboardPage({Key? key}) : super(key: key);
+
   @override
   DashboardPageState createState() => DashboardPageState();
 }
