@@ -18,27 +18,47 @@ class _MWStepperScreen2State extends State<MWStepperScreen2> {
   Widget build(BuildContext context) {
     List<Step> steps = [
       Step(
-        title: Text("Contact Detail", style: boldTextStyle(color: appStore.textPrimaryColor)),
-        subtitle: Text("Add Contact Detail", style: primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
+        title: Text("Contact Detail",
+            style: boldTextStyle(color: appStore.textPrimaryColor)),
+        subtitle: Text("Add Contact Detail",
+            style:
+                primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
         isActive: currStep == 0,
-        content: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+        content: Text(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            style: secondaryTextStyle(color: appStore.textSecondaryColor)),
       ),
       Step(
-        title: Text("Shipping Information", style: boldTextStyle(color: appStore.textPrimaryColor)),
-        subtitle: Text("Add Shipping Information", style: primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
-        content: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+        title: Text("Shipping Information",
+            style: boldTextStyle(color: appStore.textPrimaryColor)),
+        subtitle: Text("Add Shipping Information",
+            style:
+                primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
+        content: Text(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            style: secondaryTextStyle(color: appStore.textSecondaryColor)),
         isActive: currStep == 1,
       ),
       Step(
-        title: Text("Billing Address", style: boldTextStyle(color: appStore.textPrimaryColor)),
-        subtitle: Text("Added Billing Address", style: primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
-        content: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+        title: Text("Billing Address",
+            style: boldTextStyle(color: appStore.textPrimaryColor)),
+        subtitle: Text("Added Billing Address",
+            style:
+                primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
+        content: Text(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            style: secondaryTextStyle(color: appStore.textSecondaryColor)),
         isActive: currStep == 2,
       ),
       Step(
-        title: Text("Payment Flow", style: boldTextStyle(color: appStore.textPrimaryColor)),
-        subtitle: Text("Select Payment method", style: primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
-        content: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: secondaryTextStyle(color: appStore.textSecondaryColor)),
+        title: Text("Payment Flow",
+            style: boldTextStyle(color: appStore.textPrimaryColor)),
+        subtitle: Text("Select Payment method",
+            style:
+                primaryTextStyle(color: appStore.textPrimaryColor, size: 14)),
+        content: Text(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            style: secondaryTextStyle(color: appStore.textSecondaryColor)),
         isActive: currStep == 3,
       ),
     ];
@@ -53,18 +73,18 @@ class _MWStepperScreen2State extends State<MWStepperScreen2> {
             physics: BouncingScrollPhysics(),
             type: StepperType.vertical,
             currentStep: this.currStep,
-            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+            controlsBuilder: (BuildContext context, ControlsDetails details) {
               return Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   TextButton(
-                    onPressed: onStepContinue,
+                    onPressed: details.onStepContinue,
                     child: Text('CONTINUE', style: secondaryTextStyle()),
                   ),
                   10.width,
                   TextButton(
-                    onPressed: onStepCancel,
+                    onPressed: details.onStepCancel,
                     child: Text('CANCEL', style: secondaryTextStyle()),
                   ),
                 ],
