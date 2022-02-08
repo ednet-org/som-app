@@ -42,7 +42,6 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
   Widget build(BuildContext context) {
     final ButtonStyle style =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-    print('ouuuuuuuut');
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -50,7 +49,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: spacing_large),
+              const SizedBox(height: spacing_large),
               Container(
                 alignment: Alignment.center,
                 child: Image.asset('images/som/logo.png',
@@ -59,7 +58,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
               Text('Smart offer management'.toUpperCase(),
                       style: primaryTextStyle(size: textSizeLarge.toInt()))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
-              Container(
+              SizedBox(
                 width: 800,
                 child: Column(children: [
                   Login(),
