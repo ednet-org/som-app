@@ -272,14 +272,14 @@ class LauncherState extends State<Launcher>
                                         ScreenListing(snapshot.data!.widgets)
                                             .launch(context);
                                       }),
-                                      category(
-                                          appCat1, app_ic_phone, appLblFullApps,
-                                          isNew: true,
-                                          type: snapshot.data!.fullApp!.type,
-                                          onTap: () {
-                                        ScreenListing(snapshot.data!.fullApp)
-                                            .launch(context);
-                                      }),
+                                      // category(
+                                      //     appCat1, app_ic_phone, appLblFullApps,
+                                      //     isNew: true,
+                                      //     type: snapshot.data!.fullApp!.type,
+                                      //     onTap: () {
+                                      //   ScreenListing(snapshot.data!.fullApp)
+                                      //       .launch(context);
+                                      // }),
                                       category(appCat2, app_dashboard,
                                           appLblDashboard,
                                           type: snapshot.data!.dashboard!.type,
@@ -329,8 +329,6 @@ class LauncherState extends State<Launcher>
                               controller: _controller,
                               physics: NeverScrollableScrollPhysics(),
                               children: <Widget>[
-                                ThemeList(snapshot.data!.themes),
-                                ThemeList(snapshot.data!.screenList),
                               ],
                             ),
                           ),

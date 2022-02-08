@@ -8,14 +8,16 @@ class MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Container(
-          width: dynamicWidth(context),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: child,
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: Container(
+            width: dynamicWidth(context),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: child,
+            ),
           ),
         ),
       ),

@@ -29,7 +29,6 @@ class RegistrationState extends State<Registration> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RoleSelection(),
         Observer(builder: (_) {
           print('\n\nyou hit me !! \n\n');
           print(customerStore.fullName);

@@ -37,21 +37,29 @@ Widget text(
       color: textColor ?? appStore.textSecondaryColor,
       height: 1.5,
       letterSpacing: latterSpacing,
-      decoration: lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
+      decoration:
+          lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
     ),
   );
 }
 
-BoxDecoration boxDecoration({double radius = 2, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
+BoxDecoration boxDecoration(
+    {double radius = 2,
+    Color color = Colors.transparent,
+    Color? bgColor,
+    var showShadow = false}) {
   return BoxDecoration(
     color: bgColor ?? appStore.scaffoldBackground,
-    boxShadow: showShadow ? defaultBoxShadow(shadowColor: shadowColorGlobal) : [BoxShadow(color: Colors.transparent)],
+    boxShadow: showShadow
+        ? defaultBoxShadow(shadowColor: shadowColorGlobal)
+        : [BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
 }
 
-Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(BuildContext context) async {
+Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(
+    BuildContext context) async {
   try {
     final fakeList = await (loadDataFromJson(context));
     List<LatLngAndGeohash> myPoints = [];
@@ -80,11 +88,13 @@ void changeStatusColor(Color color) async {
   }*/
 }
 
-Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit? fit}) {
+Widget commonCacheImageWidget(String? url, double height,
+    {double? width, BoxFit? fit}) {
   if (url.validate().startsWith('http')) {
     if (isMobile) {
       return CachedNetworkImage(
-        placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+        placeholder:
+            placeholderWidgetFn() as Widget Function(BuildContext, String)?,
         imageUrl: '$url',
         height: height,
         width: width,
@@ -101,7 +111,13 @@ Widget commonCacheImageWidget(String? url, double height, {double? width, BoxFit
   }
 }
 
-Widget settingItem(context, String text, {Function? onTap, Widget? detail, Widget? leading, Color? textColor, int? textSize, double? padding}) {
+Widget settingItem(context, String text,
+    {Function? onTap,
+    Widget? detail,
+    Widget? leading,
+    Color? textColor,
+    int? textSize,
+    double? padding}) {
   return InkWell(
     onTap: onTap as void Function()?,
     child: Container(
@@ -112,19 +128,29 @@ Widget settingItem(context, String text, {Function? onTap, Widget? detail, Widge
         children: <Widget>[
           Row(
             children: <Widget>[
-              Container(child: leading ?? SizedBox(), width: 30, alignment: Alignment.center),
+              Container(
+                  child: leading ?? SizedBox(),
+                  width: 30,
+                  alignment: Alignment.center),
               leading != null ? 10.width : SizedBox(),
-              Text(text, style: primaryTextStyle(size: textSize ?? 18, color: textColor ?? appStore.textPrimaryColor)).expand(),
+              Text(text,
+                      style: primaryTextStyle(
+                          size: textSize ?? 18,
+                          color: textColor ?? appStore.textPrimaryColor))
+                  .expand(),
             ],
           ).expand(),
-          detail ?? Icon(Icons.arrow_forward_ios, size: 16, color: appStore.textSecondaryColor),
+          detail ??
+              Icon(Icons.arrow_forward_ios,
+                  size: 16, color: appStore.textSecondaryColor),
         ],
       ).paddingOnly(left: 16, right: 16, top: 8, bottom: 8),
     ),
   );
 }
 
-Widget appBarTitleWidget(context, String title, {Color? color, Color? textColor}) {
+Widget appBarTitleWidget(context, String title,
+    {Color? color, Color? textColor}) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
@@ -133,7 +159,8 @@ Widget appBarTitleWidget(context, String title, {Color? color, Color? textColor}
       children: <Widget>[
         Text(
           title,
-          style: boldTextStyle(color: color ?? appStore.textPrimaryColor, size: 20),
+          style: boldTextStyle(
+              color: color ?? appStore.textPrimaryColor, size: 20),
           maxLines: 1,
         ).expand(),
       ],
@@ -141,7 +168,12 @@ Widget appBarTitleWidget(context, String title, {Color? color, Color? textColor}
   );
 }
 
-AppBar appBar(BuildContext context, String title, {List<Widget>? actions, bool showBack = true, Color? color, Color? iconColor, Color? textColor}) {
+AppBar appBar(BuildContext context, String title,
+    {List<Widget>? actions,
+    bool showBack = true,
+    Color? color,
+    Color? iconColor,
+    Color? textColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: color ?? appStore.appBarColor,
@@ -150,10 +182,12 @@ AppBar appBar(BuildContext context, String title, {List<Widget>? actions, bool s
             onPressed: () {
               finish(context);
             },
-            icon: Icon(Icons.arrow_back, color: appStore.isDarkModeOn ? white : black),
+            icon: Icon(Icons.arrow_back,
+                color: appStore.isDarkModeOn ? white : black),
           )
         : null,
-    title: appBarTitleWidget(context, title, textColor: textColor, color: color),
+    title:
+        appBarTitleWidget(context, title, textColor: textColor, color: color),
     actions: actions,
   );
 }
@@ -163,7 +197,8 @@ class ExampleItemWidget extends StatelessWidget {
   final Function onTap;
   final bool showTrailing;
 
-  ExampleItemWidget(this.tabBarType, {required this.onTap, this.showTrailing = false});
+  ExampleItemWidget(this.tabBarType,
+      {required this.onTap, this.showTrailing = false});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +210,10 @@ class ExampleItemWidget extends StatelessWidget {
       child: ListTile(
         onTap: () => onTap(),
         title: Text(tabBarType.name!, style: boldTextStyle()),
-        trailing: showTrailing ? Icon(Icons.arrow_forward_ios, size: 15, color: appStore.textPrimaryColor) : null,
+        trailing: showTrailing
+            ? Icon(Icons.arrow_forward_ios,
+                size: 15, color: appStore.textPrimaryColor)
+            : null,
       ),
     );
   }
@@ -183,7 +221,9 @@ class ExampleItemWidget extends StatelessWidget {
 
 String convertDate(date) {
   try {
-    return date != null ? DateFormat(dateFormat).format(DateTime.parse(date)) : '';
+    return date != null
+        ? DateFormat(dateFormat).format(DateTime.parse(date))
+        : '';
   } catch (e) {
     print(e);
     return '';
@@ -200,7 +240,6 @@ class CustomTheme extends StatelessWidget {
     return Theme(
       data: appStore.isDarkModeOn
           ? ThemeData.dark().copyWith(
-              accentColor: appColorPrimary,
               backgroundColor: appStore.scaffoldBackground,
             )
           : ThemeData.light(),
@@ -209,9 +248,11 @@ class CustomTheme extends StatelessWidget {
   }
 }
 
-Widget? Function(BuildContext, String) placeholderWidgetFn() => (_, s) => placeholderWidget();
+Widget? Function(BuildContext, String) placeholderWidgetFn() =>
+    (_, s) => placeholderWidget();
 
-Widget placeholderWidget() => Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
+Widget placeholderWidget() =>
+    Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
 
 BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
   return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
@@ -298,7 +339,9 @@ class ContainerX extends StatelessWidget {
           return Container(
             alignment: Alignment.topCenter,
             child: Container(
-              constraints: useFullWidth.validate() ? null : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
+              constraints: useFullWidth.validate()
+                  ? null
+                  : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
               child: web ?? SizedBox(),
             ),
           );
