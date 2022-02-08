@@ -24,19 +24,4 @@ class _CustomerRegistrationPageState extends State<CustomerRegistrationPage> {
       ),
     );
   }
-
-  previousSolution(context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('Already Registered?',
-            style: boldTextStyle(
-              color: appColorPrimary,
-            )).center().onTap(() {
-          DTSignInScreen().launch(context);
-        }),
-      ],
-    );
-  }
 }
