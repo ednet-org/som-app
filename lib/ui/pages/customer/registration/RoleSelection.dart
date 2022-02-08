@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppConstant.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class RoleSelection extends StatefulWidget {
   RoleSelection();
@@ -23,9 +22,7 @@ class _RoleSelectionState extends State<RoleSelection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Please select which type of company are you registering:',
-                  style: primaryTextStyle(size: textSizeLarge.toInt()))
-              .paddingOnly(left: 8, top: 50, right: 8),
+          text('Please select which type of company are you registering'),
           16.height,
           Container(
             child: selectionCards,
@@ -38,10 +35,10 @@ class _RoleSelectionState extends State<RoleSelection> {
 
   Widget get selectionCards {
     final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20), primary: appCat1);
+        textStyle: const TextStyle(fontSize: 12),
+        primary: appIconTintDark_purple);
     final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20),
-        primary: appIconTint_mustard_yellow);
+        textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

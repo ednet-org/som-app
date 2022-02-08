@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
+import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import 'RoleSelection.dart';
@@ -170,14 +171,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     TextButton(
                       onPressed: details.onStepContinue,
                       child: Text('CONTINUE',
-                          style: secondaryTextStyle(color: Colors.amber)),
+                          style: secondaryTextStyle(color: actionColor)),
                     ),
                     400.width,
                     TextButton(
                       onPressed: details.onStepCancel,
-                      child: Text('CANCEL',
-                          style: secondaryTextStyle(
-                              color: Colors.deepOrangeAccent)),
+                      child: Text('CANCEL', style: secondaryTextStyle()),
                     ),
                   ],
                 );

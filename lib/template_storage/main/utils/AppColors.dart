@@ -16,6 +16,7 @@ const appLight_parrot_green = Color(0xFFb4ef93);
 const appIconTintCherry = Color(0xFFffddd5);
 const appIconTint_sky_blue = Color(0xFF73d8d4);
 const appIconTint_mustard_yellow = Color(0xFFffc980);
+const actionColor = Colors.amber;
 const appIconTintDark_purple = Color(0xFF8998ff);
 const appTxtTintDark_purple = Color(0xFF515BBE);
 const appIconTintDarkCherry = Color(0xFFf2866c);
