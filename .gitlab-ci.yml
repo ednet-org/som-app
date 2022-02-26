@@ -3,9 +3,9 @@ image: cirrusci/flutter:latest
 variables:
 
 before_script:
-  - flutter upgrade
   - flutter config --enable-web
   - flutter pub get
+  - flutter packages pub run build_runner build --delete-conflicting-outputs
 
 pages:
   stage: deploy
