@@ -12,12 +12,6 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
-  final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 12),
-      primary: appIconTintDark_purple);
-  final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
-
   bool isProvider = false;
   bool isBuyer = true;
 
@@ -48,18 +42,21 @@ class _RoleSelectionState extends State<RoleSelection> {
       children: [
         Container(
           width: appStore.buttonWidth,
-          child: buyerButton(buyerStyle),
+          child: buyerSelector(),
         ),
         50.width,
         Container(
           width: appStore.buttonWidth,
-          child: providerButton(providerStyle),
+          child: providerSelector(),
         ),
       ],
     );
   }
 
-  ElevatedButton providerButton(ButtonStyle providerStyle) {
+  ElevatedButton providerSelector() {
+    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+
     return ElevatedButton(
         style: providerStyle,
         onPressed: () {
@@ -85,7 +82,11 @@ class _RoleSelectionState extends State<RoleSelection> {
         ));
   }
 
-  ElevatedButton buyerButton(ButtonStyle buyerStyle) {
+  ElevatedButton buyerSelector() {
+    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 12),
+        primary: appIconTintDark_purple);
+
     return ElevatedButton(
         style: buyerStyle,
         onPressed: () {
@@ -114,9 +115,9 @@ class _RoleSelectionState extends State<RoleSelection> {
   mobile() {
     return Column(
       children: [
-        buyerButton(buyerStyle),
+        buyerSelector(),
         10.height,
-        providerButton(providerStyle),
+        providerSelector(),
       ],
     );
   }
