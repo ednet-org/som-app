@@ -173,7 +173,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       child: Text('CONTINUE',
                           style: secondaryTextStyle(color: actionColor)),
                     ),
-                    400.width,
+                    // 400.width,
                     TextButton(
                       onPressed: details.onStepCancel,
                       child: Text('CANCEL', style: secondaryTextStyle()),

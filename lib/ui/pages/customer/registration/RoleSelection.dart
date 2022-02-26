@@ -23,7 +23,7 @@ class _RoleSelectionState extends State<RoleSelection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 800,
+      // width: 800,
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
