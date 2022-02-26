@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 apply plugin: 'com.android.application'
@@ -35,10 +35,21 @@ android {
         versionCode 24
         versionName "5.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders += [applicationName: "som"]
         multiDexEnabled true
     }
 
     buildTypes {
+        release {
+            manifestPlaceholders = [applicationName: "som"]
+        }
+
+        debug {
+            manifestPlaceholders = [applicationName: "som"]
+        }
+        build {
+            manifestPlaceholders = [applicationName: "som"]
+        }
         release {
             signingConfig signingConfigs.debug
         }
