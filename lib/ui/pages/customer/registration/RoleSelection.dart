@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -45,9 +46,15 @@ class _RoleSelectionState extends State<RoleSelection> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buyerButton(buyerStyle),
-        10.width,
-        providerButton(providerStyle),
+        Container(
+          width: appStore.buttonWidth,
+          child: buyerButton(buyerStyle),
+        ),
+        50.width,
+        Container(
+          width: appStore.buttonWidth,
+          child: providerButton(providerStyle),
+        ),
       ],
     );
   }
