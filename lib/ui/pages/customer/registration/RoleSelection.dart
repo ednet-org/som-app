@@ -11,6 +11,12 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
+  final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 12),
+      primary: appIconTintDark_purple);
+  final ButtonStyle providerStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+
   bool isProvider = false;
   bool isBuyer = true;
 
@@ -24,9 +30,7 @@ class _RoleSelectionState extends State<RoleSelection> {
         children: [
           text('Please select which type of company are you registering'),
           16.height,
-          Container(
-            child: selectionCards,
-          ),
+          selectionCards,
           8.height,
         ],
       ),
@@ -34,62 +38,78 @@ class _RoleSelectionState extends State<RoleSelection> {
   }
 
   Widget get selectionCards {
-    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 12),
-        primary: appIconTintDark_purple);
-    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+    return ContainerX(web: web(), mobile: mobile());
+  }
 
+  web() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ElevatedButton(
-            style: buyerStyle,
-            onPressed: () {
-              setState(() {
-                isBuyer = !isBuyer;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Buyer ', style: boldTextStyle(size: 24)),
-                  Switch(
-                      value: isBuyer,
-                      onChanged: (value) {
-                        setState(() {
-                          isBuyer = value;
-                          print(isBuyer);
-                        });
-                      }),
-                ],
-              ),
-            )),
+        buyerButton(buyerStyle),
         10.width,
-        ElevatedButton(
-            style: providerStyle,
-            onPressed: () {
-              setState(() {
-                isProvider = !isProvider;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Provider', style: boldTextStyle(size: 24)),
-                  Switch(
-                      value: isProvider,
-                      onChanged: (value) {
-                        setState(() {
-                          isProvider = value;
-                          print(isProvider);
-                        });
-                      }),
-                ],
-              ),
-            )),
+        providerButton(providerStyle),
+      ],
+    );
+  }
+
+  ElevatedButton providerButton(ButtonStyle providerStyle) {
+    return ElevatedButton(
+        style: providerStyle,
+        onPressed: () {
+          setState(() {
+            isProvider = !isProvider;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text('Provider', style: boldTextStyle(size: 24)),
+              Switch(
+                  value: isProvider,
+                  onChanged: (value) {
+                    setState(() {
+                      isProvider = value;
+                      print(isProvider);
+                    });
+                  }),
+            ],
+          ),
+        ));
+  }
+
+  ElevatedButton buyerButton(ButtonStyle buyerStyle) {
+    return ElevatedButton(
+        style: buyerStyle,
+        onPressed: () {
+          setState(() {
+            isBuyer = !isBuyer;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text('Buyer ', style: boldTextStyle(size: 24)),
+              Switch(
+                  value: isBuyer,
+                  onChanged: (value) {
+                    setState(() {
+                      isBuyer = value;
+                      print(isBuyer);
+                    });
+                  }),
+            ],
+          ),
+        ));
+  }
+
+  mobile() {
+    return Column(
+      children: [
+        buyerButton(buyerStyle),
+        10.height,
+        providerButton(providerStyle),
       ],
     );
   }

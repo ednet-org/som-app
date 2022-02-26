@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/integrations/utils/common.dart';
 import 'package:som/main.dart';
+import 'package:som/template_storage/integrations/utils/common.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 
-import 'AppColors.dart';
 import 'AppConstant.dart';
 import 'clusteringGoogleMaps/lat_lang_geohash.dart';
 
@@ -333,6 +332,7 @@ class ContainerX extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
+        print(constraints.device);
         if (constraints.device == DeviceSize.mobile) {
           return mobile ?? SizedBox();
         } else {
