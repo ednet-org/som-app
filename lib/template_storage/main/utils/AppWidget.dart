@@ -339,7 +339,7 @@ class ContainerX extends StatelessWidget {
       builder: (_, constraints) {
         print('constraints.device constraints.device constraints.device');
         print(constraints.device);
-        if (constraints.device == DeviceSize.mobile) {
+        if (constraints.maxWidth < 500) {
           return mobile ?? SizedBox();
         } else {
           return Container(
