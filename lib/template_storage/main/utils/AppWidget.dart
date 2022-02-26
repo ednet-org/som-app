@@ -9,8 +9,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/integrations/utils/common.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
+import 'package:som/template_storage/main/utils/AppColors.dart';
 
-import 'AppColors.dart';
 import 'AppConstant.dart';
 import 'clusteringGoogleMaps/lat_lang_geohash.dart';
 
