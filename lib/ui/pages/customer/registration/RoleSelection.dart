@@ -17,7 +17,7 @@ class _RoleSelectionState extends State<RoleSelection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 800,
+      // width: 800,
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,62 +34,87 @@ class _RoleSelectionState extends State<RoleSelection> {
   }
 
   Widget get selectionCards {
+    return ContainerX(
+      mobile: mobileWidget(),
+      web: webWidget(),
+    );
+  }
+
+  buyerSelector() {
     final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 12),
         primary: appIconTintDark_purple);
+    return ElevatedButton(
+        style: buyerStyle,
+        onPressed: () {
+          setState(() {
+            isBuyer = !isBuyer;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text('Buyer ', style: boldTextStyle(size: 24)),
+              Switch(
+                  value: isBuyer,
+                  onChanged: (value) {
+                    setState(() {
+                      isBuyer = value;
+                      print(isBuyer);
+                    });
+                  }),
+            ],
+          ),
+        ));
+  }
+
+  providerSelector() {
     final ButtonStyle providerStyle = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+    return ElevatedButton(
+        style: providerStyle,
+        onPressed: () {
+          setState(() {
+            isProvider = !isProvider;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text('Provider', style: boldTextStyle(size: 24)),
+              Switch(
+                  value: isProvider,
+                  onChanged: (value) {
+                    setState(() {
+                      isProvider = value;
+                      print(isProvider);
+                    });
+                  }),
+            ],
+          ),
+        ));
+  }
 
+  mobileWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        buyerSelector(),
+        10.height,
+        providerSelector(),
+      ],
+    );
+  }
+
+  webWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ElevatedButton(
-            style: buyerStyle,
-            onPressed: () {
-              setState(() {
-                isBuyer = !isBuyer;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Buyer ', style: boldTextStyle(size: 24)),
-                  Switch(
-                      value: isBuyer,
-                      onChanged: (value) {
-                        setState(() {
-                          isBuyer = value;
-                          print(isBuyer);
-                        });
-                      }),
-                ],
-              ),
-            )),
+        buyerSelector(),
         10.width,
-        ElevatedButton(
-            style: providerStyle,
-            onPressed: () {
-              setState(() {
-                isProvider = !isProvider;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text('Provider', style: boldTextStyle(size: 24)),
-                  Switch(
-                      value: isProvider,
-                      onChanged: (value) {
-                        setState(() {
-                          isProvider = value;
-                          print(isProvider);
-                        });
-                      }),
-                ],
-              ),
-            )),
+        providerSelector(),
       ],
     );
   }

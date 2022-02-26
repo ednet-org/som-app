@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/integrations/utils/common.dart';
 import 'package:som/main.dart';
+import 'package:som/template_storage/integrations/utils/common.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 
 import 'AppColors.dart';
@@ -80,12 +80,6 @@ Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(
 
 void changeStatusColor(Color color) async {
   setStatusBarColor(color);
-  /*try {
-    await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(useWhiteForeground(color));
-  } on Exception catch (e) {
-    print(e);
-  }*/
 }
 
 Widget commonCacheImageWidget(String? url, double height,
@@ -98,16 +92,18 @@ Widget commonCacheImageWidget(String? url, double height,
         imageUrl: '$url',
         height: height,
         width: width,
-        fit: fit,
+        fit: fit ?? BoxFit.cover,
         errorWidget: (_, __, ___) {
           return SizedBox(height: height, width: width);
         },
       );
     } else {
-      return Image.network(url!, height: height, width: width, fit: fit);
+      return Image.network(url!,
+          height: height, width: width, fit: fit ?? BoxFit.cover);
     }
   } else {
-    return Image.asset(url!, height: height, width: width, fit: fit);
+    return Image.asset(url!,
+        height: height, width: width, fit: fit ?? BoxFit.cover);
   }
 }
 
@@ -189,6 +185,7 @@ AppBar appBar(BuildContext context, String title,
     title:
         appBarTitleWidget(context, title, textColor: textColor, color: color),
     actions: actions,
+    elevation: 0.5,
   );
 }
 
@@ -213,7 +210,9 @@ class ExampleItemWidget extends StatelessWidget {
         trailing: showTrailing
             ? Icon(Icons.arrow_forward_ios,
                 size: 15, color: appStore.textPrimaryColor)
-            : null,
+            : tabBarType.isNew.validate()
+                ? Text('New', style: secondaryTextStyle(color: Colors.red))
+                : null,
       ),
     );
   }
@@ -240,7 +239,8 @@ class CustomTheme extends StatelessWidget {
     return Theme(
       data: appStore.isDarkModeOn
           ? ThemeData.dark().copyWith(
-              backgroundColor: appStore.scaffoldBackground,
+              accentColor: appColorPrimary,
+              backgroundColor: context.scaffoldBackgroundColor,
             )
           : ThemeData.light(),
       child: child!,
@@ -252,14 +252,18 @@ Widget? Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 
 Widget placeholderWidget() =>
-    Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
+    Image.asset('images/app/placeholder.jpg', fit: BoxFit.cover);
 
 BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
-  return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
+  return BoxConstraints(maxWidth: maxWidth ?? appStore.applicationWidth);
 }
 
 double dynamicWidth(BuildContext context) {
-  return isMobile ? context.width() : applicationMaxWidth;
+  print("context.width()");
+  print(context.width());
+  print("appStore.applicationWidth");
+  print(appStore.applicationWidth);
+  return isMobile ? context.width() : appStore.applicationWidth;
 }
 
 /*class ContainerX extends StatelessWidget {
@@ -333,6 +337,8 @@ class ContainerX extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
+        print('constraints.device constraints.device constraints.device');
+        print(constraints.device);
         if (constraints.device == DeviceSize.mobile) {
           return mobile ?? SizedBox();
         } else {
