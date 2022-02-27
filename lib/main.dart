@@ -20,8 +20,6 @@ var appStore = AppStore();
 void main() async {
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
-  print('appStore.isAuthenticated:');
-  print(appStore.isAuthenticated);
 
   // nb_utils - Must be initialize before using shared preference
   await initialize();

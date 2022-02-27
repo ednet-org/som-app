@@ -26,7 +26,6 @@ abstract class CustomerStoreBase with Store {
 
   @action
   void selectRole(selectedRole) {
-    print('selected Role set fired: $selectedRole');
     role = selectedRole;
   }
 
