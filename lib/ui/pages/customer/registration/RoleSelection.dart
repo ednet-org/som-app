@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:som/domain/application/customer-store.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
@@ -13,42 +16,31 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
+  var customerStore;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: 800,
-      alignment: Alignment.center,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          text('Please select which type of company are you registering'),
-          16.height,
-          selectionCards,
-          8.height,
-        ],
+    customerStore = Provider.of<CustomerStore>(context);
+
+    return Observer(
+      builder: (_) => Container(
+        // width: 800,
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            text('Please select which type of company are you registering'),
+            16.height,
+            selectionCards,
+            8.height,
+          ],
+        ),
       ),
     );
   }
 
   Widget get selectionCards {
     return ContainerX(web: web(), mobile: mobile());
-  }
-
-  web() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          width: appStore.buttonWidth,
-          child: buyerSelector(),
-        ),
-        40.width,
-        Container(
-          width: appStore.buttonWidth,
-          child: providerSelector(),
-        ),
-      ],
-    );
   }
 
   ElevatedButton providerSelector() {
@@ -90,6 +82,23 @@ class _RoleSelectionState extends State<RoleSelection> {
             ],
           ),
         ));
+  }
+
+  web() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          width: appStore.buttonWidth,
+          child: buyerSelector(),
+        ),
+        40.width,
+        Container(
+          width: appStore.buttonWidth,
+          child: providerSelector(),
+        ),
+      ],
+    );
   }
 
   mobile() {

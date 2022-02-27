@@ -437,7 +437,7 @@ packages:
       name: flutter_mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.4"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -769,7 +769,7 @@ packages:
       name: mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.6+1"
   mobx_codegen:
     dependency: "direct dev"
     description:
@@ -946,12 +946,12 @@ packages:
     source: hosted
     version: "4.2.4"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.2"
   pub_semver:
     dependency: transitive
     description:

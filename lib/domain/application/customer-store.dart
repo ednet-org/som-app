@@ -31,30 +31,30 @@ abstract class CustomerStoreBase with Store {
   }
 
   @action
-  void setBuyer(isBuyerSelected) {
-    if (isBuyerSelected) {
+  void setBuyer(selectBuyer) {
+    if (selectBuyer) {
       if (role == Roles.Provider) {
         role = Roles.ProviderAndBuyer;
       } else {
         role = Roles.Buyer;
       }
     } else {
-      if (role == Roles.Buyer) {
+      if (role == Roles.Buyer || role == Roles.ProviderAndBuyer) {
         role = Roles.Provider;
       }
     }
   }
 
   @action
-  void setProvider(isProviderSelected) {
-    if (isProviderSelected) {
+  void setProvider(selectProvider) {
+    if (selectProvider) {
       if (role == Roles.Buyer) {
         role = Roles.ProviderAndBuyer;
       } else {
         role = Roles.Provider;
       }
     } else {
-      if (role == Roles.Provider) {
+      if (role == Roles.Provider || role == Roles.ProviderAndBuyer) {
         role = Roles.Buyer;
       }
     }
@@ -67,14 +67,14 @@ abstract class CustomerStoreBase with Store {
         if (role == Roles.Buyer || role == Roles.ProviderAndBuyer) {
           role = Roles.Provider;
         } else {
-          role = Roles.Buyer;
+          role = Roles.ProviderAndBuyer;
         }
         break;
       case Roles.Provider:
         if (role == Roles.Provider || role == Roles.ProviderAndBuyer) {
           role = Roles.Buyer;
         } else {
-          role = Roles.Provider;
+          role = Roles.ProviderAndBuyer;
         }
         break;
       default:

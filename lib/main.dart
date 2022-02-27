@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:som/domain/application/customer-store.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/AppStore.dart';
@@ -15,7 +16,6 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 
 /// This variable is used to get dynamic colors when theme mode is changed
 var appStore = AppStore();
-var customerStore = CustomerStore();
 
 void main() async {
   //region Entry Point
@@ -43,24 +43,30 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => MaterialApp(
-        localizationsDelegates: const [
-          SomLocalizations.delegate,
-          ...GlobalMaterialLocalizations.delegates,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        localeResolutionCallback: (locale, supportedLocales) =>
-            Locale(appStore.selectedLanguage),
-        locale: Locale(appStore.selectedLanguage),
-        supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
-        routes: routes(),
-        title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-        home: SplashPage(isAuthenticated: appStore.isAuthenticated),
-        theme: !appStore.isDarkModeOn
-            ? AppThemeData.lightTheme
-            : AppThemeData.darkTheme,
-        builder: scrollBehaviour(),
+    return MultiProvider(
+      providers: [
+        Provider<CustomerStore>(create: (_) => CustomerStore()),
+        Provider<AppStore>(create: (_) => appStore),
+      ],
+      child: Observer(
+        builder: (_) => MaterialApp(
+          localizationsDelegates: const [
+            SomLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          localeResolutionCallback: (locale, supportedLocales) =>
+              Locale(appStore.selectedLanguage),
+          locale: Locale(appStore.selectedLanguage),
+          supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
+          routes: routes(),
+          title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+          home: SplashPage(isAuthenticated: appStore.isAuthenticated),
+          theme: !appStore.isDarkModeOn
+              ? AppThemeData.lightTheme
+              : AppThemeData.darkTheme,
+          builder: scrollBehaviour(),
+        ),
       ),
     );
   }
