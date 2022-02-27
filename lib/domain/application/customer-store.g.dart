@@ -16,6 +16,20 @@ mixin _$CustomerStore on CustomerStoreBase, Store {
       (_$fullNameComputed ??= Computed<String>(() => super.fullName,
               name: 'CustomerStoreBase.fullName'))
           .value;
+  Computed<dynamic>? _$isProviderComputed;
+
+  @override
+  dynamic get isProvider =>
+      (_$isProviderComputed ??= Computed<dynamic>(() => super.isProvider,
+              name: 'CustomerStoreBase.isProvider'))
+          .value;
+  Computed<dynamic>? _$isBuyerComputed;
+
+  @override
+  dynamic get isBuyer =>
+      (_$isBuyerComputed ??= Computed<dynamic>(() => super.isBuyer,
+              name: 'CustomerStoreBase.isBuyer'))
+          .value;
 
   final _$uuidAtom = Atom(name: 'CustomerStoreBase.uuid');
 
@@ -107,6 +121,39 @@ mixin _$CustomerStore on CustomerStoreBase, Store {
   }
 
   @override
+  void setBuyer(dynamic isBuyerSelected) {
+    final _$actionInfo = _$CustomerStoreBaseActionController.startAction(
+        name: 'CustomerStoreBase.setBuyer');
+    try {
+      return super.setBuyer(isBuyerSelected);
+    } finally {
+      _$CustomerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setProvider(dynamic isProviderSelected) {
+    final _$actionInfo = _$CustomerStoreBaseActionController.startAction(
+        name: 'CustomerStoreBase.setProvider');
+    try {
+      return super.setProvider(isProviderSelected);
+    } finally {
+      _$CustomerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void switchRole(dynamic selectedRole) {
+    final _$actionInfo = _$CustomerStoreBaseActionController.startAction(
+        name: 'CustomerStoreBase.switchRole');
+    try {
+      return super.switchRole(selectedRole);
+    } finally {
+      _$CustomerStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 uuid: ${uuid},
@@ -114,7 +161,9 @@ firstName: ${firstName},
 lastName: ${lastName},
 email: ${email},
 role: ${role},
-fullName: ${fullName}
+fullName: ${fullName},
+isProvider: ${isProvider},
+isBuyer: ${isBuyer}
     ''';
   }
 }

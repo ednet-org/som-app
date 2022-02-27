@@ -20,9 +20,14 @@ const appOpenCount = 'appOpenCount';
 
 /// Linux - for linux, you have to change default window width in linux/my_application.cc
 const applicationSWidth = 300;
+
 const applicationMWidth = 686.0;
+const buttonMWidth = 220.0;
+
 const applicationLWidth = 900;
+
 const applicationXLWidth = 1200;
+
 const applicationMaxWidth = 30;
 
 const profileImage =
