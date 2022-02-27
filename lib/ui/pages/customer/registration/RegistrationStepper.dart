@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
@@ -152,62 +153,65 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       ),
     ];
 
-    return Container(
-      child: CustomTheme(
-        child: Column(
-          children: [
-            text('Customer registration'),
-            40.height,
-            Stepper(
-              steps: steps,
-              type: StepperType.vertical,
-              currentStep: this.currStep,
-              controlsBuilder: (BuildContext context, ControlsDetails details) {
-                return Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    100.height,
-                    TextButton(
-                      onPressed: details.onStepContinue,
-                      child: Text('CONTINUE',
-                          style: secondaryTextStyle(color: actionColor)),
-                    ),
-                    // 400.width,
-                    TextButton(
-                      onPressed: details.onStepCancel,
-                      child: Text('CANCEL', style: secondaryTextStyle()),
-                    ),
-                  ],
-                );
-              },
-              onStepContinue: () {
-                setState(() {
-                  if (currStep < steps.length - 1) {
-                    currStep = currStep + 1;
-                  } else {
-                    //currStep = 0;
-                    finish(context);
-                  }
-                });
-              },
-              onStepCancel: () {
-                finish(context);
-                setState(() {
-                  if (currStep > 0) {
-                    currStep = currStep - 1;
-                  } else {
-                    currStep = 0;
-                  }
-                });
-              },
-              onStepTapped: (step) {
-                setState(() {
-                  currStep = step;
-                });
-              },
-            ),
-          ],
+    return Observer(
+      builder: (_) => Container(
+        child: CustomTheme(
+          child: Column(
+            children: [
+              text('Customer registration'),
+              40.height,
+              Stepper(
+                steps: steps,
+                type: StepperType.vertical,
+                currentStep: this.currStep,
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      100.height,
+                      TextButton(
+                        onPressed: details.onStepContinue,
+                        child: Text('CONTINUE',
+                            style: secondaryTextStyle(color: actionColor)),
+                      ),
+                      // 400.width,
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: Text('CANCEL', style: secondaryTextStyle()),
+                      ),
+                    ],
+                  );
+                },
+                onStepContinue: () {
+                  setState(() {
+                    if (currStep < steps.length - 1) {
+                      currStep = currStep + 1;
+                    } else {
+                      //currStep = 0;
+                      finish(context);
+                    }
+                  });
+                },
+                onStepCancel: () {
+                  finish(context);
+                  setState(() {
+                    if (currStep > 0) {
+                      currStep = currStep - 1;
+                    } else {
+                      currStep = 0;
+                    }
+                  });
+                },
+                onStepTapped: (step) {
+                  setState(() {
+                    currStep = step;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
