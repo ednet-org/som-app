@@ -29,4 +29,63 @@ abstract class CustomerStoreBase with Store {
     print('selected Role set fired: $selectedRole');
     role = selectedRole;
   }
+
+  @action
+  void setBuyer(isBuyerSelected) {
+    if (isBuyerSelected) {
+      if (role == Roles.Provider) {
+        role = Roles.ProviderAndBuyer;
+      } else {
+        role = Roles.Buyer;
+      }
+    } else {
+      if (role == Roles.Buyer) {
+        role = Roles.Provider;
+      }
+    }
+  }
+
+  @action
+  void setProvider(isProviderSelected) {
+    if (isProviderSelected) {
+      if (role == Roles.Buyer) {
+        role = Roles.ProviderAndBuyer;
+      } else {
+        role = Roles.Provider;
+      }
+    } else {
+      if (role == Roles.Provider) {
+        role = Roles.Buyer;
+      }
+    }
+  }
+
+  @action
+  void switchRole(selectedRole) {
+    switch (selectedRole) {
+      case Roles.Buyer:
+        if (role == Roles.Buyer || role == Roles.ProviderAndBuyer) {
+          role = Roles.Provider;
+        } else {
+          role = Roles.Buyer;
+        }
+        break;
+      case Roles.Provider:
+        if (role == Roles.Provider || role == Roles.ProviderAndBuyer) {
+          role = Roles.Buyer;
+        } else {
+          role = Roles.Provider;
+        }
+        break;
+      default:
+        throw StateError(
+            'One can not set both provider and buyer at same time from UI');
+    }
+  }
+
+  @computed
+  get isProvider => role == Roles.Provider || role == Roles.ProviderAndBuyer;
+
+  @computed
+  get isBuyer => role == Roles.Buyer || role == Roles.ProviderAndBuyer;
 }
