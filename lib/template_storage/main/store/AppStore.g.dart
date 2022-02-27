@@ -55,7 +55,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$scaffoldBackgroundAtom =
-  Atom(name: 'AppStoreBase.scaffoldBackground');
+      Atom(name: 'AppStoreBase.scaffoldBackground');
 
   @override
   Color? get scaffoldBackground {
@@ -86,7 +86,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$backgroundSecondaryColorAtom =
-  Atom(name: 'AppStoreBase.backgroundSecondaryColor');
+      Atom(name: 'AppStoreBase.backgroundSecondaryColor');
 
   @override
   Color? get backgroundSecondaryColor {
@@ -118,7 +118,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$appColorPrimaryLightColorAtom =
-  Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
+      Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
 
   @override
   Color? get appColorPrimaryLightColor {
@@ -135,7 +135,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$textSecondaryColorAtom =
-  Atom(name: 'AppStoreBase.textSecondaryColor');
+      Atom(name: 'AppStoreBase.textSecondaryColor');
 
   @override
   Color? get textSecondaryColor {
@@ -181,7 +181,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$iconSecondaryColorAtom =
-  Atom(name: 'AppStoreBase.iconSecondaryColor');
+      Atom(name: 'AppStoreBase.iconSecondaryColor');
 
   @override
   Color? get iconSecondaryColor {
@@ -212,7 +212,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$selectedDrawerItemAtom =
-  Atom(name: 'AppStoreBase.selectedDrawerItem');
+      Atom(name: 'AppStoreBase.selectedDrawerItem');
 
   @override
   int get selectedDrawerItem {
@@ -243,7 +243,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$toggleDarkModeAsyncAction =
-  AsyncAction('AppStoreBase.toggleDarkMode');
+      AsyncAction('AppStoreBase.toggleDarkMode');
 
   @override
   Future<void> toggleDarkMode({bool? value}) {
@@ -278,7 +278,7 @@ mixin _$AppStore on AppStoreBase, Store {
   @override
   dynamic logout() {
     final _$actionInfo =
-    _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
+        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
     try {
       return super.logout();
     } finally {
@@ -289,7 +289,7 @@ mixin _$AppStore on AppStoreBase, Store {
   @override
   dynamic login() {
     final _$actionInfo =
-    _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
+        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
     try {
       return super.login();
     } finally {
