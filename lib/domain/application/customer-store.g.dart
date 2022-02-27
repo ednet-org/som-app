@@ -121,22 +121,22 @@ mixin _$CustomerStore on CustomerStoreBase, Store {
   }
 
   @override
-  void setBuyer(dynamic isBuyerSelected) {
+  void setBuyer(dynamic selectBuyer) {
     final _$actionInfo = _$CustomerStoreBaseActionController.startAction(
         name: 'CustomerStoreBase.setBuyer');
     try {
-      return super.setBuyer(isBuyerSelected);
+      return super.setBuyer(selectBuyer);
     } finally {
       _$CustomerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setProvider(dynamic isProviderSelected) {
+  void setProvider(dynamic selectProvider) {
     final _$actionInfo = _$CustomerStoreBaseActionController.startAction(
         name: 'CustomerStoreBase.setProvider');
     try {
-      return super.setProvider(isProviderSelected);
+      return super.setProvider(selectProvider);
     } finally {
       _$CustomerStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:som/domain/application/customer-store.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -27,7 +29,76 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
   @override
   Widget build(BuildContext context) {
-    List<Step> steps = [
+    final customerStore = Provider.of<CustomerStore>(context);
+
+    return Container(
+      child: CustomTheme(
+        child: Column(
+          children: [
+            text('Customer registration'),
+            40.height,
+            Observer(builder: (_) {
+              return Stepper(
+                key: Key("mysuperkey-" +
+                    assembleSteps(customerStore).length.toString()),
+                steps: assembleSteps(customerStore),
+                type: StepperType.vertical,
+                currentStep: this.currStep,
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      100.height,
+                      TextButton(
+                        onPressed: details.onStepContinue,
+                        child: Text('CONTINUE',
+                            style: secondaryTextStyle(color: actionColor)),
+                      ),
+                      50.width,
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: Text('CANCEL', style: secondaryTextStyle()),
+                      ),
+                    ],
+                  );
+                },
+                onStepContinue: () {
+                  setState(() {
+                    if (currStep < assembleSteps(customerStore).length - 1) {
+                      currStep = currStep + 1;
+                    } else {
+                      //currStep = 0;
+                      finish(context);
+                    }
+                  });
+                },
+                onStepCancel: () {
+                  finish(context);
+                  setState(() {
+                    if (currStep > 0) {
+                      currStep = currStep - 1;
+                    } else {
+                      currStep = 0;
+                    }
+                  });
+                },
+                onStepTapped: (step) {
+                  setState(() {
+                    currStep = step;
+                  });
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Step> assembleSteps(CustomerStore customerStore) {
+    final buyerSteps = [
       Step(
         title: Text('Role selection', style: primaryTextStyle()),
         isActive: currStep == 0,
@@ -101,6 +172,9 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
               ),
             ],
           )),
+    ];
+
+    final providerSteps = [
       Step(
         title: Text('Subscription model', style: primaryTextStyle()),
         isActive: currStep == 2,
@@ -109,7 +183,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       ),
       Step(
           title: Text('Payment details', style: primaryTextStyle()),
-          isActive: currStep == 2,
+          isActive: currStep == 3,
           state: StepState.indexed,
           content: Column(
             children: [
@@ -130,9 +204,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
               )
             ],
           )),
+    ];
+
+    final commonSteps = [
       Step(
         title: Text('Users', style: primaryTextStyle()),
-        isActive: currStep == 2,
+        isActive: currStep == 4,
         state: StepState.indexed,
         content: Column(
           children: const [
@@ -153,68 +230,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       ),
     ];
 
-    return Observer(
-      builder: (_) => Container(
-        child: CustomTheme(
-          child: Column(
-            children: [
-              text('Customer registration'),
-              40.height,
-              Stepper(
-                steps: steps,
-                type: StepperType.vertical,
-                currentStep: this.currStep,
-                controlsBuilder:
-                    (BuildContext context, ControlsDetails details) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      100.height,
-                      TextButton(
-                        onPressed: details.onStepContinue,
-                        child: Text('CONTINUE',
-                            style: secondaryTextStyle(color: actionColor)),
-                      ),
-                      // 400.width,
-                      TextButton(
-                        onPressed: details.onStepCancel,
-                        child: Text('CANCEL', style: secondaryTextStyle()),
-                      ),
-                    ],
-                  );
-                },
-                onStepContinue: () {
-                  setState(() {
-                    if (currStep < steps.length - 1) {
-                      currStep = currStep + 1;
-                    } else {
-                      //currStep = 0;
-                      finish(context);
-                    }
-                  });
-                },
-                onStepCancel: () {
-                  finish(context);
-                  setState(() {
-                    if (currStep > 0) {
-                      currStep = currStep - 1;
-                    } else {
-                      currStep = 0;
-                    }
-                  });
-                },
-                onStepTapped: (step) {
-                  setState(() {
-                    currStep = step;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    List<Step> steps = [
+      ...buyerSteps,
+      ...(customerStore.isProvider ? providerSteps : []),
+      ...commonSteps,
+    ];
+    return steps;
   }
 }
 
