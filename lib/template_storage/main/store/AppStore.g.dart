@@ -9,6 +9,36 @@ part of 'AppStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppStore on AppStoreBase, Store {
+  final _$applicationWidthAtom = Atom(name: 'AppStoreBase.applicationWidth');
+
+  @override
+  double get applicationWidth {
+    _$applicationWidthAtom.reportRead();
+    return super.applicationWidth;
+  }
+
+  @override
+  set applicationWidth(double value) {
+    _$applicationWidthAtom.reportWrite(value, super.applicationWidth, () {
+      super.applicationWidth = value;
+    });
+  }
+
+  final _$buttonWidthAtom = Atom(name: 'AppStoreBase.buttonWidth');
+
+  @override
+  double get buttonWidth {
+    _$buttonWidthAtom.reportRead();
+    return super.buttonWidth;
+  }
+
+  @override
+  set buttonWidth(double value) {
+    _$buttonWidthAtom.reportWrite(value, super.buttonWidth, () {
+      super.buttonWidth = value;
+    });
+  }
+
   final _$isDarkModeOnAtom = Atom(name: 'AppStoreBase.isDarkModeOn');
 
   @override
@@ -25,7 +55,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$scaffoldBackgroundAtom =
-      Atom(name: 'AppStoreBase.scaffoldBackground');
+  Atom(name: 'AppStoreBase.scaffoldBackground');
 
   @override
   Color? get scaffoldBackground {
@@ -56,7 +86,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$backgroundSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.backgroundSecondaryColor');
+  Atom(name: 'AppStoreBase.backgroundSecondaryColor');
 
   @override
   Color? get backgroundSecondaryColor {
@@ -88,7 +118,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$appColorPrimaryLightColorAtom =
-      Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
+  Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
 
   @override
   Color? get appColorPrimaryLightColor {
@@ -105,7 +135,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$textSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.textSecondaryColor');
+  Atom(name: 'AppStoreBase.textSecondaryColor');
 
   @override
   Color? get textSecondaryColor {
@@ -151,7 +181,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$iconSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.iconSecondaryColor');
+  Atom(name: 'AppStoreBase.iconSecondaryColor');
 
   @override
   Color? get iconSecondaryColor {
@@ -182,7 +212,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$selectedDrawerItemAtom =
-      Atom(name: 'AppStoreBase.selectedDrawerItem');
+  Atom(name: 'AppStoreBase.selectedDrawerItem');
 
   @override
   int get selectedDrawerItem {
@@ -213,7 +243,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$toggleDarkModeAsyncAction =
-      AsyncAction('AppStoreBase.toggleDarkMode');
+  AsyncAction('AppStoreBase.toggleDarkMode');
 
   @override
   Future<void> toggleDarkMode({bool? value}) {
@@ -248,7 +278,7 @@ mixin _$AppStore on AppStoreBase, Store {
   @override
   dynamic logout() {
     final _$actionInfo =
-        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
+    _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
     try {
       return super.logout();
     } finally {
@@ -259,7 +289,7 @@ mixin _$AppStore on AppStoreBase, Store {
   @override
   dynamic login() {
     final _$actionInfo =
-        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
+    _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
     try {
       return super.login();
     } finally {
@@ -270,6 +300,8 @@ mixin _$AppStore on AppStoreBase, Store {
   @override
   String toString() {
     return '''
+applicationWidth: ${applicationWidth},
+buttonWidth: ${buttonWidth},
 isDarkModeOn: ${isDarkModeOn},
 scaffoldBackground: ${scaffoldBackground},
 backgroundColor: ${backgroundColor},

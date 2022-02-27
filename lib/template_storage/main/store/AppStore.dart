@@ -11,6 +11,8 @@ class AppStore = AppStoreBase with _$AppStore;
 abstract class AppStoreBase with Store {
   @observable
   double applicationWidth = applicationMWidth;
+  @observable
+  double buttonWidth = buttonMWidth;
 
   @observable
   bool isDarkModeOn = false;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/domain/model/customer-management/roles.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -11,15 +13,6 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
-  final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 12),
-      primary: appIconTintDark_purple);
-  final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
-
-  bool isProvider = false;
-  bool isBuyer = true;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,60 +38,55 @@ class _RoleSelectionState extends State<RoleSelection> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buyerButton(buyerStyle),
-        10.width,
-        providerButton(providerStyle),
+        Container(
+          width: appStore.buttonWidth,
+          child: buyerSelector(),
+        ),
+        40.width,
+        Container(
+          width: appStore.buttonWidth,
+          child: providerSelector(),
+        ),
       ],
     );
   }
 
-  ElevatedButton providerButton(ButtonStyle providerStyle) {
+  ElevatedButton providerSelector() {
+    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+
     return ElevatedButton(
         style: providerStyle,
-        onPressed: () {
-          setState(() {
-            isProvider = !isProvider;
-          });
-        },
+        onPressed: () => customerStore.switchRole(Roles.Provider),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Provider', style: boldTextStyle(size: 24)),
               Switch(
-                  value: isProvider,
-                  onChanged: (value) {
-                    setState(() {
-                      isProvider = value;
-                      print(isProvider);
-                    });
-                  }),
+                  value: customerStore.isProvider,
+                  onChanged: customerStore.setProvider),
             ],
           ),
         ));
   }
 
-  ElevatedButton buyerButton(ButtonStyle buyerStyle) {
+  ElevatedButton buyerSelector() {
+    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 12),
+        primary: appIconTintDark_purple);
+
     return ElevatedButton(
         style: buyerStyle,
-        onPressed: () {
-          setState(() {
-            isBuyer = !isBuyer;
-          });
-        },
+        onPressed: () => customerStore.switchRole(Roles.Buyer),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Buyer ', style: boldTextStyle(size: 24)),
               Switch(
-                  value: isBuyer,
-                  onChanged: (value) {
-                    setState(() {
-                      isBuyer = value;
-                      print(isBuyer);
-                    });
-                  }),
+                  value: customerStore.isBuyer,
+                  onChanged: customerStore.setBuyer),
             ],
           ),
         ));
@@ -107,9 +95,9 @@ class _RoleSelectionState extends State<RoleSelection> {
   mobile() {
     return Column(
       children: [
-        buyerButton(buyerStyle),
+        buyerSelector(),
         10.height,
-        providerButton(providerStyle),
+        providerSelector(),
       ],
     );
   }
