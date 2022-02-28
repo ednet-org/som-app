@@ -10,16 +10,13 @@ abstract class CustomerStoreBase with Store {
   String uuid = DateTime.now().toString();
 
   @observable
-  String? firstName = "Pera Kojot";
+  String? firstName;
 
   @observable
-  String? lastName = "Genije";
+  String? lastName;
 
   @computed
   String get fullName => '$firstName, $lastName';
-
-  @observable
-  String? email;
 
   @observable
   Roles role = Roles.Buyer;
@@ -87,4 +84,93 @@ abstract class CustomerStoreBase with Store {
 
   @computed
   get isBuyer => role == Roles.Buyer || role == Roles.ProviderAndBuyer;
+
+  /// Company
+  @observable
+  String? companyName;
+
+  @action
+  void setCompanyName(value) {
+    companyName = value;
+  }
+
+  @observable
+  String? uidNumber;
+
+  @action
+  void setUidNumber(value) {
+    uidNumber = value;
+  }
+
+  @observable
+  String? registrationNumber;
+
+  @action
+  void setRegistrationNumber(value) {
+    registrationNumber = value;
+  }
+
+  @observable
+  String? phoneNumber;
+
+  @action
+  void setPhoneNumber(value) {
+    phoneNumber = value;
+  }
+
+  @observable
+  String? email;
+
+  @action
+  void setEmail(value) {
+    email = value;
+  }
+
+  @observable
+  String? companyUrl;
+
+  @action
+  void setCompanyUrl(value) {
+    companyUrl = value;
+  }
+
+  @observable
+  String? country;
+
+  @action
+  void setCountry(value) {
+    country = value;
+  }
+
+  @observable
+  String? zip;
+
+  @action
+  void setZip(value) {
+    zip = value;
+  }
+
+  @observable
+  String? city;
+
+  @action
+  void setCity(value) {
+    city = value;
+  }
+
+  @observable
+  String? street;
+
+  @action
+  void setStreet(value) {
+    street = value;
+  }
+
+  @observable
+  String? streetNumber;
+
+  @action
+  void setStreetNumber(value) {
+    streetNumber = value;
+  }
 }

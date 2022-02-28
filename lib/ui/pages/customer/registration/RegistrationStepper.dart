@@ -116,32 +116,44 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 label: 'Company name',
                 icon: Icons.account_balance,
                 hint: 'Enter legal entity name',
+                value: customerStore.companyName,
+                onChanged: customerStore.setCompanyName,
               ),
               FormField(
                 label: 'UID number',
                 icon: Icons.add_link,
                 hint: 'Enter UID number',
+                value: customerStore.uidNumber,
+                onChanged: customerStore.setUidNumber,
               ),
               FormField(
                 label: 'Registration number',
                 icon: Icons.add_link,
                 hint: 'describe what is registration number, where to find it?',
+                value: customerStore.registrationNumber,
+                onChanged: customerStore.setRegistrationNumber,
               ),
               Separator(label: 'Contact details'),
               FormField(
                 label: 'Phone number',
                 icon: Icons.phone,
                 hint: 'Enter phone number',
+                value: customerStore.phoneNumber,
+                onChanged: customerStore.setPhoneNumber,
               ),
               FormField(
                 label: 'Email',
                 icon: Icons.email,
                 hint: 'Which email we want here?',
+                value: customerStore.email,
+                onChanged: customerStore.setEmail,
               ),
               FormField(
                 label: 'Web',
                 icon: Icons.web,
                 hint: 'Enter company web address',
+                value: customerStore.companyUrl,
+                onChanged: customerStore.setCompanyUrl,
               ),
               Separator(label: 'Company address'),
               FormField(
@@ -149,26 +161,36 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter country',
                 icon: Icons.edit_location,
                 autocorrect: false,
+                value: customerStore.country,
+                onChanged: customerStore.setCountry,
               ),
               FormField(
                 label: 'ZIP',
                 hint: 'Enter ZIP',
                 autocorrect: false,
+                value: customerStore.zip,
+                onChanged: customerStore.setZip,
               ),
               FormField(
                 label: 'City',
                 hint: 'Enter city',
                 autocorrect: false,
+                value: customerStore.city,
+                onChanged: customerStore.setCity,
               ),
               FormField(
                 label: 'Street',
                 hint: 'Enter street',
                 autocorrect: false,
+                value: customerStore.street,
+                onChanged: customerStore.setStreet,
               ),
               FormField(
                 label: 'Number',
                 hint: 'Enter number',
                 autocorrect: false,
+                value: customerStore.streetNumber,
+                onChanged: customerStore.setStreetNumber,
               ),
             ],
           )),
@@ -247,6 +269,8 @@ class FormField extends StatelessWidget {
   final int maxLines;
   final bool autocorrect;
   final TextInputType? keyboardType;
+  final String? value;
+  final onChanged;
 
   const FormField({
     Key? key,
@@ -257,11 +281,15 @@ class FormField extends StatelessWidget {
     this.obscureText = false,
     this.autocorrect = true,
     this.keyboardType = TextInputType.text,
+    this.value,
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
+      initialValue: value,
       keyboardType: keyboardType,
       maxLines: maxLines,
       style: primaryTextStyle(),
