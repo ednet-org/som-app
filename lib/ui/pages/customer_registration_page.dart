@@ -9,6 +9,8 @@ import 'customer/registration/thank_you_page.dart';
 class CustomerRegistrationPage extends StatefulWidget {
   static String tag = '/CustomerRegistrationPage';
 
+  const CustomerRegistrationPage({Key? key}) : super(key: key);
+
   @override
   State<CustomerRegistrationPage> createState() =>
       _CustomerRegistrationPageState();

@@ -6,6 +6,7 @@ import 'package:som/domain/application/customer-store.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/pages/customer/registration/PlanModal.dart';
 
 import 'RoleSelection.dart';
 
@@ -201,14 +202,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         title: Text('Subscription model', style: primaryTextStyle()),
         isActive: currStep == 2,
         state: StepState.indexed,
-        content: Text("Add your image", style: primaryTextStyle()),
+        content: SubscriptionSelector(),
       ),
       Step(
           title: Text('Payment details', style: primaryTextStyle()),
           isActive: currStep == 3,
           state: StepState.indexed,
           content: Column(
-            children: [
+            children: const [
               FormField(
                 label: 'IBAN',
                 icon: Icons.account_balance,
@@ -258,6 +259,167 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       ...commonSteps,
     ];
     return steps;
+  }
+}
+
+class SubscriptionSelector extends StatefulWidget {
+  SubscriptionSelector({Key? key}) : super(key: key);
+
+  @override
+  State<SubscriptionSelector> createState() => _SubscriptionSelectorState();
+}
+
+class _SubscriptionSelectorState extends State<SubscriptionSelector> {
+  List<PlanModal> periodModal = [];
+
+  int selectIndex = 0;
+
+  int containerIndex = 0;
+
+  Color screenColor = Color(0xFFEBA791);
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+    periodModal.add(
+      PlanModal(
+        title: 'SOM Standard',
+        subTitle: "1 Benutzer",
+        optionList: [
+          PlanModal(title: 'Weekly Sentiment'),
+          PlanModal(title: 'Daily Google rank updateaaaa'),
+          PlanModal(title: 'Daily Analyze'),
+        ],
+      ),
+    );
+    periodModal.add(PlanModal(
+      title: 'SOM Premium',
+      subTitle: 'bis zu 5 Benutzer',
+      optionList: [
+        PlanModal(title: 'Monthly Sentiment'),
+        PlanModal(title: 'Software package'),
+        PlanModal(title: 'Email support'),
+      ],
+    ));
+    periodModal.add(
+      PlanModal(
+          title: 'SOM Enterprise',
+          subTitle: 'bis zu 15 Benutzer',
+          optionList: [
+            PlanModal(title: 'Yearly Sentiment'),
+            PlanModal(title: 'Unlimited email support'),
+            PlanModal(title: '24/7 support'),
+          ]),
+    );
+    setStatusBarColor(Color(0xFFFBC5BB));
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
+  void dispose() {
+    setStatusBarColor(context.scaffoldBackgroundColor);
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                UL(
+                  edgeInsets: EdgeInsets.symmetric(horizontal: 16),
+                  symbolType: SymbolType.Custom,
+                  customSymbol: Container(
+                    child: Text('•', style: secondaryTextStyle(size: 20)),
+                  ),
+                  children: List.generate(
+                      periodModal[selectIndex].optionList!.length, (i) {
+                    return Text(
+                        periodModal[selectIndex]
+                            .optionList![i]
+                            .title
+                            .validate(),
+                        style: primaryTextStyle(size: 18));
+                  }),
+                )
+              ],
+            )),
+        16.height,
+        Text('Choose Period',
+                style: boldTextStyle(size: 24, color: screenColor))
+            .paddingLeft(12.0),
+        16.height,
+        ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: periodModal.length,
+          shrinkWrap: true,
+          itemBuilder: (_, int index) {
+            bool value = selectIndex == index;
+            return Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color:
+                      value ? screenColor.withOpacity(0.3) : context.cardColor,
+                  borderRadius: BorderRadius.circular(defaultRadius),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 20,
+                          width: 20,
+                          padding: EdgeInsets.all(2),
+                          child: Icon(
+                            Icons.check,
+                            size: 14,
+                          ).visible(value).center(),
+                          decoration: BoxDecoration(
+                            color: context.cardColor,
+                            shape: BoxShape.circle,
+                            border: value
+                                ? Border.all(color: Colors.white)
+                                : Border.all(color: Colors.blue),
+                          ),
+                        ),
+                        12.width,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(periodModal[index].title.validate(),
+                                style: boldTextStyle(size: 16)),
+                            Text(periodModal[index].subTitle.validate(),
+                                style: secondaryTextStyle()),
+                          ],
+                        ).expand(),
+                      ],
+                    ),
+                  ],
+                )).onTap(
+              () {
+                selectIndex = index;
+
+                setState(() {});
+              },
+              borderRadius: radius(16),
+            ).paddingSymmetric(horizontal: 16, vertical: 4);
+          },
+        )
+      ],
+    ).paddingBottom(16);
   }
 }
 
