@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/application/customer-store.dart';
+import 'package:som/domain/application/customer_store.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/AppStore.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';

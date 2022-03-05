@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/application/customer-store.dart';
+import 'package:som/domain/application/customer_store.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -143,13 +143,6 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: customerStore.setPhoneNumber,
               ),
               FormField(
-                label: 'Email',
-                icon: Icons.email,
-                hint: 'Which email we want here?',
-                value: customerStore.email,
-                onChanged: customerStore.setEmail,
-              ),
-              FormField(
                 label: 'Web',
                 icon: Icons.web,
                 hint: 'Enter company web address',
@@ -272,7 +265,7 @@ class SubscriptionSelector extends StatefulWidget {
 class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   List<PlanModal> periodModal = [];
 
-  int selectIndex = 0;
+  int selectIndex = 2;
 
   int containerIndex = 0;
 
@@ -288,31 +281,53 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
     periodModal.add(
       PlanModal(
         title: 'SOM Standard',
-        subTitle: "1 Benutzer",
+        subTitle: "€ 39,90 / Monat",
         optionList: [
-          PlanModal(title: 'Weekly Sentiment'),
-          PlanModal(title: 'Daily Google rank updateaaaa'),
-          PlanModal(title: 'Daily Analyze'),
+          PlanModal(title: '1 Benutzer anlegen'),
+          PlanModal(title: 'keine Werbeanzeigen bei SOM Ads'),
+          PlanModal(
+              title:
+                  'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
+          PlanModal(title: '-------'),
+          PlanModal(title: 'Einrichtungspauschale €49,-'),
         ],
       ),
     );
     periodModal.add(PlanModal(
       title: 'SOM Premium',
-      subTitle: 'bis zu 5 Benutzer',
+      subTitle: '€ 79,90 / Monat',
       optionList: [
-        PlanModal(title: 'Monthly Sentiment'),
-        PlanModal(title: 'Software package'),
-        PlanModal(title: 'Email support'),
+        PlanModal(title: 'bis zu 5 Benutzer anlegen'),
+        PlanModal(
+            title:
+                '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
+        PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
+        PlanModal(
+            title:
+                'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
+        PlanModal(title: 'die ersten zwei Monate Gratis'),
+        PlanModal(title: '-------'),
+        PlanModal(title: 'Einrichtungspauschale entfällt'),
       ],
     ));
     periodModal.add(
       PlanModal(
           title: 'SOM Enterprise',
-          subTitle: 'bis zu 15 Benutzer',
+          subTitle: '€ 149,90 / Monat',
           optionList: [
-            PlanModal(title: 'Yearly Sentiment'),
-            PlanModal(title: 'Unlimited email support'),
-            PlanModal(title: '24/7 support'),
+            PlanModal(
+                title: 'bis zu 15 Benutzer anlegen',
+                subTitle: '(jeder weitere Benutzer kostet €10,-)'),
+            PlanModal(
+                title:
+                    '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
+            PlanModal(
+                title: '1 Banneranzeige pro Monatbei SOM Ads für einen Tag'),
+            PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
+            PlanModal(
+                title:
+                    'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
+            PlanModal(title: 'die ersten zwei Monate Gratis'),
           ]),
     );
     setStatusBarColor(Color(0xFFFBC5BB));
@@ -358,7 +373,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
               ],
             )),
         16.height,
-        Text('Choose Period',
+        Text('Choose subscription plan',
                 style: boldTextStyle(size: 24, color: screenColor))
             .paddingLeft(12.0),
         16.height,

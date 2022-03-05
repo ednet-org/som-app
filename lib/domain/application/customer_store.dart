@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 
-part 'customer-store.g.dart';
+part 'customer_store.g.dart';
 
 class CustomerStore = CustomerStoreBase with _$CustomerStore;
 
