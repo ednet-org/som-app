@@ -1,17 +1,45 @@
+import 'package:mobx/mobx.dart';
+
 import 'address.dart';
 
-class Company {
-  String name;
-  Address address;
-  String uidNr;
-  String registrationNumber;
-  int companySize;
+part 'company.g.dart';
 
-  // todo: what is this?
-  int type;
+class Company = _Company with _$Company;
 
-  Company(this.name, this.address, this.uidNr, this.registrationNumber,
-      this.companySize, this.type, this.websiteUrl);
+abstract class _Company with Store {
+  @observable
+  String? uidNr;
 
-  String websiteUrl;
+  @observable
+  String? registrationNumber;
+
+  @action
+  void setRegistrationNumber(String value) => registrationNumber = value;
+
+  @observable
+  String? companySize;
+
+  @action
+  void setCompanySize(String value) => companySize = value;
+
+  @action
+  void setUidNr(String value) => uidNr = value;
+
+  @observable
+  String? name;
+
+  @action
+  void setName(String value) => name = value;
+
+  @observable
+  Address? address;
+
+  @action
+  void setAddress(Address value) => address = value;
+
+  @observable
+  String? websiteUrl;
+
+  @action
+  void setWebsiteUrl(String value) => websiteUrl = value;
 }
