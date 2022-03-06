@@ -27,13 +27,13 @@ mixin _$CustomerRegistrationRequest on _CustomerRegistrationRequest, Store {
   final _$usersAtom = Atom(name: '_CustomerRegistrationRequest.users');
 
   @override
-  ObservableList<UserRegistrationRequest> get users {
+  ObservableList<LeadCustomerStore> get users {
     _$usersAtom.reportRead();
     return super.users;
   }
 
   @override
-  set users(ObservableList<UserRegistrationRequest> value) {
+  set users(ObservableList<LeadCustomerStore> value) {
     _$usersAtom.reportWrite(value, super.users, () {
       super.users = value;
     });
@@ -70,7 +70,7 @@ mixin _$CustomerRegistrationRequest on _CustomerRegistrationRequest, Store {
   }
 
   @override
-  void addUser(UserRegistrationRequest value) {
+  void addUser(LeadCustomerStore value) {
     final _$actionInfo = _$_CustomerRegistrationRequestActionController
         .startAction(name: '_CustomerRegistrationRequest.addUser');
     try {

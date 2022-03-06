@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/application/customer_store.dart';
+import 'package:som/domain/model/customer-management/lead_customer_store.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -30,7 +30,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
   @override
   Widget build(BuildContext context) {
-    final customerStore = Provider.of<CustomerStore>(context);
+    final customerStore = Provider.of<LeadCustomerStore>(context);
 
     return Container(
       child: CustomTheme(
@@ -98,7 +98,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     );
   }
 
-  List<Step> assembleSteps(CustomerStore customerStore) {
+  List<Step> assembleSteps(LeadCustomerStore customerStore) {
     final buyerSteps = [
       Step(
         title: Text('Role selection', style: primaryTextStyle()),

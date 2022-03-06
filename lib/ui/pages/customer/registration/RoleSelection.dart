@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/application/customer_store.dart';
+import 'package:som/domain/model/customer-management/lead_customer_store.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
@@ -20,7 +20,7 @@ class _RoleSelectionState extends State<RoleSelection> {
 
   @override
   Widget build(BuildContext context) {
-    customerStore = Provider.of<CustomerStore>(context);
+    customerStore = Provider.of<LeadCustomerStore>(context);
 
     return Observer(
       builder: (_) => Container(

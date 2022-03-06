@@ -4,7 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/application/customer_store.dart';
+import 'package:som/domain/model/customer-management/address.dart';
+import 'package:som/domain/model/customer-management/company.dart';
+import 'package:som/domain/model/customer-management/lead_customer_store.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/AppStore.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
@@ -16,6 +18,12 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 
 /// This variable is used to get dynamic colors when theme mode is changed
 var appStore = AppStore();
+
+/// domain model
+var oneAddressStore = Address();
+var companyStore = Company()..setAddress(oneAddressStore);
+
+var leadCustomerStore = LeadCustomerStore()..setCompany(companyStore);
 
 void main() async {
   //region Entry Point
@@ -43,8 +51,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<CustomerStore>(create: (_) => CustomerStore()),
+        Provider<LeadCustomerStore>(create: (_) => leadCustomerStore),
         Provider<AppStore>(create: (_) => appStore),
+        Provider<Company>(create: (_) => companyStore),
+        Provider<Address>(create: (_) => oneAddressStore),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
+import 'package:som/domain/model/customer-management/lead_customer_store.dart';
 import 'package:som/domain/model/customer-management/provider_registration_request.dart';
-import 'package:som/domain/model/customer-management/user_registration_request.dart';
 
 import 'company.dart';
 
@@ -17,11 +17,10 @@ abstract class _CustomerRegistrationRequest with Store {
   void setCompany(Company value) => company = value;
 
   @observable
-  ObservableList<UserRegistrationRequest> users =
-      ObservableList<UserRegistrationRequest>();
+  ObservableList<LeadCustomerStore> users = ObservableList<LeadCustomerStore>();
 
   @action
-  void addUser(UserRegistrationRequest value) => users.add(value);
+  void addUser(LeadCustomerStore value) => users.add(value);
 
   @observable
   ProviderRegistrationRequest? providerData;

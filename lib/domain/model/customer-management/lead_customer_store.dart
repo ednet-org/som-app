@@ -1,14 +1,19 @@
 import 'package:mobx/mobx.dart';
+import 'package:som/domain/model/customer-management/company.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 
-part 'user_registration_request.g.dart';
+part 'lead_customer_store.g.dart';
 
-class UserRegistrationRequest = _UserRegistrationRequest
-    with _$UserRegistrationRequest;
+/// Model of registering customer,
+/// it can have state - be invited and prepopulated
+class LeadCustomerStore = LeadCustomerStoreBase with _$LeadCustomerStore;
 
-abstract class _UserRegistrationRequest with Store {
+abstract class LeadCustomerStoreBase with Store {
   @observable
-  String uuid = DateTime.now().toString();
+  String? uuid;
+
+  @action
+  void setUuid(String value) => uuid = value;
 
   @observable
   String? firstName;
@@ -180,4 +185,9 @@ abstract class _UserRegistrationRequest with Store {
 
   @action
   void setSalutation(String value) => salutation = value;
+  @observable
+  Company? company;
+
+  @action
+  void setCompany(Company value) => company = value;
 }
