@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'AppStore.dart';
+part of 'application.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'AppStore.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AppStore on AppStoreBase, Store {
-  final _$applicationWidthAtom = Atom(name: 'AppStoreBase.applicationWidth');
+mixin _$Application on _Application, Store {
+  final _$applicationWidthAtom = Atom(name: '_Application.applicationWidth');
 
   @override
   double get applicationWidth {
@@ -24,7 +24,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$buttonWidthAtom = Atom(name: 'AppStoreBase.buttonWidth');
+  final _$buttonWidthAtom = Atom(name: '_Application.buttonWidth');
 
   @override
   double get buttonWidth {
@@ -39,7 +39,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$isDarkModeOnAtom = Atom(name: 'AppStoreBase.isDarkModeOn');
+  final _$isDarkModeOnAtom = Atom(name: '_Application.isDarkModeOn');
 
   @override
   bool get isDarkModeOn {
@@ -55,7 +55,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$scaffoldBackgroundAtom =
-      Atom(name: 'AppStoreBase.scaffoldBackground');
+      Atom(name: '_Application.scaffoldBackground');
 
   @override
   Color? get scaffoldBackground {
@@ -70,7 +70,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$backgroundColorAtom = Atom(name: 'AppStoreBase.backgroundColor');
+  final _$backgroundColorAtom = Atom(name: '_Application.backgroundColor');
 
   @override
   Color? get backgroundColor {
@@ -86,7 +86,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$backgroundSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.backgroundSecondaryColor');
+      Atom(name: '_Application.backgroundSecondaryColor');
 
   @override
   Color? get backgroundSecondaryColor {
@@ -102,7 +102,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$textPrimaryColorAtom = Atom(name: 'AppStoreBase.textPrimaryColor');
+  final _$textPrimaryColorAtom = Atom(name: '_Application.textPrimaryColor');
 
   @override
   Color? get textPrimaryColor {
@@ -118,7 +118,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$appColorPrimaryLightColorAtom =
-      Atom(name: 'AppStoreBase.appColorPrimaryLightColor');
+      Atom(name: '_Application.appColorPrimaryLightColor');
 
   @override
   Color? get appColorPrimaryLightColor {
@@ -135,7 +135,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$textSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.textSecondaryColor');
+      Atom(name: '_Application.textSecondaryColor');
 
   @override
   Color? get textSecondaryColor {
@@ -150,7 +150,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$appBarColorAtom = Atom(name: 'AppStoreBase.appBarColor');
+  final _$appBarColorAtom = Atom(name: '_Application.appBarColor');
 
   @override
   Color? get appBarColor {
@@ -165,7 +165,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$iconColorAtom = Atom(name: 'AppStoreBase.iconColor');
+  final _$iconColorAtom = Atom(name: '_Application.iconColor');
 
   @override
   Color? get iconColor {
@@ -181,7 +181,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$iconSecondaryColorAtom =
-      Atom(name: 'AppStoreBase.iconSecondaryColor');
+      Atom(name: '_Application.iconSecondaryColor');
 
   @override
   Color? get iconSecondaryColor {
@@ -196,7 +196,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$selectedLanguageAtom = Atom(name: 'AppStoreBase.selectedLanguage');
+  final _$selectedLanguageAtom = Atom(name: '_Application.selectedLanguage');
 
   @override
   String get selectedLanguage {
@@ -212,7 +212,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$selectedDrawerItemAtom =
-      Atom(name: 'AppStoreBase.selectedDrawerItem');
+      Atom(name: '_Application.selectedDrawerItem');
 
   @override
   int get selectedDrawerItem {
@@ -227,7 +227,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  final _$isAuthenticatedAtom = Atom(name: 'AppStoreBase.isAuthenticated');
+  final _$isAuthenticatedAtom = Atom(name: '_Application.isAuthenticated');
 
   @override
   bool get isAuthenticated {
@@ -243,7 +243,7 @@ mixin _$AppStore on AppStoreBase, Store {
   }
 
   final _$toggleDarkModeAsyncAction =
-      AsyncAction('AppStoreBase.toggleDarkMode');
+      AsyncAction('_Application.toggleDarkMode');
 
   @override
   Future<void> toggleDarkMode({bool? value}) {
@@ -251,49 +251,49 @@ mixin _$AppStore on AppStoreBase, Store {
         .run(() => super.toggleDarkMode(value: value));
   }
 
-  final _$AppStoreBaseActionController = ActionController(name: 'AppStoreBase');
+  final _$_ApplicationActionController = ActionController(name: '_Application');
 
   @override
   void setLanguage(String aLanguage) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setLanguage');
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+        name: '_Application.setLanguage');
     try {
       return super.setLanguage(aLanguage);
     } finally {
-      _$AppStoreBaseActionController.endAction(_$actionInfo);
+      _$_ApplicationActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setDrawerItemIndex(int aIndex) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setDrawerItemIndex');
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+        name: '_Application.setDrawerItemIndex');
     try {
       return super.setDrawerItemIndex(aIndex);
     } finally {
-      _$AppStoreBaseActionController.endAction(_$actionInfo);
+      _$_ApplicationActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic logout() {
     final _$actionInfo =
-        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.logout');
+        _$_ApplicationActionController.startAction(name: '_Application.logout');
     try {
       return super.logout();
     } finally {
-      _$AppStoreBaseActionController.endAction(_$actionInfo);
+      _$_ApplicationActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic login() {
     final _$actionInfo =
-        _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.login');
+        _$_ApplicationActionController.startAction(name: '_Application.login');
     try {
       return super.login();
     } finally {
-      _$AppStoreBaseActionController.endAction(_$actionInfo);
+      _$_ApplicationActionController.endAction(_$actionInfo);
     }
   }
 

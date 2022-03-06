@@ -10,7 +10,7 @@ import 'package:som/domain/model/customer-management/company.dart';
 import 'package:som/domain/model/customer-management/customer_registration_request.dart';
 import 'package:som/domain/model/customer-management/provider_registration_request.dart';
 import 'package:som/routes.dart';
-import 'package:som/template_storage/main/store/AppStore.dart';
+import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
 import 'package:som/ui/pages/splash_page.dart';
 
@@ -19,7 +19,7 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 //endregion
 
 /// This variable is used to get dynamic colors when theme mode is changed
-var appStore = AppStore();
+var appStore = Application();
 
 /// domain model
 var address = Address();
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AppStore>(create: (_) => appStore),
+        Provider<Application>(create: (_) => appStore),
         Provider<Company>(create: (_) => company),
         Provider<Address>(create: (_) => address),
         Provider<CustomerRegistrationRequest>(

@@ -4,11 +4,11 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 
-part 'AppStore.g.dart';
+part 'application.g.dart';
 
-class AppStore = AppStoreBase with _$AppStore;
+class Application = _Application with _$Application;
 
-abstract class AppStoreBase with Store {
+abstract class _Application with Store {
   @observable
   double applicationWidth = applicationMWidth;
   @observable
