@@ -5,8 +5,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/address.dart';
+import 'package:som/domain/model/customer-management/bank_details.dart';
 import 'package:som/domain/model/customer-management/company.dart';
-import 'package:som/domain/model/customer-management/lead_customer_store.dart';
+import 'package:som/domain/model/customer-management/customer_registration_request.dart';
+import 'package:som/domain/model/customer-management/provider_registration_request.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/AppStore.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
@@ -20,10 +22,15 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 var appStore = AppStore();
 
 /// domain model
-var oneAddressStore = Address();
-var companyStore = Company()..setAddress(oneAddressStore);
+var address = Address();
+var company = Company()..setAddress(address);
 
-var leadCustomerStore = LeadCustomerStore()..setCompany(companyStore);
+var bankDetails = BankDetails();
+var provider = ProviderRegistrationRequest()..setBankDetails(bankDetails);
+
+var customerRegistrationRequest = CustomerRegistrationRequest()
+  ..setCompany(company)
+  ..setProviderData(provider);
 
 void main() async {
   //region Entry Point
@@ -51,10 +58,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<LeadCustomerStore>(create: (_) => leadCustomerStore),
         Provider<AppStore>(create: (_) => appStore),
-        Provider<Company>(create: (_) => companyStore),
-        Provider<Address>(create: (_) => oneAddressStore),
+        Provider<Company>(create: (_) => company),
+        Provider<Address>(create: (_) => address),
+        Provider<CustomerRegistrationRequest>(
+            create: (_) => customerRegistrationRequest),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

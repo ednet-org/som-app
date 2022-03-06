@@ -69,6 +69,51 @@ mixin _$Company on _Company, Store {
     });
   }
 
+  final _$phoneNumberAtom = Atom(name: '_Company.phoneNumber');
+
+  @override
+  String? get phoneNumber {
+    _$phoneNumberAtom.reportRead();
+    return super.phoneNumber;
+  }
+
+  @override
+  set phoneNumber(String? value) {
+    _$phoneNumberAtom.reportWrite(value, super.phoneNumber, () {
+      super.phoneNumber = value;
+    });
+  }
+
+  final _$emailAtom = Atom(name: '_Company.email');
+
+  @override
+  String? get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(String? value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
+    });
+  }
+
+  final _$urlAtom = Atom(name: '_Company.url');
+
+  @override
+  String? get url {
+    _$urlAtom.reportRead();
+    return super.url;
+  }
+
+  @override
+  set url(String? value) {
+    _$urlAtom.reportWrite(value, super.url, () {
+      super.url = value;
+    });
+  }
+
   final _$addressAtom = Atom(name: '_Company.address');
 
   @override
@@ -81,21 +126,6 @@ mixin _$Company on _Company, Store {
   set address(Address? value) {
     _$addressAtom.reportWrite(value, super.address, () {
       super.address = value;
-    });
-  }
-
-  final _$websiteUrlAtom = Atom(name: '_Company.websiteUrl');
-
-  @override
-  String? get websiteUrl {
-    _$websiteUrlAtom.reportRead();
-    return super.websiteUrl;
-  }
-
-  @override
-  set websiteUrl(String? value) {
-    _$websiteUrlAtom.reportWrite(value, super.websiteUrl, () {
-      super.websiteUrl = value;
     });
   }
 
@@ -146,22 +176,44 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void setAddress(Address value) {
+  void setPhoneNumber(dynamic value) {
     final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setAddress');
+        _$_CompanyActionController.startAction(name: '_Company.setPhoneNumber');
     try {
-      return super.setAddress(value);
+      return super.setPhoneNumber(value);
     } finally {
       _$_CompanyActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setWebsiteUrl(String value) {
+  void setEmail(dynamic value) {
     final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setWebsiteUrl');
+        _$_CompanyActionController.startAction(name: '_Company.setEmail');
     try {
-      return super.setWebsiteUrl(value);
+      return super.setEmail(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUrl(dynamic value) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.setUrl');
+    try {
+      return super.setUrl(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setAddress(Address value) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.setAddress');
+    try {
+      return super.setAddress(value);
     } finally {
       _$_CompanyActionController.endAction(_$actionInfo);
     }
@@ -174,8 +226,10 @@ uidNr: ${uidNr},
 registrationNumber: ${registrationNumber},
 companySize: ${companySize},
 name: ${name},
-address: ${address},
-websiteUrl: ${websiteUrl}
+phoneNumber: ${phoneNumber},
+email: ${email},
+url: ${url},
+address: ${address}
     ''';
   }
 }

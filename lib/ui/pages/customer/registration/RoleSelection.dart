@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer-management/lead_customer_store.dart';
+import 'package:som/domain/model/customer-management/customer_registration_request.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
@@ -16,11 +16,11 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
-  var customerStore;
+  var customer;
 
   @override
   Widget build(BuildContext context) {
-    customerStore = Provider.of<LeadCustomerStore>(context);
+    customer = Provider.of<CustomerRegistrationRequest>(context);
 
     return Observer(
       builder: (_) => Container(
@@ -49,15 +49,15 @@ class _RoleSelectionState extends State<RoleSelection> {
 
     return ElevatedButton(
         style: providerStyle,
-        onPressed: () => customerStore.switchRole(Roles.Provider),
+        onPressed: () => customer.switchRole(Roles.Provider),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Provider', style: boldTextStyle(size: 24)),
               Switch(
-                  value: customerStore.isProvider,
-                  onChanged: customerStore.setProvider),
+                  value: customer.isProvider,
+                  onChanged: customer.activateProvider),
             ],
           ),
         ));
@@ -70,15 +70,14 @@ class _RoleSelectionState extends State<RoleSelection> {
 
     return ElevatedButton(
         style: buyerStyle,
-        onPressed: () => customerStore.switchRole(Roles.Buyer),
+        onPressed: () => customer.switchRole(Roles.Buyer),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Buyer ', style: boldTextStyle(size: 24)),
               Switch(
-                  value: customerStore.isBuyer,
-                  onChanged: customerStore.setBuyer),
+                  value: customer.isBuyer, onChanged: customer.activateBuyer),
             ],
           ),
         ));

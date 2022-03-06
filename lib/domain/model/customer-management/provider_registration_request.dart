@@ -22,7 +22,7 @@ abstract class _ProviderRegistrationRequest with Store {
   void addBranch(Branch value) => branches.add(value);
 
   @observable
-  PaymentInterval? paymentInterval;
+  PaymentInterval? paymentInterval = PaymentInterval.Yearly;
 
   @action
   void setPaymentInterval(PaymentInterval value) => paymentInterval = value;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer-management/lead_customer_store.dart';
+import 'package:som/domain/model/customer-management/customer_registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -30,7 +30,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
   @override
   Widget build(BuildContext context) {
-    final customerStore = Provider.of<LeadCustomerStore>(context);
+    final customerRegistration =
+        Provider.of<CustomerRegistrationRequest>(context);
 
     return Container(
       child: CustomTheme(
@@ -41,8 +42,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             Observer(builder: (_) {
               return Stepper(
                 key: Key("mysuperkey-" +
-                    assembleSteps(customerStore).length.toString()),
-                steps: assembleSteps(customerStore),
+                    assembleSteps(customerRegistration).length.toString()),
+                steps: assembleSteps(customerRegistration),
                 type: StepperType.vertical,
                 currentStep: this.currStep,
                 controlsBuilder:
@@ -67,7 +68,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 },
                 onStepContinue: () {
                   setState(() {
-                    if (currStep < assembleSteps(customerStore).length - 1) {
+                    if (currStep <
+                        assembleSteps(customerRegistration).length - 1) {
                       currStep = currStep + 1;
                     } else {
                       //currStep = 0;
@@ -98,7 +100,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     );
   }
 
-  List<Step> assembleSteps(LeadCustomerStore customerStore) {
+  List<Step> assembleSteps(CustomerRegistrationRequest customer) {
     final buyerSteps = [
       Step(
         title: Text('Role selection', style: primaryTextStyle()),
@@ -117,37 +119,37 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 label: 'Company name',
                 icon: Icons.account_balance,
                 hint: 'Enter legal entity name',
-                value: customerStore.companyName,
-                onChanged: customerStore.setCompanyName,
+                value: customer.company!.name,
+                onChanged: customer.company!.setName,
               ),
               FormField(
                 label: 'UID number',
                 icon: Icons.add_link,
                 hint: 'Enter UID number',
-                value: customerStore.uidNumber,
-                onChanged: customerStore.setUidNumber,
+                value: customer.company!.uidNr,
+                onChanged: customer.company!.setUidNr,
               ),
               FormField(
                 label: 'Registration number',
                 icon: Icons.add_link,
                 hint: 'describe what is registration number, where to find it?',
-                value: customerStore.registrationNumber,
-                onChanged: customerStore.setRegistrationNumber,
+                value: customer.company!.registrationNumber,
+                onChanged: customer.company!.setRegistrationNumber,
               ),
               Separator(label: 'Contact details'),
               FormField(
                 label: 'Phone number',
                 icon: Icons.phone,
                 hint: 'Enter phone number',
-                value: customerStore.phoneNumber,
-                onChanged: customerStore.setPhoneNumber,
+                value: customer.company!.phoneNumber,
+                onChanged: customer.company!.setPhoneNumber,
               ),
               FormField(
                 label: 'Web',
                 icon: Icons.web,
                 hint: 'Enter company web address',
-                value: customerStore.companyUrl,
-                onChanged: customerStore.setCompanyUrl,
+                value: customer.company!.url,
+                onChanged: customer.company!.setUrl,
               ),
               Separator(label: 'Company address'),
               FormField(
@@ -155,36 +157,36 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter country',
                 icon: Icons.edit_location,
                 autocorrect: false,
-                value: customerStore.country,
-                onChanged: customerStore.setCountry,
+                value: customer.company!.address!.country,
+                onChanged: customer.company!.address!.setCountry,
               ),
               FormField(
                 label: 'ZIP',
                 hint: 'Enter ZIP',
                 autocorrect: false,
-                value: customerStore.zip,
-                onChanged: customerStore.setZip,
+                value: customer.company!.address!.zip,
+                onChanged: customer.company!.address!.setZip,
               ),
               FormField(
                 label: 'City',
                 hint: 'Enter city',
                 autocorrect: false,
-                value: customerStore.city,
-                onChanged: customerStore.setCity,
+                value: customer.company!.address!.city,
+                onChanged: customer.company!.address!.setCity,
               ),
               FormField(
                 label: 'Street',
                 hint: 'Enter street',
                 autocorrect: false,
-                value: customerStore.street,
-                onChanged: customerStore.setStreet,
+                value: customer.company!.address!.street,
+                onChanged: customer.company!.address!.setStreet,
               ),
               FormField(
                 label: 'Number',
                 hint: 'Enter number',
                 autocorrect: false,
-                value: customerStore.streetNumber,
-                onChanged: customerStore.setStreetNumber,
+                value: customer.company!.address!.number,
+                onChanged: customer.company!.address!.setNumber,
               ),
             ],
           )),
@@ -202,11 +204,15 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           isActive: currStep == 3,
           state: StepState.indexed,
           content: Column(
-            children: const [
+            children: [
               FormField(
                 label: 'IBAN',
                 icon: Icons.account_balance,
                 hint: 'Enter IBAN',
+                value:
+                    customerRegistrationRequest.providerData!.bankDetails!.iban,
+                onChanged: customerRegistrationRequest
+                    .providerData!.bankDetails!.setIban,
               ),
               FormField(
                 label: 'BIC',
@@ -248,7 +254,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     List<Step> steps = [
       ...buyerSteps,
-      ...(customerStore.isProvider ? providerSteps : []),
+      ...(customer.isProvider ? providerSteps : []),
       ...commonSteps,
     ];
     return steps;

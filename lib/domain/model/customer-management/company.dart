@@ -32,14 +32,32 @@ abstract class _Company with Store {
   void setName(String value) => name = value;
 
   @observable
+  String? phoneNumber;
+
+  @action
+  void setPhoneNumber(value) {
+    phoneNumber = value;
+  }
+
+  @observable
+  String? email;
+
+  @action
+  void setEmail(value) {
+    email = value;
+  }
+
+  @observable
+  String? url;
+
+  @action
+  void setUrl(value) {
+    url = value;
+  }
+
+  @observable
   Address? address;
 
   @action
   void setAddress(Address value) => address = value;
-
-  @observable
-  String? websiteUrl;
-
-  @action
-  void setWebsiteUrl(String value) => websiteUrl = value;
 }
