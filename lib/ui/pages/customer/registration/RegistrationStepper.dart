@@ -295,36 +295,77 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         content: Column(
           children: [
             Text('Admin user'),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              alignment: WrapAlignment.start,
-              direction: Axis.horizontal,
-              children: [
-                Container(
-                  width: 350,
-                  child: FormField(
-                    label: 'Admin user email',
-                    icon: Icons.email,
-                    hint: 'Enter email of SOM administrator account',
-                    value: request.company.admin.email,
-                    onChanged: request.company.admin.setEmail,
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                children: [
+                  Container(
+                    width: 350,
+                    child: FormField(
+                      label: 'Admin user email',
+                      icon: Icons.email,
+                      hint: 'Enter email of SOM administrator account',
+                      value: request.company.admin.email,
+                      onChanged: request.company.admin.setEmail,
+                    ),
                   ),
-                ),
-                30.width,
-                request.company.canCreateMoreUsers
-                    ? Container(
-                        width: 60,
-                        child: ElevatedButton(
-                            onPressed: () =>
-                                request.company.increaseNumberOfUsers,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('+', style: boldTextStyle(size: 24)),
-                            )),
-                      )
-                    : const SizedBox(height: 1),
-              ],
+                  30.width,
+                  request.company.canCreateMoreUsers
+                      ? Container(
+                          width: 60,
+                          child: ElevatedButton(
+                              onPressed: () =>
+                                  request.company.increaseNumberOfUsers(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child:
+                                    Text('+', style: boldTextStyle(size: 24)),
+                              )),
+                        )
+                      : const SizedBox(height: 1),
+                ],
+              ),
             ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: request.company.numberOfUsers,
+                itemBuilder: (BuildContext context, int index) {
+                  return Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.start,
+                    direction: Axis.horizontal,
+                    children: [
+                      Container(
+                        width: 350,
+                        child: FormField(
+                          label: 'User ${index + 1}',
+                          icon: Icons.email,
+                          hint: 'Enter employee email',
+                          value: request.company.users[index].email,
+                          onChanged: request.company.users[index].setEmail,
+                        ),
+                      ),
+                      30.width,
+                      request.company.canCreateMoreUsers
+                          ? Container(
+                              width: 60,
+                              child: ElevatedButton(
+                                  onPressed: () =>
+                                      request.company.removeUser(index),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('-',
+                                        style: boldTextStyle(
+                                            size: 24, color: Colors.red)),
+                                  )),
+                            )
+                          : const SizedBox(height: 1),
+                    ],
+                  );
+                }),
           ],
         ),
       ),

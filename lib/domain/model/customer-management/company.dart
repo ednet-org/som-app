@@ -80,6 +80,13 @@ abstract class _Company with Store {
   @action
   void increaseNumberOfUsers() {
     numberOfUsers++;
+    users.add(RegistrationUser());
+  }
+
+  @action
+  void removeUser(position) {
+    users.removeAt(position);
+    numberOfUsers--;
   }
 
   @computed

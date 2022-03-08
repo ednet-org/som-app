@@ -257,6 +257,17 @@ mixin _$Company on _Company, Store {
   }
 
   @override
+  void removeUser(dynamic position) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.removeUser');
+    try {
+      return super.removeUser(position);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setRegistrationNumber(String value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
         name: '_Company.setRegistrationNumber');
