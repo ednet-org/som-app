@@ -10,7 +10,7 @@ class ProviderRegistrationRequest = _ProviderRegistrationRequest
 
 abstract class _ProviderRegistrationRequest with Store {
   @observable
-  BankDetails? bankDetails;
+  BankDetails? bankDetails = BankDetails();
 
   @action
   void setBankDetails(BankDetails value) => bankDetails = value;

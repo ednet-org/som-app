@@ -9,6 +9,34 @@ part of 'company.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$Company on _Company, Store {
+  Computed<dynamic>? _$isProviderComputed;
+
+  @override
+  dynamic get isProvider =>
+      (_$isProviderComputed ??= Computed<dynamic>(() => super.isProvider,
+              name: '_Company.isProvider'))
+          .value;
+  Computed<dynamic>? _$isBuyerComputed;
+
+  @override
+  dynamic get isBuyer => (_$isBuyerComputed ??=
+          Computed<dynamic>(() => super.isBuyer, name: '_Company.isBuyer'))
+      .value;
+  Computed<dynamic>? _$numberOfAllowedUsersComputed;
+
+  @override
+  dynamic get numberOfAllowedUsers => (_$numberOfAllowedUsersComputed ??=
+          Computed<dynamic>(() => super.numberOfAllowedUsers,
+              name: '_Company.numberOfAllowedUsers'))
+      .value;
+  Computed<dynamic>? _$canCreateMoreUsersComputed;
+
+  @override
+  dynamic get canCreateMoreUsers => (_$canCreateMoreUsersComputed ??=
+          Computed<dynamic>(() => super.canCreateMoreUsers,
+              name: '_Company.canCreateMoreUsers'))
+      .value;
+
   final _$uidNrAtom = Atom(name: '_Company.uidNr');
 
   @override
@@ -117,15 +145,60 @@ mixin _$Company on _Company, Store {
   final _$addressAtom = Atom(name: '_Company.address');
 
   @override
-  Address? get address {
+  Address get address {
     _$addressAtom.reportRead();
     return super.address;
   }
 
   @override
-  set address(Address? value) {
+  set address(Address value) {
     _$addressAtom.reportWrite(value, super.address, () {
       super.address = value;
+    });
+  }
+
+  final _$roleAtom = Atom(name: '_Company.role');
+
+  @override
+  Roles get role {
+    _$roleAtom.reportRead();
+    return super.role;
+  }
+
+  @override
+  set role(Roles value) {
+    _$roleAtom.reportWrite(value, super.role, () {
+      super.role = value;
+    });
+  }
+
+  final _$providerDataAtom = Atom(name: '_Company.providerData');
+
+  @override
+  ProviderRegistrationRequest get providerData {
+    _$providerDataAtom.reportRead();
+    return super.providerData;
+  }
+
+  @override
+  set providerData(ProviderRegistrationRequest value) {
+    _$providerDataAtom.reportWrite(value, super.providerData, () {
+      super.providerData = value;
+    });
+  }
+
+  final _$usersAtom = Atom(name: '_Company.users');
+
+  @override
+  ObservableList<RegistrationUser> get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(ObservableList<RegistrationUser> value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
     });
   }
 
@@ -220,6 +293,72 @@ mixin _$Company on _Company, Store {
   }
 
   @override
+  void setRole(dynamic selectedRole) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.setRole');
+    try {
+      return super.setRole(selectedRole);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setProviderData(ProviderRegistrationRequest value) {
+    final _$actionInfo = _$_CompanyActionController.startAction(
+        name: '_Company.setProviderData');
+    try {
+      return super.setProviderData(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void activateBuyer(dynamic selectBuyer) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.activateBuyer');
+    try {
+      return super.activateBuyer(selectBuyer);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void activateProvider(dynamic selectProvider) {
+    final _$actionInfo = _$_CompanyActionController.startAction(
+        name: '_Company.activateProvider');
+    try {
+      return super.activateProvider(selectProvider);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void switchRole(dynamic selectedRole) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.switchRole');
+    try {
+      return super.switchRole(selectedRole);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addUser(RegistrationUser value) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.addUser');
+    try {
+      return super.addUser(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 uidNr: ${uidNr},
@@ -229,7 +368,14 @@ name: ${name},
 phoneNumber: ${phoneNumber},
 email: ${email},
 url: ${url},
-address: ${address}
+address: ${address},
+role: ${role},
+providerData: ${providerData},
+users: ${users},
+isProvider: ${isProvider},
+isBuyer: ${isBuyer},
+numberOfAllowedUsers: ${numberOfAllowedUsers},
+canCreateMoreUsers: ${canCreateMoreUsers}
     ''';
   }
 }
