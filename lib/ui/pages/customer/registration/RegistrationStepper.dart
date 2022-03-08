@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/customer_registration_request.dart';
+import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -205,14 +206,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           state: StepState.indexed,
           content: Column(
             children: [
+              FormSectionHeader(label: 'Bank details'),
+              20.height,
               FormField(
                 label: 'IBAN',
                 icon: Icons.account_balance,
                 hint: 'Enter IBAN',
-                value:
-                    customerRegistrationRequest.providerData!.bankDetails!.iban,
-                onChanged: customerRegistrationRequest
-                    .providerData!.bankDetails!.setIban,
+                value: customer.providerData!.bankDetails!.iban,
+                onChanged: customer.providerData!.bankDetails!.setIban,
               ),
               FormField(
                 label: 'BIC',
@@ -223,7 +224,61 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 label: 'Account owner',
                 icon: Icons.person,
                 hint: 'Enter account owner',
-              )
+              ),
+              30.height,
+              FormSectionHeader(label: 'Payment interval'),
+              20.height,
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                children: [
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                        unselectedWidgetColor: appStore.textPrimaryColor),
+                    child: Radio(
+                      value: PaymentInterval.Monthly,
+                      groupValue: customer.providerData!.paymentInterval,
+                      onChanged: (dynamic value) {
+                        toast("$value Selected");
+
+                        customer.providerData!
+                            .setPaymentInterval(PaymentInterval.Monthly);
+                      },
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        customer.providerData!
+                            .setPaymentInterval(PaymentInterval.Monthly);
+                      },
+                      child: Text(PaymentInterval.Monthly.name,
+                          style: primaryTextStyle())),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      unselectedWidgetColor: appStore.textPrimaryColor,
+                    ),
+                    child: Radio(
+                      value: PaymentInterval.Yearly,
+                      groupValue: customer.providerData!.paymentInterval,
+                      onChanged: (dynamic value) {
+                        toast("$value Selected");
+
+                        customer.providerData!
+                            .setPaymentInterval(PaymentInterval.Yearly);
+                      },
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        customer.providerData!
+                            .setPaymentInterval(PaymentInterval.Yearly);
+                      },
+                      child: Text(PaymentInterval.Yearly.name,
+                          style: primaryTextStyle()))
+                ],
+              ),
+              50.height,
             ],
           )),
     ];
