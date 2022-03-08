@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer-management/customer_registration_request.dart';
+import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
@@ -16,11 +16,11 @@ class RoleSelection extends StatefulWidget {
 }
 
 class _RoleSelectionState extends State<RoleSelection> {
-  var customer;
+  var registrationRequest;
 
   @override
   Widget build(BuildContext context) {
-    customer = Provider.of<CustomerRegistrationRequest>(context);
+    registrationRequest = Provider.of<RegistrationRequest>(context);
 
     return Observer(
       builder: (_) => Container(
@@ -49,15 +49,15 @@ class _RoleSelectionState extends State<RoleSelection> {
 
     return ElevatedButton(
         style: providerStyle,
-        onPressed: () => customer.switchRole(Roles.Provider),
+        onPressed: () => registrationRequest.switchRole(Roles.Provider),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Provider', style: boldTextStyle(size: 24)),
               Switch(
-                  value: customer.isProvider,
-                  onChanged: customer.activateProvider),
+                  value: registrationRequest.company.isProvider,
+                  onChanged: registrationRequest.company.activateProvider),
             ],
           ),
         ));
@@ -70,14 +70,15 @@ class _RoleSelectionState extends State<RoleSelection> {
 
     return ElevatedButton(
         style: buyerStyle,
-        onPressed: () => customer.switchRole(Roles.Buyer),
+        onPressed: () => registrationRequest.switchRole(Roles.Buyer),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Text('Buyer ', style: boldTextStyle(size: 24)),
               Switch(
-                  value: customer.isBuyer, onChanged: customer.activateBuyer),
+                  value: registrationRequest.company.isBuyer,
+                  onChanged: registrationRequest.company.activateBuyer),
             ],
           ),
         ));

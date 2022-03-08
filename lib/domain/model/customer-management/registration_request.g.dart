@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customer_registration_request.dart';
+part of 'registration_request.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'customer_registration_request.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$CustomerRegistrationRequest on _CustomerRegistrationRequest, Store {
-  final _$companyAtom = Atom(name: '_CustomerRegistrationRequest.company');
+mixin _$RegistrationRequest on _RegistrationRequest, Store {
+  final _$companyAtom = Atom(name: '_RegistrationRequest.company');
 
   @override
   Company get company {
@@ -24,17 +24,17 @@ mixin _$CustomerRegistrationRequest on _CustomerRegistrationRequest, Store {
     });
   }
 
-  final _$_CustomerRegistrationRequestActionController =
-      ActionController(name: '_CustomerRegistrationRequest');
+  final _$_RegistrationRequestActionController =
+      ActionController(name: '_RegistrationRequest');
 
   @override
   void setCompany(Company value) {
-    final _$actionInfo = _$_CustomerRegistrationRequestActionController
-        .startAction(name: '_CustomerRegistrationRequest.setCompany');
+    final _$actionInfo = _$_RegistrationRequestActionController.startAction(
+        name: '_RegistrationRequest.setCompany');
     try {
       return super.setCompany(value);
     } finally {
-      _$_CustomerRegistrationRequestActionController.endAction(_$actionInfo);
+      _$_RegistrationRequestActionController.endAction(_$actionInfo);
     }
   }
 

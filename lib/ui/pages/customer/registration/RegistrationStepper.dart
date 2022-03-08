@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer-management/customer_registration_request.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
+import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -31,8 +31,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
   @override
   Widget build(BuildContext context) {
-    final customerRegistration =
-        Provider.of<CustomerRegistrationRequest>(context);
+    final customerRegistration = Provider.of<RegistrationRequest>(context);
 
     return Container(
       child: CustomTheme(
@@ -101,7 +100,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     );
   }
 
-  List<Step> assembleSteps(CustomerRegistrationRequest customer) {
+  List<Step> assembleSteps(RegistrationRequest request) {
     final buyerSteps = [
       Step(
         title: Text('Role selection', style: primaryTextStyle()),
@@ -120,37 +119,37 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 label: 'Company name',
                 icon: Icons.account_balance,
                 hint: 'Enter legal entity name',
-                value: customer.company.name,
-                onChanged: customer.company.setName,
+                value: request.company.name,
+                onChanged: request.company.setName,
               ),
               FormField(
                 label: 'UID number',
                 icon: Icons.add_link,
                 hint: 'Enter UID number',
-                value: customer.company.uidNr,
-                onChanged: customer.company.setUidNr,
+                value: request.company.uidNr,
+                onChanged: request.company.setUidNr,
               ),
               FormField(
                 label: 'Registration number',
                 icon: Icons.add_link,
                 hint: 'describe what is registration number, where to find it?',
-                value: customer.company.registrationNumber,
-                onChanged: customer.company.setRegistrationNumber,
+                value: request.company.registrationNumber,
+                onChanged: request.company.setRegistrationNumber,
               ),
               FormSectionHeader(label: 'Contact details'),
               FormField(
                 label: 'Phone number',
                 icon: Icons.phone,
                 hint: 'Enter phone number',
-                value: customer.company.phoneNumber,
-                onChanged: customer.company.setPhoneNumber,
+                value: request.company.phoneNumber,
+                onChanged: request.company.setPhoneNumber,
               ),
               FormField(
                 label: 'Web',
                 icon: Icons.web,
                 hint: 'Enter company web address',
-                value: customer.company.url,
-                onChanged: customer.company.setUrl,
+                value: request.company.url,
+                onChanged: request.company.setUrl,
               ),
               FormSectionHeader(label: 'Company address'),
               FormField(
@@ -158,36 +157,36 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter country',
                 icon: Icons.edit_location,
                 autocorrect: false,
-                value: customer.company.address!.country,
-                onChanged: customer.company.address!.setCountry,
+                value: request.company.address.country,
+                onChanged: request.company.address.setCountry,
               ),
               FormField(
                 label: 'ZIP',
                 hint: 'Enter ZIP',
                 autocorrect: false,
-                value: customer.company.address!.zip,
-                onChanged: customer.company.address!.setZip,
+                value: request.company.address.zip,
+                onChanged: request.company.address.setZip,
               ),
               FormField(
                 label: 'City',
                 hint: 'Enter city',
                 autocorrect: false,
-                value: customer.company.address!.city,
-                onChanged: customer.company.address!.setCity,
+                value: request.company.address.city,
+                onChanged: request.company.address.setCity,
               ),
               FormField(
                 label: 'Street',
                 hint: 'Enter street',
                 autocorrect: false,
-                value: customer.company.address!.street,
-                onChanged: customer.company.address!.setStreet,
+                value: request.company.address.street,
+                onChanged: request.company.address.setStreet,
               ),
               FormField(
                 label: 'Number',
                 hint: 'Enter number',
                 autocorrect: false,
-                value: customer.company.address!.number,
-                onChanged: customer.company.address!.setNumber,
+                value: request.company.address.number,
+                onChanged: request.company.address.setNumber,
               ),
             ],
           )),
@@ -212,18 +211,23 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 label: 'IBAN',
                 icon: Icons.account_balance,
                 hint: 'Enter IBAN',
-                value: customer.company.providerData.bankDetails?.iban,
-                onChanged: customer.company.providerData.bankDetails?.setIban,
+                value: request.company.providerData.bankDetails?.iban,
+                onChanged: request.company.providerData.bankDetails?.setIban,
               ),
               FormField(
                 label: 'BIC',
                 icon: Icons.add_link,
                 hint: 'Enter BIC',
+                value: request.company.providerData.bankDetails?.bic,
+                onChanged: request.company.providerData.bankDetails?.setBic,
               ),
               FormField(
                 label: 'Account owner',
                 icon: Icons.person,
                 hint: 'Enter account owner',
+                value: request.company.providerData.bankDetails?.accountOwner,
+                onChanged:
+                    request.company.providerData.bankDetails?.setAccountOwner,
               ),
               30.height,
               FormSectionHeader(label: 'Payment interval'),
@@ -238,18 +242,18 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                         unselectedWidgetColor: appStore.textPrimaryColor),
                     child: Radio(
                       value: PaymentInterval.Monthly,
-                      groupValue: customer.company.providerData.paymentInterval,
+                      groupValue: request.company.providerData.paymentInterval,
                       onChanged: (dynamic value) {
                         toast("$value Selected");
 
-                        customer.company.providerData
+                        request.company.providerData
                             .setPaymentInterval(PaymentInterval.Monthly);
                       },
                     ),
                   ),
                   GestureDetector(
                       onTap: () {
-                        customer.company.providerData
+                        request.company.providerData
                             .setPaymentInterval(PaymentInterval.Monthly);
                       },
                       child: Text(PaymentInterval.Monthly.name,
@@ -260,18 +264,18 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     ),
                     child: Radio(
                       value: PaymentInterval.Yearly,
-                      groupValue: customer.company.providerData.paymentInterval,
+                      groupValue: request.company.providerData.paymentInterval,
                       onChanged: (dynamic value) {
                         toast("$value Selected");
 
-                        customer.company.providerData
+                        request.company.providerData
                             .setPaymentInterval(PaymentInterval.Yearly);
                       },
                     ),
                   ),
                   GestureDetector(
                       onTap: () {
-                        customer.company.providerData
+                        request.company.providerData
                             .setPaymentInterval(PaymentInterval.Yearly);
                       },
                       child: Text(PaymentInterval.Yearly.name,
@@ -302,7 +306,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
               hint: 'Enter password',
               obscureText: true,
             ),
-            customer.company.canCreateMoreUsers ? Text("Mozxe") : SizedBox(),
+            request.company.canCreateMoreUsers ? Text("Mozxe") : SizedBox(),
           ],
         ),
       ),
@@ -310,7 +314,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     List<Step> steps = [
       ...buyerSteps,
-      ...(customer.company.isProvider ? providerSteps : []),
+      ...(request.company.isProvider ? providerSteps : []),
       ...commonSteps,
     ];
     return steps;

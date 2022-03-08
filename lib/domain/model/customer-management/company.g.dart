@@ -202,7 +202,33 @@ mixin _$Company on _Company, Store {
     });
   }
 
+  final _$adminAtom = Atom(name: '_Company.admin');
+
+  @override
+  RegistrationUser get admin {
+    _$adminAtom.reportRead();
+    return super.admin;
+  }
+
+  @override
+  set admin(RegistrationUser value) {
+    _$adminAtom.reportWrite(value, super.admin, () {
+      super.admin = value;
+    });
+  }
+
   final _$_CompanyActionController = ActionController(name: '_Company');
+
+  @override
+  void setAdmin(dynamic value) {
+    final _$actionInfo =
+        _$_CompanyActionController.startAction(name: '_Company.setAdmin');
+    try {
+      return super.setAdmin(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setRegistrationNumber(String value) {
@@ -372,6 +398,7 @@ address: ${address},
 role: ${role},
 providerData: ${providerData},
 users: ${users},
+admin: ${admin},
 isProvider: ${isProvider},
 isBuyer: ${isBuyer},
 numberOfAllowedUsers: ${numberOfAllowedUsers},

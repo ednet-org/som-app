@@ -44,6 +44,12 @@ abstract class _Company with Store {
   @observable
   ObservableList<RegistrationUser> users = ObservableList<RegistrationUser>();
 
+  @observable
+  RegistrationUser admin = RegistrationUser();
+
+  @action
+  void setAdmin(value) => admin = value;
+
   @computed
   get isProvider => role == Roles.Provider || role == Roles.ProviderAndBuyer;
 
@@ -56,7 +62,7 @@ abstract class _Company with Store {
       return 50;
     }
 
-    switch (providerData!.subscriptionPlanId) {
+    switch (providerData.subscriptionPlanId) {
       case "1":
         return 1;
       case "2":
