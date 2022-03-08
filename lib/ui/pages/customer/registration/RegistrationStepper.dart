@@ -114,7 +114,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           state: StepState.indexed,
           content: Column(
             children: [
-              Separator(label: 'General info'),
+              FormSectionHeader(label: 'General info'),
               FormField(
                 label: 'Company name',
                 icon: Icons.account_balance,
@@ -136,7 +136,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: customer.company!.registrationNumber,
                 onChanged: customer.company!.setRegistrationNumber,
               ),
-              Separator(label: 'Contact details'),
+              FormSectionHeader(label: 'Contact details'),
               FormField(
                 label: 'Phone number',
                 icon: Icons.phone,
@@ -151,7 +151,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: customer.company!.url,
                 onChanged: customer.company!.setUrl,
               ),
-              Separator(label: 'Company address'),
+              FormSectionHeader(label: 'Company address'),
               FormField(
                 label: 'Country',
                 hint: 'Enter country',
@@ -491,10 +491,10 @@ class FormField extends StatelessWidget {
   }
 }
 
-class Separator extends StatelessWidget {
+class FormSectionHeader extends StatelessWidget {
   final String label;
 
-  const Separator({Key? key, required this.label}) : super(key: key);
+  const FormSectionHeader({Key? key, required this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
