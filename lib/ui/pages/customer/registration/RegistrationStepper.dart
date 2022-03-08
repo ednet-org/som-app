@@ -295,18 +295,36 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         content: Column(
           children: [
             Text('Admin user'),
-            FormField(
-              label: 'Admin user email',
-              icon: Icons.email,
-              hint: 'Enter email of SOM administrator account',
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.start,
+              direction: Axis.horizontal,
+              children: [
+                Container(
+                  width: 350,
+                  child: FormField(
+                    label: 'Admin user email',
+                    icon: Icons.email,
+                    hint: 'Enter email of SOM administrator account',
+                    value: request.company.admin.email,
+                    onChanged: request.company.admin.setEmail,
+                  ),
+                ),
+                30.width,
+                request.company.canCreateMoreUsers
+                    ? Container(
+                        width: 60,
+                        child: ElevatedButton(
+                            onPressed: () =>
+                                request.company.increaseNumberOfUsers,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('+', style: boldTextStyle(size: 24)),
+                            )),
+                      )
+                    : const SizedBox(height: 1),
+              ],
             ),
-            FormField(
-              label: 'Password for SOM administrator account',
-              icon: Icons.lock,
-              hint: 'Enter password',
-              obscureText: true,
-            ),
-            request.company.canCreateMoreUsers ? Text("Mozxe") : SizedBox(),
           ],
         ),
       ),

@@ -217,6 +217,21 @@ mixin _$Company on _Company, Store {
     });
   }
 
+  final _$numberOfUsersAtom = Atom(name: '_Company.numberOfUsers');
+
+  @override
+  int get numberOfUsers {
+    _$numberOfUsersAtom.reportRead();
+    return super.numberOfUsers;
+  }
+
+  @override
+  set numberOfUsers(int value) {
+    _$numberOfUsersAtom.reportWrite(value, super.numberOfUsers, () {
+      super.numberOfUsers = value;
+    });
+  }
+
   final _$_CompanyActionController = ActionController(name: '_Company');
 
   @override
@@ -225,6 +240,17 @@ mixin _$Company on _Company, Store {
         _$_CompanyActionController.startAction(name: '_Company.setAdmin');
     try {
       return super.setAdmin(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void increaseNumberOfUsers() {
+    final _$actionInfo = _$_CompanyActionController.startAction(
+        name: '_Company.increaseNumberOfUsers');
+    try {
+      return super.increaseNumberOfUsers();
     } finally {
       _$_CompanyActionController.endAction(_$actionInfo);
     }
@@ -399,6 +425,7 @@ role: ${role},
 providerData: ${providerData},
 users: ${users},
 admin: ${admin},
+numberOfUsers: ${numberOfUsers},
 isProvider: ${isProvider},
 isBuyer: ${isBuyer},
 numberOfAllowedUsers: ${numberOfAllowedUsers},

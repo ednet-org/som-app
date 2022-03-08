@@ -74,6 +74,14 @@ abstract class _Company with Store {
     }
   }
 
+  @observable
+  int numberOfUsers = 0;
+
+  @action
+  void increaseNumberOfUsers() {
+    numberOfUsers++;
+  }
+
   @computed
   get canCreateMoreUsers => users.length < numberOfAllowedUsers;
 
