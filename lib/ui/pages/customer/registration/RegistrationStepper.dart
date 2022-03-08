@@ -271,7 +271,7 @@ class SubscriptionSelector extends StatefulWidget {
 class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   List<PlanModal> periodModal = [];
 
-  int selectIndex = 2;
+  int selectIndex = 0;
 
   int containerIndex = 0;
 
@@ -294,9 +294,8 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
           PlanModal(
               title:
                   'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
-          PlanModal(title: '-------'),
-          PlanModal(title: 'Einrichtungspauschale €49,-'),
         ],
+        price: '€ 39,90 / Monat + Einrichtungspauschale € 49,-',
       ),
     );
     periodModal.add(PlanModal(
@@ -312,29 +311,30 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
             title:
                 'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
         PlanModal(title: 'die ersten zwei Monate Gratis'),
-        PlanModal(title: '-------'),
-        PlanModal(title: 'Einrichtungspauschale entfällt'),
       ],
+      price: '€ 79,90 / Monat, Einrichtungspauschale entfällt',
     ));
     periodModal.add(
       PlanModal(
-          title: 'SOM Enterprise',
-          subTitle: '€ 149,90 / Monat',
-          optionList: [
-            PlanModal(
-                title: 'bis zu 15 Benutzer anlegen',
-                subTitle: '(jeder weitere Benutzer kostet €10,-)'),
-            PlanModal(
-                title:
-                    '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
-            PlanModal(
-                title: '1 Banneranzeige pro Monatbei SOM Ads für einen Tag'),
-            PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
-            PlanModal(
-                title:
-                    'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
-            PlanModal(title: 'die ersten zwei Monate Gratis'),
-          ]),
+        title: 'SOM Enterprise',
+        subTitle: '€ 149,90 / Monat',
+        optionList: [
+          PlanModal(
+              title: 'bis zu 15 Benutzer anlegen',
+              subTitle: '(jeder weitere Benutzer kostet €10,-)'),
+          PlanModal(
+              title:
+                  '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
+          PlanModal(
+              title: '1 Banneranzeige pro Monatbei SOM Ads für einen Tag'),
+          PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
+          PlanModal(
+              title:
+                  'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
+          PlanModal(title: 'die ersten zwei Monate Gratis'),
+        ],
+        price: '€ 149,90 / Monat, Einrichtungspauschale entfällt',
+      ),
     );
     setStatusBarColor(Color(0xFFFBC5BB));
   }
@@ -346,8 +346,6 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
 
   @override
   void dispose() {
-    setStatusBarColor(context.scaffoldBackgroundColor);
-
     super.dispose();
   }
 
@@ -375,7 +373,11 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                             .validate(),
                         style: primaryTextStyle(size: 18));
                   }),
-                )
+                ),
+                10.height,
+                Divider(),
+                Text(periodModal[selectIndex].price!),
+                10.height,
               ],
             )),
         16.height,

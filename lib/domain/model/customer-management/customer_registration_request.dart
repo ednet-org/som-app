@@ -15,7 +15,7 @@ abstract class _CustomerRegistrationRequest with Store {
   Roles role = Roles.Buyer;
 
   @action
-  void selectRole(selectedRole) {
+  void setRole(selectedRole) {
     role = selectedRole;
   }
 

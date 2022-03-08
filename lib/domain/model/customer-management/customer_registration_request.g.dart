@@ -89,11 +89,11 @@ mixin _$CustomerRegistrationRequest on _CustomerRegistrationRequest, Store {
       ActionController(name: '_CustomerRegistrationRequest');
 
   @override
-  void selectRole(dynamic selectedRole) {
+  void setRole(dynamic selectedRole) {
     final _$actionInfo = _$_CustomerRegistrationRequestActionController
-        .startAction(name: '_CustomerRegistrationRequest.selectRole');
+        .startAction(name: '_CustomerRegistrationRequest.setRole');
     try {
-      return super.selectRole(selectedRole);
+      return super.setRole(selectedRole);
     } finally {
       _$_CustomerRegistrationRequestActionController.endAction(_$actionInfo);
     }

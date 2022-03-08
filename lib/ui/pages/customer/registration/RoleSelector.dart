@@ -23,7 +23,7 @@ class RoleSelector extends StatelessWidget {
     return Observer(
       builder: (_) => GestureDetector(
         onTap: () {
-          customer.selectRole(role);
+          customer.setRole(role);
         },
         child: Container(
           alignment: Alignment.center,
