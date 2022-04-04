@@ -7,8 +7,8 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
-import 'package:som/ui/components/som_text_input.dart';
 
 import 'RoleSelection.dart';
 
