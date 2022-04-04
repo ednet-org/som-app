@@ -8,6 +8,7 @@ import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
+import 'package:som/ui/components/som_text_input.dart';
 
 import 'RoleSelection.dart';
 
@@ -115,21 +116,21 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           content: Column(
             children: [
               FormSectionHeader(label: 'General info'),
-              FormField(
+              SomTextInput(
                 label: 'Company name',
                 icon: Icons.account_balance,
                 hint: 'Enter legal entity name',
                 value: request.company.name,
                 onChanged: request.company.setName,
               ),
-              FormField(
+              SomTextInput(
                 label: 'UID number',
                 icon: Icons.add_link,
                 hint: 'Enter UID number',
                 value: request.company.uidNr,
                 onChanged: request.company.setUidNr,
               ),
-              FormField(
+              SomTextInput(
                 label: 'Registration number',
                 icon: Icons.add_link,
                 hint: 'describe what is registration number, where to find it?',
@@ -137,14 +138,14 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: request.company.setRegistrationNumber,
               ),
               FormSectionHeader(label: 'Contact details'),
-              FormField(
+              SomTextInput(
                 label: 'Phone number',
                 icon: Icons.phone,
                 hint: 'Enter phone number',
                 value: request.company.phoneNumber,
                 onChanged: request.company.setPhoneNumber,
               ),
-              FormField(
+              SomTextInput(
                 label: 'Web',
                 icon: Icons.web,
                 hint: 'Enter company web address',
@@ -152,7 +153,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: request.company.setUrl,
               ),
               FormSectionHeader(label: 'Company address'),
-              FormField(
+              SomTextInput(
                 label: 'Country',
                 hint: 'Enter country',
                 icon: Icons.edit_location,
@@ -160,28 +161,28 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.address.country,
                 onChanged: request.company.address.setCountry,
               ),
-              FormField(
+              SomTextInput(
                 label: 'ZIP',
                 hint: 'Enter ZIP',
                 autocorrect: false,
                 value: request.company.address.zip,
                 onChanged: request.company.address.setZip,
               ),
-              FormField(
+              SomTextInput(
                 label: 'City',
                 hint: 'Enter city',
                 autocorrect: false,
                 value: request.company.address.city,
                 onChanged: request.company.address.setCity,
               ),
-              FormField(
+              SomTextInput(
                 label: 'Street',
                 hint: 'Enter street',
                 autocorrect: false,
                 value: request.company.address.street,
                 onChanged: request.company.address.setStreet,
               ),
-              FormField(
+              SomTextInput(
                 label: 'Number',
                 hint: 'Enter number',
                 autocorrect: false,
@@ -207,21 +208,21 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             children: [
               FormSectionHeader(label: 'Bank details'),
               20.height,
-              FormField(
+              SomTextInput(
                 label: 'IBAN',
                 icon: Icons.account_balance,
                 hint: 'Enter IBAN',
                 value: request.company.providerData.bankDetails?.iban,
                 onChanged: request.company.providerData.bankDetails?.setIban,
               ),
-              FormField(
+              SomTextInput(
                 label: 'BIC',
                 icon: Icons.add_link,
                 hint: 'Enter BIC',
                 value: request.company.providerData.bankDetails?.bic,
                 onChanged: request.company.providerData.bankDetails?.setBic,
               ),
-              FormField(
+              SomTextInput(
                 label: 'Account owner',
                 icon: Icons.person,
                 hint: 'Enter account owner',
@@ -304,7 +305,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 children: [
                   Container(
                     width: 350,
-                    child: FormField(
+                    child: SomTextInput(
                       label: 'Admin user email',
                       icon: Icons.email,
                       hint: 'Enter email of SOM administrator account',
@@ -340,7 +341,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     children: [
                       Container(
                         width: 350,
-                        child: FormField(
+                        child: SomTextInput(
                           label: 'User ${index + 1}',
                           icon: Icons.email,
                           hint: 'Enter employee email',
@@ -562,51 +563,6 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
         )
       ],
     ).paddingBottom(16);
-  }
-}
-
-class FormField extends StatelessWidget {
-  final String? label;
-  final IconData? icon;
-  final String? hint;
-  final bool obscureText;
-  final int maxLines;
-  final bool autocorrect;
-  final TextInputType? keyboardType;
-  final String? value;
-  final onChanged;
-
-  const FormField({
-    Key? key,
-    this.label,
-    this.icon,
-    this.hint,
-    this.maxLines = 1,
-    this.obscureText = false,
-    this.autocorrect = true,
-    this.keyboardType = TextInputType.text,
-    this.value,
-    this.onChanged,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      onChanged: onChanged,
-      initialValue: value,
-      keyboardType: keyboardType,
-      maxLines: maxLines,
-      style: primaryTextStyle(),
-      obscureText: obscureText,
-      autocorrect: autocorrect,
-      decoration: InputDecoration(
-        labelText: label,
-        hintStyle: secondaryTextStyle(),
-        labelStyle: secondaryTextStyle(),
-        hintText: hint,
-        icon: Icon(icon, color: appStore.iconColor),
-      ),
-    );
   }
 }
 
