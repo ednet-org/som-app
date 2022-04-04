@@ -87,7 +87,7 @@ mixin _$Address on _Address, Store {
   final _$_AddressActionController = ActionController(name: '_Address');
 
   @override
-  void setCountry(String value) {
+  void setCountry(String? value) {
     final _$actionInfo =
         _$_AddressActionController.startAction(name: '_Address.setCountry');
     try {

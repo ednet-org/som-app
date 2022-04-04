@@ -10,7 +10,7 @@ abstract class _Address with Store {
   String? country;
 
   @action
-  void setCountry(String value) => country = value;
+  void setCountry(String? value) => country = value;
   @observable
   String? city;
 
