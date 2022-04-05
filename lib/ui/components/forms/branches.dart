@@ -1,3 +1,10 @@
+import 'package:som/ui/components/forms/som_tags.dart';
+
+final branchTags = branches
+    .asMap()
+    .entries
+    .map((item) => TagModel(id: item.key.toString(), title: item.value));
+
 const branches = [
   "Akupunktur",
   "Allergiebehandlung",

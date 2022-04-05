@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/forms/branches.dart';
 
 // import 'package:flutter_tags/flutter_tags.dart';
 // https://medium.com/nonstopio/flutter-tags-7410bd6a5835
 
 class SomTags extends StatefulWidget {
-  const SomTags() : super();
+  const SomTags({required this.tags}) : super();
+  final List<TagModel> tags;
 
   @override
   _SomTagsState createState() => _SomTagsState();
@@ -17,8 +17,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       TextEditingController();
 
   String get _searchText => _searchTextEditingController.text.trim();
-
-  final List<TagModel> _tagsToSelect = mappedBranches.toList();
 
   refreshState(VoidCallback fn) {
     if (mounted) setState(fn);
@@ -37,11 +35,11 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   }
 
   List<TagModel> _filterSearchResultList() {
-    if (_searchText.isEmpty) return _tagsToSelect;
+    if (_searchText.isEmpty) return widget.tags;
 
     List<TagModel> _tempList = [];
-    for (int index = 0; index < _tagsToSelect.length; index++) {
-      TagModel tagModel = _tagsToSelect[index];
+    for (int index = 0; index < widget.tags.length; index++) {
+      TagModel tagModel = widget.tags[index];
       if (tagModel.title
           .toLowerCase()
           .trim()
@@ -196,7 +194,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
             child: TextField(
               controller: _searchTextEditingController,
               decoration: const InputDecoration.collapsed(
-                hintText: 'Search Tag',
+                hintText: 'Search branch',
                 hintStyle: TextStyle(
                   color: Colors.grey,
                 ),
@@ -273,8 +271,3 @@ class TagModel {
     required this.title,
   });
 }
-
-var mappedBranches = branches
-    .asMap()
-    .entries
-    .map((item) => TagModel(id: item.key.toString(), title: item.value));

@@ -7,6 +7,7 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/components/forms/branches.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
 import 'package:som/ui/components/forms/som_tags.dart';
@@ -191,7 +192,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: request.company.address.setNumber,
               ),
               FormSectionHeader(label: 'Company branches'),
-              SomTags(),
+              SomTags(tags: branchTags.toList()),
             ],
           )),
     ];
