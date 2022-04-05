@@ -229,16 +229,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Tags',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-              ),
-            ),
-          ),
           _tags.isNotEmpty
               ? Column(children: [
                   Wrap(

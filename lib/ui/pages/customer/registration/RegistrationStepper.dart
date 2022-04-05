@@ -7,12 +7,14 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/branches.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
 import 'package:som/ui/components/forms/som_tags.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
+import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 
 import 'RoleSelection.dart';
 
@@ -37,7 +39,9 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   @override
   Widget build(BuildContext context) {
     final customerRegistration = Provider.of<RegistrationRequest>(context);
-
+    final isLastStep =
+        (customerRegistration.company.isProvider && currStep == 5) ||
+            (!customerRegistration.company.isProvider && currStep == 2);
     return Container(
       child: CustomTheme(
         child: Column(
@@ -53,23 +57,43 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 currentStep: currStep,
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      100.height,
-                      TextButton(
-                        onPressed: details.onStepContinue,
-                        child: Text('CONTINUE',
-                            style: secondaryTextStyle(color: actionColor)),
-                      ),
-                      50.width,
-                      TextButton(
-                        onPressed: details.onStepCancel,
-                        child: Text('CANCEL', style: secondaryTextStyle()),
-                      ),
-                    ],
-                  );
+                  return isLastStep
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            200.height,
+                            Container(
+                              width: 300,
+                              child: ActionButton(
+                                onPressed: () {
+                                  ThankYouPage().launch(context);
+                                },
+                                textContent: "Register",
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            100.height,
+                            TextButton(
+                              onPressed: details.onStepContinue,
+                              child: Text('CONTINUE',
+                                  style:
+                                      secondaryTextStyle(color: actionColor)),
+                            ),
+                            50.width,
+                            TextButton(
+                              onPressed: details.onStepCancel,
+                              child:
+                                  Text('CANCEL', style: secondaryTextStyle()),
+                            ),
+                          ],
+                        );
                 },
                 onStepContinue: () {
                   setState(() {
