@@ -7,6 +7,7 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
@@ -157,6 +158,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
               SomDropDown(
                 value: request.company.address.country,
                 onChanged: request.company.address.setCountry,
+                hint: 'Select country',
+                items: countries,
               ),
               SomTextInput(
                 label: 'ZIP',

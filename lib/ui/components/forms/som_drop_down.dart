@@ -1,24 +1,29 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-
-import 'countries.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class SomDropDown extends StatelessWidget {
-  final value;
+  final String? value;
   final onChanged;
+  final String? hint;
+  final items;
 
-  const SomDropDown({this.onChanged, this.value}) : super();
+  const SomDropDown({this.onChanged, this.value, this.hint, this.items})
+      : super();
 
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
         mode: Mode.MENU,
-        items: countries,
+        items: items,
         onChanged: onChanged,
         selectedItem: value,
         dropdownSearchDecoration: InputDecoration(
-          prefixIcon: Icon(Icons.edit_location),
-          label: Text('Country'),
+          icon: Icon(Icons.edit_location),
+          labelText: 'Country',
+          hintStyle: secondaryTextStyle(),
+          labelStyle: secondaryTextStyle(),
+          hintText: hint,
         ));
   }
 }
