@@ -191,22 +191,26 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.address.number,
                 onChanged: request.company.address.setNumber,
               ),
-              FormSectionHeader(label: 'Company branches'),
-              SomTags(tags: branchTags.toList()),
             ],
           )),
     ];
 
     final providerSteps = [
       Step(
-        title: Text('Subscription model', style: primaryTextStyle()),
+        title: Text('Company branches', style: primaryTextStyle()),
         isActive: currStep == 2,
+        state: StepState.indexed,
+        content: SomTags(tags: branchTags.toList()),
+      ),
+      Step(
+        title: Text('Subscription model', style: primaryTextStyle()),
+        isActive: currStep == 3,
         state: StepState.indexed,
         content: SubscriptionSelector(),
       ),
       Step(
           title: Text('Payment details', style: primaryTextStyle()),
-          isActive: currStep == 3,
+          isActive: currStep == 4,
           state: StepState.indexed,
           content: Column(
             children: [
@@ -295,7 +299,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     final commonSteps = [
       Step(
         title: Text('Users', style: primaryTextStyle()),
-        isActive: currStep == 4,
+        isActive: currStep == 5,
         state: StepState.indexed,
         content: Column(
           children: [
