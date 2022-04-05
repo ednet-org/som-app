@@ -9,6 +9,7 @@ import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
+import 'package:som/ui/components/forms/som_tags.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
 
@@ -48,7 +49,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     assembleSteps(customerRegistration).length.toString()),
                 steps: assembleSteps(customerRegistration),
                 type: StepperType.vertical,
-                currentStep: this.currStep,
+                currentStep: currStep,
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
                   return Row(
@@ -189,6 +190,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.address.number,
                 onChanged: request.company.address.setNumber,
               ),
+              FormSectionHeader(label: 'Company branches'),
+              SomTags(),
             ],
           )),
     ];
