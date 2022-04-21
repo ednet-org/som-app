@@ -92,7 +92,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       padding: const EdgeInsets.all(8.0),
       child: _filterSearchResultList().isNotEmpty
           ? _buildSuggestionWidget()
-          : const Text('No branches added'),
+          : const Text('No suggestions, please start typing'),
     );
   }
 
