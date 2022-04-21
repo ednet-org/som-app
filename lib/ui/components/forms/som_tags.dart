@@ -13,6 +13,7 @@ class SomTags extends StatefulWidget {
 
 class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   final List<TagModel> _tags = [];
+  final List<TagModel> _suggestions = [];
   final TextEditingController _searchTextEditingController =
       TextEditingController();
 
@@ -35,7 +36,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   }
 
   List<TagModel> _filterSearchResultList() {
-    if (_searchText.isEmpty) return widget.tags;
+    if (_searchText.isEmpty) return _suggestions;
 
     List<TagModel> _tempList = [];
     for (int index = 0; index < widget.tags.length; index++) {
