@@ -47,7 +47,7 @@ class SomTextInput extends StatelessWidget {
         icon: Icon(icon, color: appStore.iconColor),
         suffixIcon: required
             ? Icon(
-                Icons.warning_amber,
+                Icons.report_outlined,
                 color: appStore.iconSecondaryColor,
               )
             : null,
