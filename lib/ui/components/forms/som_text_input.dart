@@ -13,6 +13,7 @@ class SomTextInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? value;
   final onChanged;
+  final bool required;
 
   const SomTextInput({
     Key? key,
@@ -25,6 +26,7 @@ class SomTextInput extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.value,
     this.onChanged,
+    this.required = false,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,12 @@ class SomTextInput extends StatelessWidget {
         labelStyle: secondaryTextStyle(),
         hintText: hint,
         icon: Icon(icon, color: appStore.iconColor),
+        suffixIcon: required
+            ? Icon(
+                Icons.warning_amber,
+                color: appStore.iconSecondaryColor,
+              )
+            : null,
       ),
     );
   }

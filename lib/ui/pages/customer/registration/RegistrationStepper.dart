@@ -150,6 +150,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter legal entity name',
                 value: request.company.name,
                 onChanged: request.company.setName,
+                required: true,
               ),
               SomTextInput(
                 label: 'UID number',
@@ -157,6 +158,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter UID number',
                 value: request.company.uidNr,
                 onChanged: request.company.setUidNr,
+                required: true,
               ),
               SomTextInput(
                 label: 'Registration number',
@@ -164,6 +166,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'describe what is registration number, where to find it?',
                 value: request.company.registrationNumber,
                 onChanged: request.company.setRegistrationNumber,
+                required: true,
               ),
               FormSectionHeader(label: 'Contact details'),
               SomTextInput(
@@ -193,6 +196,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 autocorrect: false,
                 value: request.company.address.zip,
                 onChanged: request.company.address.setZip,
+                required: true,
               ),
               SomTextInput(
                 label: 'City',
@@ -200,6 +204,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 autocorrect: false,
                 value: request.company.address.city,
                 onChanged: request.company.address.setCity,
+                required: true,
               ),
               SomTextInput(
                 label: 'Street',
@@ -207,6 +212,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 autocorrect: false,
                 value: request.company.address.street,
                 onChanged: request.company.address.setStreet,
+                required: true,
               ),
               SomTextInput(
                 label: 'Number',
@@ -214,6 +220,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 autocorrect: false,
                 value: request.company.address.number,
                 onChanged: request.company.address.setNumber,
+                required: true,
               ),
             ],
           )),
@@ -246,6 +253,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter IBAN',
                 value: request.company.providerData.bankDetails?.iban,
                 onChanged: request.company.providerData.bankDetails?.setIban,
+                required: true,
               ),
               SomTextInput(
                 label: 'BIC',
@@ -253,6 +261,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 hint: 'Enter BIC',
                 value: request.company.providerData.bankDetails?.bic,
                 onChanged: request.company.providerData.bankDetails?.setBic,
+                required: true,
               ),
               SomTextInput(
                 label: 'Account owner',
@@ -261,6 +270,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.providerData.bankDetails?.accountOwner,
                 onChanged:
                     request.company.providerData.bankDetails?.setAccountOwner,
+                required: true,
               ),
               30.height,
               FormSectionHeader(label: 'Payment interval'),
