@@ -40,17 +40,11 @@ class SomTextInput extends StatelessWidget {
       obscureText: obscureText,
       autocorrect: autocorrect,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: '${label} ${required ? "*" : ""}',
         hintStyle: secondaryTextStyle(),
         labelStyle: secondaryTextStyle(),
         hintText: hint,
         icon: Icon(icon, color: appStore.iconColor),
-        suffixIcon: required
-            ? Icon(
-                Icons.report_outlined,
-                color: appStore.iconSecondaryColor,
-              )
-            : null,
       ),
     );
   }
