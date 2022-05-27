@@ -6,7 +6,7 @@ part of 'company.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Company on _Company, Store {
   Computed<dynamic>? _$isProviderComputed;
@@ -37,7 +37,7 @@ mixin _$Company on _Company, Store {
               name: '_Company.canCreateMoreUsers'))
       .value;
 
-  final _$uidNrAtom = Atom(name: '_Company.uidNr');
+  late final _$uidNrAtom = Atom(name: '_Company.uidNr', context: context);
 
   @override
   String? get uidNr {
@@ -52,7 +52,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$registrationNumberAtom = Atom(name: '_Company.registrationNumber');
+  late final _$registrationNumberAtom =
+      Atom(name: '_Company.registrationNumber', context: context);
 
   @override
   String? get registrationNumber {
@@ -67,7 +68,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$companySizeAtom = Atom(name: '_Company.companySize');
+  late final _$companySizeAtom =
+      Atom(name: '_Company.companySize', context: context);
 
   @override
   String? get companySize {
@@ -82,7 +84,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$nameAtom = Atom(name: '_Company.name');
+  late final _$nameAtom = Atom(name: '_Company.name', context: context);
 
   @override
   String? get name {
@@ -97,7 +99,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$phoneNumberAtom = Atom(name: '_Company.phoneNumber');
+  late final _$phoneNumberAtom =
+      Atom(name: '_Company.phoneNumber', context: context);
 
   @override
   String? get phoneNumber {
@@ -112,7 +115,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: '_Company.email');
+  late final _$emailAtom = Atom(name: '_Company.email', context: context);
 
   @override
   String? get email {
@@ -127,7 +130,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$urlAtom = Atom(name: '_Company.url');
+  late final _$urlAtom = Atom(name: '_Company.url', context: context);
 
   @override
   String? get url {
@@ -142,7 +145,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$addressAtom = Atom(name: '_Company.address');
+  late final _$addressAtom = Atom(name: '_Company.address', context: context);
 
   @override
   Address get address {
@@ -157,7 +160,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$roleAtom = Atom(name: '_Company.role');
+  late final _$roleAtom = Atom(name: '_Company.role', context: context);
 
   @override
   Roles get role {
@@ -172,7 +175,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$providerDataAtom = Atom(name: '_Company.providerData');
+  late final _$providerDataAtom =
+      Atom(name: '_Company.providerData', context: context);
 
   @override
   ProviderRegistrationRequest get providerData {
@@ -187,7 +191,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$usersAtom = Atom(name: '_Company.users');
+  late final _$usersAtom = Atom(name: '_Company.users', context: context);
 
   @override
   ObservableList<RegistrationUser> get users {
@@ -202,7 +206,7 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$adminAtom = Atom(name: '_Company.admin');
+  late final _$adminAtom = Atom(name: '_Company.admin', context: context);
 
   @override
   RegistrationUser get admin {
@@ -217,7 +221,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$numberOfUsersAtom = Atom(name: '_Company.numberOfUsers');
+  late final _$numberOfUsersAtom =
+      Atom(name: '_Company.numberOfUsers', context: context);
 
   @override
   int get numberOfUsers {
@@ -232,7 +237,8 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  final _$_CompanyActionController = ActionController(name: '_Company');
+  late final _$_CompanyActionController =
+      ActionController(name: '_Company', context: context);
 
   @override
   void setAdmin(dynamic value) {

@@ -6,10 +6,10 @@ part of 'branch.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Branch on _Branch, Store {
-  final _$uuidAtom = Atom(name: '_Branch.uuid');
+  late final _$uuidAtom = Atom(name: '_Branch.uuid', context: context);
 
   @override
   String? get uuid {
@@ -24,7 +24,7 @@ mixin _$Branch on _Branch, Store {
     });
   }
 
-  final _$titleAtom = Atom(name: '_Branch.title');
+  late final _$titleAtom = Atom(name: '_Branch.title', context: context);
 
   @override
   String? get title {
@@ -39,7 +39,7 @@ mixin _$Branch on _Branch, Store {
     });
   }
 
-  final _$categoryAtom = Atom(name: '_Branch.category');
+  late final _$categoryAtom = Atom(name: '_Branch.category', context: context);
 
   @override
   Branch? get category {
@@ -54,7 +54,7 @@ mixin _$Branch on _Branch, Store {
     });
   }
 
-  final _$productAtom = Atom(name: '_Branch.product');
+  late final _$productAtom = Atom(name: '_Branch.product', context: context);
 
   @override
   Branch? get product {
@@ -69,7 +69,8 @@ mixin _$Branch on _Branch, Store {
     });
   }
 
-  final _$_BranchActionController = ActionController(name: '_Branch');
+  late final _$_BranchActionController =
+      ActionController(name: '_Branch', context: context);
 
   @override
   void setUuid(String value) {

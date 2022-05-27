@@ -14,7 +14,7 @@ class SomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
-        mode: Mode.MENU,
+        // mode: Mode.MENU,
         items: items,
         onChanged: onChanged,
         selectedItem: value,

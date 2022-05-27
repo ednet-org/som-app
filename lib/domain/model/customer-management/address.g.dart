@@ -6,10 +6,10 @@ part of 'address.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Address on _Address, Store {
-  final _$countryAtom = Atom(name: '_Address.country');
+  late final _$countryAtom = Atom(name: '_Address.country', context: context);
 
   @override
   String? get country {
@@ -24,7 +24,7 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  final _$cityAtom = Atom(name: '_Address.city');
+  late final _$cityAtom = Atom(name: '_Address.city', context: context);
 
   @override
   String? get city {
@@ -39,7 +39,7 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  final _$streetAtom = Atom(name: '_Address.street');
+  late final _$streetAtom = Atom(name: '_Address.street', context: context);
 
   @override
   String? get street {
@@ -54,7 +54,7 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  final _$numberAtom = Atom(name: '_Address.number');
+  late final _$numberAtom = Atom(name: '_Address.number', context: context);
 
   @override
   String? get number {
@@ -69,7 +69,7 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  final _$zipAtom = Atom(name: '_Address.zip');
+  late final _$zipAtom = Atom(name: '_Address.zip', context: context);
 
   @override
   String? get zip {
@@ -84,7 +84,8 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  final _$_AddressActionController = ActionController(name: '_Address');
+  late final _$_AddressActionController =
+      ActionController(name: '_Address', context: context);
 
   @override
   void setCountry(String? value) {

@@ -6,10 +6,11 @@ part of 'application.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Application on _Application, Store {
-  final _$applicationWidthAtom = Atom(name: '_Application.applicationWidth');
+  late final _$applicationWidthAtom =
+      Atom(name: '_Application.applicationWidth', context: context);
 
   @override
   double get applicationWidth {
@@ -24,7 +25,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$buttonWidthAtom = Atom(name: '_Application.buttonWidth');
+  late final _$buttonWidthAtom =
+      Atom(name: '_Application.buttonWidth', context: context);
 
   @override
   double get buttonWidth {
@@ -39,7 +41,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$isDarkModeOnAtom = Atom(name: '_Application.isDarkModeOn');
+  late final _$isDarkModeOnAtom =
+      Atom(name: '_Application.isDarkModeOn', context: context);
 
   @override
   bool get isDarkModeOn {
@@ -54,8 +57,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$scaffoldBackgroundAtom =
-      Atom(name: '_Application.scaffoldBackground');
+  late final _$scaffoldBackgroundAtom =
+      Atom(name: '_Application.scaffoldBackground', context: context);
 
   @override
   Color? get scaffoldBackground {
@@ -70,7 +73,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$backgroundColorAtom = Atom(name: '_Application.backgroundColor');
+  late final _$backgroundColorAtom =
+      Atom(name: '_Application.backgroundColor', context: context);
 
   @override
   Color? get backgroundColor {
@@ -85,8 +89,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$backgroundSecondaryColorAtom =
-      Atom(name: '_Application.backgroundSecondaryColor');
+  late final _$backgroundSecondaryColorAtom =
+      Atom(name: '_Application.backgroundSecondaryColor', context: context);
 
   @override
   Color? get backgroundSecondaryColor {
@@ -102,7 +106,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$textPrimaryColorAtom = Atom(name: '_Application.textPrimaryColor');
+  late final _$textPrimaryColorAtom =
+      Atom(name: '_Application.textPrimaryColor', context: context);
 
   @override
   Color? get textPrimaryColor {
@@ -117,8 +122,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$appColorPrimaryLightColorAtom =
-      Atom(name: '_Application.appColorPrimaryLightColor');
+  late final _$appColorPrimaryLightColorAtom =
+      Atom(name: '_Application.appColorPrimaryLightColor', context: context);
 
   @override
   Color? get appColorPrimaryLightColor {
@@ -134,8 +139,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$textSecondaryColorAtom =
-      Atom(name: '_Application.textSecondaryColor');
+  late final _$textSecondaryColorAtom =
+      Atom(name: '_Application.textSecondaryColor', context: context);
 
   @override
   Color? get textSecondaryColor {
@@ -150,7 +155,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$appBarColorAtom = Atom(name: '_Application.appBarColor');
+  late final _$appBarColorAtom =
+      Atom(name: '_Application.appBarColor', context: context);
 
   @override
   Color? get appBarColor {
@@ -165,7 +171,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$iconColorAtom = Atom(name: '_Application.iconColor');
+  late final _$iconColorAtom =
+      Atom(name: '_Application.iconColor', context: context);
 
   @override
   Color? get iconColor {
@@ -180,8 +187,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$iconSecondaryColorAtom =
-      Atom(name: '_Application.iconSecondaryColor');
+  late final _$iconSecondaryColorAtom =
+      Atom(name: '_Application.iconSecondaryColor', context: context);
 
   @override
   Color? get iconSecondaryColor {
@@ -196,7 +203,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$selectedLanguageAtom = Atom(name: '_Application.selectedLanguage');
+  late final _$selectedLanguageAtom =
+      Atom(name: '_Application.selectedLanguage', context: context);
 
   @override
   String get selectedLanguage {
@@ -211,8 +219,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$selectedDrawerItemAtom =
-      Atom(name: '_Application.selectedDrawerItem');
+  late final _$selectedDrawerItemAtom =
+      Atom(name: '_Application.selectedDrawerItem', context: context);
 
   @override
   int get selectedDrawerItem {
@@ -227,7 +235,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$isAuthenticatedAtom = Atom(name: '_Application.isAuthenticated');
+  late final _$isAuthenticatedAtom =
+      Atom(name: '_Application.isAuthenticated', context: context);
 
   @override
   bool get isAuthenticated {
@@ -242,8 +251,8 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  final _$toggleDarkModeAsyncAction =
-      AsyncAction('_Application.toggleDarkMode');
+  late final _$toggleDarkModeAsyncAction =
+      AsyncAction('_Application.toggleDarkMode', context: context);
 
   @override
   Future<void> toggleDarkMode({bool? value}) {
@@ -251,7 +260,8 @@ mixin _$Application on _Application, Store {
         .run(() => super.toggleDarkMode(value: value));
   }
 
-  final _$_ApplicationActionController = ActionController(name: '_Application');
+  late final _$_ApplicationActionController =
+      ActionController(name: '_Application', context: context);
 
   @override
   void setLanguage(String aLanguage) {

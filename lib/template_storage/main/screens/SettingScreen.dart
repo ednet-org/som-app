@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -18,37 +16,13 @@ class SettingScreen extends StatefulWidget {
 }
 
 class SettingScreenState extends State<SettingScreen> {
-  InterstitialAd? interstitialAd;
-  BannerAd? myBanner;
-
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  init() async {
-    if (isMobile) {
-      interstitialAd = InterstitialAd(
-        adUnitId: getInterstitialAdUnitId()!,
-        request: AdRequest(),
-        listener: AdListener(),
-      );
-
-      interstitialAd!.load();
-
-      myBanner = BannerAd(
-        adUnitId: getBannerAdUnitId()!,
-        size: AdSize.banner,
-        request: AdRequest(),
-        listener: AdListener(onAdLoaded: (ad) {
-          setState(() {});
-        }),
-      );
-
-      myBanner!.load();
-    }
-  }
+  init() async {}
 
   @override
   void setState(fn) {
@@ -58,15 +32,6 @@ class SettingScreenState extends State<SettingScreen> {
   @override
   void dispose() async {
     super.dispose();
-
-    if (interstitialAd != null && (await interstitialAd?.isLoaded())!) {
-      interstitialAd?.show();
-
-      interstitialAd?.dispose();
-    }
-    if (myBanner != null && (await myBanner?.isLoaded())!) {
-      myBanner?.dispose();
-    }
   }
 
   @override
@@ -151,13 +116,6 @@ class SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            if (myBanner != null)
-              Positioned(
-                child: AdWidget(ad: myBanner!),
-                bottom: 0,
-                height: myBanner!.size.height.toDouble(),
-                width: myBanner!.size.width.toDouble(),
-              )
           ],
         ),
       ),

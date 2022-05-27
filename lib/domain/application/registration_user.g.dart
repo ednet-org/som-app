@@ -6,7 +6,7 @@ part of 'registration_user.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RegistrationUser on RegistrationUserBase, Store {
   Computed<dynamic>? _$hasAcceptedTermsAndPoliciesComputed;
@@ -18,7 +18,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
               name: 'RegistrationUserBase.hasAcceptedTermsAndPolicies'))
           .value;
 
-  final _$firstNameAtom = Atom(name: 'RegistrationUserBase.firstName');
+  late final _$firstNameAtom =
+      Atom(name: 'RegistrationUserBase.firstName', context: context);
 
   @override
   String? get firstName {
@@ -33,7 +34,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$lastNameAtom = Atom(name: 'RegistrationUserBase.lastName');
+  late final _$lastNameAtom =
+      Atom(name: 'RegistrationUserBase.lastName', context: context);
 
   @override
   String? get lastName {
@@ -48,7 +50,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: 'RegistrationUserBase.email');
+  late final _$emailAtom =
+      Atom(name: 'RegistrationUserBase.email', context: context);
 
   @override
   String? get email {
@@ -63,7 +66,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$phoneAtom = Atom(name: 'RegistrationUserBase.phone');
+  late final _$phoneAtom =
+      Atom(name: 'RegistrationUserBase.phone', context: context);
 
   @override
   String? get phone {
@@ -78,7 +82,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$salutationAtom = Atom(name: 'RegistrationUserBase.salutation');
+  late final _$salutationAtom =
+      Atom(name: 'RegistrationUserBase.salutation', context: context);
 
   @override
   String? get salutation {
@@ -93,7 +98,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$termsAtom = Atom(name: 'RegistrationUserBase.terms');
+  late final _$termsAtom =
+      Atom(name: 'RegistrationUserBase.terms', context: context);
 
   @override
   String? get terms {
@@ -108,7 +114,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$policiesAtom = Atom(name: 'RegistrationUserBase.policies');
+  late final _$policiesAtom =
+      Atom(name: 'RegistrationUserBase.policies', context: context);
 
   @override
   String? get policies {
@@ -123,7 +130,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$roleAtom = Atom(name: 'RegistrationUserBase.role');
+  late final _$roleAtom =
+      Atom(name: 'RegistrationUserBase.role', context: context);
 
   @override
   CompanyRole get role {
@@ -138,8 +146,8 @@ mixin _$RegistrationUser on RegistrationUserBase, Store {
     });
   }
 
-  final _$RegistrationUserBaseActionController =
-      ActionController(name: 'RegistrationUserBase');
+  late final _$RegistrationUserBaseActionController =
+      ActionController(name: 'RegistrationUserBase', context: context);
 
   @override
   void setSalutation(String value) {
