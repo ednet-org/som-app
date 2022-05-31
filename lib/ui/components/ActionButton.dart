@@ -20,8 +20,7 @@ class ActionButtonState extends State<ActionButton> {
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(color: Colors.white),
         elevation: 4,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         padding: const EdgeInsets.all(0.0),
       ),
       onPressed: widget.onPressed,

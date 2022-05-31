@@ -1,5 +1,4 @@
 import 'package:som/template_storage/integrations/models/ContentModel.dart';
-import 'package:som/template_storage/integrations/screens/FingerprintAuthentication.dart';
 import 'package:som/template_storage/integrations/screens/LikeButton/LBHomePage.dart';
 import 'package:som/template_storage/integrations/screens/Marquee/MHomePage.dart';
 import 'package:som/template_storage/integrations/screens/Shimmer/SHomePage.dart';
@@ -8,7 +7,6 @@ import 'package:som/template_storage/integrations/screens/StickyHeader/stickyHea
 import 'package:som/template_storage/integrations/screens/api/get_method_api_integration.dart';
 import 'package:som/template_storage/integrations/screens/api/post_method_api_integration.dart';
 import 'package:som/template_storage/integrations/screens/before_after_image_screen.dart';
-import 'package:som/template_storage/integrations/screens/button_screen.dart';
 import 'package:som/template_storage/integrations/screens/confetti/CHomePage.dart';
 import 'package:som/template_storage/integrations/screens/fluid_slider_screen.dart';
 import 'package:som/template_storage/integrations/screens/flutterCalender/CalenderHomePage.dart';
@@ -18,7 +16,6 @@ import 'package:som/template_storage/integrations/screens/google_map_screen.dart
 import 'package:som/template_storage/integrations/screens/google_signin_screen.dart';
 import 'package:som/template_storage/integrations/screens/liquid_pull_to_refresh_screen.dart';
 import 'package:som/template_storage/integrations/screens/liquid_swipe_screen.dart';
-import 'package:som/template_storage/integrations/screens/picker_screen.dart';
 import 'package:som/template_storage/integrations/screens/razorpay_screen.dart';
 import 'package:som/template_storage/integrations/screens/shader_mask_screen.dart';
 import 'package:som/template_storage/integrations/screens/singature_screen.dart';
@@ -30,41 +27,47 @@ import 'package:som/template_storage/main/model/ExpenseData.dart';
 Future<List<ContentModel>> getContents(context) async {
   List<ContentModel> list = [];
 
-  var cat1Item1 = ContentModel(title: 'Before After Image', pageName: BeforeAfterImageScreen());
-  var cat1Item2 = ContentModel(title: 'Google Sign In', pageName: GoogleSignInScreen());
+  var cat1Item1 = ContentModel(
+      title: 'Before After Image', pageName: BeforeAfterImageScreen());
+  var cat1Item2 =
+      ContentModel(title: 'Google Sign In', pageName: GoogleSignInScreen());
   var cat1Item3 = ContentModel(title: 'Wave Widget', pageName: WaveScreen());
-  var cat1Item4 = ContentModel(title: 'Signature Pad', pageName: SignatureScreen());
-  var cat1Item5 = ContentModel(title: 'Liquid Swipe WalkThrough', pageName: LiquidSwipeScreen());
+  var cat1Item4 =
+      ContentModel(title: 'Signature Pad', pageName: SignatureScreen());
+  var cat1Item5 = ContentModel(
+      title: 'Liquid Swipe WalkThrough', pageName: LiquidSwipeScreen());
 
   var cat1Item6 = ContentModel(title: 'Calender', pageName: CalenderHomePage());
 
   var cat1Item7 = ContentModel(title: 'Confitte', pageName: CHomePage());
   var cat1Item8 = ContentModel(title: 'TinderCard', pageName: TinderHomePage());
-  var cat1Item9 = ContentModel(title: 'Show Case View', pageName: SVCHomePage());
-  var cat1tem10 = ContentModel(title: 'Fingerprint Authentication', pageName: FingerprintAuthentication());
+  var cat1Item9 =
+      ContentModel(title: 'Show Case View', pageName: SVCHomePage());
 
-  list.add(ContentModel(
-      title: 'Integrations', subTitle: 'Ready-made code', bgColor: appCat1, items: [cat1Item1, cat1Item2, cat1Item3, cat1Item4, cat1Item5, cat1Item6, cat1Item7, cat1Item8, cat1Item9, cat1tem10]));
-
-  var cat2Item1 = ContentModel(title: 'Custom Buttons', bgColor: appCat4, pageName: ButtonScreen());
-  var cat2Item2 = ContentModel(title: 'Pickers', bgColor: appCat6, pageName: PickerScreen());
-  var cat2Item3 = ContentModel(title: 'Slider', bgColor: appCat6, pageName: FluidSliderScreen());
-  var cat2Item4 = ContentModel(title: 'ShaderMask', bgColor: appCat6, pageName: ShaderMaskScreen());
+  var cat2Item3 = ContentModel(
+      title: 'Slider', bgColor: appCat6, pageName: FluidSliderScreen());
+  var cat2Item4 = ContentModel(
+      title: 'ShaderMask', bgColor: appCat6, pageName: ShaderMaskScreen());
   var cat2Item5 = ContentModel(title: 'Marquee', pageName: MHomePage());
   var cat2Item6 = ContentModel(title: 'Like Button', pageName: LBHomePage());
-  list.add(ContentModel(title: 'UI Interactions', subTitle: 'List of Widgets', bgColor: appCat2, items: [
-    cat2Item1,
-    cat2Item2,
-    cat2Item3,
-    cat2Item4,
-    cat2Item5,
-    cat2Item6,
-  ]));
+  list.add(ContentModel(
+      title: 'UI Interactions',
+      subTitle: 'List of Widgets',
+      bgColor: appCat2,
+      items: [
+        cat2Item3,
+        cat2Item4,
+        cat2Item5,
+        cat2Item6,
+      ]));
 
-  var cat3Item1 = ContentModel(title: 'Liquid Pull To Refresh', pageName: LiquidPullToRefreshScreen());
-  var cat3Item2 = ContentModel(title: 'Folding Cell in ListView', pageName: FoldingCellScreen());
+  var cat3Item1 = ContentModel(
+      title: 'Liquid Pull To Refresh', pageName: LiquidPullToRefreshScreen());
+  var cat3Item2 = ContentModel(
+      title: 'Folding Cell in ListView', pageName: FoldingCellScreen());
   var cat3Item3 = ContentModel(title: 'Shimmer', pageName: SHomePage());
-  var cat3Item4 = ContentModel(title: 'Sticky Header', pageName: StickyHeaderHomePage());
+  var cat3Item4 =
+      ContentModel(title: 'Sticky Header', pageName: StickyHeaderHomePage());
   list.add(
     ContentModel(
       title: 'Lists',
@@ -81,15 +84,32 @@ Future<List<ContentModel>> getContents(context) async {
     ),
   );
 
-  var cat5Item1 = ContentModel(title: 'Google Maps with Clusttering', pageName: GoogleMapScreen());
-  var cat5Item2 = ContentModel(title: 'Google Maps Sliping Panel', pageName: SlidingPanelScreen());
-  list.add(ContentModel(title: 'Maps', subTitle: 'Maps Integrations', bgColor: appCat4, icon: 'ic_map_pin_line.png', items: [cat5Item1, cat5Item2]));
+  var cat5Item1 = ContentModel(
+      title: 'Google Maps with Clusttering', pageName: GoogleMapScreen());
+  var cat5Item2 = ContentModel(
+      title: 'Google Maps Sliping Panel', pageName: SlidingPanelScreen());
+  list.add(ContentModel(
+      title: 'Maps',
+      subTitle: 'Maps Integrations',
+      bgColor: appCat4,
+      icon: 'ic_map_pin_line.png',
+      items: [cat5Item1, cat5Item2]));
 
-  var cat6Item1 = ContentModel(title: 'RazorPay Payment', pageName: RazorPayScreen());
-  list.add(ContentModel(title: 'Payment Gateways', subTitle: 'Payment Gateways Integrations', bgColor: appCat5, icon: 'ic_payment.png', items: [cat6Item1]));
+  var cat6Item1 =
+      ContentModel(title: 'RazorPay Payment', pageName: RazorPayScreen());
+  list.add(ContentModel(
+      title: 'Payment Gateways',
+      subTitle: 'Payment Gateways Integrations',
+      bgColor: appCat5,
+      icon: 'ic_payment.png',
+      items: [cat6Item1]));
 
-  var cat7Item1 = ContentModel(title: 'GET example with FutureBuilder', pageName: GETMethodExampleScreen(), tag: 'New');
-  var cat7Item2 = ContentModel(title: 'POST example', pageName: PostMethodExampleScreen(), tag: 'New');
+  var cat7Item1 = ContentModel(
+      title: 'GET example with FutureBuilder',
+      pageName: GETMethodExampleScreen(),
+      tag: 'New');
+  var cat7Item2 = ContentModel(
+      title: 'POST example', pageName: PostMethodExampleScreen(), tag: 'New');
   list.add(
     ContentModel(
       title: 'REST API Integrations',
@@ -105,12 +125,30 @@ Future<List<ContentModel>> getContents(context) async {
 
 List<ExpenseData> getChartData() {
   List<ExpenseData> list = [];
-  list.add(ExpenseData(expanseCategory: 'Food', father: 55, mother: 48, daughter: 45, son: 10));
-  list.add(ExpenseData(expanseCategory: 'Transport', father: 33, mother: 45, daughter: 54, son: 28));
-  list.add(ExpenseData(expanseCategory: 'Medical', father: 40, mother: 23, daughter: 20, son: 34));
-  list.add(ExpenseData(expanseCategory: 'Clothes', father: 75, mother: 54, daughter: 23, son: 54));
-  list.add(ExpenseData(expanseCategory: 'Books', father: 12, mother: 18, daughter: 43, son: 55));
-  list.add(ExpenseData(expanseCategory: 'Other', father: 23, mother: 54, daughter: 33, son: 23));
+  list.add(ExpenseData(
+      expanseCategory: 'Food', father: 55, mother: 48, daughter: 45, son: 10));
+  list.add(ExpenseData(
+      expanseCategory: 'Transport',
+      father: 33,
+      mother: 45,
+      daughter: 54,
+      son: 28));
+  list.add(ExpenseData(
+      expanseCategory: 'Medical',
+      father: 40,
+      mother: 23,
+      daughter: 20,
+      son: 34));
+  list.add(ExpenseData(
+      expanseCategory: 'Clothes',
+      father: 75,
+      mother: 54,
+      daughter: 23,
+      son: 54));
+  list.add(ExpenseData(
+      expanseCategory: 'Books', father: 12, mother: 18, daughter: 43, son: 55));
+  list.add(ExpenseData(
+      expanseCategory: 'Other', father: 23, mother: 54, daughter: 33, son: 23));
 
   return list;
 }

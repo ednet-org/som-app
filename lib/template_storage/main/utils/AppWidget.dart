@@ -259,10 +259,6 @@ BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
 }
 
 double dynamicWidth(BuildContext context) {
-  print("context.width()");
-  print(context.width());
-  print("appStore.applicationWidth");
-  print(appStore.applicationWidth);
   return isMobile ? context.width() : appStore.applicationWidth;
 }
 
@@ -337,8 +333,6 @@ class ContainerX extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        print('constraints.device constraints.device constraints.device');
-        print(constraints.device);
         if (constraints.maxWidth < 500) {
           return mobile ?? SizedBox();
         } else {

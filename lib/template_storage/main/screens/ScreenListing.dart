@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/main.dart';
 
 import 'ThemeList.dart';
 
@@ -27,33 +26,16 @@ class ScreenListingState extends State<ScreenListing> {
   List<ThemeConfiguration> list = [];
   List<Color> colors = [appCat1, appCat2, appCat3];
 
-  BannerAd? myBanner;
-
   @override
   void initState() {
     super.initState();
     if (widget.proTheme!.sub_kits != null) {
       list.addAll(widget.proTheme!.sub_kits!);
     }
-
-    if (isMobile) {
-      myBanner = BannerAd(
-        adUnitId: getBannerAdUnitId()!,
-        size: AdSize.banner,
-        request: AdRequest(),
-        listener: AdListener(onAdLoaded: (ad) {
-          setState(() {});
-        }),
-      );
-
-      myBanner!.load();
-    }
   }
 
   @override
   void dispose() {
-    myBanner?.dispose();
-
     super.dispose();
   }
 
@@ -98,16 +80,6 @@ class ScreenListingState extends State<ScreenListing> {
                 ],
               ),
             ),
-            if (myBanner != null)
-              Positioned(
-                child: Container(
-                  child: AdWidget(ad: myBanner!),
-                  color: Colors.white,
-                  width: context.width(),
-                  height: myBanner!.size.height.toDouble(),
-                ),
-                bottom: 0,
-              )
           ],
         ),
       ),

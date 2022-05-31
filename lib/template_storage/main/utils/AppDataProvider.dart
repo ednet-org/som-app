@@ -1,4 +1,3 @@
-import 'package:som/template_storage/integrations/screens/MonthlySale1Screen.dart';
 import 'package:som/template_storage/integrations/screens/Shimmer/SHomePage.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
 import 'package:som/template_storage/widgets/animationAndMotionWidgets/AMAnimatedBuilderScreen.dart';
@@ -1018,13 +1017,6 @@ ThemeConfiguration getIntegrations() {
   List<ThemeConfiguration> list = [];
 
   list.add(ThemeConfiguration(
-      name: 'Chart',
-      title_name: 'Integrations',
-      show_cover: false,
-      sub_kits: getChartList(),
-      darkThemeSupported: true,
-      type: 'New'));
-  list.add(ThemeConfiguration(
       name: 'Integration',
       title_name: 'Integrations',
       type: '',
@@ -1136,15 +1128,4 @@ ThemeConfiguration getWebApps() {
       sub_kits: list);
 }
 
-List<ThemeConfiguration> getChartList() {
-  List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Monthly Sale Chart1',
-      type: 'New',
-      show_cover: false,
-      widget: MonthlySale1Screen(),
-      darkThemeSupported: true));
-
-  return list;
-}
 //endregion
