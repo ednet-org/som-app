@@ -1,0 +1,4 @@
+enum PaymentInterval {
+  Monthly,
+  Yearly,
+}

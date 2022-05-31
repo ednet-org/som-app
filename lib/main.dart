@@ -1,32 +1,29 @@
 //region imports
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/cloudStorage/model/CSDataModel.dart';
-import 'package:som/main/screens/AppSplashScreen.dart';
-import 'package:som/main/store/AppStore.dart';
-import 'package:som/main/utils/AppTheme.dart';
+import 'package:provider/provider.dart';
+import 'package:som/domain/application/customer-store.dart';
 import 'package:som/routes.dart';
+import 'package:som/template_storage/main/store/AppStore.dart';
+import 'package:som/template_storage/main/utils/AppTheme.dart';
+import 'package:som/ui/pages/splash_page.dart';
 
-import 'main/utils/AppConstant.dart';
-import 'muvi/utils/flix_app_localizations.dart';
+import 'template_storage/main/utils/AppConstant.dart';
+import 'template_storage/main/utils/intl/som_localizations.dart';
 //endregion
 
 /// This variable is used to get dynamic colors when theme mode is changed
-AppStore appStore = AppStore();
-
-List<CSDataModel> getCloudboxList = getCloudboxData();
-List<CSDrawerModel> getCSDrawerList = getCSDrawer();
-int currentIndex = 0;
+var appStore = AppStore();
 
 void main() async {
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
+  print('appStore.isAuthenticated:');
+  print(appStore.isAuthenticated);
 
+  // nb_utils - Must be initialize before using shared preference
   await initialize();
 
   // Lets start with default dark mode till we solve logo transparency
@@ -34,10 +31,9 @@ void main() async {
   // appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 
   if (isMobile) {
-    await Firebase.initializeApp();
-    MobileAds.instance.initialize();
-
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    // await Firebase.initializeApp();
+    //
+    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
 
   runApp(MyApp());
@@ -47,18 +43,30 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [MuviAppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
-        localeResolutionCallback: (locale, supportedLocales) => Locale(appStore.selectedLanguage),
-        locale: Locale(appStore.selectedLanguage),
-        supportedLocales: [Locale('en', 'de')],
-        routes: routes(),
-        title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-        home: AppSplashScreen(),
-        theme: !appStore.isDarkModeOn ? AppThemeData.lightTheme : AppThemeData.darkTheme,
-        builder: scrollBehaviour(),
+    return MultiProvider(
+      providers: [
+        Provider<CustomerStore>(create: (_) => CustomerStore()),
+        Provider<AppStore>(create: (_) => appStore),
+      ],
+      child: Observer(
+        builder: (_) => MaterialApp(
+          localizationsDelegates: const [
+            SomLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          localeResolutionCallback: (locale, supportedLocales) =>
+              Locale(appStore.selectedLanguage),
+          locale: Locale(appStore.selectedLanguage),
+          supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
+          routes: routes(),
+          title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+          home: SplashPage(isAuthenticated: appStore.isAuthenticated),
+          theme: !appStore.isDarkModeOn
+              ? AppThemeData.lightTheme
+              : AppThemeData.darkTheme,
+          builder: scrollBehaviour(),
+        ),
       ),
     );
   }
