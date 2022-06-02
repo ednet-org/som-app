@@ -1,9 +1,11 @@
 //region imports
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:som/domain/infrastructure/repository/api/som_service.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
@@ -18,6 +20,27 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 var appStore = Application();
 
 void main() async {
+  final chopper = ChopperClient(
+    baseUrl: "https://som-userservice.herokuapp.com",
+    services: [
+      // Create and pass an instance of the generated service to the client
+      SomService.create()
+    ],
+  );
+
+  final subscriptionService = chopper.getService<SomService>();
+  final response = await subscriptionService.getSubscriptions();
+  if (response.isSuccessful) {
+    // Successful request
+    final body = response.body;
+    print(body);
+  } else {
+    // Error code received from server
+    final code = response.statusCode;
+    final error = response.error;
+    print(code);
+    print(error);
+  }
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
 

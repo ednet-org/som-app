@@ -42,3 +42,52 @@ const appColorPrimaryDarkLight = Color(0xFFF9FAFF);
 const iconColorPrimaryDark = Color(0xFF212121);
 const iconColorSecondaryDark = Color(0xFFA8ABAD);
 const appShadowColorDark = Color(0x1A3E3942);
+
+// curl -X 'POST' \
+//   'https://som-userservice.herokuapp.com/Companies/register' \
+//   -H 'accept: */*' \
+//   -H 'Content-Type: application/json' \
+//   -d '{
+//   "company": {
+//     "name": "string",
+//     "address": {
+//       "country": "string",
+//       "city": "string",
+//       "street": "string",
+//       "number": "string",
+//       "zip": "string"
+//     },
+//     "uidNr": "string",
+//     "registrationNr": "string",
+//     "companySize": 0,
+//     "type": 0,
+//     "websiteUrl": "string",
+//     "providerData": {
+//       "bankDetails": {
+//         "iban": "string",
+//         "bic": "string",
+//         "accountOwner": "string"
+//       },
+//       "branchIds": [
+//         "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//       ],
+//       "paymentInterval": 0,
+//       "subscriptionPlanId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//     }
+//   },
+//   "users": [
+//     {
+//       "email": "string",
+//       "firstName": "string",
+//       "lastName": "string",
+//       "salutation": "string",
+//       "roles": [
+//         0
+//       ],
+//       "telephoneNr": "string",
+//       "title": "string",
+//       "companyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//     }
+//   ]
+// }'
