@@ -340,55 +340,22 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             Text('Admin user'),
             Align(
               alignment: Alignment.bottomLeft,
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                alignment: WrapAlignment.start,
-                direction: Axis.horizontal,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 350,
-                    child: SomTextInput(
-                      label: 'Admin user email',
-                      icon: Icons.email,
-                      hint: 'Enter email of SOM administrator account',
-                      value: request.company.admin.email,
-                      onChanged: request.company.admin.setEmail,
-                    ),
-                  ),
-                  30.width,
-                  request.company.canCreateMoreUsers
-                      ? Container(
-                          width: 60,
-                          child: ElevatedButton(
-                              onPressed: () =>
-                                  request.company.increaseNumberOfUsers(),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child:
-                                    Text('+', style: boldTextStyle(size: 24)),
-                              )),
-                        )
-                      : const SizedBox(height: 1),
-                ],
-              ),
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: request.company.numberOfUsers,
-                itemBuilder: (BuildContext context, int index) {
-                  return Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.start,
                     alignment: WrapAlignment.start,
                     direction: Axis.horizontal,
                     children: [
                       Container(
                         width: 350,
                         child: SomTextInput(
-                          label: 'User ${index + 1}',
+                          label: 'Admin user email',
                           icon: Icons.email,
-                          hint: 'Enter employee email',
-                          value: request.company.users[index].email,
-                          onChanged: request.company.users[index].setEmail,
+                          hint: 'Enter email of SOM administrator account',
+                          value: request.company.admin.email,
+                          onChanged: request.company.admin.setEmail,
                         ),
                       ),
                       30.width,
@@ -397,15 +364,159 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                               width: 60,
                               child: ElevatedButton(
                                   onPressed: () =>
-                                      request.company.removeUser(index),
+                                      request.company.increaseNumberOfUsers(),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('-',
-                                        style: boldTextStyle(
-                                            size: 24, color: Colors.red)),
+                                    child: Text('+',
+                                        style: boldTextStyle(size: 24)),
                                   )),
                             )
                           : const SizedBox(height: 1),
+                    ],
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 350,
+                    child: SomTextInput(
+                      label: 'Salutation',
+                      value: request.company.admin.salutation,
+                      onChanged: request.company.admin.setSalutation,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 350,
+                    child: SomTextInput(
+                      label: 'Title',
+                      value: request.company.admin.title,
+                      onChanged: request.company.admin.setTitle,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 350,
+                    child: SomTextInput(
+                      label: 'First name',
+                      value: request.company.admin.firstName,
+                      onChanged: request.company.admin.setFirstName,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 350,
+                    child: SomTextInput(
+                      label: 'Last name',
+                      value: request.company.admin.lastName,
+                      onChanged: request.company.admin.setLastName,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: 350,
+                    child: SomTextInput(
+                      label: 'Phone number',
+                      value: request.company.admin.phone,
+                      onChanged: request.company.admin.setPhone,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: request.company.numberOfUsers,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(
+                        color: appColorAccent,
+                      ),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        alignment: WrapAlignment.start,
+                        direction: Axis.horizontal,
+                        children: [
+                          Container(
+                            width: 350,
+                            child: SomTextInput(
+                              label: 'User ${index + 1}',
+                              icon: Icons.email,
+                              hint: 'Enter employee email',
+                              value: request.company.users[index].email,
+                              onChanged: request.company.users[index].setEmail,
+                            ),
+                          ),
+                          30.width,
+                          request.company.canCreateMoreUsers
+                              ? Container(
+                                  width: 60,
+                                  child: ElevatedButton(
+                                      onPressed: () =>
+                                          request.company.removeUser(index),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('-',
+                                            style: boldTextStyle(
+                                                size: 24, color: Colors.red)),
+                                      )),
+                                )
+                              : const SizedBox(height: 1),
+                        ],
+                      ),
+                      Container(
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'First name',
+                          value: request.company.users[index].firstName,
+                          onChanged: request.company.users[index].setFirstName,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'Salutation',
+                          value: request.company.users[index].salutation,
+                          onChanged: request.company.users[index].setSalutation,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'Title',
+                          value: request.company.users[index].title,
+                          onChanged: request.company.users[index].setTitle,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'First name',
+                          value: request.company.users[index].firstName,
+                          onChanged: request.company.users[index].setFirstName,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'Last name',
+                          value: request.company.users[index].lastName,
+                          onChanged: request.company.users[index].setLastName,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: 350,
+                        child: SomTextInput(
+                          label: 'Phone number',
+                          value: request.company.users[index].phone,
+                          onChanged: request.company.users[index].setPhone,
+                        ),
+                      ),
                     ],
                   );
                 }),
