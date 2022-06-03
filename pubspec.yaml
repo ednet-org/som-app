@@ -9,6 +9,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  annotations:
+    path:
+      ./lib/domain/domain_generator/annotations/
   chopper: ^4.0.5
   chopper_built_value: ^1.0.0
   japx: ^2.0.4
@@ -89,7 +92,9 @@ dev_dependencies:
   build_runner: ^2.0.4
   chopper_generator: ^4.0.5
   json_serializable: ^6.2.0
-  #flutter packages pub run build_runner build --delete-conflicting-outputs
+  generators:
+    path: ./lib/domain/domain_generator/generators/
+    #flutter packages pub run build_runner build --delete-conflicting-outputs
 
 flutter:
 
