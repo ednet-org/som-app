@@ -26,4 +26,4 @@ class Subscription extends ApiEntity {
   static const fromJsonFactory = _$SubscriptionFromJson;
 }
 
-https://medium.com/teamkraken/converting-json-api-response-to-dart-objects-with-chopper-and-jsonserializable-8ec98b762ac1
+// https://medium.com/teamkraken/converting-json-api-response-to-dart-objects-with-chopper-and-jsonserializable-8ec98b762ac1

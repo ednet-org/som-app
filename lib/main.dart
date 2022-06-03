@@ -5,7 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/infrastructure/repository/api/som_service.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/som_service.dart';
+import 'package:som/domain/infrastructure/utils/converters/json_serializable_converter.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
@@ -26,6 +27,7 @@ void main() async {
       // Create and pass an instance of the generated service to the client
       SomService.create()
     ],
+    converter: JsonSerializableConverter(),
   );
 
   final subscriptionService = chopper.getService<SomService>();
