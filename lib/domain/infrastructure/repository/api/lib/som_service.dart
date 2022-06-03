@@ -1,8 +1,7 @@
 import 'package:chopper/chopper.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
 
-import '../models/subscription.dart';
-
-part '../som_service.chopper.dart';
+part 'som_service.chopper.dart';
 
 @ChopperApi(baseUrl: "/Subscriptions")
 abstract class SomService extends ChopperService {

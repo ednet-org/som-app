@@ -1,5 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:chopper_json_serializable/models/article/article.dart';
+import 'package:som/domain/infrastructure/repository/api/import/models/article/article.dart';
 
 part 'article_service.chopper.dart';
 

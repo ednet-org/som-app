@@ -1,8 +1,9 @@
 import "dart:async";
-import 'package:chopper_json_serializable/core/exceptions.dart';
+
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/converters/exceptions.dart';
 
 class MockHttpClientBuilder {
   MockClient generateClient() {

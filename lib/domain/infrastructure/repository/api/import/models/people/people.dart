@@ -1,5 +1,5 @@
-import 'package:chopper_json_serializable/models/entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:som/domain/infrastructure/repository/api/import/models/entity.dart';
 
 part 'people.g.dart';
 

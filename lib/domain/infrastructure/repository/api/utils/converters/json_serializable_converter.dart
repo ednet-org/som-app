@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:japx/japx.dart';
-import 'package:som/domain/infrastructure/utils/converters/json_type_parser.dart';
-import 'package:som/domain/infrastructure/utils/converters/response_error.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/converters/json_type_parser.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/converters/response_error.dart';
 
 class JsonSerializableConverter extends JsonConverter {
   @override

@@ -1,5 +1,5 @@
-import 'package:som/domain/infrastructure/repository/api/models/subscription.dart';
-import 'package:som/domain/infrastructure/utils/converters/exceptions.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/converters/exceptions.dart';
 
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
 

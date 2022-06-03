@@ -1,6 +1,6 @@
-import 'package:chopper_json_serializable/core/exceptions.dart';
-import 'package:chopper_json_serializable/models/article/article.dart';
-import 'package:chopper_json_serializable/models/people/people.dart';
+import 'package:som/domain/infrastructure/repository/api/import/models/article/article.dart';
+import 'package:som/domain/infrastructure/repository/api/import/models/people/people.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/converters/exceptions.dart';
 
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
 
@@ -28,6 +28,8 @@ class JsonTypeParser {
     return jsonFactory(values);
   }
 
-  static List<T> _decodeList<T>(Iterable values) =>
-      values.where((dynamic v) => v != null).map((dynamic v) => decode<T>(v) as T).toList();
+  static List<T> _decodeList<T>(Iterable values) => values
+      .where((dynamic v) => v != null)
+      .map((dynamic v) => decode<T>(v) as T)
+      .toList();
 }
