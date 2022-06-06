@@ -72,13 +72,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<Application>(create: (_) => appStore),
-        Provider<Som>(create: (_) => Som()),
         Provider<ApiSubscriptionRepository>(
           create: (_) => ApiSubscriptionRepository(subscriptionService),
         ),
-        ProxyProvider<ApiSubscriptionRepository, RegistrationRequest>(
+        ProxyProvider<ApiSubscriptionRepository, Som>(
             update: (_, apiSubscriptionRepository, __) =>
-                RegistrationRequest(apiSubscriptionRepository, Som())),
+                Som(apiSubscriptionRepository)),
+        ProxyProvider<Som, RegistrationRequest>(
+            update: (_, som, __) => RegistrationRequest(som)),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

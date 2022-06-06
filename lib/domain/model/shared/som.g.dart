@@ -40,6 +40,23 @@ mixin _$Som on _Som, Store {
     });
   }
 
+  late final _$areSubscriptionsLoadedAtom =
+      Atom(name: '_Som.areSubscriptionsLoaded', context: context);
+
+  @override
+  bool get areSubscriptionsLoaded {
+    _$areSubscriptionsLoadedAtom.reportRead();
+    return super.areSubscriptionsLoaded;
+  }
+
+  @override
+  set areSubscriptionsLoaded(bool value) {
+    _$areSubscriptionsLoadedAtom
+        .reportWrite(value, super.areSubscriptionsLoaded, () {
+      super.areSubscriptionsLoaded = value;
+    });
+  }
+
   late final _$requestedBranchesAtom =
       Atom(name: '_Som.requestedBranches', context: context);
 
@@ -54,6 +71,32 @@ mixin _$Som on _Som, Store {
     _$requestedBranchesAtom.reportWrite(value, super.requestedBranches, () {
       super.requestedBranches = value;
     });
+  }
+
+  late final _$availableSubscriptionsAtom =
+      Atom(name: '_Som.availableSubscriptions', context: context);
+
+  @override
+  FutureStore<Subscription> get availableSubscriptions {
+    _$availableSubscriptionsAtom.reportRead();
+    return super.availableSubscriptions;
+  }
+
+  @override
+  set availableSubscriptions(FutureStore<Subscription> value) {
+    _$availableSubscriptionsAtom
+        .reportWrite(value, super.availableSubscriptions, () {
+      super.availableSubscriptions = value;
+    });
+  }
+
+  late final _$populateAvailableSubscriptionsAsyncAction =
+      AsyncAction('_Som.populateAvailableSubscriptions', context: context);
+
+  @override
+  Future<dynamic> populateAvailableSubscriptions() {
+    return _$populateAvailableSubscriptionsAsyncAction
+        .run(() => super.populateAvailableSubscriptions());
   }
 
   late final _$_SomActionController =
@@ -86,7 +129,9 @@ mixin _$Som on _Som, Store {
     return '''
 nesto: ${nesto},
 availableBranches: ${availableBranches},
-requestedBranches: ${requestedBranches}
+areSubscriptionsLoaded: ${areSubscriptionsLoaded},
+requestedBranches: ${requestedBranches},
+availableSubscriptions: ${availableSubscriptions}
     ''';
   }
 }
