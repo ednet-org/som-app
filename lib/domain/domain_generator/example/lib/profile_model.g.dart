@@ -9,14 +9,21 @@ part of 'profile_model.dart';
 class ProfileModelGen extends ProfileModel {
   Map<String, dynamic> variables = {};
   ProfileModelGen() {
-    variables['name'] = super._name;
+    variables['firstName'] = super._firstName;
+    variables['lastName'] = super._lastName;
     variables['age'] = super._age;
     variables['codes'] = super._codes;
   }
-  String get name => variables['name'];
-  set name(String name) {
-    super._name = name;
-    variables['name'] = name;
+  String get firstName => variables['firstName'];
+  set firstName(String firstName) {
+    super._firstName = firstName;
+    variables['firstName'] = firstName;
+  }
+
+  String get lastName => variables['lastName'];
+  set lastName(String lastName) {
+    super._lastName = lastName;
+    variables['lastName'] = lastName;
   }
 
   int get age => variables['age'];
