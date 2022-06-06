@@ -8,11 +8,11 @@ part of 'subscription.dart';
 
 Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
       json['id'] as String,
-      type: json['type'] as String,
+      type: json['type'] as num,
       isActive: json['isActive'] as bool,
       priceInSubunit: json['priceInSubunit'] as num,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      rules: json['rules'] as String,
+      rules: json['rules'] as String?,
     );
 
 Map<String, dynamic> _$SubscriptionToJson(Subscription instance) =>

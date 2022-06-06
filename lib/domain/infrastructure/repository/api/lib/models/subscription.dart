@@ -6,11 +6,11 @@ part 'subscription.g.dart';
 
 @JsonSerializable()
 class Subscription extends ApiEntity {
-  final String type;
+  final num type;
   final bool isActive;
 
   final num priceInSubunit;
-  final String rules;
+  final String? rules;
   final DateTime createdAt;
 
   Subscription(

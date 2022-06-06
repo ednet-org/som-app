@@ -3,7 +3,7 @@ import 'package:japx/japx.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_type_parser.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/response_error.dart';
 
-class JsonSerializableConverter extends JsonConverter {
+class JsonSerializableConvertersss extends JsonConverter {
   @override
   Response<ResultType> convertResponse<ResultType, Item>(Response response) {
     final jsonRes = super.convertResponse<dynamic, dynamic>(response);

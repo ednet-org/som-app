@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:japx/japx.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/response_error.dart';
 
 import 'json_type_parser.dart';
@@ -12,9 +11,8 @@ class JsonSerializableConverter extends JsonConverter {
         (jsonRes.body is String && (jsonRes.body as String).isEmpty)) {
       return jsonRes.copyWith(body: null);
     }
-    final dynamic body =
-        Japx.decode(jsonRes.body["data"]! as Map<String, dynamic>);
-    final dynamic decodedItem = JsonTypeParser.decode<Item>(body);
+
+    final dynamic decodedItem = JsonTypeParser.decode<Item>(jsonRes.body);
     return jsonRes.copyWith<ResultType>(body: decodedItem as ResultType);
   }
 
