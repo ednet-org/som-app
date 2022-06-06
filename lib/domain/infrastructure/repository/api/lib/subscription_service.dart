@@ -1,12 +1,13 @@
 import 'package:chopper/chopper.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
 
-part 'som_service.chopper.dart';
+part 'subscription_service.chopper.dart';
 
 @ChopperApi(baseUrl: "/Subscriptions")
-abstract class SomService extends ChopperService {
+abstract class SubscriptionService extends ChopperService {
   // A helper method that helps instantiating the service. You can omit this method and use the generated class directly instead.
-  static SomService create([ChopperClient? client]) => _$SomService(client);
+  static SubscriptionService create([ChopperClient? client]) =>
+      _$SubscriptionService(client);
 
   @Get()
   Future<Response<List<Subscription>>> getSubscriptions();

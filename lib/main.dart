@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/som_service.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/routes.dart';
@@ -25,12 +25,12 @@ void main() async {
     baseUrl: "https://som-userservice.herokuapp.com",
     services: [
       // Create and pass an instance of the generated service to the client
-      SomService.create()
+      SubscriptionService.create()
     ],
     converter: JsonSerializableConverter(),
   );
 
-  final subscriptionService = chopper.getService<SomService>();
+  final subscriptionService = chopper.getService<SubscriptionService>();
   final response = await subscriptionService.getSubscriptions();
   if (response.isSuccessful) {
     // Successful request
