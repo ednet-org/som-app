@@ -5,9 +5,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
+import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
@@ -21,28 +23,18 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 var appStore = Application();
 
 void main() async {
-  final chopper = ChopperClient(
-    baseUrl: "https://som-userservice.herokuapp.com",
-    services: [
-      // Create and pass an instance of the generated service to the client
-      SubscriptionService.create()
-    ],
-    converter: JsonSerializableConverter(),
-  );
-
-  final subscriptionService = chopper.getService<SubscriptionService>();
-  final response = await subscriptionService.getSubscriptions();
-  if (response.isSuccessful) {
-    // Successful request
-    final body = response.body;
-    print(body);
-  } else {
-    // Error code received from server
-    final code = response.statusCode;
-    final error = response.error;
-    print(code);
-    print(error);
-  }
+  // final response = await subscriptionService.getSubscriptions();
+  // if (response.isSuccessful) {
+  //   // Successful request
+  //   final body = response.body;
+  //   print(body);
+  // } else {
+  //   // Error code received from server
+  //   final code = response.statusCode;
+  //   final error = response.error;
+  //   print(code);
+  //   print(error);
+  // }
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -66,10 +58,27 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    /// This variable is used to get dynamic colors when theme mode is changed
+    final chopper = ChopperClient(
+      baseUrl: "https://som-userservice.herokuapp.com",
+      services: [
+        // Create and pass an instance of the generated service to the client
+        SubscriptionService.create()
+      ],
+      converter: JsonSerializableConverter(),
+    );
+    final subscriptionService = chopper.getService<SubscriptionService>();
+
     return MultiProvider(
       providers: [
         Provider<Application>(create: (_) => appStore),
-        Provider<RegistrationRequest>(create: (_) => RegistrationRequest()),
+        Provider<Som>(create: (_) => Som()),
+        Provider<ApiSubscriptionRepository>(
+          create: (_) => ApiSubscriptionRepository(subscriptionService),
+        ),
+        ProxyProvider<ApiSubscriptionRepository, RegistrationRequest>(
+            update: (_, apiSubscriptionRepository, __) =>
+                RegistrationRequest(apiSubscriptionRepository, Som())),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

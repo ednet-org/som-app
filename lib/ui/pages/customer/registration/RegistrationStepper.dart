@@ -8,7 +8,6 @@ import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/ActionButton.dart';
-import 'package:som/ui/components/forms/branches.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
 import 'package:som/ui/components/forms/som_tags.dart';
@@ -225,13 +224,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             ],
           )),
     ];
-
+    print(request.som.nesto);
     final providerSteps = [
       Step(
         title: Text('Company branches', style: primaryTextStyle()),
         isActive: currStep == 2,
         state: StepState.indexed,
-        content: SomTags(tags: branchTags.toList()),
+        content: SomTags(tags: request.som.availableBranches),
       ),
       Step(
         title: Text('Subscription model', style: primaryTextStyle()),

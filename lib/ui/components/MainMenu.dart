@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
-import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
+import 'package:som/ui/components/utils/DTDataProvider.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 
 import '../../../../main.dart';
 
@@ -43,8 +42,6 @@ class MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ClipPath(
-        clipper: OvalRightBorderClipper(),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Drawer(
           child: Container(
             color: appStore.scaffoldBackground,
