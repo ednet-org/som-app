@@ -9,6 +9,6 @@ class ChopperClientBuilder {
         client: httpClient,
         baseUrl: 'myBaseUrl',
         services: services,
-        converter: JsonSerializableConverter(),
+        // converter: JsonSerializableConverter(),
       );
 }
