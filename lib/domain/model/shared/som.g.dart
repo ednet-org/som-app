@@ -77,13 +77,13 @@ mixin _$Som on _Som, Store {
       Atom(name: '_Som.availableSubscriptions', context: context);
 
   @override
-  FutureStore<Subscription> get availableSubscriptions {
+  FutureStore<List<Subscription>> get availableSubscriptions {
     _$availableSubscriptionsAtom.reportRead();
     return super.availableSubscriptions;
   }
 
   @override
-  set availableSubscriptions(FutureStore<Subscription> value) {
+  set availableSubscriptions(FutureStore<List<Subscription>> value) {
     _$availableSubscriptionsAtom
         .reportWrite(value, super.availableSubscriptions, () {
       super.availableSubscriptions = value;

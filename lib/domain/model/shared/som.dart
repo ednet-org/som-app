@@ -36,7 +36,7 @@ abstract class _Som with Store {
   }
 
   @observable
-  FutureStore<Subscription> availableSubscriptions = FutureStore();
+  FutureStore<List<Subscription>> availableSubscriptions = FutureStore();
 
   @action
   Future populateAvailableSubscriptions() async {
@@ -51,6 +51,7 @@ abstract class _Som with Store {
           ObservableFuture(apiSubscriptionRepository.getAll());
 
       availableSubscriptions.data = await availableSubscriptions.future;
+      print(availableSubscriptions.data);
     } catch (e) {
       availableSubscriptions.errorMessage = e.toString();
     }

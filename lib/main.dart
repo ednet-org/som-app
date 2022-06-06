@@ -77,7 +77,8 @@ class MyApp extends StatelessWidget {
         ),
         ProxyProvider<ApiSubscriptionRepository, Som>(
             update: (_, apiSubscriptionRepository, __) =>
-                Som(apiSubscriptionRepository)),
+                Som(apiSubscriptionRepository)
+                  ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
             update: (_, som, __) => RegistrationRequest(som)),
       ],
