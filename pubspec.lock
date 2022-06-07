@@ -316,12 +316,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
-  ednet_design_system:
+  ednet_component_library:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "407bb3a67cb9b72d6ca5124d76e7e73974e9872a"
+      resolved-ref: a282b5fbca0783b62fa0e88b7cf0080c0cc71296
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.0.1"
@@ -1464,5 +1464,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.0 <3.0.0"
+  dart: ">=2.17.1 <3.0.0"
   flutter: ">=3.0.0"

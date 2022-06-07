@@ -21,10 +21,12 @@ class AppThemeData {
       color: appLayout_background,
       iconTheme: IconThemeData(color: textPrimaryColor),
       brightness: Brightness.light,
-      systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
     ),
     textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
-    colorScheme: ColorScheme.light(primary: appColorPrimary, primaryVariant: appColorPrimary),
+    colorScheme: ColorScheme.light(
+        primary: appColorPrimary, primaryVariant: appColorPrimary),
     cardTheme: CardTheme(color: Colors.white),
     iconTheme: IconThemeData(color: textPrimaryColor),
     bottomSheetTheme: BottomSheetThemeData(backgroundColor: whiteColor),
@@ -35,7 +37,8 @@ class AppThemeData {
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   ).copyWith(
-    pageTransitionsTheme: PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
+    pageTransitionsTheme:
+        PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: ZoomPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       TargetPlatform.linux: ZoomPageTransitionsBuilder(),
@@ -51,7 +54,8 @@ class AppThemeData {
       color: appBackgroundColorDark,
       iconTheme: IconThemeData(color: blackColor),
       brightness: Brightness.dark,
-      systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
     ),
     primaryColor: color_primary_black,
     accentColor: whiteColor,
@@ -60,9 +64,15 @@ class AppThemeData {
     textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
     hoverColor: Colors.black12,
     fontFamily: GoogleFonts.nunito().fontFamily,
-    bottomSheetTheme: BottomSheetThemeData(backgroundColor: appBackgroundColorDark),
-    primaryTextTheme: TextTheme(headline6: primaryTextStyle(color: Colors.white), overline: primaryTextStyle(color: Colors.white)),
-    colorScheme: ColorScheme.dark(primary: appBackgroundColorDark, onPrimary: cardBackgroundBlackDark, primaryVariant: color_primary_black),
+    bottomSheetTheme:
+        BottomSheetThemeData(backgroundColor: appBackgroundColorDark),
+    primaryTextTheme: TextTheme(
+        headline6: primaryTextStyle(color: Colors.white),
+        overline: primaryTextStyle(color: Colors.white)),
+    colorScheme: ColorScheme.dark(
+        primary: appBackgroundColorDark,
+        onPrimary: cardBackgroundBlackDark,
+        primaryVariant: color_primary_black),
     cardTheme: CardTheme(color: cardBackgroundBlackDark),
     iconTheme: IconThemeData(color: whiteColor),
     textTheme: TextTheme(
@@ -72,7 +82,8 @@ class AppThemeData {
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   ).copyWith(
-    pageTransitionsTheme: PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
+    pageTransitionsTheme:
+        PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: ZoomPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       TargetPlatform.linux: ZoomPageTransitionsBuilder(),

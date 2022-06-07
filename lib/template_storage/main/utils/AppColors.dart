@@ -1,3 +1,4 @@
+import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/material.dart';
 
 // Light Theme Colors
@@ -35,7 +36,7 @@ const appSecondaryBackgroundColor = Color(0xFF131d25);
 const appDividerColor = Color(0xFFDADADA);
 
 // Dark Theme Colors
-const appBackgroundColorDark = Color(0xFF131d25);
+const appBackgroundColorDark = AppColors.m3SysLightPrimaryContainer;
 const cardBackgroundBlackDark = Color(0xFF1D2939);
 const color_primary_black = Color(0xFF131d25);
 const appColorPrimaryDarkLight = Color(0xFFF9FAFF);
