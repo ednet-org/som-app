@@ -32,64 +32,6 @@ import 'package:som/template_storage/widgets/interactionModelWidgets/imDraggable
 import 'package:som/template_storage/widgets/interactionModelWidgets/imDraggableWidgets/IMDraggableScreen2.dart';
 import 'package:som/template_storage/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen1.dart';
 import 'package:som/template_storage/widgets/interactionModelWidgets/imLongPressDraggableWidgets/IMLongPressDraggableScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWAppBarScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWDrawerWidgets/MWDrawerScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWSliverAppBarWidgets/MWSliverAppBarScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen3.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/MWTabBarWidgets/MWTabBarScreen4.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwAppStrucutreWidgets/mwBottomNavigationWidgets/MWBottomNavigationScreen3.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWDropDownButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWFlatButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWFloatingActionButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWIconButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWMaterialButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWOutlineButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWPopupMenuButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwButtonWidgets/MWRaisedButtonScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWAlertDialogScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWBottomSheetScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWExpansionPanelScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSimpleDialogScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWSnackBarScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwDialogAlertPanelWidgets/MWToastScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWCardScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWChipScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWDataTableScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWGridViewScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWIconScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWImageScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen3.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen4.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWListViewWidget/MWListViewScreen5.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWProgressBarScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWRichTextScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInformationDisplayWidgets/MWTooltipScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWCheckboxScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWDatetimePickerScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWRadioScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWSliderScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWSwitchScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFieldWidgets/MWTextFieldScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwInputSelectionWidgets/MWTextFormFieldScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWDividerScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWListTileScreen.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen3.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWStepperWidget/MWStepperScreen4.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen1.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen2.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen3.dart';
-import 'package:som/template_storage/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/MWUserAccountDrawerHeaderScreen4.dart';
 import 'package:som/template_storage/widgets/otherWidgets/InteractiveViewerScreen.dart';
 import 'package:som/template_storage/widgets/otherWidgets/OpenContainerTransformScreen.dart';
 import 'package:som/template_storage/widgets/paintingAndEffectWidgets/PEBackdropFilterScreen.dart';
@@ -220,12 +162,6 @@ List<ThemeConfiguration> getMaterialWidgets() {
 List<ThemeConfiguration> getAppStructure() {
   List<ThemeConfiguration> list = [];
   list.add(ThemeConfiguration(
-      name: 'AppBar',
-      show_cover: false,
-      type: '',
-      widget: MWAppBarScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
       name: 'Bottom Navigation Bar',
       show_cover: false,
       type: '',
@@ -254,363 +190,67 @@ List<ThemeConfiguration> getAppStructure() {
 
 List<ThemeConfiguration> getBottomNavigationBar() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'With Icon and Label',
-      show_cover: false,
-      type: '',
-      widget: MWBottomNavigationScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'With Custom Image',
-      show_cover: false,
-      type: '',
-      widget: MWBottomNavigationScreen2(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'With Shifting Label',
-      show_cover: false,
-      type: '',
-      widget: MWBottomNavigationScreen3(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getDrawer() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'With Multiple Account Selection ',
-      show_cover: false,
-      type: '',
-      widget: MWDrawerScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'With Custom Shape ',
-      show_cover: false,
-      type: '',
-      widget: MWDrawerScreen2(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getSliverAppBar() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Sliver AppBar with ListView',
-      show_cover: false,
-      type: '',
-      widget: MWSliverAppBarScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Parallax Sliver AppBar',
-      show_cover: false,
-      type: '',
-      widget: MWSliverAppBarScreen2(),
-      darkThemeSupported: true));
 
   return list;
 }
 
 List<ThemeConfiguration> getTabBar() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Simple TabBar',
-      show_cover: false,
-      type: '',
-      widget: MWTabBarScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'TabBar with Title and Icon',
-      show_cover: false,
-      type: '',
-      widget: MWTabBarScreen2(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'TabBar with Icon',
-      show_cover: false,
-      type: '',
-      widget: MWTabBarScreen3(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Scrollable Tab',
-      show_cover: false,
-      type: '',
-      widget: MWTabBarScreen4(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getButtons() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'DropDownButton',
-      show_cover: false,
-      type: '',
-      widget: MWDropDownButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'MaterialButton',
-      show_cover: false,
-      type: '',
-      widget: MWMaterialButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'FlatButton',
-      show_cover: false,
-      type: '',
-      widget: MWFlatButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'FloatingActionButton',
-      show_cover: false,
-      type: '',
-      widget: MWFloatingActionButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'IconButton',
-      show_cover: false,
-      type: '',
-      widget: MWIconButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'OutlineButton',
-      show_cover: false,
-      type: '',
-      widget: MWOutlineButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'PopupMenuButton',
-      show_cover: false,
-      type: '',
-      widget: MWPopupMenuButtonScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'RaisedButton',
-      show_cover: false,
-      type: '',
-      widget: MWRaisedButtonScreen(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getInputSelection() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Checkbox',
-      show_cover: false,
-      type: '',
-      widget: MWCheckboxScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Datetime Picker',
-      show_cover: false,
-      type: '',
-      widget: MWDatetimePickerScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Radio',
-      show_cover: false,
-      type: '',
-      widget: MWRadioScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Slider',
-      show_cover: false,
-      type: '',
-      widget: MWSliderScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Switch',
-      show_cover: false,
-      type: '',
-      widget: MWSwitchScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'TextField',
-      show_cover: false,
-      type: '',
-      sub_kits: getTextField(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'TextFormField',
-      show_cover: false,
-      type: '',
-      widget: MWTextFormFieldScreen(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getTextField() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Simple TextField ',
-      show_cover: false,
-      type: '',
-      widget: MWTextFieldScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Rounded Border TextField ',
-      show_cover: false,
-      type: '',
-      widget: MWTextFieldScreen2(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getDialogs() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'AlertDialog',
-      show_cover: false,
-      type: '',
-      widget: MWAlertDialogScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'BottomSheet',
-      show_cover: false,
-      type: '',
-      widget: MWBottomSheetScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'ExpansionPanel',
-      show_cover: false,
-      type: '',
-      widget: MWExpansionPanelScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Simple Dialog',
-      show_cover: false,
-      type: '',
-      widget: MWSimpleDialogScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'SnackBar',
-      show_cover: false,
-      type: '',
-      widget: MWSnackBarScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Toast',
-      show_cover: false,
-      type: '',
-      widget: MWToastScreen(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getInformationDisplay() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Card',
-      show_cover: false,
-      type: '',
-      widget: MWCardScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Chip',
-      show_cover: false,
-      type: '',
-      widget: MWChipScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Progress Bar',
-      show_cover: false,
-      type: '',
-      widget: MWProgressBarScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Data Table',
-      show_cover: false,
-      type: '',
-      widget: MWDataTableScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Grid View',
-      show_cover: false,
-      type: '',
-      widget: MWGridViewScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'List View',
-      show_cover: false,
-      type: '',
-      sub_kits: getListView(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Rich Text',
-      show_cover: false,
-      type: '',
-      widget: MWRichTextScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Icon',
-      show_cover: false,
-      type: '',
-      widget: MWIconScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Image (assets,Network,Placeholders)',
-      show_cover: false,
-      type: '',
-      widget: MWImageScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Tooltip',
-      show_cover: false,
-      type: '',
-      widget: MWTooltipScreen(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getListView() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Simple List View',
-      show_cover: false,
-      type: '',
-      widget: MWListViewScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'List Wheel ScrollView',
-      show_cover: false,
-      type: '',
-      widget: MWListViewScreen2(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Horizontal List View',
-      show_cover: false,
-      type: '',
-      widget: MWListViewScreen3(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Bouncing Scroll List View',
-      show_cover: false,
-      type: '',
-      widget: MWListViewScreen4(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Reorderable List View',
-      show_cover: false,
-      type: '',
-      widget: MWListViewScreen5(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getLayout() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Divider',
-      show_cover: false,
-      type: '',
-      widget: MWDividerScreen(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'ListTile',
-      show_cover: false,
-      type: '',
-      widget: MWListTileScreen(),
-      darkThemeSupported: true));
+
   list.add(ThemeConfiguration(
       name: 'Stepper',
       show_cover: false,
@@ -628,59 +268,13 @@ List<ThemeConfiguration> getLayout() {
 
 List<ThemeConfiguration> getStepper() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'Horizontal Stepper with Form',
-      show_cover: false,
-      type: '',
-      widget: MWStepperScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Vertical Stepper',
-      show_cover: false,
-      type: '',
-      widget: MWStepperScreen2(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Vertical Stepper with Form',
-      show_cover: false,
-      type: '',
-      widget: MWStepperScreen3(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Simple Horizontal Stepper',
-      show_cover: false,
-      type: '',
-      widget: MWStepperScreen4(),
-      darkThemeSupported: true));
+
   return list;
 }
 
 List<ThemeConfiguration> getUserAccountsDrawerHeader() {
   List<ThemeConfiguration> list = [];
-  list.add(ThemeConfiguration(
-      name: 'With Custom UI',
-      show_cover: false,
-      type: '',
-      widget: MWUserAccountDrawerHeaderScreen1(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'Simple User Account Drawer Header',
-      show_cover: false,
-      type: '',
-      widget: MWUserAccountDrawerHeaderScreen2(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'With Multiple Account Selection',
-      show_cover: false,
-      type: '',
-      widget: MWUserAccountDrawerHeaderScreen3(),
-      darkThemeSupported: true));
-  list.add(ThemeConfiguration(
-      name: 'With Custom Background',
-      show_cover: false,
-      type: '',
-      widget: MWUserAccountDrawerHeaderScreen4(),
-      darkThemeSupported: true));
+
   return list;
 }
 //endregion

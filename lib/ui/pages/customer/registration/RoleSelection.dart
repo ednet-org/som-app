@@ -49,7 +49,7 @@ class _RoleSelectionState extends State<RoleSelection> {
 
     return ElevatedButton(
         style: providerStyle,
-        onPressed: () => registrationRequest.switchRole(Roles.Provider),
+        onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

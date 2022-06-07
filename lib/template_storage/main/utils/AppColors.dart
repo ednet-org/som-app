@@ -1,3 +1,4 @@
+import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/material.dart';
 
 // Light Theme Colors
@@ -5,11 +6,11 @@ const appColorPrimary = Color(0xFF0A79DF);
 const appColorPrimaryDark = Color(0xFF0A79DF);
 const appColorAccent = Color(0xFF03DAC5);
 const appTextColorPrimary = Color(0xFF212121);
-const iconColorPrimary = Color(0xFFFFFFFF);
+const iconColorPrimary = AppColors.m3SysLightOnPrimary;
 const appTextColorSecondary = Color(0xFF5A5C5E);
 const iconColorSecondary = Color(0xFFA8ABAD);
 const appLayout_background = Color(0xFFf8f8f8);
-const appWhite = Color(0xFFFFFFFF);
+const appWhite = AppColors.m3SysLightOnPrimary;
 const appLight_purple = Color(0xFFdee1ff);
 const appLight_orange = Color(0xFFffddd5);
 const appLight_parrot_green = Color(0xFFb4ef93);
@@ -35,10 +36,60 @@ const appSecondaryBackgroundColor = Color(0xFF131d25);
 const appDividerColor = Color(0xFFDADADA);
 
 // Dark Theme Colors
-const appBackgroundColorDark = Color(0xFF131d25);
-const cardBackgroundBlackDark = Color(0xFF1D2939);
-const color_primary_black = Color(0xFF131d25);
-const appColorPrimaryDarkLight = Color(0xFFF9FAFF);
+const appBackgroundColorDark = AppColors.m3SysDarkPrimaryContainer;
+const cardBackgroundBlackDark = AppColors.m3SysDarkOnSecondary;
+const color_primary_black = AppColors.m3SysDarkSecondaryContainer;
+const appColorPrimaryDarkLight = AppColors.m3SysDarkPrimary;
+const m3SysDarkOnSecondary = AppColors.m3SysDarkOnSecondary;
 const iconColorPrimaryDark = Color(0xFF212121);
 const iconColorSecondaryDark = Color(0xFFA8ABAD);
 const appShadowColorDark = Color(0x1A3E3942);
+
+// curl -X 'POST' \
+//   'https://som-userservice.herokuapp.com/Companies/register' \
+//   -H 'accept: */*' \
+//   -H 'Content-Type: application/json' \
+//   -d '{
+//   "company": {
+//     "name": "string",
+//     "address": {
+//       "country": "string",
+//       "city": "string",
+//       "street": "string",
+//       "number": "string",
+//       "zip": "string"
+//     },
+//     "uidNr": "string",
+//     "registrationNr": "string",
+//     "companySize": 0,
+//     "type": 0,
+//     "websiteUrl": "string",
+//     "providerData": {
+//       "bankDetails": {
+//         "iban": "string",
+//         "bic": "string",
+//         "accountOwner": "string"
+//       },
+//       "branchIds": [
+//         "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//       ],
+//       "paymentInterval": 0,
+//       "subscriptionPlanId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//     }
+//   },
+//   "users": [
+//     {
+//       "email": "string",
+//       "firstName": "string",
+//       "lastName": "string",
+//       "salutation": "string",
+//       "roles": [
+//         0
+//       ],
+//       "telephoneNr": "string",
+//       "title": "string",
+//       "companyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+//     }
+//   ]
+// }'

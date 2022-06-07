@@ -1,4 +1,4 @@
-import 'package:som/ui/components/forms/som_tags.dart';
+import 'package:som/domain/model/shared/som.dart';
 
 final branchTags = branches
     .asMap()
