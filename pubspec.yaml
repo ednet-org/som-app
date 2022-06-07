@@ -86,6 +86,13 @@ dependencies:
   dropdown_search: ^4.0.1
   json_annotation: ^4.5.0
 
+  ednet_design_system:
+    git:
+      url: git@gitlab.com:ednet/supernova-material.git
+      ref: main
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
