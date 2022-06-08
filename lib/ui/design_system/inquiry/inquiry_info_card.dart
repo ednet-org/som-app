@@ -58,7 +58,7 @@ class InquiryInfoCardWidget extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     height: 1.5),
               )),
-          Positioned(top: 15, left: 248, child: null),
+          Positioned(top: 15, left: 248, child: SizedBox()),
           Positioned(
               top: 19.5,
               left: 280,
@@ -135,7 +135,7 @@ class InquiryInfoCardWidget extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(top: 284, left: 18, child: null),
+          Positioned(top: 284, left: 18, child: SizedBox()),
           Positioned(
               top: 285,
               left: 50,
@@ -151,8 +151,8 @@ class InquiryInfoCardWidget extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(top: 326, left: 11, child: null),
-          Positioned(top: 326, left: 179, child: null),
+          Positioned(top: 326, left: 11, child: SizedBox()),
+          Positioned(top: 326, left: 179, child: SizedBox()),
           Positioned(
               top: 327,
               left: 39,

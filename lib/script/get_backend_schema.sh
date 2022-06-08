@@ -1,0 +1,1 @@
+quicktype -l dart -o '../domain/infrastructure/repository/api/lib/models/swagger/backend.dart' -t Backend --src=https://som-userservice.herokuapp.com/swagger/v1/swagger.json --use-freezed --coders-in-class --required-props
