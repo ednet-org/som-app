@@ -58,8 +58,8 @@ abstract class _Application with Store {
       scaffoldBackground = appBackgroundColorDark;
 
       appBarColor = cardBackgroundBlackDark;
-      backgroundColor = Colors.white;
-      backgroundSecondaryColor = Colors.white;
+      backgroundColor = appColorPrimaryDarkLight;
+      backgroundSecondaryColor = m3SysDarkOnSecondary;
       appColorPrimaryLightColor = cardBackgroundBlackDark;
 
       iconColor = iconColorPrimary;
