@@ -159,3 +159,16 @@ flutter:
       fonts:
         - asset: fonts/googlesansebold.ttf
 
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Medium.ttf
+        - asset: fonts/Roboto-Regular.ttf
+        - weight: 400
+
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Regular.ttf
+        - weight: 400
+
+
+
