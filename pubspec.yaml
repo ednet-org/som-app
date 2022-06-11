@@ -90,6 +90,7 @@ dependencies:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
       ref: main
+  freezed_annotation: ^2.0.3
 
 
 
@@ -102,6 +103,7 @@ dev_dependencies:
   json_serializable: ^6.2.0
   generators:
     path: ./lib/domain/domain_generator/generators/
+  freezed: ^2.0.3+1
     #flutter packages pub run build_runner build --delete-conflicting-outputs
 
 flutter:
@@ -158,4 +160,15 @@ flutter:
     - family: Bold
       fonts:
         - asset: fonts/googlesansebold.ttf
+
+    - family: Roboto
+      fonts:
+        - asset: fonts/robotomedium.ttf
+        - asset: fonts/robotoregular.ttf
+        - weight: 400
+
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Regular.ttf
+        - weight: 400
 

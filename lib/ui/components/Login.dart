@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/components/ActionButton.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
-import 'package:som/ui/pages/customer_registration_page.dart';
-import 'package:som/ui/components/utils/EditText.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/auto_size_text/auto_size_text.dart';
+import 'package:som/ui/components/ActionButton.dart';
+import 'package:som/ui/components/utils/EditText.dart';
+import 'package:som/ui/design_system/inquiry/inquiry_info_card.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 
 import '../../../main.dart';
 
@@ -43,7 +43,8 @@ class LoginState extends State<Login> {
           ),
           GestureDetector(
             onTap: () {
-              CustomerRegistrationPage().launch(context);
+              InquiryInfoCardWidget().launch(context);
+              // CustomerRegistrationPage().launch(context);
             },
             child: Card(
               child: Padding(
