@@ -11,7 +11,7 @@ import 'package:som/domain/infrastructure/repository/api/utils/converters/json_s
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/template_storage/ main/store/application.dart';
 import 'package:som/template_storage/main/utils/AppTheme.dart';
 import 'package:som/ui/pages/splash_page.dart';
 
