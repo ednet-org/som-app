@@ -3,6 +3,16 @@ image: cirrusci/flutter:latest
 variables:
 
 before_script:
+#  - apt-get update -y -qq && apt-get install -y -qq make openssh-client
+  # Start ssh-agent
+  - eval $(ssh-agent -s)
+  # Add Private key to SSH Agent
+  - echo "$SSH_PK"
+  - ssh-add <(echo "$SSH_PK")
+  # Add gitlab as known host
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
   - flutter config --enable-web
   - flutter pub get
   - flutter packages pub run build_runner build --delete-conflicting-outputs
