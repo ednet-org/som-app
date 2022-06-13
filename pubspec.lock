@@ -320,11 +320,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: main
-      resolved-ref: a282b5fbca0783b62fa0e88b7cf0080c0cc71296
+      ref: "v0.0.2"
+      resolved-ref: "7e327d612ef42932193da0f64b86c016ef20c54c"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   equatable:
     dependency: transitive
     description:

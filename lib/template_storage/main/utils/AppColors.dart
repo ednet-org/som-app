@@ -6,11 +6,12 @@ const appColorPrimary = Color(0xFF0A79DF);
 const appColorPrimaryDark = Color(0xFF0A79DF);
 const appColorAccent = Color(0xFF03DAC5);
 const appTextColorPrimary = Color(0xFF212121);
-const iconColorPrimary = AppColors.m3SysLightOnPrimary;
+const iconColorPrimary = AppColors.shadeprimarySecondaryPrimarysecondary99;
 const appTextColorSecondary = Color(0xFF5A5C5E);
 const iconColorSecondary = Color(0xFFA8ABAD);
 const appLayout_background = Color(0xFFf8f8f8);
-const appWhite = AppColors.m3SysLightOnPrimary;
+const appWhite = AppColors
+    .shadePrimarySecondaryTertiaryErrorPrimarysecondarytertiaryerror100;
 const appLight_purple = Color(0xFFdee1ff);
 const appLight_orange = Color(0xFFffddd5);
 const appLight_parrot_green = Color(0xFFb4ef93);
@@ -36,11 +37,11 @@ const appSecondaryBackgroundColor = Color(0xFF131d25);
 const appDividerColor = Color(0xFFDADADA);
 
 // Dark Theme Colors
-const appBackgroundColorDark = AppColors.m3SysDarkPrimaryContainer;
-const cardBackgroundBlackDark = AppColors.m3SysDarkOnSecondary;
-const color_primary_black = AppColors.m3SysDarkSecondaryContainer;
-const appColorPrimaryDarkLight = AppColors.m3SysDarkPrimary;
-const m3SysDarkOnSecondary = AppColors.m3SysDarkOnSecondary;
+const appBackgroundColorDark = AppColors.vibrantpurpleLightPrimary;
+const cardBackgroundBlackDark = AppColors.stargazzingDarkSecondary;
+const color_primary_black = AppColors.bleachLightSecondary;
+const appColorPrimaryDarkLight = AppColors.cherryDarkTertiary;
+const m3SysDarkOnSecondary = AppColors.shadeprimarySecondaryPrimarysecondary99;
 const iconColorPrimaryDark = Color(0xFF212121);
 const iconColorSecondaryDark = Color(0xFFA8ABAD);
 const appShadowColorDark = Color(0x1A3E3942);

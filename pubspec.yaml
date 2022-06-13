@@ -89,7 +89,8 @@ dependencies:
   ednet_component_library:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
-      ref: main
+      ref: v0.0.2
+
   freezed_annotation: ^2.0.3
 
 
@@ -104,7 +105,7 @@ dev_dependencies:
   generators:
     path: ./lib/domain/domain_generator/generators/
   freezed: ^2.0.3+1
-    #flutter packages pub run build_runner build --delete-conflicting-outputs
+  #flutter packages pub run build_runner build --delete-conflicting-outputs
 
 flutter:
 

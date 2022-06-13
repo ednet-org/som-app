@@ -38,8 +38,7 @@ class InquiryInfoCardWidget extends StatelessWidget {
                 'Inquiry',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    color:
-                        AppColors.m3ReadOnlyDarkOnSecondaryContainerOpacity012,
+                    color: AppColors.shadesecondarySecondary40,
                     fontFamily: 'Roboto',
                     fontSize: 16,
                     letterSpacing: 0.10000000149011612,
