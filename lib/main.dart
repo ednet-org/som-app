@@ -1,5 +1,6 @@
 //region imports
 import 'package:chopper/chopper.dart';
+import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,7 +13,6 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/template_storage/main/utils/AppTheme.dart';
 import 'package:som/ui/pages/splash_page.dart';
 
 import 'template_storage/main/utils/AppConstant.dart';
@@ -21,8 +21,12 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 
 /// This variable is used to get dynamic colors when theme mode is changed
 var appStore = Application();
+var lightTheme;
+var darkTheme;
 
 void main() async {
+  lightTheme = await EdsAppTheme.lightTheme;
+  darkTheme = await EdsAppTheme.darkTheme;
   // final response = await subscriptionService.getSubscriptions();
   // if (response.isSuccessful) {
   //   // Successful request
@@ -96,9 +100,7 @@ class MyApp extends StatelessWidget {
           routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
-          theme: !appStore.isDarkModeOn
-              ? AppThemeData.lightTheme
-              : AppThemeData.darkTheme,
+          theme: !appStore.isDarkModeOn ? lightTheme : darkTheme,
           builder: scrollBehaviour(),
         ),
       ),
