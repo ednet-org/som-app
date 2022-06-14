@@ -7,7 +7,7 @@ before_script:
   # Start ssh-agent
   - eval $(ssh-agent -s)
   # Add Private key to SSH Agent
-  - echo "$SSH_PK"
+#  - echo "$SSH_PK"
   - ssh-add <(echo "$SSH_PK")
   # Add gitlab as known host
   - mkdir -p ~/.ssh
