@@ -89,7 +89,7 @@ dependencies:
   ednet_component_library:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
-      ref: v0.0.2
+      ref: v0.0.7
 
   freezed_annotation: ^2.0.3
 
