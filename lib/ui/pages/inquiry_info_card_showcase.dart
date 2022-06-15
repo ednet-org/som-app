@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
+import 'package:som/ui/pages/customer_login_page.dart';
 
 import 'dashboard_page.dart';
 
@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1D2939),
+      backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
       body: Container(
         alignment: Alignment.center,
         child: Image.asset('images/som/logo.png',
