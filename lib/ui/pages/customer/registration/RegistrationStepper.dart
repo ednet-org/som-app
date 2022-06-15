@@ -430,7 +430,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(
-                        color: appColorAccent,
+                        color: Theme.of(context).accentColor,
                       ),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,

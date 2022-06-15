@@ -1,17 +1,19 @@
 import 'package:ednet_component_library/ednet_component_library.dart';
+import 'package:ednet_component_library/themes/theme/app_theme_data.dart';
 import 'package:flutter/material.dart';
 
+AppThemeData themeData = EdsAppTheme.getEdsTheme(prefix: "som", isDark: true);
 // Light Theme Colors
 const appColorPrimary = Color(0xFF0A79DF);
 const appColorPrimaryDark = Color(0xFF0A79DF);
 const appColorAccent = Color(0xFF03DAC5);
 const appTextColorPrimary = Color(0xFF212121);
-const iconColorPrimary = AppColors.shadeprimarySecondaryPrimarysecondary99;
+Color iconColorPrimary = themeData.colorScheme.primary;
+
 const appTextColorSecondary = Color(0xFF5A5C5E);
 const iconColorSecondary = Color(0xFFA8ABAD);
 const appLayout_background = Color(0xFFf8f8f8);
-const appWhite = AppColors
-    .shadePrimarySecondaryTertiaryErrorPrimarysecondarytertiaryerror100;
+Color appWhite = themeData.colorScheme.primary;
 const appLight_purple = Color(0xFFdee1ff);
 const appLight_orange = Color(0xFFffddd5);
 const appLight_parrot_green = Color(0xFFb4ef93);
@@ -37,11 +39,11 @@ const appSecondaryBackgroundColor = Color(0xFF131d25);
 const appDividerColor = Color(0xFFDADADA);
 
 // Dark Theme Colors
-const appBackgroundColorDark = AppColors.vibrantpurpleLightPrimary;
-const cardBackgroundBlackDark = AppColors.stargazzingDarkSecondary;
-const color_primary_black = AppColors.bleachLightSecondary;
-const appColorPrimaryDarkLight = AppColors.cherryDarkTertiary;
-const m3SysDarkOnSecondary = AppColors.shadeprimarySecondaryPrimarysecondary99;
+Color appBackgroundColorDark = themeData.colorScheme.primary;
+Color cardBackgroundBlackDark = themeData.colorScheme.primary;
+Color color_primary_black = themeData.colorScheme.primary;
+Color appColorPrimaryDarkLight = themeData.colorScheme.primary;
+Color m3SysDarkOnSecondary = themeData.colorScheme.primary;
 const iconColorPrimaryDark = Color(0xFF212121);
 const iconColorSecondaryDark = Color(0xFFA8ABAD);
 const appShadowColorDark = Color(0x1A3E3942);
