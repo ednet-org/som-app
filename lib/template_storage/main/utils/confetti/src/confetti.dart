@@ -25,7 +25,12 @@ class ConfettiWidget extends StatefulWidget {
     this.particleDrag = 0.05,
     this.canvas,
     this.child,
-  })  : assert(emissionFrequency >= 0 && emissionFrequency <= 1 && numberOfParticles > 0 && maxBlastForce > 0 && minBlastForce > 0 && maxBlastForce > minBlastForce),
+  })  : assert(emissionFrequency >= 0 &&
+            emissionFrequency <= 1 &&
+            numberOfParticles > 0 &&
+            maxBlastForce > 0 &&
+            minBlastForce > 0 &&
+            maxBlastForce > minBlastForce),
         assert(gravity >= 0 && gravity <= 1),
         super(key: key);
 
@@ -96,7 +101,8 @@ class ConfettiWidget extends StatefulWidget {
   _ConfettiWidgetState createState() => _ConfettiWidgetState();
 }
 
-class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProviderStateMixin {
+class _ConfettiWidgetState extends State<ConfettiWidget>
+    with SingleTickerProviderStateMixin {
   final GlobalKey _particleSystemKey = GlobalKey();
 
   AnimationController? _animController;
@@ -134,7 +140,8 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
   }
 
   void _initAnimation() {
-    _animController = AnimationController(vsync: this, duration: widget.confettiController.duration);
+    _animController = AnimationController(
+        vsync: this, duration: widget.confettiController.duration);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animController!);
     _animation.addListener(_animationListener);
     _animation.addStatusListener(_animationStatusListener);
@@ -149,13 +156,15 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
     if (widget.confettiController.state == ConfettiControllerState.playing) {
       _startAnimation();
       _startEmission();
-    } else if (widget.confettiController.state == ConfettiControllerState.stopped) {
+    } else if (widget.confettiController.state ==
+        ConfettiControllerState.stopped) {
       _stopEmission();
     }
   }
 
   void _animationListener() {
-    if (_particleSystem!.particleSystemStatus == ParticleSystemStatus.finished) {
+    if (_particleSystem!.particleSystemStatus ==
+        ParticleSystemStatus.finished) {
       _animController!.stop();
       return;
     }
@@ -172,7 +181,8 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
   }
 
   void _particleSystemListener() {
-    if (_particleSystem!.particleSystemStatus == ParticleSystemStatus.finished) {
+    if (_particleSystem!.particleSystemStatus ==
+        ParticleSystemStatus.finished) {
       _stopAnimation();
     }
   }
@@ -190,7 +200,7 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
 
   void _startAnimation() {
     // Make sure widgets are built before setting screen size and position
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _setScreenSize();
       _setEmitterPosition();
       _animController!.forward(from: 0);
@@ -216,7 +226,8 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
   }
 
   Offset _getContainerPosition() {
-    final RenderBox containerRenderBox = _particleSystemKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox containerRenderBox =
+        _particleSystemKey.currentContext!.findRenderObject() as RenderBox;
     return containerRenderBox.localToGlobal(Offset.zero);
   }
 
@@ -268,7 +279,10 @@ class _ConfettiWidgetState extends State<ConfettiWidget> with SingleTickerProvid
 }
 
 class ParticlePainter extends CustomPainter {
-  ParticlePainter(Listenable? repaint, {required this.particles, paintEmitterTarget = true, emitterTargetColor = Colors.black})
+  ParticlePainter(Listenable? repaint,
+      {required this.particles,
+      paintEmitterTarget = true,
+      emitterTargetColor = Colors.black})
       : _paintEmitterTarget = paintEmitterTarget,
         _emitterPaint = Paint()
           ..color = emitterTargetColor
@@ -326,7 +340,8 @@ class ParticlePainter extends CustomPainter {
 }
 
 class ConfettiController extends ChangeNotifier {
-  ConfettiController({this.duration = const Duration(seconds: 30)}) : assert(!duration.isNegative && duration.inMicroseconds > 0);
+  ConfettiController({this.duration = const Duration(seconds: 30)})
+      : assert(!duration.isNegative && duration.inMicroseconds > 0);
 
   Duration duration;
 

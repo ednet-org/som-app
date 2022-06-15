@@ -143,7 +143,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
   void initState() {
     super.initState();
     //  Start showcase view after current widget frames are drawn.
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
           Duration(milliseconds: 200),
           () => ShowCaseWidget.of(myContext)!

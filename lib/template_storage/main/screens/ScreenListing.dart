@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-
-import 'ThemeList.dart';
 
 class ScreenListing extends StatefulWidget {
   static String tag = "/ScreenListing";
@@ -74,7 +70,6 @@ class ScreenListingState extends State<ScreenListing> {
                             height: context.height() / 4)
                         : null,
                   ),
-                  ThemeList(list),
                 ],
               ),
             ),
