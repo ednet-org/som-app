@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
       body: Container(
         alignment: Alignment.center,
         child: Image.asset('images/som/logo.png',
