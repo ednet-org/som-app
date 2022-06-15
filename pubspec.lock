@@ -327,11 +327,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.0.9"
-      resolved-ref: "651f54105f5e1ddaff94026462386ec0505a73e8"
+      ref: design_system
+      resolved-ref: "2707e22fbc4b531a97c2c1a01d3ea71a236ea7f7"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
-    version: "0.0.9"
+    version: "0.1.0"
   equatable:
     dependency: transitive
     description:
@@ -610,14 +610,14 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.7"
+    version: "2.1.8"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
       name: google_maps_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.7"
+    version: "2.2.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -911,7 +911,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   package_info:
     dependency: "direct main"
     description:
@@ -1259,14 +1259,14 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.59"
+    version: "20.1.60"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.1.59"
+    version: "20.1.60"
   synchronized:
     dependency: transitive
     description:
@@ -1357,7 +1357,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.11"
+    version: "2.0.12"
   url_launcher_windows:
     dependency: transitive
     description:

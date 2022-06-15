@@ -100,7 +100,9 @@ class MyApp extends StatelessWidget {
           routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
-          theme: !appStore.isDarkModeOn ? lightTheme : darkTheme,
+          theme: !appStore.isDarkModeOn
+              ? lightTheme.materialThemeData
+              : darkTheme.materialThemeData,
           builder: scrollBehaviour(),
         ),
       ),
