@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 
 part 'application.g.dart';
@@ -18,33 +17,6 @@ abstract class _Application with Store {
   bool isDarkModeOn = false;
 
   @observable
-  Color? scaffoldBackground;
-
-  @observable
-  Color? backgroundColor;
-
-  @observable
-  Color? backgroundSecondaryColor;
-
-  @observable
-  Color? textPrimaryColor;
-
-  @observable
-  Color? appColorPrimaryLightColor;
-
-  @observable
-  Color? textSecondaryColor;
-
-  @observable
-  Color? appBarColor;
-
-  @observable
-  Color? iconColor;
-
-  @observable
-  Color? iconSecondaryColor;
-
-  @observable
   String selectedLanguage = 'de';
 
   @observable
@@ -55,41 +27,34 @@ abstract class _Application with Store {
     isDarkModeOn = value ?? !isDarkModeOn;
 
     if (isDarkModeOn) {
-      scaffoldBackground = appBackgroundColorDark;
+      // scaffoldBackground = appBackgroundColorDark;
 
-      appBarColor = cardBackgroundBlackDark;
-      backgroundColor = appColorPrimaryDarkLight;
-      backgroundSecondaryColor = m3SysDarkOnSecondary;
-      appColorPrimaryLightColor = cardBackgroundBlackDark;
-
-      iconColor = iconColorPrimary;
-      iconSecondaryColor = iconColorSecondary;
-
-      textPrimaryColor = whiteColor;
-      textSecondaryColor = Colors.white54;
+      // appBarColor = cardBackgroundBlackDark;
+      // backgroundColor = appColorPrimaryDarkLight;
+      // backgroundSecondaryColor = m3SysDarkOnSecondary;
+      // appColorPrimaryLightColor = cardBackgroundBlackDark;
+      //
+      // iconColor = iconColorPrimary;
+      // Theme.of(context).colorScheme.secondary = iconColorSecondary;
 
       textPrimaryColorGlobal = whiteColor;
       textSecondaryColorGlobal = Colors.white54;
-      shadowColorGlobal = appShadowColorDark;
+      // shadowColorGlobal = appShadowColorDark;
 
       setStatusBarColor(Colors.black);
     } else {
-      scaffoldBackground = Colors.white;
-
-      appBarColor = Colors.white;
-      backgroundColor = Colors.black;
-      backgroundSecondaryColor = appSecondaryBackgroundColor;
-      appColorPrimaryLightColor = appColorPrimaryLight;
-
-      iconColor = iconColorPrimaryDark;
-      iconSecondaryColor = iconColorSecondaryDark;
-
-      textPrimaryColor = appTextColorPrimary;
-      textSecondaryColor = appTextColorSecondary;
-
-      textPrimaryColorGlobal = appTextColorPrimary;
-      textSecondaryColorGlobal = appTextColorSecondary;
-      shadowColorGlobal = appShadowColor;
+      // backgroundSecondaryColor = appSecondaryBackgroundColor;
+      // appColorPrimaryLightColor = appColorPrimaryLight;
+      //
+      // iconColor = iconColorPrimaryDark;
+      // Theme.of(context).colorScheme.secondary = iconColorSecondaryDark;
+      //
+      // textPrimaryColor = appTextColorPrimary;
+      // textSecondaryColor = appTextColorSecondary;
+      //
+      // textPrimaryColorGlobal = appTextColorPrimary;
+      // textSecondaryColorGlobal = appTextColorSecondary;
+      // shadowColorGlobal = appShadowColor;
 
       setStatusBarColor(Colors.white);
     }

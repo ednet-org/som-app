@@ -5,10 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/colors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class GoogleSignInScreen extends StatefulWidget {
   static String tag = '/GoogleSignInScreen';
@@ -53,7 +51,7 @@ class GoogleSignInScreenState extends State<GoogleSignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
     return Scaffold(
       appBar: appBar(context, 'Google Sign In'),
       body: Column(
@@ -66,7 +64,8 @@ class GoogleSignInScreenState extends State<GoogleSignInScreen> {
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(right: 24),
-                  decoration: BoxDecoration(color: thirdColor, shape: BoxShape.circle),
+                  decoration:
+                      BoxDecoration(color: thirdColor, shape: BoxShape.circle),
                   padding: EdgeInsets.all(5),
                   child: CircleAvatar(
                     backgroundImage: Image.network(photoUrl!).image,
@@ -78,8 +77,21 @@ class GoogleSignInScreenState extends State<GoogleSignInScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      text(name, fontSize: textSizeLargeMedium, fontFamily: fontSemibold, textColor: isSuccess ? greenColor : appStore.textPrimaryColor),
-                      text(email, fontSize: textSizeLargeMedium, textColor: isSuccess ? greenColor : appStore.textPrimaryColor),
+                      text(name,
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontSemibold,
+                          textColor: isSuccess
+                              ? greenColor
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer),
+                      text(email,
+                          fontSize: textSizeLargeMedium,
+                          textColor: isSuccess
+                              ? greenColor
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer),
                     ],
                   ),
                 )
@@ -106,7 +118,12 @@ class GoogleSignInScreenState extends State<GoogleSignInScreen> {
                         width: 30,
                         color: whiteColor,
                       ),
-                      Center(child: text('Sign In with google', textColor: whiteColor, isCentered: true, fontFamily: fontRegular, fontSize: textSizeMedium)),
+                      Center(
+                          child: text('Sign In with google',
+                              textColor: whiteColor,
+                              isCentered: true,
+                              fontFamily: fontRegular,
+                              fontSize: textSizeMedium)),
                     ],
                   )))
         ],

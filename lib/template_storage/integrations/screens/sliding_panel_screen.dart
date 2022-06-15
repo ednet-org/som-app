@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/integrations/utils/panel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 
 class SlidingPanelScreen extends StatefulWidget {
   static String tag = '/SlidingPanelScreen';
@@ -17,7 +16,7 @@ class SlidingPanelScreen extends StatefulWidget {
 class SlidingPanelScreenState extends State<SlidingPanelScreen> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Google Maps Sliping Panel"),

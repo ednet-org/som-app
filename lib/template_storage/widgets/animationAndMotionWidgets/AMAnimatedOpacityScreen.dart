@@ -42,7 +42,7 @@ class AMAnimatedOpacityScreenState extends State<AMAnimatedOpacityScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Animated Opacity'),
         body: Center(
           child: Column(

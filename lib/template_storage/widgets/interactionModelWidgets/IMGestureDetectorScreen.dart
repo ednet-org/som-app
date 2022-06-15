@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class IMGestureDetectorScreen extends StatefulWidget {
   static String tag = '/IMGestureDetectorScreen';
 
   @override
-  _IMGestureDetectorScreenState createState() => _IMGestureDetectorScreenState();
+  _IMGestureDetectorScreenState createState() =>
+      _IMGestureDetectorScreenState();
 }
 
 class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
@@ -46,7 +46,7 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
     late DragUpdateDetails updateVerticalDragDetails;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Gesture Detector'),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -62,7 +62,8 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                 },
                 child: mImg(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               mTitle(
                 "Double Tap",
               ),
@@ -72,7 +73,8 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                 },
                 child: mImg(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               mTitle(
                 "Long press",
               ),
@@ -82,7 +84,8 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                 },
                 child: mImg(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               mTitle(
                 "Swipe",
               ),
@@ -95,7 +98,8 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                 },
                 child: mImg(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               mTitle(
                 "Vertical swipe ",
               ),
@@ -107,8 +111,12 @@ class _IMGestureDetectorScreenState extends State<IMGestureDetectorScreen> {
                         updateVerticalDragDetails = dragDetails;
                       },
                       onVerticalDragEnd: (endDetails) {
-                        double dx = updateVerticalDragDetails.globalPosition.dx - startVerticalDragDetails.globalPosition.dx;
-                        double dy = updateVerticalDragDetails.globalPosition.dy - startVerticalDragDetails.globalPosition.dy;
+                        double dx =
+                            updateVerticalDragDetails.globalPosition.dx -
+                                startVerticalDragDetails.globalPosition.dx;
+                        double dy =
+                            updateVerticalDragDetails.globalPosition.dy -
+                                startVerticalDragDetails.globalPosition.dy;
                         double velocity = endDetails.primaryVelocity!;
 
                         //Convert values to be positive

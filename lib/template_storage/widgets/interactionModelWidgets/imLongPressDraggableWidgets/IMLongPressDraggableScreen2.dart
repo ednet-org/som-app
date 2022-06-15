@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class IMLongPressDraggableScreen2 extends StatefulWidget {
   static String tag = '/IMLongPressDraggableScreen2';
 
   @override
-  _IMLongPressDraggableScreen2State createState() => _IMLongPressDraggableScreen2State();
+  _IMLongPressDraggableScreen2State createState() =>
+      _IMLongPressDraggableScreen2State();
 }
 
-class _IMLongPressDraggableScreen2State extends State<IMLongPressDraggableScreen2> with TickerProviderStateMixin {
+class _IMLongPressDraggableScreen2State
+    extends State<IMLongPressDraggableScreen2> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class _IMLongPressDraggableScreen2State extends State<IMLongPressDraggableScreen
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Long Press Draggable with Target'),
         body: Center(
           child: Column(
@@ -66,15 +66,19 @@ class _IMLongPressDraggableScreen2State extends State<IMLongPressDraggableScreen
                   Expanded(
                     flex: 1,
                     child: DragTarget(
-                      builder: (context, List<int?> candidateData, rejectedData) {
+                      builder:
+                          (context, List<int?> candidateData, rejectedData) {
                         print(candidateData);
                         return Container(
                           height: 200,
-                          color: mValue ? appColorPrimary : Colors.green,
+                          color: mValue
+                              ? Theme.of(context).primaryColor
+                              : Colors.green,
                           child: Center(
                             child: Text(
                               mValue ? "Flutter" : "Correct",
-                              style: primaryTextStyle(color: Colors.white, size: 20),
+                              style: primaryTextStyle(
+                                  color: Colors.white, size: 20),
                             ),
                           ),
                         );
@@ -84,7 +88,8 @@ class _IMLongPressDraggableScreen2State extends State<IMLongPressDraggableScreen
                       },
                       onAccept: (dynamic data) {
                         if (data == 1) {
-                          ScaffoldMessengerState().showSnackBar(SnackBar(content: Text("Correct!")));
+                          ScaffoldMessengerState().showSnackBar(
+                              SnackBar(content: Text("Correct!")));
                           mValue = false;
                           setState(() {
                             _mStatus = true;
@@ -97,14 +102,18 @@ class _IMLongPressDraggableScreen2State extends State<IMLongPressDraggableScreen
                   Expanded(
                     flex: 1,
                     child: DragTarget(
-                      builder: (context, List<int?> candidateData, rejectedData) {
+                      builder:
+                          (context, List<int?> candidateData, rejectedData) {
                         return Container(
                           height: 200,
-                          color: mValue1 ? appColorPrimary : Colors.red,
+                          color: mValue1
+                              ? Theme.of(context).primaryColor
+                              : Colors.red,
                           child: Center(
                               child: Text(
                             mValue1 ? "IOS" : "Incorrect",
-                            style: primaryTextStyle(color: Colors.white, size: 20),
+                            style:
+                                primaryTextStyle(color: Colors.white, size: 20),
                           )),
                         );
                       },

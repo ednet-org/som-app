@@ -1,11 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-const String _loremIpsumParagraph = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod '
+const String _loremIpsumParagraph =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod '
     'tempor incididunt ut labore et dolore magna aliqua. Vulputate dignissim '
     'suspendisse in est. Ut ornare lectus sit amet. Eget nunc lobortis mattis '
     'aliquam faucibus purus in. Hendrerit gravida rutrum quisque non tellus '
@@ -41,10 +41,12 @@ class OpenContainerTransformScreen extends StatefulWidget {
   static String tag = '/OpenContainerTransformScreen';
 
   @override
-  _OpenContainerTransformScreenState createState() => _OpenContainerTransformScreenState();
+  _OpenContainerTransformScreenState createState() =>
+      _OpenContainerTransformScreenState();
 }
 
-class _OpenContainerTransformScreenState extends State<OpenContainerTransformScreen> {
+class _OpenContainerTransformScreenState
+    extends State<OpenContainerTransformScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 
@@ -78,7 +80,9 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
                 child: _OpenContainerWrapper(
                   transitionType: _transitionType,
                   closedBuilder: (context, openContainer) {
-                    return _SmallDetailsCard(openContainer: openContainer, subtitle: 'Placeholder text');
+                    return _SmallDetailsCard(
+                        openContainer: openContainer,
+                        subtitle: 'Placeholder text');
                   },
                 ),
               ),
@@ -87,7 +91,9 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
                 child: _OpenContainerWrapper(
                   transitionType: _transitionType,
                   closedBuilder: (context, openContainer) {
-                    return _SmallDetailsCard(openContainer: openContainer, subtitle: 'Placeholder text');
+                    return _SmallDetailsCard(
+                        openContainer: openContainer,
+                        subtitle: 'Placeholder text');
                   },
                 ),
               ),
@@ -100,7 +106,9 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
                 child: _OpenContainerWrapper(
                   transitionType: _transitionType,
                   closedBuilder: (context, openContainer) {
-                    return _SmallDetailsCard(openContainer: openContainer, subtitle: 'Small placeholder text');
+                    return _SmallDetailsCard(
+                        openContainer: openContainer,
+                        subtitle: 'Small placeholder text');
                   },
                 ),
               ),
@@ -109,7 +117,9 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
                 child: _OpenContainerWrapper(
                   transitionType: _transitionType,
                   closedBuilder: (context, openContainer) {
-                    return _SmallDetailsCard(openContainer: openContainer, subtitle: 'Small placeholder text');
+                    return _SmallDetailsCard(
+                        openContainer: openContainer,
+                        subtitle: 'Small placeholder text');
                   },
                 ),
               ),
@@ -118,7 +128,9 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
                 child: _OpenContainerWrapper(
                   transitionType: _transitionType,
                   closedBuilder: (context, openContainer) {
-                    return _SmallDetailsCard(openContainer: openContainer, subtitle: 'Small placeholder text');
+                    return _SmallDetailsCard(
+                        openContainer: openContainer,
+                        subtitle: 'Small placeholder text');
                   },
                 ),
               ),
@@ -134,9 +146,10 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
               closedElevation: 0,
               closedBuilder: (context, openContainer) {
                 return Container(
-                  color: appStore.appBarColor,
+                  color: Theme.of(context).colorScheme.primary,
                   child: ListTile(
-                    leading: Image.network(SampleImageUrl, width: 40, fit: BoxFit.cover),
+                    leading: Image.network(SampleImageUrl,
+                        width: 40, fit: BoxFit.cover),
                     onTap: openContainer,
                     title: Text(
                       'List Menu Item' + ' ${index + 1}',
@@ -157,13 +170,15 @@ class _OpenContainerTransformScreenState extends State<OpenContainerTransformScr
         transitionType: _transitionType,
         openBuilder: (context, openContainer) => const _DetailsPage(),
         closedElevation: 6,
-        closedShape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(_fabDimension / 2))),
+        closedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(_fabDimension / 2))),
         closedColor: colorScheme.secondary,
         closedBuilder: (context, openContainer) {
           return SizedBox(
             height: _fabDimension,
             width: _fabDimension,
-            child: Center(child: Icon(Icons.add, color: colorScheme.onSecondary)),
+            child:
+                Center(child: Icon(Icons.add, color: colorScheme.onSecondary)),
           );
         },
       ),
@@ -202,7 +217,7 @@ class _DetailsCard extends StatelessWidget {
       openContainer: openContainer,
       height: 300,
       child: Container(
-        color: appStore.appBarColor,
+        color: Theme.of(context).colorScheme.primary,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -249,11 +264,12 @@ class _SmallDetailsCard extends StatelessWidget {
       openContainer: openContainer,
       height: 250,
       child: Container(
-        color: appStore.appBarColor,
+        color: Theme.of(context).colorScheme.primary,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(SampleImageUrl, width: context.width(), height: 150, fit: BoxFit.cover),
+            Image.network(SampleImageUrl,
+                width: context.width(), height: 150, fit: BoxFit.cover),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -263,7 +279,9 @@ class _SmallDetailsCard extends StatelessWidget {
                   children: [
                     Text('Title', style: primaryTextStyle(size: 18)),
                     const SizedBox(height: 4),
-                    Expanded(child: Text(subtitle!, style: secondaryTextStyle(size: 12))),
+                    Expanded(
+                        child: Text(subtitle!,
+                            style: secondaryTextStyle(size: 12))),
                   ],
                 ),
               ),
@@ -288,10 +306,11 @@ class _DetailsListTile extends StatelessWidget {
       openContainer: openContainer,
       height: height,
       child: Container(
-        color: appStore.appBarColor,
+        color: Theme.of(context).colorScheme.primary,
         child: Row(
           children: [
-            Image.network(SampleImageUrl, height: height, fit: BoxFit.cover).expand(),
+            Image.network(SampleImageUrl, height: height, fit: BoxFit.cover)
+                .expand(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20),

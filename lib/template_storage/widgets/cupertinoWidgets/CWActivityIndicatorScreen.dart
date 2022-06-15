@@ -7,7 +7,8 @@ class CWActivityIndicatorScreen extends StatefulWidget {
   static String tag = '/CWActivityIndicatorScreen';
 
   @override
-  CWActivityIndicatorScreenState createState() => CWActivityIndicatorScreenState();
+  CWActivityIndicatorScreenState createState() =>
+      CWActivityIndicatorScreenState();
 }
 
 class CWActivityIndicatorScreenState extends State<CWActivityIndicatorScreen> {
@@ -30,7 +31,8 @@ class CWActivityIndicatorScreenState extends State<CWActivityIndicatorScreen> {
       appBar: AppBar(
         title: Text(
           'Cupertino Activity Indicator',
-          style: boldTextStyle(color: appStore.textPrimaryColor),
+          style: boldTextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
         ),
       ),
       body: Center(

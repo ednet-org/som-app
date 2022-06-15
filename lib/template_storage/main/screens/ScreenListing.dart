@@ -5,7 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -24,7 +23,6 @@ class ScreenListing extends StatefulWidget {
 class ScreenListingState extends State<ScreenListing> {
   var selectedTab = 0;
   List<ThemeConfiguration> list = [];
-  List<Color> colors = [appCat1, appCat2, appCat3];
 
   @override
   void initState() {
@@ -52,7 +50,7 @@ class ScreenListingState extends State<ScreenListing> {
               message: 'Dark Mode',
               child: Switch(
                 value: appStore.isDarkModeOn,
-                activeColor: appColorPrimary,
+                activeColor: Theme.of(context).primaryColor,
                 onChanged: (s) {
                   appStore.toggleDarkMode(value: s);
                   setState(() {});

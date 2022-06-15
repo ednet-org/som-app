@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/model/DTReviewModel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/flutter_rating_bar.dart';
-
-import '../../../main.dart';
+import 'package:som/template_storage/model/DTReviewModel.dart';
 
 class ReviewWidget extends StatefulWidget {
   static String tag = '/ReviewWidget';
@@ -44,13 +41,16 @@ class ReviewWidgetState extends State<ReviewWidget> {
         return Container(
           margin: EdgeInsets.all(8),
           padding: EdgeInsets.all(16),
-          decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+          decoration: boxDecorationRoundedWithShadow(8,
+              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 child: Icon(Icons.person_outline, color: white),
-                decoration: BoxDecoration(shape: BoxShape.circle, color: appColorPrimary),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).primaryColor),
                 padding: EdgeInsets.all(4),
               ),
               16.width,
@@ -64,12 +64,14 @@ class ReviewWidgetState extends State<ReviewWidget> {
                         child: RatingBar(
                           onRatingUpdate: (r) {},
                           itemSize: 14.0,
-                          itemBuilder: (context, _) => Icon(Icons.star, color: Colors.amber),
+                          itemBuilder: (context, _) =>
+                              Icon(Icons.star, color: Colors.amber),
                           initialRating: data.ratting,
                         ),
                       ),
                       16.width,
-                      Text(data.ratting.toString(), style: secondaryTextStyle()),
+                      Text(data.ratting.toString(),
+                          style: secondaryTextStyle()),
                     ],
                   ),
                   Text(data.comment!, style: secondaryTextStyle()),
@@ -79,7 +81,9 @@ class ReviewWidgetState extends State<ReviewWidget> {
           ),
         );
       },
-      physics: widget.enableScrollPhysics.validate(value: true) ? ScrollPhysics() : NeverScrollableScrollPhysics(),
+      physics: widget.enableScrollPhysics.validate(value: true)
+          ? ScrollPhysics()
+          : NeverScrollableScrollPhysics(),
       shrinkWrap: true,
     );
   }

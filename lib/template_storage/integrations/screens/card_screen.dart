@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/styles.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class CardScreen extends StatefulWidget {
@@ -15,7 +14,7 @@ class CardScreen extends StatefulWidget {
 class CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Cards"),

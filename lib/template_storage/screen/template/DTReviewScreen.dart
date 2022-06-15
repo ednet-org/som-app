@@ -3,13 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/main/utils/flutter_rating_bar.dart';
 import 'package:som/template_storage/model/DTReviewModel.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/main/utils/flutter_rating_bar.dart';
 
 import '../../../ui/components/MainMenu.dart';
 import 'ReviewWidget.dart';
@@ -52,7 +50,8 @@ class DTReviewScreenState extends State<DTReviewScreen> {
           children: [
             Container(
               height: 200,
-              decoration: BoxDecoration(gradient: defaultThemeGradient()),
+              decoration:
+                  BoxDecoration(gradient: defaultThemeGradient(context)),
               alignment: Alignment.center,
               child: ConstrainedBox(
                 constraints: dynamicBoxConstraints(),
@@ -61,17 +60,26 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FittedBox(child: Text('4.2', style: boldTextStyle(size: 40, color: white))),
+                        FittedBox(
+                            child: Text('4.2',
+                                style: boldTextStyle(size: 40, color: white))),
                         IgnorePointer(
                           child: RatingBar(
                             onRatingUpdate: (r) {},
                             itemSize: 14.0,
-                            itemBuilder: (context, _) => Icon(Icons.star_border, color: Colors.amber),
+                            itemBuilder: (context, _) =>
+                                Icon(Icons.star_border, color: Colors.amber),
                             initialRating: 0.0,
                           ),
                         ),
                         10.height,
-                        FittedBox(child: Text(Random().nextInt(50000000).toString().formatNumberWithComma(), style: boldTextStyle(color: white))),
+                        FittedBox(
+                            child: Text(
+                                Random()
+                                    .nextInt(50000000)
+                                    .toString()
+                                    .formatNumberWithComma(),
+                                style: boldTextStyle(color: white))),
                       ],
                     ).paddingOnly(left: 8, right: 8).expand(flex: 1),
                     Column(
@@ -148,10 +156,16 @@ class DTReviewScreenState extends State<DTReviewScreen> {
               alignment: Alignment.center,
               padding: EdgeInsets.only(top: 16, bottom: 16, left: 8, right: 8),
               margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
-              child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Theme.of(context).dividerColor),
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text('Write a Review',
+                  style: boldTextStyle(color: Theme.of(context).primaryColor)),
             ).onTap(() async {
-              DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+              DTReviewModel? model = await showInDialog(context,
+                  child: WriteReviewDialog(),
+                  backgroundColor: Colors.transparent,
+                  contentPadding: EdgeInsets.all(0));
               if (model != null) {
                 list.insert(0, model);
                 setState(() {});
@@ -177,7 +191,9 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                     margin: EdgeInsets.only(top: 20),
                     height: 200,
                     width: dynamicWidth(context),
-                    decoration: BoxDecoration(gradient: defaultThemeGradient(), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                        gradient: defaultThemeGradient(context),
+                        borderRadius: BorderRadius.circular(10)),
                     alignment: Alignment.center,
                     child: ConstrainedBox(
                       constraints: dynamicBoxConstraints(),
@@ -186,17 +202,28 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              FittedBox(child: Text('4.2', style: boldTextStyle(size: 40, color: white))),
+                              FittedBox(
+                                  child: Text('4.2',
+                                      style: boldTextStyle(
+                                          size: 40, color: white))),
                               IgnorePointer(
                                 child: RatingBar(
                                   onRatingUpdate: (r) {},
                                   itemSize: 14.0,
-                                  itemBuilder: (context, _) => Icon(Icons.star_border, color: Colors.amber),
+                                  itemBuilder: (context, _) => Icon(
+                                      Icons.star_border,
+                                      color: Colors.amber),
                                   initialRating: 0.0,
                                 ),
                               ),
                               10.height,
-                              FittedBox(child: Text(Random().nextInt(50000000).toString().formatNumberWithComma(), style: boldTextStyle(color: white))),
+                              FittedBox(
+                                  child: Text(
+                                      Random()
+                                          .nextInt(50000000)
+                                          .toString()
+                                          .formatNumberWithComma(),
+                                      style: boldTextStyle(color: white))),
                             ],
                           ).paddingOnly(left: 8, right: 8).expand(flex: 1),
                           Column(
@@ -204,60 +231,70 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                             children: [
                               Row(
                                 children: [
-                                  Text('5', style: primaryTextStyle(color: white)),
+                                  Text('5',
+                                      style: primaryTextStyle(color: white)),
                                   10.width,
                                   LinearProgressIndicator(
                                     value: 0.6,
                                     backgroundColor: white.withOpacity(0.2),
-                                    valueColor: AlwaysStoppedAnimation<Color>(white),
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(white),
                                   ).expand(),
                                   10.width,
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('4', style: primaryTextStyle(color: white)),
+                                  Text('4',
+                                      style: primaryTextStyle(color: white)),
                                   10.width,
                                   LinearProgressIndicator(
                                     value: 0.4,
                                     backgroundColor: white.withOpacity(0.2),
-                                    valueColor: AlwaysStoppedAnimation<Color>(white),
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(white),
                                   ).expand(),
                                   10.width,
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('3', style: primaryTextStyle(color: white)),
+                                  Text('3',
+                                      style: primaryTextStyle(color: white)),
                                   10.width,
                                   LinearProgressIndicator(
                                     value: 0.9,
                                     backgroundColor: white.withOpacity(0.2),
-                                    valueColor: AlwaysStoppedAnimation<Color>(white),
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(white),
                                   ).expand(),
                                   10.width,
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('2', style: primaryTextStyle(color: white)),
+                                  Text('2',
+                                      style: primaryTextStyle(color: white)),
                                   10.width,
                                   LinearProgressIndicator(
                                     value: 0.8,
                                     backgroundColor: white.withOpacity(0.2),
-                                    valueColor: AlwaysStoppedAnimation<Color>(white),
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(white),
                                   ).expand(),
                                   10.width,
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('1', style: primaryTextStyle(color: white)),
+                                  Text('1',
+                                      style: primaryTextStyle(color: white)),
                                   10.width,
                                   LinearProgressIndicator(
                                     value: 0.2,
                                     backgroundColor: white.withOpacity(0.2),
-                                    valueColor: AlwaysStoppedAnimation<Color>(white),
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(white),
                                   ).expand(),
                                   10.width,
                                 ],
@@ -272,12 +309,21 @@ class DTReviewScreenState extends State<DTReviewScreen> {
                   Container(
                     alignment: Alignment.center,
                     width: dynamicWidth(context),
-                    padding: EdgeInsets.only(top: 16, bottom: 16, left: 8, right: 8),
+                    padding:
+                        EdgeInsets.only(top: 16, bottom: 16, left: 8, right: 8),
                     margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(8)),
-                    child: Text('Write a Review', style: boldTextStyle(color: appColorPrimary)),
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).dividerColor),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text('Write a Review',
+                        style: boldTextStyle(
+                            color: Theme.of(context).primaryColor)),
                   ).onTap(() async {
-                    DTReviewModel? model = await showInDialog(context, child: WriteReviewDialog(), backgroundColor: Colors.transparent, contentPadding: EdgeInsets.all(0));
+                    DTReviewModel? model = await showInDialog(context,
+                        child: WriteReviewDialog(),
+                        backgroundColor: Colors.transparent,
+                        contentPadding: EdgeInsets.all(0));
                     if (model != null) {
                       list.insert(0, model);
                       setState(() {});
@@ -319,7 +365,7 @@ class WriteReviewDialog extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: appStore.scaffoldBackground,
+          color: Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
@@ -340,7 +386,8 @@ class WriteReviewDialog extends StatelessWidget {
                 children: [
                   Text('Write a Review', style: boldTextStyle(size: 18)),
                   IconButton(
-                    icon: Icon(Icons.close, color: appStore.iconColor),
+                    icon: Icon(Icons.close,
+                        color: Theme.of(context).colorScheme.primary),
                     onPressed: () {
                       finish(context);
                     },
@@ -351,7 +398,9 @@ class WriteReviewDialog extends StatelessWidget {
                 onTap: () {
                   finish(context);
                 },
-                child: Container(padding: EdgeInsets.all(4), alignment: Alignment.centerRight),
+                child: Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.centerRight),
               ),
               8.height,
               Center(
@@ -380,14 +429,23 @@ class WriteReviewDialog extends StatelessWidget {
                   contentPadding: EdgeInsets.all(16),
                   labelStyle: secondaryTextStyle(),
                   border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer!)),
                 ),
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 //Normal textInputField will be displayed
                 maxLines: 5,
-                textInputAction: TextInputAction.newline, // when user presses enter it will adapt to it
+                textInputAction: TextInputAction
+                    .newline, // when user presses enter it will adapt to it
               ),
               30.height,
               GestureDetector(
@@ -405,7 +463,9 @@ class WriteReviewDialog extends StatelessWidget {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.all(Radius.circular(5))),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                   child: Center(
                     child: Text("Submit", style: boldTextStyle(color: white)),

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/screen/template/DTAboutScreen.dart';
-import 'package:som/template_storage/screen/template/DTPaymentScreen.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/screen/template/DTAboutScreen.dart';
+import 'package:som/template_storage/screen/template/DTPaymentScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../main.dart';
@@ -61,7 +60,8 @@ class DTProfileScreenState extends State<DTProfileScreen> {
             ],
           ),
           IconButton(
-            icon: Icon(AntDesign.edit, color: appStore.iconSecondaryColor),
+            icon: Icon(AntDesign.edit,
+                color: Theme.of(context).colorScheme.secondary),
             onPressed: () {},
           ).visible(false)
         ],
@@ -98,7 +98,7 @@ class DTProfileScreenState extends State<DTProfileScreen> {
               detail: SizedBox()),
           settingItem(context, 'Log Out', onTap: () {
             //
-          }, detail: SizedBox(), textColor: appColorPrimary),
+          }, detail: SizedBox(), textColor: Theme.of(context).primaryColor),
         ],
       );
     }
@@ -113,7 +113,7 @@ class DTProfileScreenState extends State<DTProfileScreen> {
             child: Column(
               children: [
                 profileView(),
-                Divider(color: appDividerColor, height: 8)
+                Divider(color: Theme.of(context).dividerColor, height: 8)
                     .paddingOnly(top: 4, bottom: 4),
                 options(),
               ],

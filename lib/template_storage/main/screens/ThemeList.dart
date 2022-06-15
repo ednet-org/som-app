@@ -3,7 +3,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppStrings.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
@@ -20,8 +19,6 @@ class ThemeList extends StatefulWidget {
 }
 
 class ThemeListState extends State<ThemeList> {
-  List<Color> colors = [appCat1, appCat2, appCat3];
-
   @override
   void dispose() {
     super.dispose();
@@ -46,10 +43,13 @@ class ThemeListState extends State<ThemeList> {
               child: GestureDetector(
                 onTap: () {
                   if (appStore.isDarkModeOn) {
-                    appStore.toggleDarkMode(value: widget.list![index].darkThemeSupported.validate());
+                    appStore.toggleDarkMode(
+                        value:
+                            widget.list![index].darkThemeSupported.validate());
                   }
 
-                  if (widget.list![index].sub_kits == null || widget.list![index].sub_kits!.isEmpty) {
+                  if (widget.list![index].sub_kits == null ||
+                      widget.list![index].sub_kits!.isEmpty) {
                     if (widget.list![index].widget != null) {
                       log('Tag ${widget.list![index].widget!.key}');
 
@@ -70,8 +70,15 @@ class ThemeListState extends State<ThemeList> {
                         height: 80,
                         margin: EdgeInsets.only(right: 12),
                         padding: EdgeInsets.all(16),
-                        child: Image.asset(icons[index % icons.length], color: Colors.white),
-                        decoration: boxDecoration(bgColor: colors[index % colors.length], radius: 4),
+                        child: Image.asset(icons[index % icons.length],
+                            color: Colors.white),
+                        decoration: boxDecoration(
+                            bgColor: [
+                              Theme.of(context).primaryColor,
+                              Theme.of(context).secondaryHeaderColor,
+                              Theme.of(context).dialogBackgroundColor
+                            ][index % 3],
+                            radius: 4),
                       ),
                       Expanded(
                         child: Stack(
@@ -83,17 +90,25 @@ class ThemeListState extends State<ThemeList> {
                               padding: EdgeInsets.only(left: 16, right: 16),
                               margin: EdgeInsets.only(right: width / 28),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('${widget.list![index].name.validate()}', style: boldTextStyle(), maxLines: 2),
                                       Text(
-                                        widget.list![index].title_name.validate(),
+                                          '${widget.list![index].name.validate()}',
+                                          style: boldTextStyle(),
+                                          maxLines: 2),
+                                      Text(
+                                        widget.list![index].title_name
+                                            .validate(),
                                         style: secondaryTextStyle(),
-                                      ).visible(widget.list![index].title_name.validate().isNotEmpty),
+                                      ).visible(widget.list![index].title_name
+                                          .validate()
+                                          .isNotEmpty),
                                     ],
                                   ).expand(),
                                   Container(
@@ -101,18 +116,41 @@ class ThemeListState extends State<ThemeList> {
                                     height: 25,
                                     margin: EdgeInsets.only(right: 8),
                                     padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    decoration: widget.list![index].type.validate().isNotEmpty ? boxDecoration(bgColor: appDarkRed, radius: 4) : BoxDecoration(),
-                                    child: text(widget.list![index].type.validate(), fontSize: 14.0, textColor: whiteColor),
+                                    decoration: widget.list![index].type
+                                            .validate()
+                                            .isNotEmpty
+                                        ? boxDecoration(
+                                            bgColor: Theme.of(context)
+                                                .colorScheme
+                                                .surfaceTint,
+                                            radius: 4)
+                                        : BoxDecoration(),
+                                    child: text(
+                                        widget.list![index].type.validate(),
+                                        fontSize: 14.0,
+                                        textColor: whiteColor),
                                   )
                                 ],
                               ),
-                              decoration: boxDecoration(bgColor: appStore.scaffoldBackground, radius: 4, showShadow: true),
+                              decoration: boxDecoration(
+                                  bgColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  radius: 4,
+                                  showShadow: true),
                             ),
                             Container(
                               width: 30,
                               height: 30,
-                              child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
-                              decoration: BoxDecoration(color: colors[index % colors.length], shape: BoxShape.circle),
+                              child: Icon(Icons.keyboard_arrow_right,
+                                  color: Colors.white),
+                              decoration: BoxDecoration(
+                                  color: [
+                                    Theme.of(context).primaryColor,
+                                    Theme.of(context).secondaryHeaderColor,
+                                    Theme.of(context).dialogBackgroundColor
+                                  ][index % 3],
+                                  shape: BoxShape.circle),
                             ),
                           ],
                         ),

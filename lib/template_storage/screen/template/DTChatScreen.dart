@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTChatMessageModel.dart';
 import 'package:som/template_storage/model/DTChatModel.dart';
 import 'package:som/template_storage/screen/template/DTMessageScreen.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import '../../../ui/components/MainMenu.dart';
 
@@ -103,7 +101,10 @@ class DTChatScreenState extends State<DTChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FadeInImage(
-                    placeholder: Image.asset('images/widgets/cupertinoWidgets/grey.jpg', fit: BoxFit.cover).image,
+                    placeholder: Image.asset(
+                            'images/widgets/cupertinoWidgets/grey.jpg',
+                            fit: BoxFit.cover)
+                        .image,
                     image: Image.network(data.img!).image,
                     height: 50,
                     width: 50,
@@ -117,23 +118,42 @@ class DTChatScreenState extends State<DTChatScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.name!, style: primaryTextStyle(color: appStore.textPrimaryColor)).expand(),
-                            Text(data.time!, style: secondaryTextStyle(size: 12, color: appStore.textSecondaryColor)),
+                            Text(data.name!,
+                                    style: primaryTextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer))
+                                .expand(),
+                            Text(data.time!,
+                                style: secondaryTextStyle(
+                                    size: 12,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer)),
                           ],
                         ),
                         Row(
                           children: [
-                            Text(data.lastMsg!, style: secondaryTextStyle(size: 12), maxLines: 1).expand(),
+                            Text(data.lastMsg!,
+                                    style: secondaryTextStyle(size: 12),
+                                    maxLines: 1)
+                                .expand(),
                             2.width,
                             Row(
                               children: [
-                                Icon(Icons.done_all, color: appColorPrimary, size: 14).withHeight(14),
+                                Icon(Icons.done_all,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 14)
+                                    .withHeight(14),
                                 2.width,
                                 Container(
-                                  decoration: BoxDecoration(color: appColorPrimary, shape: BoxShape.circle),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      shape: BoxShape.circle),
                                   child: Text(
                                     data.unreadCount.toString(),
-                                    style: secondaryTextStyle(color: white, size: 10),
+                                    style: secondaryTextStyle(
+                                        color: white, size: 10),
                                     maxLines: 1,
                                   ).paddingAll(6),
                                 ),
@@ -168,14 +188,18 @@ class DTChatScreenState extends State<DTChatScreen> {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
-                  decoration: BoxDecoration(color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      boxShadow: defaultBoxShadow()),
                   child: ListView.separated(
-                    separatorBuilder: (_, i) => Divider(color: Colors.transparent),
+                    separatorBuilder: (_, i) =>
+                        Divider(color: Colors.transparent),
                     shrinkWrap: true,
                     reverse: true,
                     controller: scrollController,
                     itemCount: msgListing.length,
-                    padding: EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 70),
+                    padding:
+                        EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 70),
                     itemBuilder: (_, index) {
                       DTChatMessageModel data = msgListing[index];
                       var isMe = data.Sender_id == sender_id;
@@ -188,7 +212,9 @@ class DTChatScreenState extends State<DTChatScreen> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
-                    decoration: BoxDecoration(color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        boxShadow: defaultBoxShadow()),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -198,14 +224,20 @@ class DTChatScreenState extends State<DTChatScreen> {
                           autofocus: true,
                           textCapitalization: TextCapitalization.sentences,
                           textInputAction: TextInputAction.done,
-                          decoration: InputDecoration.collapsed(hintText: personName!.isNotEmpty ? 'Write to $personName' : 'Type a message', hintStyle: primaryTextStyle()),
+                          decoration: InputDecoration.collapsed(
+                              hintText: personName!.isNotEmpty
+                                  ? 'Write to $personName'
+                                  : 'Type a message',
+                              hintStyle: primaryTextStyle()),
                           style: primaryTextStyle(),
                           onSubmitted: (s) {
                             sendClick();
                           },
                         ).expand(),
                         IconButton(
-                          icon: Icon(Icons.send, size: 25, color: appStore.iconColor),
+                          icon: Icon(Icons.send,
+                              size: 25,
+                              color: Theme.of(context).colorScheme.primary),
                           onPressed: () async {
                             sendClick();
                           },

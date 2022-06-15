@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class RoleSelection extends StatefulWidget {
@@ -45,7 +44,8 @@ class _RoleSelectionState extends State<RoleSelection> {
 
   ElevatedButton providerSelector() {
     final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 12), primary: appColorPrimaryDark);
+        textStyle: const TextStyle(fontSize: 12),
+        primary: Theme.of(context).colorScheme.primary);
 
     return ElevatedButton(
         style: providerStyle,
@@ -66,7 +66,7 @@ class _RoleSelectionState extends State<RoleSelection> {
   ElevatedButton buyerSelector() {
     final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 12),
-        primary: appIconTintDark_purple);
+        primary: Theme.of(context).colorScheme.onPrimary);
 
     return ElevatedButton(
         style: buyerStyle,

@@ -45,7 +45,7 @@ class CWSliderScreenState extends State<CWSliderScreen> {
               style: primaryTextStyle(),
             ).paddingOnly(top: 12, left: 12, right: 12),
             Card(
-                color: appStore.appBarColor,
+                color: Theme.of(context).colorScheme.primary,
                 margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
                 elevation: 2.0,
                 shadowColor: Colors.black,
@@ -54,7 +54,8 @@ class CWSliderScreenState extends State<CWSliderScreen> {
                       min: 0.0,
                       max: 100.0,
                       value: progressValue,
-                      activeColor: appStore.textPrimaryColor,
+                      activeColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                       onChanged: (val) {
                         progressValue = val;
                         setState(() {});
@@ -69,7 +70,7 @@ class CWSliderScreenState extends State<CWSliderScreen> {
               style: primaryTextStyle(),
             ).paddingOnly(top: 12, left: 12, right: 12),
             Card(
-                color: appStore.appBarColor,
+                color: Theme.of(context).colorScheme.primary,
                 margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
                 elevation: 2.0,
                 shadowColor: Colors.black,
@@ -79,7 +80,8 @@ class CWSliderScreenState extends State<CWSliderScreen> {
                       max: 100.0,
                       divisions: 10,
                       thumbColor: getColorFromHex('#8998FF'),
-                      activeColor: appStore.textPrimaryColor,
+                      activeColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                       value: divisionsProgressValue,
                       onChanged: (val) {
                         divisionsProgressValue = val;

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class AMAnimatedCrossFadeScreen extends StatefulWidget {
   static String tag = '/AMAnimatedCrossFadeScreen';
 
   @override
-  AMAnimatedCrossFadeScreenState createState() => AMAnimatedCrossFadeScreenState();
+  AMAnimatedCrossFadeScreenState createState() =>
+      AMAnimatedCrossFadeScreenState();
 }
 
 class AMAnimatedCrossFadeScreenState extends State<AMAnimatedCrossFadeScreen> {
@@ -45,12 +44,13 @@ class AMAnimatedCrossFadeScreenState extends State<AMAnimatedCrossFadeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: appStore.scaffoldBackground,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           appBar: appBar(context, 'Animated Cross Fade'),
           body: Center(
             child: AnimatedCrossFade(
               duration: Duration(seconds: 3),
-              firstChild: FlutterLogo(style: FlutterLogoStyle.horizontal, size: 150.0),
+              firstChild:
+                  FlutterLogo(style: FlutterLogoStyle.horizontal, size: 150.0),
               secondChild: FlutterLogo(size: 150.0),
               crossFadeState: _crossFadeState,
             ),

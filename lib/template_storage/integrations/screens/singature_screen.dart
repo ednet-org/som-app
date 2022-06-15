@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:signature/signature.dart';
 
@@ -17,7 +16,7 @@ class SignatureScreenState extends State<SignatureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Signature Pad"),
@@ -30,7 +29,7 @@ class SignatureScreenState extends State<SignatureScreen> {
               padding: const EdgeInsets.all(24.0),
               child: MaterialButton(
                 padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
-                color: appColorPrimary,
+                color: Theme.of(context).primaryColor,
                 onPressed: () {
                   setState(() {
                     controller.clear();

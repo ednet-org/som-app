@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
@@ -64,7 +63,7 @@ class CWTabBarScreen3State extends State<CWTabBarScreen3> {
         body: CupertinoTabScaffold(
           resizeToAvoidBottomInset: true,
           tabBar: CupertinoTabBar(
-            backgroundColor: appStore.appBarColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             onTap: (i) {
               selectIndex = i;
               setState(() {});
@@ -85,7 +84,7 @@ class CWTabBarScreen3State extends State<CWTabBarScreen3> {
                       shape: BoxShape.circle,
                       border: Border.all(
                           color: selectIndex == 3
-                              ? appColorPrimary
+                              ? Theme.of(context).primaryColor
                               : Colors.transparent,
                           width: 2)),
                   child: CachedNetworkImage(
@@ -95,7 +94,7 @@ class CWTabBarScreen3State extends State<CWTabBarScreen3> {
                 ),
               ),
             ],
-            activeColor: appColorPrimary,
+            activeColor: Theme.of(context).primaryColor,
             inactiveColor: Colors.grey,
           ),
           tabBuilder: (BuildContext context, int index) {

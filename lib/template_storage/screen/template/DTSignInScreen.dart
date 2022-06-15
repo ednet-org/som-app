@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/screen/template/DTForgotPwdScreen.dart';
 import 'package:som/ui/components/MainMenu.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
-import 'package:som/template_storage/screen/template/DTForgotPwdScreen.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 
 class DTSignInScreen extends StatefulWidget {
   static String tag = '/DTSignInScreen';
@@ -53,8 +51,8 @@ class DTSignInScreenState extends State<DTSignInScreen> {
           width: dynamicWidth(context),
           child: Form(
             key: formKey,
-           autovalidateMode: AutovalidateMode.onUserInteraction,
-           child: SingleChildScrollView(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +68,16 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       contentPadding: EdgeInsets.all(16),
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer!)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
@@ -79,7 +85,8 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       if (!s.trim().validateEmail()) return 'Email is invalid';
                       return null;
                     },
-                    onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(passFocus),
+                    onFieldSubmitted: (s) =>
+                        FocusScope.of(context).requestFocus(passFocus),
                     textInputAction: TextInputAction.next,
                   ),
                   16.height,
@@ -93,9 +100,20 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       contentPadding: EdgeInsets.all(16),
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                      suffix: Icon(!obscureText ? Icons.visibility : Icons.visibility_off).onTap(() {
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer!)),
+                      suffix: Icon(!obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off)
+                          .onTap(() {
                         obscureText = !obscureText;
                         setState(() {});
                       }),
@@ -112,15 +130,21 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                     child: Container(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
                       alignment: Alignment.topRight,
-                      child: Text("Forgot Password?", style: boldTextStyle(color: appColorPrimary)),
+                      child: Text("Forgot Password?",
+                          style: boldTextStyle(
+                              color: Theme.of(context).primaryColor)),
                     ),
                   ),
                   16.height,
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
-                    child: Text('Sign In', style: boldTextStyle(color: white, size: 18)),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: defaultBoxShadow()),
+                    child: Text('Sign In',
+                        style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     finish(context);
                     DashboardPage().launch(context);
@@ -138,8 +162,12 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
-                    child: Text('Sign Up', style: boldTextStyle(color: white, size: 18)),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: defaultBoxShadow()),
+                    child: Text('Sign Up',
+                        style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     CustomerLoginPage().launch(context);
                   }),
@@ -152,25 +180,38 @@ class DTSignInScreenState extends State<DTSignInScreen> {
                       Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
-                        child: Icon(MaterialCommunityIcons.google_glass, color: white),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: defaultBoxShadow(),
+                            shape: BoxShape.circle),
+                        child: Icon(MaterialCommunityIcons.google_glass,
+                            color: white),
                       ),
                       Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: defaultBoxShadow(),
+                            shape: BoxShape.circle),
                         child: Icon(FontAwesome.facebook, color: white),
                       ),
                       Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: defaultBoxShadow(),
+                            shape: BoxShape.circle),
                         child: Icon(Feather.twitter, color: white),
                       ),
                       Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        decoration: BoxDecoration(color: appColorPrimary, boxShadow: defaultBoxShadow(), shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: defaultBoxShadow(),
+                            shape: BoxShape.circle),
                         child: Icon(Feather.linkedin, color: white),
                       ),
                     ],

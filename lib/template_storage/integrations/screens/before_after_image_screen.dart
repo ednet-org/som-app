@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/beforeAfter/BeforeAfter.dart';
 
@@ -14,7 +13,7 @@ class BeforeAfterImageScreen extends StatefulWidget {
 class BeforeAfterImageScreenState extends State<BeforeAfterImageScreen> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
     return Scaffold(
       appBar: appBar(context, "Before After Image"),
       body: Center(

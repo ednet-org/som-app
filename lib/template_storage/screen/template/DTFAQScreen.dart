@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/screen/template/DTFAQDetailScreen.dart';
-import 'package:som/ui/components/utils/DTWidgets.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/screen/template/DTFAQDetailScreen.dart';
+import 'package:som/ui/components/utils/DTWidgets.dart';
 
-import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
 
 class DTFAQScreen extends StatefulWidget {
@@ -61,7 +60,8 @@ class DTFAQScreenState extends State<DTFAQScreen> {
               padding: EdgeInsets.all(8),
               margin: EdgeInsets.only(top: 8, bottom: 8),
               decoration: BoxDecoration(
-                  color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
+                  color: Theme.of(context).colorScheme.primary,
+                  boxShadow: defaultBoxShadow()),
               width: context.width(),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,7 +71,8 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                     child: Text(LoremText,
                         style: primaryTextStyle(size: 14), maxLines: 2),
                   ),
-                  Icon(Icons.chevron_right, color: appStore.iconColor)
+                  Icon(Icons.chevron_right,
+                      color: Theme.of(context).colorScheme.primary)
                 ],
               ).paddingAll(8),
             ),
@@ -93,7 +94,8 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                 child: Container(
                   height: 200,
                   width: context.width(),
-                  decoration: BoxDecoration(gradient: defaultThemeGradient()),
+                  decoration:
+                      BoxDecoration(gradient: defaultThemeGradient(context)),
                   padding: EdgeInsets.only(left: 20, right: 20),
                   alignment: Alignment.center,
                   child: Text('How can we help you?',
@@ -107,7 +109,7 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                   width: context.width(),
                   height: context.height() - 268,
                   decoration: BoxDecoration(
-                    color: appStore.scaffoldBackground,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(14),
                         topRight: Radius.circular(14)),
@@ -139,10 +141,14 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                                       left: 8, right: 8, top: 4, bottom: 4),
                                   decoration: BoxDecoration(
                                     gradient: selectIndex == index
-                                        ? defaultThemeGradient()
+                                        ? defaultThemeGradient(context)
                                         : LinearGradient(colors: [
-                                            appStore.appBarColor!,
-                                            appStore.appBarColor!
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .tertiaryContainer,
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .tertiaryContainer
                                           ]),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(30)),
@@ -155,7 +161,9 @@ class DTFAQScreenState extends State<DTFAQScreen> {
                                         size: 14,
                                         color: selectIndex == index
                                             ? white
-                                            : appStore.textPrimaryColor),
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),

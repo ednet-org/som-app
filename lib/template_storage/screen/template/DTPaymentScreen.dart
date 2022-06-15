@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/screen/template/DTPaymentProcessScreen.dart';
 import 'package:som/ui/components/utils/ExpirationTextField.dart';
 import 'package:som/ui/components/utils/FlipCard.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
 
 class DTPaymentScreen extends StatefulWidget {
@@ -75,11 +73,15 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                     child: FlipCard(
                       key: cardKey,
                       front: Container(
-                        decoration: BoxDecoration(color: appColorPrimary.withOpacity(0.5), borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(8)),
                         child: Stack(
                           children: [
                             Positioned(
-                              child: Image.asset('images/template_storage/ic_mastercard.png'),
+                              child: Image.asset(
+                                  'images/template_storage/ic_mastercard.png'),
                               height: 40,
                               right: 8,
                               top: 8,
@@ -90,20 +92,27 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                               children: [
                                 FittedBox(
                                   child: Text(
-                                    cardNumberCont.text.padRight(16, '*').replaceAllMapped(RegExp(r".{4}"), (match) => "${match.group(0)} "),
+                                    cardNumberCont.text
+                                        .padRight(16, '*')
+                                        .replaceAllMapped(RegExp(r".{4}"),
+                                            (match) => "${match.group(0)} "),
                                     style: boldTextStyle(size: 24),
                                   ),
                                 ),
                                 30.height,
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Card Holder', style: primaryTextStyle(size: 16)),
-                                    Text('Expiry', style: primaryTextStyle(size: 16)),
+                                    Text('Card Holder',
+                                        style: primaryTextStyle(size: 16)),
+                                    Text('Expiry',
+                                        style: primaryTextStyle(size: 16)),
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       cardHolderCont.text,
@@ -111,7 +120,8 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ).expand(),
-                                    Text(expiryDateCont.text, style: boldTextStyle(size: 24)),
+                                    Text(expiryDateCont.text,
+                                        style: boldTextStyle(size: 24)),
                                   ],
                                 ),
                               ],
@@ -120,7 +130,10 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         ),
                       ),
                       back: Container(
-                        decoration: BoxDecoration(color: appColorPrimary.withOpacity(0.5), borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,9 +142,13 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                             20.height,
                             Row(
                               children: [
-                                Container(height: 40, color: Colors.black38, width: (dynamicWidth(context)) * 0.6),
+                                Container(
+                                    height: 40,
+                                    color: Colors.black38,
+                                    width: (dynamicWidth(context)) * 0.6),
                                 20.width,
-                                Text(securityCodeCont.text, style: boldTextStyle(size: 24)),
+                                Text(securityCodeCont.text,
+                                    style: boldTextStyle(size: 24)),
                               ],
                             ),
                             20.height,
@@ -150,8 +167,14 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                       labelText: 'Card Number',
                       counterText: '',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer!)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
                       labelStyle: secondaryTextStyle(),
                     ),
                     maxLength: 16,
@@ -174,8 +197,14 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Expiry Date',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer!)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
                         ),
@@ -190,8 +219,8 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Expiry Date',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor)),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).colorScheme.onSecondaryContainer)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
                         ),
@@ -212,8 +241,14 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                         decoration: InputDecoration(
                           labelText: 'Security Code',
                           border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer!)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
                           labelStyle: secondaryTextStyle(),
                           counterText: '',
                         ),
@@ -236,8 +271,14 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                     decoration: InputDecoration(
                       labelText: 'Card Holder',
                       border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appColorPrimary)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer!)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
                       labelStyle: secondaryTextStyle(),
                     ),
                     onChanged: (s) {
@@ -248,8 +289,10 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(12),
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appColorPrimary),
-                    child: Text('Proceed to Pay', style: boldTextStyle(color: white)),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor: Theme.of(context).primaryColor),
+                    child: Text('Proceed to Pay',
+                        style: boldTextStyle(color: white)),
                   ).onTap(() {
                     hideKeyboard(context);
 
@@ -269,9 +312,11 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                                 children: [
                                   Container(
                                     height: 60,
-                                    decoration: boxDecorationWithRoundedCorners(backgroundColor: Colors.green),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        backgroundColor: Colors.green),
                                     alignment: Alignment.center,
-                                    child: Text('Success', style: boldTextStyle(color: white)),
+                                    child: Text('Success',
+                                        style: boldTextStyle(color: white)),
                                   ).onTap(() {
                                     finish(context);
                                     DTPaymentProcessScreen(
@@ -281,9 +326,11 @@ class DTPaymentScreenState extends State<DTPaymentScreen> {
                                   16.width,
                                   Container(
                                     height: 60,
-                                    decoration: boxDecorationWithRoundedCorners(backgroundColor: Colors.red),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        backgroundColor: Colors.red),
                                     alignment: Alignment.center,
-                                    child: Text('Fail', style: boldTextStyle(color: white)),
+                                    child: Text('Fail',
+                                        style: boldTextStyle(color: white)),
                                   ).onTap(() {
                                     finish(context);
                                     DTPaymentProcessScreen(

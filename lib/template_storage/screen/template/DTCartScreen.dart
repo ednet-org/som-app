@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/components/utils/DTDataProvider.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/components/utils/DTDataProvider.dart';
 
-import 'CartListView.dart';
 import '../../../ui/components/MainMenu.dart';
+import 'CartListView.dart';
 import 'DTOrderSummaryScreen.dart';
 
 class DTCartScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class DTCartScreenState extends State<DTCartScreen> {
       return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(12),
-        decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appColorPrimary),
+        decoration: boxDecorationRoundedWithShadow(8, backgroundColor: Theme.of(context).primaryColor),
         child: Text('Checkout', style: boldTextStyle(color: white)),
       ).onTap(() {
         DTOrderSummaryScreen(getCartProducts()).launch(context);

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -43,11 +42,15 @@ class CWAlertDialogScreenState extends State<CWAlertDialogScreen> {
                 child: CupertinoAlertDialog(
                   title: Text(
                     'Logout?',
-                    style: boldTextStyle(color: appStore.textPrimaryColor, size: 18),
+                    style: boldTextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 18),
                   ),
                   content: Text(
                     'Are you sure want to logout?',
-                    style: secondaryTextStyle(color: appStore.textPrimaryColor, size: 16),
+                    style: secondaryTextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 16),
                   ),
                   actions: [
                     CupertinoDialogAction(
@@ -82,11 +85,15 @@ class CWAlertDialogScreenState extends State<CWAlertDialogScreen> {
                 child: CupertinoAlertDialog(
                   title: Text(
                     'Allow "Maps to access your location while you use the app?',
-                    style: boldTextStyle(color: appStore.textPrimaryColor, size: 18),
+                    style: boldTextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 18),
                   ),
                   content: Text(
                     'your current location will be displayed on the map and used for directions,nearby search results, and estimated travel times',
-                    style: secondaryTextStyle(color: appStore.textPrimaryColor, size: 16),
+                    style: secondaryTextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 16),
                   ),
                   actions: [
                     CupertinoDialogAction(
@@ -121,7 +128,9 @@ class CWAlertDialogScreenState extends State<CWAlertDialogScreen> {
                 child: CupertinoAlertDialog(
                   title: Text(
                     'Select favorite Desert',
-                    style: boldTextStyle(color: appStore.textPrimaryColor, size: 18),
+                    style: boldTextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 18),
                   ),
                   actions: [
                     CupertinoDialogAction(

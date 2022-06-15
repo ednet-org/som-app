@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/integrations/utils/folding_cell_widget.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class FoldingCellScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class FoldingCellScreenState extends State<FoldingCellScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Folding Cell in ListView"),

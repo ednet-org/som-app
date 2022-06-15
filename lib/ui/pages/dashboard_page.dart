@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/main.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/MainMenu.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 
@@ -48,55 +47,54 @@ class DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return appStore.isAuthenticated
         ? SafeArea(
-            child: Observer(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  backgroundColor: appStore.appBarColor,
-                  title: appBarTitleWidget(context, 'Dashboard'),
-                  iconTheme: IconThemeData(color: appStore.iconColor),
-                  actions: [
-                    PopupMenuButton(
-                      color: appStore.appBarColor,
-                      child: userMenuItem(),
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                        PopupMenuItem(child: userMenuItem()),
-                        PopupMenuItem(
-                          child: ListTile(
-                            leading: Icon(Icons.notifications),
-                            title: Text('Notifications'),
-                          ),
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                title: appBarTitleWidget(context, 'Dashboard'),
+                iconTheme:
+                    IconThemeData(color: Theme.of(context).colorScheme.primary),
+                actions: [
+                  PopupMenuButton(
+                    color: Theme.of(context).colorScheme.primary,
+                    child: userMenuItem(),
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(child: userMenuItem()),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: Icon(Icons.notifications),
+                          title: Text('Notifications'),
                         ),
-                        PopupMenuItem(
-                          child: ListTile(
-                            leading: Icon(Icons.manage_accounts),
-                            title: Text('User account'),
-                          ),
+                      ),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: Icon(Icons.manage_accounts),
+                          title: Text('User account'),
                         ),
-                        PopupMenuItem(
-                          child: ListTile(
-                            leading: Icon(Icons.settings_applications),
-                            title: Text('App configuration'),
-                          ),
+                      ),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: Icon(Icons.settings_applications),
+                          title: Text('App configuration'),
                         ),
-                        PopupMenuDivider(),
-                        PopupMenuItem(
-                          child: ListTile(
-                            leading: Icon(Icons.logout),
-                            title: Text('Logout'),
-                            onTap: () {
-                              appStore.logout();
-                              CustomerLoginPage().launch(context);
-                            },
-                          ),
+                      ),
+                      PopupMenuDivider(),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: Icon(Icons.logout),
+                          title: Text('Logout'),
+                          onTap: () {
+                            appStore.logout();
+                            CustomerLoginPage().launch(context);
+                          },
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                drawer: MainMenu(),
-                body: Text(''),
-                // body: DTDashboardWidget(),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+              drawer: MainMenu(),
+              body: Text(''),
+              // body: DTDashboardWidget(),
             ),
           )
         : CustomerLoginPage();

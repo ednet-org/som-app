@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTAddressListModel.dart';
 import 'package:som/template_storage/model/DTProductModel.dart';
 import 'package:som/template_storage/screen/template/DTAddressScreen.dart';
 import 'package:som/template_storage/screen/template/DTPaymentScreen.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../main.dart';
-import 'CartListView.dart';
 import '../../../ui/components/MainMenu.dart';
+import 'CartListView.dart';
 
 // ignore: must_be_immutable
 class DTOrderSummaryScreen extends StatefulWidget {
@@ -49,7 +47,8 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
 
   init() async {
     DateTime dateTime = DateTime.now();
-    expectedDelivery = '${dateTime.day + 2} ${getMonth(dateTime.month)}, ${dateTime.year}';
+    expectedDelivery =
+        '${dateTime.day + 2} ${getMonth(dateTime.month)}, ${dateTime.year}';
 
     calculate();
   }
@@ -79,7 +78,8 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
     Widget addressView() {
       return Container(
         padding: EdgeInsets.all(8),
-        decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+        decoration: boxDecorationRoundedWithShadow(8,
+            backgroundColor: Theme.of(context).colorScheme.tertiaryContainer),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -94,11 +94,15 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
                     Container(
                       child: Text('Home', style: secondaryTextStyle()),
                       padding: EdgeInsets.only(left: 8, right: 8),
-                      decoration: BoxDecoration(color: Theme.of(context).dividerColor.withOpacity(0.5), borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).dividerColor.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                   ],
                 ),
-                Icon(Icons.phone, color: appColorPrimary).onTap(() {
+                Icon(Icons.phone, color: Theme.of(context).primaryColor)
+                    .onTap(() {
                   launch('tel:+913972847376');
                 }),
               ],
@@ -107,7 +111,8 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
             Text(address2!, style: primaryTextStyle()),
             6.height,
             Text('Change', style: secondaryTextStyle()).onTap(() async {
-              DTAddressListModel? data = await DTAddressScreen().launch(context);
+              DTAddressListModel? data =
+                  await DTAddressScreen().launch(context);
 
               if (data != null) {
                 name = data.name;
@@ -139,16 +144,20 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
         children: [
           Row(
             children: [
-              Icon(Feather.truck, size: 26, color: appColorPrimary),
+              Icon(Feather.truck,
+                  size: 26, color: Theme.of(context).primaryColor),
               10.width,
-              Text('Expected Delivery - $expectedDelivery', style: boldTextStyle(), maxLines: 1).expand(),
+              Text('Expected Delivery - $expectedDelivery',
+                      style: boldTextStyle(), maxLines: 1)
+                  .expand(),
             ],
           ),
           20.height,
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(12),
-            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appColorPrimary),
+            decoration: boxDecorationRoundedWithShadow(8,
+                backgroundColor: Theme.of(context).primaryColor),
             child: Text('Continue to Pay', style: boldTextStyle(color: white)),
           ).onTap(() {
             DTPaymentScreen().launch(context);
@@ -206,7 +215,8 @@ class DTOrderSummaryScreenState extends State<DTOrderSummaryScreen> {
             child: Column(
               children: [
                 20.height,
-                totalAmountWidget(subTotal, shippingCharges, totalAmount),
+                totalAmountWidget(
+                    context, subTotal, shippingCharges, totalAmount),
                 Divider(height: 20),
                 deliveryDateAndPayBtn(),
               ],

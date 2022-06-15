@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import '../../../main.dart';
@@ -13,7 +12,7 @@ class AMAnimatedContainerScreen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Animated Container'),
         body: SingleChildScrollView(
           child: Padding(
@@ -31,7 +30,8 @@ class AnimatedContainerDemo extends StatefulWidget {
   _AnimatedContainerDemoState createState() => _AnimatedContainerDemoState();
 }
 
-class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with TickerProviderStateMixin {
+class _AnimatedContainerDemoState extends State<AnimatedContainerDemo>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   bool selected = false;
   bool mShapeSelected = false;
@@ -45,9 +45,6 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
     init();
   }
 
-  var mColorPrimary = appColorPrimary;
-  final mDividerColor = appDividerColor;
-
   init() async {
     _controller = AnimationController(
       duration: Duration(seconds: 2),
@@ -56,7 +53,6 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
 
     _controller.addListener(() {
       setState(() {
-        mColorPrimary = mDividerColor;
         _controller.forward();
       });
     });
@@ -82,7 +78,7 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
               animation: _controller,
               builder: (BuildContext context, Widget? child) {
                 return AnimatedContainer(
-                  color: mColorPrimary,
+                  color: Theme.of(context).primaryColor,
                   duration: Duration(seconds: 2),
                   child: Container(
                     width: 100,
@@ -127,7 +123,9 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
               width: mShapeSelected ? 150.0 : 100.0,
               height: mShapeSelected ? 150.0 : 100.0,
               color: mShapeSelected ? Colors.blueGrey : Colors.green,
-              alignment: mShapeSelected ? Alignment.center : AlignmentDirectional.topCenter,
+              alignment: mShapeSelected
+                  ? Alignment.center
+                  : AlignmentDirectional.topCenter,
               duration: Duration(seconds: 2),
               curve: Curves.fastOutSlowIn,
               child: Container(),
@@ -145,13 +143,15 @@ class _AnimatedContainerDemoState extends State<AnimatedContainerDemo> with Tick
               });
             },
             child: AnimatedContainer(
-              width: mProgressSelected ? MediaQuery.of(context).size.width : 100.0,
+              width:
+                  mProgressSelected ? MediaQuery.of(context).size.width : 100.0,
               height: 10,
               decoration: BoxDecoration(
                 color: Color(0xFF0099EE),
                 borderRadius: BorderRadius.circular(8),
               ),
-              alignment: mProgressSelected ? Alignment.topLeft : Alignment.topRight,
+              alignment:
+                  mProgressSelected ? Alignment.topLeft : Alignment.topRight,
               duration: Duration(seconds: 3),
               curve: Curves.fastOutSlowIn,
               child: Container(),

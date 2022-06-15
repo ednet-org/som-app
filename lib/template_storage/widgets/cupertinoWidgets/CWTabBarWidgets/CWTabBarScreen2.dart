@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
-import 'package:som/main.dart';
 
 class CWTabBarScreen2 extends StatefulWidget {
   static const tag = '/CWTabBarScreen2';
@@ -59,7 +57,7 @@ class CWTabBarScreen2State extends State<CWTabBarScreen2> {
         appBar: appBar(context, 'TabBar with Label & Icon'),
         body: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: appStore.appBarColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -78,7 +76,7 @@ class CWTabBarScreen2State extends State<CWTabBarScreen2> {
                 label: 'Profile',
               ),
             ],
-            activeColor: appColorPrimary,
+            activeColor: Theme.of(context).primaryColor,
             inactiveColor: Colors.grey,
           ),
           tabBuilder: (BuildContext context, int index) {

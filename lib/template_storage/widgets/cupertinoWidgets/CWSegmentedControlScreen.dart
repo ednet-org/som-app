@@ -1,29 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
 class CWSegmentedControlScreen extends StatefulWidget {
   static String tag = '/CWSegmentedControlScreen';
 
   @override
-  CWSegmentedControlScreenState createState() => CWSegmentedControlScreenState();
+  CWSegmentedControlScreenState createState() =>
+      CWSegmentedControlScreenState();
 }
 
 class CWSegmentedControlScreenState extends State<CWSegmentedControlScreen> {
   int selectedValue = 0;
 
-  final Map<int, Widget> sWidget = <int, Widget>{0: Text("Home", style: primaryTextStyle()), 1: Text("Search", style: primaryTextStyle()), 2: Text("Profile", style: primaryTextStyle())};
+  final Map<int, Widget> sWidget = <int, Widget>{
+    0: Text("Home", style: primaryTextStyle()),
+    1: Text("Search", style: primaryTextStyle()),
+    2: Text("Profile", style: primaryTextStyle())
+  };
 
   static Widget giveCenter(String yourText) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         12.height,
-        Text("$yourText", style: boldTextStyle()).paddingOnly(left: 16, right: 16),
+        Text("$yourText", style: boldTextStyle())
+            .paddingOnly(left: 16, right: 16),
         Padding(
           padding: EdgeInsets.only(left: 16, right: 16, top: 8),
           child: Text(
@@ -36,7 +41,11 @@ class CWSegmentedControlScreenState extends State<CWSegmentedControlScreen> {
     );
   }
 
-  List<Widget> view = [giveCenter("Home Page"), giveCenter("Search Page"), giveCenter("Profile Page")];
+  List<Widget> view = [
+    giveCenter("Home Page"),
+    giveCenter("Search Page"),
+    giveCenter("Profile Page")
+  ];
 
   @override
   void initState() {
@@ -56,9 +65,21 @@ class CWSegmentedControlScreenState extends State<CWSegmentedControlScreen> {
   @override
   Widget build(BuildContext context) {
     final Map<int, Widget> sWidget = <int, Widget>{
-      0: Text("Home", style: primaryTextStyle(color: selectedValue == 0 ? white : appStore.textPrimaryColor)),
-      1: Text("Search", style: primaryTextStyle(color: selectedValue == 1 ? white : appStore.textPrimaryColor)),
-      2: Text("Profile", style: primaryTextStyle(color: selectedValue == 2 ? white : appStore.textPrimaryColor))
+      0: Text("Home",
+          style: primaryTextStyle(
+              color: selectedValue == 0
+                  ? white
+                  : Theme.of(context).colorScheme.onPrimaryContainer)),
+      1: Text("Search",
+          style: primaryTextStyle(
+              color: selectedValue == 1
+                  ? white
+                  : Theme.of(context).colorScheme.onPrimaryContainer)),
+      2: Text("Profile",
+          style: primaryTextStyle(
+              color: selectedValue == 2
+                  ? white
+                  : Theme.of(context).colorScheme.onPrimaryContainer))
     };
 
     return Scaffold(
@@ -68,11 +89,11 @@ class CWSegmentedControlScreenState extends State<CWSegmentedControlScreen> {
         children: [
           16.height,
           Container(
-            color: appStore.appBarColor,
+            color: Theme.of(context).colorScheme.primary,
             width: context.width(),
             child: CupertinoSegmentedControl(
-              borderColor: appColorPrimary,
-              selectedColor: appColorPrimary,
+              borderColor: Theme.of(context).primaryColor,
+              selectedColor: Theme.of(context).primaryColor,
               groupValue: selectedValue,
               onValueChanged: (dynamic val) {
                 setState(() {

@@ -60,10 +60,17 @@ class _SHomePageState extends State<SHomePage> {
             return isActive!
                 ? SizedBox(
                     child: Shimmer.fromColors(
-                      baseColor: appStore.isDarkModeOn ? Colors.black12 : Colors.grey[400],
-                      highlightColor: appStore.isDarkModeOn ? Colors.white12 : Colors.grey[100],
+                      baseColor: appStore.isDarkModeOn
+                          ? Colors.black12
+                          : Colors.grey[400],
+                      highlightColor: appStore.isDarkModeOn
+                          ? Colors.white12
+                          : Colors.grey[100],
                       child: Container(
-                        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black, width: 1.0))),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.black, width: 1.0))),
                         margin: EdgeInsets.only(top: 15),
                         child: Column(
                           children: <Widget>[
@@ -75,7 +82,9 @@ class _SHomePageState extends State<SHomePage> {
                                   margin: EdgeInsets.only(left: 15, right: 10),
                                   height: 40,
                                   width: 40,
-                                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white),
                                 ),
                                 Expanded(
                                   child: Container(
@@ -102,7 +111,8 @@ class _SHomePageState extends State<SHomePage> {
                     ),
                   )
                 : Container(
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
+                    decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.grey))),
                     margin: EdgeInsets.only(top: 15),
                     child: Column(
                       children: <Widget>[
@@ -117,26 +127,33 @@ class _SHomePageState extends State<SHomePage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image: CachedNetworkImageProvider(feed1[index].profileImg!),
+                                  image: CachedNetworkImageProvider(
+                                      feed1[index].profileImg!),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Container(
                                 padding: EdgeInsets.only(left: 10),
-                                child: Text(feed1[index].name!, style: primaryTextStyle()),
+                                child: Text(feed1[index].name!,
+                                    style: primaryTextStyle()),
                               ),
                             ),
                             Container(
                               margin: EdgeInsets.only(right: 10),
-                              child: Icon(Icons.more_vert, color: appStore.iconColor),
+                              child: Icon(Icons.more_vert,
+                                  color: Theme.of(context).colorScheme.primary),
                             )
                           ],
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 15),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                          child: CachedNetworkImage(placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?, imageUrl: feed1[index].feedImage!),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15)),
+                          child: CachedNetworkImage(
+                              placeholder: placeholderWidgetFn() as Widget
+                                  Function(BuildContext, String)?,
+                              imageUrl: feed1[index].feedImage!),
                         )
                       ],
                     ),

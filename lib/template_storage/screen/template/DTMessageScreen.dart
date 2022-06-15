@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTChatMessageModel.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class DTMessageScreen extends StatefulWidget {
   static String tag = '/DTMessageScreen';
@@ -52,7 +51,9 @@ class _DTMessageScreenState extends State<DTMessageScreen> {
     Widget textFieldWidget() {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
-        decoration: BoxDecoration(color: appStore.appBarColor, boxShadow: defaultBoxShadow()),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            boxShadow: defaultBoxShadow()),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,11 +68,14 @@ class _DTMessageScreenState extends State<DTMessageScreen> {
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
                   minLines: 1,
-                  decoration: InputDecoration.collapsed(hintText: 'Write to $personName', hintStyle: primaryTextStyle()),
+                  decoration: InputDecoration.collapsed(
+                      hintText: 'Write to $personName',
+                      hintStyle: primaryTextStyle()),
                   style: primaryTextStyle(),
                 ).expand(),
                 IconButton(
-                  icon: Icon(Icons.send, size: 25, color: appStore.iconColor),
+                  icon: Icon(Icons.send,
+                      size: 25, color: Theme.of(context).colorScheme.primary),
                   onPressed: () async {
                     DateFormat formatter = DateFormat('hh:mm a');
 

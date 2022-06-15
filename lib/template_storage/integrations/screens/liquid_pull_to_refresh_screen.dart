@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
@@ -26,13 +25,13 @@ class LiquidPullToRefreshScreenState extends State<LiquidPullToRefreshScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, 'Liquid Pull To Refresh'),
       body: LiquidPullToRefresh(
           key: refreshIndicatorKey,
-          color: appColorPrimary,
+          color: Theme.of(context).primaryColor,
           child: ListView.builder(
             itemBuilder: (context, index) {
               return Container(

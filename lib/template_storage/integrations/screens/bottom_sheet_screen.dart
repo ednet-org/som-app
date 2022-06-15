@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
@@ -35,7 +34,7 @@ class BottomSheetScreenState extends State<BottomSheetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Bottom Sheet"),
@@ -45,7 +44,7 @@ class BottomSheetScreenState extends State<BottomSheetScreen> {
           shrinkWrap: true,
           children: <Widget>[
             MaterialButton(
-              color: appColorPrimary,
+              color: Theme.of(context).primaryColor,
               onPressed: () => showBottomSheetDialog(context),
               child: Text('Show BottomSheet', style: primaryTextStyle()),
             )

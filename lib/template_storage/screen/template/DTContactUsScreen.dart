@@ -3,8 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
 
@@ -66,7 +64,8 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
               margin: EdgeInsets.all(16),
               height: 50,
               decoration: boxDecorationRoundedWithShadow(8,
-                  backgroundColor: appStore.scaffoldBackground!),
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer!),
               child: TextFormField(
                 controller: searchCont,
                 style: primaryTextStyle(),
@@ -75,8 +74,10 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                   hintStyle: primaryTextStyle(),
                   contentPadding: EdgeInsets.all(16),
                   labelStyle: secondaryTextStyle(),
-                  suffixIcon: Icon(Icons.near_me, color: appColorPrimary),
-                  prefixIcon: Icon(Icons.search, color: appStore.iconColor),
+                  suffixIcon: Icon(Icons.near_me,
+                      color: Theme.of(context).primaryColor),
+                  prefixIcon: Icon(Icons.search,
+                      color: Theme.of(context).colorScheme.primary),
                   border: InputBorder.none,
                 ),
                 keyboardType: TextInputType.name,
@@ -101,7 +102,8 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                         margin: EdgeInsets.all(16),
                         height: 180,
                         decoration: BoxDecoration(
-                            color: appStore.scaffoldBackground,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: Column(
                           children: [
@@ -110,14 +112,16 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Icon(Entypo.location_pin,
-                                    color: appStore.iconColor),
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                                 6.width,
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Headquarter',
                                         style: boldTextStyle(
-                                            color: appColorPrimary)),
+                                            color: Theme.of(context)
+                                                .primaryColor)),
                                     Text(
                                         '236, Erwin Brook Suite 688 \nNew York, NY 10007',
                                         style: secondaryTextStyle(size: 12)),
@@ -130,14 +134,16 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Icon(Entypo.location_pin,
-                                    color: appStore.iconColor),
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                                 6.width,
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Brooklyn office',
                                         style: boldTextStyle(
-                                            color: appColorPrimary)),
+                                            color: Theme.of(context)
+                                                .primaryColor)),
                                     Text(
                                         '469, Philip Underpass Suite 945 \nBrookiyn, NY 11213',
                                         style: secondaryTextStyle(size: 12)),
@@ -160,7 +166,7 @@ class DTContactUsScreenState extends State<DTContactUsScreen> {
                         width: 60,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            gradient: defaultThemeGradient(),
+                            gradient: defaultThemeGradient(context),
                             boxShadow: defaultBoxShadow()),
                         child:
                             Icon(EvilIcons.sc_telegram, color: white, size: 45)

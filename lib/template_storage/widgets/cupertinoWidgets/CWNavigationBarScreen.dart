@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class CWNavigationBarScreen extends StatefulWidget {
   static String tag = '/CWNavigationBarScreen';
 
@@ -43,10 +41,10 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
             children: [
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
-                backgroundColor: appStore.appBarColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 leading: CustomTheme(
                   child: CupertinoNavigationBarBackButton(
-                    color: appStore.iconColor,
+                    color: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       toast("Back button");
                     },
@@ -59,9 +57,9 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
               ),
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
-                backgroundColor: appStore.appBarColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 leading: CupertinoNavigationBarBackButton(
-                  color: appStore.iconColor,
+                  color: Theme.of(context).colorScheme.primary,
                   previousPageTitle: 'With Back Icon',
                   onPressed: () {
                     toast("Back button");
@@ -70,7 +68,7 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
               ),
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
-                backgroundColor: appStore.appBarColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 automaticallyImplyLeading: true,
                 leading: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -82,7 +80,7 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
                       },
                       child: Icon(
                         Icons.arrow_back,
-                        color: appStore.iconColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ],
@@ -99,7 +97,7 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
                     },
                     child: Icon(
                       Icons.settings,
-                      color: appStore.iconColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   onPressed: () {},
@@ -107,7 +105,7 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
               ),
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
-                backgroundColor: appStore.appBarColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 leading: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -115,7 +113,9 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
                       onTap: () {
                         toast("Drawer");
                       },
-                      child: Icon(Icons.menu, color: appStore.iconColor, size: 25),
+                      child: Icon(Icons.menu,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 25),
                     ),
                     8.width,
                     Expanded(child: Text("Page Title", style: boldTextStyle()))
@@ -128,24 +128,28 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
                       onTap: () {
                         toast("Search");
                       },
-                      child: Icon(Icons.search, color: appStore.iconColor, size: 25),
+                      child: Icon(Icons.search,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 25),
                     ),
                     16.width,
                     GestureDetector(
                       onTap: () {
                         toast("Menu");
                       },
-                      child: Icon(Icons.more_vert, color: appStore.iconColor, size: 25),
+                      child: Icon(Icons.more_vert,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 25),
                     ),
                   ],
                 ),
               ),
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
-                backgroundColor: appStore.appBarColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 leading: CupertinoNavigationBarBackButton(
                   previousPageTitle: 'With Single Action',
-                  color: appStore.iconColor,
+                  color: Theme.of(context).colorScheme.primary,
                   onPressed: () {
                     toast("Back button");
                   },
@@ -157,7 +161,8 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
                       toast("Profile");
                     },
                     child: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider('https://www.attractivepartners.co.uk/wp-content/uploads/2017/06/profile.jpg'),
+                      backgroundImage: CachedNetworkImageProvider(
+                          'https://www.attractivepartners.co.uk/wp-content/uploads/2017/06/profile.jpg'),
                     ),
                   ),
                   onPressed: () {},

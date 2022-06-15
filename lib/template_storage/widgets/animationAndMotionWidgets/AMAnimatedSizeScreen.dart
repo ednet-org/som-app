@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class AMAnimatedSizeScreen extends StatefulWidget {
   static String tag = '/AMAnimatedSizeScreen';
 
@@ -10,7 +8,8 @@ class AMAnimatedSizeScreen extends StatefulWidget {
   AMAnimatedSizeScreenState createState() => AMAnimatedSizeScreenState();
 }
 
-class AMAnimatedSizeScreenState extends State<AMAnimatedSizeScreen> with TickerProviderStateMixin {
+class AMAnimatedSizeScreenState extends State<AMAnimatedSizeScreen>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -43,7 +42,7 @@ class AMAnimatedSizeScreenState extends State<AMAnimatedSizeScreen> with TickerP
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Animated Size'),
         body: Center(
           child: GestureDetector(

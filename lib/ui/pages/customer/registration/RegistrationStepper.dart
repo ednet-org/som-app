@@ -4,8 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/countries.dart';
@@ -83,8 +81,10 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                             TextButton(
                               onPressed: details.onStepContinue,
                               child: Text('CONTINUE',
-                                  style:
-                                      secondaryTextStyle(color: actionColor)),
+                                  style: secondaryTextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary)),
                             ),
                             50.width,
                             TextButton(
@@ -282,7 +282,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 children: [
                   Theme(
                     data: Theme.of(context).copyWith(
-                        unselectedWidgetColor: appStore.textPrimaryColor),
+                        unselectedWidgetColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer),
                     child: Radio(
                       value: PaymentInterval.Monthly,
                       groupValue: request.company.providerData.paymentInterval,
@@ -303,7 +304,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           style: primaryTextStyle())),
                   Theme(
                     data: Theme.of(context).copyWith(
-                      unselectedWidgetColor: appStore.textPrimaryColor,
+                      unselectedWidgetColor:
+                          Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                     child: Radio(
                       value: PaymentInterval.Yearly,

@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/integrations/models/ContentModel.dart';
 import 'package:som/template_storage/integrations/utils/data_provider.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -15,7 +14,8 @@ class IntegrationHomePage extends StatefulWidget {
   IntegrationHomePageState createState() => IntegrationHomePageState();
 }
 
-class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayoutMixin<IntegrationHomePage> {
+class IntegrationHomePageState extends State<IntegrationHomePage>
+    with AfterLayoutMixin<IntegrationHomePage> {
   List<ContentModel> list = [];
   var isEnglishSelected = true;
   var isDarkThemeSelected = false;
@@ -43,7 +43,8 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
             Container(
               alignment: Alignment.centerLeft,
               decoration: boxDecorationWithShadow(
-                backgroundColor: appStore.scaffoldBackground!,
+                backgroundColor:
+                    Theme.of(context).colorScheme.primaryContainer!,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -63,8 +64,14 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
                     height: 25,
                     margin: EdgeInsets.only(right: 8),
                     padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    decoration: model.tag.isNotEmpty ? boxDecoration(bgColor: appDarkRed, radius: 4) : BoxDecoration(),
-                    child: text(model.tag, fontSize: textSizeSmall, textColor: whiteColor),
+                    decoration: model.tag.isNotEmpty
+                        ? boxDecoration(
+                            bgColor:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            radius: 4)
+                        : BoxDecoration(),
+                    child: text(model.tag,
+                        fontSize: textSizeSmall, textColor: whiteColor),
                   )
                 ],
               ),
@@ -98,8 +105,11 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
                     height: 80,
                     margin: EdgeInsets.only(right: 12),
                     padding: EdgeInsets.all(width / 25),
-                    decoration: BoxDecoration(color: item.bgColor, borderRadius: BorderRadius.all(Radius.circular(4))),
-                    child: Image.asset('images/integrations/icons/${item.icon}', height: 30, color: Colors.white),
+                    decoration: BoxDecoration(
+                        color: item.bgColor,
+                        borderRadius: BorderRadius.all(Radius.circular(4))),
+                    child: Image.asset('images/integrations/icons/${item.icon}',
+                        height: 30, color: Colors.white),
                   ),
                   Expanded(
                     child: Stack(
@@ -109,7 +119,12 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
                           height: 80,
                           padding: EdgeInsets.only(left: 16, right: 16),
                           margin: EdgeInsets.only(right: width / 28),
-                          decoration: boxDecoration(bgColor: appStore.scaffoldBackground, radius: 4, showShadow: true),
+                          decoration: boxDecoration(
+                              bgColor: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              radius: 4,
+                              showShadow: true),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -119,7 +134,8 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
                                 children: [
                                   Text(item.title, style: boldTextStyle()),
                                   4.height,
-                                  Text(item.subTitle.validate(), style: secondaryTextStyle(), maxLines: 1),
+                                  Text(item.subTitle.validate(),
+                                      style: secondaryTextStyle(), maxLines: 1),
                                 ],
                               ).expand(),
                             ],
@@ -128,8 +144,14 @@ class IntegrationHomePageState extends State<IntegrationHomePage> with AfterLayo
                         Container(
                           width: 30,
                           height: 30,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: item.bgColor),
-                          child: Icon(!item.isExpanded ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, size: 20, color: Colors.white),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: item.bgColor),
+                          child: Icon(
+                              !item.isExpanded
+                                  ? Icons.keyboard_arrow_right
+                                  : Icons.keyboard_arrow_down,
+                              size: 20,
+                              color: Colors.white),
                         )
                       ],
                     ),

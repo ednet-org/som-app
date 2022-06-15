@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 import 'package:som/template_storage/integrations/utils/styles.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class ShaderMaskScreen extends StatefulWidget {
@@ -75,7 +74,7 @@ class ShaderMaskScreenState extends State<ShaderMaskScreen> {
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-              decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.all(Radius.circular(10))),
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.all(Radius.circular(10))),
               child: textPrimary('Change Colors', aFontFamily: fontSemibold),
             ),
           )

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/components/utils/DTDataProvider.dart';
-import 'package:som/ui/components/utils/DTWidgets.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/rating_bar.dart';
+import 'package:som/ui/components/utils/DTDataProvider.dart';
+import 'package:som/ui/components/utils/DTWidgets.dart';
 
 import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
@@ -44,7 +44,9 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
           runAlignment: WrapAlignment.center,
           children: getProducts().map((data) {
             return Container(
-              decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+              decoration: boxDecorationRoundedWithShadow(8,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.tertiaryContainer),
               margin: EdgeInsets.all(8),
               //height: 200,
               width: 200,
@@ -65,7 +67,10 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                         Positioned(
                           right: 10,
                           top: 10,
-                          child: data.isLiked.validate() ? Icon(Icons.favorite, color: Colors.red, size: 16) : Icon(Icons.favorite_border, size: 16),
+                          child: data.isLiked.validate()
+                              ? Icon(Icons.favorite,
+                                  color: Colors.red, size: 16)
+                              : Icon(Icons.favorite_border, size: 16),
                         ),
                       ],
                     ),
@@ -76,7 +81,10 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(data.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(data.name!,
+                          style: primaryTextStyle(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
                       4.height,
                       Row(
                         children: [
@@ -90,15 +98,16 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                             size: 14,
                           ),
                           5.width,
-                          Text('${data.rating}', style: secondaryTextStyle(size: 12)),
+                          Text('${data.rating}',
+                              style: secondaryTextStyle(size: 12)),
                         ],
                       ),
                       4.height,
                       Row(
                         children: [
-                          priceWidget(data.discountPrice),
+                          priceWidget(context, data.discountPrice),
                           8.width,
-                          priceWidget(data.price, applyStrike: true),
+                          priceWidget(context, data.price, applyStrike: true),
                         ],
                       ),
                     ],
@@ -106,7 +115,8 @@ class DTCategoryDetailScreenState extends State<DTCategoryDetailScreen> {
                 ],
               ),
             ).onTap(() async {
-              int? index = await DTProductDetailScreen(productModel: data).launch(context);
+              int? index = await DTProductDetailScreen(productModel: data)
+                  .launch(context);
               if (index != null) appStore.setDrawerItemIndex(index);
             });
           }).toList(),

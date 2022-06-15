@@ -98,7 +98,7 @@ class CWPickerScreenState extends State<CWPickerScreen> {
           child: Column(
             children: [
               Container(
-                color: appStore.appBarColor,
+                color: Theme.of(context).colorScheme.primary,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -117,9 +117,12 @@ class CWPickerScreenState extends State<CWPickerScreen> {
               Container(
                 height: 200,
                 child: CupertinoTheme(
-                  data: CupertinoThemeData(textTheme: CupertinoTextThemeData(dateTimePickerTextStyle: primaryTextStyle(size: 20))),
+                  data: CupertinoThemeData(
+                      textTheme: CupertinoTextThemeData(
+                          dateTimePickerTextStyle: primaryTextStyle(size: 20))),
                   child: CupertinoDatePicker(
-                    backgroundColor: appStore.scaffoldBackground,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     minimumDate: today,
                     minuteInterval: 1,
                     mode: CupertinoDatePickerMode.time,
@@ -152,7 +155,7 @@ class CWPickerScreenState extends State<CWPickerScreen> {
             child: Column(
               children: [
                 Container(
-                  color: appStore.appBarColor,
+                  color: Theme.of(context).colorScheme.primary,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -177,9 +180,12 @@ class CWPickerScreenState extends State<CWPickerScreen> {
                 Container(
                   height: 200,
                   child: CupertinoTheme(
-                    data: CupertinoThemeData(textTheme: CupertinoTextThemeData(dateTimePickerTextStyle: primaryTextStyle(size: 20))),
+                    data: CupertinoThemeData(
+                        textTheme: CupertinoTextThemeData(
+                            dateTimePickerTextStyle:
+                                primaryTextStyle(size: 20))),
                     child: CupertinoDatePicker(
-                      backgroundColor: appStore.appBarColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       minimumDate: today,
                       minuteInterval: 1,
                       mode: CupertinoDatePickerMode.date,
@@ -208,7 +214,7 @@ class CWPickerScreenState extends State<CWPickerScreen> {
           child: Column(
             children: [
               Container(
-                color: appStore.appBarColor,
+                color: Theme.of(context).colorScheme.primary,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -219,7 +225,9 @@ class CWPickerScreenState extends State<CWPickerScreen> {
                     }),
                     Text('Done', style: primaryTextStyle(size: 18)).onTap(() {
                       finish(context);
-                      toast(selectedValue!.isNotEmpty ? selectedValue : 'Please select value');
+                      toast(selectedValue!.isNotEmpty
+                          ? selectedValue
+                          : 'Please select value');
                     })
                   ],
                 ).paddingAll(8.0),
@@ -233,7 +241,8 @@ class CWPickerScreenState extends State<CWPickerScreen> {
                     ),
                   ),
                   child: CupertinoPicker(
-                    backgroundColor: appStore.scaffoldBackground,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     itemExtent: 30,
                     children: countryName.map((e) {
                       return Text(e, style: primaryTextStyle(size: 20));

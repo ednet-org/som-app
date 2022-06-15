@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class AMAnimatedPositionedScreen extends StatefulWidget {
   static String tag = '/AMAnimatedPositionedScreen';
 
   @override
-  AMAnimatedPositionedScreenState createState() => AMAnimatedPositionedScreenState();
+  AMAnimatedPositionedScreenState createState() =>
+      AMAnimatedPositionedScreenState();
 }
 
-class AMAnimatedPositionedScreenState extends State<AMAnimatedPositionedScreen> {
+class AMAnimatedPositionedScreenState
+    extends State<AMAnimatedPositionedScreen> {
   double mLeftPosition = 0;
   double mRightPosition = 0;
   double mTopPosition = 0;
@@ -34,7 +34,7 @@ class AMAnimatedPositionedScreenState extends State<AMAnimatedPositionedScreen> 
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Animated Positioned'),
         body: Container(
           child: Stack(
@@ -81,7 +81,8 @@ class AMAnimatedPositionedScreenState extends State<AMAnimatedPositionedScreen> 
                           mBottomPosition = 0;
                         });
                       },
-                      child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
+                      child:
+                          Icon(Icons.keyboard_arrow_right, color: Colors.white),
                     ),
                     10.width,
                     ElevatedButton(
@@ -94,7 +95,8 @@ class AMAnimatedPositionedScreenState extends State<AMAnimatedPositionedScreen> 
                           mBottomPosition = 0;
                         });
                       },
-                      child: Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                      child:
+                          Icon(Icons.keyboard_arrow_down, color: Colors.white),
                     ),
                     10.width,
                     ElevatedButton(
@@ -107,7 +109,8 @@ class AMAnimatedPositionedScreenState extends State<AMAnimatedPositionedScreen> 
                           mBottomPosition = 0;
                         });
                       },
-                      child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
+                      child:
+                          Icon(Icons.keyboard_arrow_left, color: Colors.white),
                     ),
                   ],
                 ),

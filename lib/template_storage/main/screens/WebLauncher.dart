@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/main.dart';
 import 'package:som/ui/pages/dashboard_page.dart';
 
 import 'SettingScreen.dart';
@@ -44,7 +42,11 @@ class WebLauncherState extends State<WebLauncher> {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> colors = [appCat1, appCat2, appCat3];
+    List<Color> colors = [
+      Theme.of(context).primaryColor,
+      Theme.of(context).secondaryHeaderColor,
+      Theme.of(context).dialogBackgroundColor
+    ];
 
     return Observer(
       builder: (_) => Scaffold(
@@ -53,7 +55,8 @@ class WebLauncherState extends State<WebLauncher> {
           'Dashboard',
           actions: [
             IconButton(
-              icon: Icon(Icons.settings, color: appStore.backgroundColor),
+              icon: Icon(Icons.settings,
+                  color: Theme.of(context).colorScheme.primaryContainer),
               onPressed: () {
                 SettingScreen().launch(context);
               },

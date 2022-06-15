@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -7,10 +6,12 @@ class IMLongPressDraggableScreen extends StatefulWidget {
   static String tag = '/IMLongPressDraggableScreen';
 
   @override
-  _IMLongPressDraggableScreenState createState() => _IMLongPressDraggableScreenState();
+  _IMLongPressDraggableScreenState createState() =>
+      _IMLongPressDraggableScreenState();
 }
 
-class _IMLongPressDraggableScreenState extends State<IMLongPressDraggableScreen> {
+class _IMLongPressDraggableScreenState
+    extends State<IMLongPressDraggableScreen> {
   Offset position = Offset(20.0, 20.0);
 
   @override
@@ -41,7 +42,7 @@ class _IMLongPressDraggableScreenState extends State<IMLongPressDraggableScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: appStore.scaffoldBackground,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           appBar: appBar(context, 'LongPressDraggable'),
           body: ListView.builder(
               itemCount: example.length,
@@ -49,7 +50,10 @@ class _IMLongPressDraggableScreenState extends State<IMLongPressDraggableScreen>
                 return ExampleItemWidget(
                   example[index],
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => example[index].widget!));
                   },
                 );
               })),

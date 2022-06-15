@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class AMAnimatedBuilderScreen extends StatefulWidget {
@@ -12,7 +11,8 @@ class AMAnimatedBuilderScreen extends StatefulWidget {
   AMAnimatedBuilderScreenState createState() => AMAnimatedBuilderScreenState();
 }
 
-class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with TickerProviderStateMixin {
+class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   // ignore: non_constant_identifier_names
   late Animation _FavouriteAnimation;
@@ -30,8 +30,12 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
       vsync: this,
     )..repeat();
 
-    _favouriteAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1200))..repeat();
-    _FavouriteAnimation = Tween(begin: 80.0, end: 100.0).animate(CurvedAnimation(curve: Curves.bounceOut, parent: _favouriteAnimationController!));
+    _favouriteAnimationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1200))
+          ..repeat();
+    _FavouriteAnimation = Tween(begin: 80.0, end: 100.0).animate(
+        CurvedAnimation(
+            curve: Curves.bounceOut, parent: _favouriteAnimationController!));
 
     _favouriteAnimationController!.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -57,7 +61,7 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Animated Builder'),
         body: Container(
           margin: EdgeInsets.all(16),
@@ -73,7 +77,8 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
                 AnimatedBuilder(
                   animation: _controller,
                   child: Container(
-                    decoration: boxDecoration(radius: 8, bgColor: Colors.blueGrey),
+                    decoration:
+                        boxDecoration(radius: 8, bgColor: Colors.blueGrey),
                     height: 150,
                     width: 150,
                   ),
@@ -88,7 +93,10 @@ class AMAnimatedBuilderScreenState extends State<AMAnimatedBuilderScreen> with T
                 AnimatedBuilder(
                   animation: _controller,
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16))),
                     width: 150,
                     height: 150,
                     child: FlutterLogo(),

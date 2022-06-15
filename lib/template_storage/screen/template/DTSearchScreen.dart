@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/screen/template/DTCategoryDetailScreen.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/screen/template/DTCategoryDetailScreen.dart';
 
-import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
 
 class DTSearchScreen extends StatefulWidget {
@@ -17,7 +15,7 @@ class DTSearchScreen extends StatefulWidget {
 class _DTSearchScreenState extends State<DTSearchScreen> {
   var searchCont = TextEditingController();
   List<String> recentSearch = [];
-   List<String> trending = [];
+  List<String> trending = [];
 
   String searchText = '';
 
@@ -60,13 +58,23 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
               style: primaryTextStyle(),
               decoration: InputDecoration(
                 hintText: 'Search',
-                hintStyle: primaryTextStyle(color: appStore.textSecondaryColor),
+                hintStyle: primaryTextStyle(
+                    color: Theme.of(context).colorScheme.onSecondaryContainer),
                 contentPadding: EdgeInsets.all(16),
-                prefixIcon: Icon(AntDesign.search1, color: appStore.textSecondaryColor),
+                prefixIcon: Icon(AntDesign.search1,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer),
                 labelStyle: secondaryTextStyle(),
                 border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appColorPrimary)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).primaryColor)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSecondaryContainer!)),
               ),
               keyboardType: TextInputType.name,
               textInputAction: TextInputAction.done,
@@ -89,10 +97,16 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Recent Searches', style: primaryTextStyle()).expand(),
+                        Text('Recent Searches', style: primaryTextStyle())
+                            .expand(),
                         Container(
-                          padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
-                          decoration: BoxDecoration(color: appColorPrimary, shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          padding: EdgeInsets.only(
+                              left: 8, right: 8, top: 4, bottom: 4),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              shape: BoxShape.rectangle,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0))),
                           child: Text(
                             'View All',
                             style: secondaryTextStyle(color: white),
@@ -118,12 +132,18 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      shape: BoxShape.circle),
                                   padding: EdgeInsets.all(4),
-                                  child: Icon(Icons.search, color: white, size: 20),
+                                  child: Icon(Icons.search,
+                                      color: white, size: 20),
                                 ),
                                 Flexible(
-                                  child: Text(recentSearch[i], style: primaryTextStyle(size: 14), maxLines: 2).paddingOnly(left: 8, right: 8),
+                                  child: Text(recentSearch[i],
+                                          style: primaryTextStyle(size: 14),
+                                          maxLines: 2)
+                                      .paddingOnly(left: 8, right: 8),
                                 ),
                               ],
                             ),
@@ -134,7 +154,8 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                     16.height,
                     Text(
                       'What\'s Trending',
-                      style: primaryTextStyle(color: appColorPrimary),
+                      style: primaryTextStyle(
+                          color: Theme.of(context).primaryColor),
                     ),
                     16.height,
                     ListView.builder(
@@ -152,12 +173,18 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  decoration: BoxDecoration(color: appColorPrimary, shape: BoxShape.circle),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      shape: BoxShape.circle),
                                   padding: EdgeInsets.all(4),
-                                  child: Icon(Icons.trending_up, color: white, size: 20),
+                                  child: Icon(Icons.trending_up,
+                                      color: white, size: 20),
                                 ),
                                 Flexible(
-                                  child: Text(trending[i], style: primaryTextStyle(size: 14), maxLines: 2).paddingOnly(left: 8, right: 8),
+                                  child: Text(trending[i],
+                                          style: primaryTextStyle(size: 14),
+                                          maxLines: 2)
+                                      .paddingOnly(left: 8, right: 8),
                                 ),
                               ],
                             ),
@@ -173,7 +200,8 @@ class _DTSearchScreenState extends State<DTSearchScreen> {
                     child: CircularProgressIndicator(
                       backgroundColor: Color(0xffD6D6D6),
                       strokeWidth: 4,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey),
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueGrey),
                     ),
                   ),
                 ).visible(searchText != ''),

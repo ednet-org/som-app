@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,9 +39,9 @@ class SettingScreenState extends State<SettingScreen> {
       builder: (_) => Scaffold(
         appBar: AppBar(
           title: Text('Settings', style: boldTextStyle(size: 22)),
-          backgroundColor: appStore.appBarColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           leading: BackButton(
-            color: appStore.textPrimaryColor,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
             onPressed: () {
               finish(context);
             },
@@ -60,7 +59,9 @@ class SettingScreenState extends State<SettingScreen> {
                 children: [
                   SettingItemWidget(
                     leading: Image.asset('images/app/ic_documentation.png',
-                        height: 24, width: 24, color: appColorPrimary),
+                        height: 24,
+                        width: 24,
+                        color: Theme.of(context).primaryColor),
                     title: 'Documentation',
                     onTap: () {
                       launch(DocumentationUrl,
@@ -74,7 +75,9 @@ class SettingScreenState extends State<SettingScreen> {
                           forceWebView: true, enableJavaScript: true);
                     },
                     leading: Image.asset('images/app/ic_change_log.png',
-                        height: 24, width: 24, color: appColorPrimary),
+                        height: 24,
+                        width: 24,
+                        color: Theme.of(context).primaryColor),
                   ),
                   SettingItemWidget(
                     title: "Share App",
@@ -86,7 +89,9 @@ class SettingScreenState extends State<SettingScreen> {
                       });
                     },
                     leading: Image.asset('images/app/ic_share.png',
-                        height: 24, width: 24, color: appColorPrimary),
+                        height: 24,
+                        width: 24,
+                        color: Theme.of(context).primaryColor),
                   ),
                   SettingItemWidget(
                     title: "Rate us",
@@ -97,7 +102,9 @@ class SettingScreenState extends State<SettingScreen> {
                       });
                     },
                     leading: Image.asset('images/app/ic_rate_app.png',
-                        height: 24, width: 24, color: appColorPrimary),
+                        height: 24,
+                        width: 24,
+                        color: Theme.of(context).primaryColor),
                   ),
                   SettingItemWidget(
                     title: "Dark Mode",
@@ -105,7 +112,9 @@ class SettingScreenState extends State<SettingScreen> {
                       appStore.toggleDarkMode();
                     },
                     leading: Image.asset('images/app/ic_theme.png',
-                        height: 24, width: 24, color: appColorPrimary),
+                        height: 24,
+                        width: 24,
+                        color: Theme.of(context).primaryColor),
                     trailing: Switch(
                       value: appStore.isDarkModeOn,
                       onChanged: (s) {

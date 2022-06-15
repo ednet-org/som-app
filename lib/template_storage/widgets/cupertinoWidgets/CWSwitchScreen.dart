@@ -39,7 +39,7 @@ class CWSwitchScreenState extends State<CWSwitchScreen> {
           child: Column(
         children: [
           Card(
-              color: appStore.appBarColor,
+              color: Theme.of(context).colorScheme.primary,
               margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
               elevation: 2.0,
               shadowColor: Colors.black,
@@ -56,7 +56,7 @@ class CWSwitchScreenState extends State<CWSwitchScreen> {
                     },
                   ))),
           Card(
-              color: appStore.appBarColor,
+              color: Theme.of(context).colorScheme.primary,
               margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
               elevation: 2.0,
               shadowColor: Colors.black,
@@ -75,7 +75,7 @@ class CWSwitchScreenState extends State<CWSwitchScreen> {
                     },
                   ))),
           Card(
-              color: appStore.appBarColor,
+              color: Theme.of(context).colorScheme.primary,
               margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
               elevation: 2.0,
               shadowColor: Colors.black,
