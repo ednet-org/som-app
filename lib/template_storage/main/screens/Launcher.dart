@@ -6,19 +6,16 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/model/AppModel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppDataProvider.dart';
 import 'package:som/template_storage/main/utils/AppImages.dart';
 import 'package:som/template_storage/main/utils/AppStrings.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/screen/template/DTWalkThoughScreen.dart';
-import 'package:som/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'ScreenListing.dart';
 import 'SettingScreen.dart';
-import 'ThemeList.dart';
 
 class Launcher extends StatefulWidget {
   static String tag = '/Launcher';
@@ -51,8 +48,12 @@ class LauncherState extends State<Launcher>
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.scaffoldBackground!);
-    List<Color> colors = [appCat1, appCat2, appCat3];
+    changeStatusColor(Theme.of(context).colorScheme.primaryContainer!);
+    List<Color> colors = [
+      Theme.of(context).primaryColor,
+      Theme.of(context).secondaryHeaderColor,
+      Theme.of(context).dialogBackgroundColor
+    ];
 
     var width = MediaQuery.of(context).size.width;
 
@@ -71,14 +72,14 @@ class LauncherState extends State<Launcher>
           child: Text(name,
               style: boldTextStyle(
                   color: selectedTab == pos
-                      ? appColorPrimaryDark
-                      : appStore.textPrimaryColor,
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).colorScheme.onPrimaryContainer,
                   size: 18)),
           alignment: Alignment.center,
           height: 50,
           decoration: selectedTab == pos
               ? BoxDecoration(
-                  color: appStore.appColorPrimaryLightColor,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                   borderRadius: isRight
                       ? BorderRadius.only(topLeft: Radius.circular(16))
                       : BorderRadius.only(topRight: Radius.circular(16)))
@@ -120,7 +121,8 @@ class LauncherState extends State<Launcher>
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(right: 8, top: 8),
                 padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
-                decoration: boxDecoration(bgColor: appDarkRed, radius: 4),
+                decoration: boxDecoration(
+                    bgColor: Theme.of(context).colorScheme.error, radius: 4),
                 child: FittedBox(
                     child: text(type.validate(),
                         fontSize: 8.0, textColor: Colors.white)),
@@ -133,7 +135,7 @@ class LauncherState extends State<Launcher>
 
     return Observer(
       builder: (_) => Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         body: FutureBuilder<AppTheme>(
           future: getAllAppsAndThemes(),
           builder: (context, snapshot) {
@@ -146,14 +148,17 @@ class LauncherState extends State<Launcher>
                       SliverAppBar(
                         expandedHeight: 230.0,
                         floating: false,
-                        backgroundColor: appStore.scaffoldBackground,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
                         forceElevated: innerBoxIsScrolled,
                         pinned: true,
                         automaticallyImplyLeading: false,
                         actions: [
                           IconButton(
                             icon: Icon(Icons.settings,
-                                color: appStore.backgroundColor),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
                             onPressed: () {
                               SettingScreen().launch(context);
                             },
@@ -216,8 +221,9 @@ class LauncherState extends State<Launcher>
                                                 ],
                                               ),
                                               decoration: boxDecoration(
-                                                  bgColor: appStore
-                                                      .scaffoldBackground,
+                                                  bgColor: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   radius: 4,
                                                   showShadow: true),
                                             ),
@@ -259,13 +265,21 @@ class LauncherState extends State<Launcher>
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      category(appCat5, app_ic_phone,
+                                      category(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          app_ic_phone,
                                           snapshot.data!.template_storage!.name,
                                           type: snapshot.data!.template_storage!
                                               .type, onTap: () {
                                         DTWalkThoughScreen().launch(context);
                                       }),
-                                      category(appCat4, app_ic_phone,
+                                      category(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .inversePrimary,
+                                          app_ic_phone,
                                           snapshot.data!.widgets!.name,
                                           type: snapshot.data!.widgets!.type,
                                           onTap: () {
@@ -280,14 +294,22 @@ class LauncherState extends State<Launcher>
                                       //   ScreenListing(snapshot.data!.fullApp)
                                       //       .launch(context);
                                       // }),
-                                      category(appCat2, app_dashboard,
+                                      category(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          app_dashboard,
                                           appLblDashboard,
                                           type: snapshot.data!.dashboard!.type,
                                           onTap: () {
                                         ScreenListing(snapshot.data!.dashboard)
                                             .launch(context);
                                       }),
-                                      category(appCat3, app_ic_phone,
+                                      category(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          app_ic_phone,
                                           appLblIntegrations, onTap: () {
                                         ScreenListing(
                                                 snapshot.data!.integrations)
@@ -319,7 +341,8 @@ class LauncherState extends State<Launcher>
                         Expanded(
                           child: Container(
                             height: double.maxFinite,
-                            color: appStore.scaffoldBackground,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
                             child: PageView(
                               pageSnapping: false,
                               onPageChanged: (value) {
@@ -328,8 +351,7 @@ class LauncherState extends State<Launcher>
                               },
                               controller: _controller,
                               physics: NeverScrollableScrollPhysics(),
-                              children: <Widget>[
-                              ],
+                              children: <Widget>[],
                             ),
                           ),
                         )
@@ -359,7 +381,7 @@ class CustomDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: appStore.scaffoldBackground,
+          color: Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(16),
         ),
@@ -377,7 +399,8 @@ class CustomDialog extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: Padding(
                       padding: EdgeInsets.only(top: 8, right: 16),
-                      child: Icon(Icons.close, color: appStore.iconColor)),
+                      child: Icon(Icons.close,
+                          color: Theme.of(context).colorScheme.primary)),
                 ),
               ),
               Image.asset('images/app/app_icon.png', height: 100),
@@ -391,7 +414,7 @@ class CustomDialog extends StatelessWidget {
               SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: appColorPrimary,
+                  primary: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
                   finish(context);

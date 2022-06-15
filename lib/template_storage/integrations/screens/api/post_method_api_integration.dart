@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/network/rest_apis.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-
-import '../../../../main.dart';
 
 class PostMethodExampleScreen extends StatefulWidget {
   static String tag = '/PostMethodExampleScreen';
@@ -32,7 +29,11 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
       isLoading = true;
       setState(() {});
 
-      Map req = {"name": nameCont.text, "salary": salaryCont.text, "age": ageCont.text};
+      Map req = {
+        "name": nameCont.text,
+        "salary": salaryCont.text,
+        "age": ageCont.text
+      };
 
       await createEmployee(req).then((value) {
         isLoading = false;
@@ -80,15 +81,26 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
                         labelText: 'Name',
                         border: OutlineInputBorder(),
                         labelStyle: primaryTextStyle(),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
                       ),
                       focusNode: nameNode,
                       validator: (s) {
                         if (s!.isEmpty) return 'Field is required';
                         return null;
                       },
-                      onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(salaryNode),
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(salaryNode),
                       textInputAction: TextInputAction.next,
                     ),
                     16.height,
@@ -100,8 +112,18 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
                         labelText: 'Salary',
                         border: OutlineInputBorder(),
                         labelStyle: primaryTextStyle(),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
                       ),
                       focusNode: salaryNode,
                       validator: (s) {
@@ -109,7 +131,8 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
                         if (!s.isDigit()) return 'Please enter valid data';
                         return null;
                       },
-                      onFieldSubmitted: (s) => FocusScope.of(context).requestFocus(ageNode),
+                      onFieldSubmitted: (s) =>
+                          FocusScope.of(context).requestFocus(ageNode),
                       textInputAction: TextInputAction.next,
                     ),
                     16.height,
@@ -121,8 +144,18 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
                         labelText: 'Age',
                         border: OutlineInputBorder(),
                         labelStyle: primaryTextStyle(),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer!)),
                       ),
                       focusNode: ageNode,
                       validator: (s) {
@@ -139,10 +172,13 @@ class PostMethodExampleScreenState extends State<PostMethodExampleScreen> {
                       child: Container(
                         margin: EdgeInsets.all(16),
                         width: MediaQuery.of(context).size.width,
-                        decoration: boxDecoration(bgColor: appColorPrimary, radius: 16),
+                        decoration: boxDecoration(
+                            bgColor: Theme.of(context).primaryColor,
+                            radius: 16),
                         padding: EdgeInsets.all(16),
                         child: Center(
-                          child: Text("Submit", style: primaryTextStyle(color: white)),
+                          child: Text("Submit",
+                              style: primaryTextStyle(color: white)),
                         ),
                       ),
                     ),

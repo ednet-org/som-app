@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/MarqueeUtil.dart' as m;
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class MHomePage extends StatefulWidget {
@@ -39,10 +38,16 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                   height: 40,
                   margin: EdgeInsets.only(top: 5),
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                  decoration: boxDecorationRoundedWithShadow(8,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.tertiaryContainer),
                   child: m.Marquee(
-                    text: 'A life without suffering is a life without happiness.',
-                    style: TextStyle(fontSize: 15, color: appStore.textPrimaryColor),
+                    text:
+                        'A life without suffering is a life without happiness.',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color:
+                            Theme.of(context).colorScheme.onPrimaryContainer),
                     startPadding: 10.0,
                     blankSpace: 20.0,
                   ),
@@ -61,9 +66,12 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                   height: 40,
                   margin: EdgeInsets.only(top: 15),
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                  decoration: boxDecorationRoundedWithShadow(8,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.tertiaryContainer),
                   child: m.Marquee(
-                    text: 'A life without suffering is a life without happiness.',
+                    text:
+                        'A life without suffering is a life without happiness.',
                     //  Style the text within the Marquee.
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -87,10 +95,16 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                     margin: EdgeInsets.only(top: 8),
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.tertiaryContainer),
                     child: m.Marquee(
-                      text: 'A life without suffering is a life without happiness.',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
+                      text:
+                          'A life without suffering is a life without happiness.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer),
                       scrollAxis: Axis.horizontal,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       blankSpace: 20.0,
@@ -115,10 +129,16 @@ class _MHomePageState extends State<MHomePage> {
                 ),
                 Container(
                   height: 40,
-                  decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                  decoration: boxDecorationRoundedWithShadow(8,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.tertiaryContainer),
                   child: m.Marquee(
-                    text: 'A life without suffering is a life without happiness.',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
+                    text:
+                        'A life without suffering is a life without happiness.',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).colorScheme.onPrimaryContainer),
                     scrollAxis: Axis.horizontal,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     blankSpace: 20.0,
@@ -133,11 +153,18 @@ class _MHomePageState extends State<MHomePage> {
                 ),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.tertiaryContainer),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
-                      text: 'A life without suffering is a life without happiness.',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textSecondaryColor),
+                      text:
+                          'A life without suffering is a life without happiness.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer),
                       scrollAxis: Axis.horizontal,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       blankSpace: 20.0,
@@ -151,11 +178,17 @@ class _MHomePageState extends State<MHomePage> {
                     )),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.tertiaryContainer),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
-                      text: 'A life without suffering is a life without happiness.',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
+                      text:
+                          'A life without suffering is a life without happiness.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer),
                       scrollAxis: Axis.horizontal,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       blankSpace: 20.0,
@@ -169,11 +202,17 @@ class _MHomePageState extends State<MHomePage> {
                     )),
                 Container(
                     height: 40,
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.tertiaryContainer),
                     margin: EdgeInsets.only(top: 8),
                     child: m.Marquee(
-                      text: 'A life without suffering is a life without happiness.',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
+                      text:
+                          'A life without suffering is a life without happiness.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer),
                       scrollAxis: Axis.horizontal,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       blankSpace: 20.0,
@@ -199,10 +238,16 @@ class _MHomePageState extends State<MHomePage> {
                 Container(
                     height: 150,
                     margin: EdgeInsets.only(top: 15),
-                    decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+                    decoration: boxDecorationRoundedWithShadow(8,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.tertiaryContainer),
                     child: m.Marquee(
-                      text: 'A life without suffering is a life without happiness. Stay Happy :)',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor),
+                      text:
+                          'A life without suffering is a life without happiness. Stay Happy :)',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer),
                       scrollAxis: Axis.vertical,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       blankSpace: 20.0,
@@ -225,11 +270,17 @@ class _MHomePageState extends State<MHomePage> {
 
 const ShadowColor = Color(0x95E9EBF0);
 
-BoxDecoration boxDecorations({double radius = 8, Color color = Colors.transparent, Color bgColor = Colors.white, var showShadow = true}) {
+BoxDecoration boxDecorations(
+    {double radius = 8,
+    Color color = Colors.transparent,
+    Color bgColor = Colors.white,
+    var showShadow = true}) {
   return BoxDecoration(
       color: bgColor,
       //gradient: LinearGradient(colors: [bgColor, whiteColor]),
-      boxShadow: showShadow ? [BoxShadow(color: ShadowColor, blurRadius: 10, spreadRadius: 2)] : [BoxShadow(color: Colors.transparent)],
+      boxShadow: showShadow
+          ? [BoxShadow(color: ShadowColor, blurRadius: 10, spreadRadius: 2)]
+          : [BoxShadow(color: Colors.transparent)],
       border: Border.all(color: color),
       borderRadius: BorderRadius.all(Radius.circular(radius)));
 }

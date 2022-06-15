@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:som/template_storage/integrations/utils/DefaultLayout.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 
 class LiquidSwipeScreen extends StatefulWidget {
   static String tag = '/LiquidSwipeScreen';
@@ -22,7 +21,7 @@ class LiquidSwipeScreenState extends State<LiquidSwipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
     final pages = [
       DefaultLayout(
         title: titles[0],

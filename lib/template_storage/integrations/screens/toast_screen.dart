@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class ToastScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class ToastScreenState extends State<ToastScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
     width = (MediaQuery.of(context).size.width) / 4;
     return Scaffold(
       appBar: appBar(context, "Toast"),

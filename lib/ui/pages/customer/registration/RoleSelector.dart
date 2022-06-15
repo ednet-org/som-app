@@ -31,9 +31,11 @@ class RoleSelector extends StatelessWidget {
           margin: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
           decoration: BoxDecoration(
             gradient: registrationRequest.company.role == role
-                ? defaultThemeGradient()
-                : LinearGradient(
-                    colors: [appStore.appBarColor!, appStore.appBarColor!]),
+                ? defaultThemeGradient(context)
+                : LinearGradient(colors: [
+                    Theme.of(context).colorScheme.tertiaryContainer,
+                    Theme.of(context).colorScheme.tertiaryContainer
+                  ]),
             borderRadius: BorderRadius.all(Radius.circular(30)),
             border: Border.all(color: Colors.black12, width: 0.5),
           ),
@@ -43,7 +45,7 @@ class RoleSelector extends StatelessWidget {
                 size: textSizeXXLarge.toInt(),
                 color: registrationRequest.company.role == role
                     ? white
-                    : appStore.textPrimaryColor),
+                    : Theme.of(context).colorScheme.onPrimaryContainer),
             textAlign: TextAlign.center,
           ),
         ),

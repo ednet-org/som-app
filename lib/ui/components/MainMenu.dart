@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/pages/dashboard_page.dart';
 
@@ -44,7 +43,7 @@ class MainMenuState extends State<MainMenu> {
       child: ClipPath(
         child: Drawer(
           child: Container(
-            color: appStore.scaffoldBackground,
+            color: Theme.of(context).colorScheme.primaryContainer,
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(
@@ -72,7 +71,8 @@ class MainMenuState extends State<MainMenu> {
                   Container(
                     padding: EdgeInsets.all(16),
                     child: Text('Home',
-                        style: boldTextStyle(color: appColorPrimary)),
+                        style: boldTextStyle(
+                            color: Theme.of(context).primaryColor)),
                   ).onTap(() {
                     appStore.setDrawerItemIndex(-1);
                     DashboardPage().launch(context, isNewTask: true);
@@ -84,15 +84,17 @@ class MainMenuState extends State<MainMenu> {
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: appStore.selectedDrawerItem == index
-                              ? appColorPrimary.withOpacity(0.3)
-                              : appStore.scaffoldBackground,
+                              ? Theme.of(context).primaryColor.withOpacity(0.3)
+                              : Theme.of(context).colorScheme.primaryContainer,
                         ),
                         child: Text(
                           drawerItems[index].name!,
                           style: boldTextStyle(
                               color: appStore.selectedDrawerItem == index
-                                  ? appColorPrimary
-                                  : appStore.textPrimaryColor),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer),
                         ),
                       ).onTap(() {
                         finish(context);

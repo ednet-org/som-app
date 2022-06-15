@@ -3,7 +3,6 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/codePicker/selection_dialog.dart';
-import 'package:som/main.dart';
 
 import 'country_code.dart';
 import 'country_codes.dart';
@@ -124,7 +123,8 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
             Flexible(
               fit: widget.alignLeft ? FlexFit.tight : FlexFit.loose,
               child: text(selectedItem!.toCountryCodeString(),
-                  textColor: appStore.textPrimaryColor, fontSize: 16.0),
+                  textColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontSize: 16.0),
             ),
           ],
         ),

@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/material.dart';
 
 class InquiryInfoCardWidget extends StatelessWidget {
@@ -25,11 +24,12 @@ class InquiryInfoCardWidget extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.15000000596046448),
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                           offset: Offset(0, 2),
                           blurRadius: 6)
                     ],
-                    color: Color.fromRGBO(255, 251, 254, 1),
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ))),
           Positioned(
               top: 15,
@@ -37,13 +37,7 @@ class InquiryInfoCardWidget extends StatelessWidget {
               child: Text(
                 'Inquiry',
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: AppColors.shadesecondarySecondary40,
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    letterSpacing: 0.10000000149011612,
-                    fontWeight: FontWeight.normal,
-                    height: 1.5),
+                style: Theme.of(context).textTheme.titleMedium,
               )),
           Positioned(
               top: 15,

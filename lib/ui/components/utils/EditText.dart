@@ -3,8 +3,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 
-import '../../../main.dart';
-
 class EditText extends StatefulWidget {
   var isPassword;
   var isSecure;
@@ -48,18 +46,20 @@ class EditTextState extends State<EditText> {
           hintStyle: secondaryTextStyle(),
           labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
         ),
         maxLines: widget.maxLine,
         style: TextStyle(
             fontSize: widget.fontSize,
-            color: appStore.textPrimaryColor,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
             fontFamily: widget.fontFamily),
       );
     } else {
@@ -76,7 +76,7 @@ class EditTextState extends State<EditText> {
             },
             child: Icon(
                 widget.isPassword ? Icons.visibility : Icons.visibility_off,
-                color: appStore.iconColor),
+                color: Theme.of(context).colorScheme.primary),
           ),
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           hintText: widget.text,
@@ -84,17 +84,19 @@ class EditTextState extends State<EditText> {
           hintStyle: secondaryTextStyle(),
           labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: appStore.textPrimaryColor!, width: 0.0),
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
         ),
         style: TextStyle(
             fontSize: widget.fontSize,
-            color: appStore.textPrimaryColor,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
             fontFamily: widget.fontFamily),
       );
     }

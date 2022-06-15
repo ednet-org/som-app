@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/models/follower_model.dart';
 import 'package:som/template_storage/integrations/network/rest_apis.dart';
 import 'package:som/template_storage/integrations/utils/common.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class GETMethodExampleScreen extends StatefulWidget {
@@ -31,10 +30,14 @@ class GETMethodExampleScreenState extends State<GETMethodExampleScreen> {
           return Container(
             margin: EdgeInsets.all(8),
             padding: EdgeInsets.all(8),
-            decoration: boxDecorationRoundedWithShadow(8, backgroundColor: appStore.appBarColor!),
+            decoration: boxDecorationRoundedWithShadow(8,
+                backgroundColor:
+                    Theme.of(context).colorScheme.tertiaryContainer),
             child: Row(
               children: [
-                networkImage(data[index].avatar_url, fit: BoxFit.fill, aWidth: 60, aHeight: 60).cornerRadiusWithClipRRect(50),
+                networkImage(data[index].avatar_url,
+                        fit: BoxFit.fill, aWidth: 60, aHeight: 60)
+                    .cornerRadiusWithClipRRect(50),
                 10.width,
                 Text(data[index].login!, style: boldTextStyle()),
               ],

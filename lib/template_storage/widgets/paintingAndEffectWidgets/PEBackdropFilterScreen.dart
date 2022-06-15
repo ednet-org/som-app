@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class PEBackdropFilterScreen extends StatefulWidget {
@@ -49,11 +47,14 @@ class PEBackdropFilterScreenState extends State<PEBackdropFilterScreen> {
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: CachedNetworkImageProvider('https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'),
+                    image: CachedNetworkImageProvider(
+                        'https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'),
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: BackdropFilter(filter: ImageFilter.blur(sigmaX: xAxis, sigmaY: yAxis), child: Container(color: Colors.white.withOpacity(0.2))),
+                child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: xAxis, sigmaY: yAxis),
+                    child: Container(color: Colors.white.withOpacity(0.2))),
               ).paddingOnly(top: 25, bottom: 25),
               Column(
                 children: [
@@ -61,8 +62,9 @@ class PEBackdropFilterScreenState extends State<PEBackdropFilterScreen> {
                     children: [
                       Text('X Axis: ', style: boldTextStyle()),
                       Slider(
-                        inactiveColor: appStore.textPrimaryColor,
-                        activeColor: appColorPrimary,
+                        inactiveColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                        activeColor: Theme.of(context).primaryColor,
                         max: 10,
                         min: 0,
                         value: xAxis,
@@ -72,15 +74,17 @@ class PEBackdropFilterScreenState extends State<PEBackdropFilterScreen> {
                           });
                         },
                       ).expand(),
-                      Text('Value: ${xAxis.toStringAsFixed(2)}', style: primaryTextStyle()),
+                      Text('Value: ${xAxis.toStringAsFixed(2)}',
+                          style: primaryTextStyle()),
                     ],
                   ),
                   Row(
                     children: [
                       Text('Y Axis: ', style: boldTextStyle()),
                       Slider(
-                        inactiveColor: appStore.textPrimaryColor,
-                        activeColor: appColorPrimary,
+                        inactiveColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
+                        activeColor: Theme.of(context).primaryColor,
                         max: 10,
                         min: 0,
                         value: yAxis,
@@ -90,7 +94,8 @@ class PEBackdropFilterScreenState extends State<PEBackdropFilterScreen> {
                           });
                         },
                       ).expand(),
-                      Text('Value: ${yAxis.toStringAsFixed(2)}', style: primaryTextStyle()),
+                      Text('Value: ${yAxis.toStringAsFixed(2)}',
+                          style: primaryTextStyle()),
                     ],
                   ),
                 ],

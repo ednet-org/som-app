@@ -5,8 +5,6 @@ import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/flutter_rating_bar.dart';
 
-import '../../../main.dart';
-
 class CWDialogScreen extends StatefulWidget {
   static String tag = '/CWDialogScreen';
 
@@ -51,9 +49,19 @@ class CWDialogScreenState extends State<CWDialogScreen> {
                               child: CupertinoAlertDialog(
                                 title: Text(
                                   "Cupertino Dialog",
-                                  style: boldTextStyle(color: appStore.textPrimaryColor, size: 16),
+                                  style: boldTextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer,
+                                      size: 16),
                                 ).paddingBottom(6),
-                                content: Text("Hey! I'm Coflutter!", style: primaryTextStyle(color: appStore.textSecondaryColor, size: 16)).paddingBottom(6),
+                                content: Text("Hey! I'm Coflutter!",
+                                        style: primaryTextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondaryContainer,
+                                            size: 16))
+                                    .paddingBottom(6),
                                 actions: <Widget>[
                                   TextButton(
                                     child: Text(
@@ -83,7 +91,8 @@ class CWDialogScreenState extends State<CWDialogScreen> {
                                       minRating: 1,
                                       itemSize: 20,
                                       direction: Axis.horizontal,
-                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                      itemPadding:
+                                          EdgeInsets.symmetric(horizontal: 2.0),
                                       itemBuilder: (context, _) => Icon(
                                         Icons.star,
                                         color: Colors.amber,

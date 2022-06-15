@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/main.dart';
 
 import '../AppConstant.dart';
 import 'country_code.dart';
@@ -45,7 +44,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               text("Select Country Code",
-                  textColor: appStore.textPrimaryColor,
+                  textColor: Theme.of(context).colorScheme.onPrimaryContainer,
                   fontSize: 16.0,
                   fontFamily: fontSemibold),
               SizedBox(height: 8),
@@ -124,10 +123,11 @@ class _SelectionDialogState extends State<SelectionDialog> {
                 Expanded(
                     child: text(e.toLongString(),
                         fontSize: textSizeMedium,
-                        textColor: appStore.textPrimaryColor)),
+                        textColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer)),
                 text(e.dialCode,
                     fontSize: textSizeMedium,
-                    textColor: appStore.textPrimaryColor,
+                    textColor: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontFamily: fontSemibold),
               ],
             ),

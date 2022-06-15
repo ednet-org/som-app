@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import '../../../ui/components/MainMenu.dart';
@@ -92,14 +91,14 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
               bottom: 20,
               left: 0,
               right: 0,
-              child: DotIndicator(pageController: pageController, pages: pages, indicatorColor: appColorPrimary),
+              child: DotIndicator(pageController: pageController, pages: pages, indicatorColor: Theme.of(context).primaryColor),
             ),
             Positioned(
               child: AnimatedCrossFade(
                 firstChild: Container(
                   child: Text('Get Started', style: boldTextStyle(color: white)),
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(8)),
                 ).onTap(() {
                   DTSignInScreen().launch(context);
                 }),
@@ -117,7 +116,7 @@ class DTWalkThoughScreenState extends State<DTWalkThoughScreen> {
                 duration: Duration(seconds: 1),
                 child: Text('Skip', style: boldTextStyle(color: white)),
                 padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(8)),
               ).onTap(() {
                 finish(context);
                 DTSignInScreen().launch(context);

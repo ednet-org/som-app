@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class PETransformScreen extends StatefulWidget {
@@ -41,12 +40,20 @@ class PETransformScreenState extends State<PETransformScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Transform Rotate', style: boldTextStyle()).paddingBottom(20),
+              Text('Transform Rotate', style: boldTextStyle())
+                  .paddingBottom(20),
               20.height,
-              Transform.rotate(angle: rotateValue, child: Container(height: 100.0, width: 100.0, color: Colors.pink)).center(),
-              Text('Value : ${rotateValue.toStringAsFixed(2)}', style: primaryTextStyle()).center().paddingTop(25),
+              Transform.rotate(
+                      angle: rotateValue,
+                      child: Container(
+                          height: 100.0, width: 100.0, color: Colors.pink))
+                  .center(),
+              Text('Value : ${rotateValue.toStringAsFixed(2)}',
+                      style: primaryTextStyle())
+                  .center()
+                  .paddingTop(25),
               Slider(
-                inactiveColor: appStore.textPrimaryColor,
+                inactiveColor: Theme.of(context).colorScheme.onPrimaryContainer,
                 activeColor: Colors.pink,
                 max: 15,
                 min: 1,
@@ -60,12 +67,16 @@ class PETransformScreenState extends State<PETransformScreen> {
               Text('Transform Scale', style: boldTextStyle()).paddingBottom(35),
               Transform.scale(
                 scale: scaleValue,
-                child: Container(height: 100.0, width: 100.0, color: Colors.blue),
+                child:
+                    Container(height: 100.0, width: 100.0, color: Colors.blue),
               ).center(),
-              Text('Value : ${scaleValue.toStringAsFixed(2)}', style: primaryTextStyle()).center().paddingTop(35),
+              Text('Value : ${scaleValue.toStringAsFixed(2)}',
+                      style: primaryTextStyle())
+                  .center()
+                  .paddingTop(35),
               Slider(
                 activeColor: Colors.blue,
-                inactiveColor: appStore.textPrimaryColor,
+                inactiveColor: Theme.of(context).colorScheme.onPrimaryContainer,
                 max: 1.5,
                 min: 0.5,
                 value: scaleValue,
@@ -75,15 +86,19 @@ class PETransformScreenState extends State<PETransformScreen> {
                   });
                 },
               ),
-              Text('Transform Translate', style: boldTextStyle()).paddingBottom(20),
+              Text('Transform Translate', style: boldTextStyle())
+                  .paddingBottom(20),
               Transform.translate(
                 offset: Offset(offsetX, 0.0),
                 child: Container(height: 100, width: 100, color: Colors.green),
               ).center(),
-              Text('Value : ${offsetX.toStringAsFixed(2)}', style: primaryTextStyle()).center().paddingTop(25),
+              Text('Value : ${offsetX.toStringAsFixed(2)}',
+                      style: primaryTextStyle())
+                  .center()
+                  .paddingTop(25),
               Slider(
                 activeColor: Colors.green,
-                inactiveColor: appStore.textPrimaryColor,
+                inactiveColor: Theme.of(context).colorScheme.onPrimaryContainer,
                 max: 100,
                 min: 0,
                 value: offsetX,

@@ -143,7 +143,8 @@ class FadingEdgeScrollView extends StatefulWidget {
   _FadingEdgeScrollViewState createState() => _FadingEdgeScrollViewState();
 }
 
-class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView> with WidgetsBindingObserver {
+class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView>
+    with WidgetsBindingObserver {
   ScrollController? _controller;
   bool? _isScrolledToStart;
   bool? _isScrolledToEnd;
@@ -156,23 +157,24 @@ class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView> with Widget
     _isScrolledToStart = _controller!.initialScrollOffset == 0;
     _controller!.addListener(_onScroll);
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_controller == null) {
         return;
       }
 
-      if (_isScrolledToEnd == null && _controller!.position.maxScrollExtent == 0) {
+      if (_isScrolledToEnd == null &&
+          _controller!.position.maxScrollExtent == 0) {
         setState(() {
           _isScrolledToEnd = true;
         });
       }
     });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
     _controller!.removeListener(_onScroll);
     if (widget.shouldDisposeScrollController) {
@@ -189,7 +191,8 @@ class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView> with Widget
     final isScrolledToEnd = offset >= maxOffset;
     final isScrolledToStart = offset <= minOffset;
 
-    if (isScrolledToEnd != _isScrolledToEnd || isScrolledToStart != _isScrolledToStart) {
+    if (isScrolledToEnd != _isScrolledToEnd ||
+        isScrolledToStart != _isScrolledToStart) {
       setState(() {
         _isScrolledToEnd = isScrolledToEnd;
         _isScrolledToStart = isScrolledToStart;
@@ -247,7 +250,9 @@ class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView> with Widget
           1 - widget.gradientFractionOnEnd * 0.5,
           1,
         ],
-        colors: _getColors(widget.gradientFractionOnStart > 0 && !(_isScrolledToStart ?? true), widget.gradientFractionOnEnd > 0 && !(_isScrolledToEnd ?? false)),
+        colors: _getColors(
+            widget.gradientFractionOnStart > 0 && !(_isScrolledToStart ?? true),
+            widget.gradientFractionOnEnd > 0 && !(_isScrolledToEnd ?? false)),
       ).createShader(
         bounds.shift(Offset(-bounds.left, -bounds.top)),
         textDirection: Directionality.of(context),
@@ -257,18 +262,32 @@ class _FadingEdgeScrollViewState extends State<FadingEdgeScrollView> with Widget
     );
   }
 
-  AlignmentGeometry get _gradientStart => widget.scrollDirection == Axis.vertical ? _verticalStart : _horizontalStart;
+  AlignmentGeometry get _gradientStart =>
+      widget.scrollDirection == Axis.vertical
+          ? _verticalStart
+          : _horizontalStart;
 
-  AlignmentGeometry get _gradientEnd => widget.scrollDirection == Axis.vertical ? _verticalEnd : _horizontalEnd;
+  AlignmentGeometry get _gradientEnd =>
+      widget.scrollDirection == Axis.vertical ? _verticalEnd : _horizontalEnd;
 
-  Alignment get _verticalStart => widget.reverse ? Alignment.bottomCenter : Alignment.topCenter;
+  Alignment get _verticalStart =>
+      widget.reverse ? Alignment.bottomCenter : Alignment.topCenter;
 
-  Alignment get _verticalEnd => widget.reverse ? Alignment.topCenter : Alignment.bottomCenter;
+  Alignment get _verticalEnd =>
+      widget.reverse ? Alignment.topCenter : Alignment.bottomCenter;
 
-  AlignmentDirectional get _horizontalStart => widget.reverse ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart;
+  AlignmentDirectional get _horizontalStart => widget.reverse
+      ? AlignmentDirectional.centerEnd
+      : AlignmentDirectional.centerStart;
 
-  AlignmentDirectional get _horizontalEnd => widget.reverse ? AlignmentDirectional.centerStart : AlignmentDirectional.centerEnd;
+  AlignmentDirectional get _horizontalEnd => widget.reverse
+      ? AlignmentDirectional.centerStart
+      : AlignmentDirectional.centerEnd;
 
-  List<Color> _getColors(bool isStartEnabled, bool isEndEnabled) =>
-      [(isStartEnabled ? Colors.transparent : Colors.white), Colors.white, Colors.white, (isEndEnabled ? Colors.transparent : Colors.white)];
+  List<Color> _getColors(bool isStartEnabled, bool isEndEnabled) => [
+        (isStartEnabled ? Colors.transparent : Colors.white),
+        Colors.white,
+        Colors.white,
+        (isEndEnabled ? Colors.transparent : Colors.white)
+      ];
 }

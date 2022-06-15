@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class DTNotificationSettingScreen extends StatefulWidget {
@@ -42,7 +41,7 @@ class DTNotificationSettingScreenState extends State<DTNotificationSettingScreen
             context,
             'Push Notifications',
             detail: Switch(
-              activeColor: appColorPrimary,
+              activeColor: Theme.of(context).primaryColor,
               value: pushNotifications,
               onChanged: (s) {
                 pushNotifications = s;
@@ -58,7 +57,7 @@ class DTNotificationSettingScreenState extends State<DTNotificationSettingScreen
             context,
             'Email Feedback',
             detail: Switch(
-              activeColor: appColorPrimary,
+              activeColor: Theme.of(context).primaryColor,
               value: emailFeedback,
               onChanged: (s) {
                 emailFeedback = s;
@@ -74,7 +73,7 @@ class DTNotificationSettingScreenState extends State<DTNotificationSettingScreen
             context,
             'Support Emails',
             detail: Switch(
-              activeColor: appColorPrimary,
+              activeColor: Theme.of(context).primaryColor,
               value: supportEmails,
               onChanged: (s) {
                 supportEmails = s;
@@ -90,7 +89,7 @@ class DTNotificationSettingScreenState extends State<DTNotificationSettingScreen
             context,
             'Follower Requests',
             detail: Switch(
-              activeColor: appColorPrimary,
+              activeColor: Theme.of(context).primaryColor,
               value: followerRequests,
               onChanged: (s) {
                 followerRequests = s;
@@ -106,7 +105,7 @@ class DTNotificationSettingScreenState extends State<DTNotificationSettingScreen
             context,
             'Chat Messages',
             detail: Switch(
-              activeColor: appColorPrimary,
+              activeColor: Theme.of(context).primaryColor,
               value: chatMessage,
               onChanged: (s) {
                 chatMessage = s;

@@ -6,7 +6,7 @@ import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/auto_size_text/auto_size_text.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/utils/EditText.dart';
-import 'package:som/ui/design_system/inquiry/inquiry_info_card.dart';
+import 'package:som/ui/pages/customer_registration_page.dart';
 import 'package:som/ui/pages/dashboard_page.dart';
 
 import '../../../main.dart';
@@ -24,7 +24,8 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appStore.appBarColor!);
+    changeStatusColor(Theme.of(context).colorScheme.tertiaryContainer);
+    changeStatusColor(Theme.of(context).colorScheme.tertiaryContainer);
     return Container(
       color: context.scaffoldBackgroundColor,
       margin: EdgeInsets.only(left: spacing_large, right: spacing_large),
@@ -43,8 +44,8 @@ class LoginState extends State<Login> {
           ),
           GestureDetector(
             onTap: () {
-              InquiryInfoCardWidget().launch(context);
-              // CustomerRegistrationPage().launch(context);
+              // InquiryInfoCardWidget().launch(context);
+              CustomerRegistrationPage().launch(context);
             },
             child: Card(
               child: Padding(

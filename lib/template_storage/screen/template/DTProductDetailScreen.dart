@@ -3,17 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppConstant.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTAddressListModel.dart';
 import 'package:som/template_storage/model/DTProductModel.dart';
 import 'package:som/template_storage/screen/template/DTCartScreen.dart';
 import 'package:som/template_storage/screen/template/DTReviewScreen.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppConstant.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
 import 'DTAddressScreen.dart';
 import 'ReviewWidget.dart';
@@ -70,7 +68,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: appStore.scaffoldBackground,
+            color: Theme.of(context).colorScheme.primaryContainer,
             boxShadow: defaultBoxShadow(spreadRadius: 3.0)),
         child: Text('Add to Cart', style: boldTextStyle()),
       ).onTap(() {
@@ -86,7 +84,8 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
         alignment: Alignment.center,
         width: context.width() / 2,
         decoration: BoxDecoration(
-            color: appColorPrimary, boxShadow: defaultBoxShadow()),
+            color: Theme.of(context).primaryColor,
+            boxShadow: defaultBoxShadow()),
         child: Text('Buy Now', style: boldTextStyle(color: white)),
       ).onTap(() {
         // Do your logic
@@ -115,14 +114,15 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  priceWidget(widget.productModel!.discountPrice,
-                      fontSize: 28, textColor: appColorPrimary),
+                  priceWidget(context, widget.productModel!.discountPrice,
+                      fontSize: 28, textColor: Theme.of(context).primaryColor),
                   8.width,
-                  priceWidget(widget.productModel!.price,
+                  priceWidget(context, widget.productModel!.price,
                       applyStrike: true, fontSize: 18),
                   16.width,
                   Text('${discount.toInt()}% off',
-                          style: boldTextStyle(color: appColorPrimary))
+                          style: boldTextStyle(
+                              color: Theme.of(context).primaryColor))
                       .visible(discount != 0.0),
                 ],
               ),
@@ -131,7 +131,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: appColorPrimary,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(16)),
                     padding:
                         EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
@@ -179,7 +179,8 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
                   Container(
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                        border: Border.all(color: appColorPrimary),
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
                         borderRadius: BorderRadius.circular(3)),
                     child: Text('Change', style: primaryTextStyle()),
                   ).onTap(() async {
@@ -206,20 +207,21 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
           ).paddingAll(16),
           settingItem(context, '\$10 Delivery in 2 days, Monday',
               leading: Icon(MaterialCommunityIcons.truck_delivery,
-                  color: appColorPrimary),
+                  color: Theme.of(context).primaryColor),
               textSize: 15,
               padding: 0.0, onTap: () {
             mMoreOfferBottomSheet(context);
           }),
           settingItem(context, '7 Days return policy',
-              leading:
-                  Icon(FontAwesome.exchange, color: appColorPrimary, size: 18),
+              leading: Icon(FontAwesome.exchange,
+                  color: Theme.of(context).primaryColor, size: 18),
               textSize: 15,
               padding: 0.0, onTap: () {
             mMoreOfferBottomSheet(context);
           }),
           settingItem(context, 'Cash on Delivery',
-              leading: Icon(MaterialIcons.attach_money, color: appColorPrimary),
+              leading: Icon(MaterialIcons.attach_money,
+                  color: Theme.of(context).primaryColor),
               textSize: 15,
               padding: 0.0, onTap: () {
             mMoreOfferBottomSheet(context);
@@ -288,7 +290,8 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
               ).expand(flex: 40),
               VerticalDivider(width: 0),
               Container(
-                decoration: boxDecoration(bgColor: appStore.scaffoldBackground),
+                decoration: boxDecoration(
+                    bgColor: Theme.of(context).colorScheme.primaryContainer),
                 child: SingleChildScrollView(
                   child: productDetail(),
                 ),
@@ -321,7 +324,7 @@ class DTProductDetailScreenState extends State<DTProductDetailScreen> {
 void mMoreOfferBottomSheet(BuildContext aContext) {
   showModalBottomSheet(
     context: aContext,
-    backgroundColor: appStore.scaffoldBackground,
+    backgroundColor: Theme.of(aContext).colorScheme.primaryContainer,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
     ),
@@ -337,7 +340,7 @@ void mMoreOfferBottomSheet(BuildContext aContext) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(MaterialCommunityIcons.truck_delivery,
-                      color: appColorPrimary),
+                      color: Theme.of(aContext).primaryColor),
                   10.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,7 +361,8 @@ void mMoreOfferBottomSheet(BuildContext aContext) {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(FontAwesome.exchange, color: appColorPrimary),
+                  Icon(FontAwesome.exchange,
+                      color: Theme.of(aContext).primaryColor),
                   10.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,7 +382,8 @@ void mMoreOfferBottomSheet(BuildContext aContext) {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(MaterialIcons.attach_money, color: appColorPrimary),
+                  Icon(MaterialIcons.attach_money,
+                      color: Theme.of(aContext).primaryColor),
                   10.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTProductModel.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
 
-import '../../../main.dart';
 import 'DTOrderSummaryScreen.dart';
 import 'DTProductDetailScreen.dart';
 
@@ -66,7 +64,7 @@ class CartListViewState extends State<CartListView> {
     Widget itemCart(DTProductModel data, int index) {
       return Container(
         decoration: boxDecorationRoundedWithShadow(8,
-            backgroundColor: appStore.appBarColor!),
+            backgroundColor: Theme.of(context).colorScheme.tertiaryContainer),
         margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(8),
         child: Row(
@@ -94,16 +92,16 @@ class CartListViewState extends State<CartListView> {
                 4.height,
                 Row(
                   children: [
-                    priceWidget(data.discountPrice),
+                    priceWidget(context, data.discountPrice),
                     8.width,
-                    priceWidget(data.price, applyStrike: true),
+                    priceWidget(context, data.price, applyStrike: true),
                   ],
                 ),
                 8.height,
                 Container(
                   decoration: boxDecorationWithRoundedCorners(
                     borderRadius: BorderRadius.circular(4),
-                    backgroundColor: appColorPrimaryDark,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   padding: EdgeInsets.all(4),
                   child: Row(
@@ -158,7 +156,7 @@ class CartListViewState extends State<CartListView> {
           totalItemCountWidget(data.length),
           SingleChildScrollView(child: cartItemList()),
           20.height,
-          totalAmountWidget(subTotal, shippingCharges, totalAmount),
+          totalAmountWidget(context, subTotal, shippingCharges, totalAmount),
         ],
       ),
       web: Row(
@@ -172,17 +170,19 @@ class CartListViewState extends State<CartListView> {
             margin: EdgeInsets.all(16),
             padding: EdgeInsets.all(8),
             decoration: boxDecoration(
-                showShadow: true, bgColor: appStore.scaffoldBackground),
+                showShadow: true,
+                bgColor: Theme.of(context).colorScheme.primaryContainer),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                totalAmountWidget(subTotal, shippingCharges, totalAmount)
+                totalAmountWidget(
+                        context, subTotal, shippingCharges, totalAmount)
                     .visible(widget.mIsEditable!),
                 Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(12),
                   decoration: boxDecorationRoundedWithShadow(8,
-                      backgroundColor: appColorPrimary),
+                      backgroundColor: Theme.of(context).primaryColor),
                   child: Text('Checkout', style: boldTextStyle(color: white)),
                 ).onTap(() {
                   DTOrderSummaryScreen(data).launch(context);

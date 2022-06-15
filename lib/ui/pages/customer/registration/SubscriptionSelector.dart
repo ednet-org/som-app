@@ -19,8 +19,6 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
 
   int containerIndex = 0;
 
-  Color screenColor = Color(0xFFEBA791);
-
   @override
   void initState() {
     super.initState();
@@ -84,7 +82,6 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
         price: '€ 149,90 / Monat, Einrichtungspauschale entfällt',
       ),
     );
-    setStatusBarColor(Color(0xFFFBC5BB));
   }
 
   @override
@@ -104,7 +101,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
     }
 
     // show empty message
-    if ((som.availableSubscriptions?.data?.length ?? 0) == 0) {
+    if ((som.availableSubscriptions.data?.length ?? 0) == 0) {
       return Center(child: Text("No subscription plans found."));
     }
 
@@ -139,7 +136,9 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
             )),
         16.height,
         Text('Choose subscription plan',
-                style: boldTextStyle(size: 24, color: screenColor))
+                style: boldTextStyle(
+                    size: 24,
+                    color: Theme.of(context).colorScheme.tertiaryContainer))
             .paddingLeft(12.0),
         16.height,
         ListView.builder(
@@ -151,8 +150,12 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
             return Container(
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color:
-                      value ? screenColor.withOpacity(0.3) : context.cardColor,
+                  color: value
+                      ? Theme.of(context)
+                          .colorScheme
+                          .tertiaryContainer
+                          .withOpacity(0.3)
+                      : context.cardColor,
                   borderRadius: BorderRadius.circular(defaultRadius),
                 ),
                 child: Column(

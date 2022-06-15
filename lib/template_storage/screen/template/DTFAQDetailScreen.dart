@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
@@ -41,7 +40,7 @@ class _DTFAQDetailScreenState extends State<DTFAQDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Hosting', style: secondaryTextStyle(color: appColorPrimary, size: 12)),
+              Text('Hosting', style: secondaryTextStyle(color: Theme.of(context).primaryColor, size: 12)),
               4.height,
               Text('What is Airbnb plus and how to different ?', style: boldTextStyle(size: 24), maxLines: 2),
               8.height,

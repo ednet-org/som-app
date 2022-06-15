@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class IMLongPressDraggableScreen1 extends StatefulWidget {
   static String tag = '/IMLongPressDraggableScreen1';
 
   @override
-  _IMLongPressDraggableScreen1State createState() => _IMLongPressDraggableScreen1State();
+  _IMLongPressDraggableScreen1State createState() =>
+      _IMLongPressDraggableScreen1State();
 }
 
-class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen1> {
+class _IMLongPressDraggableScreen1State
+    extends State<IMLongPressDraggableScreen1> {
   @override
   void initState() {
     super.initState();
@@ -31,7 +32,7 @@ class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Simple Long Press Draggable'),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -55,7 +56,8 @@ class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen
                 ),
                 childWhenDragging: Container(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               Text(
                 "Custom Draggable",
                 style: boldTextStyle(),
@@ -85,7 +87,8 @@ class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen
                   ),
                 ),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               Text(
                 "Custom Draggable",
                 style: boldTextStyle(),
@@ -104,7 +107,8 @@ class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen
                 ),
                 childWhenDragging: Container(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               Text(
                 "Horizontal Draggable",
                 style: boldTextStyle(),
@@ -120,7 +124,8 @@ class _IMLongPressDraggableScreen1State extends State<IMLongPressDraggableScreen
                 ),
                 childWhenDragging: Container(),
               ).center(),
-              Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+              Divider(color: Theme.of(context).dividerColor)
+                  .paddingOnly(top: 16, bottom: 16),
               Text(
                 "Vertical Draggable",
                 style: boldTextStyle(),

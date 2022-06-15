@@ -44,7 +44,7 @@ class SomTextInput extends StatelessWidget {
         hintStyle: secondaryTextStyle(),
         labelStyle: secondaryTextStyle(),
         hintText: hint,
-        icon: Icon(icon, color: appStore.iconColor),
+        icon: Icon(icon, color: Theme.of(context).colorScheme.primary),
       ),
     );
   }

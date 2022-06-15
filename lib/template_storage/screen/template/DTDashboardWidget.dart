@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/main.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/main/utils/rating_bar.dart';
 import 'package:som/template_storage/model/CategoryModel.dart';
 import 'package:som/template_storage/model/DTProductModel.dart';
 import 'package:som/template_storage/screen/template/DTCategoryDetailScreen.dart';
 import 'package:som/template_storage/screen/template/DTSearchScreen.dart';
 import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/components/utils/DTWidgets.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/main/utils/rating_bar.dart';
 
 import 'DTProductDetailScreen.dart';
 
@@ -53,15 +52,17 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: viewLineColor),
-          color: appStore.scaffoldBackground,
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
         margin: EdgeInsets.all(8),
         child: Row(
           children: [
-            Icon(AntDesign.search1, color: appStore.textSecondaryColor),
+            Icon(AntDesign.search1,
+                color: Theme.of(context).colorScheme.onSecondaryContainer),
             10.width,
             Text('Search',
-                style: boldTextStyle(color: appStore.textSecondaryColor)),
+                style: boldTextStyle(
+                    color: Theme.of(context).colorScheme.onSecondaryContainer)),
           ],
         ),
         padding: EdgeInsets.all(10),
@@ -86,7 +87,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                   Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: appColorPrimary),
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).primaryColor),
                     child: Image.asset(e.icon!,
                         height: 30, width: 30, color: white),
                   ),
@@ -114,7 +116,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
 
           return Container(
             decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor: appStore.appBarColor!),
+                backgroundColor:
+                    Theme.of(context).colorScheme.tertiaryContainer),
             width: 220,
             margin: EdgeInsets.only(right: 8),
             child: Column(
@@ -171,9 +174,9 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
                     4.height,
                     Row(
                       children: [
-                        priceWidget(data.discountPrice),
+                        priceWidget(context, data.discountPrice),
                         8.width,
-                        priceWidget(data.price, applyStrike: true),
+                        priceWidget(context, data.price, applyStrike: true),
                       ],
                     ),
                   ],
@@ -256,7 +259,8 @@ class DTDashboardWidgetState extends State<DTDashboardWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Smart Offer Management', style: boldTextStyle()).paddingAll(8),
+              Text('Smart Offer Management', style: boldTextStyle())
+                  .paddingAll(8),
             ],
           ),
         ),

@@ -5,7 +5,6 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:som/template_storage/integrations/screens/Marquee/MHomePage.dart';
 import 'package:som/template_storage/integrations/screens/ShowViewCase/LessonsModel.dart';
 import 'package:som/template_storage/integrations/screens/ShowViewCase/LiveVideo.dart';
-import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import 'ExamCardModel.dart';
@@ -144,7 +143,7 @@ class _SVCHomePageState extends State<SVCHomePage> {
   void initState() {
     super.initState();
     //  Start showcase view after current widget frames are drawn.
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
           Duration(milliseconds: 200),
           () => ShowCaseWidget.of(myContext)!
@@ -214,7 +213,8 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                     child: Icon(
                                       Icons.notifications_none,
                                       size: 30,
-                                      color: appStore.iconColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -435,7 +435,9 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                 margin: EdgeInsets.only(left: 20),
                                 width: 300,
                                 decoration: boxDecorationRoundedWithShadow(8,
-                                    backgroundColor: appStore.appBarColor!),
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .tertiaryContainer),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -447,7 +449,9 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                           topLeft: Radius.circular(5),
                                           bottomLeft: Radius.circular(5),
                                         ),
-                                        color: appStore.appBarColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         image: DecorationImage(
                                           image: CachedNetworkImageProvider(
                                               liveVideo[index].image!),
@@ -481,7 +485,9 @@ class _SVCHomePageState extends State<SVCHomePage> {
                                           ),
                                           Container(
                                             margin: EdgeInsets.only(top: 8),
-                                            color: appStore.appBarColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             child: FittedBox(
                                               child: Text(
                                                 liveVideo[index].message!,

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class FilePickerScreen extends StatefulWidget {
@@ -70,7 +69,7 @@ class FilePickerScreenState extends State<FilePickerScreen> {
           ).paddingAll(16),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: appColorPrimary,
+              primary: Theme.of(context).primaryColor,
             ),
             onPressed: () async {
               await getFiles();

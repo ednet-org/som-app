@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class IMDraggableScreen1 extends StatefulWidget {
@@ -10,7 +9,8 @@ class IMDraggableScreen1 extends StatefulWidget {
   _IMDraggableScreen1State createState() => _IMDraggableScreen1State();
 }
 
-class _IMDraggableScreen1State extends State<IMDraggableScreen1> with TickerProviderStateMixin {
+class _IMDraggableScreen1State extends State<IMDraggableScreen1>
+    with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
 
   @override
@@ -58,7 +58,8 @@ class _IMDraggableScreen1State extends State<IMDraggableScreen1> with TickerProv
                 childWhenDragging: Container(),
               ),
             ),
-            Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+            Divider(color: Theme.of(context).dividerColor)
+                .paddingOnly(top: 16, bottom: 16),
             Text(
               "Custom Draggable",
               style: boldTextStyle(),
@@ -90,7 +91,8 @@ class _IMDraggableScreen1State extends State<IMDraggableScreen1> with TickerProv
                 ),
               ),
             ),
-            Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+            Divider(color: Theme.of(context).dividerColor)
+                .paddingOnly(top: 16, bottom: 16),
             Text(
               "Custom Draggable",
               style: boldTextStyle(),
@@ -111,7 +113,8 @@ class _IMDraggableScreen1State extends State<IMDraggableScreen1> with TickerProv
                 childWhenDragging: Container(),
               ),
             ),
-            Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+            Divider(color: Theme.of(context).dividerColor)
+                .paddingOnly(top: 16, bottom: 16),
             Text(
               "Horizontal Draggable",
               style: boldTextStyle(),
@@ -127,7 +130,8 @@ class _IMDraggableScreen1State extends State<IMDraggableScreen1> with TickerProv
               ),
               childWhenDragging: Container(),
             ).center(),
-            Divider(color: appDividerColor).paddingOnly(top: 16, bottom: 16),
+            Divider(color: Theme.of(context).dividerColor)
+                .paddingOnly(top: 16, bottom: 16),
             Text(
               "Vertical Draggable",
               style: boldTextStyle(),

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
-
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-
-import '../../../main.dart';
+import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
 class AMHeroScreen extends StatefulWidget {
   static String tag = '/AMHeroScreen';
@@ -38,14 +35,18 @@ class AMHeroScreenState extends State<AMHeroScreen> {
     double cardHeight = context.height() / 4;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Hero'),
         body: GridView.builder(
           scrollDirection: Axis.vertical,
           itemCount: mListing.length,
           padding: EdgeInsets.all(16),
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: cardWidth / cardHeight),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: cardWidth / cardHeight),
           itemBuilder: (context, index) => Product(mListing[index], index),
         ),
       ),
@@ -96,7 +97,11 @@ class Product extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(model.name, style: primaryTextStyle(color: appStore.textPrimaryColor)),
+                  Text(model.name,
+                      style: primaryTextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer)),
                 ],
               ),
             )
@@ -115,27 +120,33 @@ class ItemModel {
 List<ItemModel> getData() {
   List<ItemModel> popularArrayList = [];
   ItemModel item1 = ItemModel();
-  item1.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item3.jpg';
+  item1.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item3.jpg';
   item1.name = "Black Jacket";
 
   ItemModel item2 = ItemModel();
-  item2.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item1.jpg';
+  item2.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item1.jpg';
   item2.name = "Denim Jacket";
 
   ItemModel item3 = ItemModel();
-  item3.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item5.jpg';
+  item3.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item5.jpg';
   item3.name = "Blazer";
 
   ItemModel item4 = ItemModel();
-  item4.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item2.jpg';
+  item4.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item2.jpg';
   item4.name = "T-shirt";
 
   ItemModel item5 = ItemModel();
-  item5.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg';
+  item5.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg';
   item5.name = "Sunglasses";
 
   ItemModel item6 = ItemModel();
-  item6.img = 'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item7.jpg';
+  item6.img =
+      'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item7.jpg';
   item6.name = "Shirt";
 
   popularArrayList.add(item1);
@@ -173,7 +184,9 @@ class _DetailScreenState extends State<DetailScreen> {
               Hero(
                 tag: widget.image!,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16)),
                   child: Image.asset(
                     widget.image!,
                     fit: BoxFit.cover,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
 class IMDismissibleScreen extends StatefulWidget {
   static String tag = '/IMDismissibleScreen';
@@ -38,26 +37,33 @@ class _IMDismissibleScreenState extends State<IMDismissibleScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: appStore.scaffoldBackground,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           appBar: appBar(context, 'Dismissible'),
           body: ListView.builder(
-              itemCount:  example.length,
+              itemCount: example.length,
               itemBuilder: (BuildContext context, index) {
                 return ExampleItemWidget(example[index], onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => example[index].widget!));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => example[index].widget!));
                 });
               })),
     );
   }
 }
 
-Widget mDismissibleList(UserModel mUserModel) {
+Widget mDismissibleList(UserModel mUserModel, context) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(radius: 20, backgroundColor: appColorPrimary, child: Text(mUserModel.tag!, style: primaryTextStyle(color: Colors.white))),
+        CircleAvatar(
+            radius: 20,
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Text(mUserModel.tag!,
+                style: primaryTextStyle(color: Colors.white))),
         10.width,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

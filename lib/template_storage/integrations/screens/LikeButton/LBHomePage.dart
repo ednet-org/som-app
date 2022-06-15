@@ -5,8 +5,6 @@ import 'package:som/template_storage/main/utils/like_button/like_button.dart';
 import 'package:som/template_storage/main/utils/like_button/utils/like_button_model.dart';
 import 'package:som/template_storage/main/utils/like_button/utils/like_button_typedef.dart';
 
-import '../../../../main.dart';
-
 class LBHomePage extends StatefulWidget {
   static String tag = '/LBHomePage';
 
@@ -37,22 +35,32 @@ class _LBHomePageState extends State<LBHomePage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: Image.network('https://www.attractivepartners.co.uk/wp-content/uploads/2017/06/profile.jpg').image,
+                    image: Image.network(
+                            'https://www.attractivepartners.co.uk/wp-content/uploads/2017/06/profile.jpg')
+                        .image,
                   ),
                 ),
               ),
               Expanded(
-                child: Container(padding: EdgeInsets.only(left: 10), child: Text('John Doe', style: primaryTextStyle(size: 18))),
+                child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text('John Doe', style: primaryTextStyle(size: 18))),
               ),
-              Container(margin: EdgeInsets.only(right: 10), child: Icon(Icons.more_vert, color: appStore.iconColor))
+              Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Icon(Icons.more_vert,
+                      color: Theme.of(context).colorScheme.primary))
             ],
           ),
           Container(
             margin: EdgeInsets.only(top: 15),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
             child: FadeInImage(
-              image: Image.network('https://i2.wp.com/www.casadekarma.com.au/wp-content/uploads/2015/05/healthy-food-inspiration-instagram-e1432362958184.jpg?fit=1505%2C915&ssl=1').image,
-              placeholder: Image.asset('images/LikeButton/image/grey.jpg').image,
+              image: Image.network(
+                      'https://i2.wp.com/www.casadekarma.com.au/wp-content/uploads/2015/05/healthy-food-inspiration-instagram-e1432362958184.jpg?fit=1505%2C915&ssl=1')
+                  .image,
+              placeholder:
+                  Image.asset('images/LikeButton/image/grey.jpg').image,
             ),
           ),
         ],
@@ -86,9 +94,11 @@ class _LBHomePageState extends State<LBHomePage> {
                           // the total number of count
                           likeCount: likeCount,
                           // to handle the count behaviour
-                          countBuilder: (int? count, bool isLiked, String text) {
+                          countBuilder:
+                              (int? count, bool isLiked, String text) {
                             // color of the count
-                            final ColorSwatch<int> color = isLiked ? Colors.pinkAccent : Colors.grey;
+                            final ColorSwatch<int> color =
+                                isLiked ? Colors.pinkAccent : Colors.grey;
                             Widget result;
                             if (count == 0) {
                               result = Text(
@@ -97,7 +107,9 @@ class _LBHomePageState extends State<LBHomePage> {
                               );
                             } else
                               result = Text(
-                                count! >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
+                                count! >= 1000
+                                    ? (count / 1000.0).toStringAsFixed(1) + 'k'
+                                    : text,
                                 style: TextStyle(color: color),
                               );
                             return result;
@@ -106,7 +118,8 @@ class _LBHomePageState extends State<LBHomePage> {
                           countPostion: CountPostion.right,
                           // Animation for the count
                           likeCountAnimationType: likeCount < 1000
-                              ? LikeCountAnimationType.all // the whole number will change
+                              ? LikeCountAnimationType
+                                  .all // the whole number will change
                               : LikeCountAnimationType.part,
                           // only the last digit will change
                           onTap: onLikeButtonTapped,
@@ -124,36 +137,52 @@ class _LBHomePageState extends State<LBHomePage> {
                       children: <Widget>[
                         LikeButton(
                           size: buttonSize,
-                          circleColor: const CircleColor(start: Color(0xff63C5DA), end: Color(0xff1338BE)),
-                          bubblesColor: const BubblesColor(dotPrimaryColor: Color(0xff0080FF), dotSecondaryColor: Color(0xff1034A6)),
+                          circleColor: const CircleColor(
+                              start: Color(0xff63C5DA), end: Color(0xff1338BE)),
+                          bubblesColor: const BubblesColor(
+                              dotPrimaryColor: Color(0xff0080FF),
+                              dotSecondaryColor: Color(0xff1034A6)),
                           likeBuilder: (bool isLiked) {
-                            return Icon(Icons.thumb_up, color: isLiked ? Colors.blue : Colors.grey, size: buttonSize);
+                            return Icon(Icons.thumb_up,
+                                color: isLiked ? Colors.blue : Colors.grey,
+                                size: buttonSize);
                           },
                           countPostion: CountPostion.right,
                           likeCount: 100,
-                          countBuilder: (int? count, bool isLiked, String text) {
-                            final ColorSwatch<int> color = isLiked ? Colors.blue : Colors.grey;
+                          countBuilder:
+                              (int? count, bool isLiked, String text) {
+                            final ColorSwatch<int> color =
+                                isLiked ? Colors.blue : Colors.grey;
                             Widget result;
                             if (count == 0) {
-                              result = Text('love', style: TextStyle(color: color));
+                              result =
+                                  Text('love', style: TextStyle(color: color));
                             } else
-                              result = Text(text, style: TextStyle(color: color));
+                              result =
+                                  Text(text, style: TextStyle(color: color));
                             return result;
                           },
                         ),
                         SizedBox(width: 10),
                         LikeButton(
                           size: buttonSize,
-                          circleColor: const CircleColor(start: Color(0xff63C5DA), end: Color(0xff1338BE)),
-                          bubblesColor: const BubblesColor(dotPrimaryColor: Color(0xff0080FF), dotSecondaryColor: Color(0xff1034A6)),
+                          circleColor: const CircleColor(
+                              start: Color(0xff63C5DA), end: Color(0xff1338BE)),
+                          bubblesColor: const BubblesColor(
+                              dotPrimaryColor: Color(0xff0080FF),
+                              dotSecondaryColor: Color(0xff1034A6)),
                           likeBuilder: (bool isLiked) {
-                            return Icon(Icons.thumb_down, color: isLiked ? Colors.blue : Colors.grey, size: buttonSize);
+                            return Icon(Icons.thumb_down,
+                                color: isLiked ? Colors.blue : Colors.grey,
+                                size: buttonSize);
                           },
                           countPostion: CountPostion.right,
                           likeCount: 100,
                           likeCountAnimationType: LikeCountAnimationType.all,
-                          countBuilder: (int? count, bool isLiked, String text) {
-                            final MaterialColor color = isLiked ? Colors.blue : Colors.grey;
+                          countBuilder:
+                              (int? count, bool isLiked, String text) {
+                            final MaterialColor color =
+                                isLiked ? Colors.blue : Colors.grey;
                             Widget result;
                             print(text);
                             if (count == 0) {
@@ -169,7 +198,9 @@ class _LBHomePageState extends State<LBHomePage> {
                             return result;
                           },
                         ),
-                        Container(margin: EdgeInsets.only(left: 10), child: Icon(Icons.comment, color: Colors.grey))
+                        Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Icon(Icons.comment, color: Colors.grey))
                       ],
                     ),
                   ),
@@ -186,8 +217,10 @@ class _LBHomePageState extends State<LBHomePage> {
                             LikeButton(
                               size: buttonSize,
                               likeCount: likeCount,
-                              countBuilder: (int? count, bool isLiked, String text) {
-                                final ColorSwatch<int> color = isLiked ? Colors.pinkAccent : Colors.grey;
+                              countBuilder:
+                                  (int? count, bool isLiked, String text) {
+                                final ColorSwatch<int> color =
+                                    isLiked ? Colors.pinkAccent : Colors.grey;
                                 Widget result;
                                 if (count == 0) {
                                   result = Text(
@@ -196,13 +229,18 @@ class _LBHomePageState extends State<LBHomePage> {
                                   );
                                 } else
                                   result = Text(
-                                    count! >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
+                                    count! >= 1000
+                                        ? (count / 1000.0).toStringAsFixed(1) +
+                                            'k'
+                                        : text,
                                     style: TextStyle(color: color),
                                   );
                                 return result;
                               },
                               countPostion: CountPostion.right,
-                              likeCountAnimationType: likeCount < 1000 ? LikeCountAnimationType.all : LikeCountAnimationType.part,
+                              likeCountAnimationType: likeCount < 1000
+                                  ? LikeCountAnimationType.all
+                                  : LikeCountAnimationType.part,
                               onTap: onLikeButtonTapped,
                             ),
                             SizedBox(
@@ -231,8 +269,10 @@ class _LBHomePageState extends State<LBHomePage> {
                               );
                             },
                             likeCount: 888,
-                            countBuilder: (int? count, bool isLiked, String text) {
-                              final ColorSwatch<int> color = isLiked ? Colors.blue : Colors.grey;
+                            countBuilder:
+                                (int? count, bool isLiked, String text) {
+                              final ColorSwatch<int> color =
+                                  isLiked ? Colors.blue : Colors.grey;
                               Widget result;
                               if (count == 0) {
                                 result = Text(

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -92,7 +91,7 @@ class VideoPickerScreenState extends State<VideoPickerScreen> {
                 ).center(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: appColorPrimary,
+                  primary: Theme.of(context).primaryColor,
                 ),
                 onPressed: () async {
                   await getVideo();
@@ -105,7 +104,7 @@ class VideoPickerScreenState extends State<VideoPickerScreen> {
         ),
         floatingActionButton: pickVideo != null
             ? FloatingActionButton(
-                backgroundColor: appColorPrimary,
+                backgroundColor: Theme.of(context).primaryColor,
                 onPressed: () {
                   isVideoPlay ? _controller!.pause() : _controller!.play();
                   isVideoPlay = !isVideoPlay;

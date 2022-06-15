@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class RazorPayScreen extends StatefulWidget {
@@ -67,7 +66,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
     return Scaffold(
       appBar: appBar(context, 'RazorPay Payment checkout'),
       body: SingleChildScrollView(
@@ -109,7 +108,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
                 ],
               ),
               Divider(height: 0.5),
-              text("Name", textColor: appColorPrimary, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
+              text("Name", textColor: Theme.of(context).primaryColor, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
               Container(
                 margin: EdgeInsets.only(left: 16, right: 16),
                 width: MediaQuery.of(context).size.width,
@@ -117,7 +116,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                 child: Text("Acme Corp.", style: secondaryTextStyle()),
               ),
-              text("Email", textColor: appColorPrimary, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
+              text("Email", textColor: Theme.of(context).primaryColor, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
               Container(
                 margin: EdgeInsets.only(left: 16, right: 16),
                 width: MediaQuery.of(context).size.width,
@@ -125,7 +124,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                 child: Text("test@razorpay.com", style: secondaryTextStyle()),
               ),
-              text("Contact", textColor: appColorPrimary, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
+              text("Contact", textColor: Theme.of(context).primaryColor, fontFamily: fontSemibold, fontSize: textSizeLargeMedium).paddingAll(16),
               Container(
                 margin: EdgeInsets.only(left: 16, right: 16),
                 width: MediaQuery.of(context).size.width,
@@ -139,7 +138,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
                 decoration: BoxDecoration(
-                  color: appColorPrimary,
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -155,7 +154,7 @@ class RazorPayScreenState extends State<RazorPayScreen> {
           )
 
           /*MaterialButton(
-            color: appColorPrimary,
+            color: Theme.of(context).primaryColor,
             onPressed: () => openCheckout(),
             child: textPrimary('Pay with RazorPay'),
           )*/

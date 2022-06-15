@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+
 import '../IMDismissibleScreen.dart';
 
 class IMDismissibleScreen2 extends StatefulWidget {
@@ -28,14 +29,14 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
     if (mounted) super.setState(fn);
   }
 
-  ListView generateItemsList() {
+  ListView generateItemsList(context) {
     return ListView.builder(
       itemCount: userList.length,
       itemBuilder: (context, index) {
         return Dismissible(
           direction: DismissDirection.endToStart,
           key: Key(userList[index].tag!),
-          child: mDismissibleList(userList[index]),
+          child: mDismissibleList(userList[index], context),
           background: slideRightBackground(),
           // ignore: missing_return
           confirmDismiss: (direction) async {
@@ -44,7 +45,7 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      backgroundColor: appStore.appBarColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       content: Text(
                         "Are you sure you want to delete?",
                         style: primaryTextStyle(),
@@ -112,9 +113,9 @@ class _IMDismissibleScreen2State extends State<IMDismissibleScreen2> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Dismissible with One Side'),
-        body: generateItemsList(),
+        body: generateItemsList(context),
       ),
     );
   }

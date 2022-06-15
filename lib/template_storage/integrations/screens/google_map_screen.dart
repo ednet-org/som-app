@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/clusteringGoogleMaps/clustering_helper.dart';
 import 'package:som/template_storage/main/utils/clusteringGoogleMaps/lat_lang_geohash.dart';
@@ -15,7 +13,8 @@ class GoogleMapScreen extends StatefulWidget {
   GoogleMapScreenState createState() => GoogleMapScreenState();
 }
 
-class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<GoogleMapScreen> {
+class GoogleMapScreenState extends State<GoogleMapScreen>
+    with AfterLayoutMixin<GoogleMapScreen> {
   //TODO Without NullSafety Geo coder
   //Completer<GoogleMapController> _controller = Completer();
 
@@ -49,14 +48,14 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
   // TODO Without NullSafety Geo coder
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     // TODO Without NullSafety Geo coder
     /*CameraPosition initialPosition = CameraPosition(
       target: LatLng(43.7262115, 12.636526499999945),
       zoom: 5,
     );*/
-      // TODO Without NullSafety Geo coder
+    // TODO Without NullSafety Geo coder
     //CameraPosition newPosition = CameraPosition(bearing: 192.8334901395799, target: LatLng(37.43296265331129, -122.08832357078792), tilt: 59.440717697143555, zoom: 19.151926040649414);
     // TODO Without NullSafety Geo coder
     return Scaffold(
@@ -98,7 +97,7 @@ class GoogleMapScreenState extends State<GoogleMapScreen> with AfterLayoutMixin<
     return [
       CustomTheme(
         child: PopupMenuButton(
-          color: appStore.scaffoldBackground,
+          color: Theme.of(context).colorScheme.primaryContainer,
           itemBuilder: (_) => [
             PopupMenuItem(
               child: InkWell(

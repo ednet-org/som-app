@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 import '../../../ui/components/MainMenu.dart';
@@ -53,7 +51,9 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text('Password Reset', style: boldTextStyle(size: 24)),
-                  Text('To reset your password, enter your email to get reset link.', style: secondaryTextStyle()),
+                  Text(
+                      'To reset your password, enter your email to get reset link.',
+                      style: secondaryTextStyle()),
                   30.height,
                   TextFormField(
                     controller: emailCont,
@@ -63,8 +63,16 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
                       contentPadding: EdgeInsets.all(16),
                       labelStyle: secondaryTextStyle(),
                       border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appColorPrimary)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: appStore.textSecondaryColor!)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer!)),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (s) {
@@ -78,8 +86,12 @@ class _DTForgotPwdScreenState extends State<DTForgotPwdScreen> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    decoration: BoxDecoration(color: appColorPrimary, borderRadius: BorderRadius.circular(8), boxShadow: defaultBoxShadow()),
-                    child: Text('Send', style: boldTextStyle(color: white, size: 18)),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: defaultBoxShadow()),
+                    child: Text('Send',
+                        style: boldTextStyle(color: white, size: 18)),
                   ).onTap(() {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();

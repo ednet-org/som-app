@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/main/utils/Lipsum.dart' as lipsum;
 
@@ -59,7 +58,7 @@ class CWTabBarScreen1State extends State<CWTabBarScreen1> {
         appBar: appBar(context, 'TabBar with Icon'),
         body: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: appStore.appBarColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -74,7 +73,7 @@ class CWTabBarScreen1State extends State<CWTabBarScreen1> {
                 icon: Icon(Icons.person),
               ),
             ],
-            activeColor: appColorPrimary,
+            activeColor: Theme.of(context).primaryColor,
             inactiveColor: Colors.grey,
           ),
           tabBuilder: (BuildContext context, int index) {

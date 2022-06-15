@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class ImagePickerScreen extends StatefulWidget {
@@ -66,7 +65,7 @@ class ImagePickerScreenState extends State<ImagePickerScreen> {
                 ).center(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: appColorPrimary,
+                  primary: Theme.of(context).primaryColor,
                 ),
                 onPressed: () async {
                   await getImage();

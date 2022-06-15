@@ -12,7 +12,8 @@ class AMFadeTransitionScreen extends StatefulWidget {
   AMFadeTransitionScreenState createState() => AMFadeTransitionScreenState();
 }
 
-class AMFadeTransitionScreenState extends State<AMFadeTransitionScreen> with TickerProviderStateMixin {
+class AMFadeTransitionScreenState extends State<AMFadeTransitionScreen>
+    with TickerProviderStateMixin {
   AnimationController? _controller;
   int index = 0;
   List<String?> listOfCategory = [
@@ -62,7 +63,7 @@ class AMFadeTransitionScreenState extends State<AMFadeTransitionScreen> with Tic
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Fade Transition'),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -77,12 +78,12 @@ class AMFadeTransitionScreenState extends State<AMFadeTransitionScreen> with Tic
               if (index == 5) mName(Curves.easeOutBack),
               DropdownButton(
                 isExpanded: true,
-                dropdownColor: appStore.appBarColor,
+                dropdownColor: Theme.of(context).colorScheme.primary,
                 value: selectedIndexCategory,
                 style: boldTextStyle(),
                 icon: Icon(
                   Icons.keyboard_arrow_down,
-                  color: appStore.iconColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 underline: 0.height,
                 onChanged: (dynamic newValue) {
@@ -93,7 +94,8 @@ class AMFadeTransitionScreenState extends State<AMFadeTransitionScreen> with Tic
                 },
                 items: listOfCategory.map((category) {
                   return DropdownMenuItem(
-                    child: Text(category!, style: primaryTextStyle()).paddingLeft(8),
+                    child: Text(category!, style: primaryTextStyle())
+                        .paddingLeft(8),
                     value: category,
                   );
                 }).toList(),

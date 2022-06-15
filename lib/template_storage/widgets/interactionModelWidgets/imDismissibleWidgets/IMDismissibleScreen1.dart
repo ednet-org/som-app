@@ -28,22 +28,24 @@ class _IMDismissibleScreen1State extends State<IMDismissibleScreen1> {
     if (mounted) super.setState(fn);
   }
 
-  Widget generateItemsList() {
+  Widget generateItemsList(context) {
     return Container(
       child: ListView.builder(
         itemCount: userList.length,
         itemBuilder: (context, index) {
           return Dismissible(
             key: Key(userList[index].tag!),
-            child: mDismissibleList(userList[index]),
+            child: mDismissibleList(userList[index], context),
             background: slideRightBackground(),
             secondaryBackground: slideLeftBackground(),
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                ScaffoldMessengerState().showSnackBar(SnackBar(content: Text("Swipe to left")));
+                ScaffoldMessengerState()
+                    .showSnackBar(SnackBar(content: Text("Swipe to left")));
               } else if (direction == DismissDirection.endToStart) {
                 userList.removeAt(index);
-                ScaffoldMessengerState().showSnackBar(SnackBar(content: Text("Swipe to right")));
+                ScaffoldMessengerState()
+                    .showSnackBar(SnackBar(content: Text("Swipe to right")));
               }
             },
           );
@@ -108,9 +110,9 @@ class _IMDismissibleScreen1State extends State<IMDismissibleScreen1> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'Dismissible with Both Side'),
-        body: generateItemsList(),
+        body: generateItemsList(context),
       ),
     );
   }

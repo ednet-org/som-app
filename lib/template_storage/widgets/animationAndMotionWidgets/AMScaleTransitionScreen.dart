@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class AMScaleTransitionScreen extends StatefulWidget {
   static String tag = '/AMScaleTransitionScreen';
 
@@ -10,7 +8,8 @@ class AMScaleTransitionScreen extends StatefulWidget {
   AMScaleTransitionScreenState createState() => AMScaleTransitionScreenState();
 }
 
-class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen> with TickerProviderStateMixin {
+class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -21,9 +20,11 @@ class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen> with T
   }
 
   init() async {
-    _controller = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this, value: 0.1);
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 2000), vsync: this, value: 0.1);
 
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+    _animation =
+        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
 
     _controller.forward();
   }
@@ -43,7 +44,7 @@ class AMScaleTransitionScreenState extends State<AMScaleTransitionScreen> with T
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appStore.scaffoldBackground,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: appBar(context, 'ScaleTransition'),
         body: Center(
           child: ScaleTransition(

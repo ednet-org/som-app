@@ -4,8 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
-
 class CWActionSheetScreen extends StatefulWidget {
   static String tag = '/CWActionSheetScreen';
 
@@ -107,7 +105,7 @@ class CWActionSheetScreenState extends State<CWActionSheetScreen> {
                   ),
                   Icon(
                     Icons.share,
-                    color: appStore.iconColor,
+                    color: Theme.of(context).colorScheme.primary,
                   )
                 ],
               )),
@@ -125,7 +123,7 @@ class CWActionSheetScreenState extends State<CWActionSheetScreen> {
                 ),
                 Icon(
                   Icons.supervised_user_circle,
-                  color: appStore.iconColor,
+                  color: Theme.of(context).colorScheme.primary,
                 )
               ],
             ),
@@ -150,11 +148,17 @@ class CWActionSheetScreenState extends State<CWActionSheetScreen> {
             itemBuilder: (BuildContext context, index) {
               return ExampleItemWidget(example[index], onTap: () {
                 if (index == 0) {
-                  showCupertinoModalPopup(context: context, builder: (BuildContext context) => action1);
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) => action1);
                 } else if (index == 1) {
-                  showCupertinoModalPopup(context: context, builder: (BuildContext context) => action2);
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) => action2);
                 } else if (index == 2) {
-                  showCupertinoModalPopup(context: context, builder: (BuildContext context) => action3);
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) => action3);
                 }
               });
             }),

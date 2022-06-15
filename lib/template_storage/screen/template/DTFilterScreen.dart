@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTFilter.dart';
 import 'package:som/template_storage/model/DTFilterOption.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 
-import '../../../main.dart';
 import '../../../ui/components/MainMenu.dart';
 
 int selectedIndex = 0;
@@ -66,11 +64,13 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                   toast("Apply");
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: appColorPrimary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                  primary: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
                   padding: EdgeInsets.fromLTRB(50, 12, 50, 12),
                 ),
-                child: Text("Apply", style: primaryTextStyle(color: Colors.white)),
+                child:
+                    Text("Apply", style: primaryTextStyle(color: Colors.white)),
               )
             ],
           ),
@@ -81,7 +81,7 @@ class DTFilterScreenState extends State<DTFilterScreen> {
             Expanded(
               flex: isMobile ? 3 : 2,
               child: Container(
-                color: appStore.appBarColor,
+                color: Theme.of(context).colorScheme.primary,
                 height: context.height(),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -97,7 +97,9 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                     dataList[index].total = selectedCount;
 
                     return Container(
-                      color: selectedIndex == index ? appStore.appBarColor : Colors.transparent,
+                      color: selectedIndex == index
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.transparent,
                       padding: EdgeInsets.fromLTRB(16, 16, 10, 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,13 +109,24 @@ class DTFilterScreenState extends State<DTFilterScreen> {
                           Expanded(
                             child: Text(
                               dataList[index].name!,
-                              style: primaryTextStyle(color: selectedIndex == index ? appColorPrimary : appStore.textPrimaryColor),
+                              style: primaryTextStyle(
+                                  color: selectedIndex == index
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer),
                               maxLines: 1,
                             ),
                           ),
                           selectedIndex == index
-                              ? Icon(Icons.check, color: appColorPrimary, size: 16)
-                              : Text(dataList[index].total.validate().toString(), style: primaryTextStyle(color: appColorPrimary), maxLines: 1)
+                              ? Icon(Icons.check,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 16)
+                              : Text(
+                                  dataList[index].total.validate().toString(),
+                                  style: primaryTextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                  maxLines: 1)
                         ],
                       ),
                     ).onTap(() {
@@ -128,7 +141,10 @@ class DTFilterScreenState extends State<DTFilterScreen> {
               ),
             ),
             VerticalDivider(width: 0),
-            Expanded(flex: isMobile ? 5 : 7, child: Container(height: context.height(), child: data(selectedIndex))),
+            Expanded(
+                flex: isMobile ? 5 : 7,
+                child: Container(
+                    height: context.height(), child: data(selectedIndex))),
           ],
         ),
       ),
@@ -190,16 +206,20 @@ class _OptionState extends State<Option> {
             width: 16,
             height: 16,
             decoration: boxDecoration(
-              bgColor: appStore.appBarColor,
+              bgColor: Theme.of(context).colorScheme.primary,
               color: Theme.of(context).dividerColor,
             ),
-            child: Icon(Icons.done, color: appStore.iconColor, size: 12).visible(widget.model.isSelected),
+            child: Icon(Icons.done,
+                    color: Theme.of(context).colorScheme.primary, size: 12)
+                .visible(widget.model.isSelected),
           ),
           16.width,
           Text(
             widget.model.name!,
             style: primaryTextStyle(
-              color: widget.model.isSelected ? appColorPrimary : appStore.textPrimaryColor,
+              color: widget.model.isSelected
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).colorScheme.onPrimaryContainer,
             ),
           ).expand(),
         ],

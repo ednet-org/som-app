@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/model/DTChatMessageModel.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/template_storage/model/DTChatMessageModel.dart';
 
 import '../../../main.dart';
 
-Widget priceWidget(int? price,
+Widget priceWidget(context, int? price,
     {bool applyStrike = false, double? fontSize, Color? textColor}) {
   return Text(
     applyStrike ? '$price' : '\$$price',
@@ -16,8 +15,8 @@ Widget priceWidget(int? price,
       color: textColor != null
           ? textColor
           : applyStrike
-              ? appStore.textSecondaryColor
-              : appStore.textPrimaryColor,
+              ? Theme.of(context).colorScheme.onSecondaryContainer
+              : Theme.of(context).colorScheme.onPrimaryContainer,
       fontSize: fontSize != null
           ? fontSize
           : applyStrike
@@ -36,11 +35,11 @@ Widget dot() {
   );
 }
 
-Gradient defaultThemeGradient() {
+Gradient defaultThemeGradient(context) {
   return LinearGradient(
     colors: [
-      appColorPrimary,
-      appColorPrimary.withOpacity(0.5),
+      Theme.of(context).primaryColor,
+      Theme.of(context).primaryColor.withOpacity(0.5),
     ],
     tileMode: TileMode.mirror,
     begin: Alignment.topCenter,
@@ -118,7 +117,8 @@ Widget totalItemCountWidget(int count) {
   );
 }
 
-Widget totalAmountWidget(int subTotal, int shippingCharges, int totalAmount) {
+Widget totalAmountWidget(
+    context, int subTotal, int shippingCharges, int totalAmount) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -126,21 +126,21 @@ Widget totalAmountWidget(int subTotal, int shippingCharges, int totalAmount) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('Sub Total', style: boldTextStyle(size: 18)),
-          priceWidget(subTotal),
+          priceWidget(context, subTotal),
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('Shipping Charges', style: boldTextStyle(size: 18)),
-          priceWidget(shippingCharges),
+          priceWidget(context, shippingCharges),
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('Total Amount', style: boldTextStyle(size: 18)),
-          priceWidget(totalAmount),
+          priceWidget(context, totalAmount),
         ],
       ),
       20.height,
@@ -179,7 +179,9 @@ class ChatMessageWidget extends StatelessWidget {
                   left: 0,
                   right: (dynamicWidth(context) * 0.25).toDouble()),
           decoration: BoxDecoration(
-            color: !isMe ? appColorPrimary : appStore.appBarColor,
+            color: !isMe
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).colorScheme.primary,
             boxShadow: defaultBoxShadow(),
             borderRadius: isMe.validate()
                 ? BorderRadius.only(
@@ -204,10 +206,16 @@ class ChatMessageWidget extends StatelessWidget {
               Flexible(
                   child: Text(data.msg!,
                       style: primaryTextStyle(
-                          color: !isMe ? white : appStore.textPrimaryColor))),
+                          color: !isMe
+                              ? white
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer))),
               Text(data.time!,
                   style: secondaryTextStyle(
-                      color: !isMe ? white : appStore.textSecondaryColor,
+                      color: !isMe
+                          ? white
+                          : Theme.of(context).colorScheme.onSecondaryContainer,
                       size: 12))
             ],
           ),

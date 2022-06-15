@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/template_storage/main/utils/AppColors.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 
 class SnackBarScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class SnackBarScreenState extends State<SnackBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    changeStatusColor(Theme.of(context).primaryColor);
 
     return Scaffold(
       appBar: appBar(context, "Snackbar"),
@@ -59,7 +58,7 @@ class SnackBarScreenState extends State<SnackBarScreen> {
               ScaffoldMessengerState().hideCurrentSnackBar();
               ScaffoldMessengerState().showSnackBar(SnackBar(
                 content: text('This is custom Snackbar', fontSize: 20),
-                backgroundColor: appColorPrimary,
+                backgroundColor: Theme.of(context).primaryColor,
               ));
             },
             child: simpleCard('Custom Snackbar'),
@@ -104,8 +103,8 @@ class SnackBarScreenState extends State<SnackBarScreen> {
             onTap: () {
               ScaffoldMessengerState().hideCurrentSnackBar();
               ScaffoldMessengerState().showSnackBar(SnackBar(
-                content: text('This is Bordered Snackbar', textColor: appColorPrimary),
-                shape: Border.all(color: appColorPrimary),
+                content: text('This is Bordered Snackbar', textColor: Theme.of(context).primaryColor),
+                shape: Border.all(color: Theme.of(context).primaryColor),
                 backgroundColor: whiteColor,
                 behavior: SnackBarBehavior.floating,
               ));
