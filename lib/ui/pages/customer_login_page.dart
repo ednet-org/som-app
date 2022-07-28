@@ -40,8 +40,6 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -56,7 +54,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                     height: 150, fit: BoxFit.fitHeight),
               ),
               Text('Smart offer management'.toUpperCase(),
-                      style: primaryTextStyle(size: textSizeLarge.toInt()))
+                      style: Theme.of(context).textTheme.displayMedium)
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               SizedBox(
                 width: 800,

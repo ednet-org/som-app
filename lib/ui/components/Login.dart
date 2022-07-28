@@ -24,10 +24,8 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Theme.of(context).colorScheme.tertiaryContainer);
-    changeStatusColor(Theme.of(context).colorScheme.tertiaryContainer);
+    changeStatusColor(Theme.of(context).colorScheme.secondary);
     return Container(
-      color: context.scaffoldBackgroundColor,
       margin: EdgeInsets.only(left: spacing_large, right: spacing_large),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -37,8 +35,7 @@ class LoginState extends State<Login> {
           if (widget.showWelcomeMessage) welcomeMessage(),
           loginForm(),
           SizedBox(height: spacing_large),
-          text(static["link.forgottenPassword"],
-              textColor: Colors.amber, fontFamily: fontMedium),
+          text(static["link.forgottenPassword"], fontFamily: fontMedium),
           SizedBox(
             width: spacing_control,
           ),
@@ -57,10 +54,7 @@ class LoginState extends State<Login> {
                   ]),
                   maxLines: 3,
                   overflow: TextOverflow.fade,
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                      color: Colors.amber,
-                      fontSize: 15,
-                      fontFamily: fontMedium),
+                  style: Theme.of(context).textTheme.button,
                   // TODO impl read more able components
                 ),
               ),
