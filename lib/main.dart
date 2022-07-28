@@ -22,12 +22,10 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 
 /// This variable is used to get dynamic colors when theme mode is changed
 var appStore = Application();
-AppThemeData? lightTheme;
 AppThemeData? darkTheme;
 
 void main() async {
-  lightTheme = await EdsAppTheme.lightTheme;
-  darkTheme = await EdsAppTheme.darkTheme;
+  darkTheme = await EdsAppTheme.som["dark"];
   // final response = await subscriptionService.getSubscriptions();
   // if (response.isSuccessful) {
   //   // Successful request
@@ -101,9 +99,9 @@ class MyApp extends StatelessWidget {
           routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
-          theme: !appStore.isDarkModeOn
-              ? lightTheme!.materialThemeData
-              : darkTheme!.materialThemeData,
+          // hardcoded dark mode
+          themeMode: ThemeMode.dark,
+          theme: darkTheme!.materialThemeData,
           builder: scrollBehaviour(),
         ),
       ),
