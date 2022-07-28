@@ -43,8 +43,7 @@ class IntegrationHomePageState extends State<IntegrationHomePage>
             Container(
               alignment: Alignment.centerLeft,
               decoration: boxDecorationWithShadow(
-                backgroundColor:
-                    Theme.of(context).colorScheme.primaryContainer!,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   bottomRight: Radius.circular(30),

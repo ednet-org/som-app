@@ -66,9 +66,7 @@ Widget errorWidget(
           left: 20,
           right: 20,
           child: Container(
-            decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor:
-                    appStore.isDarkModeOn ? Colors.black26 : Colors.white70),
+            decoration: boxDecorationRoundedWithShadow(8),
             padding: EdgeInsets.all(8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

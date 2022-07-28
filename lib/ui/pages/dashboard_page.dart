@@ -35,7 +35,6 @@ class DashboardPageState extends State<DashboardPage> {
   userMenuItem() {
     return Row(children: [
       CircleAvatar(
-        backgroundColor: Colors.grey.shade800,
         backgroundImage: AssetImage(
             'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
       ).paddingRight(10.0),
@@ -49,7 +48,6 @@ class DashboardPageState extends State<DashboardPage> {
         ? SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.primary,
                 title: appBarTitleWidget(context, 'Dashboard'),
                 iconTheme:
                     IconThemeData(color: Theme.of(context).colorScheme.primary),

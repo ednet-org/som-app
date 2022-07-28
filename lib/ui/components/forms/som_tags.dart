@@ -154,7 +154,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                 ? Positioned(
                     right: 0,
                     child: CircleAvatar(
-                      backgroundColor: Colors.orange.shade600,
                       radius: 8.0,
                       child: const Icon(
                         Icons.clear,

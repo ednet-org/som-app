@@ -30,9 +30,7 @@ class GETMethodExampleScreenState extends State<GETMethodExampleScreen> {
           return Container(
             margin: EdgeInsets.all(8),
             padding: EdgeInsets.all(8),
-            decoration: boxDecorationRoundedWithShadow(8,
-                backgroundColor:
-                    Theme.of(context).colorScheme.tertiaryContainer),
+            decoration: boxDecorationRoundedWithShadow(8),
             child: Row(
               children: [
                 networkImage(data[index].avatar_url,
