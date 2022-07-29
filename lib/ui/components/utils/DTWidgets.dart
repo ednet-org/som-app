@@ -3,8 +3,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/template_storage/model/DTChatMessageModel.dart';
 
-import '../../../main.dart';
-
 Widget priceWidget(context, int? price,
     {bool applyStrike = false, double? fontSize, Color? textColor}) {
   return Text(
@@ -31,7 +29,7 @@ Widget dot() {
   return Container(
     height: 7,
     width: 7,
-    decoration: BoxDecoration(color: Colors.black12, shape: BoxShape.circle),
+    decoration: BoxDecoration(shape: BoxShape.circle),
   );
 }
 
@@ -91,8 +89,7 @@ Widget errorWidget(
                       onPressed: () {
                         onRetry!();
                       },
-                      child: Text('RETRY',
-                          style: primaryTextStyle(color: textPrimaryColor)),
+                      child: Text('RETRY'),
                     )
                   ],
                 ).visible(showRetry),
@@ -178,8 +175,8 @@ class ChatMessageWidget extends StatelessWidget {
                   right: (dynamicWidth(context) * 0.25).toDouble()),
           decoration: BoxDecoration(
             color: !isMe
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).colorScheme.primary,
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.secondary,
             boxShadow: defaultBoxShadow(),
             borderRadius: isMe.validate()
                 ? BorderRadius.only(
@@ -205,14 +202,14 @@ class ChatMessageWidget extends StatelessWidget {
                   child: Text(data.msg!,
                       style: primaryTextStyle(
                           color: !isMe
-                              ? white
+                              ? Theme.of(context).colorScheme.onPrimaryContainer
                               : Theme.of(context)
                                   .colorScheme
-                                  .onPrimaryContainer))),
+                                  .onSecondaryContainer))),
               Text(data.time!,
                   style: secondaryTextStyle(
                       color: !isMe
-                          ? white
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
                           : Theme.of(context).colorScheme.onSecondaryContainer,
                       size: 12))
             ],

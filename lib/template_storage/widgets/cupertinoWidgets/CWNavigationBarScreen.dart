@@ -42,13 +42,11 @@ class CWNavigationBarScreenState extends State<CWNavigationBarScreen> {
               CupertinoNavigationBar(
                 transitionBetweenRoutes: false,
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                leading: CustomTheme(
-                  child: CupertinoNavigationBarBackButton(
-                    color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {
-                      toast("Back button");
-                    },
-                  ),
+                leading: CupertinoNavigationBarBackButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  onPressed: () {
+                    toast("Back button");
+                  },
                 ),
                 middle: Text(
                   'Center Title',

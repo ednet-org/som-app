@@ -33,111 +33,105 @@ class CWActionSheetScreenState extends State<CWActionSheetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final action1 = CustomTheme(
-      child: CupertinoActionSheet(
-        title: Text(
-          'Cupertino Action Sheet Example',
-          style: boldTextStyle(size: 18),
+    final action1 = CupertinoActionSheet(
+      title: Text(
+        'Cupertino Action Sheet Example',
+        style: boldTextStyle(size: 18),
+      ),
+      message: Text('It\'s a demo for cupertino action sheet.'),
+      actions: [
+        CupertinoActionSheetAction(
+            onPressed: () {
+              toast('OK');
+              finish(context);
+            },
+            child: Text('OK', style: primaryTextStyle(size: 18)))
+      ],
+      cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            finish(context);
+          },
+          child: Text(
+            'Cancel',
+            style: primaryTextStyle(color: redColor, size: 18),
+          )),
+    );
+
+    final action2 = CupertinoActionSheet(
+      actions: [
+        CupertinoActionSheetAction(
+          onPressed: () {
+            finish(context);
+            toast('Male Clicked');
+          },
+          child: Text(' 💁‍♂️ Male', style: primaryTextStyle(size: 18)),
+          isDefaultAction: true,
         ),
-        message: Text('It\'s a demo for cupertino action sheet.'),
-        actions: [
-          CupertinoActionSheetAction(
-              onPressed: () {
-                toast('OK');
-                finish(context);
-              },
-              child: Text('OK', style: primaryTextStyle(size: 18)))
-        ],
-        cancelButton: CupertinoActionSheetAction(
+        CupertinoActionSheetAction(
             onPressed: () {
               finish(context);
+              toast('Female Clicked');
             },
-            child: Text(
-              'Cancel',
-              style: primaryTextStyle(color: redColor, size: 18),
-            )),
-      ),
+            child: Text(' 💁‍♀️ Female', style: primaryTextStyle(size: 18)))
+      ],
+      cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            finish(context);
+          },
+          child: Text(
+            'Cancel',
+            style: primaryTextStyle(color: redColor, size: 18),
+          )),
     );
 
-    final action2 = CustomTheme(
-      child: CupertinoActionSheet(
-        actions: [
-          CupertinoActionSheetAction(
+    final action3 = CupertinoActionSheet(
+      actions: [
+        CupertinoActionSheetAction(
             onPressed: () {
-              finish(context);
-              toast('Male Clicked');
-            },
-            child: Text(' 💁‍♂️ Male', style: primaryTextStyle(size: 18)),
-            isDefaultAction: true,
-          ),
-          CupertinoActionSheetAction(
-              onPressed: () {
-                finish(context);
-                toast('Female Clicked');
-              },
-              child: Text(' 💁‍♀️ Female', style: primaryTextStyle(size: 18)))
-        ],
-        cancelButton: CupertinoActionSheetAction(
-            onPressed: () {
-              finish(context);
-            },
-            child: Text(
-              'Cancel',
-              style: primaryTextStyle(color: redColor, size: 18),
-            )),
-      ),
-    );
-
-    final action3 = CustomTheme(
-      child: CupertinoActionSheet(
-        actions: [
-          CupertinoActionSheetAction(
-              onPressed: () {
-                toast('Share App');
-                finish(context);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Share App',
-                    style: primaryTextStyle(size: 18),
-                  ),
-                  Icon(
-                    Icons.share,
-                    color: Theme.of(context).colorScheme.primary,
-                  )
-                ],
-              )),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              toast('More by this Developer');
+              toast('Share App');
               finish(context);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'More by this Developer',
+                  'Share App',
                   style: primaryTextStyle(size: 18),
                 ),
                 Icon(
-                  Icons.supervised_user_circle,
+                  Icons.share,
                   color: Theme.of(context).colorScheme.primary,
                 )
               ],
-            ),
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-            onPressed: () {
-              finish(context);
-            },
-            child: Text(
-              'Cancel',
-              style: primaryTextStyle(color: redColor, size: 18),
             )),
-      ),
+        CupertinoActionSheetAction(
+          onPressed: () {
+            toast('More by this Developer');
+            finish(context);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'More by this Developer',
+                style: primaryTextStyle(size: 18),
+              ),
+              Icon(
+                Icons.supervised_user_circle,
+                color: Theme.of(context).colorScheme.primary,
+              )
+            ],
+          ),
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            finish(context);
+          },
+          child: Text(
+            'Cancel',
+            style: primaryTextStyle(color: redColor, size: 18),
+          )),
     );
 
     return Scaffold(

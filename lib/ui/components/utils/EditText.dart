@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 
@@ -43,24 +42,10 @@ class EditTextState extends State<EditText> {
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           hintText: widget.text,
           labelText: widget.text,
-          hintStyle: secondaryTextStyle(),
-          labelStyle: secondaryTextStyle(),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
-          ),
         ),
         maxLines: widget.maxLine,
-        style: TextStyle(
-            fontSize: widget.fontSize,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-            fontFamily: widget.fontFamily),
+        style:
+            TextStyle(fontSize: widget.fontSize, fontFamily: widget.fontFamily),
       );
     } else {
       return TextField(
@@ -75,29 +60,14 @@ class EditTextState extends State<EditText> {
               });
             },
             child: Icon(
-                widget.isPassword ? Icons.visibility : Icons.visibility_off,
-                color: Theme.of(context).colorScheme.primary),
+                widget.isPassword ? Icons.visibility : Icons.visibility_off),
           ),
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           hintText: widget.text,
           labelText: widget.text,
-          hintStyle: secondaryTextStyle(),
-          labelStyle: secondaryTextStyle(),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
-          ),
         ),
-        style: TextStyle(
-            fontSize: widget.fontSize,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-            fontFamily: widget.fontFamily),
+        style:
+            TextStyle(fontSize: widget.fontSize, fontFamily: widget.fontFamily),
       );
     }
   }

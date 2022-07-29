@@ -33,54 +33,54 @@ class CWContextMenuScreenState extends State<CWContextMenuScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: appBar(context, 'Cupertino Context Menu'),
-        body: CustomTheme(
-          child: CupertinoContextMenu(
-            child: Container(
-              margin: EdgeInsets.all(16.0),
-              child: FadeInImage(
+        body: CupertinoContextMenu(
+          child: Container(
+            margin: EdgeInsets.all(16.0),
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              placeholder: Image.asset(
+                'images/widgets/cupertinoWidgets/grey.jpg',
                 fit: BoxFit.cover,
-                placeholder: Image.asset(
-                  'images/widgets/cupertinoWidgets/grey.jpg',
-                  fit: BoxFit.cover,
-                ).image,
-                image: CachedNetworkImageProvider(
-                  SampleImageUrl,
-                ),
-                height: 150,
-                width: MediaQuery.of(context).size.width,
-              ).cornerRadiusWithClipRRect(10),
-            ),
-            actions: <Widget>[
-              CupertinoContextMenuAction(
-                child: Text(
-                  'Copy',
-                  style: primaryTextStyle(color: Colors.black),
-                ),
-                isDefaultAction: true,
-                trailingIcon: Icons.content_copy,
-                onPressed: () {
-                  toast("Copy");
-                  finish(context);
-                },
+              ).image,
+              image: CachedNetworkImageProvider(
+                SampleImageUrl,
               ),
-              CupertinoContextMenuAction(
-                child: Text('Share', style: primaryTextStyle(color: Colors.black)),
-                trailingIcon: Icons.share,
-                onPressed: () {
-                  toast("Share");
-                  finish(context);
-                },
-              ),
-              CupertinoContextMenuAction(
-                child: Text('Delete', style: primaryTextStyle(color: Colors.black)),
-                trailingIcon: Icons.delete,
-                onPressed: () {
-                  toast("Delete");
-                  finish(context);
-                },
-              ),
-            ],
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+            ).cornerRadiusWithClipRRect(10),
           ),
+          actions: <Widget>[
+            CupertinoContextMenuAction(
+              child: Text(
+                'Copy',
+                style: primaryTextStyle(color: Colors.black),
+              ),
+              isDefaultAction: true,
+              trailingIcon: Icons.content_copy,
+              onPressed: () {
+                toast("Copy");
+                finish(context);
+              },
+            ),
+            CupertinoContextMenuAction(
+              child:
+                  Text('Share', style: primaryTextStyle(color: Colors.black)),
+              trailingIcon: Icons.share,
+              onPressed: () {
+                toast("Share");
+                finish(context);
+              },
+            ),
+            CupertinoContextMenuAction(
+              child:
+                  Text('Delete', style: primaryTextStyle(color: Colors.black)),
+              trailingIcon: Icons.delete,
+              onPressed: () {
+                toast("Delete");
+                finish(context);
+              },
+            ),
+          ],
         ),
       ),
     );

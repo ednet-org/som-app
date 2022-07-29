@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../main.dart';
-
 class SomTextInput extends StatelessWidget {
   final String? label;
   final IconData? icon;
@@ -44,7 +42,7 @@ class SomTextInput extends StatelessWidget {
         hintStyle: secondaryTextStyle(),
         labelStyle: secondaryTextStyle(),
         hintText: hint,
-        icon: Icon(icon, color: Theme.of(context).colorScheme.primary),
+        icon: Icon(icon),
       ),
     );
   }

@@ -138,13 +138,11 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                   vertical: 10.0,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.deepOrangeAccent,
                   borderRadius: BorderRadius.circular(100.0),
                 ),
                 child: Text(
                   '${tagModel.title}',
                   style: const TextStyle(
-                    color: Colors.white,
                     fontSize: 15.0,
                   ),
                 ),
@@ -158,7 +156,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                       child: const Icon(
                         Icons.clear,
                         size: 10.0,
-                        color: Colors.white,
                       ),
                     ),
                   )
@@ -185,7 +182,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
           Radius.circular(5.0),
         ),
         border: Border.all(
-          color: Colors.grey.shade500,
           width: 1,
         ),
       ),
@@ -196,9 +192,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
               controller: _searchTextEditingController,
               decoration: const InputDecoration.collapsed(
                 hintText: 'Search branch',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                ),
+                hintStyle: TextStyle(),
               ),
               style: const TextStyle(
                 fontSize: 16.0,
@@ -210,13 +204,11 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
               ? InkWell(
                   child: Icon(
                     Icons.clear,
-                    color: Colors.grey.shade700,
                   ),
                   onTap: () => _searchTextEditingController.clear(),
                 )
               : Icon(
                   Icons.search,
-                  color: Colors.grey.shade700,
                 ),
           Container(),
         ],

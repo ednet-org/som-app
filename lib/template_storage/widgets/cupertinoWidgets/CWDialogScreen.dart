@@ -45,80 +45,76 @@ class CWDialogScreenState extends State<CWDialogScreen> {
                   if (index == 0) {
                     showDialog(
                         context: context,
-                        builder: (_) => CustomTheme(
-                              child: CupertinoAlertDialog(
-                                title: Text(
-                                  "Cupertino Dialog",
-                                  style: boldTextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer,
-                                      size: 16),
-                                ).paddingBottom(6),
-                                content: Text("Hey! I'm Coflutter!",
-                                        style: primaryTextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSecondaryContainer,
-                                            size: 16))
-                                    .paddingBottom(6),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text(
-                                      'Close me!',
-                                      style: primaryTextStyle(),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  )
-                                ],
-                              ),
+                        builder: (_) => CupertinoAlertDialog(
+                              title: Text(
+                                "Cupertino Dialog",
+                                style: boldTextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                    size: 16),
+                              ).paddingBottom(6),
+                              content: Text("Hey! I'm Coflutter!",
+                                      style: primaryTextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondaryContainer,
+                                          size: 16))
+                                  .paddingBottom(6),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Close me!',
+                                    style: primaryTextStyle(),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
                             ));
                   } else if (index == 1) {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => CustomTheme(
-                              child: CupertinoAlertDialog(
-                                title: Text(
-                                  'Rating',
-                                  style: boldTextStyle(size: 16),
-                                ).paddingOnly(bottom: 8),
-                                content: Column(
-                                  children: [
-                                    RatingBar(
-                                      initialRating: 5,
-                                      minRating: 1,
-                                      itemSize: 20,
-                                      direction: Axis.horizontal,
-                                      itemPadding:
-                                          EdgeInsets.symmetric(horizontal: 2.0),
-                                      itemBuilder: (context, _) => Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      onRatingUpdate: (rating) {},
+                        builder: (BuildContext context) => CupertinoAlertDialog(
+                              title: Text(
+                                'Rating',
+                                style: boldTextStyle(size: 16),
+                              ).paddingOnly(bottom: 8),
+                              content: Column(
+                                children: [
+                                  RatingBar(
+                                    initialRating: 5,
+                                    minRating: 1,
+                                    itemSize: 20,
+                                    direction: Axis.horizontal,
+                                    itemPadding:
+                                        EdgeInsets.symmetric(horizontal: 2.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
                                     ),
-                                  ],
-                                ),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    child: Text(
-                                      "Cancel",
-                                    ),
-                                    onPressed: () {
-                                      finish(context);
-                                    },
+                                    onRatingUpdate: (rating) {},
                                   ),
-                                  CupertinoDialogAction(
-                                    child: Text('Submit'),
-                                    onPressed: () {
-                                      toast('Submit');
-                                      finish(context);
-                                    },
-                                  )
                                 ],
                               ),
+                              actions: [
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    "Cancel",
+                                  ),
+                                  onPressed: () {
+                                    finish(context);
+                                  },
+                                ),
+                                CupertinoDialogAction(
+                                  child: Text('Submit'),
+                                  onPressed: () {
+                                    toast('Submit');
+                                    finish(context);
+                                  },
+                                )
+                              ],
                             ));
                   }
                 });

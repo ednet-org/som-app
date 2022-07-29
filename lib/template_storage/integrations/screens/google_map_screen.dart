@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -95,64 +94,62 @@ class GoogleMapScreenState extends State<GoogleMapScreen>
 
   buildActionButtons() {
     return [
-      CustomTheme(
-        child: PopupMenuButton(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          itemBuilder: (_) => [
-            PopupMenuItem(
-              child: InkWell(
-                child: Text(
-                  'Hybrid',
-                  style: primaryTextStyle(),
-                ),
-                onTap: () {
-                  setState(() {
-                    mMapType = MapType.hybrid;
-                  });
-                },
+      PopupMenuButton(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        itemBuilder: (_) => [
+          PopupMenuItem(
+            child: InkWell(
+              child: Text(
+                'Hybrid',
+                style: primaryTextStyle(),
               ),
+              onTap: () {
+                setState(() {
+                  mMapType = MapType.hybrid;
+                });
+              },
             ),
-            PopupMenuItem(
-              child: InkWell(
-                child: Text(
-                  'Normal',
-                  style: primaryTextStyle(),
-                ),
-                onTap: () {
-                  setState(() {
-                    mMapType = MapType.normal;
-                  });
-                },
+          ),
+          PopupMenuItem(
+            child: InkWell(
+              child: Text(
+                'Normal',
+                style: primaryTextStyle(),
               ),
+              onTap: () {
+                setState(() {
+                  mMapType = MapType.normal;
+                });
+              },
             ),
-            PopupMenuItem(
-              child: InkWell(
-                child: Text(
-                  'Satellite',
-                  style: primaryTextStyle(),
-                ),
-                onTap: () {
-                  setState(() {
-                    mMapType = MapType.satellite;
-                  });
-                },
+          ),
+          PopupMenuItem(
+            child: InkWell(
+              child: Text(
+                'Satellite',
+                style: primaryTextStyle(),
               ),
+              onTap: () {
+                setState(() {
+                  mMapType = MapType.satellite;
+                });
+              },
             ),
-            PopupMenuItem(
-              child: InkWell(
-                child: Text(
-                  'Terrain',
-                  style: primaryTextStyle(),
-                ),
-                onTap: () {
-                  setState(() {
-                    mMapType = MapType.terrain;
-                  });
-                },
+          ),
+          PopupMenuItem(
+            child: InkWell(
+              child: Text(
+                'Terrain',
+                style: primaryTextStyle(),
               ),
+              onTap: () {
+                setState(() {
+                  mMapType = MapType.terrain;
+                });
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       )
     ];
   }

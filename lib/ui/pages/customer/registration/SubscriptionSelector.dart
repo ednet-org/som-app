@@ -131,11 +131,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
               ],
             )),
         16.height,
-        Text('Choose subscription plan',
-                style: boldTextStyle(
-                    size: 24,
-                    color: Theme.of(context).colorScheme.tertiaryContainer))
-            .paddingLeft(12.0),
+        Text('Choose subscription plan').paddingLeft(12.0),
         16.height,
         ListView.builder(
           physics: NeverScrollableScrollPhysics(),
@@ -147,12 +143,8 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: value
-                      ? Theme.of(context)
-                          .colorScheme
-                          .tertiaryContainer
-                          .withOpacity(0.3)
+                      ? context.cardColor.withOpacity(0.3)
                       : context.cardColor,
-                  borderRadius: BorderRadius.circular(defaultRadius),
                 ),
                 child: Column(
                   children: [
@@ -167,11 +159,15 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                             size: 14,
                           ).visible(value).center(),
                           decoration: BoxDecoration(
-                            color: context.cardColor,
                             shape: BoxShape.circle,
                             border: value
-                                ? Border.all(color: Colors.white)
-                                : Border.all(color: Colors.blue),
+                                ? Border.all(
+                                    color:
+                                        Theme.of(context).colorScheme.primary)
+                                : Border.all(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
                           ),
                         ),
                         12.width,

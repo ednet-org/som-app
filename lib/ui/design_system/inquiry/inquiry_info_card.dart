@@ -29,7 +29,6 @@ class InquiryInfoCardWidget extends StatelessWidget {
                           offset: Offset(0, 2),
                           blurRadius: 6)
                     ],
-                    color: Theme.of(context).colorScheme.primaryContainer,
                   ))),
           Positioned(
               top: 15,

@@ -41,86 +41,82 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         (customerRegistration.company.isProvider && currStep == 5) ||
             (!customerRegistration.company.isProvider && currStep == 2);
     return Container(
-      child: CustomTheme(
-        child: Column(
-          children: [
-            text('Customer registration'),
-            40.height,
-            Observer(builder: (_) {
-              return Stepper(
-                key: Key("mysuperkey-" +
-                    assembleSteps(customerRegistration).length.toString()),
-                steps: assembleSteps(customerRegistration),
-                type: StepperType.vertical,
-                currentStep: currStep,
-                controlsBuilder:
-                    (BuildContext context, ControlsDetails details) {
-                  return isLastStep
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            200.height,
-                            Container(
-                              width: 300,
-                              child: ActionButton(
-                                onPressed: () {
-                                  ThankYouPage().launch(context);
-                                },
-                                textContent: "Register",
-                              ),
+      child: Column(
+        children: [
+          text('Customer registration'),
+          40.height,
+          Observer(builder: (_) {
+            return Stepper(
+              key: Key("mysuperkey-" +
+                  assembleSteps(customerRegistration).length.toString()),
+              steps: assembleSteps(customerRegistration),
+              type: StepperType.vertical,
+              currentStep: currStep,
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                return isLastStep
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          200.height,
+                          Container(
+                            width: 300,
+                            child: ActionButton(
+                              onPressed: () {
+                                ThankYouPage().launch(context);
+                              },
+                              textContent: "Register",
                             ),
-                          ],
-                        )
-                      : Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            100.height,
-                            TextButton(
-                              onPressed: details.onStepContinue,
-                              child: Text('CONTINUE'),
-                            ),
-                            50.width,
-                            TextButton(
-                              onPressed: details.onStepCancel,
-                              child:
-                                  Text('CANCEL', style: secondaryTextStyle()),
-                            ),
-                          ],
-                        );
-                },
-                onStepContinue: () {
-                  setState(() {
-                    if (currStep <
-                        assembleSteps(customerRegistration).length - 1) {
-                      currStep = currStep + 1;
-                    } else {
-                      //currStep = 0;
-                      finish(context);
-                    }
-                  });
-                },
-                onStepCancel: () {
-                  finish(context);
-                  setState(() {
-                    if (currStep > 0) {
-                      currStep = currStep - 1;
-                    } else {
-                      currStep = 0;
-                    }
-                  });
-                },
-                onStepTapped: (step) {
-                  setState(() {
-                    currStep = step;
-                  });
-                },
-              );
-            }),
-          ],
-        ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          100.height,
+                          TextButton(
+                            onPressed: details.onStepContinue,
+                            child: Text('CONTINUE'),
+                          ),
+                          50.width,
+                          TextButton(
+                            onPressed: details.onStepCancel,
+                            child: Text('CANCEL', style: secondaryTextStyle()),
+                          ),
+                        ],
+                      );
+              },
+              onStepContinue: () {
+                setState(() {
+                  if (currStep <
+                      assembleSteps(customerRegistration).length - 1) {
+                    currStep = currStep + 1;
+                  } else {
+                    //currStep = 0;
+                    finish(context);
+                  }
+                });
+              },
+              onStepCancel: () {
+                finish(context);
+                setState(() {
+                  if (currStep > 0) {
+                    currStep = currStep - 1;
+                  } else {
+                    currStep = 0;
+                  }
+                });
+              },
+              onStepTapped: (step) {
+                setState(() {
+                  currStep = step;
+                });
+              },
+            );
+          }),
+        ],
       ),
     );
   }
@@ -441,9 +437,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                           request.company.removeUser(index),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text('-',
-                                            style: boldTextStyle(
-                                                size: 24, color: Colors.red)),
+                                        child: Text('-'),
                                       )),
                                 )
                               : const SizedBox(height: 1),

@@ -230,24 +230,6 @@ String convertDate(date) {
   }
 }
 
-class CustomTheme extends StatelessWidget {
-  final Widget? child;
-
-  CustomTheme({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Theme(
-      data: appStore.isDarkModeOn
-          ? ThemeData.dark().copyWith(
-              backgroundColor: context.scaffoldBackgroundColor,
-            )
-          : ThemeData.light(),
-      child: child!,
-    );
-  }
-}
-
 Widget? Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 

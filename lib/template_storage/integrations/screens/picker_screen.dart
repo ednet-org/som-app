@@ -7,7 +7,6 @@ import 'package:som/template_storage/integrations/utils/colors.dart';
 import 'package:som/template_storage/integrations/utils/constants.dart';
 import 'package:som/template_storage/integrations/utils/styles.dart';
 import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart' as aw;
 
 class PickerScreen extends StatefulWidget {
   static String tag = '/PickerScreen';
@@ -31,7 +30,7 @@ class PickerScreenState extends State<PickerScreen> {
             DateTime(selectedDate.year, selectedDate.month, selectedDate.day),
         lastDate: DateTime(2101),
         builder: (BuildContext context, Widget? child) {
-          return aw.CustomTheme(child: child);
+          return child ?? SizedBox();
         });
     setState(() {
       if (picked != null && picked != selectedDate) selectedDate = picked;

@@ -38,62 +38,60 @@ class _SelectionDialogState extends State<SelectionDialog> {
   late List<CountryCode> filteredElements;
 
   @override
-  Widget build(BuildContext context) => CustomTheme(
-        child: SimpleDialog(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              text("Select Country Code",
-                  textColor: Theme.of(context).colorScheme.onPrimaryContainer,
-                  fontSize: 16.0,
-                  fontFamily: fontSemibold),
-              SizedBox(height: 8),
-              TextField(
-                style: widget.searchStyle,
-                decoration: InputDecoration(
-                  filled: true,
-                  hintText: "Search Country",
-                  hintStyle: secondaryTextStyle(),
-                  border: InputBorder.none,
-                ),
-                onChanged: _filterElements,
-              )
-            ],
-          ),
-          children: [
-            Container(
-                margin: EdgeInsets.only(top: 16),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: ListView(
-                    children: [
-                  widget.favoriteElements.isEmpty
-                      ? DecoratedBox(decoration: BoxDecoration())
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[]
-                            ..addAll(widget.favoriteElements
-                                .map(
-                                  (f) => SimpleDialogOption(
-                                    child: _buildOption(f),
-                                    onPressed: () {
-                                      _selectItem(f);
-                                    },
-                                  ),
-                                )
-                                .toList())
-                            ..add(Divider())),
-                ]..addAll(filteredElements.isEmpty
-                        ? [_buildEmptySearchWidget(context)]
-                        : filteredElements.map((e) => SimpleDialogOption(
-                              key: Key(e.toLongString()),
-                              child: _buildOption(e),
-                              onPressed: () {
-                                _selectItem(e);
-                              },
-                            ))))),
+  Widget build(BuildContext context) => SimpleDialog(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            text("Select Country Code",
+                textColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontSize: 16.0,
+                fontFamily: fontSemibold),
+            SizedBox(height: 8),
+            TextField(
+              style: widget.searchStyle,
+              decoration: InputDecoration(
+                filled: true,
+                hintText: "Search Country",
+                hintStyle: secondaryTextStyle(),
+                border: InputBorder.none,
+              ),
+              onChanged: _filterElements,
+            )
           ],
         ),
+        children: [
+          Container(
+              margin: EdgeInsets.only(top: 16),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: ListView(
+                  children: [
+                widget.favoriteElements.isEmpty
+                    ? DecoratedBox(decoration: BoxDecoration())
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[]
+                          ..addAll(widget.favoriteElements
+                              .map(
+                                (f) => SimpleDialogOption(
+                                  child: _buildOption(f),
+                                  onPressed: () {
+                                    _selectItem(f);
+                                  },
+                                ),
+                              )
+                              .toList())
+                          ..add(Divider())),
+              ]..addAll(filteredElements.isEmpty
+                      ? [_buildEmptySearchWidget(context)]
+                      : filteredElements.map((e) => SimpleDialogOption(
+                            key: Key(e.toLongString()),
+                            child: _buildOption(e),
+                            onPressed: () {
+                              _selectItem(e);
+                            },
+                          ))))),
+        ],
       );
 
   Widget _buildOption(CountryCode e) {

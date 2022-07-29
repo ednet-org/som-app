@@ -43,7 +43,6 @@ class MainMenuState extends State<MainMenu> {
       child: ClipPath(
         child: Drawer(
           child: Container(
-            color: Theme.of(context).colorScheme.primaryContainer,
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(
@@ -70,32 +69,17 @@ class MainMenuState extends State<MainMenu> {
                   ),
                   Container(
                     padding: EdgeInsets.all(16),
-                    child: Text('Home',
-                        style: boldTextStyle(
-                            color: Theme.of(context).primaryColor)),
+                    child: Text('Home'),
                   ).onTap(() {
                     appStore.setDrawerItemIndex(-1);
                     DashboardPage().launch(context, isNewTask: true);
                   }),
-                  Divider(height: 16, color: viewLineColor),
+                  Divider(height: 16),
                   ListView.builder(
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: appStore.selectedDrawerItem == index
-                              ? Theme.of(context).primaryColor.withOpacity(0.3)
-                              : Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                        child: Text(
-                          drawerItems[index].name!,
-                          style: boldTextStyle(
-                              color: appStore.selectedDrawerItem == index
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
-                        ),
+                        child: Text(drawerItems[index].name!),
                       ).onTap(() {
                         finish(context);
                         appStore.setDrawerItemIndex(index);
