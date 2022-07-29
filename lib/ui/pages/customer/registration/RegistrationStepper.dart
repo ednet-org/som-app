@@ -276,20 +276,15 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 alignment: WrapAlignment.start,
                 direction: Axis.horizontal,
                 children: [
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                        unselectedWidgetColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer),
-                    child: Radio(
-                      value: PaymentInterval.Monthly,
-                      groupValue: request.company.providerData.paymentInterval,
-                      onChanged: (dynamic value) {
-                        toast("$value Selected");
+                  Radio(
+                    value: PaymentInterval.Monthly,
+                    groupValue: request.company.providerData.paymentInterval,
+                    onChanged: (dynamic value) {
+                      toast("$value Selected");
 
-                        request.company.providerData
-                            .setPaymentInterval(PaymentInterval.Monthly);
-                      },
-                    ),
+                      request.company.providerData
+                          .setPaymentInterval(PaymentInterval.Monthly);
+                    },
                   ),
                   GestureDetector(
                       onTap: () {
@@ -298,21 +293,15 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       },
                       child: Text(PaymentInterval.Monthly.name,
                           style: primaryTextStyle())),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      unselectedWidgetColor:
-                          Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                    child: Radio(
-                      value: PaymentInterval.Yearly,
-                      groupValue: request.company.providerData.paymentInterval,
-                      onChanged: (dynamic value) {
-                        toast("$value Selected");
+                  Radio(
+                    value: PaymentInterval.Yearly,
+                    groupValue: request.company.providerData.paymentInterval,
+                    onChanged: (dynamic value) {
+                      toast("$value Selected");
 
-                        request.company.providerData
-                            .setPaymentInterval(PaymentInterval.Yearly);
-                      },
-                    ),
+                      request.company.providerData
+                          .setPaymentInterval(PaymentInterval.Yearly);
+                    },
                   ),
                   GestureDetector(
                       onTap: () {
@@ -427,9 +416,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Divider(
-                        color: Theme.of(context).accentColor,
-                      ),
+                      Divider(),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         alignment: WrapAlignment.start,

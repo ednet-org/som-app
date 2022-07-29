@@ -14,7 +14,6 @@ class SubscriptionSelector extends StatefulWidget {
 
 class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   List<PlanModal> periodModal = [];
-  late Som som;
   int selectIndex = 0;
 
   int containerIndex = 0;
@@ -25,11 +24,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
     init();
   }
 
-  Future<void> init() async {
-    this.som = Provider.of<Som>(context);
-
-    await som.populateAvailableSubscriptions();
-
+  void init() {
     periodModal.add(
       PlanModal(
         title: 'SOM Standard',
@@ -96,6 +91,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final Som som = Provider.of<Som>(context);
     if (som.availableSubscriptions.futureState == FutureState.loading) {
       return Center(child: CircularProgressIndicator());
     }

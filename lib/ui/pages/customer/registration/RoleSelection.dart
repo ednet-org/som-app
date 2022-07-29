@@ -43,12 +43,7 @@ class _RoleSelectionState extends State<RoleSelection> {
   }
 
   ElevatedButton providerSelector() {
-    final ButtonStyle providerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 12),
-        primary: Theme.of(context).colorScheme.primary);
-
     return ElevatedButton(
-        style: providerStyle,
         onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -64,12 +59,7 @@ class _RoleSelectionState extends State<RoleSelection> {
   }
 
   ElevatedButton buyerSelector() {
-    final ButtonStyle buyerStyle = ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 12),
-        primary: Theme.of(context).colorScheme.onPrimary);
-
     return ElevatedButton(
-        style: buyerStyle,
         onPressed: () => registrationRequest.switchRole(Roles.Buyer),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -49,11 +49,8 @@ class DashboardPageState extends State<DashboardPage> {
             child: Scaffold(
               appBar: AppBar(
                 title: appBarTitleWidget(context, 'Dashboard'),
-                iconTheme:
-                    IconThemeData(color: Theme.of(context).colorScheme.primary),
                 actions: [
                   PopupMenuButton(
-                    color: Theme.of(context).colorScheme.primary,
                     child: userMenuItem(),
                     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                       PopupMenuItem(child: userMenuItem()),
