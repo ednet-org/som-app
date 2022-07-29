@@ -1,7 +1,6 @@
 //region imports
 import 'package:chopper/chopper.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
-import 'package:ednet_component_library/themes/theme/app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,10 +21,12 @@ import 'template_storage/main/utils/intl/som_localizations.dart';
 
 /// This variable is used to get dynamic colors when theme mode is changed
 var appStore = Application();
-AppThemeData? darkTheme;
+ThemeData? darkTheme;
+ThemeData? lightTheme;
 
 void main() async {
   darkTheme = await EdsAppTheme.som["dark"];
+  lightTheme = await EdsAppTheme.som["light"];
   // final response = await subscriptionService.getSubscriptions();
   // if (response.isSuccessful) {
   //   // Successful request
@@ -101,7 +102,8 @@ class MyApp extends StatelessWidget {
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
           // hardcoded dark mode
           themeMode: ThemeMode.dark,
-          theme: darkTheme!.materialThemeData,
+          theme: lightTheme,
+          darkTheme: darkTheme,
           builder: scrollBehaviour(),
         ),
       ),
