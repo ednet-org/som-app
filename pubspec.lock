@@ -328,7 +328,7 @@ packages:
     description:
       path: "."
       ref: design_system
-      resolved-ref: "3f2a04cef3b8cbfb6e7735f396af3b4b1ed2e403"
+      resolved-ref: efa6ba9e565eda9b7d9067fee0b75fd61e02fd31
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.1.1"
