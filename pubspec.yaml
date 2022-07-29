@@ -166,9 +166,3 @@ flutter:
         - asset: fonts/robotomedium.ttf
         - asset: fonts/robotoregular.ttf
         - weight: 400
-
-    - family: Inter
-      fonts:
-        - asset: fonts/Inter-Regular.ttf
-        - weight: 400
-
