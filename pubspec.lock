@@ -328,10 +328,10 @@ packages:
     description:
       path: "."
       ref: design_system
-      resolved-ref: "1ea9c5c5f6dcfb6d190508097f1dcfd839806944"
+      resolved-ref: "98aa39d21ebba922ca3d8e9e8a0f99513c5f1dc6"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
-    version: "0.1.1"
+    version: "0.1.2"
   equatable:
     dependency: transitive
     description:
@@ -1478,5 +1478,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.1 <3.0.0"
+  dart: ">=2.17.6 <3.0.0"
   flutter: ">=3.0.0"
