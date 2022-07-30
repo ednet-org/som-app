@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/template_storage/main/model/ListModels.dart';
-import 'package:som/ui/components/utils/DTDataProvider.dart';
 import 'package:som/ui/pages/dashboard_page.dart';
 
 import '../../../../main.dart';
@@ -116,4 +115,15 @@ class MainMenuState extends State<MainMenu> {
       ),
     );
   }
+}
+
+List<ListModel> getDrawerItems() {
+  List<ListModel> drawerItems = [];
+
+  drawerItems.add(ListModel(name: 'Inquiries', widget: DashboardPage()));
+  drawerItems.add(ListModel(name: 'Company', widget: DashboardPage()));
+  drawerItems.add(ListModel(name: 'Users', widget: DashboardPage()));
+  drawerItems.add(ListModel(name: 'Ads', widget: DashboardPage()));
+  drawerItems.add(ListModel(name: 'Statistics', widget: DashboardPage()));
+  return drawerItems;
 }
