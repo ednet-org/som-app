@@ -7,8 +7,8 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/integrations/utils/common.dart';
-import 'package:som/template_storage/main/model/ListModels.dart';
+import 'package:som/ui/utils/ListModels.dart';
+import 'package:som/ui/utils/common.dart';
 
 import 'AppConstant.dart';
 import 'clusteringGoogleMaps/lat_lang_geohash.dart';
@@ -33,6 +33,7 @@ Widget text(
     style: TextStyle(
       fontFamily: fontFamily ?? null,
       fontSize: fontSize,
+      color: textColor ?? appStore.textSecondaryColor,
       height: 1.5,
       letterSpacing: latterSpacing,
       decoration:
@@ -47,6 +48,7 @@ BoxDecoration boxDecoration(
     Color? bgColor,
     var showShadow = false}) {
   return BoxDecoration(
+    color: bgColor ?? appStore.scaffoldBackground,
     boxShadow: showShadow
         ? defaultBoxShadow(shadowColor: shadowColorGlobal)
         : [BoxShadow(color: Colors.transparent)],
@@ -129,15 +131,13 @@ Widget settingItem(context, String text,
               Text(text,
                       style: primaryTextStyle(
                           size: textSize ?? 18,
-                          color: textColor ??
-                              Theme.of(context).colorScheme.onPrimaryContainer))
+                          color: textColor ?? appStore.textPrimaryColor))
                   .expand(),
             ],
           ).expand(),
           detail ??
               Icon(Icons.arrow_forward_ios,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.onSecondaryContainer),
+                  size: 16, color: appStore.textSecondaryColor),
         ],
       ).paddingOnly(left: 16, right: 16, top: 8, bottom: 8),
     ),
@@ -149,14 +149,13 @@ Widget appBarTitleWidget(context, String title,
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
-    color: color ?? Theme.of(context).colorScheme.primary,
+    color: color ?? appStore.appBarColor,
     child: Row(
       children: <Widget>[
         Text(
           title,
           style: boldTextStyle(
-              color: color ?? Theme.of(context).colorScheme.onPrimaryContainer,
-              size: 20),
+              color: color ?? appStore.textPrimaryColor, size: 20),
           maxLines: 1,
         ).expand(),
       ],
@@ -172,7 +171,7 @@ AppBar appBar(BuildContext context, String title,
     Color? textColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
-    backgroundColor: color ?? Theme.of(context).colorScheme.primary,
+    backgroundColor: color ?? appStore.appBarColor,
     leading: showBack
         ? IconButton(
             onPressed: () {
@@ -200,7 +199,7 @@ class ExampleItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.primary,
+      color: appStore.appBarColor,
       margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
       elevation: 2.0,
       shadowColor: Colors.black,
@@ -209,8 +208,7 @@ class ExampleItemWidget extends StatelessWidget {
         title: Text(tabBarType.name!, style: boldTextStyle()),
         trailing: showTrailing
             ? Icon(Icons.arrow_forward_ios,
-                size: 15,
-                color: Theme.of(context).colorScheme.onPrimaryContainer)
+                size: 15, color: appStore.textPrimaryColor)
             : tabBarType.isNew.validate()
                 ? Text('New', style: secondaryTextStyle(color: Colors.red))
                 : null,
@@ -230,6 +228,27 @@ String convertDate(date) {
   }
 }
 
+class CustomTheme extends StatelessWidget {
+  final Widget? child;
+
+  CustomTheme({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return child!;
+
+    // Theme(
+    //   data: appStore.isDarkModeOn
+    //       ? ThemeData.dark().copyWith(
+    //           accentColor: appColorPrimary,
+    //           backgroundColor: context.scaffoldBackgroundColor,
+    //         )
+    //       : ThemeData.light(),
+    //   child: child!,
+    // );
+  }
+}
+
 Widget? Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 
@@ -237,11 +256,11 @@ Widget placeholderWidget() =>
     Image.asset('images/app/placeholder.jpg', fit: BoxFit.cover);
 
 BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
-  return BoxConstraints(maxWidth: maxWidth ?? appStore.applicationWidth);
+  return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
 }
 
 double dynamicWidth(BuildContext context) {
-  return isMobile ? context.width() : appStore.applicationWidth;
+  return isMobile ? context.width() : applicationMaxWidth;
 }
 
 /*class ContainerX extends StatelessWidget {
@@ -315,7 +334,7 @@ class ContainerX extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        if (constraints.maxWidth < 500) {
+        if (constraints.device == DeviceSize.mobile) {
           return mobile ?? SizedBox();
         } else {
           return Container(
