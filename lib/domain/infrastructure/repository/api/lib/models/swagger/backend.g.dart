@@ -117,7 +117,7 @@ _$_City _$$_CityFromJson(Map<String, dynamic> json) => _$_City(
     );
 
 Map<String, dynamic> _$$_CityToJson(_$_City instance) => <String, dynamic>{
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
       'nullable': instance.nullable,
     };
 
@@ -314,7 +314,7 @@ _$_SubscriptionPlanId _$$_SubscriptionPlanIdFromJson(
 Map<String, dynamic> _$$_SubscriptionPlanIdToJson(
         _$_SubscriptionPlanId instance) =>
     <String, dynamic>{
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
       'format': instance.format,
     };
 
@@ -436,7 +436,7 @@ _$_ConfirmPassword _$$_ConfirmPasswordFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_ConfirmPasswordToJson(_$_ConfirmPassword instance) =>
     <String, dynamic>{
       'maxLength': instance.maxLength,
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
       'nullable': instance.nullable,
     };
 
@@ -449,7 +449,7 @@ _$_Password _$$_PasswordFromJson(Map<String, dynamic> json) => _$_Password(
 Map<String, dynamic> _$$_PasswordToJson(_$_Password instance) =>
     <String, dynamic>{
       'maxLength': instance.maxLength,
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
       'format': instance.format,
     };
 
@@ -502,7 +502,7 @@ _$_CompanyId _$$_CompanyIdFromJson(Map<String, dynamic> json) => _$_CompanyId(
 
 Map<String, dynamic> _$$_CompanyIdToJson(_$_CompanyId instance) =>
     <String, dynamic>{
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
       'format': instance.format,
       'nullable': instance.nullable,
     };
@@ -614,7 +614,7 @@ _$_Schema _$$_SchemaFromJson(Map<String, dynamic> json) => _$_Schema(
     );
 
 Map<String, dynamic> _$$_SchemaToJson(_$_Schema instance) => <String, dynamic>{
-      'type': _$TypeEnumMap[instance.type],
+      'type': _$TypeEnumMap[instance.type]!,
     };
 
 _$_Responses _$$_ResponsesFromJson(Map<String, dynamic> json) => _$_Responses(
@@ -631,7 +631,7 @@ _$_The200 _$$_The200FromJson(Map<String, dynamic> json) => _$_The200(
     );
 
 Map<String, dynamic> _$$_The200ToJson(_$_The200 instance) => <String, dynamic>{
-      'description': _$DescriptionEnumMap[instance.description],
+      'description': _$DescriptionEnumMap[instance.description]!,
     };
 
 const _$DescriptionEnumMap = {

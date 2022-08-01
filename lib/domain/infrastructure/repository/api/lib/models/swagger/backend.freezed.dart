@@ -205,7 +205,9 @@ class _$_Backend implements _Backend {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BackendToJson(this);
+    return _$$_BackendToJson(
+      this,
+    );
   }
 }
 
@@ -219,13 +221,13 @@ abstract class _Backend implements Backend {
   factory _Backend.fromJson(Map<String, dynamic> json) = _$_Backend.fromJson;
 
   @override
-  String get openapi => throw _privateConstructorUsedError;
+  String get openapi;
   @override
-  Info get info => throw _privateConstructorUsedError;
+  Info get info;
   @override
-  Paths get paths => throw _privateConstructorUsedError;
+  Paths get paths;
   @override
-  Components get components => throw _privateConstructorUsedError;
+  Components get components;
   @override
   @JsonKey(ignore: true)
   _$$_BackendCopyWith<_$_Backend> get copyWith =>
@@ -356,7 +358,9 @@ class _$_Components implements _Components {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ComponentsToJson(this);
+    return _$$_ComponentsToJson(
+      this,
+    );
   }
 }
 
@@ -367,7 +371,7 @@ abstract class _Components implements Components {
       _$_Components.fromJson;
 
   @override
-  Schemas get schemas => throw _privateConstructorUsedError;
+  Schemas get schemas;
   @override
   @JsonKey(ignore: true)
   _$$_ComponentsCopyWith<_$_Components> get copyWith =>
@@ -847,7 +851,9 @@ class _$_Schemas implements _Schemas {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SchemasToJson(this);
+    return _$$_SchemasToJson(
+      this,
+    );
   }
 }
 
@@ -870,32 +876,31 @@ abstract class _Schemas implements Schemas {
   factory _Schemas.fromJson(Map<String, dynamic> json) = _$_Schemas.fromJson;
 
   @override
-  AddressDto get addressDto => throw _privateConstructorUsedError;
+  AddressDto get addressDto;
   @override
-  AuthenticateDto get authenticateDto => throw _privateConstructorUsedError;
+  AuthenticateDto get authenticateDto;
   @override
-  BankDetailsDto get bankDetailsDto => throw _privateConstructorUsedError;
+  BankDetailsDto get bankDetailsDto;
   @override
-  CompanySize get companySize => throw _privateConstructorUsedError;
+  CompanySize get companySize;
   @override
-  CompanySize get companyType => throw _privateConstructorUsedError;
+  CompanySize get companyType;
   @override
-  CreateCompanyDto get createCompanyDto => throw _privateConstructorUsedError;
+  CreateCompanyDto get createCompanyDto;
   @override
-  CreateProviderDto get createProviderDto => throw _privateConstructorUsedError;
+  CreateProviderDto get createProviderDto;
   @override
-  ForgotPasswordDto get forgotPasswordDto => throw _privateConstructorUsedError;
+  ForgotPasswordDto get forgotPasswordDto;
   @override
-  CompanySize get paymentInterval => throw _privateConstructorUsedError;
+  CompanySize get paymentInterval;
   @override
-  RegisterCompanyDto get registerCompanyDto =>
-      throw _privateConstructorUsedError;
+  RegisterCompanyDto get registerCompanyDto;
   @override
-  ResetPasswordDto get resetPasswordDto => throw _privateConstructorUsedError;
+  ResetPasswordDto get resetPasswordDto;
   @override
-  CompanySize get roles => throw _privateConstructorUsedError;
+  CompanySize get roles;
   @override
-  UserDto get userDto => throw _privateConstructorUsedError;
+  UserDto get userDto;
   @override
   @JsonKey(ignore: true)
   _$$_SchemasCopyWith<_$_Schemas> get copyWith =>
@@ -1068,7 +1073,9 @@ class _$_AddressDto implements _AddressDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AddressDtoToJson(this);
+    return _$$_AddressDtoToJson(
+      this,
+    );
   }
 }
 
@@ -1082,11 +1089,11 @@ abstract class _AddressDto implements AddressDto {
       _$_AddressDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  AddressDtoProperties get properties => throw _privateConstructorUsedError;
+  AddressDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_AddressDtoCopyWith<_$_AddressDto> get copyWith =>
@@ -1326,7 +1333,9 @@ class _$_AddressDtoProperties implements _AddressDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AddressDtoPropertiesToJson(this);
+    return _$$_AddressDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -1342,15 +1351,15 @@ abstract class _AddressDtoProperties implements AddressDtoProperties {
       _$_AddressDtoProperties.fromJson;
 
   @override
-  City get country => throw _privateConstructorUsedError;
+  City get country;
   @override
-  City get city => throw _privateConstructorUsedError;
+  City get city;
   @override
-  City get street => throw _privateConstructorUsedError;
+  City get street;
   @override
-  City get number => throw _privateConstructorUsedError;
+  City get number;
   @override
-  City get zip => throw _privateConstructorUsedError;
+  City get zip;
   @override
   @JsonKey(ignore: true)
   _$$_AddressDtoPropertiesCopyWith<_$_AddressDtoProperties> get copyWith =>
@@ -1479,7 +1488,9 @@ class _$_City implements _City {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CityToJson(this);
+    return _$$_CityToJson(
+      this,
+    );
   }
 }
 
@@ -1490,9 +1501,9 @@ abstract class _City implements City {
   factory _City.fromJson(Map<String, dynamic> json) = _$_City.fromJson;
 
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
-  bool get nullable => throw _privateConstructorUsedError;
+  bool get nullable;
   @override
   @JsonKey(ignore: true)
   _$$_CityCopyWith<_$_City> get copyWith => throw _privateConstructorUsedError;
@@ -1667,7 +1678,9 @@ class _$_AuthenticateDto implements _AuthenticateDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthenticateDtoToJson(this);
+    return _$$_AuthenticateDtoToJson(
+      this,
+    );
   }
 }
 
@@ -1681,12 +1694,11 @@ abstract class _AuthenticateDto implements AuthenticateDto {
       _$_AuthenticateDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  AuthenticateDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  AuthenticateDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticateDtoCopyWith<_$_AuthenticateDto> get copyWith =>
@@ -1851,7 +1863,9 @@ class _$_AuthenticateDtoProperties implements _AuthenticateDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthenticateDtoPropertiesToJson(this);
+    return _$$_AuthenticateDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -1864,9 +1878,9 @@ abstract class _AuthenticateDtoProperties implements AuthenticateDtoProperties {
       _$_AuthenticateDtoProperties.fromJson;
 
   @override
-  City get email => throw _privateConstructorUsedError;
+  City get email;
   @override
-  City get password => throw _privateConstructorUsedError;
+  City get password;
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticateDtoPropertiesCopyWith<_$_AuthenticateDtoProperties>
@@ -2041,7 +2055,9 @@ class _$_BankDetailsDto implements _BankDetailsDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BankDetailsDtoToJson(this);
+    return _$$_BankDetailsDtoToJson(
+      this,
+    );
   }
 }
 
@@ -2055,11 +2071,11 @@ abstract class _BankDetailsDto implements BankDetailsDto {
       _$_BankDetailsDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  BankDetailsDtoProperties get properties => throw _privateConstructorUsedError;
+  BankDetailsDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_BankDetailsDtoCopyWith<_$_BankDetailsDto> get copyWith =>
@@ -2249,7 +2265,9 @@ class _$_BankDetailsDtoProperties implements _BankDetailsDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BankDetailsDtoPropertiesToJson(this);
+    return _$$_BankDetailsDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -2263,11 +2281,11 @@ abstract class _BankDetailsDtoProperties implements BankDetailsDtoProperties {
       _$_BankDetailsDtoProperties.fromJson;
 
   @override
-  City get iban => throw _privateConstructorUsedError;
+  City get iban;
   @override
-  City get bic => throw _privateConstructorUsedError;
+  City get bic;
   @override
-  City get accountOwner => throw _privateConstructorUsedError;
+  City get accountOwner;
   @override
   @JsonKey(ignore: true)
   _$$_BankDetailsDtoPropertiesCopyWith<_$_BankDetailsDtoProperties>
@@ -2427,7 +2445,9 @@ class _$_CompanySize implements _CompanySize {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompanySizeToJson(this);
+    return _$$_CompanySizeToJson(
+      this,
+    );
   }
 }
 
@@ -2441,11 +2461,11 @@ abstract class _CompanySize implements CompanySize {
       _$_CompanySize.fromJson;
 
   @override
-  List<int> get companySizeEnum => throw _privateConstructorUsedError;
+  List<int> get companySizeEnum;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  String get format => throw _privateConstructorUsedError;
+  String get format;
   @override
   @JsonKey(ignore: true)
   _$$_CompanySizeCopyWith<_$_CompanySize> get copyWith =>
@@ -2622,7 +2642,9 @@ class _$_CreateCompanyDto implements _CreateCompanyDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateCompanyDtoToJson(this);
+    return _$$_CreateCompanyDtoToJson(
+      this,
+    );
   }
 }
 
@@ -2636,12 +2658,11 @@ abstract class _CreateCompanyDto implements CreateCompanyDto {
       _$_CreateCompanyDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  CreateCompanyDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  CreateCompanyDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_CreateCompanyDtoCopyWith<_$_CreateCompanyDto> get copyWith =>
@@ -2983,7 +3004,9 @@ class _$_CreateCompanyDtoProperties implements _CreateCompanyDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateCompanyDtoPropertiesToJson(this);
+    return _$$_CreateCompanyDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -3003,21 +3026,21 @@ abstract class _CreateCompanyDtoProperties
       _$_CreateCompanyDtoProperties.fromJson;
 
   @override
-  City get name => throw _privateConstructorUsedError;
+  City get name;
   @override
-  Address get address => throw _privateConstructorUsedError;
+  Address get address;
   @override
-  City get uidNr => throw _privateConstructorUsedError;
+  City get uidNr;
   @override
-  City get registrationNr => throw _privateConstructorUsedError;
+  City get registrationNr;
   @override
-  Address get companySize => throw _privateConstructorUsedError;
+  Address get companySize;
   @override
-  Address get type => throw _privateConstructorUsedError;
+  Address get type;
   @override
-  City get websiteUrl => throw _privateConstructorUsedError;
+  City get websiteUrl;
   @override
-  Address get providerData => throw _privateConstructorUsedError;
+  Address get providerData;
   @override
   @JsonKey(ignore: true)
   _$$_CreateCompanyDtoPropertiesCopyWith<_$_CreateCompanyDtoProperties>
@@ -3132,7 +3155,9 @@ class _$_Address implements _Address {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AddressToJson(this);
+    return _$$_AddressToJson(
+      this,
+    );
   }
 }
 
@@ -3142,7 +3167,7 @@ abstract class _Address implements Address {
   factory _Address.fromJson(Map<String, dynamic> json) = _$_Address.fromJson;
 
   @override
-  String get ref => throw _privateConstructorUsedError;
+  String get ref;
   @override
   @JsonKey(ignore: true)
   _$$_AddressCopyWith<_$_Address> get copyWith =>
@@ -3320,7 +3345,9 @@ class _$_CreateProviderDto implements _CreateProviderDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateProviderDtoToJson(this);
+    return _$$_CreateProviderDtoToJson(
+      this,
+    );
   }
 }
 
@@ -3334,12 +3361,11 @@ abstract class _CreateProviderDto implements CreateProviderDto {
       _$_CreateProviderDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  CreateProviderDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  CreateProviderDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_CreateProviderDtoCopyWith<_$_CreateProviderDto> get copyWith =>
@@ -3571,7 +3597,9 @@ class _$_CreateProviderDtoProperties implements _CreateProviderDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateProviderDtoPropertiesToJson(this);
+    return _$$_CreateProviderDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -3588,14 +3616,13 @@ abstract class _CreateProviderDtoProperties
       _$_CreateProviderDtoProperties.fromJson;
 
   @override
-  Address get bankDetails => throw _privateConstructorUsedError;
+  Address get bankDetails;
   @override
-  BranchIds get branchIds => throw _privateConstructorUsedError;
+  BranchIds get branchIds;
   @override
-  Address get paymentInterval => throw _privateConstructorUsedError;
+  Address get paymentInterval;
   @override
-  SubscriptionPlanId get subscriptionPlanId =>
-      throw _privateConstructorUsedError;
+  SubscriptionPlanId get subscriptionPlanId;
   @override
   @JsonKey(ignore: true)
   _$$_CreateProviderDtoPropertiesCopyWith<_$_CreateProviderDtoProperties>
@@ -3756,7 +3783,9 @@ class _$_BranchIds implements _BranchIds {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BranchIdsToJson(this);
+    return _$$_BranchIdsToJson(
+      this,
+    );
   }
 }
 
@@ -3770,11 +3799,11 @@ abstract class _BranchIds implements BranchIds {
       _$_BranchIds.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  SubscriptionPlanId get items => throw _privateConstructorUsedError;
+  SubscriptionPlanId get items;
   @override
-  bool get nullable => throw _privateConstructorUsedError;
+  bool get nullable;
   @override
   @JsonKey(ignore: true)
   _$$_BranchIdsCopyWith<_$_BranchIds> get copyWith =>
@@ -3912,7 +3941,9 @@ class _$_SubscriptionPlanId implements _SubscriptionPlanId {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SubscriptionPlanIdToJson(this);
+    return _$$_SubscriptionPlanIdToJson(
+      this,
+    );
   }
 }
 
@@ -3925,9 +3956,9 @@ abstract class _SubscriptionPlanId implements SubscriptionPlanId {
       _$_SubscriptionPlanId.fromJson;
 
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
-  String get format => throw _privateConstructorUsedError;
+  String get format;
   @override
   @JsonKey(ignore: true)
   _$$_SubscriptionPlanIdCopyWith<_$_SubscriptionPlanId> get copyWith =>
@@ -4105,7 +4136,9 @@ class _$_ForgotPasswordDto implements _ForgotPasswordDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ForgotPasswordDtoToJson(this);
+    return _$$_ForgotPasswordDtoToJson(
+      this,
+    );
   }
 }
 
@@ -4119,12 +4152,11 @@ abstract class _ForgotPasswordDto implements ForgotPasswordDto {
       _$_ForgotPasswordDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  ForgotPasswordDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  ForgotPasswordDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_ForgotPasswordDtoCopyWith<_$_ForgotPasswordDto> get copyWith =>
@@ -4263,7 +4295,9 @@ class _$_ForgotPasswordDtoProperties implements _ForgotPasswordDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ForgotPasswordDtoPropertiesToJson(this);
+    return _$$_ForgotPasswordDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -4276,7 +4310,7 @@ abstract class _ForgotPasswordDtoProperties
       _$_ForgotPasswordDtoProperties.fromJson;
 
   @override
-  City get email => throw _privateConstructorUsedError;
+  City get email;
   @override
   @JsonKey(ignore: true)
   _$$_ForgotPasswordDtoPropertiesCopyWith<_$_ForgotPasswordDtoProperties>
@@ -4454,7 +4488,9 @@ class _$_RegisterCompanyDto implements _RegisterCompanyDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterCompanyDtoToJson(this);
+    return _$$_RegisterCompanyDtoToJson(
+      this,
+    );
   }
 }
 
@@ -4468,12 +4504,11 @@ abstract class _RegisterCompanyDto implements RegisterCompanyDto {
       _$_RegisterCompanyDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  RegisterCompanyDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  RegisterCompanyDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterCompanyDtoCopyWith<_$_RegisterCompanyDto> get copyWith =>
@@ -4639,7 +4674,9 @@ class _$_RegisterCompanyDtoProperties implements _RegisterCompanyDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterCompanyDtoPropertiesToJson(this);
+    return _$$_RegisterCompanyDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -4653,9 +4690,9 @@ abstract class _RegisterCompanyDtoProperties
       _$_RegisterCompanyDtoProperties.fromJson;
 
   @override
-  Address get company => throw _privateConstructorUsedError;
+  Address get company;
   @override
-  Users get users => throw _privateConstructorUsedError;
+  Users get users;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterCompanyDtoPropertiesCopyWith<_$_RegisterCompanyDtoProperties>
@@ -4813,7 +4850,9 @@ class _$_Users implements _Users {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UsersToJson(this);
+    return _$$_UsersToJson(
+      this,
+    );
   }
 }
 
@@ -4826,11 +4865,11 @@ abstract class _Users implements Users {
   factory _Users.fromJson(Map<String, dynamic> json) = _$_Users.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  Address get items => throw _privateConstructorUsedError;
+  Address get items;
   @override
-  bool get nullable => throw _privateConstructorUsedError;
+  bool get nullable;
   @override
   @JsonKey(ignore: true)
   _$$_UsersCopyWith<_$_Users> get copyWith =>
@@ -5031,7 +5070,9 @@ class _$_ResetPasswordDto implements _ResetPasswordDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResetPasswordDtoToJson(this);
+    return _$$_ResetPasswordDtoToJson(
+      this,
+    );
   }
 }
 
@@ -5046,14 +5087,13 @@ abstract class _ResetPasswordDto implements ResetPasswordDto {
       _$_ResetPasswordDto.fromJson;
 
   @override
-  List<String> get required => throw _privateConstructorUsedError;
+  List<String> get required;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  ResetPasswordDtoProperties get properties =>
-      throw _privateConstructorUsedError;
+  ResetPasswordDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_ResetPasswordDtoCopyWith<_$_ResetPasswordDto> get copyWith =>
@@ -5280,7 +5320,9 @@ class _$_ResetPasswordDtoProperties implements _ResetPasswordDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResetPasswordDtoPropertiesToJson(this);
+    return _$$_ResetPasswordDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -5296,13 +5338,13 @@ abstract class _ResetPasswordDtoProperties
       _$_ResetPasswordDtoProperties.fromJson;
 
   @override
-  Password get password => throw _privateConstructorUsedError;
+  Password get password;
   @override
-  ConfirmPassword get confirmPassword => throw _privateConstructorUsedError;
+  ConfirmPassword get confirmPassword;
   @override
-  City get email => throw _privateConstructorUsedError;
+  City get email;
   @override
-  City get token => throw _privateConstructorUsedError;
+  City get token;
   @override
   @JsonKey(ignore: true)
   _$$_ResetPasswordDtoPropertiesCopyWith<_$_ResetPasswordDtoProperties>
@@ -5455,7 +5497,9 @@ class _$_ConfirmPassword implements _ConfirmPassword {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ConfirmPasswordToJson(this);
+    return _$$_ConfirmPasswordToJson(
+      this,
+    );
   }
 }
 
@@ -5469,11 +5513,11 @@ abstract class _ConfirmPassword implements ConfirmPassword {
       _$_ConfirmPassword.fromJson;
 
   @override
-  int get maxLength => throw _privateConstructorUsedError;
+  int get maxLength;
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
-  bool get nullable => throw _privateConstructorUsedError;
+  bool get nullable;
   @override
   @JsonKey(ignore: true)
   _$$_ConfirmPasswordCopyWith<_$_ConfirmPassword> get copyWith =>
@@ -5622,7 +5666,9 @@ class _$_Password implements _Password {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PasswordToJson(this);
+    return _$$_PasswordToJson(
+      this,
+    );
   }
 }
 
@@ -5635,11 +5681,11 @@ abstract class _Password implements Password {
   factory _Password.fromJson(Map<String, dynamic> json) = _$_Password.fromJson;
 
   @override
-  int get maxLength => throw _privateConstructorUsedError;
+  int get maxLength;
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
-  String get format => throw _privateConstructorUsedError;
+  String get format;
   @override
   @JsonKey(ignore: true)
   _$$_PasswordCopyWith<_$_Password> get copyWith =>
@@ -5804,7 +5850,9 @@ class _$_UserDto implements _UserDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserDtoToJson(this);
+    return _$$_UserDtoToJson(
+      this,
+    );
   }
 }
 
@@ -5817,11 +5865,11 @@ abstract class _UserDto implements UserDto {
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  UserDtoProperties get properties => throw _privateConstructorUsedError;
+  UserDtoProperties get properties;
   @override
-  bool get additionalProperties => throw _privateConstructorUsedError;
+  bool get additionalProperties;
   @override
   @JsonKey(ignore: true)
   _$$_UserDtoCopyWith<_$_UserDto> get copyWith =>
@@ -6185,7 +6233,9 @@ class _$_UserDtoProperties implements _UserDtoProperties {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserDtoPropertiesToJson(this);
+    return _$$_UserDtoPropertiesToJson(
+      this,
+    );
   }
 }
 
@@ -6205,23 +6255,23 @@ abstract class _UserDtoProperties implements UserDtoProperties {
       _$_UserDtoProperties.fromJson;
 
   @override
-  City get email => throw _privateConstructorUsedError;
+  City get email;
   @override
-  City get firstName => throw _privateConstructorUsedError;
+  City get firstName;
   @override
-  City get lastName => throw _privateConstructorUsedError;
+  City get lastName;
   @override
-  City get salutation => throw _privateConstructorUsedError;
+  City get salutation;
   @override
-  Users get roles => throw _privateConstructorUsedError;
+  Users get roles;
   @override
-  City get telephoneNr => throw _privateConstructorUsedError;
+  City get telephoneNr;
   @override
-  City get title => throw _privateConstructorUsedError;
+  City get title;
   @override
-  CompanyId get companyId => throw _privateConstructorUsedError;
+  CompanyId get companyId;
   @override
-  SubscriptionPlanId get id => throw _privateConstructorUsedError;
+  SubscriptionPlanId get id;
   @override
   @JsonKey(ignore: true)
   _$$_UserDtoPropertiesCopyWith<_$_UserDtoProperties> get copyWith =>
@@ -6370,7 +6420,9 @@ class _$_CompanyId implements _CompanyId {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompanyIdToJson(this);
+    return _$$_CompanyIdToJson(
+      this,
+    );
   }
 }
 
@@ -6384,11 +6436,11 @@ abstract class _CompanyId implements CompanyId {
       _$_CompanyId.fromJson;
 
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
-  String get format => throw _privateConstructorUsedError;
+  String get format;
   @override
-  bool get nullable => throw _privateConstructorUsedError;
+  bool get nullable;
   @override
   @JsonKey(ignore: true)
   _$$_CompanyIdCopyWith<_$_CompanyId> get copyWith =>
@@ -6517,7 +6569,9 @@ class _$_Info implements _Info {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_InfoToJson(this);
+    return _$$_InfoToJson(
+      this,
+    );
   }
 }
 
@@ -6528,9 +6582,9 @@ abstract class _Info implements Info {
   factory _Info.fromJson(Map<String, dynamic> json) = _$_Info.fromJson;
 
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String get version => throw _privateConstructorUsedError;
+  String get version;
   @override
   @JsonKey(ignore: true)
   _$$_InfoCopyWith<_$_Info> get copyWith => throw _privateConstructorUsedError;
@@ -7038,7 +7092,9 @@ class _$_Paths implements _Paths {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PathsToJson(this);
+    return _$$_PathsToJson(
+      this,
+    );
   }
 }
 
@@ -7064,40 +7120,31 @@ abstract class _Paths implements Paths {
   factory _Paths.fromJson(Map<String, dynamic> json) = _$_Paths.fromJson;
 
   @override
-  CompaniesCompanyIdRegisterUser get authForgotPassword =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdRegisterUser get authForgotPassword;
   @override
-  AuthConfirmEmail get authConfirmEmail => throw _privateConstructorUsedError;
+  AuthConfirmEmail get authConfirmEmail;
   @override
-  CompaniesCompanyIdRegisterUser get authResetPassword =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdRegisterUser get authResetPassword;
   @override
-  CompaniesCompanyIdRegisterUser get authLogin =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdRegisterUser get authLogin;
   @override
-  CompaniesRegister get companiesRegister => throw _privateConstructorUsedError;
+  CompaniesRegister get companiesRegister;
   @override
-  CompaniesCompanyIdUsers get companiesCompanyIdUsers =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdUsers get companiesCompanyIdUsers;
   @override
-  CompaniesCompanyIdUsersUserId get companiesCompanyIdUsersUserId =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdUsersUserId get companiesCompanyIdUsersUserId;
   @override
-  CompaniesCompanyIdRegisterUser get companiesCompanyIdRegisterUser =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdRegisterUser get companiesCompanyIdRegisterUser;
   @override
-  CompaniesCompanyIdUsersUserIdUpdate get companiesCompanyIdUsersUserIdUpdate =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdUsersUserIdUpdate get companiesCompanyIdUsersUserIdUpdate;
   @override
-  Companies get companies => throw _privateConstructorUsedError;
+  Companies get companies;
   @override
-  CompaniesCompanyId get companiesCompanyId =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyId get companiesCompanyId;
   @override
-  Companies get subscriptions => throw _privateConstructorUsedError;
+  Companies get subscriptions;
   @override
-  CompaniesCompanyId get usersLoadUserWithCompany =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyId get usersLoadUserWithCompany;
   @override
   @JsonKey(ignore: true)
   _$$_PathsCopyWith<_$_Paths> get copyWith =>
@@ -7233,7 +7280,9 @@ class _$_AuthConfirmEmail implements _AuthConfirmEmail {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthConfirmEmailToJson(this);
+    return _$$_AuthConfirmEmailToJson(
+      this,
+    );
   }
 }
 
@@ -7246,8 +7295,7 @@ abstract class _AuthConfirmEmail implements AuthConfirmEmail {
       _$_AuthConfirmEmail.fromJson;
 
   @override
-  AuthConfirmEmailGet get authConfirmEmailGet =>
-      throw _privateConstructorUsedError;
+  AuthConfirmEmailGet get authConfirmEmailGet;
   @override
   @JsonKey(ignore: true)
   _$$_AuthConfirmEmailCopyWith<_$_AuthConfirmEmail> get copyWith =>
@@ -7430,7 +7478,9 @@ class _$_AuthConfirmEmailGet implements _AuthConfirmEmailGet {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthConfirmEmailGetToJson(this);
+    return _$$_AuthConfirmEmailGetToJson(
+      this,
+    );
   }
 }
 
@@ -7444,11 +7494,11 @@ abstract class _AuthConfirmEmailGet implements AuthConfirmEmailGet {
       _$_AuthConfirmEmailGet.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  List<PostParameter> get parameters => throw _privateConstructorUsedError;
+  List<PostParameter> get parameters;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
   @JsonKey(ignore: true)
   _$$_AuthConfirmEmailGetCopyWith<_$_AuthConfirmEmailGet> get copyWith =>
@@ -7632,7 +7682,9 @@ class _$_PostParameter implements _PostParameter {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PostParameterToJson(this);
+    return _$$_PostParameterToJson(
+      this,
+    );
   }
 }
 
@@ -7647,13 +7699,13 @@ abstract class _PostParameter implements PostParameter {
       _$_PostParameter.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get parameterIn => throw _privateConstructorUsedError;
+  String get parameterIn;
   @override
-  bool get required => throw _privateConstructorUsedError;
+  bool get required;
   @override
-  Schema get schema => throw _privateConstructorUsedError;
+  Schema get schema;
   @override
   @JsonKey(ignore: true)
   _$$_PostParameterCopyWith<_$_PostParameter> get copyWith =>
@@ -7767,7 +7819,9 @@ class _$_Schema implements _Schema {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SchemaToJson(this);
+    return _$$_SchemaToJson(
+      this,
+    );
   }
 }
 
@@ -7777,7 +7831,7 @@ abstract class _Schema implements Schema {
   factory _Schema.fromJson(Map<String, dynamic> json) = _$_Schema.fromJson;
 
   @override
-  Type get type => throw _privateConstructorUsedError;
+  Type get type;
   @override
   @JsonKey(ignore: true)
   _$$_SchemaCopyWith<_$_Schema> get copyWith =>
@@ -7906,7 +7960,9 @@ class _$_Responses implements _Responses {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResponsesToJson(this);
+    return _$$_ResponsesToJson(
+      this,
+    );
   }
 }
 
@@ -7917,7 +7973,7 @@ abstract class _Responses implements Responses {
       _$_Responses.fromJson;
 
   @override
-  The200 get the200 => throw _privateConstructorUsedError;
+  The200 get the200;
   @override
   @JsonKey(ignore: true)
   _$$_ResponsesCopyWith<_$_Responses> get copyWith =>
@@ -8032,7 +8088,9 @@ class _$_The200 implements _The200 {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_The200ToJson(this);
+    return _$$_The200ToJson(
+      this,
+    );
   }
 }
 
@@ -8042,7 +8100,7 @@ abstract class _The200 implements The200 {
   factory _The200.fromJson(Map<String, dynamic> json) = _$_The200.fromJson;
 
   @override
-  Description get description => throw _privateConstructorUsedError;
+  Description get description;
   @override
   @JsonKey(ignore: true)
   _$$_The200CopyWith<_$_The200> get copyWith =>
@@ -8183,7 +8241,9 @@ class _$_CompaniesCompanyIdRegisterUser
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdRegisterUserToJson(this);
+    return _$$_CompaniesCompanyIdRegisterUserToJson(
+      this,
+    );
   }
 }
 
@@ -8196,7 +8256,7 @@ abstract class _CompaniesCompanyIdRegisterUser
       _$_CompaniesCompanyIdRegisterUser.fromJson;
 
   @override
-  GetClass get post => throw _privateConstructorUsedError;
+  GetClass get post;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdRegisterUserCopyWith<_$_CompaniesCompanyIdRegisterUser>
@@ -8407,7 +8467,9 @@ class _$_GetClass implements _GetClass {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GetClassToJson(this);
+    return _$$_GetClassToJson(
+      this,
+    );
   }
 }
 
@@ -8421,13 +8483,13 @@ abstract class _GetClass implements GetClass {
   factory _GetClass.fromJson(Map<String, dynamic> json) = _$_GetClass.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  List<PostParameter> get parameters => throw _privateConstructorUsedError;
+  List<PostParameter> get parameters;
   @override
-  GetRequestBody get requestBody => throw _privateConstructorUsedError;
+  GetRequestBody get requestBody;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
   @JsonKey(ignore: true)
   _$$_GetClassCopyWith<_$_GetClass> get copyWith =>
@@ -8560,7 +8622,9 @@ class _$_GetRequestBody implements _GetRequestBody {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GetRequestBodyToJson(this);
+    return _$$_GetRequestBodyToJson(
+      this,
+    );
   }
 }
 
@@ -8572,7 +8636,7 @@ abstract class _GetRequestBody implements GetRequestBody {
       _$_GetRequestBody.fromJson;
 
   @override
-  Content get content => throw _privateConstructorUsedError;
+  Content get content;
   @override
   @JsonKey(ignore: true)
   _$$_GetRequestBodyCopyWith<_$_GetRequestBody> get copyWith =>
@@ -8755,7 +8819,9 @@ class _$_Content implements _Content {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ContentToJson(this);
+    return _$$_ContentToJson(
+      this,
+    );
   }
 }
 
@@ -8768,11 +8834,11 @@ abstract class _Content implements Content {
   factory _Content.fromJson(Map<String, dynamic> json) = _$_Content.fromJson;
 
   @override
-  Json get contentApplicationJson => throw _privateConstructorUsedError;
+  Json get contentApplicationJson;
   @override
-  Json get textJson => throw _privateConstructorUsedError;
+  Json get textJson;
   @override
-  Json get applicationJson => throw _privateConstructorUsedError;
+  Json get applicationJson;
   @override
   @JsonKey(ignore: true)
   _$$_ContentCopyWith<_$_Content> get copyWith =>
@@ -8897,7 +8963,9 @@ class _$_Json implements _Json {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_JsonToJson(this);
+    return _$$_JsonToJson(
+      this,
+    );
   }
 }
 
@@ -8907,7 +8975,7 @@ abstract class _Json implements Json {
   factory _Json.fromJson(Map<String, dynamic> json) = _$_Json.fromJson;
 
   @override
-  Address get schema => throw _privateConstructorUsedError;
+  Address get schema;
   @override
   @JsonKey(ignore: true)
   _$$_JsonCopyWith<_$_Json> get copyWith => throw _privateConstructorUsedError;
@@ -9036,7 +9104,9 @@ class _$_Companies implements _Companies {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesToJson(this);
+    return _$$_CompaniesToJson(
+      this,
+    );
   }
 }
 
@@ -9048,7 +9118,7 @@ abstract class _Companies implements Companies {
       _$_Companies.fromJson;
 
   @override
-  CompaniesGet get companiesGet => throw _privateConstructorUsedError;
+  CompaniesGet get companiesGet;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCopyWith<_$_Companies> get copyWith =>
@@ -9203,7 +9273,9 @@ class _$_CompaniesGet implements _CompaniesGet {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesGetToJson(this);
+    return _$$_CompaniesGetToJson(
+      this,
+    );
   }
 }
 
@@ -9216,9 +9288,9 @@ abstract class _CompaniesGet implements CompaniesGet {
       _$_CompaniesGet.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesGetCopyWith<_$_CompaniesGet> get copyWith =>
@@ -9355,7 +9427,9 @@ class _$_CompaniesCompanyId implements _CompaniesCompanyId {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdToJson(this);
+    return _$$_CompaniesCompanyIdToJson(
+      this,
+    );
   }
 }
 
@@ -9368,8 +9442,7 @@ abstract class _CompaniesCompanyId implements CompaniesCompanyId {
       _$_CompaniesCompanyId.fromJson;
 
   @override
-  CompaniesCompanyIdGet get companiesCompanyIdGet =>
-      throw _privateConstructorUsedError;
+  CompaniesCompanyIdGet get companiesCompanyIdGet;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdCopyWith<_$_CompaniesCompanyId> get copyWith =>
@@ -9558,7 +9631,9 @@ class _$_CompaniesCompanyIdGet implements _CompaniesCompanyIdGet {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdGetToJson(this);
+    return _$$_CompaniesCompanyIdGetToJson(
+      this,
+    );
   }
 }
 
@@ -9572,11 +9647,11 @@ abstract class _CompaniesCompanyIdGet implements CompaniesCompanyIdGet {
       _$_CompaniesCompanyIdGet.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  List<DeleteParameter> get parameters => throw _privateConstructorUsedError;
+  List<DeleteParameter> get parameters;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdGetCopyWith<_$_CompaniesCompanyIdGet> get copyWith =>
@@ -9768,7 +9843,9 @@ class _$_DeleteParameter implements _DeleteParameter {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeleteParameterToJson(this);
+    return _$$_DeleteParameterToJson(
+      this,
+    );
   }
 }
 
@@ -9783,13 +9860,13 @@ abstract class _DeleteParameter implements DeleteParameter {
       _$_DeleteParameter.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get parameterIn => throw _privateConstructorUsedError;
+  String get parameterIn;
   @override
-  bool get required => throw _privateConstructorUsedError;
+  bool get required;
   @override
-  SubscriptionPlanId get schema => throw _privateConstructorUsedError;
+  SubscriptionPlanId get schema;
   @override
   @JsonKey(ignore: true)
   _$$_DeleteParameterCopyWith<_$_DeleteParameter> get copyWith =>
@@ -9927,7 +10004,9 @@ class _$_CompaniesCompanyIdUsers implements _CompaniesCompanyIdUsers {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdUsersToJson(this);
+    return _$$_CompaniesCompanyIdUsersToJson(
+      this,
+    );
   }
 }
 
@@ -9940,7 +10019,7 @@ abstract class _CompaniesCompanyIdUsers implements CompaniesCompanyIdUsers {
       _$_CompaniesCompanyIdUsers.fromJson;
 
   @override
-  GetClass get companiesCompanyIdUsersGet => throw _privateConstructorUsedError;
+  GetClass get companiesCompanyIdUsersGet;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdUsersCopyWith<_$_CompaniesCompanyIdUsers>
@@ -10114,7 +10193,9 @@ class _$_CompaniesCompanyIdUsersUserId
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdUsersUserIdToJson(this);
+    return _$$_CompaniesCompanyIdUsersUserIdToJson(
+      this,
+    );
   }
 }
 
@@ -10128,10 +10209,9 @@ abstract class _CompaniesCompanyIdUsersUserId
       _$_CompaniesCompanyIdUsersUserId.fromJson;
 
   @override
-  Delete get companiesCompanyIdUsersUserIdGet =>
-      throw _privateConstructorUsedError;
+  Delete get companiesCompanyIdUsersUserIdGet;
   @override
-  Delete get delete => throw _privateConstructorUsedError;
+  Delete get delete;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdUsersUserIdCopyWith<_$_CompaniesCompanyIdUsersUserId>
@@ -10339,7 +10419,9 @@ class _$_Delete implements _Delete {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeleteToJson(this);
+    return _$$_DeleteToJson(
+      this,
+    );
   }
 }
 
@@ -10353,13 +10435,13 @@ abstract class _Delete implements Delete {
   factory _Delete.fromJson(Map<String, dynamic> json) = _$_Delete.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  List<DeleteParameter> get parameters => throw _privateConstructorUsedError;
+  List<DeleteParameter> get parameters;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
-  GetRequestBody get requestBody => throw _privateConstructorUsedError;
+  GetRequestBody get requestBody;
   @override
   @JsonKey(ignore: true)
   _$$_DeleteCopyWith<_$_Delete> get copyWith =>
@@ -10503,7 +10585,9 @@ class _$_CompaniesCompanyIdUsersUserIdUpdate
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesCompanyIdUsersUserIdUpdateToJson(this);
+    return _$$_CompaniesCompanyIdUsersUserIdUpdateToJson(
+      this,
+    );
   }
 }
 
@@ -10517,7 +10601,7 @@ abstract class _CompaniesCompanyIdUsersUserIdUpdate
       _$_CompaniesCompanyIdUsersUserIdUpdate.fromJson;
 
   @override
-  Delete get put => throw _privateConstructorUsedError;
+  Delete get put;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesCompanyIdUsersUserIdUpdateCopyWith<
@@ -10652,7 +10736,9 @@ class _$_CompaniesRegister implements _CompaniesRegister {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesRegisterToJson(this);
+    return _$$_CompaniesRegisterToJson(
+      this,
+    );
   }
 }
 
@@ -10664,7 +10750,7 @@ abstract class _CompaniesRegister implements CompaniesRegister {
       _$_CompaniesRegister.fromJson;
 
   @override
-  CompaniesRegisterPost get post => throw _privateConstructorUsedError;
+  CompaniesRegisterPost get post;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesRegisterCopyWith<_$_CompaniesRegister> get copyWith =>
@@ -10853,7 +10939,9 @@ class _$_CompaniesRegisterPost implements _CompaniesRegisterPost {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CompaniesRegisterPostToJson(this);
+    return _$$_CompaniesRegisterPostToJson(
+      this,
+    );
   }
 }
 
@@ -10867,11 +10955,11 @@ abstract class _CompaniesRegisterPost implements CompaniesRegisterPost {
       _$_CompaniesRegisterPost.fromJson;
 
   @override
-  List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get tags;
   @override
-  PurpleRequestBody get requestBody => throw _privateConstructorUsedError;
+  PurpleRequestBody get requestBody;
   @override
-  Responses get responses => throw _privateConstructorUsedError;
+  Responses get responses;
   @override
   @JsonKey(ignore: true)
   _$$_CompaniesRegisterPostCopyWith<_$_CompaniesRegisterPost> get copyWith =>
@@ -11021,7 +11109,9 @@ class _$_PurpleRequestBody implements _PurpleRequestBody {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PurpleRequestBodyToJson(this);
+    return _$$_PurpleRequestBodyToJson(
+      this,
+    );
   }
 }
 
@@ -11034,9 +11124,9 @@ abstract class _PurpleRequestBody implements PurpleRequestBody {
       _$_PurpleRequestBody.fromJson;
 
   @override
-  Content get content => throw _privateConstructorUsedError;
+  Content get content;
   @override
-  bool get required => throw _privateConstructorUsedError;
+  bool get required;
   @override
   @JsonKey(ignore: true)
   _$$_PurpleRequestBodyCopyWith<_$_PurpleRequestBody> get copyWith =>
