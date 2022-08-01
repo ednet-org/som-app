@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/model/DTChatMessageModel.dart';
+import 'package:som/ui/utils/AppWidget.dart';
+import 'package:som/ui/utils/DTChatMessageModel.dart';
 
 Widget priceWidget(context, int? price,
     {bool applyStrike = false, double? fontSize, Color? textColor}) {

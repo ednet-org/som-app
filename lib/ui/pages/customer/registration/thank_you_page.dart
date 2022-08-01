@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/template_storage/main/utils/auto_size_text/auto_size_text.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
+import 'package:som/ui/utils/AppConstant.dart';
+import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
 class ThankYouPage extends StatelessWidget {
   const ThankYouPage({Key? key}) : super(key: key);

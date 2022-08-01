@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/main/utils/AppConstant.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
+import 'package:som/ui/utils/AppConstant.dart';
 
 import 'dashboard_page.dart';
 

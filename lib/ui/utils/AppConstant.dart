@@ -1,4 +1,4 @@
-const mainAppName = 'ProKit Flutter';
+const mainAppName = 'Smart Offer Management';
 
 //region Social URLs
 const youTubeUrl = 'https://www.youtube.com/iqonicdesign';
@@ -102,3 +102,14 @@ const flutterWaveEncryptionKey = 'FLWSECK_TEST8497cc2db86c';
 
 //paystack
 const payStackPublicKey = 'pk_test_c46ddf9def17e34152daa1b6e2eb940dedea41f0';
+
+/* margin */
+
+const spacing_control_half = 2.0;
+const spacing_control = 4.0;
+const spacing_standard = 8.0;
+const spacing_middle = 10.0;
+const spacing_standard_new = 16.0;
+const spacing_large = 24.0;
+const spacing_xlarge = 32.0;
+const spacing_xxLarge = 40.0;

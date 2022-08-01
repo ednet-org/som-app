@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
@@ -13,6 +12,7 @@ import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/FormSectionHeader.dart';
 import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
 import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
+import 'package:som/ui/utils/AppWidget.dart';
 
 import 'RoleSelection.dart';
 

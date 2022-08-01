@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/template_storage/integrations/utils/constants.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
-import 'package:som/template_storage/main/utils/auto_size_text/auto_size_text.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/utils/EditText.dart';
 import 'package:som/ui/pages/customer_registration_page.dart';
 import 'package:som/ui/pages/dashboard_page.dart';
+import 'package:som/ui/utils/AppConstant.dart';
+import 'package:som/ui/utils/AppWidget.dart';
+import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
 import '../../../main.dart';
 

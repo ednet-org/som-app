@@ -85,6 +85,8 @@ dependencies:
   dropdown_search: ^4.0.1
   json_annotation: ^4.5.0
 
+  google_mobile_ads: ^1.2.0
+
   ednet_component_library:
     git:
       url: git@gitlab.com:ednet/supernova-material.git

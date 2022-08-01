@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/utils/AppWidget.dart';
 
 class MainBody extends StatelessWidget {
   final child;

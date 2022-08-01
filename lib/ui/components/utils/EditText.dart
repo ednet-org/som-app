@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:som/template_storage/integrations/utils/colors.dart';
-import 'package:som/template_storage/integrations/utils/constants.dart';
+import 'package:som/ui/utils/AppConstant.dart';
 
 class EditText extends StatefulWidget {
   var isPassword;
@@ -15,8 +14,8 @@ class EditText extends StatefulWidget {
   VoidCallback? onPressed;
 
   EditText(
-      {var this.fontSize = textSizeMedium,
-      var this.textColor = textColorPrimary,
+      {var this.fontSize,
+      var this.textColor,
       var this.fontFamily = fontRegular,
       var this.isPassword = true,
       var this.isSecure = false,
@@ -37,7 +36,6 @@ class EditTextState extends State<EditText> {
       return TextFormField(
         controller: widget.mController,
         obscureText: widget.isPassword,
-        cursorColor: textColorSecondary,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           hintText: widget.text,
@@ -51,7 +49,6 @@ class EditTextState extends State<EditText> {
       return TextField(
         controller: widget.mController,
         obscureText: widget.isPassword,
-        cursorColor: textColorSecondary,
         decoration: InputDecoration(
           suffixIcon: GestureDetector(
             onTap: () {

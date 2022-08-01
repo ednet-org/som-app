@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
+import 'package:som/ui/utils/AppWidget.dart';
 
 class RoleSelection extends StatefulWidget {
   RoleSelection();

@@ -14,8 +14,8 @@ import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/pages/splash_page.dart';
+import 'package:som/ui/utils/AppConstant.dart';
 
-import 'template_storage/main/utils/AppConstant.dart';
 import 'template_storage/main/utils/intl/som_localizations.dart';
 //endregion
 

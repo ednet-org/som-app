@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/utils/AppWidget.dart';
 import 'package:som/ui/components/MainMenu.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
+import 'package:som/ui/utils/AppWidget.dart';
 
 class DashboardPage extends StatefulWidget {
   static String tag = '/DashboardScreen';
