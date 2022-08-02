@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/ui/components/MainMenu.dart';
+import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
@@ -88,7 +89,7 @@ class DashboardPageState extends State<DashboardPage> {
                 ],
               ),
               drawer: MainMenu(),
-              body: Text(''),
+              body: AppBody(),
               // body: DTDashboardWidget(),
             ),
           )

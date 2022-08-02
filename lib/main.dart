@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
           // hardcoded dark mode
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.light,
           theme: lightTheme,
           darkTheme: darkTheme,
           builder: scrollBehaviour(),
