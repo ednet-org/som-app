@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 class EditText extends StatefulWidget {
@@ -38,12 +39,24 @@ class EditTextState extends State<EditText> {
         obscureText: widget.isPassword,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
-          hintText: widget.text,
+          // hintText: widget.text,
           labelText: widget.text,
+          hintStyle: secondaryTextStyle(),
+          labelStyle: secondaryTextStyle(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary, width: 0.0),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimary, width: 0.0),
+          ),
         ),
         maxLines: widget.maxLine,
-        style:
-            TextStyle(fontSize: widget.fontSize, fontFamily: widget.fontFamily),
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
       );
     } else {
       return TextField(
@@ -60,11 +73,23 @@ class EditTextState extends State<EditText> {
                 widget.isPassword ? Icons.visibility : Icons.visibility_off),
           ),
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
-          hintText: widget.text,
+          // hintText: widget.text,
           labelText: widget.text,
+          hintStyle: secondaryTextStyle(),
+          labelStyle: secondaryTextStyle(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary, width: 0.0),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimary, width: 0.0),
+          ),
         ),
-        style:
-            TextStyle(fontSize: widget.fontSize, fontFamily: widget.fontFamily),
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
       );
     }
   }

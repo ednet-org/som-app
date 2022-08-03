@@ -28,7 +28,7 @@ class ActionButtonState extends State<ActionButton> {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
             child: Text(
               widget.textContent,
-              style: TextStyle(fontSize: 16),
+              style: Theme.of(context).textTheme.button,
               textAlign: TextAlign.center,
             ),
           ),

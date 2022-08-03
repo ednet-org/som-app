@@ -42,6 +42,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         resizeToAvoidBottomInset: true,
         body: Center(
             child: SingleChildScrollView(
@@ -54,7 +55,11 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                     height: 150, fit: BoxFit.fitHeight),
               ),
               Text('Smart offer management'.toUpperCase(),
-                      style: Theme.of(context).textTheme.displayMedium)
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               SizedBox(
                 width: 800,
