@@ -12,6 +12,7 @@ class ThankYouPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         resizeToAvoidBottomInset: true,
         body: Center(
             child: SingleChildScrollView(
@@ -20,11 +21,21 @@ class ThankYouPage extends StatelessWidget {
               SizedBox(height: spacing_large),
               Container(
                 alignment: Alignment.center,
-                child: Image.asset('images/som/logo.png',
-                    height: 150, fit: BoxFit.fitHeight),
+                child: Image.asset(
+                  'images/som/logo.png',
+                  height: 150,
+                  fit: BoxFit.fitHeight,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
               Text('Smart offer management'.toUpperCase(),
-                      style: primaryTextStyle(size: textSizeLarge.toInt()))
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               Container(
                 width: 800,
@@ -33,6 +44,10 @@ class ThankYouPage extends StatelessWidget {
                   child: Column(
                     children: [
                       AutoSizeText.rich(
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer),
                         TextSpan(
                             text:
                                 'Dear John, \nwe are delighted that Samsung GmbH has placed'
