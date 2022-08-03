@@ -51,8 +51,12 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
               const SizedBox(height: spacing_large),
               Container(
                 alignment: Alignment.center,
-                child: Image.asset('images/som/logo.png',
-                    height: 150, fit: BoxFit.fitHeight),
+                child: Image.asset(
+                  'images/som/logo.png',
+                  height: 150,
+                  fit: BoxFit.fitHeight,
+                  color: Theme.of(context).colorScheme.surface,
+                ),
               ),
               Text('Smart offer management'.toUpperCase(),
                       style: Theme.of(context)
@@ -61,7 +65,8 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                           ?.copyWith(
                               color: Theme.of(context)
                                   .colorScheme
-                                  .onPrimaryContainer))
+                                  .onPrimaryContainer
+                                  .withOpacity(0.7)))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               SizedBox(
                 width: 800,
