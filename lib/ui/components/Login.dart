@@ -17,7 +17,7 @@ class Login extends StatefulWidget {
   @override
   LoginState createState() => LoginState();
 
-  Login({this.showWelcomeMessage = true});
+  Login({this.showWelcomeMessage = false});
 }
 
 class LoginState extends State<Login> {
@@ -33,21 +33,8 @@ class LoginState extends State<Login> {
           SizedBox(height: spacing_large),
           if (widget.showWelcomeMessage) welcomeMessage(),
           loginForm(),
-          SizedBox(height: 8),
-          Text(
-            static["link.forgottenPassword"] ?? "",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color:
-                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
-          ),
           SizedBox(
             height: 100,
-          ),
-          ActionButton(
-            onPressed: () {
-              CustomerRegistrationPage().launch(context);
-            },
-            textContent: static["signUp"],
           ),
           SizedBox(height: spacing_large),
         ],
@@ -76,7 +63,23 @@ class LoginState extends State<Login> {
               DashboardPage().launch(context, isNewTask: true);
             },
             textContent: static["button.login"],
-          )
+          ),
+          SizedBox(height: 8),
+          Text(
+            static["link.forgottenPassword"] ?? "",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color:
+                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
+          ),
+          SizedBox(height: 60),
+          ActionButton(
+            onPressed: () {
+              CustomerRegistrationPage().launch(context);
+            },
+            textContent: static["signUp"],
+            primary: Theme.of(context).colorScheme.secondary,
+            onPrimary: Theme.of(context).colorScheme.onSecondary,
+          ),
         ],
       ),
     );
@@ -106,8 +109,7 @@ void changeStatusColor(Color color) async {
 }
 
 const static = {
-  "welcome":
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+  "welcome": "Existing user:",
   "username": "E-mail",
   "password": "Password",
   "button.login": "Sign In",
