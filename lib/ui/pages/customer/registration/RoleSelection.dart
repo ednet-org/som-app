@@ -44,34 +44,44 @@ class _RoleSelectionState extends State<RoleSelection> {
 
   ElevatedButton providerSelector() {
     return ElevatedButton(
-        onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text('Provider', style: boldTextStyle(size: 24)),
-              Switch(
-                  value: registrationRequest.company.isProvider,
-                  onChanged: registrationRequest.company.activateProvider),
-            ],
-          ),
-        ));
+      onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Text('Provider', style: boldTextStyle(size: 24)),
+            Switch(
+                value: registrationRequest.company.isProvider,
+                onChanged: registrationRequest.company.activateProvider),
+          ],
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).colorScheme.primaryContainer,
+        onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
+    );
   }
 
   ElevatedButton buyerSelector() {
     return ElevatedButton(
-        onPressed: () => registrationRequest.switchRole(Roles.Buyer),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text('Buyer ', style: boldTextStyle(size: 24)),
-              Switch(
-                  value: registrationRequest.company.isBuyer,
-                  onChanged: registrationRequest.company.activateBuyer),
-            ],
-          ),
-        ));
+      onPressed: () => registrationRequest.switchRole(Roles.Buyer),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Text('Buyer ', style: boldTextStyle(size: 24)),
+            Switch(
+                value: registrationRequest.company.isBuyer,
+                onChanged: registrationRequest.company.activateBuyer),
+          ],
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).colorScheme.secondaryContainer,
+        onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+      ),
+    );
   }
 
   web() {

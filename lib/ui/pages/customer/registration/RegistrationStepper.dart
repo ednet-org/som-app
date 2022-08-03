@@ -12,7 +12,6 @@ import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/FormSectionHeader.dart';
 import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
 import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
-import 'package:som/ui/utils/AppWidget.dart';
 
 import 'RoleSelection.dart';
 
@@ -43,10 +42,17 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     return Container(
       child: Column(
         children: [
-          text('Customer registration'),
+          Text(
+            'Customer registration',
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+          ),
           40.height,
           Observer(builder: (_) {
             return Stepper(
+              elevation: 4,
               key: Key("mysuperkey-" +
                   assembleSteps(customerRegistration).length.toString()),
               steps: assembleSteps(customerRegistration),
@@ -217,7 +223,6 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             ],
           )),
     ];
-    print(request.som.nesto);
     final providerSteps = [
       Step(
         title: Text('Company branches', style: primaryTextStyle()),

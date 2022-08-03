@@ -23,7 +23,7 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Theme.of(context).colorScheme.primary);
+    changeStatusColor(Theme.of(context).colorScheme.primaryContainer);
     return Container(
       margin: EdgeInsets.only(left: spacing_large, right: spacing_large),
       child: Column(
@@ -68,8 +68,10 @@ class LoginState extends State<Login> {
           Text(
             static["link.forgottenPassword"] ?? "",
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color:
-                    Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onPrimaryContainer
+                    .withOpacity(0.5)),
           ),
           SizedBox(height: 60),
           ActionButton(
@@ -89,10 +91,8 @@ class LoginState extends State<Login> {
     return Column(
       children: [
         AutoSizeText.rich(
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
           TextSpan(text: static["welcome"]),
           maxLines: 8,
           overflow: TextOverflow.ellipsis,

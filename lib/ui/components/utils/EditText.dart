@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 class EditText extends StatefulWidget {
@@ -41,22 +40,22 @@ class EditTextState extends State<EditText> {
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           // hintText: widget.text,
           labelText: widget.text,
-          hintStyle: secondaryTextStyle(),
-          labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.primary, width: 0.0),
+                color: Theme.of(context).colorScheme.primaryContainer,
+                width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimary, width: 0.0),
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
         ),
         maxLines: widget.maxLine,
         style: Theme.of(context)
             .textTheme
             .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
       );
     } else {
       return TextField(
@@ -75,21 +74,21 @@ class EditTextState extends State<EditText> {
           contentPadding: EdgeInsets.fromLTRB(16, 8, 4, 8),
           // hintText: widget.text,
           labelText: widget.text,
-          hintStyle: secondaryTextStyle(),
-          labelStyle: secondaryTextStyle(),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.primary, width: 0.0),
+                color: Theme.of(context).colorScheme.primaryContainer,
+                width: 0.0),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimary, width: 0.0),
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                width: 0.0),
           ),
         ),
         style: Theme.of(context)
             .textTheme
             .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
       );
     }
   }

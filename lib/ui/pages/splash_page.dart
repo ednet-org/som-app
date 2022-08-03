@@ -44,14 +44,14 @@ class _SplashPageState extends State<SplashPage>
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: Container(
         alignment: Alignment.center,
         child: Image.asset(
           'images/som/logo.png',
           height: 300,
           fit: BoxFit.fitHeight,
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
       ),
     );

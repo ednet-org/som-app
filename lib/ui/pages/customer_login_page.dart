@@ -42,7 +42,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         resizeToAvoidBottomInset: true,
         body: Center(
             child: SingleChildScrollView(
@@ -59,7 +59,9 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                           .textTheme
                           .displayMedium
                           ?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary))
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               SizedBox(
                 width: 800,
