@@ -49,16 +49,21 @@ class _RoleSelectionState extends State<RoleSelection> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Text('Provider', style: boldTextStyle(size: 24)),
+            Text('Provider',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
             Switch(
+                activeColor: Theme.of(context).colorScheme.onPrimary,
                 value: registrationRequest.company.isProvider,
                 onChanged: registrationRequest.company.activateProvider),
           ],
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.primaryContainer,
-        onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
+        primary: Theme.of(context).colorScheme.primary,
+        onPrimary: Theme.of(context).colorScheme.onPrimary,
       ),
     );
   }
@@ -70,16 +75,19 @@ class _RoleSelectionState extends State<RoleSelection> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Text('Buyer ', style: boldTextStyle(size: 24)),
+            Text('Buyer ',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary)),
             Switch(
+                activeColor: Theme.of(context).colorScheme.onSecondary,
                 value: registrationRequest.company.isBuyer,
                 onChanged: registrationRequest.company.activateBuyer),
           ],
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.secondaryContainer,
-        onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+        primary: Theme.of(context).colorScheme.secondary,
+        onPrimary: Theme.of(context).colorScheme.secondary,
       ),
     );
   }

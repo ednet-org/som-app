@@ -44,10 +44,11 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         children: [
           Text(
             'Customer registration',
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall
-                ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                color: Theme.of(context)
+                    .colorScheme
+                    .onPrimaryContainer
+                    ?.withOpacity(0.7)),
           ),
           40.height,
           Observer(builder: (_) {
@@ -89,7 +90,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           50.width,
                           TextButton(
                             onPressed: details.onStepCancel,
-                            child: Text('CANCEL', style: secondaryTextStyle()),
+                            child: Text('CANCEL'),
                           ),
                         ],
                       );
@@ -130,13 +131,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   List<Step> assembleSteps(RegistrationRequest request) {
     final buyerSteps = [
       Step(
-        title: Text('Role selection', style: primaryTextStyle()),
+        title: Text('Role selection'),
         isActive: currStep == 0,
         state: StepState.indexed,
         content: RoleSelection(),
       ),
       Step(
-          title: Text('Company details', style: primaryTextStyle()),
+          title: Text('Company details'),
           isActive: currStep == 1,
           state: StepState.indexed,
           content: Column(
@@ -225,19 +226,19 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     ];
     final providerSteps = [
       Step(
-        title: Text('Company branches', style: primaryTextStyle()),
+        title: Text('Company branches'),
         isActive: currStep == 2,
         state: StepState.indexed,
         content: SomTags(tags: request.som.availableBranches),
       ),
       Step(
-        title: Text('Subscription model', style: primaryTextStyle()),
+        title: Text('Subscription model'),
         isActive: currStep == 3,
         state: StepState.indexed,
         content: SubscriptionSelector(),
       ),
       Step(
-          title: Text('Payment details', style: primaryTextStyle()),
+          title: Text('Payment details'),
           isActive: currStep == 4,
           state: StepState.indexed,
           content: Column(
@@ -292,8 +293,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                         request.company.providerData
                             .setPaymentInterval(PaymentInterval.Monthly);
                       },
-                      child: Text(PaymentInterval.Monthly.name,
-                          style: primaryTextStyle())),
+                      child: Text(PaymentInterval.Monthly.name)),
                   Radio(
                     value: PaymentInterval.Yearly,
                     groupValue: request.company.providerData.paymentInterval,
@@ -309,8 +309,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                         request.company.providerData
                             .setPaymentInterval(PaymentInterval.Yearly);
                       },
-                      child: Text(PaymentInterval.Yearly.name,
-                          style: primaryTextStyle()))
+                      child: Text(PaymentInterval.Yearly.name))
                 ],
               ),
               50.height,
@@ -320,7 +319,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     final commonSteps = [
       Step(
-        title: Text('Users', style: primaryTextStyle()),
+        title: Text('Users'),
         isActive: currStep == 5,
         state: StepState.indexed,
         content: Column(
@@ -355,8 +354,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                       request.company.increaseNumberOfUsers(),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text('+',
-                                        style: boldTextStyle(size: 24)),
+                                    child: Text('+'),
                                   )),
                             )
                           : const SizedBox(height: 1),
