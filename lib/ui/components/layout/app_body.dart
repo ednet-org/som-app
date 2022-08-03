@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/cards/inquiry_info_card.dart';
 
 class AppBody extends StatelessWidget {
   const AppBody({
@@ -89,35 +88,37 @@ class AppBody extends StatelessWidget {
     );
   }
 
-  CustomScrollView get overdueInquiries {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Colors.yellow,
-          ),
-        ),
-        SliverPadding(padding: EdgeInsets.only(top: 10)),
-        SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.0,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0),
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return BodyWidget();
-            },
-            childCount: 30,
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(bottom: 80.0),
-        )
-      ],
-    );
+  Widget get overdueInquiries {
+    return Text("Oldest Inquiries");
+
+    // return CustomScrollView(
+    //   slivers: <Widget>[
+    //     SliverToBoxAdapter(
+    //       child: Container(
+    //         height: 50.0,
+    //         width: double.infinity,
+    //         color: Colors.yellow,
+    //       ),
+    //     ),
+    //     SliverPadding(padding: EdgeInsets.only(top: 10)),
+    //     SliverGrid(
+    //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //           crossAxisCount: 2,
+    //           childAspectRatio: 1.0,
+    //           mainAxisSpacing: 10.0,
+    //           crossAxisSpacing: 10.0),
+    //       delegate: SliverChildBuilderDelegate(
+    //         (context, index) {
+    //           return BodyWidget();
+    //         },
+    //         childCount: 30,
+    //       ),
+    //     ),
+    //     SliverPadding(
+    //       padding: const EdgeInsets.only(bottom: 80.0),
+    //     )
+    //   ],
+    // );
   }
 
   //
@@ -152,11 +153,12 @@ class AppBody extends StatelessWidget {
             )));
   }
 
-  TestHorizontalListView get currentInquiries {
-    return TestHorizontalListView();
+  Widget get currentInquiries {
+    return Text("Current Inquiries");
+    // return TestHorizontalListView();
   }
 
-  Container get contextMenu => Container(child: SizedBox());
+  Container get contextMenu => Container(child: Text("Context Menu"));
 }
 
 class TestHorizontalListView extends StatefulWidget {

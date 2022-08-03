@@ -144,9 +144,21 @@ Widget appBarTitleWidget(context, String title,
     height: 60,
     child: Row(
       children: <Widget>[
+        Container(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'images/som/logo.png',
+            height: 40,
+            fit: BoxFit.fitHeight,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+        SizedBox(width: 15),
         Text(
           title,
-          style: boldTextStyle(size: 20),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
           maxLines: 1,
         ).expand(),
       ],

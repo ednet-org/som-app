@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/ui/components/MainMenu.dart';
 import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppWidget.dart';
@@ -40,7 +39,13 @@ class DashboardPageState extends State<DashboardPage> {
             'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
       ).paddingRight(10.0),
       // TODO: mobile
-      Text('Fritzchen der Käufer').paddingRight(50),
+      Text(
+        'Fritzchen der Käufer',
+        style: Theme.of(context)
+            .textTheme
+            .titleSmall
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+      ).paddingRight(50),
     ]);
   }
 
@@ -48,14 +53,24 @@ class DashboardPageState extends State<DashboardPage> {
     return appStore.isAuthenticated
         ? SafeArea(
             child: Scaffold(
+              backgroundColor:
+                  Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
               appBar: AppBar(
+                backgroundColor:
+                    Theme.of(context).colorScheme.primary.withOpacity(1),
                 title: appBarTitleWidget(context, 'Dashboard'),
                 actions: [
                   PopupMenuButton(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(1),
                     child: userMenuItem(),
                     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                       PopupMenuItem(child: userMenuItem()),
                       PopupMenuItem(
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary),
                         child: ListTile(
                           leading: Icon(Icons.notifications),
                           title: Text('Notifications'),
@@ -88,7 +103,7 @@ class DashboardPageState extends State<DashboardPage> {
                   ),
                 ],
               ),
-              drawer: MainMenu(),
+              // drawer: MainMenu(),
               body: AppBody(),
               // body: DTDashboardWidget(),
             ),

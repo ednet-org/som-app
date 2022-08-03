@@ -39,60 +39,58 @@ class MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ClipPath(
-        child: Drawer(
-          child: Container(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  DrawerHeader(
-                    child: Row(
-                      children: [
-                        50.width,
-                        Column(
-                          children: [
-                            15.height,
-                            Image.asset(
-                              'images/som/logo.png',
-                              height: 75,
-                              width: 75,
-                            ),
-                            15.height,
-                            Text('Smart Offer Manager'),
-                          ],
-                        ),
-                      ],
-                    ),
+      child: Drawer(
+        child: Container(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DrawerHeader(
+                  child: Row(
+                    children: [
+                      50.width,
+                      Column(
+                        children: [
+                          15.height,
+                          Image.asset(
+                            'images/som/logo.png',
+                            height: 75,
+                            width: 75,
+                          ),
+                          15.height,
+                          Text('Smart Offer Manager'),
+                        ],
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text('Home'),
-                  ).onTap(() {
-                    appStore.setDrawerItemIndex(-1);
-                    DashboardPage().launch(context, isNewTask: true);
-                  }),
-                  Divider(height: 16),
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(16),
-                        child: Text(drawerItems[index].name!),
-                      ).onTap(() {
-                        finish(context);
-                        appStore.setDrawerItemIndex(index);
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: Text('Home'),
+                ).onTap(() {
+                  appStore.setDrawerItemIndex(-1);
+                  DashboardPage().launch(context, isNewTask: true);
+                }),
+                Divider(height: 16),
+                ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: EdgeInsets.all(16),
+                      child: Text(drawerItems[index].name!),
+                    ).onTap(() {
+                      finish(context);
+                      appStore.setDrawerItemIndex(index);
 
-                        drawerItems[index].widget.launch(context);
-                      });
-                    },
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(top: 8, bottom: 8),
-                    itemCount: drawerItems.length,
-                    shrinkWrap: true,
-                  ),
-                ],
-              ),
+                      drawerItems[index].widget.launch(context);
+                    });
+                  },
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                  itemCount: drawerItems.length,
+                  shrinkWrap: true,
+                ),
+              ],
             ),
           ),
         ),
