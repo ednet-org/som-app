@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class SomTextInput extends StatelessWidget {
   final String? label;
@@ -34,13 +33,13 @@ class SomTextInput extends StatelessWidget {
       initialValue: value,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      style: primaryTextStyle(),
+      // style: primaryTextStyle(),
       obscureText: obscureText,
       autocorrect: autocorrect,
       decoration: InputDecoration(
         labelText: '${label} ${required ? "*" : ""}',
-        hintStyle: secondaryTextStyle(),
-        labelStyle: secondaryTextStyle(),
+        // hintStyle: secondaryTextStyle(),
+        // labelStyle: secondaryTextStyle(),
         hintText: hint,
         icon: Icon(icon),
       ),

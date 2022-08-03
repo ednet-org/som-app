@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class SomDropDown extends StatelessWidget {
   final String? value;
@@ -21,8 +20,6 @@ class SomDropDown extends StatelessWidget {
         dropdownSearchDecoration: InputDecoration(
           icon: Icon(Icons.edit_location),
           labelText: 'Country',
-          hintStyle: secondaryTextStyle(),
-          labelStyle: secondaryTextStyle(),
           hintText: hint,
         ));
   }

@@ -48,7 +48,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 color: Theme.of(context)
                     .colorScheme
                     .onPrimaryContainer
-                    ?.withOpacity(0.7)),
+                    .withOpacity(0.7)),
           ),
           40.height,
           Observer(builder: (_) {

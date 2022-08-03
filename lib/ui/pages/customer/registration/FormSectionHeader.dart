@@ -11,7 +11,12 @@ class FormSectionHeader extends StatelessWidget {
     return Column(
       children: [
         40.height,
-        Text(label, style: secondaryTextStyle()),
+        Text(label,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: Theme.of(context)
+                    .colorScheme
+                    .onPrimaryContainer
+                    .withOpacity(0.9))),
       ],
     );
   }
