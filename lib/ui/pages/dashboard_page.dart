@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
 import 'package:som/ui/components/layout/app_body.dart';
+import 'package:som/ui/components/layout/mock.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
@@ -113,12 +114,7 @@ class DashboardPageState extends State<DashboardPage> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                 )),
-                leftSplit: Text(
-                  "Newest Inquiries",
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
+                leftSplit: TestHorizontalListView(),
                 rightSplit: Text(
                   "Oldest Inquiries",
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
