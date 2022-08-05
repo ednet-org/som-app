@@ -9,10 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/models/api_company_service.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/cors_interceptor.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/http_color_logging_interceptor.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/interceptors/token_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
@@ -29,6 +31,7 @@ ThemeData? darkTheme;
 ThemeData? lightTheme;
 var subscriptionService;
 var loginService;
+var apiCompanyService;
 
 void main() async {
   final api = ChopperClient(
@@ -36,30 +39,22 @@ void main() async {
     services: [
       // Create and pass an instance of the generated service to the client
       SubscriptionService.create(),
-      LoginService.create()
+      LoginService.create(),
+      ApiCompanyService.create(),
     ],
     converter: JsonSerializableConverter(),
     errorConverter: JsonConverter(),
     interceptors: [
-      // TokenInterceptor(),
+      TokenInterceptor(),
       CORSInterceptor(),
       HttpColorLoggingInterceptor(),
     ],
   );
   subscriptionService = api.getService<SubscriptionService>();
   loginService = api.getService<LoginService>();
-  final response = await subscriptionService.getSubscriptions();
-  if (response.isSuccessful) {
-    // Successful request
-    final body = response.body;
-    print(body);
-  } else {
-    // Error code received from server
-    final code = response.statusCode;
-    final error = response.error;
-    print(code);
-    print(error);
-  }
+  apiCompanyService = api.getService<ApiCompanyService>();
+
+  var companies = await apiCompanyService.getCompanies();
 
   darkTheme = await EdsAppTheme.som["dark"];
   lightTheme = await EdsAppTheme.som["light"];

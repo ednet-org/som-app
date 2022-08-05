@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
 
 part 'application.g.dart';
@@ -6,6 +7,8 @@ part 'application.g.dart';
 class Application = _Application with _$Application;
 
 abstract class _Application with Store {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   @observable
   double applicationWidth = 600;
   @observable
@@ -40,7 +43,12 @@ abstract class _Application with Store {
   }
 
   @action
-  login(Authorization aAuthorization) {
+  login(Authorization aAuthorization) async {
+    final sharedPrefs = await _prefs;
+
+    sharedPrefs
+      ..setString('token', aAuthorization.token)
+      ..setString('refreshToken', aAuthorization.refreshToken);
     authorization = aAuthorization;
   }
 
@@ -51,16 +59,16 @@ abstract class _Application with Store {
 class Authorization {
   Roles? companyRole;
   UserRoles? userRole;
-  String? token;
-  String? refreshToken;
+  String token;
+  String refreshToken;
   var user;
 
   Authorization({
     this.companyRole,
     this.userRole,
     this.user,
-    this.token,
-    this.refreshToken,
+    required this.token,
+    required this.refreshToken,
   });
 }
 

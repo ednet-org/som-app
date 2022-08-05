@@ -44,8 +44,8 @@ abstract class _EmailLoginStoreBase with Store {
         isLoggedIn = true;
         password = "";
         appStore.login(Authorization(
-            token: response.body?.token,
-            refreshToken: response.body?.refreshToken));
+            token: response.body!.token,
+            refreshToken: response.body!.refreshToken));
       }
 
       if (response.error != null) {

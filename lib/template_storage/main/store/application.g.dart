@@ -122,6 +122,14 @@ mixin _$Application on _Application, Store {
         .run(() => super.toggleDarkMode(value: value));
   }
 
+  late final _$loginAsyncAction =
+      AsyncAction('_Application.login', context: context);
+
+  @override
+  Future login(Authorization aAuthorization) {
+    return _$loginAsyncAction.run(() => super.login(aAuthorization));
+  }
+
   late final _$_ApplicationActionController =
       ActionController(name: '_Application', context: context);
 
@@ -153,17 +161,6 @@ mixin _$Application on _Application, Store {
         _$_ApplicationActionController.startAction(name: '_Application.logout');
     try {
       return super.logout();
-    } finally {
-      _$_ApplicationActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic login(Authorization aAuthorization) {
-    final _$actionInfo =
-        _$_ApplicationActionController.startAction(name: '_Application.login');
-    try {
-      return super.login(aAuthorization);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }

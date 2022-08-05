@@ -1,4 +1,5 @@
 import 'package:som/domain/infrastructure/repository/api/lib/models/auth/authentication_response_dto.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/models/domain/company_dto.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/exceptions.dart';
 
@@ -8,6 +9,7 @@ class JsonTypeParser {
   static const Map<Type, JsonFactory> factories = {
     Subscription: Subscription.fromJsonFactory,
     AuthenticationResponseDto: AuthenticationResponseDto.fromJsonFactory,
+    Company: Company.fromJsonFactory,
     // People: People.fromJsonFactory,
   };
 
