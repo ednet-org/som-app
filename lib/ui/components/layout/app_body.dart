@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AppBody extends StatelessWidget {
-  const AppBody({
-    Key? key,
-  }) : super(key: key);
+class SpacedContainer extends StatelessWidget {
+  final horizontalBody;
+
+  const SpacedContainer({Key? key, this.horizontalBody}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return spacedContainer;
-  }
-
-  Padding get spacedContainer {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
       child: Center(
@@ -21,7 +17,7 @@ class AppBody extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    child: HorizontalBody,
+                    child: horizontalBody,
                   ),
                 ),
               ),
@@ -31,8 +27,27 @@ class AppBody extends StatelessWidget {
       ),
     );
   }
+}
 
-  Row get HorizontalBody {
+class HorizontalBody extends StatelessWidget {
+  final expandedBodyMenu;
+
+  final expandedBodyContentSplitLeft;
+
+  final expandedBodyContentSplitRight;
+
+  const HorizontalBody({
+    Key? key,
+    this.expandedBodyMenu,
+    this.expandedBodyContentSplitLeft,
+    this.expandedBodyContentSplitRight,
+  }) : super(key: key);
+
+  Expanded get expandedVerticalDivider =>
+      Expanded(flex: 1, child: VerticalDivider());
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -44,41 +59,55 @@ class AppBody extends StatelessWidget {
       ],
     );
   }
+}
 
-  Expanded get expandedBodyContentSplitRight {
+class ExpandedSplit extends StatelessWidget {
+  final child;
+
+  const ExpandedSplit({Key? key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       flex: 9,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: overdueInquiries,
+            child: child,
           ),
         ),
       ),
     );
   }
+}
 
-  Expanded get expandedVerticalDivider =>
-      Expanded(flex: 1, child: VerticalDivider());
+class AppBody extends StatelessWidget {
+  final contextMenu;
 
-  Expanded get expandedBodyContentSplitLeft {
-    return Expanded(
-      flex: 9,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: currentInquiries,
-          ),
-        ),
+  final leftSplit;
+  final rightSplit;
+
+  const AppBody({
+    Key? key,
+    this.leftSplit,
+    this.rightSplit,
+    this.contextMenu,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SpacedContainer(
+      horizontalBody: HorizontalBody(
+        expandedBodyMenu: contextMenu,
+        expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
+        expandedBodyContentSplitRight: ExpandedSplit(child: rightSplit),
       ),
     );
   }
 
-  Expanded get expandedBodyMenu {
+  Widget get expandedBodyMenu {
     return Expanded(
       flex: 3,
       child: Padding(
@@ -88,77 +117,10 @@ class AppBody extends StatelessWidget {
     );
   }
 
-  Widget get overdueInquiries {
-    return Text("Oldest Inquiries");
-
-    // return CustomScrollView(
-    //   slivers: <Widget>[
-    //     SliverToBoxAdapter(
-    //       child: Container(
-    //         height: 50.0,
-    //         width: double.infinity,
-    //         color: Colors.yellow,
-    //       ),
-    //     ),
-    //     SliverPadding(padding: EdgeInsets.only(top: 10)),
-    //     SliverGrid(
-    //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    //           crossAxisCount: 2,
-    //           childAspectRatio: 1.0,
-    //           mainAxisSpacing: 10.0,
-    //           crossAxisSpacing: 10.0),
-    //       delegate: SliverChildBuilderDelegate(
-    //         (context, index) {
-    //           return BodyWidget();
-    //         },
-    //         childCount: 30,
-    //       ),
-    //     ),
-    //     SliverPadding(
-    //       padding: const EdgeInsets.only(bottom: 80.0),
-    //     )
-    //   ],
-    // );
-  }
-
-  //
-  // Column get overdueInquiries {
-  //   return Column(
-  //     children: [
-  //       _buildCard("1"),
-  //       _buildCard("2"),
-  //       _buildCard("3"),
-  //       _buildCard("4"),
-  //       _buildCard("5"),
-  //       _buildCard("6"),
-  //       _buildCard("7"),
-  //       _buildCard("5"),
-  //       _buildCard("5"),
-  //       _buildCard("5"),
-  //     ],
-  //   );
-  // }
-
-  _buildCard(String value) {
-    return Expanded(
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 20.0),
-            width: 300,
-            height: 400,
-            child: Card(
-              child: Expanded(
-                  child: Text(value,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30))),
-            )));
-  }
-
   Widget get currentInquiries {
     return Text("Current Inquiries");
     // return TestHorizontalListView();
   }
-
-  Container get contextMenu => Container(child: Text("Context Menu"));
 }
 
 class TestHorizontalListView extends StatefulWidget {
@@ -266,5 +228,68 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
                     child: const Icon(Icons.arrow_left),
                   ),
                 ]))));
+  }
+
+  // Widget get overdueInquiries {
+  // return CustomScrollView(
+  //   slivers: <Widget>[
+  //     SliverToBoxAdapter(
+  //       child: Container(
+  //         height: 50.0,
+  //         width: double.infinity,
+  //         color: Colors.yellow,
+  //       ),
+  //     ),
+  //     SliverPadding(padding: EdgeInsets.only(top: 10)),
+  //     SliverGrid(
+  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //           crossAxisCount: 2,
+  //           childAspectRatio: 1.0,
+  //           mainAxisSpacing: 10.0,
+  //           crossAxisSpacing: 10.0),
+  //       delegate: SliverChildBuilderDelegate(
+  //         (context, index) {
+  //           return BodyWidget();
+  //         },
+  //         childCount: 30,
+  //       ),
+  //     ),
+  //     SliverPadding(
+  //       padding: const EdgeInsets.only(bottom: 80.0),
+  //     )
+  //   ],
+  // );
+  // }
+
+  //
+  // Column get overdueInquiries {
+  //   return Column(
+  //     children: [
+  //       _buildCard("1"),
+  //       _buildCard("2"),
+  //       _buildCard("3"),
+  //       _buildCard("4"),
+  //       _buildCard("5"),
+  //       _buildCard("6"),
+  //       _buildCard("7"),
+  //       _buildCard("5"),
+  //       _buildCard("5"),
+  //       _buildCard("5"),
+  //     ],
+  //   );
+  // }
+
+  _buildCardB(String value) {
+    return Expanded(
+        child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 20.0),
+            width: 300,
+            height: 400,
+            child: Card(
+              child: Expanded(
+                  child: Text(value,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30))),
+            )));
   }
 }

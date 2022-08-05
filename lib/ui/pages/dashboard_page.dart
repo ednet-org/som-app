@@ -50,14 +50,15 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   Widget build(BuildContext context) {
+    print("Theme.of(context).colorScheme.onPrimary");
+    print(Theme.of(context).colorScheme.onPrimary);
     return appStore.isAuthenticated
         ? SafeArea(
             child: Scaffold(
-              backgroundColor:
-                  Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
               appBar: AppBar(
-                backgroundColor:
-                    Theme.of(context).colorScheme.primary.withOpacity(1),
+                // backgroundColor:
+                //     Theme.of(context).colorScheme.primary.withOpacity(1),
                 title: appBarTitleWidget(context, 'Dashboard'),
                 actions: [
                   PopupMenuButton(
@@ -104,8 +105,27 @@ class DashboardPageState extends State<DashboardPage> {
                 ],
               ),
               // drawer: MainMenu(),
-              body: AppBody(),
-              // body: DTDashboardWidget(),
+              body: AppBody(
+                contextMenu: Container(
+                    child: Text(
+                  "Context Menu",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                )),
+                leftSplit: Text(
+                  "Newest Inquiries",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+                rightSplit: Text(
+                  "Oldest Inquiries",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ),
             ),
           )
         : CustomerLoginPage();

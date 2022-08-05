@@ -328,7 +328,7 @@ packages:
     description:
       path: "."
       ref: design_system
-      resolved-ref: "7d15787abda8ab0610bd01ae723a04d85906fd91"
+      resolved-ref: "763307041a8f44d77f768f72654c590f5e4c736e"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.1.2"
@@ -488,7 +488,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1+1"
+    version: "1.1.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -673,7 +673,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.4"
+    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:
@@ -729,7 +729,7 @@ packages:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   intl:
     dependency: "direct main"
     description:
@@ -792,7 +792,7 @@ packages:
       name: local_auth_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.9"
   local_auth_ios:
     dependency: transitive
     description:
@@ -827,7 +827,7 @@ packages:
       name: lottie
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   matcher:
     dependency: transitive
     description:
@@ -932,14 +932,14 @@ packages:
       name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   path_provider:
     dependency: transitive
     description:
@@ -1441,7 +1441,7 @@ packages:
       name: webview_flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.9.2"
+    version: "2.9.3"
   webview_flutter_platform_interface:
     dependency: transitive
     description:

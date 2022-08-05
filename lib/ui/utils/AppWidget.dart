@@ -148,7 +148,7 @@ Widget appBarTitleWidget(context, String title,
           alignment: Alignment.center,
           child: Image.asset(
             'images/som/logo.png',
-            height: 40,
+            height: 80,
             fit: BoxFit.fitHeight,
             color: Theme.of(context).colorScheme.onPrimary,
           ),
@@ -156,9 +156,6 @@ Widget appBarTitleWidget(context, String title,
         SizedBox(width: 15),
         Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
           maxLines: 1,
         ).expand(),
       ],
