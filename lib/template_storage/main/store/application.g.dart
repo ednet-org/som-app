@@ -9,6 +9,14 @@ part of 'application.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Application on _Application, Store {
+  Computed<dynamic>? _$isAuthenticatedComputed;
+
+  @override
+  dynamic get isAuthenticated => (_$isAuthenticatedComputed ??=
+          Computed<dynamic>(() => super.isAuthenticated,
+              name: '_Application.isAuthenticated'))
+      .value;
+
   late final _$applicationWidthAtom =
       Atom(name: '_Application.applicationWidth', context: context);
 
@@ -89,19 +97,19 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$isAuthenticatedAtom =
-      Atom(name: '_Application.isAuthenticated', context: context);
+  late final _$authorizationAtom =
+      Atom(name: '_Application.authorization', context: context);
 
   @override
-  bool get isAuthenticated {
-    _$isAuthenticatedAtom.reportRead();
-    return super.isAuthenticated;
+  Authorization? get authorization {
+    _$authorizationAtom.reportRead();
+    return super.authorization;
   }
 
   @override
-  set isAuthenticated(bool value) {
-    _$isAuthenticatedAtom.reportWrite(value, super.isAuthenticated, () {
-      super.isAuthenticated = value;
+  set authorization(Authorization? value) {
+    _$authorizationAtom.reportWrite(value, super.authorization, () {
+      super.authorization = value;
     });
   }
 
@@ -151,11 +159,11 @@ mixin _$Application on _Application, Store {
   }
 
   @override
-  dynamic login() {
+  dynamic login(String? email, String? password) {
     final _$actionInfo =
         _$_ApplicationActionController.startAction(name: '_Application.login');
     try {
-      return super.login();
+      return super.login(email, password);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }
@@ -169,6 +177,7 @@ buttonWidth: ${buttonWidth},
 isDarkModeOn: ${isDarkModeOn},
 selectedLanguage: ${selectedLanguage},
 selectedDrawerItem: ${selectedDrawerItem},
+authorization: ${authorization},
 isAuthenticated: ${isAuthenticated}
     ''';
   }

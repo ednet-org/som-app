@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 part 'application.g.dart';
@@ -70,16 +71,44 @@ abstract class _Application with Store {
     selectedDrawerItem = aIndex;
   }
 
-  @observable
-  bool isAuthenticated = false;
+  @computed
+  get isAuthenticated => authorization != null;
 
   @action
   logout() {
-    isAuthenticated = false;
+    authorization = null;
   }
 
   @action
-  login() {
-    isAuthenticated = true;
+  login(String? email, String? password) {
+    if (email == null || password == null) {
+      return false;
+    }
+    // authorization = Authorization(
+    //   email: email,
+    //   password: password,
+    //   roles: [Role.customer],
+    // );
+    return true;
   }
+
+  @observable
+  Authorization? authorization;
+}
+
+class Authorization {
+  Roles companyRole;
+  UserRoles userRole;
+  var user;
+
+  Authorization({
+    required this.companyRole,
+    required this.userRole,
+    required this.user,
+  });
+}
+
+enum UserRoles {
+  Employee,
+  Admin,
 }

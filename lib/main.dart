@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
             update: (_, som, __) => RegistrationRequest(som)),
+        Provider<EmailLoginStore>(create: (_) => EmailLoginStore()),
       ],
       child: Observer(
         builder: (_) => MaterialApp(
@@ -102,7 +104,7 @@ class MyApp extends StatelessWidget {
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           home: SplashPage(isAuthenticated: appStore.isAuthenticated),
           // hardcoded dark mode
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.dark,
           theme: lightTheme,
           darkTheme: darkTheme,
           builder: scrollBehaviour(),
