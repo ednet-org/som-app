@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
@@ -25,17 +26,20 @@ var appStore = Application();
 ThemeData? darkTheme;
 ThemeData? lightTheme;
 var subscriptionService;
+var loginService;
 
 void main() async {
-  final chopper = ChopperClient(
+  final api = ChopperClient(
     baseUrl: "https://som-userservice-dev.azurewebsites.net/",
     services: [
       // Create and pass an instance of the generated service to the client
-      SubscriptionService.create()
+      SubscriptionService.create(),
+      LoginService.create()
     ],
     converter: JsonSerializableConverter(),
   );
-  subscriptionService = chopper.getService<SubscriptionService>();
+  subscriptionService = api.getService<SubscriptionService>();
+  loginService = api.getService<LoginService>();
   final response = await subscriptionService.getSubscriptions();
   if (response.isSuccessful) {
     // Successful request
@@ -87,7 +91,7 @@ class MyApp extends StatelessWidget {
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
             update: (_, som, __) => RegistrationRequest(som)),
-        Provider<EmailLoginStore>(create: (_) => EmailLoginStore()),
+        Provider<EmailLoginStore>(create: (_) => EmailLoginStore(loginService)),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

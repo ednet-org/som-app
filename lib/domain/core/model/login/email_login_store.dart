@@ -1,10 +1,16 @@
 import 'package:mobx/mobx.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
+import 'package:som/domain/infrastructure/repository/api/lib/models/auth/authentication_request_dto.dart';
 
 part 'email_login_store.g.dart';
 
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
+  LoginService loginService;
+
+  _EmailLoginStoreBase(this.loginService);
+
   @observable
   bool showWelcomeMessage = false;
 
@@ -15,13 +21,22 @@ abstract class _EmailLoginStoreBase with Store {
   bool isLoading = false;
 
   @action
-  void login() {
+  Future login() async {
     print(email);
-    print(password);
     isLoading = true;
-    Future.delayed(const Duration(seconds: 2));
-    isLoading = false;
-    isLoggedIn = true;
+    loginService
+        .login(AuthenticateRequestDto(
+      email: email,
+      password: password,
+    ))
+        .then((response) {
+      isLoading = false;
+      isLoggedIn = true;
+      password = "";
+    }).catchError((error) {
+      isLoading = false;
+      print(error);
+    });
   }
 
   @observable
