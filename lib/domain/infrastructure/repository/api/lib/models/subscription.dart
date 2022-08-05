@@ -6,7 +6,7 @@ part 'subscription.g.dart';
 
 @JsonSerializable()
 class Subscription extends ApiEntity {
-  final num type;
+  final num? type;
   final bool isActive;
 
   final num priceInSubunit;
