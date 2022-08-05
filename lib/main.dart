@@ -11,6 +11,8 @@ import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_re
 import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/interceptors/cors_interceptor.dart';
+import 'package:som/domain/infrastructure/repository/api/utils/interceptors/http_color_logging_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
@@ -30,13 +32,19 @@ var loginService;
 
 void main() async {
   final api = ChopperClient(
-    baseUrl: "https://som-userservice-dev.azurewebsites.net/",
+    baseUrl: "https://som-userservice-dev-dm.azurewebsites.net/",
     services: [
       // Create and pass an instance of the generated service to the client
       SubscriptionService.create(),
       LoginService.create()
     ],
     converter: JsonSerializableConverter(),
+    errorConverter: JsonConverter(),
+    interceptors: [
+      // TokenInterceptor(),
+      CORSInterceptor(),
+      HttpColorLoggingInterceptor(),
+    ],
   );
   subscriptionService = api.getService<SubscriptionService>();
   loginService = api.getService<LoginService>();
