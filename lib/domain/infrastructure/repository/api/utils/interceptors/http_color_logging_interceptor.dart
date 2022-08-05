@@ -50,7 +50,7 @@ class HttpColorLoggingInterceptor
       final resp = response.base as http.Response;
       if (resp.body != null && resp.body.isNotEmpty) {
         chopperLogger.d(resp.body);
-        bytes = ' (${response.bodyBytes?.length}-byte body)';
+        bytes = ' (${response.bodyBytes.length}-byte body)';
       }
     }
 
