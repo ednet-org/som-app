@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/auth/authentication_request_dto.dart';
+import 'package:som/template_storage/main/store/application.dart';
 
 part 'email_login_store.g.dart';
 
@@ -8,11 +9,18 @@ class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
   LoginService loginService;
+  Application appStore;
 
-  _EmailLoginStoreBase(this.loginService);
+  _EmailLoginStoreBase(this.loginService, this.appStore);
 
   @observable
   bool showWelcomeMessage = false;
+
+  @observable
+  bool isInvalidCredentials = false;
+
+  @observable
+  Object? errorMessage = false;
 
   @observable
   String welcomeMessage = "";
@@ -31,11 +39,24 @@ abstract class _EmailLoginStoreBase with Store {
     ))
         .then((response) {
       isLoading = false;
-      isLoggedIn = true;
-      password = "";
+      if (response.body != null) {
+        isInvalidCredentials = false;
+        isLoggedIn = true;
+        password = "";
+        appStore.login(Authorization(
+            token: response.body?.token,
+            refreshToken: response.body?.refreshToken));
+      }
+
+      if (response.error != null) {
+        errorMessage = response.error;
+        isInvalidCredentials = true;
+        print(response.error);
+      }
     }).catchError((error) {
       isLoading = false;
       print(error);
+      appStore.logout();
     });
   }
 

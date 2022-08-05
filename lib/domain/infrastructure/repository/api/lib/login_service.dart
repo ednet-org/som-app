@@ -4,7 +4,7 @@ import 'package:som/domain/infrastructure/repository/api/lib/models/auth/authent
 
 part 'login_service.chopper.dart';
 
-@ChopperApi(baseUrl: "/auth/login")
+@ChopperApi(baseUrl: "auth/login")
 abstract class LoginService extends ChopperService {
   // A helper method that helps instantiating the service. You can omit this method and use the generated class directly instead.
   static LoginService create([ChopperClient? client]) => _$LoginService(client);

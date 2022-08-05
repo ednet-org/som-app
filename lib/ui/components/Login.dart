@@ -78,6 +78,15 @@ class LoginState extends State<Login> {
                     },
                     textContent: static["button.login"],
                   ),
+            emailLoginStore.isInvalidCredentials
+                ? Text(
+                    emailLoginStore.errorMessage,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(color: Theme.of(context).colorScheme.error),
+                  )
+                : Container(),
             SizedBox(height: 30),
             Text(
               static["link.forgottenPassword"] ?? "",

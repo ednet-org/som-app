@@ -159,11 +159,11 @@ mixin _$Application on _Application, Store {
   }
 
   @override
-  dynamic login(String? email, String? password) {
+  dynamic login(Authorization aAuthorization) {
     final _$actionInfo =
         _$_ApplicationActionController.startAction(name: '_Application.login');
     try {
-      return super.login(email, password);
+      return super.login(aAuthorization);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }

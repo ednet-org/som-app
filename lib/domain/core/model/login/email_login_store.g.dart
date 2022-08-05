@@ -33,6 +33,39 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
+  late final _$isInvalidCredentialsAtom =
+      Atom(name: '_EmailLoginStoreBase.isInvalidCredentials', context: context);
+
+  @override
+  bool get isInvalidCredentials {
+    _$isInvalidCredentialsAtom.reportRead();
+    return super.isInvalidCredentials;
+  }
+
+  @override
+  set isInvalidCredentials(bool value) {
+    _$isInvalidCredentialsAtom.reportWrite(value, super.isInvalidCredentials,
+        () {
+      super.isInvalidCredentials = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: '_EmailLoginStoreBase.errorMessage', context: context);
+
+  @override
+  Object? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(Object? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$welcomeMessageAtom =
       Atom(name: '_EmailLoginStoreBase.welcomeMessage', context: context);
 
@@ -188,6 +221,8 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
   String toString() {
     return '''
 showWelcomeMessage: ${showWelcomeMessage},
+isInvalidCredentials: ${isInvalidCredentials},
+errorMessage: ${errorMessage},
 welcomeMessage: ${welcomeMessage},
 isLoading: ${isLoading},
 email: ${email},

@@ -91,7 +91,8 @@ class MyApp extends StatelessWidget {
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
             update: (_, som, __) => RegistrationRequest(som)),
-        Provider<EmailLoginStore>(create: (_) => EmailLoginStore(loginService)),
+        Provider<EmailLoginStore>(
+            create: (_) => EmailLoginStore(loginService, appStore)),
       ],
       child: Observer(
         builder: (_) => MaterialApp(
@@ -106,7 +107,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
           routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-          home: SplashPage(isAuthenticated: appStore.isAuthenticated),
+          home: SplashPage(appStore),
           // hardcoded dark mode
           themeMode: ThemeMode.dark,
           theme: lightTheme,

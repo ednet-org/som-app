@@ -51,79 +51,72 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   Widget build(BuildContext context) {
-    print("Theme.of(context).colorScheme.onPrimary");
-    print(Theme.of(context).colorScheme.onPrimary);
-    return appStore.isAuthenticated
-        ? SafeArea(
-            child: Scaffold(
-              backgroundColor: Theme.of(context).colorScheme.onPrimary,
-              appBar: AppBar(
-                // backgroundColor:
-                //     Theme.of(context).colorScheme.primary.withOpacity(1),
-                title: appBarTitleWidget(context, 'Dashboard'),
-                actions: [
-                  PopupMenuButton(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(1),
-                    child: userMenuItem(),
-                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                      PopupMenuItem(child: userMenuItem()),
-                      PopupMenuItem(
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary),
-                        child: ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text('Notifications'),
-                        ),
-                      ),
-                      PopupMenuItem(
-                        child: ListTile(
-                          leading: Icon(Icons.manage_accounts),
-                          title: Text('User account'),
-                        ),
-                      ),
-                      PopupMenuItem(
-                        child: ListTile(
-                          leading: Icon(Icons.settings_applications),
-                          title: Text('App configuration'),
-                        ),
-                      ),
-                      PopupMenuDivider(),
-                      PopupMenuItem(
-                        child: ListTile(
-                          leading: Icon(Icons.logout),
-                          title: Text('Logout'),
-                          onTap: () {
-                            appStore.logout();
-                            CustomerLoginPage().launch(context);
-                          },
-                        ),
-                      ),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        appBar: AppBar(
+          // backgroundColor:
+          //     Theme.of(context).colorScheme.primary.withOpacity(1),
+          title: appBarTitleWidget(context, 'Dashboard'),
+          actions: [
+            PopupMenuButton(
+              color: Theme.of(context).colorScheme.primary.withOpacity(1),
+              child: userMenuItem(),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                PopupMenuItem(child: userMenuItem()),
+                PopupMenuItem(
+                  textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary),
+                  child: ListTile(
+                    leading: Icon(Icons.notifications),
+                    title: Text('Notifications'),
                   ),
-                ],
-              ),
-              // drawer: MainMenu(),
-              body: AppBody(
-                contextMenu: Container(
-                    child: Text(
-                  "Context Menu",
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                )),
-                leftSplit: TestHorizontalListView(),
-                rightSplit: Text(
-                  "Oldest Inquiries",
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
                 ),
-              ),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.manage_accounts),
+                    title: Text('User account'),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.settings_applications),
+                    title: Text('App configuration'),
+                  ),
+                ),
+                PopupMenuDivider(),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text('Logout'),
+                    onTap: () {
+                      appStore.logout();
+                      CustomerLoginPage().launch(context);
+                    },
+                  ),
+                ),
+              ],
             ),
-          )
-        : CustomerLoginPage();
+          ],
+        ),
+        // drawer: MainMenu(),
+        body: AppBody(
+          contextMenu: Container(
+              child: Text(
+            "Context Menu",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          )),
+          leftSplit: TestHorizontalListView(),
+          rightSplit: Text(
+            "Oldest Inquiries",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+        ),
+      ),
+    );
   }
 }

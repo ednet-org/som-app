@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:som/domain/model/customer-management/roles.dart';
-import 'package:som/ui/utils/AppConstant.dart';
 
 part 'application.g.dart';
 
@@ -24,44 +21,7 @@ abstract class _Application with Store {
   var selectedDrawerItem = -1;
 
   @action
-  Future<void> toggleDarkMode({bool? value}) async {
-    isDarkModeOn = value ?? !isDarkModeOn;
-
-    if (isDarkModeOn) {
-      // scaffoldBackground = appBackgroundColorDark;
-
-      // appBarColor = cardBackgroundBlackDark;
-      // backgroundColor = appColorPrimaryDarkLight;
-      // backgroundSecondaryColor = m3SysDarkOnSecondary;
-      // appColorPrimaryLightColor = cardBackgroundBlackDark;
-      //
-      // iconColor = iconColorPrimary;
-      // Theme.of(context).colorScheme.secondary = iconColorSecondary;
-
-      textPrimaryColorGlobal = whiteColor;
-      textSecondaryColorGlobal = Colors.white54;
-      // shadowColorGlobal = appShadowColorDark;
-
-      setStatusBarColor(Colors.black);
-    } else {
-      // backgroundSecondaryColor = appSecondaryBackgroundColor;
-      // appColorPrimaryLightColor = appColorPrimaryLight;
-      //
-      // iconColor = iconColorPrimaryDark;
-      // Theme.of(context).colorScheme.secondary = iconColorSecondaryDark;
-      //
-      // textPrimaryColor = appTextColorPrimary;
-      // textSecondaryColor = appTextColorSecondary;
-      //
-      // textPrimaryColorGlobal = appTextColorPrimary;
-      // textSecondaryColorGlobal = appTextColorSecondary;
-      // shadowColorGlobal = appShadowColor;
-
-      setStatusBarColor(Colors.white);
-    }
-
-    setValue(isDarkModeOnPref, isDarkModeOn);
-  }
+  Future<void> toggleDarkMode({bool? value}) async {}
 
   @action
   void setLanguage(String aLanguage) => selectedLanguage = aLanguage;
@@ -80,16 +40,8 @@ abstract class _Application with Store {
   }
 
   @action
-  login(String? email, String? password) {
-    if (email == null || password == null) {
-      return false;
-    }
-    // authorization = Authorization(
-    //   email: email,
-    //   password: password,
-    //   roles: [Role.customer],
-    // );
-    return true;
+  login(Authorization aAuthorization) {
+    authorization = aAuthorization;
   }
 
   @observable
@@ -97,14 +49,18 @@ abstract class _Application with Store {
 }
 
 class Authorization {
-  Roles companyRole;
-  UserRoles userRole;
+  Roles? companyRole;
+  UserRoles? userRole;
+  String? token;
+  String? refreshToken;
   var user;
 
   Authorization({
-    required this.companyRole,
-    required this.userRole,
-    required this.user,
+    this.companyRole,
+    this.userRole,
+    this.user,
+    this.token,
+    this.refreshToken,
   });
 }
 
