@@ -4,7 +4,7 @@ import 'package:chopper/chopper.dart';
 
 class CORSInterceptor implements RequestInterceptor {
   static const String CORS_HEADER = "Access-Control-Allow-Origin";
-  static const String ORIGIN = "slavisam.gitlab.io";
+  static const String ORIGIN = "*";
 
   @override
   FutureOr<Request> onRequest(Request request) async {
