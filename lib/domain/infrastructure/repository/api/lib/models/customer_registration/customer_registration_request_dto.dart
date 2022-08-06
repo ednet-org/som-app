@@ -1,212 +1,225 @@
+// To parse this JSON data, do
+//
+//     final customerRegistrationRequestDto = customerRegistrationRequestDtoFromJson(jsonString);
+
+import 'dart:convert';
+
 class CustomerRegistrationRequestDto {
-  Company? company;
-  List<Users>? users;
+  CustomerRegistrationRequestDto({
+    required this.company,
+    required this.users,
+  });
 
-  CustomerRegistrationRequestDto({this.company, this.users});
+  Company company;
+  List<User> users;
 
-  CustomerRegistrationRequestDto.fromJson(Map<String, dynamic> json) {
-    company =
-        json['company'] != null ? new Company.fromJson(json['company']) : null;
-    if (json['users'] != null) {
-      users = <Users>[];
-      json['users'].forEach((v) {
-        users!.add(new Users.fromJson(v));
-      });
-    }
-  }
+  factory CustomerRegistrationRequestDto.fromRawJson(String str) =>
+      CustomerRegistrationRequestDto.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.company != null) {
-      data['company'] = this.company!.toJson();
-    }
-    if (this.users != null) {
-      data['users'] = this.users!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory CustomerRegistrationRequestDto.fromJson(Map<String, dynamic> json) =>
+      CustomerRegistrationRequestDto(
+        company: Company.fromJson(json["company"]),
+        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "company": company.toJson(),
+        "users": List<dynamic>.from(users.map((x) => x.toJson())),
+      };
 }
 
 class Company {
-  String? name;
-  Address? address;
-  String? uidNr;
-  String? registrationNr;
-  int? companySize;
-  int? type;
-  String? websiteUrl;
-  ProviderData? providerData;
+  Company({
+    required this.address,
+    required this.companySize,
+    required this.name,
+    required this.providerData,
+    required this.registrationNr,
+    required this.type,
+    required this.uidNr,
+    required this.websiteUrl,
+  });
 
-  Company(
-      {this.name,
-      this.address,
-      this.uidNr,
-      this.registrationNr,
-      this.companySize,
-      this.type,
-      this.websiteUrl,
-      this.providerData});
+  Address address;
+  int companySize;
+  String name;
+  ProviderData providerData;
+  String registrationNr;
+  int type;
+  String uidNr;
+  String websiteUrl;
 
-  Company.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    address =
-        json['address'] != null ? new Address.fromJson(json['address']) : null;
-    uidNr = json['uidNr'];
-    registrationNr = json['registrationNr'];
-    companySize = json['companySize'];
-    type = json['type'];
-    websiteUrl = json['websiteUrl'];
-    providerData = json['providerData'] != null
-        ? new ProviderData.fromJson(json['providerData'])
-        : null;
-  }
+  factory Company.fromRawJson(String str) => Company.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.address != null) {
-      data['address'] = this.address!.toJson();
-    }
-    data['uidNr'] = this.uidNr;
-    data['registrationNr'] = this.registrationNr;
-    data['companySize'] = this.companySize;
-    data['type'] = this.type;
-    data['websiteUrl'] = this.websiteUrl;
-    if (this.providerData != null) {
-      data['providerData'] = this.providerData!.toJson();
-    }
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory Company.fromJson(Map<String, dynamic> json) => Company(
+        address: Address.fromJson(json["address"]),
+        companySize: json["companySize"],
+        name: json["name"],
+        providerData: ProviderData.fromJson(json["providerData"]),
+        registrationNr: json["registrationNr"],
+        type: json["type"],
+        uidNr: json["uidNr"],
+        websiteUrl: json["websiteUrl"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "address": address.toJson(),
+        "companySize": companySize,
+        "name": name,
+        "providerData": providerData.toJson(),
+        "registrationNr": registrationNr,
+        "type": type,
+        "uidNr": uidNr,
+        "websiteUrl": websiteUrl,
+      };
 }
 
 class Address {
-  String? country;
-  String? city;
-  String? street;
-  String? number;
-  String? zip;
+  Address({
+    required this.city,
+    required this.country,
+    required this.number,
+    required this.street,
+    required this.zip,
+  });
 
-  Address({this.country, this.city, this.street, this.number, this.zip});
+  String city;
+  String country;
+  String number;
+  String street;
+  String zip;
 
-  Address.fromJson(Map<String, dynamic> json) {
-    country = json['country'];
-    city = json['city'];
-    street = json['street'];
-    number = json['number'];
-    zip = json['zip'];
-  }
+  factory Address.fromRawJson(String str) => Address.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['street'] = this.street;
-    data['number'] = this.number;
-    data['zip'] = this.zip;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+        city: json["city"],
+        country: json["country"],
+        number: json["number"],
+        street: json["street"],
+        zip: json["zip"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "city": city,
+        "country": country,
+        "number": number,
+        "street": street,
+        "zip": zip,
+      };
 }
 
 class ProviderData {
-  BankDetails? bankDetails;
-  List<String>? branchIds;
-  int? paymentInterval;
-  String? subscriptionPlanId;
+  ProviderData({
+    required this.bankDetails,
+    required this.branchIds,
+    required this.paymentInterval,
+    required this.subscriptionPlanId,
+  });
 
-  ProviderData(
-      {this.bankDetails,
-      this.branchIds,
-      this.paymentInterval,
-      this.subscriptionPlanId});
+  BankDetails bankDetails;
+  List<String> branchIds;
+  int paymentInterval;
+  String subscriptionPlanId;
 
-  ProviderData.fromJson(Map<String, dynamic> json) {
-    bankDetails = json['bankDetails'] != null
-        ? new BankDetails.fromJson(json['bankDetails'])
-        : null;
-    branchIds = json['branchIds'].cast<String>();
-    paymentInterval = json['paymentInterval'];
-    subscriptionPlanId = json['subscriptionPlanId'];
-  }
+  factory ProviderData.fromRawJson(String str) =>
+      ProviderData.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.bankDetails != null) {
-      data['bankDetails'] = this.bankDetails!.toJson();
-    }
-    data['branchIds'] = this.branchIds;
-    data['paymentInterval'] = this.paymentInterval;
-    data['subscriptionPlanId'] = this.subscriptionPlanId;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory ProviderData.fromJson(Map<String, dynamic> json) => ProviderData(
+        bankDetails: BankDetails.fromJson(json["bankDetails"]),
+        branchIds: List<String>.from(json["branchIds"].map((x) => x)),
+        paymentInterval: json["paymentInterval"],
+        subscriptionPlanId: json["subscriptionPlanId"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "bankDetails": bankDetails.toJson(),
+        "branchIds": List<dynamic>.from(branchIds.map((x) => x)),
+        "paymentInterval": paymentInterval,
+        "subscriptionPlanId": subscriptionPlanId,
+      };
 }
 
 class BankDetails {
-  String? iban;
-  String? bic;
-  String? accountOwner;
+  BankDetails({
+    required this.accountOwner,
+    required this.bic,
+    required this.iban,
+  });
 
-  BankDetails({this.iban, this.bic, this.accountOwner});
+  String accountOwner;
+  String bic;
+  String iban;
 
-  BankDetails.fromJson(Map<String, dynamic> json) {
-    iban = json['iban'];
-    bic = json['bic'];
-    accountOwner = json['accountOwner'];
-  }
+  factory BankDetails.fromRawJson(String str) =>
+      BankDetails.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['iban'] = this.iban;
-    data['bic'] = this.bic;
-    data['accountOwner'] = this.accountOwner;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory BankDetails.fromJson(Map<String, dynamic> json) => BankDetails(
+        accountOwner: json["accountOwner"],
+        bic: json["bic"],
+        iban: json["iban"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "accountOwner": accountOwner,
+        "bic": bic,
+        "iban": iban,
+      };
 }
 
-class Users {
-  String? email;
-  String? firstName;
-  String? lastName;
-  String? salutation;
-  List<int>? roles;
-  String? telephoneNr;
-  String? title;
-  String? companyId;
-  String? id;
+class User {
+  User({
+    required this.email,
+    required this.firstName,
+    required this.id,
+    required this.lastName,
+    required this.roles,
+    required this.salutation,
+    required this.telephoneNr,
+    required this.title,
+  });
 
-  Users(
-      {this.email,
-      this.firstName,
-      this.lastName,
-      this.salutation,
-      this.roles,
-      this.telephoneNr,
-      this.title,
-      this.companyId,
-      this.id});
+  String email;
+  String firstName;
+  String id;
+  String lastName;
+  List<int> roles;
+  String salutation;
+  String telephoneNr;
+  String title;
 
-  Users.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    salutation = json['salutation'];
-    roles = json['roles'].cast<int>();
-    telephoneNr = json['telephoneNr'];
-    title = json['title'];
-    companyId = json['companyId'];
-    id = json['id'];
-  }
+  factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['salutation'] = this.salutation;
-    data['roles'] = this.roles;
-    data['telephoneNr'] = this.telephoneNr;
-    data['title'] = this.title;
-    data['companyId'] = this.companyId;
-    data['id'] = this.id;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        email: json["email"],
+        firstName: json["firstName"],
+        id: json["id"],
+        lastName: json["lastName"],
+        roles: List<int>.from(json["roles"].map((x) => x)),
+        salutation: json["salutation"],
+        telephoneNr: json["telephoneNr"],
+        title: json["title"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "firstName": firstName,
+        "id": id,
+        "lastName": lastName,
+        "roles": List<dynamic>.from(roles.map((x) => x)),
+        "salutation": salutation,
+        "telephoneNr": telephoneNr,
+        "title": title,
+      };
 }
