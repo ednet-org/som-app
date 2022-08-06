@@ -7,19 +7,17 @@ part 'subscription.g.dart';
 @JsonSerializable()
 class Subscription extends ApiEntity {
   final num? type;
-  final bool isActive;
+  final bool? isActive;
 
-  final num priceInSubunit;
+  final num? priceInSubunit;
   final String? rules;
-  final DateTime createdAt;
 
   Subscription(
     String id, {
-    required this.type,
-    required this.isActive,
-    required this.priceInSubunit,
-    required this.createdAt,
-    required this.rules,
+    this.type,
+    this.isActive,
+    this.priceInSubunit,
+    this.rules,
   }) : super(id);
 
   Map<String, dynamic> toJson() => _$SubscriptionToJson(this);

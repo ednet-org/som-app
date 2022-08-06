@@ -1,7 +1,6 @@
 //region imports
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/foundation.dart';
@@ -14,13 +13,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/models/api_company_service.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
-import 'package:som/domain/infrastructure/repository/api/utils/converters/json_serializable_converter.dart';
-import 'package:som/domain/infrastructure/repository/api/utils/interceptors/cors_interceptor.dart';
-import 'package:som/domain/infrastructure/repository/api/utils/interceptors/http_color_logging_interceptor.dart';
-import 'package:som/domain/infrastructure/repository/api/utils/interceptors/token_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes.dart';
@@ -57,31 +49,29 @@ var loginService;
 var apiCompanyService;
 
 void main() async {
+  // dio perform awful if not spawn to own worker
   (api_instance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
       parseJson;
-  var subApi = api_instance.getSubscriptionsApi();
-  var subs = await subApi.subscriptionsGet();
-  print(subs);
 
-  final api = ChopperClient(
-    baseUrl: "https://som-userservice-dev-dm.azurewebsites.net/",
-    services: [
-      // Create and pass an instance of the generated service to the client
-      SubscriptionService.create(),
-      LoginService.create(),
-      ApiCompanyService.create(),
-    ],
-    converter: JsonSerializableConverter(),
-    errorConverter: JsonConverter(),
-    interceptors: [
-      TokenInterceptor(),
-      CORSInterceptor(),
-      HttpColorLoggingInterceptor(),
-    ],
-  );
-  subscriptionService = api.getService<SubscriptionService>();
-  loginService = api.getService<LoginService>();
-  apiCompanyService = api.getService<ApiCompanyService>();
+  // final api = ChopperClient(
+  //   baseUrl: "https://som-userservice-dev-dm.azurewebsites.net/",
+  //   services: [
+  //     // Create and pass an instance of the generated service to the client
+  //     SubscriptionService.create(),
+  //     LoginService.create(),
+  //     ApiCompanyService.create(),
+  //   ],
+  //   converter: JsonSerializableConverter(),
+  //   errorConverter: JsonConverter(),
+  //   interceptors: [
+  //     TokenInterceptor(),
+  //     CORSInterceptor(),
+  //     HttpColorLoggingInterceptor(),
+  //   ],
+  // );
+  // subscriptionService = api.getService<SubscriptionService>();
+  // loginService = api.getService<LoginService>();
+  // apiCompanyService = api.getService<ApiCompanyService>();
 
   darkTheme = await EdsAppTheme.som["dark"];
   lightTheme = await EdsAppTheme.som["light"];
@@ -113,15 +103,19 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<Application>(create: (_) => appStore),
         Provider<ApiSubscriptionRepository>(
-          create: (_) => ApiSubscriptionRepository(subscriptionService),
+          create: (_) =>
+              ApiSubscriptionRepository(api_instance.getSubscriptionsApi()),
         ),
         ProxyProvider<ApiSubscriptionRepository, Som>(
             update: (_, apiSubscriptionRepository, __) =>
                 Som(apiSubscriptionRepository)
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
-            update: (_, som, __) => RegistrationRequest(som)),
-        Provider<EmailLoginStore>(create: (_) => EmailLoginStore(appStore)),
+            update: (_, som, __) =>
+                RegistrationRequest(som, api_instance.getCompaniesApi())),
+        Provider<EmailLoginStore>(
+            create: (_) =>
+                EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

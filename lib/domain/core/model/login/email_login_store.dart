@@ -7,10 +7,10 @@ part 'email_login_store.g.dart';
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
-  Openapi openapi = Openapi();
-  Application appStore;
+  final AuthenticationApi authService;
+  final Application appStore;
 
-  _EmailLoginStoreBase(this.appStore);
+  _EmailLoginStoreBase(this.authService, this.appStore);
 
   @observable
   bool showWelcomeMessage = false;
@@ -29,14 +29,13 @@ abstract class _EmailLoginStoreBase with Store {
 
   @action
   Future login() async {
-    var loginService = openapi.getAuthenticationApi();
     print(email);
     isLoading = true;
     var authReq = AuthenticateDtoBuilder()
       ..password = password
       ..email = email;
     authReq.password = password;
-    loginService
+    authService
         .authLoginPost(authenticateDto: authReq.build())
         .then((response) {
       isLoading = false;

@@ -1,16 +1,25 @@
+import 'package:openapi/openapi.dart';
 import 'package:som/domain/core/model/i_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/subscription_service.dart';
 
 class ApiSubscriptionRepository extends IRepository<Subscription> {
-  final SubscriptionService subscriptionService;
+  final SubscriptionsApi subscriptionService;
 
   ApiSubscriptionRepository(this.subscriptionService);
 
   @override
   Future<List<Subscription>> getAll() async {
-    final response = await subscriptionService.getSubscriptions();
+    final response = await subscriptionService.subscriptionsGet();
 
-    return response.body ?? [];
+    final List<dynamic> data = response.data as List<dynamic>;
+
+    return data
+        .map((e) => Subscription(
+              e["id"],
+              isActive: e["isActive"] == true,
+              priceInSubunit: e["priceInSubunit"],
+              rules: e["rules"],
+            ))
+        .toList();
   }
 }

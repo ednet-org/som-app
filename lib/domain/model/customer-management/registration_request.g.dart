@@ -40,6 +40,17 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
   }
 
   @override
+  void registerCustomer() {
+    final _$actionInfo = _$_RegistrationRequestActionController.startAction(
+        name: '_RegistrationRequest.registerCustomer');
+    try {
+      return super.registerCustomer();
+    } finally {
+      _$_RegistrationRequestActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 company: ${company}
