@@ -1,0 +1,1 @@
+openapi-generator-cli generate -i swagger.json -g dart -o .tmp/

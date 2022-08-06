@@ -91,10 +91,13 @@ dependencies:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
       ref: design_system
+  openapi:
+    path: ./openapi
 
   freezed_annotation: ^2.0.3
   logger: ^1.1.0
-
+  dio: '>=4.0.1 <5.0.0'
+  pretty_dio_logger: ^1.1.1
 
 
 dev_dependencies:

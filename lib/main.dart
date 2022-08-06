@@ -1,10 +1,13 @@
 //region imports
 import 'package:chopper/chopper.dart';
+import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:openapi/openapi.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
@@ -23,6 +26,15 @@ import 'package:som/ui/pages/splash_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';
+
+final api_instance = Openapi(
+    dio: Dio(BaseOptions(
+        baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
+      ..interceptors.add(PrettyDioLogger()),
+    serializers: standardSerializers);
+final token = "token_example"; // String |
+final email = "email_example"; // String |
+
 //endregion
 
 /// This variable is used to get dynamic colors when theme mode is changed
@@ -34,6 +46,10 @@ var loginService;
 var apiCompanyService;
 
 void main() async {
+  var subApi = api_instance.getSubscriptionsApi();
+  var subs = await subApi.subscriptionsGet();
+  print(subs);
+
   final api = ChopperClient(
     baseUrl: "https://som-userservice-dev-dm.azurewebsites.net/",
     services: [
@@ -53,8 +69,6 @@ void main() async {
   subscriptionService = api.getService<SubscriptionService>();
   loginService = api.getService<LoginService>();
   apiCompanyService = api.getService<ApiCompanyService>();
-
-  var companies = await apiCompanyService.getCompanies();
 
   darkTheme = await EdsAppTheme.som["dark"];
   lightTheme = await EdsAppTheme.som["light"];
@@ -94,8 +108,7 @@ class MyApp extends StatelessWidget {
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
             update: (_, som, __) => RegistrationRequest(som)),
-        Provider<EmailLoginStore>(
-            create: (_) => EmailLoginStore(loginService, appStore)),
+        Provider<EmailLoginStore>(create: (_) => EmailLoginStore(appStore)),
       ],
       child: Observer(
         builder: (_) => MaterialApp(

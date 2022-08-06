@@ -1,6 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/login_service.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/models/auth/authentication_request_dto.dart';
+import 'package:openapi/openapi.dart';
 import 'package:som/template_storage/main/store/application.dart';
 
 part 'email_login_store.g.dart';
@@ -8,10 +7,10 @@ part 'email_login_store.g.dart';
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
-  LoginService loginService;
+  Openapi openapi = Openapi();
   Application appStore;
 
-  _EmailLoginStoreBase(this.loginService, this.appStore);
+  _EmailLoginStoreBase(this.appStore);
 
   @observable
   bool showWelcomeMessage = false;
@@ -30,32 +29,36 @@ abstract class _EmailLoginStoreBase with Store {
 
   @action
   Future login() async {
+    var loginService = openapi.getAuthenticationApi();
     print(email);
     isLoading = true;
+    var authReq = AuthenticateDtoBuilder()
+      ..password = password
+      ..email = email;
+    authReq.password = password;
     loginService
-        .login(AuthenticateRequestDto(
-      email: email,
-      password: password,
-    ))
+        .authLoginPost(authenticateDto: authReq.build())
         .then((response) {
       isLoading = false;
-      if (response.body != null) {
+      if (response.statusCode == 200) {
         isInvalidCredentials = false;
         isLoggedIn = true;
         password = "";
         appStore.login(Authorization(
-            token: response.body!.token,
-            refreshToken: response.body!.refreshToken));
+            token: (response.data as Map<String, dynamic>)["token"]!,
+            refreshToken:
+                (response.data as Map<String, dynamic>)["refreshToken"]!));
       }
 
-      if (response.error != null) {
-        errorMessage = response.error;
+      if (response.statusCode != 200) {
+        errorMessage = response.statusMessage;
         isInvalidCredentials = true;
-        print(response.error);
+        print(response.statusMessage);
       }
     }).catchError((error) {
+      errorMessage = error.response.data;
+      isInvalidCredentials = true;
       isLoading = false;
-      print(error);
       appStore.logout();
     });
   }
