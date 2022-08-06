@@ -1,7 +1,10 @@
 //region imports
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -27,6 +30,15 @@ import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';
 
+// Must be top-level function
+_parseAndDecode(String response) {
+  return jsonDecode(response);
+}
+
+parseJson(String text) {
+  return compute(_parseAndDecode, text);
+}
+
 final api_instance = Openapi(
     dio: Dio(BaseOptions(
         baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
@@ -37,7 +49,6 @@ final email = "email_example"; // String |
 
 //endregion
 
-/// This variable is used to get dynamic colors when theme mode is changed
 var appStore = Application();
 ThemeData? darkTheme;
 ThemeData? lightTheme;
@@ -46,6 +57,8 @@ var loginService;
 var apiCompanyService;
 
 void main() async {
+  (api_instance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
+      parseJson;
   var subApi = api_instance.getSubscriptionsApi();
   var subs = await subApi.subscriptionsGet();
   print(subs);
