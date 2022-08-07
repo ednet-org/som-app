@@ -15,7 +15,7 @@ import 'package:openapi/src/api/subscriptions_api.dart';
 import 'package:openapi/src/api/users_api.dart';
 
 class Openapi {
-  static const String basePath = r'https://som-userservice-dev-dm.azurewebsites.net';
+  static const String basePath = r'http://localhost';
 
   final Dio dio;
   final Serializers serializers;

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **subscriptionsGet**
-> subscriptionsGet()
+> SubscriptionsResponse subscriptionsGet()
 
 
 
@@ -24,7 +24,8 @@ import 'package:openapi/api.dart';
 final api = Openapi().getSubscriptionsApi();
 
 try {
-    api.subscriptionsGet();
+    final response = api.subscriptionsGet();
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling SubscriptionsApi->subscriptionsGet: $e\n');
 }
@@ -35,7 +36,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**SubscriptionsResponse**](SubscriptionsResponse.md)
 
 ### Authorization
 
@@ -44,7 +45,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

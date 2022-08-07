@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **companiesCompanyIdGet**
-> companiesCompanyIdGet(companyId)
+> CompanyDto companiesCompanyIdGet(companyId)
 
 
 
@@ -32,7 +32,8 @@ final api = Openapi().getCompaniesApi();
 final String companyId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api.companiesCompanyIdGet(companyId);
+    final response = api.companiesCompanyIdGet(companyId);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesCompanyIdGet: $e\n');
 }
@@ -46,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**CompanyDto**](CompanyDto.md)
 
 ### Authorization
 
@@ -55,7 +56,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -102,7 +103,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companiesCompanyIdUsersGet**
-> companiesCompanyIdUsersGet(companyId)
+> BuiltList<UserDto> companiesCompanyIdUsersGet(companyId)
 
 
 
@@ -114,7 +115,8 @@ final api = Openapi().getCompaniesApi();
 final String companyId = companyId_example; // String | 
 
 try {
-    api.companiesCompanyIdUsersGet(companyId);
+    final response = api.companiesCompanyIdUsersGet(companyId);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesCompanyIdUsersGet: $e\n');
 }
@@ -128,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**BuiltList&lt;UserDto&gt;**](UserDto.md)
 
 ### Authorization
 
@@ -137,7 +139,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -184,7 +186,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companiesCompanyIdUsersUserIdGet**
-> companiesCompanyIdUsersUserIdGet(userId, companyId)
+> UserDto companiesCompanyIdUsersUserIdGet(userId, companyId)
 
 
 
@@ -197,7 +199,8 @@ final String userId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final String companyId = companyId_example; // String | 
 
 try {
-    api.companiesCompanyIdUsersUserIdGet(userId, companyId);
+    final response = api.companiesCompanyIdUsersUserIdGet(userId, companyId);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesCompanyIdUsersUserIdGet: $e\n');
 }
@@ -212,7 +215,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UserDto**](UserDto.md)
 
 ### Authorization
 
@@ -221,12 +224,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companiesCompanyIdUsersUserIdUpdatePut**
-> companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto)
+> UserDto companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto)
 
 
 
@@ -240,7 +243,8 @@ final String companyId = companyId_example; // String |
 final UserDto userDto = ; // UserDto | 
 
 try {
-    api.companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto);
+    final response = api.companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesCompanyIdUsersUserIdUpdatePut: $e\n');
 }
@@ -256,7 +260,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UserDto**](UserDto.md)
 
 ### Authorization
 
@@ -265,12 +269,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companiesGet**
-> companiesGet()
+> BuiltList<CompanyDto> companiesGet()
 
 
 
@@ -281,7 +285,8 @@ import 'package:openapi/api.dart';
 final api = Openapi().getCompaniesApi();
 
 try {
-    api.companiesGet();
+    final response = api.companiesGet();
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesGet: $e\n');
 }
@@ -292,7 +297,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**BuiltList&lt;CompanyDto&gt;**](CompanyDto.md)
 
 ### Authorization
 
@@ -301,7 +306,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

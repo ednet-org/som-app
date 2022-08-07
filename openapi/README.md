@@ -84,7 +84,9 @@ Class | Method | HTTP request | Description
 
  - [AddressDto](doc/AddressDto.md)
  - [AuthenticateDto](doc/AuthenticateDto.md)
+ - [AuthenticateResultDto](doc/AuthenticateResultDto.md)
  - [BankDetailsDto](doc/BankDetailsDto.md)
+ - [CompanyDto](doc/CompanyDto.md)
  - [CompanySize](doc/CompanySize.md)
  - [CompanyType](doc/CompanyType.md)
  - [CreateCompanyDto](doc/CreateCompanyDto.md)
@@ -93,8 +95,13 @@ Class | Method | HTTP request | Description
  - [PaymentInterval](doc/PaymentInterval.md)
  - [RegisterCompanyDto](doc/RegisterCompanyDto.md)
  - [ResetPasswordDto](doc/ResetPasswordDto.md)
+ - [RestrictionType](doc/RestrictionType.md)
  - [Roles](doc/Roles.md)
+ - [SubscriptionPlanDto](doc/SubscriptionPlanDto.md)
+ - [SubscriptionRuleDto](doc/SubscriptionRuleDto.md)
+ - [SubscriptionsResponse](doc/SubscriptionsResponse.md)
  - [UserDto](doc/UserDto.md)
+ - [UserWithCompanyDto](doc/UserWithCompanyDto.md)
 
 
 ## Documentation For Authorization

@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/authenticate_dto.dart';
+import 'package:openapi/src/model/authenticate_result_dto.dart';
 import 'package:openapi/src/model/forgot_password_dto.dart';
 import 'package:openapi/src/model/reset_password_dto.dart';
 
@@ -87,9 +88,9 @@ class AuthenticationApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [String] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> authForgotPasswordPost({ 
+  Future<Response<String>> authForgotPasswordPost({ 
     ForgotPasswordDto? forgotPasswordDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -138,7 +139,30 @@ class AuthenticationApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    String _responseData;
+
+    try {
+      _responseData = _response.data as String;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<String>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// authLoginPost
@@ -153,9 +177,9 @@ class AuthenticationApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [AuthenticateResultDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> authLoginPost({ 
+  Future<Response<AuthenticateResultDto>> authLoginPost({ 
     AuthenticateDto? authenticateDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -204,7 +228,34 @@ class AuthenticationApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    AuthenticateResultDto _responseData;
+
+    try {
+      const _responseType = FullType(AuthenticateResultDto);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as AuthenticateResultDto;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<AuthenticateResultDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// authResetPasswordPost

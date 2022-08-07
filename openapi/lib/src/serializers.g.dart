@@ -9,7 +9,9 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AddressDto.serializer)
       ..add(AuthenticateDto.serializer)
+      ..add(AuthenticateResultDto.serializer)
       ..add(BankDetailsDto.serializer)
+      ..add(CompanyDto.serializer)
       ..add(CompanySize.serializer)
       ..add(CompanyType.serializer)
       ..add(CreateCompanyDto.serializer)
@@ -18,14 +20,27 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PaymentInterval.serializer)
       ..add(RegisterCompanyDto.serializer)
       ..add(ResetPasswordDto.serializer)
+      ..add(RestrictionType.serializer)
       ..add(Roles.serializer)
+      ..add(SubscriptionPlanDto.serializer)
+      ..add(SubscriptionRuleDto.serializer)
+      ..add(SubscriptionsResponse.serializer)
       ..add(UserDto.serializer)
+      ..add(UserWithCompanyDto.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Roles)]),
           () => new ListBuilder<Roles>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(SubscriptionPlanDto)]),
+          () => new ListBuilder<SubscriptionPlanDto>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(SubscriptionRuleDto)]),
+          () => new ListBuilder<SubscriptionRuleDto>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserDto)]),
           () => new ListBuilder<UserDto>()))

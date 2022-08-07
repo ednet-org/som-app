@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **usersLoadUserWithCompanyGet**
-> usersLoadUserWithCompanyGet(userId, companyId)
+> UserWithCompanyDto usersLoadUserWithCompanyGet(userId, companyId)
 
 
 
@@ -26,7 +26,8 @@ final String userId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final String companyId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api.usersLoadUserWithCompanyGet(userId, companyId);
+    final response = api.usersLoadUserWithCompanyGet(userId, companyId);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling UsersApi->usersLoadUserWithCompanyGet: $e\n');
 }
@@ -41,7 +42,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UserWithCompanyDto**](UserWithCompanyDto.md)
 
 ### Authorization
 
@@ -50,7 +51,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

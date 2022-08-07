@@ -58,7 +58,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authForgotPasswordPost**
-> authForgotPasswordPost(forgotPasswordDto)
+> String authForgotPasswordPost(forgotPasswordDto)
 
 
 
@@ -70,7 +70,8 @@ final api = Openapi().getAuthenticationApi();
 final ForgotPasswordDto forgotPasswordDto = ; // ForgotPasswordDto | 
 
 try {
-    api.authForgotPasswordPost(forgotPasswordDto);
+    final response = api.authForgotPasswordPost(forgotPasswordDto);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling AuthenticationApi->authForgotPasswordPost: $e\n');
 }
@@ -84,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**String**
 
 ### Authorization
 
@@ -93,12 +94,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authLoginPost**
-> authLoginPost(authenticateDto)
+> AuthenticateResultDto authLoginPost(authenticateDto)
 
 
 
@@ -110,7 +111,8 @@ final api = Openapi().getAuthenticationApi();
 final AuthenticateDto authenticateDto = ; // AuthenticateDto | 
 
 try {
-    api.authLoginPost(authenticateDto);
+    final response = api.authLoginPost(authenticateDto);
+    print(response);
 } catch on DioError (e) {
     print('Exception when calling AuthenticationApi->authLoginPost: $e\n');
 }
@@ -124,7 +126,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AuthenticateResultDto**](AuthenticateResultDto.md)
 
 ### Authorization
 
@@ -133,7 +135,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

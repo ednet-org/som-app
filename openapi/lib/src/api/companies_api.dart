@@ -7,6 +7,8 @@ import 'dart:async';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:built_collection/built_collection.dart';
+import 'package:openapi/src/model/company_dto.dart';
 import 'package:openapi/src/model/register_company_dto.dart';
 import 'package:openapi/src/model/user_dto.dart';
 
@@ -30,9 +32,9 @@ class CompaniesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [CompanyDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdGet({ 
+  Future<Response<CompanyDto>> companiesCompanyIdGet({ 
     required String companyId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -62,7 +64,34 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    CompanyDto _responseData;
+
+    try {
+      const _responseType = FullType(CompanyDto);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as CompanyDto;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<CompanyDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// companiesCompanyIdRegisterUserPost
@@ -145,9 +174,9 @@ class CompaniesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [BuiltList<UserDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdUsersGet({ 
+  Future<Response<BuiltList<UserDto>>> companiesCompanyIdUsersGet({ 
     required String companyId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -177,7 +206,34 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    BuiltList<UserDto> _responseData;
+
+    try {
+      const _responseType = FullType(BuiltList, [FullType(UserDto)]);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as BuiltList<UserDto>;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<BuiltList<UserDto>>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// companiesCompanyIdUsersUserIdDelete
@@ -242,9 +298,9 @@ class CompaniesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [UserDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdUsersUserIdGet({ 
+  Future<Response<UserDto>> companiesCompanyIdUsersUserIdGet({ 
     required String userId,
     required String companyId,
     CancelToken? cancelToken,
@@ -275,7 +331,34 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    UserDto _responseData;
+
+    try {
+      const _responseType = FullType(UserDto);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as UserDto;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<UserDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// companiesCompanyIdUsersUserIdUpdatePut
@@ -292,9 +375,9 @@ class CompaniesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [UserDto] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdUsersUserIdUpdatePut({ 
+  Future<Response<UserDto>> companiesCompanyIdUsersUserIdUpdatePut({ 
     required String userId,
     required String companyId,
     UserDto? userDto,
@@ -345,7 +428,34 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    UserDto _responseData;
+
+    try {
+      const _responseType = FullType(UserDto);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as UserDto;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<UserDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// companiesGet
@@ -359,9 +469,9 @@ class CompaniesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [BuiltList<CompanyDto>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesGet({ 
+  Future<Response<BuiltList<CompanyDto>>> companiesGet({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -390,7 +500,34 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    BuiltList<CompanyDto> _responseData;
+
+    try {
+      const _responseType = FullType(BuiltList, [FullType(CompanyDto)]);
+      _responseData = _serializers.deserialize(
+        _response.data!,
+        specifiedType: _responseType,
+      ) as BuiltList<CompanyDto>;
+
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<BuiltList<CompanyDto>>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// companiesRegisterPost
