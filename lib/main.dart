@@ -1,6 +1,7 @@
 //region imports
 import 'dart:convert';
 
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/foundation.dart';
@@ -34,8 +35,10 @@ parseJson(String text) {
 final api_instance = Openapi(
     dio: Dio(BaseOptions(
         baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
-      ..interceptors.add(PrettyDioLogger()),
+      ..interceptors.add(PrettyDioLogger())
+      ..interceptors.add(CurlLoggerDioInterceptor()),
     serializers: standardSerializers);
+
 final token = "token_example"; // String |
 final email = "email_example"; // String |
 
