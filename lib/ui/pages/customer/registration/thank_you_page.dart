@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/components/ActionButton.dart';
-import 'package:som/ui/pages/customer_login_page.dart';
+import 'package:provider/provider.dart';
+import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
@@ -10,6 +10,7 @@ class ThankYouPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customerRegistration = Provider.of<RegistrationRequest>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -50,21 +51,14 @@ class ThankYouPage extends StatelessWidget {
                                 .onPrimaryContainer),
                         TextSpan(
                             text:
-                                'Dear John, \nwe are delighted that Samsung GmbH has placed'
-                                'its trust into our product which primary task is to '
+                                'Dear ${customerRegistration.company.admin.firstName}, \nwe are delighted that ${customerRegistration.company.name} has placed'
+                                ' its trust into our product which primary task is to '
                                 'help you and your team find new and maintain existing partners.\n\n'
-                                'We have sent invitations e-mail to franz.kaufer@som.at where you can click on confirmation'
+                                'We have sent invitations e-mail to ${customerRegistration.company.admin.email} where you can click on confirmation'
                                 'link in order to activate account and set an user password.'),
                         maxLines: 8,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      50.height,
-                      ActionButton(
-                          textContent: "Close",
-                          onPressed: () {
-                            CustomerLoginPage()
-                                .launch(context, isNewTask: true);
-                          })
                     ],
                   ),
                 ),

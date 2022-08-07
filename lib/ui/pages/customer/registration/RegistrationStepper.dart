@@ -11,7 +11,6 @@ import 'package:som/ui/components/forms/som_tags.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/FormSectionHeader.dart';
 import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
-import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 
 import 'RoleSelection.dart';
 
@@ -69,13 +68,31 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           200.height,
                           Container(
                             width: 300,
-                            child: ActionButton(
-                              onPressed: () {
-                                ThankYouPage().launch(context);
-                              },
-                              textContent: "Register",
-                            ),
+                            child: customerRegistration.isRegistering
+                                ? CircularProgressIndicator()
+                                : ActionButton(
+                                    onPressed: () {
+                                      customerRegistration
+                                          .registerCustomer(context);
+                                    },
+                                    textContent: "Register",
+                                  ),
                           ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          customerRegistration.isFailedRegistration
+                              ? Text(
+                                  customerRegistration.errorMessage,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),
+                                )
+                              : Container()
                         ],
                       )
                     : Row(

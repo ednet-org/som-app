@@ -9,6 +9,55 @@ part of 'registration_request.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RegistrationRequest on _RegistrationRequest, Store {
+  late final _$isRegisteringAtom =
+      Atom(name: '_RegistrationRequest.isRegistering', context: context);
+
+  @override
+  bool get isRegistering {
+    _$isRegisteringAtom.reportRead();
+    return super.isRegistering;
+  }
+
+  @override
+  set isRegistering(bool value) {
+    _$isRegisteringAtom.reportWrite(value, super.isRegistering, () {
+      super.isRegistering = value;
+    });
+  }
+
+  late final _$isFailedRegistrationAtom =
+      Atom(name: '_RegistrationRequest.isFailedRegistration', context: context);
+
+  @override
+  bool get isFailedRegistration {
+    _$isFailedRegistrationAtom.reportRead();
+    return super.isFailedRegistration;
+  }
+
+  @override
+  set isFailedRegistration(bool value) {
+    _$isFailedRegistrationAtom.reportWrite(value, super.isFailedRegistration,
+        () {
+      super.isFailedRegistration = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: '_RegistrationRequest.errorMessage', context: context);
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$companyAtom =
       Atom(name: '_RegistrationRequest.company', context: context);
 
@@ -23,6 +72,15 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
     _$companyAtom.reportWrite(value, super.company, () {
       super.company = value;
     });
+  }
+
+  late final _$registerCustomerAsyncAction =
+      AsyncAction('_RegistrationRequest.registerCustomer', context: context);
+
+  @override
+  Future<void> registerCustomer(BuildContext context) {
+    return _$registerCustomerAsyncAction
+        .run(() => super.registerCustomer(context));
   }
 
   late final _$_RegistrationRequestActionController =
@@ -40,19 +98,11 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
   }
 
   @override
-  void registerCustomer() {
-    final _$actionInfo = _$_RegistrationRequestActionController.startAction(
-        name: '_RegistrationRequest.registerCustomer');
-    try {
-      return super.registerCustomer();
-    } finally {
-      _$_RegistrationRequestActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
+isRegistering: ${isRegistering},
+isFailedRegistration: ${isFailedRegistration},
+errorMessage: ${errorMessage},
 company: ${company}
     ''';
   }
