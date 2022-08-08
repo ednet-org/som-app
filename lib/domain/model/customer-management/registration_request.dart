@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
+import 'package:som/template_storage/main/store/application.dart';
 
 import 'company.dart';
 
@@ -14,11 +14,17 @@ class RegistrationRequest = _RegistrationRequest with _$RegistrationRequest;
 abstract class _RegistrationRequest with Store {
   Som som;
   CompaniesApi api;
+  Application appStore;
+  final sharedPrefs;
 
-  _RegistrationRequest(this.som, this.api);
+  _RegistrationRequest(this.som, this.api, this.appStore, this.sharedPrefs)
+      : this.company = Company(appStore, sharedPrefs);
 
   @observable
   bool isRegistering = false;
+
+  @observable
+  bool isSuccess = false;
 
   @observable
   bool isFailedRegistration = false;
@@ -27,7 +33,7 @@ abstract class _RegistrationRequest with Store {
   String errorMessage = '';
 
   @observable
-  Company company = Company();
+  Company company;
 
   @action
   void setCompany(Company value) => company = value;
@@ -73,7 +79,8 @@ abstract class _RegistrationRequest with Store {
       ..providerData = providerData
       ..registrationNr = company.registrationNumber
       ..websiteUrl = company.url
-      ..uidNr = company.uidNr;
+      ..uidNr = company.uidNr
+      ..build();
 
     ListBuilder<UserDto>? usersRequest = ListBuilder<UserDto>(
         company.users.map((element) => UserDtoBuilder()
@@ -98,14 +105,14 @@ abstract class _RegistrationRequest with Store {
       ..company = companyRequest
       ..users = usersRequest;
 
+    final buildCompany = registerCompanyDto.build();
+
     try {
-      final response = await api.companiesRegisterPost(
-          registerCompanyDto: registerCompanyDto.build());
+      final response =
+          await api.companiesRegisterPost(registerCompanyDto: buildCompany);
 
       if (response.statusCode == 200) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute<ThankYouPage>(builder: (_) => ThankYouPage()),
-            (route) => true);
+        isSuccess = true;
       }
     } catch (error) {
       isFailedRegistration = true;

@@ -9,6 +9,7 @@ class RegistrationUser = _RegistrationUser with _$RegistrationUser;
 enum CompanyRole { admin, employee }
 
 abstract class _RegistrationUser with Store {
+  _RegistrationUser({this.email});
   @observable
   String? firstName;
 

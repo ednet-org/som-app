@@ -10,7 +10,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
@@ -32,11 +31,14 @@ parseJson(String text) {
   return compute(_parseAndDecode, text);
 }
 
+final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
 final api_instance = Openapi(
     dio: Dio(BaseOptions(
         baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
-      ..interceptors.add(PrettyDioLogger())
-      ..interceptors.add(CurlLoggerDioInterceptor()),
+      // ..interceptors.add(PrettyDioLogger())
+      ..interceptors.add(CurlLoggerDioInterceptor(
+          printOnSuccess: true, convertFormData: false)),
     serializers: standardSerializers);
 
 final token = "token_example"; // String |
@@ -44,7 +46,7 @@ final email = "email_example"; // String |
 
 //endregion
 
-var appStore = Application();
+var appStore;
 ThemeData? darkTheme;
 ThemeData? lightTheme;
 var subscriptionService;
@@ -52,6 +54,11 @@ var loginService;
 var apiCompanyService;
 
 void main() async {
+  final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
+  final sharedPrefs = await prefsFuture;
+  num emailSeed = num.parse(sharedPrefs.getString('emailSeed') ?? "1");
+  appStore = Application(sharedPrefs, emailSeed);
+
   // dio perform awful if not spawn to own worker
   (api_instance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
       parseJson;
@@ -114,8 +121,8 @@ class MyApp extends StatelessWidget {
                 Som(apiSubscriptionRepository)
                   ..populateAvailableSubscriptions()),
         ProxyProvider<Som, RegistrationRequest>(
-            update: (_, som, __) =>
-                RegistrationRequest(som, api_instance.getCompaniesApi())),
+            update: (_, som, __) => RegistrationRequest(som,
+                api_instance.getCompaniesApi(), appStore, sharedPreferences)),
         Provider<EmailLoginStore>(
             create: (_) =>
                 EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),

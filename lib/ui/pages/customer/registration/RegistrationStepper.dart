@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
+import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
@@ -35,6 +36,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   @override
   Widget build(BuildContext context) {
     final customerRegistration = Provider.of<RegistrationRequest>(context);
+    final appStore = Provider.of<Application>(context);
     final isLastStep =
         (customerRegistration.company.isProvider && currStep == 5) ||
             (!customerRegistration.company.isProvider && currStep == 2);
@@ -54,8 +56,10 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
             return Stepper(
               elevation: 4,
               key: Key("mysuperkey-" +
-                  assembleSteps(customerRegistration).length.toString()),
-              steps: assembleSteps(customerRegistration),
+                  assembleSteps(customerRegistration, appStore)
+                      .length
+                      .toString()),
+              steps: assembleSteps(customerRegistration, appStore),
               type: StepperType.vertical,
               currentStep: currStep,
               controlsBuilder: (BuildContext context, ControlsDetails details) {
@@ -69,7 +73,11 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           Container(
                             width: 300,
                             child: customerRegistration.isRegistering
-                                ? CircularProgressIndicator()
+                                ? Center(
+                                    child: Container(
+                                        width: 100,
+                                        child: CircularProgressIndicator()),
+                                  )
                                 : ActionButton(
                                     onPressed: () {
                                       customerRegistration
@@ -78,6 +86,20 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                     textContent: "Register",
                                   ),
                           ),
+                          customerRegistration.isSuccess
+                              ? Container(
+                                  width: 300,
+                                  child: Text(
+                                      "YOu have successfully registered!",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer)),
+                                )
+                              : Container(),
                           SizedBox(
                             height: 7,
                           ),
@@ -115,7 +137,8 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
               onStepContinue: () {
                 setState(() {
                   if (currStep <
-                      assembleSteps(customerRegistration).length - 1) {
+                      assembleSteps(customerRegistration, appStore).length -
+                          1) {
                     currStep = currStep + 1;
                   } else {
                     //currStep = 0;
@@ -145,7 +168,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     );
   }
 
-  List<Step> assembleSteps(RegistrationRequest request) {
+  List<Step> assembleSteps(RegistrationRequest request, Application appStore) {
     final buyerSteps = [
       Step(
         title: Text('Role selection'),
@@ -355,7 +378,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       Container(
                         width: 350,
                         child: SomTextInput(
-                          label: 'Admin user email',
+                          label: 'slavisam+${appStore.emailSeed}@gmail.com',
                           icon: Icons.email,
                           hint: 'Enter email of SOM administrator account',
                           value: request.company.admin.email,

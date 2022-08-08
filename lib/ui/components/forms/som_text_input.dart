@@ -34,7 +34,7 @@ class SomTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: onChanged,
-      initialValue: value,
+      initialValue: value ?? label,
       keyboardType: keyboardType,
       maxLines: maxLines,
       obscureText: isPassword && showPassword ? false : isPassword,

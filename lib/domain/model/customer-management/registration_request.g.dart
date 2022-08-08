@@ -25,6 +25,22 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
     });
   }
 
+  late final _$isSuccessAtom =
+      Atom(name: '_RegistrationRequest.isSuccess', context: context);
+
+  @override
+  bool get isSuccess {
+    _$isSuccessAtom.reportRead();
+    return super.isSuccess;
+  }
+
+  @override
+  set isSuccess(bool value) {
+    _$isSuccessAtom.reportWrite(value, super.isSuccess, () {
+      super.isSuccess = value;
+    });
+  }
+
   late final _$isFailedRegistrationAtom =
       Atom(name: '_RegistrationRequest.isFailedRegistration', context: context);
 
@@ -101,6 +117,7 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
   String toString() {
     return '''
 isRegistering: ${isRegistering},
+isSuccess: ${isSuccess},
 isFailedRegistration: ${isFailedRegistration},
 errorMessage: ${errorMessage},
 company: ${company}

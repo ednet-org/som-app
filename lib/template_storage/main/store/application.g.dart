@@ -33,6 +33,22 @@ mixin _$Application on _Application, Store {
     });
   }
 
+  late final _$emailSeedAtom =
+      Atom(name: '_Application.emailSeed', context: context);
+
+  @override
+  num get emailSeed {
+    _$emailSeedAtom.reportRead();
+    return super.emailSeed;
+  }
+
+  @override
+  set emailSeed(num value) {
+    _$emailSeedAtom.reportWrite(value, super.emailSeed, () {
+      super.emailSeed = value;
+    });
+  }
+
   late final _$buttonWidthAtom =
       Atom(name: '_Application.buttonWidth', context: context);
 
@@ -113,6 +129,14 @@ mixin _$Application on _Application, Store {
     });
   }
 
+  late final _$incEmailSeedAsyncAction =
+      AsyncAction('_Application.incEmailSeed', context: context);
+
+  @override
+  Future<dynamic> incEmailSeed() {
+    return _$incEmailSeedAsyncAction.run(() => super.incEmailSeed());
+  }
+
   late final _$toggleDarkModeAsyncAction =
       AsyncAction('_Application.toggleDarkMode', context: context);
 
@@ -170,6 +194,7 @@ mixin _$Application on _Application, Store {
   String toString() {
     return '''
 applicationWidth: ${applicationWidth},
+emailSeed: ${emailSeed},
 buttonWidth: ${buttonWidth},
 isDarkModeOn: ${isDarkModeOn},
 selectedLanguage: ${selectedLanguage},

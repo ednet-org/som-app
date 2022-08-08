@@ -10,6 +10,11 @@ part 'company.g.dart';
 class Company = _Company with _$Company;
 
 abstract class _Company with Store {
+  final appStore;
+  final sharedPrefs;
+
+  _Company(this.appStore, this.sharedPrefs);
+
   /// State
   @observable
   String? uidNr;
@@ -80,7 +85,10 @@ abstract class _Company with Store {
   @action
   void increaseNumberOfUsers() {
     numberOfUsers++;
-    users.add(RegistrationUser());
+    appStore.emailSeed++;
+    users.add(
+        RegistrationUser(email: 'slavisam+${appStore.emailSeed}@gmail.com'));
+    sharedPrefs.setString("emailSeed", appStore.emailSeed.toString());
   }
 
   @action
