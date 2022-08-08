@@ -7,10 +7,22 @@ part 'application.g.dart';
 class Application = _Application with _$Application;
 
 abstract class _Application with Store {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final SharedPreferences sharedPrefs;
+
+  _Application(this.sharedPrefs, this.emailSeed);
 
   @observable
   double applicationWidth = 600;
+
+  @observable
+  num emailSeed;
+
+  @action
+  Future incEmailSeed() async {
+    emailSeed++;
+    sharedPrefs.setString("emailSeed", emailSeed.toString());
+  }
+
   @observable
   double buttonWidth = 200;
 
@@ -44,8 +56,6 @@ abstract class _Application with Store {
 
   @action
   login(Authorization aAuthorization) async {
-    final sharedPrefs = await _prefs;
-
     sharedPrefs
       ..setString('token', aAuthorization.token)
       ..setString('refreshToken', aAuthorization.refreshToken);
