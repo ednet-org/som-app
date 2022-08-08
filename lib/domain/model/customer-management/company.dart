@@ -85,10 +85,12 @@ abstract class _Company with Store {
   @action
   void increaseNumberOfUsers() {
     numberOfUsers++;
-    appStore.emailSeed++;
-    users.add(
-        RegistrationUser(email: 'slavisam+${appStore.emailSeed}@gmail.com'));
-    sharedPrefs.setString("emailSeed", appStore.emailSeed.toString());
+
+    //todo: clean after done registration
+    // appStore.emailSeed++;
+    // users.add(
+    //     RegistrationUser(email: 'slavisam+${appStore.emailSeed}@gmail.com'));
+    // sharedPrefs.setString("emailSeed", appStore.emailSeed.toString());
   }
 
   @action
