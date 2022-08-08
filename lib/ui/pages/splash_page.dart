@@ -58,30 +58,25 @@ class _SplashPageState extends State<SplashPage>
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    child: Image.asset(
-                      'images/som/logo.png',
-                      height: 300,
-                      fit: BoxFit.fitHeight,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
+                    child: som.isLoadingData
+                        ? Image.asset(
+                            'images/som/logo.png',
+                            height: 300,
+                            fit: BoxFit.fitHeight,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                        : Icon(
+                            Icons.check_circle_outlined,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 300,
+                          ),
                   ),
                   SizedBox(height: 20),
-                  som.isLoadingData
-                      ? Text(
-                          "Loading...",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
-                        )
-                      : Icon(
-                          Icons.check_circle_outlined,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
+                  Text(
+                    "Loading...",
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary),
+                  )
                 ],
               ),
             )

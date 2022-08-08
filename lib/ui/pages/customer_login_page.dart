@@ -63,8 +63,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                           'images/som/logo.png',
                           height: 150,
                           fit: BoxFit.fitHeight,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       Text('Smart offer management'.toUpperCase(),
@@ -74,7 +73,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
                                   ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .onPrimaryContainer))
+                                          .primary))
                           .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
                       SizedBox(
                         width: 800,

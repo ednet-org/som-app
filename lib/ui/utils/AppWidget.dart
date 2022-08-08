@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:som/main.dart';
+import 'package:som/template_storage/main/store/application.dart';
 
 import 'AppColors.dart';
 import 'AppConstant.dart';
@@ -139,20 +141,26 @@ Widget settingItem(context, String text,
 
 Widget appBarTitleWidget(context, String title,
     {Color? color, Color? textColor}) {
+  final appStore = Provider.of<Application>(context);
+
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
     child: Row(
       children: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: Image.asset(
-            'images/som/logo.png',
-            height: 80,
-            fit: BoxFit.fitHeight,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
+        GestureDetector(
+            onTap: () {
+              appStore.toggleDarkMode();
+            },
+            child: Container(
+              alignment: Alignment.center,
+              child: Image.asset(
+                'images/som/logo.png',
+                height: 80,
+                fit: BoxFit.fitHeight,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            )),
         SizedBox(width: 15),
         Text(
           title,

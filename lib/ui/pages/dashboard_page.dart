@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/main.dart';
+import 'package:provider/provider.dart';
+import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppWidget.dart';
@@ -50,12 +51,13 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   Widget build(BuildContext context) {
+    final appStore = Provider.of<Application>(context);
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: AppBar(
-          // backgroundColor:
-          //     Theme.of(context).colorScheme.primary.withOpacity(1),
+          backgroundColor: Theme.of(context).colorScheme.primary,
           title: appBarTitleWidget(context, 'Dashboard'),
           actions: [
             PopupMenuButton(

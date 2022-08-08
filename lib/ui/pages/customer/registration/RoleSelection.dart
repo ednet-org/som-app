@@ -28,7 +28,10 @@ class _RoleSelectionState extends State<RoleSelection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text('Please select which type of company are you registering'),
+            Text(
+              'Please select which type of company are you registering',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             16.height,
             selectionCards,
             8.height,

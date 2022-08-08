@@ -96,7 +96,7 @@ void main() async {
   await initialize();
 
   // Lets start with default dark mode till we solve logo transparency
-  appStore.toggleDarkMode(value: true);
+  appStore.toggleDarkMode();
   // appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 
   if (isMobile) {
@@ -143,9 +143,9 @@ class MyApp extends StatelessWidget {
           supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
           routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+          // home: VerifyEmailPage(),
           home: SplashPage(appStore),
-          // hardcoded dark mode
-          themeMode: ThemeMode.light,
+          themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
           theme: lightTheme,
           darkTheme: darkTheme,
           builder: scrollBehaviour(),

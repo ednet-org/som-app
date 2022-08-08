@@ -137,15 +137,6 @@ mixin _$Application on _Application, Store {
     return _$incEmailSeedAsyncAction.run(() => super.incEmailSeed());
   }
 
-  late final _$toggleDarkModeAsyncAction =
-      AsyncAction('_Application.toggleDarkMode', context: context);
-
-  @override
-  Future<void> toggleDarkMode({bool? value}) {
-    return _$toggleDarkModeAsyncAction
-        .run(() => super.toggleDarkMode(value: value));
-  }
-
   late final _$loginAsyncAction =
       AsyncAction('_Application.login', context: context);
 
@@ -156,6 +147,17 @@ mixin _$Application on _Application, Store {
 
   late final _$_ApplicationActionController =
       ActionController(name: '_Application', context: context);
+
+  @override
+  void toggleDarkMode() {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+        name: '_Application.toggleDarkMode');
+    try {
+      return super.toggleDarkMode();
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setLanguage(String aLanguage) {

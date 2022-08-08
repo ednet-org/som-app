@@ -36,7 +36,9 @@ abstract class _Application with Store {
   var selectedDrawerItem = -1;
 
   @action
-  Future<void> toggleDarkMode({bool? value}) async {}
+  void toggleDarkMode() {
+    isDarkModeOn = !isDarkModeOn;
+  }
 
   @action
   void setLanguage(String aLanguage) => selectedLanguage = aLanguage;

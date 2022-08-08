@@ -26,7 +26,7 @@ class ThankYouPage extends StatelessWidget {
                   'images/som/logo.png',
                   height: 150,
                   fit: BoxFit.fitHeight,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               Text('Smart offer management'.toUpperCase(),
@@ -34,9 +34,7 @@ class ThankYouPage extends StatelessWidget {
                           .textTheme
                           .displayMedium
                           ?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer))
+                              color: Theme.of(context).colorScheme.primary))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
               Container(
                 width: 800,
@@ -46,9 +44,7 @@ class ThankYouPage extends StatelessWidget {
                     children: [
                       AutoSizeText.rich(
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
+                            color: Theme.of(context).colorScheme.primary),
                         TextSpan(
                             text:
                                 'Dear ${customerRegistration.company.admin.firstName}, \nwe are delighted that ${customerRegistration.company.name} has placed'

@@ -90,8 +90,10 @@ class LoginState extends State<Login> {
             SizedBox(height: 30),
             Text(
               static["link.forgottenPassword"] ?? "",
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             SizedBox(height: 5),
             ActionButton(
@@ -105,8 +107,10 @@ class LoginState extends State<Login> {
             SizedBox(height: 30),
             Text(
               static["no.account"] ?? "",
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             SizedBox(height: 5),
             ActionButton(
@@ -127,8 +131,10 @@ class LoginState extends State<Login> {
     return Column(
       children: [
         AutoSizeText.rich(
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimaryContainer),
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: Theme.of(context).colorScheme.primary),
           TextSpan(text: static["welcome"]),
           maxLines: 8,
           overflow: TextOverflow.ellipsis,

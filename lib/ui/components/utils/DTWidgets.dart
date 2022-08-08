@@ -14,7 +14,7 @@ Widget priceWidget(context, int? price,
           ? textColor
           : applyStrike
               ? Theme.of(context).colorScheme.onSecondaryContainer
-              : Theme.of(context).colorScheme.onPrimaryContainer,
+              : Theme.of(context).colorScheme.primary,
       fontSize: fontSize != null
           ? fontSize
           : applyStrike
@@ -202,14 +202,14 @@ class ChatMessageWidget extends StatelessWidget {
                   child: Text(data.msg!,
                       style: primaryTextStyle(
                           color: !isMe
-                              ? Theme.of(context).colorScheme.onPrimaryContainer
+                              ? Theme.of(context).colorScheme.primary
                               : Theme.of(context)
                                   .colorScheme
                                   .onSecondaryContainer))),
               Text(data.time!,
                   style: secondaryTextStyle(
                       color: !isMe
-                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.onSecondaryContainer,
                       size: 12))
             ],

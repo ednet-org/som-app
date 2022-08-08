@@ -47,15 +47,14 @@ class EditTextState extends State<EditText> {
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
+                color: Theme.of(context).colorScheme.primary, width: 0.0),
           ),
         ),
         maxLines: widget.maxLine,
         style: Theme.of(context)
             .textTheme
             .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
+            ?.copyWith(color: Theme.of(context).colorScheme.primary),
       );
     } else {
       return TextField(
@@ -81,14 +80,13 @@ class EditTextState extends State<EditText> {
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                width: 0.0),
+                color: Theme.of(context).colorScheme.primary, width: 0.0),
           ),
         ),
         style: Theme.of(context)
             .textTheme
             .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
+            ?.copyWith(color: Theme.of(context).colorScheme.primary),
       );
     }
   }

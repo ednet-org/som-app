@@ -46,10 +46,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           Text(
             'Customer registration',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: Theme.of(context)
-                    .colorScheme
-                    .onPrimaryContainer
-                    .withOpacity(0.7)),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
           ),
           40.height,
           Observer(builder: (_) {
@@ -104,7 +101,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                         Icons.check_circle_outlined,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .onPrimaryContainer,
+                                            .primary,
                                       )
                                     : Container(),
                                 SizedBox(
