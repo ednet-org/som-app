@@ -1,6 +1,7 @@
 //region imports
 import 'dart:convert';
 
+import 'package:beamer/beamer.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
@@ -17,8 +18,9 @@ import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_re
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/routes.dart';
 import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/components/Login.dart';
+import 'package:som/ui/pages/customer_registration_page.dart';
 import 'package:som/ui/pages/splash_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
@@ -110,6 +112,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final routerDelegate = BeamerDelegate(
+    locationBuilder: RoutesLocationBuilder(
+      routes: {
+        '/': (context, state, data) => SplashPage(appStore),
+        '/register': (context, state, data) => const CustomerRegistrationPage(),
+        '/login': (context, state, data) => Login(),
+      },
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -131,7 +143,9 @@ class MyApp extends StatelessWidget {
                 EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
       ],
       child: Observer(
-        builder: (_) => MaterialApp(
+        builder: (_) => MaterialApp.router(
+          routeInformationParser: BeamerParser(),
+          routerDelegate: routerDelegate,
           localizationsDelegates: const [
             SomLocalizations.delegate,
             ...GlobalMaterialLocalizations.delegates,
@@ -141,10 +155,8 @@ class MyApp extends StatelessWidget {
               Locale(appStore.selectedLanguage),
           locale: Locale(appStore.selectedLanguage),
           supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
-          routes: routes(),
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           // home: VerifyEmailPage(),
-          home: SplashPage(appStore),
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
           theme: lightTheme,
           darkTheme: darkTheme,

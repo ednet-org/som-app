@@ -99,6 +99,7 @@ dependencies:
   dio: '>=4.0.1 <5.0.0'
   pretty_dio_logger: ^1.1.1
   curl_logger_dio_interceptor: ^0.0.3
+  beamer: ^1.5.0
 
 dev_dependencies:
   flutter_test:
