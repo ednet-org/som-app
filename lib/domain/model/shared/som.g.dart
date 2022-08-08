@@ -24,6 +24,22 @@ mixin _$Som on _Som, Store {
     });
   }
 
+  late final _$isLoadingDataAtom =
+      Atom(name: '_Som.isLoadingData', context: context);
+
+  @override
+  bool get isLoadingData {
+    _$isLoadingDataAtom.reportRead();
+    return super.isLoadingData;
+  }
+
+  @override
+  set isLoadingData(bool value) {
+    _$isLoadingDataAtom.reportWrite(value, super.isLoadingData, () {
+      super.isLoadingData = value;
+    });
+  }
+
   late final _$availableBranchesAtom =
       Atom(name: '_Som.availableBranches', context: context);
 
@@ -128,6 +144,7 @@ mixin _$Som on _Som, Store {
   String toString() {
     return '''
 nesto: ${nesto},
+isLoadingData: ${isLoadingData},
 availableBranches: ${availableBranches},
 areSubscriptionsLoaded: ${areSubscriptionsLoaded},
 requestedBranches: ${requestedBranches},

@@ -17,6 +17,9 @@ abstract class _Som with Store {
   String nesto = 'Nesto';
 
   @observable
+  bool isLoadingData = true;
+
+  @observable
   List<TagModel> availableBranches = branchTags.toList();
 
   @observable
@@ -40,7 +43,9 @@ abstract class _Som with Store {
 
   @action
   Future populateAvailableSubscriptions() async {
+    isLoadingData = true;
     if (availableSubscriptions.data != null) {
+      isLoadingData = false;
       return;
     }
 
@@ -52,7 +57,9 @@ abstract class _Som with Store {
 
       availableSubscriptions.data = await availableSubscriptions.future;
       print(availableSubscriptions.data);
+      isLoadingData = false;
     } catch (e) {
+      isLoadingData = false;
       availableSubscriptions.errorMessage = e.toString();
     }
   }

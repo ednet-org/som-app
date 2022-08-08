@@ -5,6 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
@@ -45,18 +47,42 @@ class _SplashPageState extends State<SplashPage>
   }
 
   Widget build(BuildContext context) {
+    final Som som = Provider.of<Som>(context);
+
     return Observer(
       builder: (_) => !widget.appStore.isAuthenticated
           ? Scaffold(
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              body: Container(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'images/som/logo.png',
-                  height: 300,
-                  fit: BoxFit.fitHeight,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'images/som/logo.png',
+                      height: 300,
+                      fit: BoxFit.fitHeight,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  som.isLoadingData
+                      ? Text(
+                          "Loading...",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer),
+                        )
+                      : Icon(
+                          Icons.check_circle_outlined,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                ],
               ),
             )
           : DashboardPage(),
