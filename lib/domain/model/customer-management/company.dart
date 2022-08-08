@@ -85,6 +85,7 @@ abstract class _Company with Store {
   @action
   void increaseNumberOfUsers() {
     numberOfUsers++;
+    users.add(RegistrationUser());
 
     //todo: clean after done registration
     // appStore.emailSeed++;
