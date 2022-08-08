@@ -382,7 +382,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       Container(
                         width: 350,
                         child: SomTextInput(
-                          label: 'slavisam+${appStore.emailSeed}@gmail.com',
+                          label: 'E-mail',
                           icon: Icons.email,
                           hint: 'Enter email of SOM administrator account',
                           value: request.company.admin.email,

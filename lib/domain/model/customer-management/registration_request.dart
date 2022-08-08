@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 
 import 'company.dart';
 
