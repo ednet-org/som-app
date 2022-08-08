@@ -44,9 +44,8 @@ abstract class _EmailLoginStoreBase with Store {
         isLoggedIn = true;
         password = "";
         appStore.login(Authorization(
-            token: (response.data as Map<String, dynamic>)["token"]!,
-            refreshToken:
-                (response.data as Map<String, dynamic>)["refreshToken"]!));
+            token: response.data!.token!,
+            refreshToken: response.data!.refreshToken!));
       }
 
       if (response.statusCode != 200) {
