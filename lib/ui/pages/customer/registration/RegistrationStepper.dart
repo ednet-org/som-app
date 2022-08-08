@@ -380,7 +380,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     direction: Axis.horizontal,
                     children: [
                       Container(
-                        width: 350,
+                        width: 260,
                         child: SomTextInput(
                           label: 'E-mail',
                           icon: Icons.email,
