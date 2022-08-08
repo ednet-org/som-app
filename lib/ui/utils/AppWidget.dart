@@ -158,7 +158,7 @@ Widget appBarTitleWidget(context, String title,
                 'images/som/logo.png',
                 height: 80,
                 fit: BoxFit.fitHeight,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             )),
         SizedBox(width: 15),
@@ -331,14 +331,14 @@ class ContainerX extends StatelessWidget {
   final Widget? web;
   final bool? useFullWidth;
 
-  ContainerX({this.mobile, this.web, this.useFullWidth});
+  const ContainerX({this.mobile, this.web, this.useFullWidth});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
         if (constraints.device == DeviceSize.mobile) {
-          return mobile ?? SizedBox();
+          return mobile ?? web!;
         } else {
           return Container(
             alignment: Alignment.topCenter,
@@ -346,7 +346,7 @@ class ContainerX extends StatelessWidget {
               constraints: useFullWidth.validate()
                   ? null
                   : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
-              child: web ?? SizedBox(),
+              child: web ?? mobile,
             ),
           );
         }

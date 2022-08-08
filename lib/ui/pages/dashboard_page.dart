@@ -39,7 +39,7 @@ class DashboardPageState extends State<DashboardPage> {
         backgroundImage: AssetImage(
             'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
       ).paddingRight(10.0),
-      // TODO: mobile
+      // TODO: mobile - ContainerX is again broken
       Text(
         'Fritzchen der Käufer',
         style: Theme.of(context)
@@ -52,44 +52,60 @@ class DashboardPageState extends State<DashboardPage> {
 
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
+    print(Theme.of(context)
+        .textTheme
+        .titleLarge
+        ?.copyWith(color: Theme.of(context).colorScheme.secondary)
+        .color);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: appBarTitleWidget(context, 'Dashboard'),
           actions: [
             PopupMenuButton(
+              padding: EdgeInsets.all(20),
               color: Theme.of(context).colorScheme.primary.withOpacity(1),
               child: userMenuItem(),
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                 PopupMenuItem(child: userMenuItem()),
                 PopupMenuItem(
-                  textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary),
                   child: ListTile(
                     leading: Icon(Icons.notifications),
-                    title: Text('Notifications'),
+                    title: Text(
+                      'Notifications',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
                   ),
                 ),
                 PopupMenuItem(
                   child: ListTile(
                     leading: Icon(Icons.manage_accounts),
-                    title: Text('User account'),
+                    title: Text(
+                      'User account',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    ),
                   ),
                 ),
                 PopupMenuItem(
                   child: ListTile(
                     leading: Icon(Icons.settings_applications),
-                    title: Text('App configuration'),
+                    title: Text('App configuration',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary)),
                   ),
                 ),
                 PopupMenuDivider(),
                 PopupMenuItem(
                   child: ListTile(
                     leading: Icon(Icons.logout),
-                    title: Text('Logout'),
+                    title: Text('Logout',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary)),
                     onTap: () {
                       appStore.logout();
                       CustomerLoginPage().launch(context);

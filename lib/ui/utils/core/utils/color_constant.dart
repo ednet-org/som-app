@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ColorConstant {
@@ -11,6 +12,8 @@ class ColorConstant {
   static Color gray900 = fromHex('#1c1b1e');
 
   static Color indigo900 = fromHex('#381e72');
+
+  static Color indqqigo900 = fromHex('#0ff625b71');
 
   static Color whiteA701 = fromHex('#ffffff');
 

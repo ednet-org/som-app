@@ -15,6 +15,31 @@ class CustomerLoginPage extends StatefulWidget {
   CustomerLoginPageState createState() => CustomerLoginPageState();
 }
 
+class FunnyLogo extends StatelessWidget {
+  final height;
+
+  const FunnyLogo(this.height, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final appStore = Provider.of<Application>(context);
+
+    return GestureDetector(
+        onTap: () {
+          appStore.toggleDarkMode();
+        },
+        child: Container(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'images/som/logo.png',
+            height: height,
+            fit: BoxFit.fitHeight,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ));
+  }
+}
+
 class CustomerLoginPageState extends State<CustomerLoginPage> {
   bool obscureText = true;
   bool autoValidate = false;
@@ -51,21 +76,12 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
           : SafeArea(
               child: Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                resizeToAvoidBottomInset: true,
                 body: Center(
                     child: SingleChildScrollView(
                   child: Column(
                     children: [
                       const SizedBox(height: spacing_large),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          'images/som/logo.png',
-                          height: 150,
-                          fit: BoxFit.fitHeight,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
+                      FunnyLogo(150.0),
                       Text('Smart offer management'.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme
