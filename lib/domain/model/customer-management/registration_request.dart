@@ -73,10 +73,10 @@ abstract class _RegistrationRequest with Store {
     }
 
     final companyRequest = CreateCompanyDtoBuilder()
-      // hardcoded
+      // todo: hardcoded
       ..type = company.isProvider ? CompanyType.number1 : CompanyType.number0
       ..address = addressRequest
-      // hardcoded
+      // todo: hardcoded
       ..companySize = CompanySize.number4
       ..name = company.name
       ..providerData = providerData
@@ -115,6 +115,7 @@ abstract class _RegistrationRequest with Store {
       final response =
           await api.companiesRegisterPost(registerCompanyDto: buildCompany);
 
+      //todo: evaluate state, fix UI and check possible abstractions in behaviour - ex. error handling, success message, etc.
       if (response.statusCode == 200) {
         isSuccess = true;
         isFailedRegistration = false;
