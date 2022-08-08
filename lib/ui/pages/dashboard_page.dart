@@ -34,46 +34,43 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   userMenuItem() {
-    return Row(children: [
-      CircleAvatar(
-        backgroundImage: AssetImage(
-            'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
-      ).paddingRight(10.0),
-      // TODO: mobile - ContainerX is again broken
-      Text(
-        'Fritzchen der Käufer',
-        style: Theme.of(context)
-            .textTheme
-            .titleSmall
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-      ).paddingRight(50),
-    ]);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(children: [
+        CircleAvatar(
+          backgroundImage: AssetImage(
+              'images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/ic_item4.jpg'),
+        ).paddingRight(10.0),
+        // TODO: mobile - ContainerX is again broken
+        Text(
+          'Fritzchen der Käufer',
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onTertiary),
+        ).paddingRight(10),
+      ]),
+    );
   }
 
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
-    print(Theme.of(context)
-        .textTheme
-        .titleLarge
-        ?.copyWith(color: Theme.of(context).colorScheme.secondary)
-        .color);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: appBarTitleWidget(context, 'Dashboard'),
+          title: appBarTitleWidget(context, 'Smart Offer Management'),
           actions: [
             PopupMenuButton(
-              padding: EdgeInsets.all(20),
-              color: Theme.of(context).colorScheme.primary.withOpacity(1),
+              color: Theme.of(context).colorScheme.primary,
               child: userMenuItem(),
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                 PopupMenuItem(child: userMenuItem()),
                 PopupMenuItem(
                   child: ListTile(
-                    leading: Icon(Icons.notifications),
+                    leading: Icon(Icons.notifications,
+                        color: Theme.of(context).colorScheme.onPrimary),
                     title: Text(
                       'Notifications',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -83,29 +80,32 @@ class DashboardPageState extends State<DashboardPage> {
                 ),
                 PopupMenuItem(
                   child: ListTile(
-                    leading: Icon(Icons.manage_accounts),
+                    leading: Icon(Icons.manage_accounts,
+                        color: Theme.of(context).colorScheme.onPrimary),
                     title: Text(
                       'User account',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary),
+                          color: Theme.of(context).colorScheme.onTertiary),
                     ),
                   ),
                 ),
                 PopupMenuItem(
                   child: ListTile(
-                    leading: Icon(Icons.settings_applications),
+                    leading: Icon(Icons.settings_applications,
+                        color: Theme.of(context).colorScheme.onPrimary),
                     title: Text('App configuration',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary)),
+                            color: Theme.of(context).colorScheme.onTertiary)),
                   ),
                 ),
                 PopupMenuDivider(),
                 PopupMenuItem(
                   child: ListTile(
-                    leading: Icon(Icons.logout),
+                    leading: Icon(Icons.logout,
+                        color: Theme.of(context).colorScheme.onPrimary),
                     title: Text('Logout',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary)),
+                            color: Theme.of(context).colorScheme.onTertiary)),
                     onTap: () {
                       appStore.logout();
                       CustomerLoginPage().launch(context);
@@ -123,19 +123,19 @@ class DashboardPageState extends State<DashboardPage> {
               child: Text(
             "Context Menu",
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
           )),
           leftSplit: Text(
             "Newest Inquiries",
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
           ),
           rightSplit: Text(
             "Oldest Inquiries",
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
           ),
         ),
