@@ -122,7 +122,8 @@ abstract class _RegistrationRequest with Store {
         isRegistering = false;
         await Future.delayed(Duration(seconds: 2));
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => ThankYouPage()), (route) => true);
+            MaterialPageRoute(builder: (_) => ThankYouPage()),
+            (route) => false);
       }
     } catch (error) {
       isFailedRegistration = true;
