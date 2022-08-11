@@ -13,14 +13,16 @@ class SomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
-        // mode: Mode.MENU,
-        items: items,
-        onChanged: onChanged,
-        selectedItem: value,
-        dropdownSearchDecoration: InputDecoration(
-          icon: Icon(Icons.edit_location),
-          labelText: 'Country',
-          hintText: hint,
-        ));
+      // mode: Mode.MENU,
+      items: items,
+      onChanged: onChanged,
+      selectedItem: value,
+      dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+        icon: Icon(Icons.edit_location),
+        labelText: 'Country',
+        hintText: hint,
+      )),
+    );
   }
 }
