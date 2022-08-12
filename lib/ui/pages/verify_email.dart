@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   static String tag = '/VerifyEmailPage';
+
+  final String? email;
+  final String? token;
+
+  VerifyEmailPage(this.token, this.email);
 
   @override
   _VerifyEmailPageState createState() => _VerifyEmailPageState();
@@ -49,6 +55,22 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 isPassword: true,
               ),
             ),
+            SizedBox(height: 20),
+            Container(
+              width: 350,
+              child: ActionButton(
+                  primary: Theme.of(context).colorScheme.primary,
+                  onPrimary: Theme.of(context).colorScheme.onPrimary,
+                  textContent: 'Set password',
+                  onPressed: () {
+                    print('password set');
+                  }),
+            ),
+            SizedBox(height: 100),
+            Container(
+                width: 350, child: Text(widget.token ?? 'there is no token')),
+            Container(
+                width: 350, child: Text(widget.email ?? 'there is no email')),
           ],
         ),
       ),

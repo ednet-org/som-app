@@ -19,11 +19,8 @@ import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/Login.dart';
-import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
-import 'package:som/ui/pages/customer_registration_page.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
 import 'package:som/ui/pages/splash_page.dart';
+import 'package:som/ui/pages/verify_email.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';
@@ -47,9 +44,6 @@ final api_instance = Openapi(
       ..interceptors.add(CurlLoggerDioInterceptor(
           printOnSuccess: true, convertFormData: false)),
     serializers: standardSerializers);
-
-final token = "token_example"; // String |
-final email = "email_example"; // String |
 
 //endregion
 
@@ -115,15 +109,33 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        '/': (context, state, data) => SplashPage(appStore),
-        '/register': (context, state, data) => const CustomerRegistrationPage(),
-        '/register/success': (context, state, data) => ThankYouPage(),
-        '/login': (context, state, data) => Login(),
-        '/dashboard': (context, state, data) => DashboardPage(),
-      },
-    ),
+    initialPath: "/",
+    // locationBuilder: RoutesLocationBuilder(
+    //   routes: {
+    //     '/': (context, state, data) => SplashPage(appStore),
+    //     '/register': (context, state, data) => const CustomerRegistrationPage(),
+    //     '/login': (context, state, data) => Login(),
+    //     '/dashboard': (context, state, data) => DashboardPage(),
+    //   },
+    // ),
+    locationBuilder: (routeInformation, _) {
+      final route = routeInformation.location;
+
+      if (route != null && route.contains('confirmEmail')) {
+        return EmailVerificationLocation(routeInformation);
+      } else {
+        return HomeLocation();
+      }
+      // switch (routeInformation.path) {
+      //   case '/':
+      //     return [
+      //       HomeLocation(
+      //           key: ValueKey('SplashPage'), child: SplashPage(appStore))
+      //     ];
+      //   default:
+      //     return const SplashPage(appStore);
+      // }
+    },
   );
 
   @override
@@ -171,5 +183,141 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class EmailVerificationState extends ChangeNotifier
+    with RouteInformationSerializable {
+  EmailVerificationState([String? token, String? email])
+      : _token = token,
+        _email = email;
+
+  String? _token;
+  String? _email;
+
+  set email(String? email) {
+    if (email != null) {
+      _email = email;
+      notifyListeners();
+    }
+  }
+
+  String? get email => _email;
+
+  String? get token => _token;
+
+  set token(String? token) {
+    if (token != null) {
+      _token = token;
+      notifyListeners();
+    }
+  }
+
+  @override
+  fromRouteInformation(RouteInformation routeInformation) {
+    final uri = Uri.parse(routeInformation.location ?? '/');
+    if (uri.pathSegments.isNotEmpty) {
+      _token = uri.queryParameters['token'];
+      _email = uri.queryParameters['email'];
+    }
+    return this;
+  }
+
+  @override
+  RouteInformation toRouteInformation() {
+    String uriString = 'auth/confirmEmail';
+    if (_token != null) {
+      uriString += '?token=$_token';
+    }
+    if (_email != null) {
+      uriString += '&?email=$_email';
+    }
+    return RouteInformation(location: uriString.isEmpty ? '/' : uriString);
+  }
+
+  void updateWith(String token, String email) {
+    _token = token;
+    _email = email;
+    notifyListeners();
+  }
+}
+
+class EmailVerificationLocation extends BeamLocation<EmailVerificationState> {
+  EmailVerificationLocation(RouteInformation? routeInformation)
+      : super(routeInformation);
+
+  @override
+  EmailVerificationState createState(RouteInformation routeInformation) =>
+      EmailVerificationState().fromRouteInformation(routeInformation);
+
+  @override
+  void initState() {
+    super.initState();
+    state.addListener(notifyListeners);
+  }
+
+  @override
+  void updateState(RouteInformation routeInformation) {
+    final emailVerificationState =
+        EmailVerificationState().fromRouteInformation(routeInformation);
+    state.updateWith(
+        emailVerificationState.email, emailVerificationState.token);
+  }
+
+  @override
+  void disposeState() {
+    super.disposeState();
+    state.removeListener(notifyListeners);
+  }
+
+  @override
+  List<Pattern> get pathPatterns => ['/auth/confirmEmail'];
+
+  @override
+  List<BeamPage> buildPages(
+      BuildContext context, EmailVerificationState state) {
+    return [
+      BeamPage(
+        key: ValueKey('verify-email'),
+        title: 'Verify Email',
+        child: VerifyEmailPage(state.token, state.email),
+      ),
+    ];
+  }
+}
+
+class HomeLocation extends BeamLocation<BeamState> {
+  HomeLocation({RouteInformation? routeInformation}) : super(routeInformation);
+
+  @override
+  List<String> get pathPatterns => [
+        '/',
+      ];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('home'),
+        title: 'Home',
+        child: SplashPage(appStore),
+      ),
+      // if (state.uri.pathSegments.contains('books'))
+      //   BeamPage(
+      //     key: ValueKey('books'),
+      //     title: 'Books',
+      //     child: BooksScreen(),
+      //   ),
+      // if (state.pathParameters.containsKey('bookId'))
+      //   BeamPage(
+      //     key: ValueKey('book-${state.pathParameters['bookId']}'),
+      //     title: books.firstWhere(
+      //         (book) => book['id'] == state.pathParameters['bookId'])['title'],
+      //     child: BookDetailsScreen(
+      //       book: books.firstWhere(
+      //           (book) => book['id'] == state.pathParameters['bookId']),
+      //     ),
+      //   ),
+    ];
   }
 }

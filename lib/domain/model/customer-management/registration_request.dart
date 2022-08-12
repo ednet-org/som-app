@@ -1,10 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:built_collection/src/list.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 
 import 'company.dart';
 
@@ -121,9 +121,7 @@ abstract class _RegistrationRequest with Store {
         isFailedRegistration = false;
         isRegistering = false;
         await Future.delayed(Duration(seconds: 2));
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => ThankYouPage()),
-            (route) => false);
+        Beamer.of(context).beamToNamed('/registration/success');
       }
     } catch (error) {
       isFailedRegistration = true;

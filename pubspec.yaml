@@ -140,7 +140,6 @@ flutter:
     - images/defaultTheme/category/
     - images/defaultTheme/banner/
     - assets/defaultTheme/
-    - assets/cricket_data/
     - lang/en.json
     - lang/de.json
     - lang/sr.json
