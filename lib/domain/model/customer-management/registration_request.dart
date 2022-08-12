@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
+import 'package:som/main.dart';
 import 'package:som/template_storage/main/store/application.dart';
 
 import 'company.dart';
@@ -121,7 +122,7 @@ abstract class _RegistrationRequest with Store {
         isFailedRegistration = false;
         isRegistering = false;
         await Future.delayed(Duration(seconds: 2));
-        Beamer.of(context).beamToNamed('/registration/success');
+        Beamer.of(context).beamTo(ThankYouPageLocation());
       }
     } catch (error) {
       isFailedRegistration = true;

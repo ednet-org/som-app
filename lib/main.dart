@@ -19,6 +19,7 @@ import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 import 'package:som/ui/pages/splash_page.dart';
 import 'package:som/ui/pages/verify_email.dart';
 import 'package:som/ui/utils/AppConstant.dart';
@@ -301,6 +302,43 @@ class HomeLocation extends BeamLocation<BeamState> {
         key: ValueKey('home'),
         title: 'Home',
         child: SplashPage(appStore),
+      ),
+      // if (state.uri.pathSegments.contains('books'))
+      //   BeamPage(
+      //     key: ValueKey('books'),
+      //     title: 'Books',
+      //     child: BooksScreen(),
+      //   ),
+      // if (state.pathParameters.containsKey('bookId'))
+      //   BeamPage(
+      //     key: ValueKey('book-${state.pathParameters['bookId']}'),
+      //     title: books.firstWhere(
+      //         (book) => book['id'] == state.pathParameters['bookId'])['title'],
+      //     child: BookDetailsScreen(
+      //       book: books.firstWhere(
+      //           (book) => book['id'] == state.pathParameters['bookId']),
+      //     ),
+      //   ),
+    ];
+  }
+}
+
+class ThankYouPageLocation extends BeamLocation<BeamState> {
+  ThankYouPageLocation({RouteInformation? routeInformation})
+      : super(routeInformation);
+
+  @override
+  List<String> get pathPatterns => [
+        '/auth/register/success',
+      ];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('thank you page'),
+        title: 'Thank you',
+        child: ThankYouPage(),
       ),
       // if (state.uri.pathSegments.contains('books'))
       //   BeamPage(
