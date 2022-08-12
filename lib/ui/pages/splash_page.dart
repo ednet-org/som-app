@@ -11,7 +11,7 @@ import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
-import 'dashboard_page.dart';
+import '../smart_offer_management.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage>
     if (!widget.appStore.isAuthenticated) {
       return CustomerLoginPage().launch(context);
     }
-    return DashboardPage().launch(context);
+    return SmartOfferManagement().launch(context);
   }
 
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _SplashPageState extends State<SplashPage>
                 ],
               ),
             )
-          : DashboardPage(),
+          : SmartOfferManagement(),
     );
   }
 }

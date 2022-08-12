@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
+import 'package:som/ui/smart_offer_management.dart';
 import 'package:som/ui/utils/ListModels.dart';
 
 import '../../../../main.dart';
@@ -70,7 +70,7 @@ class MainMenuState extends State<MainMenu> {
                   child: Text('Home'),
                 ).onTap(() {
                   appStore.setDrawerItemIndex(-1);
-                  DashboardPage().launch(context, isNewTask: true);
+                  SmartOfferManagement().launch(context, isNewTask: true);
                 }),
                 Divider(height: 16),
                 ListView.builder(
@@ -102,10 +102,11 @@ class MainMenuState extends State<MainMenu> {
 List<ListModel> getDrawerItems() {
   List<ListModel> drawerItems = [];
 
-  drawerItems.add(ListModel(name: 'Inquiries', widget: DashboardPage()));
-  drawerItems.add(ListModel(name: 'Company', widget: DashboardPage()));
-  drawerItems.add(ListModel(name: 'Users', widget: DashboardPage()));
-  drawerItems.add(ListModel(name: 'Ads', widget: DashboardPage()));
-  drawerItems.add(ListModel(name: 'Statistics', widget: DashboardPage()));
+  drawerItems.add(ListModel(name: 'Inquiries', widget: SmartOfferManagement()));
+  drawerItems.add(ListModel(name: 'Company', widget: SmartOfferManagement()));
+  drawerItems.add(ListModel(name: 'Users', widget: SmartOfferManagement()));
+  drawerItems.add(ListModel(name: 'Ads', widget: SmartOfferManagement()));
+  drawerItems
+      .add(ListModel(name: 'Statistics', widget: SmartOfferManagement()));
   return drawerItems;
 }

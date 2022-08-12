@@ -6,16 +6,16 @@ import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
-class DashboardPage extends StatefulWidget {
-  static String tag = '/DashboardScreen';
+class SmartOfferManagement extends StatefulWidget {
+  static String tag = '/SmartOfferManagement';
 
-  const DashboardPage({Key? key}) : super(key: key);
+  const SmartOfferManagement({Key? key}) : super(key: key);
 
   @override
-  DashboardPageState createState() => DashboardPageState();
+  SmartOfferManagementState createState() => SmartOfferManagementState();
 }
 
-class DashboardPageState extends State<DashboardPage> {
+class SmartOfferManagementState extends State<SmartOfferManagement> {
   bool isUserMenuExpanded = false;
 
   @override

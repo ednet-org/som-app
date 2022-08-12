@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/pages/dashboard_page.dart';
+import 'package:som/ui/smart_offer_management.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import '../components/Login.dart';
@@ -72,7 +72,7 @@ class CustomerLoginPageState extends State<CustomerLoginPage> {
     final appStore = Provider.of<Application>(context);
     return Observer(
       builder: (_) => appStore.isAuthenticated
-          ? DashboardPage()
+          ? SmartOfferManagement()
           : SafeArea(
               child: Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
