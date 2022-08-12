@@ -911,7 +911,7 @@ packages:
       name: nb_utils
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.6.18"
+    version: "4.6.19"
   nested:
     dependency: transitive
     description:

@@ -17,7 +17,7 @@ dependencies:
   japx: ^2.0.4
   cupertino_icons: ^1.0.5
   url_launcher: ^6.1.5
-  nb_utils: ^4.6.18
+  nb_utils: ^4.6.19
   google_fonts: ^3.0.1
   animations: ^2.0.3
   intl: ^0.17.0
@@ -119,27 +119,7 @@ flutter:
 
   assets:
     - assets/
-    - images/LikeButton/image/grey.jpg
-    - images/widgets/materialWidgets/mwAppStructureWidgets/BottomNavigation/
-    - images/widgets/materialWidgets/mwAppStructureWidgets/TabBar/
-    - images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/
-    - images/widgets/materialWidgets/mwInputSelectionWidgets/switch/
-    - images/widgets/materialWidgets/mwInformationDisplayWidgets/cards/
-    - images/widgets/materialWidgets/mwInformationDisplayWidgets/gridview/
-    - images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/
-    - images/widgets/materialWidgets/mwInputSelectionWidgets/switch/
-    - images/widgets/materialWidgets/mwLayoutWidgtes/MWUserAccountDrawerHeaderWidget/
-    - images/widgets/materialWidgets/mwDialogAlertPanelWidgets/
-    - images/widgets/materialWidgets/mwLayoutWidgtes/MWListTile/
-    - images/widgets/cupertinoWidgets/
-    - images/widgets/materialWidgets/mwInformationDisplayWidgets/listView/
-    - images/widgets/animationAndMotionWidgets/
-    - images/widgets/paintingAndEffectWidgets/opacity/
-    - images/widgets/interactionModelWidgets/
-    - images/defaultTheme/
-    - images/defaultTheme/category/
-    - images/defaultTheme/banner/
-    - assets/defaultTheme/
+    - images/som/
     - lang/en.json
     - lang/de.json
     - lang/sr.json
