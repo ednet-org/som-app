@@ -20,7 +20,9 @@ import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/Login.dart';
+import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
 import 'package:som/ui/pages/customer_registration_page.dart';
+import 'package:som/ui/pages/dashboard_page.dart';
 import 'package:som/ui/pages/splash_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
@@ -117,7 +119,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context, state, data) => SplashPage(appStore),
         '/register': (context, state, data) => const CustomerRegistrationPage(),
+        '/register/success': (context, state, data) => ThankYouPage(),
         '/login': (context, state, data) => Login(),
+        '/dashboard': (context, state, data) => DashboardPage(),
       },
     ),
   );
@@ -146,6 +150,9 @@ class MyApp extends StatelessWidget {
         builder: (_) => MaterialApp.router(
           routeInformationParser: BeamerParser(),
           routerDelegate: routerDelegate,
+          // android back button behavior
+          backButtonDispatcher:
+              BeamerBackButtonDispatcher(delegate: routerDelegate),
           localizationsDelegates: const [
             SomLocalizations.delegate,
             ...GlobalMaterialLocalizations.delegates,
