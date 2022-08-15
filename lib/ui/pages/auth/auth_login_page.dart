@@ -3,76 +3,21 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/smart_offer_management.dart';
+import 'package:som/ui/components/funny_logo.dart';
+import 'package:som/ui/som_application.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
-import '../components/Login.dart';
+import '../../components/Login.dart';
 
-class CustomerLoginPage extends StatefulWidget {
+class AuthLoginPage extends StatelessWidget {
   static String tag = '/DTLogin';
-
-  @override
-  CustomerLoginPageState createState() => CustomerLoginPageState();
-}
-
-class FunnyLogo extends StatelessWidget {
-  final height;
-
-  const FunnyLogo(this.height, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final appStore = Provider.of<Application>(context);
-
-    return GestureDetector(
-        onTap: () {
-          appStore.toggleDarkMode();
-        },
-        child: Container(
-          alignment: Alignment.center,
-          child: Image.asset(
-            'images/som/logo.png',
-            height: height,
-            fit: BoxFit.fitHeight,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ));
-  }
-}
-
-class CustomerLoginPageState extends State<CustomerLoginPage> {
-  bool obscureText = true;
-  bool autoValidate = false;
-  var formKey = GlobalKey<FormState>();
-
-  var emailCont = TextEditingController();
-  var passCont = TextEditingController();
-  var companyNameCont = TextEditingController();
-
-  var emailFocus = FocusNode();
-  var passFocus = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  init() async {
-    //
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
 
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     return Observer(
       builder: (_) => appStore.isAuthenticated
-          ? SmartOfferManagement()
+          ? SomApplication()
           : SafeArea(
               child: Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,

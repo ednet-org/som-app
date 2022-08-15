@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 
-class VerifyEmailPage extends StatefulWidget {
-  static String tag = '/VerifyEmailPage';
+class ConfirmEmailPage extends StatefulWidget {
+  static String tag = '/ConfirmEmailPage';
 
   final String? email;
   final String? token;
 
-  VerifyEmailPage(this.token, this.email);
+  ConfirmEmailPage(this.token, this.email);
 
   @override
-  _VerifyEmailPageState createState() => _VerifyEmailPageState();
+  _ConfirmEmailPageState createState() => _ConfirmEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
+class _ConfirmEmailPageState extends State<ConfirmEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

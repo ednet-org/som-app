@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
-import 'package:som/ui/pages/customer_registration_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
@@ -98,7 +98,7 @@ class LoginState extends State<Login> {
             SizedBox(height: 5),
             ActionButton(
               onPressed: () {
-                CustomerRegistrationPage().launch(context);
+                context.beamToNamed('/customer/register');
               },
               textContent: static["reset.password"],
               primary: Theme.of(context).colorScheme.secondary,
@@ -115,7 +115,7 @@ class LoginState extends State<Login> {
             SizedBox(height: 5),
             ActionButton(
               onPressed: () {
-                CustomerRegistrationPage().launch(context);
+                context.beamToNamed('/customer/register');
               },
               textContent: static["signUp"],
               primary: Theme.of(context).colorScheme.tertiary,

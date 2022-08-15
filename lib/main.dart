@@ -18,22 +18,18 @@ import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_re
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
+import 'package:som/routes/beamer_provided_key.dart';
+import 'package:som/routes/locations/auth/auth_confirm_email_page_location.dart';
+import 'package:som/routes/locations/auth/auth_forgot_password_page_location.dart';
+import 'package:som/routes/locations/auth/auth_login_page_location.dart';
+import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
+import 'package:som/routes/locations/guest/customer_register_page_location.dart';
+import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
+import 'package:som/routes/locations/splash_page_beam_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/pages/customer/registration/thank_you_page.dart';
-import 'package:som/ui/pages/splash_page.dart';
-import 'package:som/ui/pages/verify_email.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';
-
-// Must be top-level function
-_parseAndDecode(String response) {
-  return jsonDecode(response);
-}
-
-parseJson(String text) {
-  return compute(_parseAndDecode, text);
-}
 
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -56,93 +52,48 @@ var loginService;
 var apiCompanyService;
 
 void main() async {
+  // nb_utils - Must be initialize before using shared preference
+  await initialize();
+
   final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
   final sharedPrefs = await prefsFuture;
-  num emailSeed = num.parse(sharedPrefs.getString('emailSeed') ?? "1");
-  appStore = Application(sharedPrefs, emailSeed);
+  appStore = Application();
 
   // dio perform awful if not spawn to own worker
   (api_instance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
       parseJson;
 
-  // final api = ChopperClient(
-  //   baseUrl: "https://som-userservice-dev-dm.azurewebsites.net/",
-  //   services: [
-  //     // Create and pass an instance of the generated service to the client
-  //     SubscriptionService.create(),
-  //     LoginService.create(),
-  //     ApiCompanyService.create(),
-  //   ],
-  //   converter: JsonSerializableConverter(),
-  //   errorConverter: JsonConverter(),
-  //   interceptors: [
-  //     TokenInterceptor(),
-  //     CORSInterceptor(),
-  //     HttpColorLoggingInterceptor(),
-  //   ],
-  // );
-  // subscriptionService = api.getService<SubscriptionService>();
-  // loginService = api.getService<LoginService>();
-  // apiCompanyService = api.getService<ApiCompanyService>();
-
-  darkTheme = await EdsAppTheme.som["dark"];
-  lightTheme = await EdsAppTheme.som["light"];
+  await initTheming();
 
   //region Entry Point
   WidgetsFlutterBinding.ensureInitialized();
-
-  // nb_utils - Must be initialize before using shared preference
-  await initialize();
-
-  // Lets start with default dark mode till we solve logo transparency
-  appStore.toggleDarkMode();
-  // appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
-
-  if (isMobile) {
-    // await Firebase.initializeApp();
-    //
-    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  }
-
+  // we do not need # in url
+  // Beamer.setPathUrlStrategy();
   runApp(MyApp());
   //endregion
 }
 
 class MyApp extends StatelessWidget {
-  final routerDelegate = BeamerDelegate(
-    initialPath: "/",
-    // locationBuilder: RoutesLocationBuilder(
-    //   routes: {
-    //     '/': (context, state, data) => SplashPage(appStore),
-    //     '/register': (context, state, data) => const CustomerRegistrationPage(),
-    //     '/login': (context, state, data) => Login(),
-    //     '/dashboard': (context, state, data) => DashboardPage(),
-    //   },
-    // ),
-    locationBuilder: (routeInformation, _) {
-      final route = routeInformation.location;
+  final beamerKey = BeamerProvidedKey();
 
-      if (route != null && route.contains('confirmEmail')) {
-        return EmailVerificationLocation(routeInformation);
-      } else {
-        return HomeLocation();
-      }
-      // switch (routeInformation.path) {
-      //   case '/':
-      //     return [
-      //       HomeLocation(
-      //           key: ValueKey('SplashPage'), child: SplashPage(appStore))
-      //     ];
-      //   default:
-      //     return const SplashPage(appStore);
-      // }
-    },
-  );
+  final routerDelegate = BeamerDelegate(
+      initialPath: '/splash',
+      transitionDelegate: const NoAnimationTransitionDelegate(),
+      locationBuilder: BeamerLocationBuilder(beamLocations: [
+        SplashPageBeamLocation(),
+        AuthLoginPageLocation(),
+        AuthConfirmEmailPageLocation(),
+        AuthForgotPasswordPageLocation(),
+        CustomerRegisterPageLocation(),
+        CustomerRegisterSuccessPageLocation(),
+        SmartOfferManagementPageLocation(),
+      ]));
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<BeamerProvidedKey>(create: (_) => beamerKey),
         Provider<Application>(create: (_) => appStore),
         Provider<ApiSubscriptionRepository>(
           create: (_) =>
@@ -162,7 +113,6 @@ class MyApp extends StatelessWidget {
       child: Observer(
         builder: (_) => MaterialApp.router(
           routeInformationParser: BeamerParser(),
-          routerDelegate: routerDelegate,
           // android back button behavior
           backButtonDispatcher:
               BeamerBackButtonDispatcher(delegate: routerDelegate),
@@ -176,186 +126,31 @@ class MyApp extends StatelessWidget {
           locale: Locale(appStore.selectedLanguage),
           supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-          // home: VerifyEmailPage(),
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
           theme: lightTheme,
           darkTheme: darkTheme,
           builder: scrollBehaviour(),
+          routerDelegate: routerDelegate,
         ),
       ),
     );
   }
 }
 
-class EmailVerificationState extends ChangeNotifier
-    with RouteInformationSerializable {
-  EmailVerificationState([String? token, String? email])
-      : _token = token,
-        _email = email;
+//region bootstrap
 
-  String? _token;
-  String? _email;
-
-  set email(String? email) {
-    if (email != null) {
-      _email = email;
-      notifyListeners();
-    }
-  }
-
-  String? get email => _email;
-
-  String? get token => _token;
-
-  set token(String? token) {
-    if (token != null) {
-      _token = token;
-      notifyListeners();
-    }
-  }
-
-  @override
-  fromRouteInformation(RouteInformation routeInformation) {
-    final uri = Uri.parse(routeInformation.location ?? '/');
-    if (uri.pathSegments.isNotEmpty) {
-      _token = uri.queryParameters['token'];
-      _email = uri.queryParameters['email'];
-    }
-    return this;
-  }
-
-  @override
-  RouteInformation toRouteInformation() {
-    String uriString = 'auth/confirmEmail';
-    if (_token != null) {
-      uriString += '?token=$_token';
-    }
-    if (_email != null) {
-      uriString += '&?email=$_email';
-    }
-    return RouteInformation(location: uriString.isEmpty ? '/' : uriString);
-  }
-
-  void updateWith(String token, String email) {
-    _token = token;
-    _email = email;
-    notifyListeners();
-  }
+// Must be top-level function
+_parseAndDecode(String response) {
+  return jsonDecode(response);
 }
 
-class EmailVerificationLocation extends BeamLocation<EmailVerificationState> {
-  EmailVerificationLocation(RouteInformation? routeInformation)
-      : super(routeInformation);
-
-  @override
-  EmailVerificationState createState(RouteInformation routeInformation) =>
-      EmailVerificationState().fromRouteInformation(routeInformation);
-
-  @override
-  void initState() {
-    super.initState();
-    state.addListener(notifyListeners);
-  }
-
-  @override
-  void updateState(RouteInformation routeInformation) {
-    final emailVerificationState =
-        EmailVerificationState().fromRouteInformation(routeInformation);
-    state.updateWith(
-        emailVerificationState.email, emailVerificationState.token);
-  }
-
-  @override
-  void disposeState() {
-    super.disposeState();
-    state.removeListener(notifyListeners);
-  }
-
-  @override
-  List<Pattern> get pathPatterns => ['/auth/confirmEmail'];
-
-  @override
-  List<BeamPage> buildPages(
-      BuildContext context, EmailVerificationState state) {
-    return [
-      BeamPage(
-        key: ValueKey('verify-email'),
-        title: 'Verify Email',
-        child: VerifyEmailPage(state.token, state.email),
-      ),
-    ];
-  }
+parseJson(String text) {
+  return compute(_parseAndDecode, text);
 }
 
-class HomeLocation extends BeamLocation<BeamState> {
-  HomeLocation({RouteInformation? routeInformation}) : super(routeInformation);
-
-  @override
-  List<String> get pathPatterns => [
-        '/',
-      ];
-
-  @override
-  List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    return [
-      BeamPage(
-        key: ValueKey('home'),
-        title: 'Home',
-        child: SplashPage(appStore),
-      ),
-      // if (state.uri.pathSegments.contains('books'))
-      //   BeamPage(
-      //     key: ValueKey('books'),
-      //     title: 'Books',
-      //     child: BooksScreen(),
-      //   ),
-      // if (state.pathParameters.containsKey('bookId'))
-      //   BeamPage(
-      //     key: ValueKey('book-${state.pathParameters['bookId']}'),
-      //     title: books.firstWhere(
-      //         (book) => book['id'] == state.pathParameters['bookId'])['title'],
-      //     child: BookDetailsScreen(
-      //       book: books.firstWhere(
-      //           (book) => book['id'] == state.pathParameters['bookId']),
-      //     ),
-      //   ),
-    ];
-  }
+Future<void> initTheming() async {
+  darkTheme = await EdsAppTheme.som["dark"];
+  lightTheme = await EdsAppTheme.som["light"];
 }
 
-class ThankYouPageLocation extends BeamLocation<BeamState> {
-  ThankYouPageLocation({RouteInformation? routeInformation})
-      : super(routeInformation);
-
-  @override
-  List<String> get pathPatterns => [
-        '/auth/register/success',
-      ];
-
-  @override
-  List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    return [
-      BeamPage(
-        key: ValueKey('thank you page'),
-        title: 'Thank you',
-        child: ThankYouPage(),
-      ),
-      // if (state.uri.pathSegments.contains('books'))
-      //   BeamPage(
-      //     key: ValueKey('books'),
-      //     title: 'Books',
-      //     child: BooksScreen(),
-      //   ),
-      // if (state.pathParameters.containsKey('bookId'))
-      //   BeamPage(
-      //     key: ValueKey('book-${state.pathParameters['bookId']}'),
-      //     title: books.firstWhere(
-      //         (book) => book['id'] == state.pathParameters['bookId'])['title'],
-      //     child: BookDetailsScreen(
-      //       book: books.firstWhere(
-      //           (book) => book['id'] == state.pathParameters['bookId']),
-      //     ),
-      //   ),
-    ];
-  }
-}
+//endregion

@@ -1,23 +1,21 @@
 import 'dart:async';
 
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/shared/som.dart';
+import 'package:som/routes/beamer_provided_key.dart';
+import 'package:som/routes/locations/auth/auth_login_page_location.dart';
+import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/pages/customer_login_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
-
-import '../smart_offer_management.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
-  Application appStore;
 
-  SplashPage(this.appStore);
+  SplashPage();
 
   @override
   _SplashPageState createState() => _SplashPageState();
@@ -40,17 +38,20 @@ class _SplashPageState extends State<SplashPage>
 
     await Future.delayed(Duration(seconds: 3));
 
-    if (!widget.appStore.isAuthenticated) {
-      return CustomerLoginPage().launch(context);
+    final appStore = Provider.of<Application>(context, listen: false);
+    if (appStore.isAuthenticated) {
+      context.beamTo(AuthLoginPageLocation());
+    } else {
+      context.beamTo(SmartOfferManagementPageLocation());
     }
-    return SmartOfferManagement().launch(context);
   }
 
   Widget build(BuildContext context) {
     final Som som = Provider.of<Som>(context);
-
+    final appStore = Provider.of<Application>(context);
+    final beamerKey = Provider.of<BeamerProvidedKey>(context);
     return Observer(
-      builder: (_) => !widget.appStore.isAuthenticated
+      builder: (_) => !appStore.isAuthenticated
           ? Scaffold(
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               body: Column(
@@ -80,7 +81,10 @@ class _SplashPageState extends State<SplashPage>
                 ],
               ),
             )
-          : SmartOfferManagement(),
+          : Beamer(
+              key: beamerKey,
+              routerDelegate: beamerKey.currentState!.routerDelegate,
+            ),
     );
   }
 }
