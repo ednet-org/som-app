@@ -1,9 +1,11 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
+import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/countries.dart';
@@ -121,7 +123,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 50.width,
                                 TextButton(
                                   onPressed: details.onStepCancel,
-                                  child: Text('CANCEL'),
+                                  child: Text('BACK'),
                                 ),
                               ],
                             ),
@@ -146,6 +148,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                         currStep = currStep - 1;
                       } else {
                         currStep = 0;
+                        context.beamTo(AuthLoginPageLocation());
                       }
                     });
                   },
