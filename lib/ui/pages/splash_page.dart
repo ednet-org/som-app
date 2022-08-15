@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage>
     await Future.delayed(Duration(seconds: 3));
 
     final appStore = Provider.of<Application>(context, listen: false);
-    if (appStore.isAuthenticated) {
+    if (!appStore.isAuthenticated) {
       context.beamTo(AuthLoginPageLocation());
     } else {
       context.beamTo(SmartOfferManagementPageLocation());
