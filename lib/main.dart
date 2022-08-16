@@ -13,6 +13,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
+import 'package:som/domain/core/model/user_account_confirmation/user_account_confirmation.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
@@ -108,6 +109,9 @@ class MyApp extends StatelessWidget {
         Provider<EmailLoginStore>(
             create: (_) =>
                 EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
+        Provider<UserAccountConfirmation>(
+            create: (_) => UserAccountConfirmation(
+                api_instance.getAuthenticationApi(), appStore)),
       ],
       child: Observer(
         builder: (_) => MaterialApp.router(

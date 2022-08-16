@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
+import 'package:som/routes/beamer_provided_key.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/utils/AppConstant.dart';
@@ -23,6 +24,7 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final emailLoginStore = Provider.of<EmailLoginStore>(context);
+    final BeamerProvidedKey beamer = Provider.of<BeamerProvidedKey>(context);
 
     changeStatusColor(Theme.of(context).colorScheme.primaryContainer);
     return Container(
@@ -33,7 +35,7 @@ class LoginState extends State<Login> {
         children: <Widget>[
           SizedBox(height: spacing_large),
           if (emailLoginStore.showWelcomeMessage) welcomeMessage(),
-          loginForm(emailLoginStore),
+          loginForm(emailLoginStore, beamer),
           SizedBox(
             height: 100,
           ),
@@ -43,7 +45,18 @@ class LoginState extends State<Login> {
     );
   }
 
-  loginForm(emailLoginStore) {
+  loginForm(emailLoginStore, BeamerProvidedKey beamer) {
+    // final token =
+    //     (beamer.currentState as BeamState).queryParameters['token'] ?? '';
+    // final email =
+    //     (beamer.currentState as BeamState).queryParameters['email'] ?? '';
+    // print('token: $token');
+    // print('email: $email');
+
+    final token =
+        'CfDJ8J2Uib2U17tAiY%2FLxD0rccbwLNDz4wdIEsE%2FCNGBed4fGH%2BIlSNXSl9yFa0RAYTFSnIjliuHOB9DW0IDovgxHI%2BPAZhwPEHG%2BRSEC2AxF5W3x5O2My2%2Bx8KaBI%2FJpNEvgU9bp2pEYQezanhEQuzV%2B5DnOaKQ3qMj%2Fpd3984s4dqvtTjd0Eef5ViHC%2FLeWLsjkLSMz1TlV7vPjtm5zXN5LhhxSSRLAuM5x2RE7aySkUREZgfKIXm4pdKLfzZvLmWYTg%3D%3D';
+    final email = 'slavisam@gmail.com';
+
     return Observer(
       builder: (_) => Container(
         width: 300,
@@ -118,6 +131,16 @@ class LoginState extends State<Login> {
                 context.beamToNamed('/customer/register');
               },
               textContent: static["signUp"],
+              primary: Theme.of(context).colorScheme.tertiary,
+              onPrimary: Theme.of(context).colorScheme.onTertiary,
+            ),
+            SizedBox(height: 50),
+            ActionButton(
+              onPressed: () {
+                context.beamToNamed(
+                    '/auth/confirmEmail?token=${token}&email=${email}');
+              },
+              textContent: "Verify E-mail",
               primary: Theme.of(context).colorScheme.tertiary,
               onPrimary: Theme.of(context).colorScheme.onTertiary,
             ),

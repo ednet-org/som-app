@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/pages/confirm-email.dart';
+import 'package:som/ui/pages/confirm-email_page.dart';
 
 class AuthConfirmEmailPageNotifier extends ChangeNotifier
     with RouteInformationSerializable {
