@@ -98,7 +98,7 @@ class LoginState extends State<Login> {
             SizedBox(height: 5),
             ActionButton(
               onPressed: () {
-                context.beamToNamed('/customer/register');
+                context.beamToNamed('/customer/forgotten-password');
               },
               textContent: static["reset.password"],
               primary: Theme.of(context).colorScheme.secondary,

@@ -119,7 +119,9 @@ flutter:
 
   assets:
     - assets/
+    - images/
     - images/som/
+    - images/som/icons/
     - lang/en.json
     - lang/de.json
     - lang/sr.json

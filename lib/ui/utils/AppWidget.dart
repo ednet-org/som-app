@@ -142,32 +142,44 @@ Widget settingItem(context, String text,
 Widget appBarTitleWidget(context, String title,
     {Color? color, Color? textColor}) {
   final appStore = Provider.of<Application>(context);
-
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    height: 60,
-    child: Row(
-      children: <Widget>[
-        GestureDetector(
-            onTap: () {
-              appStore.toggleDarkMode();
-            },
-            child: Container(
-              alignment: Alignment.center,
-              child: Image.asset(
-                'images/som/logo.png',
-                height: 80,
-                fit: BoxFit.fitHeight,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
-            )),
-        SizedBox(width: 15),
-        Text(
-          title,
-          maxLines: 1,
-        ).expand(),
-      ],
-    ),
+  print(MediaQuery.of(context).size.width);
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      print(constraints.maxWidth);
+      print(constraints.maxHeight);
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        // height: 60,
+        child: Row(
+          children: <Widget>[
+            GestureDetector(
+                onTap: () {
+                  appStore.toggleDarkMode();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'images/som/logo.png',
+                    height: 80,
+                    fit: BoxFit.fitHeight,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                )),
+            SizedBox(width: 15),
+            constraints.maxWidth > 200
+                ? Text(
+                    title,
+                    maxLines: 3,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: textColor ??
+                              Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ).expand()
+                : Container(),
+          ],
+        ),
+      );
+    },
   );
 }
 

@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "45.0.0"
+    version: "46.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.0"
+    version: "4.6.0"
   animations:
     dependency: "direct main"
     description:
@@ -56,7 +56,7 @@ packages:
       name: beamer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -441,7 +441,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.7.0"
+    version: "9.7.1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -638,7 +638,7 @@ packages:
       name: google_mobile_ads
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -1205,7 +1205,7 @@ packages:
       name: signature
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "5.2.1"
   simple_animations:
     dependency: "direct main"
     description:
@@ -1456,6 +1456,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.12"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.3"
   watcher:
     dependency: transitive
     description:
@@ -1483,7 +1490,7 @@ packages:
       name: webview_flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.9.3"
+    version: "2.9.5"
   webview_flutter_platform_interface:
     dependency: transitive
     description:

@@ -15,6 +15,7 @@ class InquiryBeamLocation extends BeamLocation<BeamState> {
 
   @override
   List<Pattern> get pathPatterns => [
-        'iInquiry',
+        'inquiry',
+        'inquiries',
       ];
 }

@@ -4,6 +4,7 @@ import 'locations/authenticated/authenticated.dart';
 
 final authenticatedPagesDelegate = BeamerDelegate(
   updateParent: false,
+  transitionDelegate: const NoAnimationTransitionDelegate(),
   locationBuilder: BeamerLocationBuilder(
     beamLocations: [
       AdsBeamLocation(),

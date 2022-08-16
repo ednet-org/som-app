@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
@@ -36,7 +35,7 @@ final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 final api_instance = Openapi(
     dio: Dio(BaseOptions(
         baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
-      ..interceptors.add(PrettyDioLogger())
+      // ..interceptors.add(PrettyDioLogger())
       ..interceptors.add(CorsInterceptor())
       ..interceptors.add(CurlLoggerDioInterceptor(
           printOnSuccess: true, convertFormData: false)),

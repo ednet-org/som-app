@@ -19,18 +19,21 @@ class SomApplication extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(children: [
-        CircleAvatar(
-          backgroundImage:
-              Image.network('https://picsum.photos/id/2/60/60').image,
-        ).paddingRight(10.0),
-        // TODO: mobile - ContainerX is again broken
         Text(
           'Fritzchen der Käufer',
           style: Theme.of(context)
               .textTheme
               .titleSmall
-              ?.copyWith(color: Theme.of(context).colorScheme.onTertiary),
+              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
         ).paddingRight(10),
+        Container(
+          width: 60,
+          child: CircleAvatar(
+            backgroundImage:
+                Image.network('https://picsum.photos/id/2/80/80').image,
+          ).paddingRight(10.0),
+        ),
+        // TODO: mobile - ContainerX is again broken
       ]),
     );
   }
@@ -48,27 +51,37 @@ class SomApplication extends StatelessWidget {
         appBar: AppBar(
           title: appBarTitleWidget(context, 'Smart Offer Management'),
           actions: [
-            buildPopupMenuButton(context, appStore),
             AppBarButton(
-              child: Text('Company management'),
+              title: 'Inquiries',
+              child: AppBarIcons.inquiry.value,
+              beamer: beamer,
+              uri: '/inquiries',
+            ),
+            AppBarButton(
+              title: 'Company',
+              child: AppBarIcons.company.value,
               beamer: beamer,
               uri: '/company',
             ),
             AppBarButton(
-              child: Text('User management'),
+              title: 'User',
+              child: AppBarIcons.user.value,
               beamer: beamer,
               uri: '/user',
             ),
             AppBarButton(
-              child: Text('Ads management'),
+              title: 'Ads',
+              child: AppBarIcons.ads.value,
               beamer: beamer,
               uri: '/ads',
             ),
             AppBarButton(
-              child: Text('Statistics'),
+              title: 'Statistics',
+              child: AppBarIcons.statistics.value,
               beamer: beamer,
               uri: '/statistics',
-            )
+            ),
+            buildPopupMenuButton(context, appStore),
           ],
           automaticallyImplyLeading: false,
         ),
