@@ -39,7 +39,7 @@ class SomTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+            color: onPrimary ?? Theme.of(context).colorScheme.primary,
           ),
       onChanged: onChanged,
       initialValue: value,

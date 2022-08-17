@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/components/funny_logo.dart';
 import 'package:som/ui/components/layout/MainBody.dart';
 import 'package:som/ui/pages/customer/registration/RegistrationStepper.dart';
 
@@ -19,6 +20,10 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
       body: MainBody(
         child: Column(
           children: [
+            FunnyLogo(
+              primary: Theme.of(context).colorScheme.primaryContainer,
+              onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
             RegistrationStepper(),
           ],
         ),

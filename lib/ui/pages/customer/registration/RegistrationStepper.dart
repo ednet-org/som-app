@@ -48,7 +48,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           Text(
             'Customer registration',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
+                color: Theme.of(context).colorScheme.onPrimaryContainer),
           ),
           40.height,
           Observer(builder: (_) {
