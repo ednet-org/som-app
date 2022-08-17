@@ -49,7 +49,7 @@ class SomTextInput extends StatelessWidget {
       autocorrect: autocorrect,
       decoration: InputDecoration(
           labelStyle: TextStyle(
-            color: onPrimary ?? Theme.of(context).colorScheme.primaryContainer,
+            color: onPrimary ?? Theme.of(context).colorScheme.primary,
           ),
           focusColor: primary ?? Theme.of(context).colorScheme.primaryContainer,
           focusedBorder: UnderlineInputBorder(
