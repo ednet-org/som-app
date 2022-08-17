@@ -19,7 +19,7 @@ abstract class _EmailLoginStoreBase with Store {
   bool isInvalidCredentials = false;
 
   @observable
-  Object? errorMessage = false;
+  String errorMessage = '';
 
   @observable
   String welcomeMessage = "";
@@ -29,6 +29,7 @@ abstract class _EmailLoginStoreBase with Store {
 
   @action
   Future login() async {
+    errorMessage = '';
     print(email);
     isLoading = true;
     var authReq = AuthenticateDtoBuilder()
@@ -49,12 +50,12 @@ abstract class _EmailLoginStoreBase with Store {
       }
 
       if (response.statusCode != 200) {
-        errorMessage = response.statusMessage;
+        errorMessage = response.statusMessage ?? 'Something went wrong';
         isInvalidCredentials = true;
         print(response.statusMessage);
       }
     }).catchError((error) {
-      errorMessage = error.response.data;
+      errorMessage = error.response.data["message"] ?? 'Something went wrong';
       isInvalidCredentials = true;
       isLoading = false;
       appStore.logout();

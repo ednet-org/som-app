@@ -54,13 +54,13 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
       Atom(name: '_EmailLoginStoreBase.errorMessage', context: context);
 
   @override
-  Object? get errorMessage {
+  String get errorMessage {
     _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
-  set errorMessage(Object? value) {
+  set errorMessage(String value) {
     _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
     });
