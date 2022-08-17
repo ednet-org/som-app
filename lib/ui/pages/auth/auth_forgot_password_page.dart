@@ -40,45 +40,51 @@ class AuthForgotPasswordPage extends StatelessWidget {
                           ),
                         ],
                       )
-                    : Column(children: [
-                        Text('Forgotten Password?',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    : !authForgotPasswordState.isLinkSent
+                        ? Column(children: [
+                            Text('Forgotten Password?',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onErrorContainer,
                                     )),
-                        Text(
-                            'Please enter your e-mail to receive instructions to reset password.',
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                            Text(
+                                'Please enter your e-mail to receive instructions to reset password.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onErrorContainer,
                                     )),
-                        SomTextInput(
-                          primary: Theme.of(context).colorScheme.onError,
-                          onPrimary: Theme.of(context).colorScheme.error,
-                          label: 'Email',
-                          value: authForgotPasswordState.email,
-                          required: true,
-                          icon: Icons.email_outlined,
-                          onChanged: (value) =>
-                              authForgotPasswordState.setEmail(value),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ActionButton(
-                          onPrimary:
-                              Theme.of(context).colorScheme.errorContainer,
-                          primary: Theme.of(context).colorScheme.error,
-                          textContent: 'Send reset link',
-                          onPressed: () {
-                            authForgotPasswordState.sendResetLink();
-                          },
-                        ),
-                      ]),
+                            SomTextInput(
+                              primary: Theme.of(context).colorScheme.onError,
+                              onPrimary: Theme.of(context).colorScheme.error,
+                              label: 'Email',
+                              value: authForgotPasswordState.email,
+                              required: true,
+                              icon: Icons.email_outlined,
+                              onChanged: (value) =>
+                                  authForgotPasswordState.setEmail(value),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ActionButton(
+                              onPrimary:
+                                  Theme.of(context).colorScheme.errorContainer,
+                              primary: Theme.of(context).colorScheme.error,
+                              textContent: 'Send reset link',
+                              onPressed: () {
+                                authForgotPasswordState.sendResetLink();
+                              },
+                            ),
+                          ])
+                        : Container(),
                 SizedBox(
                   height: 50,
                 ),
@@ -143,6 +149,5 @@ class AuthForgotPasswordPage extends StatelessWidget {
         ),
       ),
     );
-    return Container();
   }
 }

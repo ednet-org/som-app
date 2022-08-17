@@ -49,25 +49,25 @@ class SomTextInput extends StatelessWidget {
       autocorrect: autocorrect,
       decoration: InputDecoration(
           labelStyle: TextStyle(
-            color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+            color: onPrimary ?? Theme.of(context).colorScheme.primaryContainer,
           ),
-          focusColor: primary ?? Theme.of(context).colorScheme.primary,
+          focusColor: primary ?? Theme.of(context).colorScheme.primaryContainer,
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+              color: onPrimary ?? Theme.of(context).colorScheme.primary,
             ),
           ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+              color: onPrimary ?? Theme.of(context).colorScheme.primary,
             ),
           ),
-          prefixIconColor: primary ?? Theme.of(context).colorScheme.onPrimary,
-          suffixIconColor: primary ?? Theme.of(context).colorScheme.onPrimary,
+          prefixIconColor: primary ?? Theme.of(context).colorScheme.primary,
+          suffixIconColor: primary ?? Theme.of(context).colorScheme.primary,
           labelText: '${label} ${required ? "*" : ""}',
           hintText: hint,
           icon: Icon(icon,
-              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary),
+              color: onPrimary ?? Theme.of(context).colorScheme.primary),
           suffixIcon: isPassword ? obscureTextIcon() : null),
     );
   }
