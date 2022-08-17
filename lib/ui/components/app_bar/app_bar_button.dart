@@ -45,34 +45,7 @@ class _AppBarButtonState extends State<AppBarButton> {
               .beamToNamed(widget.uri),
           tooltip: widget.title,
           iconSize: 50,
-        )
-
-        /*
-
-      GestureDetector(
-        onTap: () =>
-            widget.beamer.currentState?.routerDelegate.beamToNamed(widget.uri),
-        child: Row(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              padding: EdgeInsets.all(10),
-              child: ImageIcon(
-                AssetImage(widget.child),
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-            ),
-            Text(widget.title,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.primaryContainer)),
-          ],
-        ),
-        // child: widget.child,
-      )
-
-       */
-        );
+        ));
   }
 
   @override

@@ -45,10 +45,10 @@ class LoginState extends State<Login> {
   }
 
   loginForm(emailLoginStore, BeamerProvidedKey beamer) {
-    final token =
-        'CfDJ8J2Uib2U17tAiY%2FLxD0rccZMwUrnU%2BYkeJWbIBuB7DUTAZulRirWGloNQDeGvZBMHpGW0Tdrhd0fNXN8HZmNvfihB9NrvY4w4Q70%2FJKTGrGSJsL47yyJmrTEQbNp0ytkpyQMMMu2FoOCCgYaRacHbX9pHVjWXvC4JG2mvjw%2BPUMKG%2F2ScaXwSg%2F5zbKRbnAq689zliNSIuHbcyq3vsQhYJrw%2FOgNUGAx5C1e3M94aIr37AC4VjxkqQdCr1HmLXQmIw%3D%3D';
-
-    final email = 'slavisam@gmail.com';
+    // final token =
+    //     'CfDJ8J2Uib2U17tAiY%2FLxD0rccZMwUrnU%2BYkeJWbIBuB7DUTAZulRirWGloNQDeGvZBMHpGW0Tdrhd0fNXN8HZmNvfihB9NrvY4w4Q70%2FJKTGrGSJsL47yyJmrTEQbNp0ytkpyQMMMu2FoOCCgYaRacHbX9pHVjWXvC4JG2mvjw%2BPUMKG%2F2ScaXwSg%2F5zbKRbnAq689zliNSIuHbcyq3vsQhYJrw%2FOgNUGAx5C1e3M94aIr37AC4VjxkqQdCr1HmLXQmIw%3D%3D';
+    //
+    // final email = 'slavisam@gmail.com';
 
     return Observer(
       builder: (_) => Container(
@@ -127,16 +127,16 @@ class LoginState extends State<Login> {
               primary: Theme.of(context).colorScheme.tertiary,
               onPrimary: Theme.of(context).colorScheme.onTertiary,
             ),
-            SizedBox(height: 50),
-            ActionButton(
-              onPressed: () {
-                context.beamToNamed(
-                    '/auth/confirmEmail?token=${token}&email=${email}');
-              },
-              textContent: "Verify E-mail",
-              primary: Theme.of(context).colorScheme.tertiary,
-              onPrimary: Theme.of(context).colorScheme.onTertiary,
-            ),
+            // SizedBox(height: 50),
+            // ActionButton(
+            //   onPressed: () {
+            //     context.beamToNamed(
+            //         '/auth/confirmEmail?token=${token}&email=${email}');
+            //   },
+            //   textContent: "Verify E-mail",
+            //   primary: Theme.of(context).colorScheme.tertiary,
+            //   onPrimary: Theme.of(context).colorScheme.onTertiary,
+            // ),
           ],
         ),
       ),
