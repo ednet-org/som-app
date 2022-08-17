@@ -10,19 +10,19 @@ import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 
-class ConfirmEmailPage extends StatefulWidget {
+class AuthConfirmEmailPage extends StatefulWidget {
   static String tag = '/ConfirmEmailPage';
 
   final String? email;
   final String? token;
 
-  ConfirmEmailPage(this.token, this.email);
+  AuthConfirmEmailPage(this.token, this.email);
 
   @override
-  State<ConfirmEmailPage> createState() => _ConfirmEmailPageState();
+  State<AuthConfirmEmailPage> createState() => _AuthConfirmEmailPageState();
 }
 
-class _ConfirmEmailPageState extends State<ConfirmEmailPage>
+class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
