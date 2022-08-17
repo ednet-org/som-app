@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/template_storage/main/store/application.dart';
 
 part 'user_account_confirmation.g.dart';
@@ -11,8 +12,10 @@ class UserAccountConfirmation = _UserAccountConfirmationBase
 abstract class _UserAccountConfirmationBase with Store {
   final AuthenticationApi authService;
   final Application appStore;
+  final EmailLoginStore emailLoginStore;
 
-  _UserAccountConfirmationBase(this.authService, this.appStore);
+  _UserAccountConfirmationBase(
+      this.authService, this.appStore, this.emailLoginStore);
 
   @observable
   String token = '';
@@ -25,6 +28,9 @@ abstract class _UserAccountConfirmationBase with Store {
 
   @observable
   bool isConfirming = false;
+
+  @observable
+  bool isLoggingIn = false;
 
   @observable
   bool isConfirmed = false;
@@ -55,7 +61,7 @@ abstract class _UserAccountConfirmationBase with Store {
   }
 
   @action
-  Future<dynamic> setUserPassword() async {
+  Future<dynamic> setUserPassword(contextCallback) async {
     errorMessage = '';
 
     if (!isConfirmed || isConfirming || resetPasswordToken.isEmpty) {
@@ -84,14 +90,22 @@ abstract class _UserAccountConfirmationBase with Store {
       authService
           .authResetPasswordPost(
               resetPasswordDto: resetPasswordDtoBuilder.build())
-          .then((response) {
+          .then((response) async {
         if (response.statusCode == 200) {
-          appStore.login(Authorization(
-            token: (response.data as dynamic).token,
-            refreshToken: (response.data as dynamic).refreshToken,
-          ));
+          final authenticateDtoBuilder = AuthenticateDtoBuilder()
+            ..email = email
+            ..password = password;
           isPasswordSet = true;
           isSettingPassword = false;
+          authService.authLoginPost(
+              authenticateDto: authenticateDtoBuilder.build());
+          emailLoginStore.setPassword(password);
+          emailLoginStore.setEmail(email);
+          isLoggingIn = true;
+          await emailLoginStore.login().then((_) {
+            isLoggingIn = false;
+            contextCallback();
+          });
         } else {
           errorMessage = 'Some error occurred';
         }
@@ -104,12 +118,20 @@ abstract class _UserAccountConfirmationBase with Store {
 
   @action
   Future<dynamic> confirmEmail() async {
+    // emailLoginStore.setPassword('Admin123!');
+    // emailLoginStore.setEmail('slavisam@gmail.com');
+    // isLoggingIn = true;
+    // await emailLoginStore.login();
+    //
+    // return;
     if (isConfirmed || isConfirming) {
       return;
     }
 
     isConfirming = true;
 
+    print(token);
+    print(email);
     if (token.isNotEmpty && email.isNotEmpty) {
       authService
           .authConfirmEmailGet(token: token, email: email)

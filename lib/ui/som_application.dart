@@ -41,10 +41,7 @@ class SomApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     final beamer = Provider.of<BeamerProvidedKey>(context);
-    final isHome =
-        (context.currentBeamLocation.state as BeamState).uri.path == '/';
 
-    print('isHome: $isHome');
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,

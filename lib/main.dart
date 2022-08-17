@@ -109,9 +109,11 @@ class MyApp extends StatelessWidget {
         Provider<EmailLoginStore>(
             create: (_) =>
                 EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
-        Provider<UserAccountConfirmation>(
-            create: (_) => UserAccountConfirmation(
-                api_instance.getAuthenticationApi(), appStore)),
+        ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
+            update: (_, emailLoginStore, __) => UserAccountConfirmation(
+                api_instance.getAuthenticationApi(),
+                appStore,
+                emailLoginStore)),
       ],
       child: Observer(
         builder: (_) => MaterialApp.router(

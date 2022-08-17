@@ -102,7 +102,7 @@ extension AppBarIconsExtension on AppBarIcons {
         return "images/som/icons/ads_icon_outlined.png";
 
       case AppBarIcons.inquiry:
-        return "images/som/icons/inquiries_icon_outlined.png";
+        return "images/som/icons/inquiries_icon_outlined_sec.png";
 
       case AppBarIcons.offer:
         return "images/som/icons/offer_icon_outlined.png";

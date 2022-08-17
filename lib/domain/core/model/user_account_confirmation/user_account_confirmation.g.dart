@@ -74,6 +74,22 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
+  late final _$isLoggingInAtom =
+      Atom(name: '_UserAccountConfirmationBase.isLoggingIn', context: context);
+
+  @override
+  bool get isLoggingIn {
+    _$isLoggingInAtom.reportRead();
+    return super.isLoggingIn;
+  }
+
+  @override
+  set isLoggingIn(bool value) {
+    _$isLoggingInAtom.reportWrite(value, super.isLoggingIn, () {
+      super.isLoggingIn = value;
+    });
+  }
+
   late final _$isConfirmedAtom =
       Atom(name: '_UserAccountConfirmationBase.isConfirmed', context: context);
 
@@ -175,8 +191,9 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
       context: context);
 
   @override
-  Future<dynamic> setUserPassword() {
-    return _$setUserPasswordAsyncAction.run(() => super.setUserPassword());
+  Future<dynamic> setUserPassword(dynamic contextCallback) {
+    return _$setUserPasswordAsyncAction
+        .run(() => super.setUserPassword(contextCallback));
   }
 
   late final _$confirmEmailAsyncAction = AsyncAction(
@@ -220,6 +237,7 @@ token: ${token},
 resetPasswordToken: ${resetPasswordToken},
 email: ${email},
 isConfirming: ${isConfirming},
+isLoggingIn: ${isLoggingIn},
 isConfirmed: ${isConfirmed},
 isSettingPassword: ${isSettingPassword},
 isPasswordSet: ${isPasswordSet},

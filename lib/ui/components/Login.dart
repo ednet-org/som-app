@@ -1,5 +1,4 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -46,15 +45,9 @@ class LoginState extends State<Login> {
   }
 
   loginForm(emailLoginStore, BeamerProvidedKey beamer) {
-    // final token =
-    //     (beamer.currentState as BeamState).queryParameters['token'] ?? '';
-    // final email =
-    //     (beamer.currentState as BeamState).queryParameters['email'] ?? '';
-    // print('token: $token');
-    // print('email: $email');
-
     final token =
-        'CfDJ8J2Uib2U17tAiY%2FLxD0rccbwLNDz4wdIEsE%2FCNGBed4fGH%2BIlSNXSl9yFa0RAYTFSnIjliuHOB9DW0IDovgxHI%2BPAZhwPEHG%2BRSEC2AxF5W3x5O2My2%2Bx8KaBI%2FJpNEvgU9bp2pEYQezanhEQuzV%2B5DnOaKQ3qMj%2Fpd3984s4dqvtTjd0Eef5ViHC%2FLeWLsjkLSMz1TlV7vPjtm5zXN5LhhxSSRLAuM5x2RE7aySkUREZgfKIXm4pdKLfzZvLmWYTg%3D%3D';
+        'CfDJ8J2Uib2U17tAiY%2FLxD0rccZMwUrnU%2BYkeJWbIBuB7DUTAZulRirWGloNQDeGvZBMHpGW0Tdrhd0fNXN8HZmNvfihB9NrvY4w4Q70%2FJKTGrGSJsL47yyJmrTEQbNp0ytkpyQMMMu2FoOCCgYaRacHbX9pHVjWXvC4JG2mvjw%2BPUMKG%2F2ScaXwSg%2F5zbKRbnAq689zliNSIuHbcyq3vsQhYJrw%2FOgNUGAx5C1e3M94aIr37AC4VjxkqQdCr1HmLXQmIw%3D%3D';
+
     final email = 'slavisam@gmail.com';
 
     return Observer(
