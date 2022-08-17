@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:som/ui/pages/user/user_app_body.dart';
 
 class UserBeamLocation extends BeamLocation<BeamState> {
   @override
@@ -8,7 +9,7 @@ class UserBeamLocation extends BeamLocation<BeamState> {
       BeamPage(
         key: ValueKey('User page'),
         title: 'User',
-        child: Text('User'),
+        child: UserAppBody(),
       ),
     ];
   }

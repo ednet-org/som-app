@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:som/ui/pages/statistics/statistics_app_body.dart';
 
 class StatisticsBeamLocation extends BeamLocation<BeamState> {
   @override
@@ -8,7 +9,7 @@ class StatisticsBeamLocation extends BeamLocation<BeamState> {
       BeamPage(
         key: ValueKey('Statistics page'),
         title: 'Statistics',
-        child: Text('Statistics'),
+        child: StatisticsAppBody(),
       ),
     ];
   }

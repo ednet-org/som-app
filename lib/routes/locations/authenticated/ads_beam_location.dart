@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:som/ui/pages/ads/ads_app_body.dart';
 
 class AdsBeamLocation extends BeamLocation<BeamState> {
   @override
@@ -8,7 +9,7 @@ class AdsBeamLocation extends BeamLocation<BeamState> {
       BeamPage(
         key: ValueKey('ads page'),
         title: 'Ads',
-        child: Text('Ads'),
+        child: AdsAppBody(),
       ),
     ];
   }
