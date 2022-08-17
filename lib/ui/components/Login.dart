@@ -56,7 +56,7 @@ class LoginState extends State<Login> {
         child: Column(
           children: [
             SomTextInput(
-              label: 'User name',
+              label: 'User e-mail',
               icon: Icons.email_outlined,
               hint: 'usually your email',
               value: emailLoginStore.email,
@@ -104,7 +104,7 @@ class LoginState extends State<Login> {
             SizedBox(height: 5),
             ActionButton(
               onPressed: () {
-                context.beamToNamed('/customer/forgotten-password');
+                context.beamToNamed('/auth/forgot-password');
               },
               textContent: static["reset.password"],
               primary: Theme.of(context).colorScheme.secondary,

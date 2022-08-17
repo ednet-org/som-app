@@ -16,6 +16,7 @@ import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/domain/core/model/user_account_confirmation/user_account_confirmation.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
+import 'package:som/domain/model/customer-management/auth_forgot_password_page_state.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes/beamer_provided_key.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<AuthForgotPasswordPageState>(
+            create: (_) => AuthForgotPasswordPageState(
+                api_instance.getAuthenticationApi())),
         Provider<BeamerProvidedKey>(create: (_) => beamerKey),
         Provider<Application>(create: (_) => appStore),
         Provider<ApiSubscriptionRepository>(

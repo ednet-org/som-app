@@ -26,7 +26,7 @@ class AuthLoginPage extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: spacing_large),
-                      FunnyLogo(150.0),
+                      FunnyLogo(height: 150.0),
                       Text('Smart offer management'.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme

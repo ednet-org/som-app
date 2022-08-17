@@ -14,6 +14,9 @@ class SomTextInput extends StatelessWidget {
   final onToggleShowPassword;
   final bool required;
 
+  final Color? primary;
+  final Color? onPrimary;
+
   const SomTextInput({
     Key? key,
     this.label,
@@ -28,11 +31,16 @@ class SomTextInput extends StatelessWidget {
     this.onToggleShowPassword,
     this.required = false,
     this.isPassword = false,
+    this.primary,
+    this.onPrimary,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+          ),
       onChanged: onChanged,
       initialValue: value,
       keyboardType: keyboardType,
@@ -40,9 +48,26 @@ class SomTextInput extends StatelessWidget {
       obscureText: isPassword && showPassword ? false : isPassword,
       autocorrect: autocorrect,
       decoration: InputDecoration(
+          labelStyle: TextStyle(
+            color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+          ),
+          focusColor: primary ?? Theme.of(context).colorScheme.primary,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+          prefixIconColor: primary ?? Theme.of(context).colorScheme.onPrimary,
+          suffixIconColor: primary ?? Theme.of(context).colorScheme.onPrimary,
           labelText: '${label} ${required ? "*" : ""}',
           hintText: hint,
-          icon: Icon(icon),
+          icon: Icon(icon,
+              color: onPrimary ?? Theme.of(context).colorScheme.onPrimary),
           suffixIcon: isPassword ? obscureTextIcon() : null),
     );
   }

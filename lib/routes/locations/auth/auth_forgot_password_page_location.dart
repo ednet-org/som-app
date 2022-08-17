@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:som/ui/pages/auth/auth_forgot_password_page.dart';
 
 class AuthForgotPasswordPageLocation extends BeamLocation<BeamState> {
   @override
@@ -18,13 +19,4 @@ class AuthForgotPasswordPageLocation extends BeamLocation<BeamState> {
   List<Pattern> get pathPatterns => [
         '/auth/forgot-password',
       ];
-}
-
-class AuthForgotPasswordPage extends StatelessWidget {
-  const AuthForgotPasswordPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(width: 350, child: Text('Forgot Password'));
-  }
 }
