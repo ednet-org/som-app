@@ -95,6 +95,7 @@ class AuthForgotPasswordPage extends StatelessWidget {
                             height: 20,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Link is sent',
                                   style: Theme.of(context)
