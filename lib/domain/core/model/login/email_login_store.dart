@@ -55,7 +55,7 @@ abstract class _EmailLoginStoreBase with Store {
         print(response.statusMessage);
       }
     }).catchError((error) {
-      errorMessage = error.response.data["message"] ?? 'Something went wrong';
+      errorMessage = error.response?.data["message"] ?? 'Something went wrong';
       isInvalidCredentials = true;
       isLoading = false;
       appStore.logout();
