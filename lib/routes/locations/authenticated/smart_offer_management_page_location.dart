@@ -1,6 +1,5 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/som_application.dart';
 
 class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
@@ -17,16 +16,6 @@ class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
         title: 'Smart Offer Management',
         child: SomApplication(),
       ),
-      if (isCompanyLocation)
-        BeamPage(
-          key: ValueKey('company smart offer management page'),
-          title: 'Smart Offer Management',
-          child: AppBody(
-            contextMenu: Text('Company'),
-            leftSplit: Text('Company thingy'),
-            rightSplit: Text('Company thingy'),
-          ),
-        ),
     ];
   }
 

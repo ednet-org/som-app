@@ -5,11 +5,12 @@ import 'locations/authenticated/authenticated.dart';
 final authenticatedPagesDelegate = BeamerDelegate(
   updateParent: false,
   transitionDelegate: const NoAnimationTransitionDelegate(),
+  initialPath: '/inquiries',
   locationBuilder: BeamerLocationBuilder(
     beamLocations: [
+      InquiryBeamLocation(),
       AdsBeamLocation(),
       CompanyBeamLocation(),
-      InquiryBeamLocation(),
       StatisticsBeamLocation(),
       UserBeamLocation(),
     ],

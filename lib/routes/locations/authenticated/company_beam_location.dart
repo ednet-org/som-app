@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:som/ui/pages/company/company_app_body.dart';
 
 class CompanyBeamLocation extends BeamLocation<BeamState> {
   CompanyBeamLocation({RouteInformation? routeInformation})
@@ -16,20 +17,8 @@ class CompanyBeamLocation extends BeamLocation<BeamState> {
       BeamPage(
         key: ValueKey('company page'),
         title: 'Company',
-        child: CompanyPage(),
+        child: CompanyAppBody(),
       ),
     ];
-  }
-}
-
-class CompanyPage extends StatelessWidget {
-  const CompanyPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 350,
-      child: Text('Moin!'),
-    );
   }
 }
