@@ -118,12 +118,6 @@ abstract class _UserAccountConfirmationBase with Store {
 
   @action
   Future<dynamic> confirmEmail() async {
-    // emailLoginStore.setPassword('Admin123!');
-    // emailLoginStore.setEmail('slavisam@gmail.com');
-    // isLoggingIn = true;
-    // await emailLoginStore.login();
-    //
-    // return;
     if (isConfirmed || isConfirming) {
       return;
     }
