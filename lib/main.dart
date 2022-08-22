@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:nested/nested.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
@@ -93,32 +94,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<AuthForgotPasswordPageState>(
-            create: (_) => AuthForgotPasswordPageState(
-                api_instance.getAuthenticationApi())),
-        Provider<BeamerProvidedKey>(create: (_) => beamerKey),
-        Provider<Application>(create: (_) => appStore),
-        Provider<ApiSubscriptionRepository>(
-          create: (_) =>
-              ApiSubscriptionRepository(api_instance.getSubscriptionsApi()),
-        ),
-        ProxyProvider<ApiSubscriptionRepository, Som>(
-            update: (_, apiSubscriptionRepository, __) =>
-                Som(apiSubscriptionRepository)
-                  ..populateAvailableSubscriptions()),
-        ProxyProvider<Som, RegistrationRequest>(
-            update: (_, som, __) => RegistrationRequest(som,
-                api_instance.getCompaniesApi(), appStore, sharedPreferences)),
-        Provider<EmailLoginStore>(
-            create: (_) =>
-                EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
-        ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
-            update: (_, emailLoginStore, __) => UserAccountConfirmation(
-                api_instance.getAuthenticationApi(),
-                appStore,
-                emailLoginStore)),
-      ],
+      providers: getProviders,
       child: Observer(
         builder: (_) => MaterialApp.router(
           routeInformationParser: BeamerParser(),
@@ -143,6 +119,32 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<SingleChildWidget> get getProviders {
+    return [
+      Provider<AuthForgotPasswordPageState>(
+          create: (_) =>
+              AuthForgotPasswordPageState(api_instance.getAuthenticationApi())),
+      Provider<BeamerProvidedKey>(create: (_) => beamerKey),
+      Provider<Application>(create: (_) => appStore),
+      Provider<ApiSubscriptionRepository>(
+        create: (_) =>
+            ApiSubscriptionRepository(api_instance.getSubscriptionsApi()),
+      ),
+      ProxyProvider<ApiSubscriptionRepository, Som>(
+          update: (_, apiSubscriptionRepository, __) =>
+              Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
+      ProxyProvider<Som, RegistrationRequest>(
+          update: (_, som, __) => RegistrationRequest(som,
+              api_instance.getCompaniesApi(), appStore, sharedPreferences)),
+      Provider<EmailLoginStore>(
+          create: (_) =>
+              EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
+      ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
+          update: (_, emailLoginStore, __) => UserAccountConfirmation(
+              api_instance.getAuthenticationApi(), appStore, emailLoginStore)),
+    ];
   }
 }
 
