@@ -20,8 +20,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
         child: Column(
           children: [
             FunnyLogo(
-              primary: Theme.of(context).colorScheme.primaryContainer,
-              onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             RegistrationStepper(),
           ],

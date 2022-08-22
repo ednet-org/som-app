@@ -17,6 +17,15 @@ class SomTextInput extends StatelessWidget {
   final Color? primary;
   final Color? onPrimary;
 
+  final Color? secondary;
+  final Color? onSecondary;
+
+  final void Function()? forgotPasswordHandler;
+
+  final bool displayForgotPassword;
+
+  // final Function? forgotPasswordHandler;
+
   const SomTextInput({
     Key? key,
     this.label,
@@ -31,44 +40,74 @@ class SomTextInput extends StatelessWidget {
     this.onToggleShowPassword,
     this.required = false,
     this.isPassword = false,
+    this.displayForgotPassword = false,
+    this.forgotPasswordHandler,
     this.primary,
+    this.secondary,
+    this.onSecondary,
     this.onPrimary,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: onPrimary ?? Theme.of(context).colorScheme.primary,
-          ),
-      onChanged: onChanged,
-      initialValue: value,
-      keyboardType: keyboardType,
-      maxLines: maxLines,
-      obscureText: isPassword && showPassword ? false : isPassword,
-      autocorrect: autocorrect,
-      decoration: InputDecoration(
-          labelStyle: TextStyle(
-            color: onPrimary ?? Theme.of(context).colorScheme.primary,
-          ),
-          focusColor: primary ?? Theme.of(context).colorScheme.primaryContainer,
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: onPrimary ?? Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: onPrimary ?? Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          prefixIconColor: primary ?? Theme.of(context).colorScheme.primary,
-          suffixIconColor: primary ?? Theme.of(context).colorScheme.primary,
-          labelText: '${label} ${required ? "*" : ""}',
-          hintText: hint,
-          icon: Icon(icon,
-              color: onPrimary ?? Theme.of(context).colorScheme.primary),
-          suffixIcon: isPassword ? obscureTextIcon() : null),
+    return Column(
+      children: [
+        TextFormField(
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: onPrimary ?? Theme.of(context).colorScheme.secondary,
+              ),
+          onChanged: onChanged,
+          initialValue: value,
+          keyboardType: keyboardType,
+          maxLines: maxLines,
+          obscureText: isPassword && showPassword ? false : isPassword,
+          autocorrect: autocorrect,
+          decoration: InputDecoration(
+              labelStyle: TextStyle(
+                color: onPrimary ?? Theme.of(context).colorScheme.primary,
+              ),
+              focusColor:
+                  primary ?? Theme.of(context).colorScheme.primaryContainer,
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: onPrimary ?? Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: onPrimary ?? Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              prefixIconColor: primary ?? Theme.of(context).colorScheme.primary,
+              suffixIconColor: primary ?? Theme.of(context).colorScheme.primary,
+              labelText: '$label ${required ? "*" : ""}',
+              hintText: hint,
+              icon: Icon(icon,
+                  color: onPrimary ?? Theme.of(context).colorScheme.primary),
+              suffixIcon: isPassword ? obscureTextIcon() : null),
+        ),
+        isPassword && displayForgotPassword
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    primary:
+                        secondary ?? Theme.of(context).colorScheme.secondary,
+                    surfaceTintColor:
+                        secondary ?? Theme.of(context).colorScheme.secondary,
+                  ),
+                  onPressed: forgotPasswordHandler,
+                  child: Text(
+                    'Forgot password?',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: secondary ??
+                              Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                ),
+              )
+            : Container(),
+      ],
     );
   }
 

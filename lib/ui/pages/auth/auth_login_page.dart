@@ -105,22 +105,19 @@ class AuthLoginPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FunnyLogo(
-              height: 150.0,
-              primary: Theme.of(context).colorScheme.onPrimary,
-              // .withOpacity(0.8),
-              // onPrimary: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
-          const SizedBox(height: 20.0),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Smart offer management'.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayMedium
-                // ?.copyWith(
-                //     color:
-                //         Theme.of(context).colorScheme.onSurface),
-                ),
+            child: Text(
+              'Smart offer management'.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(color: Theme.of(context).colorScheme.secondary),
+            ),
           ),
         ],
       ),
@@ -146,7 +143,7 @@ class AuthLoginPage extends StatelessWidget {
         mainAxisAlignment:
             is4K ? MainAxisAlignment.center : MainAxisAlignment.start,
         children: [
-          if (!is4K) SizedBox(height: constraints.maxHeight * 0.03),
+          if (!is4K) SizedBox(height: constraints.maxHeight * 0.02),
           const Login(
             key: Key('Login'),
           ),

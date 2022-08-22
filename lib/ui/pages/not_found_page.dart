@@ -9,32 +9,27 @@ class NotFoundPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.errorContainer,
+      backgroundColor: Theme.of(context).colorScheme.error,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FunnyLogo(
-              height: 200.0,
-              onPrimary: Theme.of(context).colorScheme.error,
-              primary: Theme.of(context).colorScheme.errorContainer,
-            ),
-            const SizedBox(
-              height: 70,
+              color: Theme.of(context).colorScheme.onError,
             ),
             Text(
-              'Page not found',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onErrorContainer,
+              'Page not found 404',
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onError,
                   ),
             ),
             const SizedBox(
-              height: 7,
+              height: 10,
             ),
             ActionButton(
-              width: 300.0,
-              onPrimary: Theme.of(context).colorScheme.error,
-              primary: Theme.of(context).colorScheme.errorContainer,
+              width: 320.0,
+              onPrimary: Theme.of(context).colorScheme.onError,
+              primary: Theme.of(context).colorScheme.error,
               textContent: "Home",
               onPressed: () => context.beamToNamed('/'),
             ),

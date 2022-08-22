@@ -7,16 +7,15 @@ import 'package:som/template_storage/main/store/application.dart';
 class FunnyLogo extends StatelessWidget {
   final double height;
 
-  final Color? primary;
-  final Color? onPrimary;
+  final Color? color;
 
-  const FunnyLogo({Key? key, this.height = 300.0, this.primary, this.onPrimary})
+  const FunnyLogo({Key? key, this.height = 300.0, this.color})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
-    final Color? iconColor = primary;
+    final Color? iconColor = color;
 
     return GestureDetector(
         onTap: () {
@@ -24,10 +23,13 @@ class FunnyLogo extends StatelessWidget {
         },
         child: Column(
           children: [
-            ImageIcon(
-              size: height,
-              const AssetImage('images/som/logo.png'),
-              color: primary,
+            Padding(
+              padding: EdgeInsets.all(height / 4),
+              child: ImageIcon(
+                size: height,
+                const AssetImage('images/som/logo.png'),
+                color: color,
+              ),
             ),
             ReactionBuilder(
               builder: (BuildContext context) => reaction(

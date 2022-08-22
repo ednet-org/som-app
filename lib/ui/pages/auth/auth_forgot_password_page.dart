@@ -16,7 +16,7 @@ class AuthForgotPasswordPage extends StatelessWidget {
     final authForgotPasswordState =
         Provider.of<AuthForgotPasswordPageState>(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.errorContainer,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Observer(
         builder: (_) => Center(
           child: SizedBox(
@@ -25,10 +25,7 @@ class AuthForgotPasswordPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                FunnyLogo(
-                  onPrimary: Theme.of(context).colorScheme.error,
-                  primary: Theme.of(context).colorScheme.errorContainer,
-                ),
+                FunnyLogo(color: Theme.of(context).colorScheme.onSecondary),
                 const SizedBox(
                   height: 50,
                 ),
@@ -45,28 +42,32 @@ class AuthForgotPasswordPage extends StatelessWidget {
                       )
                     : !authForgotPasswordState.isLinkSent
                         ? Column(children: [
-                            Text('Forgotten Password?',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onErrorContainer,
-                                    )),
                             Text(
-                                'Please enter your e-mail to receive instructions to reset password.',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onErrorContainer,
-                                    )),
+                              'Forgotten Password?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                  ),
+                            ),
+                            Text(
+                              'Please enter your e-mail to receive instructions to reset password.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                  ),
+                            ),
                             SomTextInput(
-                              primary: Theme.of(context).colorScheme.onError,
-                              onPrimary: Theme.of(context).colorScheme.error,
+                              primary: Theme.of(context).colorScheme.secondary,
+                              onPrimary:
+                                  Theme.of(context).colorScheme.onSecondary,
                               label: 'Email',
                               value: authForgotPasswordState.email,
                               required: true,
@@ -78,9 +79,9 @@ class AuthForgotPasswordPage extends StatelessWidget {
                               height: 10,
                             ),
                             ActionButton(
+                              primary: Theme.of(context).colorScheme.secondary,
                               onPrimary:
-                                  Theme.of(context).colorScheme.errorContainer,
-                              primary: Theme.of(context).colorScheme.error,
+                                  Theme.of(context).colorScheme.onSecondary,
                               textContent: 'Send reset link',
                               onPressed: () {
                                 authForgotPasswordState.sendResetLink();
@@ -100,26 +101,28 @@ class AuthForgotPasswordPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Link is sent',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium
-                                      ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onErrorContainer)),
+                              Text(
+                                'Link is sent',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onErrorContainer),
+                              ),
                               const SizedBox(width: 10),
-                              Icon(
+                              const Icon(
                                 Icons.check_circle_outline,
-                                color: Theme.of(context).colorScheme.error,
+                                // color: Theme.of(context).colorScheme.error,
                                 size: 50,
                               ),
                             ],
                           ),
                           ActionButton(
-                            onPrimary:
-                                Theme.of(context).colorScheme.errorContainer,
-                            primary: Theme.of(context).colorScheme.error,
+                            // onPrimary:
+                            //     Theme.of(context).colorScheme.errorContainer,
+                            // primary: Theme.of(context).colorScheme.error,
                             textContent: 'Open link in browser',
                             onPressed: () async {
                               final uri =
@@ -141,9 +144,9 @@ class AuthForgotPasswordPage extends StatelessWidget {
                     ? Text(
                         authForgotPasswordState.errorMessage,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onErrorContainer,
+                            // color: Theme.of(context)
+                            //     .colorScheme
+                            //     .onErrorContainer,
                             ),
                       )
                     : Container(),
@@ -152,8 +155,8 @@ class AuthForgotPasswordPage extends StatelessWidget {
                 ),
                 ActionButton(
                   width: 300.0,
-                  onPrimary: Theme.of(context).colorScheme.error,
-                  primary: Theme.of(context).colorScheme.errorContainer,
+                  // onPrimary: Theme.of(context).colorScheme.error,
+                  // primary: Theme.of(context).colorScheme.errorContainer,
                   textContent: "Home",
                   onPressed: () => context.beamToNamed('/'),
                 ),

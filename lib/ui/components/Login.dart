@@ -47,15 +47,20 @@ class Login extends StatelessWidget {
                 onToggleShowPassword: emailLoginStore.toggleShowPassword,
                 isPassword: true,
                 autocorrect: false,
+                displayForgotPassword: true,
+                forgotPasswordHandler: () {
+                  context.beamTo(AuthForgotPasswordPageLocation());
+                },
               ),
-              const SizedBox(height: 50),
+
+              const SizedBox(height: 20),
               emailLoginStore.isLoading
                   ? const CircularProgressIndicator()
                   : ActionButton(
                       onPressed: () {
                         emailLoginStore.login();
                       },
-                      textContent: static["button.login"]!,
+                      textContent: 'Login',
                     ),
               emailLoginStore.isInvalidCredentials
                   ? Text(
@@ -66,46 +71,24 @@ class Login extends StatelessWidget {
                       //     ?.copyWith(color: Theme.of(context).colorScheme.error),
                     )
                   : Container(),
+
               const SizedBox(height: 30),
               Text(
-                static["link.forgottenPassword"] ?? "",
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer),
-              ),
-              const SizedBox(height: 5),
-              ActionButton(
-                onPressed: () {
-                  context.beamTo(AuthForgotPasswordPageLocation());
-                },
-                textContent: static["reset.password"]!,
-                // primary: Theme.of(context).colorScheme.secondary,
-                // onPrimary: Theme.of(context).colorScheme.onSecondary,
-              ),
-              const SizedBox(height: 30),
-              Text(
-                static["no.account"] ?? "",
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer),
+                'Don\'t have an account?',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: Theme.of(context).colorScheme.tertiary),
               ),
               const SizedBox(height: 5),
               ActionButton(
                 onPressed: () {
                   context.beamToNamed('/customer/register');
                 },
-                textContent: static["signUp"]!,
-                // primary: Theme.of(context).colorScheme.tertiary,
-                // onPrimary: Theme.of(context).colorScheme.onTertiary,
+                textContent: 'Register',
+                primary: Theme.of(context).colorScheme.tertiary,
+                onPrimary: Theme.of(context).colorScheme.onTertiary,
               ),
-              const SizedBox(height: 5),
-              ActionButton(
-                onPressed: () {
-                  context.beamToNamed('/sdfsdf/dsfsdf');
-                },
-                textContent: "NotFouund",
-                // primary: Theme.of(context).colorScheme.tertiary,
-                // onPrimary: Theme.of(context).colorScheme.onTertiary,
-              ),
-
               ReactionBuilder(
                 child: Container(),
                 builder: (context) =>
@@ -144,7 +127,7 @@ class Login extends StatelessWidget {
         AutoSizeText.rich(
           style: Theme.of(context).textTheme.bodyMedium,
           // ?.copyWith(color: Theme.of(context).colorScheme.primary),
-          TextSpan(text: static["welcome"]),
+          const TextSpan(text: 'Welcome! '),
           maxLines: 8,
           overflow: TextOverflow.ellipsis,
           // TODO impl read more able components
@@ -158,14 +141,3 @@ class Login extends StatelessWidget {
 void changeStatusColor(Color color) async {
   setStatusBarColor(color);
 }
-
-const static = {
-  "welcome": "Existing user:",
-  "email": "E-mail",
-  "password": "Password",
-  "button.login": "Sign In",
-  "link.forgottenPassword": "Forgotten password?",
-  "no.account": "Not having account? ",
-  "signUp": "Register here",
-  "reset.password": "Reset password",
-};
