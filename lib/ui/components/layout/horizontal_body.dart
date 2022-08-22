@@ -14,20 +14,47 @@ class HorizontalBody extends StatelessWidget {
     this.expandedBodyContentSplitRight,
   }) : super(key: key);
 
-  Expanded get expandedVerticalDivider =>
-      Expanded(flex: 1, child: VerticalDivider());
+  Expanded expandedVerticalDivider(context) => Expanded(
+      flex: 1,
+      child: VerticalDivider(
+        color: Theme.of(context).colorScheme.primary,
+      ));
+
+  Expanded expandedHorizontalDivider(context) => Expanded(
+      flex: 1,
+      child: Divider(
+        color: Theme.of(context).colorScheme.primary,
+      ));
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        expandedBodyMenu,
-        expandedBodyContentSplitLeft,
-        expandedVerticalDivider,
-        expandedBodyContentSplitRight,
-      ],
-    );
+    return LayoutBuilder(builder: (buildContext, constraints) {
+      final isMobile = constraints.maxWidth < 600;
+      final responsiveContainer = isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                expandedBodyMenu,
+                expandedHorizontalDivider(context),
+                expandedBodyContentSplitLeft,
+                expandedHorizontalDivider(context),
+                expandedBodyContentSplitRight,
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                expandedBodyMenu,
+                expandedVerticalDivider(context),
+                expandedBodyContentSplitLeft,
+                expandedVerticalDivider(context),
+                expandedBodyContentSplitRight,
+              ],
+            );
+
+      return responsiveContainer;
+    });
   }
 }

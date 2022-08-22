@@ -9,21 +9,22 @@ class AppBody extends StatelessWidget {
   final leftSplit;
   final rightSplit;
 
-  const AppBody({
-    Key? key,
-    this.leftSplit,
-    this.rightSplit,
-    this.contextMenu,
-  }) : super(key: key);
+  final body;
+
+  const AppBody(
+      {Key? key, this.leftSplit, this.rightSplit, this.contextMenu, this.body})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SpacedContainer(
-      horizontalBody: HorizontalBody(
-        expandedBodyMenu: contextMenu,
-        expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
-        expandedBodyContentSplitRight: ExpandedSplit(child: rightSplit),
-      ),
+      horizontalBody: body != null
+          ? ExpandedSplit(child: body)
+          : HorizontalBody(
+              expandedBodyMenu: contextMenu,
+              expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
+              expandedBodyContentSplitRight: ExpandedSplit(child: rightSplit),
+            ),
     );
   }
 
@@ -35,10 +36,5 @@ class AppBody extends StatelessWidget {
         child: contextMenu,
       ),
     );
-  }
-
-  Widget get currentInquiries {
-    return Text("Current Inquiries");
-    // return TestHorizontalListView();
   }
 }
