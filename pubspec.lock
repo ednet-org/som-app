@@ -56,7 +56,7 @@ packages:
       name: beamer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -119,7 +119,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.4.0"
+    version: "8.4.1"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -349,7 +349,7 @@ packages:
     description:
       path: "."
       ref: design_system
-      resolved-ref: "763307041a8f44d77f768f72654c590f5e4c736e"
+      resolved-ref: "6107c4a34c0fa0aef12b5238e02bb132f42da92a"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.1.2"
@@ -359,7 +359,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.5"
   expandable_bottom_sheet:
     dependency: "direct main"
     description:
@@ -387,7 +387,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.4"
   file_picker:
     dependency: "direct main"
     description:
@@ -441,7 +441,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.7.1"
+    version: "9.8.0+1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -509,7 +509,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.3"
+    version: "1.1.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -575,7 +575,7 @@ packages:
       name: geolocator_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.0"
   geolocator_apple:
     dependency: transitive
     description:
@@ -624,14 +624,28 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
+    version: "2.1.12"
+  google_maps_flutter_android:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.1.10"
+  google_maps_flutter_ios:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.11"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
       name: google_maps_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   google_mobile_ads:
     dependency: "direct main"
     description:
@@ -918,7 +932,7 @@ packages:
       name: nb_utils
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.6.19"
+    version: "4.6.20"
   nested:
     dependency: transitive
     description:
@@ -1107,7 +1121,7 @@ packages:
       name: pubspec_parse
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   quiver:
     dependency: transitive
     description:
@@ -1308,14 +1322,14 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.2.43"
+    version: "20.2.44"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.2.43"
+    version: "20.2.44"
   synchronized:
     dependency: transitive
     description:
@@ -1441,7 +1455,7 @@ packages:
       name: video_player_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.8"
+    version: "2.3.9"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -1504,7 +1518,7 @@ packages:
       name: webview_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.1"
+    version: "1.9.2"
   webview_flutter_wkwebview:
     dependency: transitive
     description:
