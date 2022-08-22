@@ -10,11 +10,16 @@ class ActionButton extends StatelessWidget {
 
   final Color? onPrimary;
 
-  ActionButton(
-      {required this.textContent,
-      required this.onPressed,
-      this.primary,
-      this.onPrimary});
+  final double? width;
+
+  const ActionButton({
+    Key? key,
+    required this.textContent,
+    required this.onPressed,
+    this.primary,
+    this.onPrimary,
+    this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
