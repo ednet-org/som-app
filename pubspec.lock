@@ -349,7 +349,7 @@ packages:
     description:
       path: "."
       ref: design_system
-      resolved-ref: "6107c4a34c0fa0aef12b5238e02bb132f42da92a"
+      resolved-ref: "54493ac8a29477bfdf4ef18965c7a628e993178b"
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.1.2"
@@ -1448,7 +1448,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.6"
+    version: "2.4.7"
   video_player_android:
     dependency: transitive
     description:
