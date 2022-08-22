@@ -23,6 +23,6 @@ class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
   // TODO: implement pathPatterns
   List<Pattern> get pathPatterns => [
         '/',
-        '/*',
+        // '/*',
       ];
 }

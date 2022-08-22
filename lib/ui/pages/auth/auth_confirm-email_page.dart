@@ -16,7 +16,8 @@ class AuthConfirmEmailPage extends StatefulWidget {
   final String? email;
   final String? token;
 
-  AuthConfirmEmailPage(this.token, this.email);
+  const AuthConfirmEmailPage(this.token, this.email, {Key? key})
+      : super(key: key);
 
   @override
   State<AuthConfirmEmailPage> createState() => _AuthConfirmEmailPageState();
@@ -69,29 +70,28 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
         context,
       ) =>
           Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         body: Column(
           children: [
             Center(
               child: userAccountConfirmation.isConfirmed
                   ? buildSetPassword(context, userAccountConfirmation)
                   : userAccountConfirmation.isConfirming
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           semanticsLabel: 'Confirming E-mail',
                         )
                       : userAccountConfirmation.isLoggingIn
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               semanticsLabel: 'Logging in',
                             )
-                          : Container(
+                          : SizedBox(
                               width: 350,
                               child: Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(height: 20),
-                                    Text('Missing data!'),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
+                                    const Text('Missing data!'),
+                                    const SizedBox(height: 20),
                                     ActionButton(
                                       textContent: 'Back',
                                       onPressed: () => context
@@ -144,14 +144,14 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
                   .textTheme
                   .displaySmall
                   ?.copyWith(color: Theme.of(context).colorScheme.primary)),
-          SizedBox(width: 10),
-          SizedBox(height: 100),
+          const SizedBox(width: 10),
+          const SizedBox(height: 100),
           Text('Please set your password',
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
                   ?.copyWith(color: Theme.of(context).colorScheme.primary)),
-          Container(
+          SizedBox(
             width: 350,
             child: SomTextInput(
               onChanged: userAccountConfirmation.setPassword,
@@ -159,7 +159,7 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
               isPassword: true,
             ),
           ),
-          Container(
+          SizedBox(
             width: 350,
             child: SomTextInput(
               onChanged: userAccountConfirmation.setRepeatedPassword,
@@ -168,8 +168,8 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
               isPassword: true,
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: 350,
             child: ActionButton(
               primary: Theme.of(context).colorScheme.primary,
@@ -182,9 +182,9 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
               },
             ),
           ),
-          SizedBox(height: 100),
-          Container(width: 350, child: Text(userAccountConfirmation.token)),
-          Container(width: 350, child: Text(userAccountConfirmation.email)),
+          const SizedBox(height: 100),
+          SizedBox(width: 350, child: Text(userAccountConfirmation.token)),
+          SizedBox(width: 350, child: Text(userAccountConfirmation.email)),
         ],
       ),
     );

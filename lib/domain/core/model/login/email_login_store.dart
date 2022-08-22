@@ -27,9 +27,13 @@ abstract class _EmailLoginStoreBase with Store {
   @observable
   bool isLoading = false;
 
+  @observable
+  String loggingInMessage = '';
+
   @action
   Future login() async {
     errorMessage = '';
+    loggingInMessage = '';
     print(email);
     isLoading = true;
     var authReq = AuthenticateDtoBuilder()
@@ -38,12 +42,16 @@ abstract class _EmailLoginStoreBase with Store {
     authReq.password = password;
     authService
         .authLoginPost(authenticateDto: authReq.build())
-        .then((response) {
+        .then((response) async {
       isLoading = false;
+
       if (response.statusCode == 200) {
+        loggingInMessage = 'Successfully logged in. Redirecting...';
         isInvalidCredentials = false;
         isLoggedIn = true;
         password = "";
+        await Future.delayed(Duration(seconds: 5));
+
         appStore.login(Authorization(
             token: response.data!.token!,
             refreshToken: response.data!.refreshToken!));

@@ -13,7 +13,7 @@ import 'package:som/ui/utils/AppWidget.dart';
 class SomApplication extends StatelessWidget {
   static String tag = '/SmartOfferManagement';
 
-  SomApplication({Key? key}) : super(key: key);
+  const SomApplication({Key? key}) : super(key: key);
 
   userMenuItem(context) {
     return Padding(
@@ -26,7 +26,7 @@ class SomApplication extends StatelessWidget {
               .titleSmall
               ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
         ).paddingRight(10),
-        Container(
+        SizedBox(
           width: 60,
           child: CircleAvatar(
             backgroundImage:
@@ -38,41 +38,46 @@ class SomApplication extends StatelessWidget {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     final beamer = Provider.of<BeamerProvidedKey>(context);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         appBar: AppBar(
           title: appBarTitleWidget(context, 'Smart Offer Management'),
           actions: [
             AppBarButton(
+              key: const ValueKey('InquiriesManagementMenuItem'),
               title: 'Inquiries',
               child: AppBarIcons.inquiry.value,
               beamer: beamer,
               uri: '/inquiries',
             ),
             AppBarButton(
+              key: const ValueKey('CompanyManagementMenuItem'),
               title: 'Company',
               child: AppBarIcons.company.value,
               beamer: beamer,
               uri: '/company',
             ),
             AppBarButton(
+              key: const ValueKey('UserManagementMenuItem'),
               title: 'User',
               child: AppBarIcons.user.value,
               beamer: beamer,
               uri: '/user',
             ),
             AppBarButton(
+              key: const ValueKey('AdsManagementMenuItem'),
               title: 'Ads',
               child: AppBarIcons.ads.value,
               beamer: beamer,
               uri: '/ads',
             ),
             AppBarButton(
+              key: const ValueKey('StatisticsMenuItem'),
               title: 'Statistics',
               child: AppBarIcons.statistics.value,
               beamer: beamer,
@@ -92,13 +97,12 @@ class SomApplication extends StatelessWidget {
 
   AppBody homePageBody(BuildContext context) {
     return AppBody(
-      contextMenu: Container(
-          child: Text(
+      contextMenu: Text(
         "Context Menu",
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: Theme.of(context).colorScheme.onPrimary,
             ),
-      )),
+      ),
       leftSplit: Text(
         "Newest Inquiries",
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -156,7 +160,7 @@ class SomApplication extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onTertiary)),
           ),
         ),
-        PopupMenuDivider(),
+        const PopupMenuDivider(),
         PopupMenuItem(
           child: ListTile(
             leading: Icon(Icons.logout,

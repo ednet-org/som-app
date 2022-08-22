@@ -30,12 +30,12 @@ abstract class _Som with Store {
 
   @action
   void requestBranch(branch) {
-    this.requestedBranches.add(branch);
+    requestedBranches.add(branch);
   }
 
   @action
   void removeRequestedBranch(branch) {
-    this.requestedBranches.remove(branch);
+    requestedBranches.remove(branch);
   }
 
   @observable

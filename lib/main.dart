@@ -29,11 +29,12 @@ import 'package:som/routes/locations/guest/customer_register_page_location.dart'
 import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
 import 'package:som/routes/locations/splash_page_beam_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';
 
-final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+// final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 final api_instance = Openapi(
     dio: Dio(BaseOptions(
@@ -57,8 +58,8 @@ void main() async {
   // nb_utils - Must be initialize before using shared preference
   await initialize();
 
-  final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
-  final sharedPrefs = await prefsFuture;
+  // final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
+  // final sharedPrefs = await prefsFuture;
   appStore = Application();
 
   // dio perform awful if not spawn to own worker
@@ -80,6 +81,11 @@ class MyApp extends StatelessWidget {
 
   final routerDelegate = BeamerDelegate(
       initialPath: '/splash',
+      notFoundPage: const BeamPage(
+        key: ValueKey('not found page'),
+        title: 'Not Found',
+        child: NotFoundPage(),
+      ),
       transitionDelegate: const NoAnimationTransitionDelegate(),
       locationBuilder: BeamerLocationBuilder(beamLocations: [
         SplashPageBeamLocation(),
@@ -90,6 +96,8 @@ class MyApp extends StatelessWidget {
         CustomerRegisterSuccessPageLocation(),
         SmartOfferManagementPageLocation(),
       ]));
+
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +117,33 @@ class MyApp extends StatelessWidget {
           localeResolutionCallback: (locale, supportedLocales) =>
               Locale(appStore.selectedLanguage),
           locale: Locale(appStore.selectedLanguage),
-          supportedLocales: [Locale('en'), Locale('de'), Locale('sr')],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('de'),
+            Locale('sr'),
+          ],
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-          theme: lightTheme,
-          darkTheme: darkTheme,
+          theme: lightTheme?.copyWith(
+            scaffoldBackgroundColor: lightTheme?.colorScheme.onPrimary,
+            appBarTheme: lightTheme?.appBarTheme.copyWith(
+                toolbarHeight: 100,
+                elevation: 7,
+                backgroundColor: lightTheme?.colorScheme.primary,
+                foregroundColor: lightTheme?.colorScheme.onPrimary,
+                titleTextStyle: lightTheme?.textTheme.displaySmall
+                    ?.copyWith(color: lightTheme?.colorScheme.onPrimary)),
+          ),
+          darkTheme: darkTheme?.copyWith(
+            scaffoldBackgroundColor: darkTheme?.colorScheme.onPrimary,
+            appBarTheme: darkTheme?.appBarTheme.copyWith(
+                toolbarHeight: 100,
+                elevation: 7,
+                backgroundColor: darkTheme?.colorScheme.primary,
+                foregroundColor: darkTheme?.colorScheme.onPrimary,
+                titleTextStyle: darkTheme?.textTheme.displaySmall
+                    ?.copyWith(color: darkTheme?.colorScheme.onPrimary)),
+          ),
           builder: scrollBehaviour(),
           routerDelegate: routerDelegate,
         ),
@@ -134,7 +164,8 @@ class MyApp extends StatelessWidget {
       ),
       ProxyProvider<ApiSubscriptionRepository, Som>(
           update: (_, apiSubscriptionRepository, __) =>
-              Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
+              Som(apiSubscriptionRepository)),
+      // Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
       ProxyProvider<Som, RegistrationRequest>(
           update: (_, som, __) => RegistrationRequest(som,
               api_instance.getCompaniesApi(), appStore, sharedPreferences)),

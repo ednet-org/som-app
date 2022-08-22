@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,7 +13,7 @@ import 'package:som/ui/utils/AppConstant.dart';
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
 
-  SplashPage();
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
   _SplashPageState createState() => _SplashPageState();
@@ -36,16 +34,15 @@ class _SplashPageState extends State<SplashPage>
       toastLong(errorInternetNotAvailable);
     }
 
-    await Future.delayed(Duration(seconds: 3));
-
     final appStore = Provider.of<Application>(context, listen: false);
-    if (!appStore.isAuthenticated) {
+    if (appStore.isAuthenticated) {
       context.beamTo(AuthLoginPageLocation());
     } else {
       context.beamTo(SmartOfferManagementPageLocation());
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     final Som som = Provider.of<Som>(context);
     final appStore = Provider.of<Application>(context);
@@ -53,7 +50,6 @@ class _SplashPageState extends State<SplashPage>
     return Observer(
       builder: (_) => !appStore.isAuthenticated
           ? Scaffold(
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -72,7 +68,7 @@ class _SplashPageState extends State<SplashPage>
                             size: 300,
                           ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     "Loading...",
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(

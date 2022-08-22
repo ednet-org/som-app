@@ -101,8 +101,10 @@ dependencies:
   curl_logger_dio_interceptor: ^0.0.3
   beamer: ^1.5.0
   jwt_decode: ^0.3.1
+  connectivity:
 
 dev_dependencies:
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
   mobx_codegen: ^2.0.7
@@ -112,6 +114,7 @@ dev_dependencies:
   generators:
     path: ./lib/domain/domain_generator/generators/
   freezed: ^2.1.0+1
+
   #flutter packages pub run build_runner build --delete-conflicting-outputs
 
 flutter:

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:som/template_storage/main/store/application.dart';
 
 class FunnyLogo extends StatelessWidget {
-  final height;
+  final double height;
 
   final Color? primary;
   final Color? onPrimary;
@@ -14,20 +16,30 @@ class FunnyLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
+    final Color? iconColor = primary;
 
     return GestureDetector(
         onTap: () {
           appStore.toggleDarkMode();
         },
-        child: Container(
-          color: this.primary ?? Theme.of(context).colorScheme.primary,
-          alignment: Alignment.center,
-          child: Image.asset(
-            'images/som/logo.png',
-            height: height,
-            fit: BoxFit.fitHeight,
-            color: this.onPrimary ?? Theme.of(context).colorScheme.onPrimary,
-          ),
+        child: Column(
+          children: [
+            ImageIcon(
+              size: height,
+              const AssetImage('images/som/logo.png'),
+              color: primary,
+            ),
+            ReactionBuilder(
+              builder: (BuildContext context) => reaction(
+                  (_) => appStore.isDarkModeOn,
+                  (bool isOn) =>
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(isOn ? 'Dark mode' : 'Light mode'),
+                        duration: const Duration(milliseconds: 1500),
+                      ))),
+              child: Container(),
+            ),
+          ],
         ));
   }
 }

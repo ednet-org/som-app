@@ -13,7 +13,6 @@ class CustomerRegisterSuccessPage extends StatelessWidget {
     final customerRegistration = Provider.of<RegistrationRequest>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         resizeToAvoidBottomInset: true,
         body: Center(
             child: SingleChildScrollView(

@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 
 import 'locations/authenticated/authenticated.dart';
 
+//todo: implement guards
 final authenticatedPagesDelegate = BeamerDelegate(
   updateParent: false,
   transitionDelegate: const NoAnimationTransitionDelegate(),

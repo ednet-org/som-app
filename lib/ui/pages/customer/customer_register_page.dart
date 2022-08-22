@@ -16,7 +16,6 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: MainBody(
         child: Column(
           children: [

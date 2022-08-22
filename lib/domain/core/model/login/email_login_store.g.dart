@@ -98,6 +98,22 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
+  late final _$loggingInMessageAtom =
+      Atom(name: '_EmailLoginStoreBase.loggingInMessage', context: context);
+
+  @override
+  String get loggingInMessage {
+    _$loggingInMessageAtom.reportRead();
+    return super.loggingInMessage;
+  }
+
+  @override
+  set loggingInMessage(String value) {
+    _$loggingInMessageAtom.reportWrite(value, super.loggingInMessage, () {
+      super.loggingInMessage = value;
+    });
+  }
+
   late final _$emailAtom =
       Atom(name: '_EmailLoginStoreBase.email', context: context);
 
@@ -225,6 +241,7 @@ isInvalidCredentials: ${isInvalidCredentials},
 errorMessage: ${errorMessage},
 welcomeMessage: ${welcomeMessage},
 isLoading: ${isLoading},
+loggingInMessage: ${loggingInMessage},
 email: ${email},
 password: ${password},
 showPassword: ${showPassword},

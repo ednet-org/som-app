@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppBarButton extends StatefulWidget {
   AppBarButton({
+    required super.key,
     required this.title,
     required this.beamer,
     required this.uri,
