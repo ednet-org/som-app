@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer-management/payment-interval.dart';
 import 'package:som/domain/model/customer-management/registration_request.dart';
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
+import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/countries.dart';
@@ -88,10 +89,15 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                           )
                                         : !customerRegistration.isSuccess
                                             ? ActionButton(
-                                                onPressed: () {
-                                                  customerRegistration
-                                                      .registerCustomer(
-                                                          context);
+                                                onPressed: () async {
+                                                  final beamer =
+                                                      Beamer.of(context);
+
+                                                  await customerRegistration
+                                                      .registerCustomer();
+
+                                                  beamer.beamTo(
+                                                      CustomerRegisterSuccessPageLocation());
                                                 },
                                                 textContent: "Register",
                                               )

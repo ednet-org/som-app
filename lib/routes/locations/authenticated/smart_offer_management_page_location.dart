@@ -11,7 +11,7 @@ class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
     final isCompanyLocation =
         state.routeInformation.location?.contains('company') ?? false;
     return [
-      BeamPage(
+      const BeamPage(
         key: ValueKey('smart offer management page'),
         title: 'Smart Offer Management',
         child: SomApplication(),

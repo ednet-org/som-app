@@ -1,7 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/user_account_confirmation/user_account_confirmation.dart';
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
@@ -28,7 +27,6 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
   @override
   void initState() {
     super.initState();
-    confirmEmail();
   }
 
   @override
@@ -36,16 +34,12 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
     super.dispose();
   }
 
-  void confirmEmail() async {
-    // return context.beamTo(SplashPageBeamLocation());
-    if (!await isNetworkAvailable()) {
-      toastLong(errorInternetNotAvailable);
-    }
-
+  @override
+  void didChangeDependencies() {
     final userAccountConfirmation =
-        Provider.of<UserAccountConfirmation>(context, listen: false);
+        Provider.of<UserAccountConfirmation>(context);
 
-    final appStore = Provider.of<Application>(context, listen: false);
+    final appStore = Provider.of<Application>(context);
 
     if (appStore.isAuthenticated) {
       context.beamTo(SmartOfferManagementPageLocation());
@@ -55,10 +49,12 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
     userAccountConfirmation.email = widget.email!;
     if (userAccountConfirmation.isConfirmed ||
         userAccountConfirmation.isConfirming) {
+      super.didChangeDependencies();
       return;
     } else {
       userAccountConfirmation.confirmEmail();
     }
+    super.didChangeDependencies();
   }
 
   @override
@@ -72,51 +68,57 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
           Scaffold(
         body: Column(
           children: [
-            Center(
-              child: userAccountConfirmation.isConfirmed
-                  ? buildSetPassword(context, userAccountConfirmation)
-                  : userAccountConfirmation.isConfirming
-                      ? const CircularProgressIndicator(
-                          semanticsLabel: 'Confirming E-mail',
-                        )
-                      : userAccountConfirmation.isLoggingIn
-                          ? const CircularProgressIndicator(
-                              semanticsLabel: 'Logging in',
-                            )
-                          : SizedBox(
-                              width: 350,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(height: 20),
-                                    const Text('Missing data!'),
-                                    const SizedBox(height: 20),
-                                    ActionButton(
-                                      textContent: 'Back',
-                                      onPressed: () => context
-                                          .beamTo(AuthLoginPageLocation()),
-                                    )
-                                  ],
+            userAccountConfirmation.errorMessage.isNotEmpty
+                ? Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Container(
+                            padding: const EdgeInsets.all(30.0),
+                            color: Theme.of(context).colorScheme.error,
+                            width: 350,
+                            child: Text(userAccountConfirmation.errorMessage,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onError))),
+                      ),
+                    ),
+                  )
+                : Container(),
+            Expanded(
+              child: Center(
+                child: userAccountConfirmation.isConfirmed
+                    ? buildSetPassword(context, userAccountConfirmation)
+                    : userAccountConfirmation.isConfirming
+                        ? const CircularProgressIndicator(
+                            semanticsLabel: 'Confirming E-mail',
+                          )
+                        : userAccountConfirmation.isLoggingIn
+                            ? const CircularProgressIndicator(
+                                semanticsLabel: 'Logging in',
+                              )
+                            : SizedBox(
+                                width: 350,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(height: 20),
+                                      const Text('Missing data!'),
+                                      const SizedBox(height: 20),
+                                      ActionButton(
+                                        textContent: 'Back',
+                                        onPressed: () => context
+                                            .beamTo(AuthLoginPageLocation()),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Container(
-                    color: Theme.of(context).colorScheme.error,
-                    width: 350,
-                    child: userAccountConfirmation.errorMessage.isEmpty
-                        ? Text(userAccountConfirmation.errorMessage,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.onError))
-                        : Container()),
               ),
             ),
           ],

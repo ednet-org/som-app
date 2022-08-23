@@ -35,7 +35,7 @@ class CustomerRegisterSuccessPage extends StatelessWidget {
                           ?.copyWith(
                               color: Theme.of(context).colorScheme.primary))
                   .paddingOnly(left: 8, top: 20, right: 8, bottom: 20),
-              Container(
+              SizedBox(
                 width: 800,
                 child: Padding(
                   padding: EdgeInsets.all(50.0),

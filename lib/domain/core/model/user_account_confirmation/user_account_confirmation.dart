@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
 import 'package:som/template_storage/main/store/application.dart';
@@ -109,8 +108,11 @@ abstract class _UserAccountConfirmationBase with Store {
         } else {
           errorMessage = 'Some error occurred';
         }
+      }).catchError((error) {
+        errorMessage = 'Some error occurred: ${error.response.data['message']}';
       });
     } catch (error) {
+      errorMessage = 'Some error occurred $error.toString()';
       isPasswordSet = false;
       isSettingPassword = false;
     }
@@ -118,6 +120,7 @@ abstract class _UserAccountConfirmationBase with Store {
 
   @action
   Future<dynamic> confirmEmail() async {
+    errorMessage = '';
     if (isConfirmed || isConfirming) {
       return;
     }
@@ -136,14 +139,12 @@ abstract class _UserAccountConfirmationBase with Store {
           isConfirmed = true;
         }
       }).catchError((error) {
-        toastLong(
-            'ERROR in Confirming e-mail token:$token email:$email error:$error');
-
+        errorMessage = 'Some error occurred: ${error.response.data['message']}';
         isConfirming = false;
         print(error.response.data);
       });
     } else {
-      toastLong('ERROR in Confirming e-mail token:$token email:$email');
+      errorMessage = 'ERROR in Confirming e-mail token:$token email:$email';
       isConfirming = false;
     }
   }

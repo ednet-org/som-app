@@ -6,7 +6,7 @@ class InquiryBeamLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
-      BeamPage(
+      const BeamPage(
         key: ValueKey('Inquiry page'),
         title: 'Inquiry',
         child: InquiryAppBody(),

@@ -22,7 +22,7 @@ class _BodyWidgetState extends State<BodyWidget> {
               child: Container(
                   width: 305,
                   height: 357,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12),
@@ -37,7 +37,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     ],
                     color: Color.fromRGBO(255, 251, 255, 1),
                   ))),
-          Positioned(
+          const Positioned(
               top: 12,
               left: 20,
               child: Text(
@@ -52,7 +52,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 15,
               left: 108,
               child: Text(
@@ -67,14 +67,14 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(top: 16, left: 251, child: SizedBox()),
+          const Positioned(top: 16, left: 251, child: SizedBox()),
           Positioned(
               top: 20.5,
               left: 283,
               child: Container(
                   width: 17,
                   height: 15,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromRGBO(120, 234, 51, 1),
                     borderRadius: BorderRadius.all(Radius.elliptical(17, 15)),
                   ))),
@@ -83,9 +83,10 @@ class _BodyWidgetState extends State<BodyWidget> {
               left: 1,
               child: Transform.rotate(
                 angle: 2.4848083448933725e-17 * (math.pi / 180),
-                child: Divider(color: Color.fromRGBO(0, 0, 0, 1), thickness: 1),
+                child: const Divider(
+                    color: Color.fromRGBO(0, 0, 0, 1), thickness: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 67,
               left: 20,
               child: Text(
@@ -100,7 +101,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 113,
               left: 20,
               child: Text(
@@ -115,7 +116,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 230,
               left: 227,
               child: Text(
@@ -130,7 +131,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 230,
               left: 22,
               child: Text(
@@ -145,8 +146,8 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(top: 278, left: 20, child: SizedBox()),
-          Positioned(
+          const Positioned(top: 278, left: 20, child: SizedBox()),
+          const Positioned(
               top: 279,
               left: 52,
               child: Text(
@@ -161,9 +162,9 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(top: 326, left: 11, child: SizedBox()),
-          Positioned(top: 326, left: 179, child: SizedBox()),
-          Positioned(
+          const Positioned(top: 326, left: 11, child: SizedBox()),
+          const Positioned(top: 326, left: 179, child: SizedBox()),
+          const Positioned(
               top: 327,
               left: 39,
               child: Text(
@@ -177,7 +178,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1.4285714285714286),
               )),
-          Positioned(
+          const Positioned(
               top: 327,
               left: 204,
               child: Text(

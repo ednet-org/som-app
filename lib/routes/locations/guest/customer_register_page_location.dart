@@ -6,7 +6,7 @@ class CustomerRegisterPageLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
-      BeamPage(
+      const BeamPage(
         key: ValueKey('customer register page'),
         title: 'Register',
         child: CustomerRegisterPage(),

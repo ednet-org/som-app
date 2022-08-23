@@ -94,9 +94,8 @@ mixin _$RegistrationRequest on _RegistrationRequest, Store {
       AsyncAction('_RegistrationRequest.registerCustomer', context: context);
 
   @override
-  Future<void> registerCustomer(BuildContext context) {
-    return _$registerCustomerAsyncAction
-        .run(() => super.registerCustomer(context));
+  Future<void> registerCustomer() {
+    return _$registerCustomerAsyncAction.run(() => super.registerCustomer());
   }
 
   late final _$_RegistrationRequestActionController =

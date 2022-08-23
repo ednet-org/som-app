@@ -125,6 +125,12 @@ class MyApp extends StatelessWidget {
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
           theme: lightTheme?.copyWith(
+            textTheme: lightTheme?.textTheme.copyWith(
+              titleLarge: lightTheme?.textTheme.titleLarge?.copyWith(
+                fontSize:
+                    (lightTheme?.textTheme.titleLarge?.fontSize ?? 1) * 1.5,
+              ),
+            ),
             scaffoldBackgroundColor: lightTheme?.colorScheme.onPrimary,
             appBarTheme: lightTheme?.appBarTheme.copyWith(
                 toolbarHeight: 100,

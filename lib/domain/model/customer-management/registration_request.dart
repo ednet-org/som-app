@@ -1,10 +1,7 @@
-import 'package:beamer/beamer.dart';
 import 'package:built_collection/src/list.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
 
 import 'company.dart';
@@ -41,7 +38,7 @@ abstract class _RegistrationRequest with Store {
   void setCompany(Company value) => company = value;
 
   @action
-  Future<void> registerCustomer(BuildContext context) async {
+  Future<void> registerCustomer() async {
     isRegistering = true;
     isFailedRegistration = false;
     isSuccess = false;
@@ -121,8 +118,6 @@ abstract class _RegistrationRequest with Store {
         isSuccess = true;
         isFailedRegistration = false;
         isRegistering = false;
-        await Future.delayed(Duration(seconds: 2));
-        Beamer.of(context).beamTo(CustomerRegisterSuccessPageLocation());
       }
     } catch (error) {
       isFailedRegistration = true;
