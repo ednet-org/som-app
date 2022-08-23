@@ -15,7 +15,11 @@ class SomDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownSearch<String>(
       popupProps: PopupProps.modalBottomSheet(
+        showSelectedItems: true,
         modalBottomSheetProps: ModalBottomSheetProps(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(const Radius.circular(15)),
+          ),
           constraints:
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.3),
           // backgroundColor: Theme.of(context).colorScheme.background,
@@ -23,6 +27,8 @@ class SomDropDown extends StatelessWidget {
         ),
         itemBuilder: (context, value, displayValue) {
           return ListTile(
+            // style: ListTileTheme.of(context).style,
+            focusColor: Theme.of(context).colorScheme.secondary,
             title: Text(value,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -46,6 +52,8 @@ class SomDropDown extends StatelessWidget {
         ),
         showSearchBox: true,
         searchFieldProps: TextFieldProps(
+          padding: const EdgeInsets.all(20),
+          autofocus: true,
           style: Theme.of(context)
               .textTheme
               .labelLarge
@@ -60,6 +68,10 @@ class SomDropDown extends StatelessWidget {
             fillColor: Theme.of(context).colorScheme.secondary,
             focusColor: Theme.of(context).colorScheme.onSecondary,
             hoverColor: Theme.of(context).colorScheme.primary,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
           ),
         ),
         containerBuilder: (BuildContext context, widget) {
@@ -96,7 +108,12 @@ class SomDropDown extends StatelessWidget {
             hintText: hint,
             fillColor: Theme.of(context).colorScheme.secondary,
             focusColor: Theme.of(context).colorScheme.secondary,
+            hoverColor: Theme.of(context).colorScheme.secondary,
           )),
+      // clearButtonProps: ClearButtonProps(
+      //   icon: const Icon(Icons.clear),
+      //   color: Theme.of(context).colorScheme.secondary,
+      // ),
     );
   }
 }
