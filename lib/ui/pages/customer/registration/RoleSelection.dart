@@ -7,19 +7,12 @@ import 'package:som/domain/model/customer-management/roles.dart';
 import 'package:som/main.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
-class RoleSelection extends StatefulWidget {
-  RoleSelection();
-
-  @override
-  State<RoleSelection> createState() => _RoleSelectionState();
-}
-
-class _RoleSelectionState extends State<RoleSelection> {
-  var registrationRequest;
+class RoleSelection extends StatelessWidget {
+  const RoleSelection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    registrationRequest = Provider.of<RegistrationRequest>(context);
+    final registrationRequest = Provider.of<RegistrationRequest>(context);
 
     return Observer(
       builder: (_) => Container(
@@ -33,7 +26,7 @@ class _RoleSelectionState extends State<RoleSelection> {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             16.height,
-            selectionCards,
+            selectionCards(context, registrationRequest),
             8.height,
           ],
         ),
@@ -41,83 +34,85 @@ class _RoleSelectionState extends State<RoleSelection> {
     );
   }
 
-  Widget get selectionCards {
-    return ContainerX(web: web(), mobile: mobile());
+  Widget selectionCards(context, registrationRequest) {
+    return ContainerX(
+        web: web(context, registrationRequest),
+        mobile: mobile(context, registrationRequest));
   }
 
-  ElevatedButton providerSelector() {
+  ElevatedButton providerSelector(context, registrationRequest) {
     return ElevatedButton(
       onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).colorScheme.secondary,
+        onPrimary: Theme.of(context).colorScheme.onSecondary,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             Text('Provider',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary)),
+            Switch(
+                activeColor: Theme.of(context).colorScheme.onSecondary,
+                value: registrationRequest.company.isProvider,
+                onChanged: registrationRequest.company.activateProvider),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ElevatedButton buyerSelector(context, registrationRequest) {
+    return ElevatedButton(
+      onPressed: () => registrationRequest.switchRole(Roles.Buyer),
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).colorScheme.primary,
+        onPrimary: Theme.of(context).colorScheme.onPrimary,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Text('Buyer ',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
                     ?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
             Switch(
                 activeColor: Theme.of(context).colorScheme.onPrimary,
-                value: registrationRequest.company.isProvider,
-                onChanged: registrationRequest.company.activateProvider),
-          ],
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.primary,
-        onPrimary: Theme.of(context).colorScheme.onPrimary,
-      ),
-    );
-  }
-
-  ElevatedButton buyerSelector() {
-    return ElevatedButton(
-      onPressed: () => registrationRequest.switchRole(Roles.Buyer),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Text('Buyer ',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary)),
-            Switch(
-                activeColor: Theme.of(context).colorScheme.onSecondary,
                 value: registrationRequest.company.isBuyer,
                 onChanged: registrationRequest.company.activateBuyer),
           ],
         ),
       ),
-      style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.secondary,
-        onPrimary: Theme.of(context).colorScheme.secondary,
-      ),
     );
   }
 
-  web() {
+  web(context, registrationRequest) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           width: appStore.buttonWidth,
-          child: buyerSelector(),
+          child: buyerSelector(context, registrationRequest),
         ),
         40.width,
         Container(
           width: appStore.buttonWidth,
-          child: providerSelector(),
+          child: providerSelector(context, registrationRequest),
         ),
       ],
     );
   }
 
-  mobile() {
+  mobile(context, registrationRequest) {
     return Column(
       children: [
-        buyerSelector(),
+        buyerSelector(context, registrationRequest),
         10.height,
-        providerSelector(),
+        providerSelector(context, registrationRequest),
       ],
     );
   }

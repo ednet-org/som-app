@@ -18,14 +18,11 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
     return Scaffold(
       body: MainBody(
         child: Column(
-          children: [
-            FunnyLogo(
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
+          children: const [
+            FunnyLogo(),
             RegistrationStepper(),
           ],
         ),
-        // child: ,
       ),
     );
   }

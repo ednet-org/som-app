@@ -11,8 +11,8 @@ class MainBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 100),
-          child: Container(
+          padding: const EdgeInsets.only(top: 50),
+          child: SizedBox(
             width: dynamicWidth(context),
             child: Padding(
               padding: const EdgeInsets.all(16.0),

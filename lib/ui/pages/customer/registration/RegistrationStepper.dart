@@ -18,6 +18,8 @@ import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
 import 'RoleSelection.dart';
 
 class RegistrationStepper extends StatefulWidget {
+  const RegistrationStepper({Key? key}) : super(key: key);
+
   @override
   _RegistrationStepperState createState() => _RegistrationStepperState();
 }
@@ -42,152 +44,149 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     final isLastStep =
         (customerRegistration.company.isProvider && currStep == 5) ||
             (!customerRegistration.company.isProvider && currStep == 2);
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'Customer registration',
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onPrimaryContainer),
-          ),
-          40.height,
-          Observer(builder: (_) {
-            return Column(
-              children: [
-                Stepper(
-                  elevation: 4,
-                  key: Key("mysuperkey-" +
-                      assembleSteps(customerRegistration, appStore)
-                          .length
-                          .toString()),
-                  steps: assembleSteps(customerRegistration, appStore),
-                  type: StepperType.vertical,
-                  currentStep: currStep,
-                  controlsBuilder:
-                      (BuildContext context, ControlsDetails details) {
-                    return Column(children: [
-                      isLastStep
-                          ? Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    200.height,
-                                    Container(
-                                      width: 300,
-                                      child: customerRegistration.isRegistering
-                                          ? Center(
-                                              child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                            )
-                                          : !customerRegistration.isSuccess
-                                              ? ActionButton(
-                                                  onPressed: () {
-                                                    customerRegistration
-                                                        .registerCustomer(
-                                                            context);
-                                                  },
-                                                  textContent: "Register",
-                                                )
-                                              : Container(),
-                                    ),
-                                  ],
-                                ),
-                                customerRegistration.isSuccess
-                                    ? Icon(
-                                        Icons.check_circle_outlined,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      )
-                                    : Container(),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                              ],
-                            )
-                          : Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                100.height,
-                                TextButton(
-                                  onPressed: details.onStepContinue,
-                                  child: Text('CONTINUE'),
-                                ),
-                                50.width,
-                                TextButton(
-                                  onPressed: details.onStepCancel,
-                                  child: Text('BACK'),
-                                ),
-                              ],
-                            ),
-                    ]);
-                  },
-                  onStepContinue: () {
-                    setState(() {
-                      if (currStep <
-                          assembleSteps(customerRegistration, appStore).length -
-                              1) {
-                        currStep = currStep + 1;
-                      } else {
-                        //currStep = 0;
-                        finish(context);
-                      }
-                    });
-                  },
-                  onStepCancel: () {
-                    finish(context);
-                    setState(() {
-                      if (currStep > 0) {
-                        currStep = currStep - 1;
-                      } else {
-                        currStep = 0;
-                        context.beamTo(AuthLoginPageLocation());
-                      }
-                    });
-                  },
-                  onStepTapped: (step) {
-                    setState(() {
-                      currStep = step;
-                    });
-                  },
-                ),
-                customerRegistration.isFailedRegistration
-                    ? Text(
-                        customerRegistration.errorMessage,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.error),
-                      )
-                    : Container()
-              ],
-            );
-          }),
-        ],
-      ),
+    return Column(
+      children: [
+        Text(
+          textAlign: TextAlign.center,
+          'Customer registration'.toUpperCase(),
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+        ),
+        40.height,
+        Observer(builder: (_) {
+          return Column(
+            children: [
+              Stepper(
+                elevation: 40,
+                key: Key(
+                    "mysuperkey-${assembleSteps(customerRegistration, appStore).length}"),
+                steps: assembleSteps(customerRegistration, appStore),
+                type: StepperType.vertical,
+                currentStep: currStep,
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
+                  return Column(children: [
+                    isLastStep
+                        ? Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  200.height,
+                                  SizedBox(
+                                    width: 300,
+                                    child: customerRegistration.isRegistering
+                                        ? const Center(
+                                            child: SizedBox(
+                                                width: 100,
+                                                height: 100,
+                                                child:
+                                                    CircularProgressIndicator()),
+                                          )
+                                        : !customerRegistration.isSuccess
+                                            ? ActionButton(
+                                                onPressed: () {
+                                                  customerRegistration
+                                                      .registerCustomer(
+                                                          context);
+                                                },
+                                                textContent: "Register",
+                                              )
+                                            : Container(),
+                                  ),
+                                ],
+                              ),
+                              customerRegistration.isSuccess
+                                  ? Icon(
+                                      Icons.check_circle_outlined,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    )
+                                  : Container(),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                            ],
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              100.height,
+                              TextButton(
+                                onPressed: details.onStepContinue,
+                                child: const Text('CONTINUE'),
+                              ),
+                              50.width,
+                              TextButton(
+                                onPressed: details.onStepCancel,
+                                child: const Text('BACK'),
+                              ),
+                            ],
+                          ),
+                  ]);
+                },
+                onStepContinue: () {
+                  setState(() {
+                    if (currStep <
+                        assembleSteps(customerRegistration, appStore).length -
+                            1) {
+                      currStep = currStep + 1;
+                    } else {
+                      //currStep = 0;
+                      finish(context);
+                    }
+                  });
+                },
+                onStepCancel: () {
+                  finish(context);
+                  setState(() {
+                    if (currStep > 0) {
+                      currStep = currStep - 1;
+                    } else {
+                      currStep = 0;
+                      context.beamTo(AuthLoginPageLocation());
+                    }
+                  });
+                },
+                onStepTapped: (step) {
+                  setState(() {
+                    currStep = step;
+                  });
+                },
+              ),
+              customerRegistration.isFailedRegistration
+                  ? Text(
+                      customerRegistration.errorMessage,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error),
+                    )
+                  : Container()
+            ],
+          );
+        }),
+      ],
     );
   }
 
   List<Step> assembleSteps(RegistrationRequest request, Application appStore) {
     final buyerSteps = [
       Step(
-        title: Text('Role selection'),
+        title: stepTitle('Role selection'),
         isActive: currStep == 0,
         state: StepState.indexed,
         content: RoleSelection(),
       ),
       Step(
-          title: Text('Company details'),
+          title: stepTitle('Company details'),
           isActive: currStep == 1,
           state: StepState.indexed,
           content: Column(
             children: [
-              FormSectionHeader(label: 'General info'),
+              const FormSectionHeader(label: 'General info'),
               SomTextInput(
                 label: 'Company name',
                 icon: Icons.account_balance,
@@ -212,7 +211,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: request.company.setRegistrationNumber,
                 required: true,
               ),
-              FormSectionHeader(label: 'Contact details'),
+              const FormSectionHeader(label: 'Contact details'),
               SomTextInput(
                 label: 'Phone number',
                 icon: Icons.phone,
@@ -227,7 +226,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.url,
                 onChanged: request.company.setUrl,
               ),
-              FormSectionHeader(label: 'Company address'),
+              const FormSectionHeader(label: 'Company address'),
               SomDropDown(
                 value: request.company.address.country,
                 onChanged: request.company.address.setCountry,
@@ -271,24 +270,24 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     ];
     final providerSteps = [
       Step(
-        title: Text('Company branches'),
+        title: stepTitle('Company branches'),
         isActive: currStep == 2,
         state: StepState.indexed,
         content: SomTags(tags: request.som.availableBranches),
       ),
       Step(
-        title: Text('Subscription model'),
+        title: stepTitle('Subscription model'),
         isActive: currStep == 3,
         state: StepState.indexed,
         content: SubscriptionSelector(),
       ),
       Step(
-          title: Text('Payment details'),
+          title: stepTitle('Payment details'),
           isActive: currStep == 4,
           state: StepState.indexed,
           content: Column(
             children: [
-              FormSectionHeader(label: 'Bank details'),
+              const FormSectionHeader(label: 'Bank details'),
               20.height,
               SomTextInput(
                 label: 'IBAN',
@@ -316,7 +315,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 required: true,
               ),
               30.height,
-              FormSectionHeader(label: 'Payment interval'),
+              const FormSectionHeader(label: 'Payment interval'),
               20.height,
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -364,12 +363,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     final commonSteps = [
       Step(
-        title: Text('Users'),
+        title: stepTitle('Users'),
         isActive: currStep == 5,
         state: StepState.indexed,
         content: Column(
           children: [
-            Text('Admin user'),
+            const Text('Admin user'),
             Align(
               alignment: Alignment.bottomLeft,
               child: Column(
@@ -380,7 +379,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     alignment: WrapAlignment.start,
                     direction: Axis.horizontal,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 260,
                         child: SomTextInput(
                           label: 'E-mail',
@@ -392,13 +391,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       ),
                       30.width,
                       request.company.canCreateMoreUsers
-                          ? Container(
+                          ? SizedBox(
                               width: 60,
                               child: ElevatedButton(
                                   onPressed: () =>
                                       request.company.increaseNumberOfUsers(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Text('+'),
                                   )),
                             )
@@ -460,13 +459,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Divider(),
+                      const Divider(),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         alignment: WrapAlignment.start,
                         direction: Axis.horizontal,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 350,
                             child: SomTextInput(
                               label: 'User ${index + 1}',
@@ -478,20 +477,20 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           ),
                           30.width,
                           request.company.canCreateMoreUsers
-                              ? Container(
+                              ? SizedBox(
                                   width: 60,
                                   child: ElevatedButton(
                                       onPressed: () =>
                                           request.company.removeUser(index),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
                                         child: Text('-'),
                                       )),
                                 )
                               : const SizedBox(height: 1),
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         width: 350,
                         child: SomTextInput(
                           label: 'First name',
@@ -558,5 +557,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       ...commonSteps,
     ];
     return steps;
+  }
+
+  Text stepTitle(title) {
+    return Text(title,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+            ));
   }
 }
