@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
 class AppBarButton extends StatefulWidget {
-  AppBarButton({
+  const AppBarButton({
     required super.key,
     required this.title,
     required this.beamer,
@@ -32,20 +32,31 @@ class _AppBarButtonState extends State<AppBarButton> {
 
   @override
   Widget build(BuildContext context) {
-    final path = (context.currentBeamLocation.state as BeamState).uri.path;
-
     return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: IconButton(
-          // hoverColor: Theme.of(context).colorScheme.secondary,
-          icon: ImageIcon(
-            AssetImage(widget.child),
-            // color: Theme.of(context).colorScheme.primaryContainer,
-          ),
-          onPressed: () => widget.beamer.currentState?.routerDelegate
-              .beamToNamed(widget.uri),
-          tooltip: widget.title,
-          iconSize: 50,
+        padding:
+            const EdgeInsets.only(right: 100, top: 10, bottom: 10, left: 1),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              // hoverColor: Theme.of(context).colorScheme.secondary,
+              icon: ImageIcon(
+                AssetImage(widget.child),
+                // color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              onPressed: () => widget.beamer.currentState?.routerDelegate
+                  .beamToNamed(widget.uri),
+              tooltip: '${widget.title} management page',
+              iconSize: 50,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              widget.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
         ));
   }
 
