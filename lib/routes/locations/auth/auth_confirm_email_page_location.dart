@@ -84,17 +84,26 @@ class AuthConfirmEmailPageLocation
   }
 
   @override
-  List<Pattern> get pathPatterns => ['/auth/confirmEmail'];
+  List<Pattern> get pathPatterns =>
+      ['/auth/confirmEmail', '/auth/confirmEmail/error'];
 
   @override
   List<BeamPage> buildPages(
       BuildContext context, AuthConfirmEmailPageNotifier state) {
+    final hasError =
+        state.routeInformation.location?.contains('error') ?? false;
     return [
       BeamPage(
-        key: ValueKey('confirm-email'),
+        key: const ValueKey('confirm-email'),
         title: 'Confirm Email',
         child: AuthConfirmEmailPage(state.token, state.email),
       ),
+      if (hasError)
+        const BeamPage(
+          key: ValueKey('confirm-email-error'),
+          title: 'Confirm Email Error',
+          child: Text('Error'),
+        ),
     ];
   }
 }

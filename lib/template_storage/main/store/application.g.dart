@@ -49,6 +49,22 @@ mixin _$Application on _Application, Store {
     });
   }
 
+  late final _$textScaleFactorAtom =
+      Atom(name: '_Application.textScaleFactor', context: context);
+
+  @override
+  double get textScaleFactor {
+    _$textScaleFactorAtom.reportRead();
+    return super.textScaleFactor;
+  }
+
+  @override
+  set textScaleFactor(double value) {
+    _$textScaleFactorAtom.reportWrite(value, super.textScaleFactor, () {
+      super.textScaleFactor = value;
+    });
+  }
+
   late final _$isDarkModeOnAtom =
       Atom(name: '_Application.isDarkModeOn', context: context);
 
@@ -125,6 +141,17 @@ mixin _$Application on _Application, Store {
       ActionController(name: '_Application', context: context);
 
   @override
+  void setTextScaleFactor(double value) {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+        name: '_Application.setTextScaleFactor');
+    try {
+      return super.setTextScaleFactor(value);
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleDarkMode() {
     final _$actionInfo = _$_ApplicationActionController.startAction(
         name: '_Application.toggleDarkMode');
@@ -173,6 +200,7 @@ mixin _$Application on _Application, Store {
     return '''
 applicationWidth: ${applicationWidth},
 buttonWidth: ${buttonWidth},
+textScaleFactor: ${textScaleFactor},
 isDarkModeOn: ${isDarkModeOn},
 selectedLanguage: ${selectedLanguage},
 selectedDrawerItem: ${selectedDrawerItem},

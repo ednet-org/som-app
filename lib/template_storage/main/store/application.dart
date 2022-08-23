@@ -13,6 +13,12 @@ abstract class _Application with Store {
   double buttonWidth = 200;
 
   @observable
+  double textScaleFactor = 1.0;
+
+  @action
+  void setTextScaleFactor(double value) => textScaleFactor = value;
+
+  @observable
   bool isDarkModeOn = true;
 
   @observable

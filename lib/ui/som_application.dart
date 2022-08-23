@@ -48,6 +48,16 @@ class SomApplication extends StatelessWidget {
         appBar: AppBar(
           title: appBarTitleWidget(context, 'Smart Offer Management'),
           actions: [
+            SizedBox(
+              width: 200,
+              child: Slider(
+                value: appStore.textScaleFactor,
+                onChanged: appStore.setTextScaleFactor,
+                min: 0.0,
+                max: 5.0,
+              ),
+            ),
+            const SizedBox(width: 10),
             AppBarButton(
               key: const ValueKey('InquiriesManagementMenuItem'),
               title: 'Inquiries',
