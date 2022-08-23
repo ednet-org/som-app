@@ -78,11 +78,13 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Icon(
-        //   Icons.local_offer_outlined,
-        //   color: Colors.deepOrangeAccent,
-        //   size: 25.0,
-        // ),
+        _tags.isNotEmpty
+            ? Icon(
+                Icons.local_offer_outlined,
+                color: Theme.of(context).colorScheme.primary,
+                size: 25.0,
+              )
+            : Container(),
         _tagsWidget(),
       ],
     );
@@ -123,96 +125,92 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
     action,
     showCloseIcon,
   }) {
-    return InkWell(
-        onTap: onTap,
-        child: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 5.0,
-                horizontal: 5.0,
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 10.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                child: Text(
-                  '${tagModel.title}',
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ),
-            showCloseIcon
-                ? Positioned(
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 8.0,
-                      child: const Icon(
-                        Icons.clear,
-                        size: 10.0,
-                      ),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Stack(
+        children: [
+          OutlinedButton(
+              onPressed: onTap,
+              child: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 15.0,
                     ),
-                  )
-                : SizedBox(),
-          ],
-        ));
+                    child: Text(
+                      '${tagModel.title}',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: showCloseIcon
+                                ? Theme.of(context).colorScheme.tertiary
+                                : Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                  ),
+                ],
+              )),
+          showCloseIcon
+              ? Positioned(
+                  right: 8.0,
+                  top: 16.0,
+                  child: CircleAvatar(
+                    radius: 10.0,
+                    child: Icon(
+                      Icons.clear,
+                      size: 15.0,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                )
+              : const SizedBox()
+        ],
+      ),
+    );
   }
 
   Widget _buildSearchFieldWidget() {
-    return Container(
-      padding: const EdgeInsets.only(
-        left: 20.0,
-        top: 10.0,
-        bottom: 10.0,
-      ),
-      margin: const EdgeInsets.only(
-        left: 20.0,
-        right: 20.0,
-        top: 20.0,
-        bottom: 5.0,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        border: Border.all(
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _searchTextEditingController,
-              decoration: const InputDecoration.collapsed(
-                hintText: 'Search branch',
-                hintStyle: TextStyle(),
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _searchTextEditingController,
+            decoration: InputDecoration(
+              labelStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
               ),
-              style: const TextStyle(
-                fontSize: 16.0,
-              ),
-              textInputAction: TextInputAction.search,
-            ),
-          ),
-          _searchText.isNotEmpty
-              ? InkWell(
-                  child: Icon(
-                    Icons.clear,
-                  ),
-                  onTap: () => _searchTextEditingController.clear(),
-                )
-              : Icon(
-                  Icons.search,
+              focusColor: Theme.of(context).colorScheme.primaryContainer,
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-          Container(),
-        ],
-      ),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              prefixIconColor: Theme.of(context).colorScheme.primary,
+              suffixIconColor: Theme.of(context).colorScheme.primary,
+              labelText: 'Filter categories',
+              hintText: 'Branches like IT, Media, Pharma, Sport...',
+            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+            textInputAction: TextInputAction.search,
+          ),
+        ),
+        _searchText.isNotEmpty
+            ? InkWell(
+                child: Icon(
+                  Icons.clear,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                onTap: () => _searchTextEditingController.clear(),
+              )
+            : Container(),
+        Container(),
+      ],
     );
   }
 
