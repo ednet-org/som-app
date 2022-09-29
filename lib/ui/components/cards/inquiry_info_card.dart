@@ -2,12 +2,14 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-class BodyWidget extends StatefulWidget {
+class InquiryInfoCard extends StatefulWidget {
+  const InquiryInfoCard({super.key});
+
   @override
-  _BodyWidgetState createState() => _BodyWidgetState();
+  InquiryInfoCardState createState() => InquiryInfoCardState();
 }
 
-class _BodyWidgetState extends State<BodyWidget> {
+class InquiryInfoCardState extends State<InquiryInfoCard> {
   @override
   Widget build(BuildContext context) {
     // Figma Flutter Generator BodyWidget - GROUP
@@ -107,6 +109,7 @@ class _BodyWidgetState extends State<BodyWidget> {
               child: Text(
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
                 textAlign: TextAlign.left,
+                softWrap: true,
                 style: TextStyle(
                     color: Color.fromRGBO(98, 91, 113, 1),
                     fontFamily: 'Work Sans',
