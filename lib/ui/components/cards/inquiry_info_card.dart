@@ -3,18 +3,37 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class InquiryInfoCard extends StatefulWidget {
-  const InquiryInfoCard({super.key});
+  final Map<String, Object> inquiry;
+
+  const InquiryInfoCard({super.key, required this.inquiry});
 
   @override
   InquiryInfoCardState createState() => InquiryInfoCardState();
 }
 
 class InquiryInfoCardState extends State<InquiryInfoCard> {
+  // generate inquiry status color based on inquiry status
+  Color get inquiryStatusColor {
+    var inquiryStatus = widget.inquiry['status'];
+    switch (inquiryStatus) {
+      case 'closed':
+        return Colors.green;
+      case 'responded':
+        return Colors.red;
+      case 'published':
+        return Colors.yellow;
+      case 'draft':
+        return Colors.grey;
+      default:
+        return Colors.grey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Figma Flutter Generator BodyWidget - GROUP
 
-    return Container(
+    return SizedBox(
         width: 306.00164794921875,
         height: 357,
         child: Stack(children: <Widget>[
@@ -72,13 +91,14 @@ class InquiryInfoCardState extends State<InquiryInfoCard> {
           const Positioned(top: 16, left: 251, child: SizedBox()),
           Positioned(
               top: 20.5,
-              left: 283,
+              left: 270,
               child: Container(
                   width: 17,
                   height: 15,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(120, 234, 51, 1),
-                    borderRadius: BorderRadius.all(Radius.elliptical(17, 15)),
+                  decoration: BoxDecoration(
+                    color: inquiryStatusColor,
+                    borderRadius:
+                        const BorderRadius.all(Radius.elliptical(17, 15)),
                   ))),
           Positioned(
               top: 51,
@@ -106,6 +126,7 @@ class InquiryInfoCardState extends State<InquiryInfoCard> {
           const Positioned(
               top: 113,
               left: 20,
+              width: 280,
               child: Text(
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
                 textAlign: TextAlign.left,
@@ -113,7 +134,7 @@ class InquiryInfoCardState extends State<InquiryInfoCard> {
                 style: TextStyle(
                     color: Color.fromRGBO(98, 91, 113, 1),
                     fontFamily: 'Work Sans',
-                    fontSize: 16,
+                    fontSize: 12,
                     letterSpacing:
                         0 /*percentages not used in flutter. defaulting to zero*/,
                     fontWeight: FontWeight.normal,

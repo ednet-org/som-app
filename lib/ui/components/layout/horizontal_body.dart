@@ -38,8 +38,10 @@ class HorizontalBody extends StatelessWidget {
                 expandedBodyMenu,
                 expandedHorizontalDivider(context),
                 expandedBodyContentSplitLeft,
-                expandedHorizontalDivider(context),
-                expandedBodyContentSplitRight,
+                if (expandedBodyContentSplitRight != null)
+                  expandedHorizontalDivider(context),
+                if (expandedBodyContentSplitRight != null)
+                  expandedBodyContentSplitRight,
               ],
             )
           : Row(
@@ -49,8 +51,10 @@ class HorizontalBody extends StatelessWidget {
                 expandedBodyMenu,
                 expandedVerticalDivider(context),
                 expandedBodyContentSplitLeft,
-                expandedVerticalDivider(context),
-                expandedBodyContentSplitRight,
+                if (expandedBodyContentSplitRight != null)
+                  expandedHorizontalDivider(context),
+                if (expandedBodyContentSplitRight != null)
+                  expandedBodyContentSplitRight,
               ],
             );
 

@@ -23,7 +23,8 @@ class AppBody extends StatelessWidget {
           : HorizontalBody(
               expandedBodyMenu: contextMenu,
               expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
-              expandedBodyContentSplitRight: ExpandedSplit(child: rightSplit),
+              expandedBodyContentSplitRight:
+                  rightSplit != null ? ExpandedSplit(child: rightSplit) : null,
             ),
     );
   }
