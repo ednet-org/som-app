@@ -12,7 +12,7 @@ class InquiryAppBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBody(
       contextMenu: Text(
-        'Filter Inquiry',
+        'Refine your search with Filters',
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
