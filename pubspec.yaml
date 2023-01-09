@@ -2,6 +2,8 @@ name: som
 description: A new Flutter application.
 version: 1.0.0+1
 
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
 environment:
   sdk: '>=2.17.0 <3.0.0'
 
@@ -91,6 +93,17 @@ dependencies:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
       ref: design_system
+
+  ednet_core:
+    git:
+      url: git@github.com:ednet-dev/ednet_core.git
+      ref: main
+
+  ednet_semantics:
+    git:
+      url: git@github.com:ednet-dev/ednet_semantics.git
+      ref: main
+
   openapi:
     path: ./openapi
 

@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/model/customer-management/bank_details.dart';
-import 'package:som/domain/model/customer-management/branch.dart';
-import 'package:som/domain/model/customer-management/payment-interval.dart';
+import 'package:som/domain/model/customer_management/bank_details.dart';
+import 'package:som/domain/model/customer_management/branch.dart';
+import 'package:som/domain/model/customer_management/payment-interval.dart';
 
 part 'provider_registration_request.g.dart';
 

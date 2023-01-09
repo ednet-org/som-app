@@ -374,6 +374,24 @@ packages:
       url: "git@gitlab.com:ednet/supernova-material.git"
     source: git
     version: "0.1.2"
+  ednet_core:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "1547712e954a7c7b7d70a5a66512bd9a911d1fe6"
+      url: "git@github.com:ednet-dev/ednet_core.git"
+    source: git
+    version: "0.0.1"
+  ednet_semantics:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: f80b084bf97f8df162b2bd302299f75006c5a51a
+      url: "git@github.com:ednet-dev/ednet_semantics.git"
+    source: git
+    version: "0.0.1"
   equatable:
     dependency: transitive
     description:
@@ -1597,5 +1615,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.6 <3.0.0"
+  dart: ">=2.18.6 <3.0.0"
   flutter: ">=3.0.0"

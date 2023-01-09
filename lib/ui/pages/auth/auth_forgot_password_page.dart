@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer-management/auth_forgot_password_page_state.dart';
+import 'package:som/domain/model/customer_management/auth_forgot_password_page_state.dart';
 import 'package:som/ui/components/ActionButton.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/components/funny_logo.dart';

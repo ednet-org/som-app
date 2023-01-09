@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/model/customer-management/provider_registration_request.dart';
-import 'package:som/domain/model/customer-management/registration_user.dart';
-import 'package:som/domain/model/customer-management/roles.dart';
+import 'package:som/domain/model/customer_management/provider_registration_request.dart';
+import 'package:som/domain/model/customer_management/registration_user.dart';
+import 'package:som/domain/model/customer_management/roles.dart';
 
 import 'address.dart';
 
