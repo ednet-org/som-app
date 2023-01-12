@@ -19,7 +19,11 @@ class _$ApiCompanyService extends ApiCompanyService {
   @override
   Future<Response<List<Company>>> getCompanies() {
     final $url = 'companies';
-    final $request = Request('GET', $url, client.baseUrl);
+    final $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
     return client.send<List<Company>, Company>($request);
   }
 }

@@ -120,3 +120,5 @@ class SomTextInput extends StatelessWidget {
     );
   }
 }
+
+// lets pause our story about SemanticEntityCard for the moment and learn something about EDS, ednet_design_system library which could help us styling and implementing SemanticEntityCard,  here what we know about EDS, please refactore in accordance with new knowledge:"""

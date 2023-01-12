@@ -89,6 +89,7 @@ dependencies:
 
   google_mobile_ads: ^2.0.0
 
+  # refactor to ednet_design_system
   ednet_component_library:
     git:
       url: git@gitlab.com:ednet/supernova-material.git
@@ -112,7 +113,7 @@ dependencies:
   dio: '>=4.0.1 <5.0.0'
   pretty_dio_logger: ^1.1.1
   curl_logger_dio_interceptor: ^0.0.3
-  beamer: ^1.5.0
+  beamer: ^1.5.3
   jwt_decode: ^0.3.1
   connectivity:
 

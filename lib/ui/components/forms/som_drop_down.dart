@@ -83,9 +83,6 @@ class SomDropDown extends StatelessWidget {
             child: widget,
           );
         },
-        textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
       ),
       dropdownBuilder: (context, value) {
         return Text(value ?? 'n/a',

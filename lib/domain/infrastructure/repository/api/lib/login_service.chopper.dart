@@ -21,7 +21,12 @@ class _$LoginService extends LoginService {
       AuthenticateRequestDto body) {
     final $url = 'auth/login';
     final $body = body;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    final $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
     return client
         .send<AuthenticationResponseDto, AuthenticationResponseDto>($request);
   }

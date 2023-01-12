@@ -19,7 +19,11 @@ class _$PeopleService extends PeopleService {
   @override
   Future<Response<People>> getPerson(String personId) {
     final $url = '/people/${personId}';
-    final $request = Request('GET', $url, client.baseUrl);
+    final $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
     return client.send<People, People>($request);
   }
 }
