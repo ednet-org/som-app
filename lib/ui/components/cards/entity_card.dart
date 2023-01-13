@@ -1,5 +1,5 @@
+import 'package:ednet_core/ednet_core.dart';
 import 'package:flutter/material.dart';
-import 'package:som/domain/core/model/entity/entity.dart';
 
 class EntityCard<T extends Entity> extends StatelessWidget {
   final item;

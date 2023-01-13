@@ -5,9 +5,9 @@ import 'package:som/domain/infrastructure/repository/api/utils/converters/except
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
 
 class JsonTypeParser {
-  static const Map<Type, JsonFactory> factories = {
-    Article: Article.fromJsonFactory,
-    People: People.fromJsonFactory,
+  static Map<Type, JsonFactory> factories = {
+    // Article: Article.fromJson,
+    // People: People.fromJson,
   };
 
   static dynamic decode<T>(dynamic entity) {
