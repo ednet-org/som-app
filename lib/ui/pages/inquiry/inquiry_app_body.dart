@@ -27,7 +27,7 @@ class InquiryAppBody extends StatelessWidget {
             case 0:
               return InquiryInfoCard(inquiry: inquiries[index]);
             case 1:
-              return InquiryInfoCard(inquiry: inquiries[index]);
+              return EntityCard(item: inquiries.elementAt(index));
             case 2:
               return EntityCard(item: inquiries.elementAt(index));
             default:
@@ -137,128 +137,10 @@ List<Map<String, String>> inquiries = [
   }
 ];
 
-class User {
-  final String id;
-  final String username;
-  final String? phoneNumber;
-  final String email;
-  final String role; // "buyer", "provider", "som_employee", "som_admin"
-  final Company company;
-
-  User(
-      {this.phoneNumber,
-      required this.id,
-      required this.username,
-      required this.email,
-      required this.role,
-      required this.company});
-}
-
-class Company {
-  final String id;
-  final String name;
-  final String role; // "buyer" or "provider"
-  final String address;
-
-  Company(
-      {required this.id,
-      required this.name,
-      required this.role,
-      required this.address,
-      required List<User> employees});
-}
-
 //= {location, companyType,companySize};
-class ProviderCriteria {
-  final String location;
-  final String companyType;
-  final String companySize;
-
-  ProviderCriteria(
-      {required this.location,
-      required this.companyType,
-      required this.companySize});
-}
-
-class Inquiry {
-  final String id;
-  final String title;
-  final String description;
-  final String category;
-  final String branch;
-  final User buyer; // User that created the inquiry, should have role "buyer"
-  final DateTime publishingDate;
-  final DateTime? expirationDate;
-  final String? deliveryLocation;
-  final ProviderCriteria provider;
-  final List<String> attachments;
-  final InquiryStatus status;
-  final List<Offer> offers;
-
-  get numberOfOffers => offers.length;
-
-  Inquiry({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.category,
-    required this.branch,
-    required this.buyer,
-    required this.publishingDate,
-    required this.expirationDate,
-    required this.deliveryLocation,
-    required this.provider,
-    required this.attachments,
-    required this.status,
-    required this.offers,
-  });
-}
 
 // can be draft, published, responded, closed
-class InquiryStatus {
-  static const DRAFT = 'draft';
-  static const PUBLISHED = 'published';
-  static const RESPONDED = 'responded';
-  static const CLOSED = 'closed';
 
-  static fromString(String status) {
-    switch (status) {
-      case DRAFT:
-        return DRAFT;
-      case PUBLISHED:
-        return PUBLISHED;
-      case RESPONDED:
-        return RESPONDED;
-      case CLOSED:
-        return CLOSED;
-      default:
-        throw Exception('Invalid status');
-    }
-  }
-}
-
-class Offer {
-  final String id;
-  final Inquiry inquiry;
-  final User
-      provider; // User that created the offer, should have role "provider"
-  final double? price;
-  final String? deliveryTime;
-  final String? warranty;
-  final List<String>? attachments;
-  final OfferStatus status;
-
-  Offer({
-    required this.id,
-    required this.inquiry,
-    required this.provider,
-    required this.price,
-    required this.deliveryTime,
-    required this.warranty,
-    required this.attachments,
-    required this.status,
-  });
-}
 //
 // List<Inquiry> parsedInquiries = inquiries.map((inquiry) {
 //   Company buyer = Company(
@@ -343,38 +225,3 @@ class Offer {
 //     offers: offers,
 //   );
 // }).toList();
-
-class UserRole {
-  static const String EMPLOYEE = "employee";
-  static const String ADMIN = "admin";
-  static const String SOM_EMPLOYEE = "som_employee";
-  static const String SOM_ADMIN = "som_admin";
-}
-
-class OfferStatus {
-  static const String DRAFT = "draft";
-  static const String PUBLISHED = "pending";
-  static const String ACCEPTED = "accepted";
-  static const String REJECTED = "rejected";
-
-  static String fromString(String status) {
-    switch (status) {
-      case DRAFT:
-        return DRAFT;
-      case PUBLISHED:
-        return PUBLISHED;
-      case ACCEPTED:
-        return ACCEPTED;
-      case REJECTED:
-        return REJECTED;
-      default:
-        return DRAFT;
-    }
-  }
-}
-
-class CompanyRole {
-  static const String BUYER = "buyer";
-  static const String PROVIDER = "provider";
-  static const String BOTH = "both";
-}
