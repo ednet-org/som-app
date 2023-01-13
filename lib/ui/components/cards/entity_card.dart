@@ -21,6 +21,6 @@ class EntityCard<T extends Entity> extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: SizedBox(width: 400, child: mapping.build(item)));
+        child: SizedBox(width: 200, child: mapping.build(item)));
   }
 }

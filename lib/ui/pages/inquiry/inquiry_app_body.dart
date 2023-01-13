@@ -94,7 +94,7 @@ List<Map<String, String>> inquiries = [
     "providercompanysize": "up to 50 empoyees",
     "attachments": "[]",
     "status": "published",
-    "offers": "[]"
+    "offers": "5"
   },
   {
     "id": "2",
@@ -113,7 +113,7 @@ List<Map<String, String>> inquiries = [
     "providerlocation": "Austria",
     "providercompanytype": "Dealer",
     "providercompanysize": "no restriction",
-    "attachments": "...",
+    "attachments": "[]",
     "status": "responded",
     "offers": "3"
   },
@@ -136,7 +136,7 @@ List<Map<String, String>> inquiries = [
     "providerlocation": "east austria",
     "providercompanytype": "Dealer",
     "providercompanysize": "no restriction",
-    "attachments": "...",
+    "attachments": "[]",
     "status": "draft",
     "offers": "3"
   }
@@ -230,3 +230,4 @@ List<Map<String, String>> inquiries = [
 //     offers: offers,
 //   );
 // }).toList();
+final inquiry = Inquiry.fromMapK(inquiries[0]);

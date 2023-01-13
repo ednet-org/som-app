@@ -21,4 +21,16 @@ class Offer {
     required this.attachments,
     required this.status,
   });
+
+  static Offer fromJson(Map<String, dynamic> json) {
+    return Offer(
+      id: json['id'],
+      inquiry: Inquiry.fromJson(json['inquiry']),
+      provider: User.fromJson(json['provider']),
+      price: json['price'],
+      deliveryTime: json['deliveryTime'],
+      attachments: json['attachments'],
+      status: json['status'] as OfferStatus,
+    );
+  }
 }

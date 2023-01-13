@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:ednet_core/ednet_core.dart';
+import 'package:intl/intl.dart';
 import 'package:som/main.dart';
 
 import 'company.dart';
@@ -7,96 +10,6 @@ import 'offer_status.dart';
 import 'offer.dart';
 import 'provider_criteria.dart';
 import 'user.dart';
-
-List<Map<String, String>> rawMapKInquiries = [
-  {
-    "id": "1",
-    "title": "Laptops for new Dev team - Blue oranges",
-    "description": "describe me...",
-    "category": "IT",
-    "branch": "Laptops",
-    "username": "Mr. Basche",
-    "userrole": "IT Manager",
-    "userphonenumber": "+436641234567",
-    "usermail": "basche@som.com",
-    "publishingDate": "14.11.2022",
-    "expirationDate": "01.12.2022",
-    "deliverylocation": "Vienna",
-    "numberofOffers": "3",
-    "providerlocation": "east austria",
-    "providercompanytype": "Dealer",
-    "providercompanysize": "no restriction",
-    "attachments": "Items and amounts",
-    "status": "draft",
-    "offers": "3"
-  },
-  {
-    "id": "1",
-    "title": "Office Printer",
-    "category": "Printing",
-    "branch": "Multifunction Printers",
-    "description":
-        "New Office Printers with FollowMe Solution; We need 4 A3 Colour Office Printers for about 10k A4 printouts per Month. Besides that the printers must have minimum two Paperbanks and one Printer a Bookletfinisher. We want an offer for rental and purchase variation.",
-    "username": "Mr. Basche",
-    "userrole": "IT Manager",
-    "userphonenumber": "+436641234567",
-    "usermail": "basche@som.com",
-    "publishingDate": "20.11.2022",
-    "expirationDate": "31.12.2022",
-    "deliverylocation": "Vienna",
-    "numberofOffers": "3",
-    "providerlocation": "Austria",
-    "providercompanytype": "Dealer",
-    "providercompanysize": "up to 50 empoyees",
-    "attachments": "[]",
-    "status": "published",
-    "offers": "[]"
-  },
-  {
-    "id": "2",
-    "title": "Notebooks",
-    "category": "Clients",
-    "branch": "IT",
-    "description": "6x 15“ Notebook; Specifications attached",
-    "username": "Mr. Basche",
-    "userrole": "IT Manager",
-    "userphonenumber": "+436641234567",
-    "usermail": "basche@som.com",
-    "publishingDate": "20.11.2022",
-    "expirationDate": "31.12.2022",
-    "deliverylocation": "Graz",
-    "numberofOffers": "5",
-    "providerlocation": "Austria",
-    "providercompanytype": "Dealer",
-    "providercompanysize": "no restriction",
-    "attachments": "...",
-    "status": "responded",
-    "offers": "3"
-  },
-  {
-    "id": "3",
-    "title":
-        "25 Phonenumbers with Samsung Smartphones and 10 mobile internet for tablets",
-    "category": "Mobilephone, mobileinternet",
-    "branch": "Telecommunication",
-    "description":
-        "We need 25 Mobilephonemubers (flat minutes in austria, flat minutes in europe and each number with 10GB internet in austria and europe) with Samsung Galaxy 22FE and 10 Mobileinternet-Cards (each 20GB for austria and europe)",
-    "username": "Mr. Basche",
-    "userrole": "Purchase Manager",
-    "userphonenumber": "+436641234567",
-    "usermail": "basche@som.com",
-    "publishingDate": "20.11.2022",
-    "expirationDate": "31.12.2022",
-    "deliverylocation": "Vienna",
-    "numberofOffers": "3",
-    "providerlocation": "east austria",
-    "providercompanytype": "Dealer",
-    "providercompanysize": "no restriction",
-    "attachments": "...",
-    "status": "draft",
-    "offers": "3"
-  }
-];
 
 class Inquiry extends Entity {
   @override
@@ -134,7 +47,7 @@ class Inquiry extends Entity {
   final ProviderCriteria provider;
   final List<String> attachments;
   final InquiryStatus status;
-  final List<Offer> offers;
+  final int offers;
 
   Inquiry(
     this.description,
@@ -170,7 +83,6 @@ class Inquiry extends Entity {
     };
   }
 
-  get numberOfOffers => offers.length;
 
   @override
   getAttributeByName(String name) {
@@ -204,29 +116,65 @@ class Inquiry extends Entity {
     return Inquiry(
       json['description'],
       json['id'],
-      tags: json['tags'],
-      topics: json['topics'],
-      interests: json['interests'],
-      policies: json['policies'],
-      title: json['title'],
-      category: json['category'],
-      branch: json['branch'],
-      buyer: json['buyer'],
-      publishingDate: json['publishingDate'],
-      expirationDate: json['expirationDate'],
-      deliveryLocation: json['deliveryLocation'],
-      provider: json['provider'],
-      attachments: json['attachments'],
-      status: json['status'],
-      offers: json['offers'],
+      tags: json['tags'] != null ? List<String>.from(json['tags']) : [],
+      topics: json['topics'] != null
+          ? List<EntityEvent>.from(
+              json['topics'].map((e) => EntityEvent.fromJson(e)))
+          : [],
+      interests: json['interests'] != null
+          ? List<EntityEvent>.from(
+              json['interests'].map((e) => EntityEvent.fromJson(e)))
+          : [],
+      policies: json['policies'] != null
+          ? List<EntityPolicy>.from(
+              json['policies'].map((e) => EntityPolicy.fromJson(e)))
+          : [],
+      title: json['title'] ?? '',
+      category: json['category'] ?? '',
+      branch: json['branch'] ?? '',
+      buyer: json['buyer'] != null
+          ? User.fromJson(json['buyer'])
+          : User(
+              id: '1',
+              userphonenumber: '',
+              company: Company(
+                id: '1',
+                name: 'SOM',
+                role: '',
+                address: '',
+                employees: [],
+              ),
+              username: '',
+              usermail: '',
+              userrole: '',
+            ),
+      publishingDate: json['publishingDate'] != null
+          ? DateFormat('dd.MM.yyyy').parse(json['publishingDate'])
+          : DateTime.now(),
+      expirationDate: json['expirationDate'] != null
+          ? DateFormat('dd.MM.yyyy').parse(json['expirationDate'])
+          : null,
+      deliveryLocation: json['deliveryLocation'] ?? '',
+      provider: json['provider'] != null
+          ? ProviderCriteria.fromJson(json['provider'])
+          : ProviderCriteria(
+              location: '',
+              companyType: '',
+              companySize: '',
+            ),
+      attachments: json['attachments'] != null
+          ? List<String>.from(jsonDecode(json['attachments']))
+          : [],
+      status: InquiryStatus.values
+          .firstWhere((e) => e.toString() == 'InquiryStatus.' + json['status']),
+      offers: int.parse(json['offers'] ?? 0),
     );
   }
 
   static Inquiry fromMapK(Map<String, String> map) {
     final User defaultUser = User(
       id: '',
-      role: '',
-      phoneNumber: '',
+      userphonenumber: '',
       company: Company(
         id: '1',
         name: 'SOM',
@@ -235,7 +183,8 @@ class Inquiry extends Entity {
         employees: [],
       ),
       username: '',
-      email: '',
+      usermail: '',
+      userrole: '',
     );
 
     final defaultProviderCriteria = ProviderCriteria(
@@ -244,31 +193,28 @@ class Inquiry extends Entity {
       companySize: '',
     );
 
-    final defaultInquiry = Inquiry(
-      '',
-      '',
-      tags: [],
-      topics: [],
-      interests: [],
-      policies: [],
-      title: '',
-      category: '',
-      branch: '',
-      buyer: defaultUser,
-      publishingDate: DateTime.now(),
-      expirationDate: DateTime.now(),
-      deliveryLocation: '',
-      provider: defaultProviderCriteria,
-      attachments: [],
-      status: InquiryStatus.DRAFT as InquiryStatus,
-      offers: [],
-    );
+    final defaultInquiry = Inquiry('', '',
+        tags: [],
+        topics: [],
+        interests: [],
+        policies: [],
+        title: '',
+        category: '',
+        branch: '',
+        buyer: defaultUser,
+        publishingDate: DateTime.now(),
+        expirationDate: DateTime.now(),
+        deliveryLocation: '',
+        provider: defaultProviderCriteria,
+        attachments: [],
+        status: InquiryStatus.draft,
+        offers: 2);
 
     final defaultOffer = Offer(
       id: '',
       price: 0,
       attachments: [],
-      status: OfferStatus.DRAFT as OfferStatus,
+      status: OfferStatus.draft,
       provider: defaultUser,
       inquiry: defaultInquiry,
       deliveryTime: '',

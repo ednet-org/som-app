@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:som/domain/model/inquiry_management/inquiry.dart';
 
 class InquiryToCardMapping {
   final String id = 'id';
@@ -24,7 +25,7 @@ class InquiryToCardMapping {
   const InquiryToCardMapping();
 
   // function which returns a widget based on properties of this class
-  Widget build(Map<String, String> item) {
+  Widget build(Inquiry item) {
     return Column(
       children: [
         const SizedBox(
@@ -36,7 +37,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'ID: ${item[id]}',
+              'ID: ${item.id}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -44,7 +45,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Status: ${item[status]}',
+              'Status: ${item.status}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -64,7 +65,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Title: ${item[title]}',
+              'Title: ${item.title}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -72,7 +73,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Category: ${item[category]}',
+              'Category: ${item.category}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -92,7 +93,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Description: ${item[description]}',
+              'Description: ${item.description}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -100,7 +101,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Branch: ${item[branch]}',
+              'Branch: ${item.branch}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -120,7 +121,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'User: ${item[username]}',
+              'User: ${item.buyer.username}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -128,7 +129,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Role: ${item[userrole]}',
+              'Role: ${item.buyer.userrole}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -148,7 +149,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Phone: ${item[userphonenumber]}',
+              'Phone: ${item.buyer.userphonenumber}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -156,7 +157,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Mail: ${item[usermail]}',
+              'Mail: ${item.buyer.usermail}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -176,7 +177,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Publishing Date: ${item[publishingDate]}',
+              'Publishing Date: ${item.publishingDate}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -184,7 +185,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Expiration Date: ${item[expirationDate]}',
+              'Expiration Date: ${item.expirationDate}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -204,7 +205,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Delivery Location: ${item[deliverylocation]}',
+              'Delivery Location: ${item.deliveryLocation}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -212,7 +213,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Number of Offers: ${item[numberofOffers]}',
+              'Number of Offers: ${item.offers}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -232,7 +233,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Provider Location: ${item[providerlocation]}',
+              'Provider Location: ${item.provider.location}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -240,7 +241,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Provider Company Type: ${item[providercompanytype]}',
+              'Provider Company Type: ${item.provider.companyType}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -260,7 +261,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Provider Company Size: ${item[providercompanysize]}',
+              'Provider Company Size: ${item.provider.companySize}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -268,7 +269,7 @@ class InquiryToCardMapping {
             ),
             const Spacer(),
             Text(
-              'Attachments: ${item[attachments]}',
+              'Attachments: ${item.attachments}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -288,7 +289,7 @@ class InquiryToCardMapping {
               width: 8,
             ),
             Text(
-              'Offers: ${item[offers]}',
+              'Offers: ${item.offers}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
