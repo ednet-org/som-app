@@ -96,14 +96,16 @@ dependencies:
       ref: design_system
 
   ednet_core:
-    git:
-      url: git@github.com:ednet-dev/ednet_core.git
-      ref: main
+    path: ../ednet_core
+  #    git:
+  #      url: git@github.com:ednet-dev/ednet_core.git
+  #      ref: main
 
   ednet_semantics:
-    git:
-      url: git@github.com:ednet-dev/ednet_semantics.git
-      ref: main
+    path: ../ednet_semantics
+  #    git:
+  #      url: git@github.com:ednet-dev/ednet_semantics.git
+  #      ref: main
 
   openapi:
     path: ./openapi

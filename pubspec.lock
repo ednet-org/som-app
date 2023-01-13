@@ -349,20 +349,16 @@ packages:
   ednet_core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "40c34b322bd61cf001e209d907ea9aa119fdbd89"
-      url: "git@github.com:ednet-dev/ednet_core.git"
-    source: git
+      path: "../ednet_core"
+      relative: true
+    source: path
     version: "0.0.1"
   ednet_semantics:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "3829513a7176a94243552d72eec523f79b5f118f"
-      url: "git@github.com:ednet-dev/ednet_semantics.git"
-    source: git
+      path: "../ednet_semantics"
+      relative: true
+    source: path
     version: "0.0.1"
   equatable:
     dependency: transitive
@@ -797,6 +793,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  isar:
+    dependency: transitive
+    description:
+      name: isar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.5"
   japx:
     dependency: "direct main"
     description:
