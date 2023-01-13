@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/ui/components/cards/entity_card.dart';
+import 'package:som/ui/components/cards/grida_inquiry_info_card.dart';
 import 'package:som/ui/components/cards/inquiry_info_card.dart';
 
 // import 'package:som/ui/components/cards/inquiry_info_card.dart';
@@ -30,6 +31,8 @@ class InquiryAppBody extends StatelessWidget {
             case 0:
               return InquiryInfoCard(inquiry: inquiries[index]);
             case 1:
+              return GridaInquiryInfoCard(
+                  inquiry: Inquiry.fromJson(inquiries[index]));
             case 2:
               return EntityCard(
                 item: Inquiry.fromJson(inquiries[index]),
