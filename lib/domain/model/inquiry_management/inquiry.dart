@@ -106,4 +106,26 @@ class Inquiry extends Entity {
   @override
   // TODO: implement name
   String get name => throw UnimplementedError();
+
+  static Inquiry fromJson(Map<String, dynamic> json) {
+    return Inquiry(
+      json['description'],
+      json['id'],
+      tags: json['tags'],
+      topics: json['topics'],
+      interests: json['interests'],
+      policies: json['policies'],
+      title: json['title'],
+      category: json['category'],
+      branch: json['branch'],
+      buyer: json['buyer'],
+      publishingDate: json['publishingDate'],
+      expirationDate: json['expirationDate'],
+      deliveryLocation: json['deliveryLocation'],
+      provider: json['provider'],
+      attachments: json['attachments'],
+      status: json['status'],
+      offers: json['offers'],
+    );
+  }
 }

@@ -5,6 +5,9 @@ import 'package:som/ui/components/cards/inquiry_info_card.dart';
 // import 'package:som/ui/components/cards/inquiry_info_card.dart';
 import 'package:som/ui/components/layout/app_body.dart';
 
+import '../../../domain/model/inquiry_management/inquiry.dart';
+import '../../components/cards/inquiry_to_card_mapping.dart';
+
 class InquiryAppBody extends StatelessWidget {
   const InquiryAppBody({Key? key}) : super(key: key);
 
@@ -27,9 +30,11 @@ class InquiryAppBody extends StatelessWidget {
             case 0:
               return InquiryInfoCard(inquiry: inquiries[index]);
             case 1:
-              return EntityCard(item: inquiries.elementAt(index));
             case 2:
-              return EntityCard(item: inquiries.elementAt(index));
+              return EntityCard(
+                item: Inquiry.fromJson(inquiries[index]),
+                mapping: const InquiryToCardMapping(),
+              );
             default:
               return Container();
           }
