@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:nested/nested.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
@@ -54,9 +53,14 @@ var subscriptionService;
 var loginService;
 var apiCompanyService;
 
+/// Environment
+const env = String.fromEnvironment('env', defaultValue: 'dev');
+
 void main() async {
   // nb_utils - Must be initialize before using shared preference
   await initialize();
+
+  print("Environment: $env");
 
   // final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
   // final sharedPrefs = await prefsFuture;
@@ -157,7 +161,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  List<SingleChildWidget> get getProviders {
+  get getProviders {
     return [
       Provider<AuthForgotPasswordPageState>(
           create: (_) =>
