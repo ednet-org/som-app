@@ -15,4 +15,14 @@ class User {
         required this.email,
         required this.role,
         required this.company});
+
+  static User fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      username: json['username'],
+      email: json['email'],
+      role: json['role'],
+      company: Company.fromJson(json['company']),
+    );
+  }
 }

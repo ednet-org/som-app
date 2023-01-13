@@ -9,7 +9,6 @@ class Offer {
       provider; // User that created the offer, should have role "provider"
   final double? price;
   final String? deliveryTime;
-  final String? warranty;
   final List<String>? attachments;
   final OfferStatus status;
 
@@ -19,7 +18,6 @@ class Offer {
     required this.provider,
     required this.price,
     required this.deliveryTime,
-    required this.warranty,
     required this.attachments,
     required this.status,
   });
