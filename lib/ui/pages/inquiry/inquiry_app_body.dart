@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/cards/eds_card.dart';
+import 'package:som/ui/components/cards/entity_card.dart';
 import 'package:som/ui/components/cards/inquiry_info_card.dart';
 
 // import 'package:som/ui/components/cards/inquiry_info_card.dart';
@@ -29,7 +29,7 @@ class InquiryAppBody extends StatelessWidget {
             case 1:
               return InquiryInfoCard(inquiry: inquiries[index]);
             case 2:
-              return EdsCard(item: inquiries.elementAt(index));
+              return EntityCard(item: inquiries.elementAt(index));
             default:
               return Container();
           }
