@@ -80,7 +80,6 @@ class Article extends Entity {
     };
   }
 
-  @override
   fromJsonFactory(Map<String, dynamic> json) {
     return Article(
       id: json['id'],
@@ -102,4 +101,8 @@ class Article extends Entity {
     required this.interests,
     required this.policies,
   });
+
+  @override
+  // TODO: implement status
+  get status => throw UnimplementedError();
 }

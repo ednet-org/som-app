@@ -110,7 +110,7 @@ class Inquiry extends Entity {
 
   @override
   // TODO: implement name
-  String get name => throw UnimplementedError();
+  String get name => 'Inquiry';
 
   static Inquiry fromJson(Map<String, dynamic> json) {
     return Inquiry(

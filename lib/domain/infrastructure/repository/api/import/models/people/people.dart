@@ -110,4 +110,8 @@ class People extends Entity {
     this.age,
     this.gender,
   );
+
+  @override
+  // TODO: implement status
+  get status => throw UnimplementedError();
 }
