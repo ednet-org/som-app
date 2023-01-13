@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:som/domain/infrastructure/repository/api/import/models/entity.dart';
+import 'package:som/domain/core/model/entity/entity.dart';
 
 part 'people.g.dart';
 

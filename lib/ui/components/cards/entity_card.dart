@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:som/domain/core/model/entity/entity.dart';
 
-class EntityCard extends StatelessWidget {
+class EntityCard<T extends Entity> extends StatelessWidget {
   final item;
 
   final mapping;

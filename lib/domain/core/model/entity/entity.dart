@@ -3,4 +3,11 @@ abstract class Entity {
   final String id;
 
   Entity(this.type, this.id);
+
+  toJson() {
+    return {
+      'type': type,
+      'id': id,
+    };
+  }
 }
