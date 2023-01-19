@@ -5,18 +5,18 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: "4897882604d919befd350648c7f91926a9d5de99e67b455bf0917cc2362f4bb8"
+      sha256: "0c80aeab9bc807ab10022cd3b2f4cf2ecdf231949dc1ddd9442406a003f19201"
       url: "https://pub.dev"
     source: hosted
-    version: "47.0.0"
+    version: "52.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "690e335554a8385bc9d787117d9eb52c0c03ee207a607e593de3c9d71b1cfe80"
+      sha256: cd8ee83568a77f3ae6b913a36093a1c9b1264e7cb7f834d9ddd2311dade9c1f4
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.0"
+    version: "5.4.0"
   animations:
     dependency: "direct main"
     description:
@@ -188,26 +188,18 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: "813cabd029ad8c020874429a671f2c15f45cfc3ced66b566bfa181a9b61b89b8"
+      sha256: ea41a0bafd5f4d4d735a90a722e00bb1d80e830073cb380edfa1979901d6d2df
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.6"
-  chopper_built_value:
-    dependency: "direct main"
-    description:
-      name: chopper_built_value
-      sha256: "619c1e5b9176342c6244293e504cdc6e8d910f10dbecd7fd563ec4cff901b6ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
+    version: "6.0.0"
   chopper_generator:
     dependency: "direct dev"
     description:
       name: chopper_generator
-      sha256: b090e4926b2ad3a0277fa65fa6590a1f2087b55afd0dd53341b4ade669fabdb5
+      sha256: "62360a1a3536645aaee030dd7719089838a478682867d46dbcf30a3c0e5305b4"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.6"
+    version: "6.0.0"
   clock:
     dependency: transitive
     description:
@@ -388,14 +380,14 @@ packages:
   ednet_core:
     dependency: "direct main"
     description:
-      path: "../ednet/libs/ednet_core"
+      path: "../ednet_core"
       relative: true
     source: path
     version: "0.0.1"
   ednet_semantics:
     dependency: "direct main"
     description:
-      path: "../ednet/libs/ednet_semantics"
+      path: "../ednet_semantics"
       relative: true
     source: path
     version: "0.0.1"
@@ -611,14 +603,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.2"
-  freezed:
-    dependency: "direct dev"
+  fpdart:
+    dependency: "direct main"
     description:
-      name: freezed
-      sha256: "4179d41127bc7a67dc3f58ceec1d22f1cdf10470653cb86eda2a63f81b4920c7"
+      name: fpdart
+      sha256: "19db038cf3bb49bfe28b2a0b363ce84cf2e6a0f471a93ae09271cfef03dae935"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "0.4.0"
+  freezed:
+    dependency: "direct main"
+    description:
+      name: freezed
+      sha256: e819441678f1679b719008ff2ff0ef045d66eed9f9ec81166ca0d9b02a187454
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -635,6 +635,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  functional_widget:
+    dependency: "direct main"
+    description:
+      name: functional_widget
+      sha256: "58af369f6b882b5433e2232eaca0b86505167727c94975dd1bdac0f75c90d0b7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1"
+  functional_widget_annotation:
+    dependency: transitive
+    description:
+      name: functional_widget_annotation
+      sha256: f0612079cb7e226b7be32b473bdaf85fe680370886c0c13ea69a102ccc17a0c7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.0"
   generators:
     dependency: "direct dev"
     description:

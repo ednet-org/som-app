@@ -4,27 +4,59 @@ import 'package:som/domain/infrastructure/repository/api/utils/converters/respon
 import 'json_type_parser.dart';
 
 class JsonSerializableConverter extends JsonConverter {
+  const JsonSerializableConverter();
+
   @override
-  Response<ResultType> convertResponse<ResultType, Item>(Response response) {
-    final jsonRes = super.convertResponse<dynamic, dynamic>(response);
-    if (jsonRes.body == null ||
-        (jsonRes.body is String && (jsonRes.body as String).isEmpty)) {
-      return jsonRes.copyWith(body: null);
+  Response<BodyType> convertResponse<BodyType, InnerType>(
+    Response<dynamic> response,
+  ) {
+    final dynamic body = response.body;
+    final dynamic error = response.error;
+
+    if (body is BodyType) {
+      return response.copyWith<BodyType>(body: body);
+    } else if (body is Map<String, dynamic>) {
+      if (BodyType == dynamic) {
+        return response.copyWith<BodyType>(body: body as BodyType);
+      } else if (BodyType == ResponseError) {
+        return response.copyWith<BodyType>(
+          body: ResponseError.fromJsonFactory(body) as BodyType,
+        );
+      } else {
+        return response.copyWith<BodyType>(
+          body: JsonTypeParser.decode<BodyType>(body) as BodyType,
+        );
+      }
+    } else if (error is InnerType) {
+      return response.copyWith<BodyType>(bodyError: error);
+    } else if (error is Map<String, dynamic>) {
+      if (InnerType == dynamic) {
+        return response.copyWith<BodyType>(bodyError: error as InnerType);
+      } else if (InnerType == ResponseError) {
+        return response.copyWith<BodyType>(
+          bodyError: ResponseError.fromJsonFactory(error) as InnerType,
+        );
+      } else {
+        return response.copyWith<BodyType>(
+          bodyError: JsonTypeParser.decode<InnerType>(error) as InnerType,
+        );
+      }
+    } else {
+      throw FormatException(
+        'The type of the data received (${body.runtimeType}) is not the '
+        'same as the expected type ($BodyType).',
+      );
     }
-
-    final dynamic decodedItem = JsonTypeParser.decode<Item>(jsonRes.body);
-    return jsonRes.copyWith<ResultType>(body: decodedItem as ResultType);
   }
+}
 
-  @override
-  // We won't be dealing with toJson methods for now...
-  Request convertRequest(Request request) => super.convertRequest(request);
+@override
+Request convertRequest(Request request) {
+  final dynamic body = request.body;
 
-  @override
-  Response convertError<BodyType, InnerType>(Response response) {
-    final jsonRes = super.convertError<BodyType, InnerType>(response);
-    final dynamic body = jsonRes.body;
-    final dynamic responseError = JsonTypeParser.decode<ResponseError>(body);
-    return jsonRes.copyWith<BodyType>(bodyError: responseError as BodyType);
+  if (body is Map<String, dynamic>) {
+    return request.copyWith(body: body);
+  } else {
+    return request;
   }
 }

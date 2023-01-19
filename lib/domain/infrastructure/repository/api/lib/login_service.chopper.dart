@@ -19,9 +19,9 @@ class _$LoginService extends LoginService {
   @override
   Future<Response<AuthenticationResponseDto>> login(
       AuthenticateRequestDto body) {
-    final $url = 'auth/login';
+    final Uri $url = Uri.parse('auth/login');
     final $body = body;
-    final $request = Request(
+    final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,

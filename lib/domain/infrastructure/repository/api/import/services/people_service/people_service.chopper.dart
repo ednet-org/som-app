@@ -18,8 +18,8 @@ class _$PeopleService extends PeopleService {
 
   @override
   Future<Response<People>> getPerson(String personId) {
-    final $url = '/people/${personId}';
-    final $request = Request(
+    final Uri $url = Uri.parse('/people/${personId}');
+    final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,

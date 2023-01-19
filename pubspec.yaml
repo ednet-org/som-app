@@ -13,8 +13,7 @@ dependencies:
   annotations:
     path:
       ./lib/domain/domain_generator/annotations/
-  chopper: ^4.0.6
-  chopper_built_value: ^1.0.0
+  chopper: ^6.0.0
   japx: ^2.0.4
   cupertino_icons: ^1.0.5
   url_launcher: ^6.1.5
@@ -95,13 +94,13 @@ dependencies:
       ref: design_system
 
   ednet_core:
-    path: ../ednet/libs/ednet_core
+    path: ../../projects/ednet_core
   #    git:
   #      url: git@github.com:ednet-dev/ednet_core.git
   #      ref: main
 
   ednet_semantics:
-    path: ../ednet/libs/ednet_semantics
+    path: ../../projects/ednet_semantics
   #    git:
   #      url: git@github.com:ednet-dev/ednet_semantics.git
   #      ref: main
@@ -109,7 +108,11 @@ dependencies:
   openapi:
     path: ./openapi
 
-  freezed_annotation: ^2.1.0
+  freezed_annotation: ^2.2.0
+  freezed: ^2.3.2
+  fpdart: ^0.4.0
+  functional_widget: ^0.10.1
+
   logger: ^1.1.0
   dio: '>=4.0.1 <5.0.0'
   pretty_dio_logger: ^1.1.1
@@ -124,11 +127,10 @@ dev_dependencies:
     sdk: flutter
   mobx_codegen: ^2.0.7
   build_runner: ^2.2.0
-  chopper_generator: ^4.0.6
+  chopper_generator: ^6.0.0
   json_serializable: ^6.3.1
   generators:
     path: ./lib/domain/domain_generator/generators/
-  freezed: ^2.1.0+1
 
   #flutter packages pub run build_runner build --delete-conflicting-outputs
 

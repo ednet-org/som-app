@@ -18,8 +18,8 @@ class _$SubscriptionService extends SubscriptionService {
 
   @override
   Future<Response<List<Subscription>>> getSubscriptions() {
-    final $url = '/Subscriptions';
-    final $request = Request(
+    final Uri $url = Uri.parse('/Subscriptions');
+    final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,

@@ -18,8 +18,8 @@ class _$ArticleService extends ArticleService {
 
   @override
   Future<Response<Article>> getArticle(String articleId) {
-    final $url = '/articles/${articleId}';
-    final $request = Request(
+    final Uri $url = Uri.parse('/articles/${articleId}');
+    final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
