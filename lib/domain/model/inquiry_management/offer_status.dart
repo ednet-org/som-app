@@ -3,4 +3,14 @@ enum OfferStatus {
   published,
   accepted,
   rejected,
+  static;
+
+  OfferStatus fromJson(String value) {
+    return OfferStatus.values
+        .firstWhere((e) => e.name == value.toLowerCase());
+  }
+
+  String toJson() {
+    return toString().split('.').last;
+  }
 }

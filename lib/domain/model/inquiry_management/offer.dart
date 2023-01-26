@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+
 import 'attachment.dart';
 import 'inquiry.dart';
 import 'offer_status.dart';
@@ -31,8 +34,11 @@ class Offer {
   });
 
   static Offer fromJson(Map<String, dynamic> json) {
+    const dateFormat = 'dd.MM.yyyy';
+    var uuid = const Uuid();
+
     return Offer(
-      id: json['id'],
+      id: json['id'] ?? uuid.v4(),
       inquiry: Inquiry.fromJson(json['inquiry']),
       provider: Provider.fromJson(json['provider']),
       price: json['price'],
@@ -43,7 +49,7 @@ class Offer {
               .toList()
           : [],
       status: json['status'] as OfferStatus,
-      expirationDate: DateTime.parse(json['expirationDate']),
+      expirationDate: DateFormat(dateFormat).parse(json['expirationDate']),
       description: json['description'],
     );
   }

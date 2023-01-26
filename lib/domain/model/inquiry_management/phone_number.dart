@@ -5,7 +5,7 @@ class PhoneNumber {
 
   static PhoneNumber fromJson(Map<String, dynamic> json) {
     return PhoneNumber(
-      number: json['number'],
+      number: json['phoneNumber'],
     );
   }
 

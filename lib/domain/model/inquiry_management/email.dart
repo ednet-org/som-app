@@ -7,13 +7,13 @@ class Email {
 
   static Email fromJson(Map<String, dynamic> json) {
     return Email(
-      address: json['address'],
+      address: json['email'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'address': address,
+      'email': address,
     };
   }
 }

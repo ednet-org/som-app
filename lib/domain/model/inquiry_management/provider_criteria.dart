@@ -16,7 +16,7 @@ class ProviderCriteria {
     return ProviderCriteria(
       location: json['location'],
       companyType: CompanyType.fromJson(json['companyType']),
-      companySize: CompanySize.fromJson(json['companySize']),
+      companySize: CompanySize.fromStringOrNull(json['companySize']),
     );
   }
 

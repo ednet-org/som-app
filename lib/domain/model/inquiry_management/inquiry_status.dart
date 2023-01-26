@@ -6,7 +6,7 @@ enum InquiryStatus {
   expired;
 
   static InquiryStatus fromJson(String value) {
-    return InquiryStatus.values.firstWhere((e) => e.toString() == value);
+    return InquiryStatus.values.firstWhere((e) => e.name == value.toLowerCase());
   }
 
   String toJson() {

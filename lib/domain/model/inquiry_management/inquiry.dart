@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+
 import 'attachment.dart';
 import 'inquiry_status.dart';
 import 'offer.dart';
@@ -39,24 +44,31 @@ class Inquiry {
   });
 
   static Inquiry fromJson(Map<String, dynamic> json) {
+    const dateFormat = 'dd.MM.yyyy';
+    var uuid = const Uuid();
+
     return Inquiry(
-      id: json['id'],
+      id: json['id'] ?? uuid.v4(),
       title: json['title'],
       description: json['description'],
       category: json['category'],
       branch: json['branch'],
-      publishingDate: DateTime.parse(json['publishingDate']),
-      expirationDate: DateTime.parse(json['expirationDate']),
+      publishingDate: DateFormat(dateFormat).parse(json['publishingDate']),
+      expirationDate: DateFormat(dateFormat).parse(json['expirationDate']),
       buyer: User.fromJson(json['user']),
       deliveryLocation: json['deliveryLocation'],
       providerCriteria: ProviderCriteria.fromJson(json['provider']),
-      attachments: (json['attachments'] as List<dynamic>)
-          .map((e) => Attachment.fromJson(e))
-          .toList(),
+      attachments: json['attachments'] != null
+          ? jsonDecode(json['attachments'])
+              .map<Attachment>((e) => Attachment.fromJson(e))
+              .toList()
+          : [],
       status: InquiryStatus.fromJson(json['status']),
-      offers: (json['offers'] as List<dynamic>)
-          .map((e) => Offer.fromJson(e))
-          .toList(),
+      offers: json['offers'] != null && json['offers'].isNotEmpty
+          ? jsonDecode(json['offers'])
+              .map<Offer>((e) => Offer.fromJson(e))
+              .toList()
+          : [],
     );
   }
 

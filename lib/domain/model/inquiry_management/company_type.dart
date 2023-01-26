@@ -5,7 +5,7 @@ enum CompanyType {
   wholesaler;
 
   static CompanyType fromJson(String value) {
-    return CompanyType.values.firstWhere((e) => e.toString() == value);
+    return CompanyType.values.firstWhere((e) => e.name == value.toLowerCase());
   }
 
   String toJson() {
