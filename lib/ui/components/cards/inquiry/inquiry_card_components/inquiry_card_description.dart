@@ -1,8 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry.dart';
-
-import '../positioned _info.dart';
 
 class InquiryCardDescription<T> extends StatelessWidget {
   final Inquiry inquiry;
@@ -11,10 +8,14 @@ class InquiryCardDescription<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PositionedInfo(
-      top: 15,
-      left: 108,
-      child: Text(inquiry.description.toString()),
+    final ThemeData theme = Theme.of(context);
+
+    return SizedBox(
+      width: 380,
+      child: Text(inquiry.description.toString(),
+          maxLines: 10,
+          style: theme.textTheme.bodyMedium
+              ?.copyWith(color: theme.colorScheme.onSurface)),
     );
   }
 }

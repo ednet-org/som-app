@@ -18,11 +18,12 @@ class InquiryAppBody extends StatelessWidget {
             ),
       ),
       leftSplit: GridView.builder(
+        padding: const EdgeInsets.all(10.0),
         itemCount: inquiries.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
+            crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
         itemBuilder: (BuildContext context, int index) {
-          var inquiry = Inquiry.fromJson(inquiries[index]);
+          final inquiry = Inquiry.fromJson(inquiries[index]);
           switch (inquiry.status) {
             case InquiryStatus.draft:
               return InquiryCard(inquiry: inquiry);

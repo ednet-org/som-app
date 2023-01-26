@@ -1,11 +1,9 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
+import 'package:som/ui/components/cards/inquiry/inquiry_card_components/inquiry_card_divider.dart';
 
 import '../../../../domain/model/inquiry_management/inquiry.dart';
 import 'inquiry_card_components/inquiry_card_container.dart';
 import 'inquiry_card_components/inquiry_card_description.dart';
-import 'inquiry_card_components/inquiry_card_divider.dart';
 import 'inquiry_card_components/inquiry_card_status.dart';
 import 'inquiry_card_components/inquiry_card_title.dart';
 import 'positioned _info.dart';
@@ -17,16 +15,93 @@ class InquiryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return SizedBox(
-        width: 315,
-        height: 375,
-        child: Stack(children: <Widget>[
+      width: 400,
+      height: 375,
+      child: Stack(
+        children: <Widget>[
           const PositionedInfo(
-              top: 0, left: 0, child: InquiryCardContainer()),
-          InquiryCardTitle(inquiry: inquiry),
-          InquiryCardDescription(inquiry: inquiry),
-          InquiryCardStatus(inquiry: inquiry),
-          const InquiryCardDivider(),
-        ]));
+            top: 0,
+            left: 0,
+            child: InquiryCardContainer(),
+          ),
+          PositionedInfo(
+            top: 10,
+            left: 10,
+            child: InquiryCardStatus(inquiry: inquiry),
+          ),
+          PositionedInfo(
+            top: 10,
+            left: 40,
+            child: InquiryCardTitle(inquiry: inquiry),
+          ),
+          const PositionedInfo(
+            top: 70,
+            left: 10,
+            child: InquiryCardDivider(),
+          ),
+          PositionedInfo(
+            top: 80,
+            left: 10,
+            child: InquiryCardDescription(inquiry: inquiry),
+          ),
+          PositionedInfo(
+            top: 260,
+            left: 10,
+            child: InquiryBranch(inquiry: inquiry),
+          ),
+          PositionedInfo(
+            top: 260,
+            left: 250,
+            child: InquiryCategory(inquiry: inquiry),
+          ),
+          const PositionedInfo(
+            top: 300,
+            left: 10,
+            child: InquiryCardDivider(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InquiryBranch extends StatelessWidget {
+  final Inquiry inquiry;
+
+  const InquiryBranch({super.key, required this.inquiry});
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return SizedBox(
+      width: 150,
+      child: Text(inquiry.branch.toString(),
+          maxLines: 2,
+          style: theme.textTheme.bodyMedium
+              ?.copyWith(color: theme.colorScheme.onSurface)),
+    );
+  }
+}
+
+class InquiryCategory extends StatelessWidget {
+  final Inquiry inquiry;
+
+  const InquiryCategory({super.key, required this.inquiry});
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return SizedBox(
+      width: 150,
+      child: Text(inquiry.category.toString(),
+          maxLines: 2,
+          style: theme.textTheme.bodyMedium
+              ?.copyWith(color: theme.colorScheme.onSurface)),
+    );
   }
 }

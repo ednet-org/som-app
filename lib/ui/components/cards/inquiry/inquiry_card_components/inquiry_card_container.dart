@@ -5,17 +5,19 @@ class InquiryCardContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return Container(
-        width: 315,
+        width: 400,
         height: 375,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
             boxShadow: [
               BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.15),
-                  offset: Offset(0, 2),
-                  blurRadius: 6)
+                  color: theme.shadowColor,
+                  offset: const Offset(0, 2),
+                  blurRadius: 4)
             ],
-            color: Color.fromRGBO(255, 251, 255, 1)));
+            color: theme.colorScheme.surface));
   }
 }
