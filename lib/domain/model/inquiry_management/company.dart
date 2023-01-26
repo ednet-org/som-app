@@ -1,17 +1,17 @@
-import 'user.dart';
+import 'company_role.dart';
 
 class Company {
   final String id;
   final String name;
-  final String role; // "buyer" or "provider"
+  final CompanyRole role; // "buyer" or "provider"
   final String address;
 
-  Company(
-      {required this.id,
-      required this.name,
-      required this.role,
-      required this.address,
-      required List<User> employees});
+  Company({
+    required this.id,
+    required this.name,
+    required this.role,
+    required this.address,
+  });
 
   static Company fromJson(Map<String, dynamic> json) {
     return Company(
@@ -19,7 +19,6 @@ class Company {
       name: json['name'],
       role: json['role'],
       address: json['address'],
-      employees: json['employees'],
     );
   }
 }

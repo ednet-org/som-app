@@ -1,7 +1,8 @@
 import 'dart:math' as math;
-import 'package:ednet_core/ednet_core.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../../domain/model/inquiry_management/inquiry.dart';
 import 'inquiry_card_components/inquiry_card_container.dart';
 import 'inquiry_card_components/inquiry_card_description.dart';
 import 'inquiry_card_components/inquiry_card_divider.dart';
@@ -9,8 +10,8 @@ import 'inquiry_card_components/inquiry_card_status.dart';
 import 'inquiry_card_components/inquiry_card_title.dart';
 import 'positioned _info.dart';
 
-class InquiryCard<T extends Entity> extends StatelessWidget {
-  final T inquiry;
+class InquiryCard extends StatelessWidget {
+  final Inquiry inquiry;
 
   const InquiryCard({super.key, required this.inquiry});
 

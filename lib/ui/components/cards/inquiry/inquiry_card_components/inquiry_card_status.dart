@@ -1,10 +1,10 @@
-import 'package:ednet_core/ednet_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
 
 import '../positioned _info.dart';
 
-class InquiryCardStatus<T extends Entity> extends StatelessWidget {
+class InquiryCardStatus<T> extends StatelessWidget {
   final T inquiry;
 
   const InquiryCardStatus({super.key, required this.inquiry});

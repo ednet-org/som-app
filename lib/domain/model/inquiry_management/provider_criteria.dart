@@ -1,18 +1,30 @@
+import 'company_size.dart';
+import 'company_type.dart';
+
 class ProviderCriteria {
   final String location;
-  final String companyType;
-  final String companySize;
+  final CompanyType companyType;
+  final CompanySize companySize;
 
-  ProviderCriteria(
-      {required this.location,
-      required this.companyType,
-      required this.companySize});
+  const ProviderCriteria({
+    required this.location,
+    required this.companyType,
+    required this.companySize,
+  });
 
   static ProviderCriteria fromJson(Map<String, dynamic> json) {
     return ProviderCriteria(
       location: json['location'],
-      companyType: json['companyType'],
-      companySize: json['companySize'],
+      companyType: CompanyType.fromJson(json['companyType']),
+      companySize: CompanySize.fromJson(json['companySize']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'location': location,
+      'companyType': companyType.toJson(),
+      'companySize': companySize.toJson(),
+    };
   }
 }

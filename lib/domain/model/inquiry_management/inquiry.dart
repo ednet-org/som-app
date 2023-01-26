@@ -1,294 +1,112 @@
-import 'dart:convert';
-
-import 'package:ednet_core/ednet_core.dart';
-import 'package:intl/intl.dart';
-import 'package:som/main.dart';
-
-import 'company.dart';
+import 'attachment.dart';
 import 'inquiry_status.dart';
-import 'offer_status.dart';
 import 'offer.dart';
 import 'provider_criteria.dart';
 import 'user.dart';
 
-class Inquiry extends Entity {
-  @override
-  List<EntityCommand> commands = [];
-
-  @override
-  String description;
-
-  @override
-  String id;
-
-  @override
-  List<EntityEvent> interests;
-
-  @override
-  List<EntityPolicy> policies;
-
-  @override
-  List<String> tags;
-
-  @override
-  List<EntityEvent> topics;
-
-  @override
-// TODO: implement attributes
-  List<EntityAttribute> get attributes => throw UnimplementedError();
-
+/// [Inquiry] is a [Buyer] business request to the [Provider]
+class Inquiry {
+  final String id;
   final String title;
+  final String description;
   final String category;
   final String branch;
-  final User buyer; // User that created the inquiry, should have role "buyer"
   final DateTime publishingDate;
-  final DateTime? expirationDate;
-  final String? deliveryLocation;
-  final ProviderCriteria provider;
-  final List<String> attachments;
-  final InquiryStatus status;
-  final int offers;
+  final DateTime expirationDate;
 
-  Inquiry(
-    this.description,
-    this.id, {
-    required this.tags,
-    required this.topics,
-    required this.interests,
-    required this.policies,
+  final User buyer;
+  final String deliveryLocation;
+  final ProviderCriteria providerCriteria;
+  final List<Attachment> attachments;
+  final List<Offer> offers;
+
+  final InquiryStatus status;
+
+  const Inquiry({
+    required this.id,
     required this.title,
+    required this.description,
     required this.category,
     required this.branch,
     required this.buyer,
     required this.publishingDate,
-    this.expirationDate,
-    this.deliveryLocation,
-    required this.provider,
+    required this.expirationDate,
+    required this.deliveryLocation,
+    required this.providerCriteria,
     required this.attachments,
     required this.status,
     required this.offers,
   });
 
-  @override
+  static Inquiry fromJson(Map<String, dynamic> json) {
+    return Inquiry(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      category: json['category'],
+      branch: json['branch'],
+      publishingDate: DateTime.parse(json['publishingDate']),
+      expirationDate: DateTime.parse(json['expirationDate']),
+      buyer: User.fromJson(json['user']),
+      deliveryLocation: json['deliveryLocation'],
+      providerCriteria: ProviderCriteria.fromJson(json['provider']),
+      attachments: (json['attachments'] as List<dynamic>)
+          .map((e) => Attachment.fromJson(e))
+          .toList(),
+      status: InquiryStatus.fromJson(json['status']),
+      offers: (json['offers'] as List<dynamic>)
+          .map((e) => Offer.fromJson(e))
+          .toList(),
+    );
+  }
+
   Map<String, dynamic> toJson() {
-    // return merged local json with super json
     return {
-      'description': description,
       'id': id,
-      'tags': tags,
-      'topics': topics,
-      'interests': interests,
-      'policies': policies,
-      'attributes': attributes.map((e) => e.toJson()).toList(),
+      'title': title,
+      'description': description,
+      'category': category,
+      'branch': branch,
+      'publishingDate': publishingDate.toIso8601String(),
+      'expirationDate': expirationDate.toIso8601String(),
+      'user': buyer.toJson(),
+      'deliveryLocation': deliveryLocation,
+      'provider': providerCriteria.toJson(),
+      'attachments': attachments.map((e) => e.toJson()).toList(),
+      'status': status.toJson(),
+      'offers': offers.map((e) => e.toJson()).toList(),
     };
   }
 
-
-  @override
-  getAttributeByName(String name) {
-    // TODO: implement getAttributeByName
-    throw UnimplementedError();
-  }
-
-  @override
-  getAttributesByType(String type) {
-    // TODO: implement getAttributesByType
-    throw UnimplementedError();
-  }
-
-  @override
-  getAttributesNames() {
-    // TODO: implement getAttributesNames
-    throw UnimplementedError();
-  }
-
-  @override
-  getValueByName(String name) {
-    // TODO: implement getValueByName
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement name
-  String get name => 'Inquiry';
-
-  static Inquiry fromJson(Map<String, dynamic> json) {
+  Inquiry copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? category,
+    String? branch,
+    DateTime? publishingDate,
+    DateTime? expirationDate,
+    User? buyer,
+    String? deliveryLocation,
+    ProviderCriteria? providerCriteria,
+    List<Attachment>? attachments,
+    InquiryStatus? status,
+    List<Offer>? offers,
+  }) {
     return Inquiry(
-      json['description'],
-      json['id'],
-      tags: json['tags'] != null ? List<String>.from(json['tags']) : [],
-      topics: json['topics'] != null
-          ? List<EntityEvent>.from(
-              json['topics'].map((e) => EntityEvent.fromJson(e)))
-          : [],
-      interests: json['interests'] != null
-          ? List<EntityEvent>.from(
-              json['interests'].map((e) => EntityEvent.fromJson(e)))
-          : [],
-      policies: json['policies'] != null
-          ? List<EntityPolicy>.from(
-              json['policies'].map((e) => EntityPolicy.fromJson(e)))
-          : [],
-      title: json['title'] ?? '',
-      category: json['category'] ?? '',
-      branch: json['branch'] ?? '',
-      buyer: json['buyer'] != null
-          ? User.fromJson(json['buyer'])
-          : User(
-              id: '1',
-              userphonenumber: '',
-              company: Company(
-                id: '1',
-                name: 'SOM',
-                role: '',
-                address: '',
-                employees: [],
-              ),
-              username: '',
-              usermail: '',
-              userrole: '',
-            ),
-      publishingDate: json['publishingDate'] != null
-          ? DateFormat('dd.MM.yyyy').parse(json['publishingDate'])
-          : DateTime.now(),
-      expirationDate: json['expirationDate'] != null
-          ? DateFormat('dd.MM.yyyy').parse(json['expirationDate'])
-          : null,
-      deliveryLocation: json['deliveryLocation'] ?? '',
-      provider: json['provider'] != null
-          ? ProviderCriteria.fromJson(json['provider'])
-          : ProviderCriteria(
-              location: '',
-              companyType: '',
-              companySize: '',
-            ),
-      attachments: json['attachments'] != null
-          ? List<String>.from(jsonDecode(json['attachments']))
-          : [],
-      status: InquiryStatus.values
-          .firstWhere((e) => e.toString() == 'InquiryStatus.' + json['status']),
-      offers: int.parse(json['offers'] ?? 0),
-    );
-  }
-
-  static Inquiry fromMapK(Map<String, String> map) {
-    final User defaultUser = User(
-      id: '',
-      userphonenumber: '',
-      company: Company(
-        id: '1',
-        name: 'SOM',
-        role: '',
-        address: '',
-        employees: [],
-      ),
-      username: '',
-      usermail: '',
-      userrole: '',
-    );
-
-    final defaultProviderCriteria = ProviderCriteria(
-      location: '',
-      companyType: '',
-      companySize: '',
-    );
-
-    final defaultInquiry = Inquiry('', '',
-        tags: [],
-        topics: [],
-        interests: [],
-        policies: [],
-        title: '',
-        category: '',
-        branch: '',
-        buyer: defaultUser,
-        publishingDate: DateTime.now(),
-        expirationDate: DateTime.now(),
-        deliveryLocation: '',
-        provider: defaultProviderCriteria,
-        attachments: [],
-        status: InquiryStatus.draft,
-        offers: 2);
-
-    final defaultOffer = Offer(
-      id: '',
-      price: 0,
-      attachments: [],
-      status: OfferStatus.draft,
-      provider: defaultUser,
-      inquiry: defaultInquiry,
-      deliveryTime: '',
-    );
-
-    final defaultPolicy = EntityPolicy(
-      id: '',
-      name: 'Default Policy',
-      type: '',
-      version: '',
-    );
-
-    final defaultTopic = EntityEvent(
-      id: '',
-      name: 'Default Topic',
-      type: '',
-      version: '',
-      topic: '',
-      source: '',
-      time: DateTime.now(),
-      data: {},
-    );
-
-    final defaultInterest = EntityEvent(
-      id: '',
-      name: 'Default Interest',
-      type: '',
-      version: '',
-      topic: '',
-      source: '',
-      time: DateTime.now(),
-      data: {},
-    );
-
-    final defaultAttribute = EntityAttribute(
-      name: 'age',
-      type: 'int',
-      value: 3,
-    );
-
-    return Inquiry(
-      map['description']!,
-      map['id']!,
-      tags: map['tags'] != null ? map['tags']!.split(',') : ['it', 'monitor'],
-      topics: map['topics'] != null
-          ? parseJson(map['topics']!).map((e) => e as EntityEvent).toList()
-          : [defaultTopic],
-      interests: map['interests'] != null
-          ? parseJson(map['interests']!).map((e) => e as EntityEvent).toList()
-          : [defaultInterest],
-      policies: map['policies'] != null
-          ? parseJson(map['policies']!).map((e) => e as EntityPolicy).toList()
-          : [defaultPolicy],
-      title: map['title'] ?? '',
-      category: map['category'] ?? '',
-      branch: map['branch'] ?? '',
-      buyer: map['buyer'] != null
-          ? User.fromJson(parseJson(map['buyer']!))
-          : defaultUser,
-      publishingDate: map['publishingDate'] != null
-          ? DateTime.parse(map['publishingDate']!)
-          : DateTime.now(),
-      expirationDate: map['expirationDate'] != null
-          ? DateTime.parse(map['expirationDate']!)
-          : null,
-      deliveryLocation: map['deliveryLocation'] ?? '',
-      provider: map['provider'] != null
-          ? ProviderCriteria.fromJson(parseJson(map['provider']!))
-          : defaultProviderCriteria,
-      attachments: [],
-      status: map['status'] as InquiryStatus,
-      offers: map['offers'] != null && (map['offers'] as List).isNotEmpty
-          ? parseJson(map['offers']!).map((e) => e as Offer).toList()
-          : [defaultOffer],
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      branch: branch ?? this.branch,
+      publishingDate: publishingDate ?? this.publishingDate,
+      expirationDate: expirationDate ?? this.expirationDate,
+      buyer: buyer ?? this.buyer,
+      deliveryLocation: deliveryLocation ?? this.deliveryLocation,
+      providerCriteria: providerCriteria ?? this.providerCriteria,
+      attachments: attachments ?? this.attachments,
+      status: status ?? this.status,
+      offers: offers ?? this.offers,
     );
   }
 }
