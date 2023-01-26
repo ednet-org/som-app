@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry.dart';
 import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
 
-import '../positioned _info.dart';
-
 class InquiryCardStatus extends StatelessWidget {
   final Inquiry inquiry;
 
@@ -27,15 +25,13 @@ class InquiryCardStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PositionedInfo(
-        top: 20.5,
-        left: 270,
-        child: Container(
-            width: 17,
-            height: 15,
-            decoration: BoxDecoration(
-              color: inquiryStatusColor,
-              borderRadius: const BorderRadius.all(Radius.elliptical(17, 15)),
-            )));
+    return Container(
+      width: 17,
+      height: 15,
+      decoration: BoxDecoration(
+        color: inquiryStatusColor,
+        borderRadius: const BorderRadius.all(Radius.elliptical(17, 15)),
+      ),
+    );
   }
 }
