@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:som/domain/model/inquiry_management/inquiry.dart';
 
-import '../../../../domain/model/inquiry/inquiry.dart';
 import '../positioned _info.dart';
 
 class InquiryCardTitle extends StatelessWidget {
@@ -13,7 +13,7 @@ class InquiryCardTitle extends StatelessWidget {
     return PositionedInfo(
         top: 20,
         left: 10,
-        child: Text(inquiry.name,
+        child: Text(inquiry.id,
             style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,

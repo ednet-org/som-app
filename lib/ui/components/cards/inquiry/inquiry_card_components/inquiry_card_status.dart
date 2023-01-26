@@ -1,11 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:som/domain/model/inquiry_management/inquiry.dart';
 import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
 
 import '../positioned _info.dart';
 
-class InquiryCardStatus<T> extends StatelessWidget {
-  final T inquiry;
+class InquiryCardStatus extends StatelessWidget {
+  final Inquiry inquiry;
 
   const InquiryCardStatus({super.key, required this.inquiry});
 

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
-import 'package:som/ui/components/cards/entity_card.dart';
-import 'package:som/ui/components/cards/grida_inquiry_info_card.dart';
 
-// import 'package:som/ui/components/cards/inquiry_info_card.dart';
 import 'package:som/ui/components/layout/app_body.dart';
 
 import '../../../domain/model/inquiry_management/inquiry.dart';
 import '../../components/cards/inquiry/inquiry_card.dart';
-import '../../components/cards/inquiry_to_card_mapping.dart';
 
 class InquiryAppBody extends StatelessWidget {
   const InquiryAppBody({Key? key}) : super(key: key);
@@ -34,7 +30,6 @@ class InquiryAppBody extends StatelessWidget {
             case InquiryStatus.responded:
               return InquiryCard(inquiry: inquiry);
             case InquiryStatus.published:
-              return InquiryCard(inquiry: inquiry);
               return InquiryCard(inquiry: inquiry);
             case InquiryStatus.closed:
               return InquiryCard(inquiry: inquiry);
