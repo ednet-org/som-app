@@ -13,9 +13,7 @@ class InquiryAppBody extends StatelessWidget {
     return AppBody(
       contextMenu: Text(
         'Refine your search with Filters',
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       leftSplit: GridView.builder(
         padding: const EdgeInsets.all(10.0),

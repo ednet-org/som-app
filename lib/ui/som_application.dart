@@ -21,10 +21,7 @@ class SomApplication extends StatelessWidget {
       child: Row(children: [
         Text(
           'Fritzchen der Käufer',
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
-              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+          style: Theme.of(context).textTheme.titleSmall,
         ).paddingRight(10),
         SizedBox(
           width: 60,
@@ -32,8 +29,7 @@ class SomApplication extends StatelessWidget {
             backgroundImage:
                 Image.network('https://picsum.photos/id/2/80/80').image,
           ).paddingRight(10.0),
-        ),
-        // TODO: mobile - ContainerX is again broken
+        ), /* TODO: mobile - ContainerX is again broken*/
       ]),
     );
   }
@@ -42,7 +38,6 @@ class SomApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     final beamer = Provider.of<BeamerProvidedKey>(context);
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -109,21 +104,15 @@ class SomApplication extends StatelessWidget {
     return AppBody(
       contextMenu: Text(
         "Context Menu",
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       leftSplit: Text(
         "Newest Inquiries",
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       rightSplit: Text(
         "Oldest Inquiries",
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }
@@ -131,53 +120,40 @@ class SomApplication extends StatelessWidget {
   PopupMenuButton<dynamic> buildPopupMenuButton(
       BuildContext context, Application appStore) {
     return PopupMenuButton(
-      color: Theme.of(context).colorScheme.primary,
       child: userMenuItem(context),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(child: userMenuItem(context)),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.notifications,
-                color: Theme.of(context).colorScheme.onPrimary),
+            leading: const Icon(Icons.notifications),
             title: Text(
               'Notifications',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
         ),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.manage_accounts,
-                color: Theme.of(context).colorScheme.onPrimary),
+            leading: const Icon(Icons.manage_accounts),
             title: Text(
               'User account',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Theme.of(context).colorScheme.onTertiary),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
         ),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.settings_applications,
-                color: Theme.of(context).colorScheme.onPrimary),
+            leading: const Icon(Icons.settings_applications),
             title: Text('App configuration',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onTertiary)),
+                style: Theme.of(context).textTheme.titleSmall),
           ),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.logout,
-                color: Theme.of(context).colorScheme.onPrimary),
-            title: Text('Logout',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onTertiary)),
+            leading: const Icon(Icons.logout),
+            title:
+                Text('Logout', style: Theme.of(context).textTheme.titleSmall),
             onTap: () {
               appStore.logout();
               context.beamTo(AuthLoginPageLocation());

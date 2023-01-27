@@ -25,9 +25,12 @@ class _AppBarButtonState extends State<AppBarButton> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => widget
-        .beamer.currentState?.routerDelegate
-        .addListener(_setStateListener));
+    /// only if mounted
+    if (mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) => widget
+          .beamer.currentState?.routerDelegate
+          .addListener(_setStateListener));
+    }
   }
 
   @override

@@ -21,7 +21,6 @@ class Login extends StatelessWidget {
     final emailLoginStore = Provider.of<EmailLoginStore>(context);
     // final BeamerProvidedKey beamer = Provider.of<BeamerProvidedKey>(context);
 
-    changeStatusColor(Theme.of(context).colorScheme.primaryContainer);
     return SizedBox(
       width: 350,
       child: Observer(
@@ -75,10 +74,7 @@ class Login extends StatelessWidget {
               const SizedBox(height: 30),
               Text(
                 'Don\'t have an account?',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.tertiary),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               const SizedBox(height: 5),
               ActionButton(
@@ -86,8 +82,8 @@ class Login extends StatelessWidget {
                   context.beamToNamed('/customer/register');
                 },
                 textContent: 'Register',
-                primary: Theme.of(context).colorScheme.tertiary,
-                onPrimary: Theme.of(context).colorScheme.onTertiary,
+                primary: Theme.of(context).colorScheme.primary,
+                onPrimary: Theme.of(context).colorScheme.onPrimary,
               ),
               ReactionBuilder(
                 child: Container(),

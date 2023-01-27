@@ -23,16 +23,8 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        elevation: 10,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-        padding: const EdgeInsets.all(0.0),
-        primary: primary ?? Theme.of(context).colorScheme.secondary,
-        onPrimary:
-            onPrimary ?? Theme.of(context).colorScheme.onSecondaryContainer,
-        onSurface: Theme.of(context).colorScheme.onSurface,
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        shadowColor: Theme.of(context).colorScheme.shadow,
-        textStyle: Theme.of(context).textTheme.button,
+        backgroundColor: onPrimary,
+        foregroundColor: primary,
       ),
       onPressed: onPressed,
       child: SizedBox(

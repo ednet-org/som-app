@@ -44,18 +44,19 @@ class RoleSelection extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.secondary,
-        onPrimary: Theme.of(context).colorScheme.onSecondary,
+        backgroundColor: registrationRequest.company.isProvider
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.secondary,
+        foregroundColor: registrationRequest.company.isProvider
+            ? Theme.of(context).colorScheme.onPrimary
+            : Theme.of(context).colorScheme.onSecondary,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Text('Provider',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary)),
+            Text('Provider', style: Theme.of(context).textTheme.titleLarge),
             Switch(
-                activeColor: Theme.of(context).colorScheme.onSecondary,
                 value: registrationRequest.company.isProvider,
                 onChanged: registrationRequest.company.activateProvider),
           ],
@@ -68,20 +69,19 @@ class RoleSelection extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => registrationRequest.switchRole(Roles.Buyer),
       style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.primary,
-        onPrimary: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: registrationRequest.company.isBuyer
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.secondary,
+        foregroundColor: registrationRequest.company.isBuyer
+            ? Theme.of(context).colorScheme.onPrimary
+            : Theme.of(context).colorScheme.onSecondary,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Text('Buyer ',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+            Text('Buyer ', style: Theme.of(context).textTheme.titleLarge),
             Switch(
-                activeColor: Theme.of(context).colorScheme.onPrimary,
                 value: registrationRequest.company.isBuyer,
                 onChanged: registrationRequest.company.activateBuyer),
           ],
@@ -94,12 +94,12 @@ class RoleSelection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: appStore.buttonWidth,
           child: buyerSelector(context, registrationRequest),
         ),
         40.width,
-        Container(
+        SizedBox(
           width: appStore.buttonWidth,
           child: providerSelector(context, registrationRequest),
         ),

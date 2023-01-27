@@ -6,7 +6,7 @@ import 'package:som/domain/model/shared/som.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
 
 class SubscriptionSelector extends StatefulWidget {
-  SubscriptionSelector({Key? key}) : super(key: key);
+  const SubscriptionSelector({Key? key}) : super(key: key);
 
   @override
   State<SubscriptionSelector> createState() => _SubscriptionSelectorState();
@@ -93,27 +93,25 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   Widget build(BuildContext context) {
     final Som som = Provider.of<Som>(context);
     if (som.availableSubscriptions.futureState == FutureState.loading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
-    // show empty message
-    if ((som.availableSubscriptions.data?.length ?? 0) == 0) {
-      return Center(child: Text("No subscription plans found."));
-    }
+    // // show empty message
+    // if ((som.availableSubscriptions.data?.length ?? 0) == 0) {
+    //   return const Center(child: Text("No subscription plans found."));
+    // }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 UL(
-                  edgeInsets: EdgeInsets.symmetric(horizontal: 16),
+                  edgeInsets: const EdgeInsets.symmetric(horizontal: 16),
                   symbolType: SymbolType.Custom,
-                  customSymbol: Container(
-                    child: Text('•', style: secondaryTextStyle(size: 20)),
-                  ),
+                  customSymbol: Text('•', style: secondaryTextStyle(size: 20)),
                   children: List.generate(
                       periodModal[selectIndex].optionList!.length, (i) {
                     return Text(
@@ -125,22 +123,22 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                   }),
                 ),
                 10.height,
-                Divider(),
+                const Divider(),
                 Text(periodModal[selectIndex].price!),
                 10.height,
               ],
             )),
         16.height,
-        Text('Choose subscription plan').paddingLeft(12.0),
+        const Text('Choose subscription plan').paddingLeft(12.0),
         16.height,
         ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: periodModal.length,
           shrinkWrap: true,
           itemBuilder: (_, int index) {
             bool value = selectIndex == index;
             return Container(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: value
                       ? context.cardColor.withOpacity(0.3)
@@ -153,11 +151,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                         Container(
                           height: 20,
                           width: 20,
-                          padding: EdgeInsets.all(2),
-                          child: Icon(
-                            Icons.check,
-                            size: 14,
-                          ).visible(value).center(),
+                          padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: value
@@ -169,6 +163,10 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                                         .colorScheme
                                         .secondary),
                           ),
+                          child: const Icon(
+                            Icons.check,
+                            size: 14,
+                          ).visible(value).center(),
                         ),
                         12.width,
                         Column(

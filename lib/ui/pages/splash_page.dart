@@ -60,19 +60,16 @@ class _SplashPageState extends State<SplashPage>
                             'images/som/logo.png',
                             height: 300,
                             fit: BoxFit.fitHeight,
-                            color: Theme.of(context).colorScheme.primary,
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.check_circle_outlined,
-                            color: Theme.of(context).colorScheme.primary,
                             size: 300,
                           ),
                   ),
                   const SizedBox(height: 20),
                   Text(
                     "Loading...",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.primary),
+                    style: Theme.of(context).textTheme.titleSmall,
                   )
                 ],
               ),

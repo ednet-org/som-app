@@ -80,6 +80,8 @@ void main() async {
   //endregion
 }
 
+const seedColor = Color(0x0044546a);
+
 class MyApp extends StatelessWidget {
   final beamerKey = BeamerProvidedKey();
 
@@ -128,8 +130,14 @@ class MyApp extends StatelessWidget {
           ],
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: seedColor, brightness: Brightness.light)),
+          darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: seedColor, brightness: Brightness.dark)),
           builder: scrollBehaviour(),
           routerDelegate: routerDelegate,
         ),
