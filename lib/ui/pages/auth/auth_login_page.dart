@@ -113,10 +113,7 @@ class AuthLoginPage extends StatelessWidget {
             child: Text(
               'Smart offer management'.toUpperCase(),
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge
-                  ?.copyWith(color: Theme.of(context).colorScheme.secondary),
+              style: Theme.of(context).textTheme.displayLarge,
             ),
           ),
         ],

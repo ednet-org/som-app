@@ -75,16 +75,11 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Container(
                             padding: const EdgeInsets.all(30.0),
-                            color: Theme.of(context).colorScheme.error,
                             width: 350,
-                            child: Text(userAccountConfirmation.errorMessage,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onError))),
+                            child: Text(
+                              userAccountConfirmation.errorMessage,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            )),
                       ),
                     ),
                   )

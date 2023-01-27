@@ -28,7 +28,6 @@ class FunnyLogo extends StatelessWidget {
               child: ImageIcon(
                 size: height,
                 const AssetImage('images/som/logo.png'),
-                color: color ?? Theme.of(context).colorScheme.secondary,
               ),
             ),
             ReactionBuilder(

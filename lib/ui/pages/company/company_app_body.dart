@@ -9,11 +9,7 @@ class CompanyAppBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      contextMenu: Text('Company',
-          style: Theme.of(context)
-              .textTheme
-              .caption
-              ?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+      contextMenu: Text('Company', style: Theme.of(context).textTheme.caption),
       // body: Text('Company'),
       leftSplit: l,
       rightSplit: r,

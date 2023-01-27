@@ -79,9 +79,8 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.min,
       children: [
         _tags.isNotEmpty
-            ? Icon(
+            ? const Icon(
                 Icons.local_offer_outlined,
-                color: Theme.of(context).colorScheme.primary,
                 size: 25.0,
               )
             : Container(),
@@ -140,17 +139,13 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                     ),
                     child: Text(
                       '${tagModel.title}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: showCloseIcon
-                                ? Theme.of(context).colorScheme.tertiary
-                                : Theme.of(context).colorScheme.primary,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ],
               )),
           showCloseIcon
-              ? Positioned(
+              ? const Positioned(
                   right: 8.0,
                   top: 16.0,
                   child: CircleAvatar(
@@ -158,7 +153,6 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                     child: Icon(
                       Icons.clear,
                       size: 15.0,
-                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 )
@@ -174,37 +168,18 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
         Expanded(
           child: TextField(
             controller: _searchTextEditingController,
-            decoration: InputDecoration(
-              labelStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              focusColor: Theme.of(context).colorScheme.primaryContainer,
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              prefixIconColor: Theme.of(context).colorScheme.primary,
-              suffixIconColor: Theme.of(context).colorScheme.primary,
+            decoration: const InputDecoration(
               labelText: 'Filter categories',
               hintText: 'Branches like IT, Media, Pharma, Sport...',
             ),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+            style: Theme.of(context).textTheme.titleMedium,
             textInputAction: TextInputAction.search,
           ),
         ),
         _searchText.isNotEmpty
             ? InkWell(
-                child: Icon(
+                child: const Icon(
                   Icons.clear,
-                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 onTap: () => _searchTextEditingController.clear(),
               )

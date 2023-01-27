@@ -16,7 +16,6 @@ class AuthForgotPasswordPage extends StatelessWidget {
     final authForgotPasswordState =
         Provider.of<AuthForgotPasswordPageState>(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Observer(
         builder: (_) => Center(
           child: SizedBox(
@@ -25,7 +24,7 @@ class AuthForgotPasswordPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                FunnyLogo(color: Theme.of(context).colorScheme.onSecondary),
+                FunnyLogo(),
                 const SizedBox(
                   height: 50,
                 ),
@@ -44,25 +43,11 @@ class AuthForgotPasswordPage extends StatelessWidget {
                         ? Column(children: [
                             Text(
                               'Forgotten Password?',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                  ),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
                               'Please enter your e-mail to receive instructions to reset password.',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                  ),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                             SomTextInput(
                               primary: Theme.of(context).colorScheme.secondary,

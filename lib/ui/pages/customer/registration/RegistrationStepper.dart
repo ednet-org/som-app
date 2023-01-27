@@ -50,9 +50,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         Text(
           textAlign: TextAlign.center,
           'Customer registration'.toUpperCase(),
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+          style: Theme.of(context).textTheme.displayLarge,
         ),
         40.height,
         Observer(builder: (_) {

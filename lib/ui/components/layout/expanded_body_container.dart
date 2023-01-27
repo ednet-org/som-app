@@ -14,17 +14,11 @@ class ExpandedBodyContainer extends StatelessWidget {
     this.expandedBodyContentSplitRight,
   }) : super(key: key);
 
-  Expanded expandedVerticalDivider(context) => Expanded(
-      flex: 1,
-      child: VerticalDivider(
-        color: Theme.of(context).colorScheme.primary,
-      ));
+  Expanded expandedVerticalDivider(context) =>
+      const Expanded(flex: 1, child: VerticalDivider());
 
-  Expanded expandedHorizontalDivider(context) => Expanded(
-      flex: 1,
-      child: Divider(
-        color: Theme.of(context).colorScheme.primary,
-      ));
+  Expanded expandedHorizontalDivider(context) =>
+      const Expanded(flex: 1, child: Divider());
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +63,7 @@ class ExpandedBodyContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text('DEBUG'),
+                      const Text('DEBUG'),
                       expandedBodyMenu,
                     ],
                   ),

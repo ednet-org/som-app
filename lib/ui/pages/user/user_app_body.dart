@@ -6,7 +6,7 @@ class UserAppBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBody(
+    return const AppBody(
       contextMenu: Text('Context'),
       leftSplit: Text('Users'),
       rightSplit: Text('Roles'),

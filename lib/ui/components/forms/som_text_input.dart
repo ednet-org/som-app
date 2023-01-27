@@ -56,9 +56,7 @@ class SomTextInput extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: onPrimary ?? Theme.of(context).colorScheme.secondary,
-              ),
+          style: Theme.of(context).textTheme.labelLarge,
           onChanged: onChanged,
           initialValue: value,
           keyboardType: keyboardType,
@@ -66,27 +64,11 @@ class SomTextInput extends StatelessWidget {
           obscureText: isPassword && showPassword ? false : isPassword,
           autocorrect: autocorrect,
           decoration: InputDecoration(
-              labelStyle: TextStyle(
-                color: onPrimary ?? Theme.of(context).colorScheme.primary,
-              ),
-              focusColor:
-                  primary ?? Theme.of(context).colorScheme.primaryContainer,
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: onPrimary ?? Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: onPrimary ?? Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              prefixIconColor: primary ?? Theme.of(context).colorScheme.primary,
-              suffixIconColor: primary ?? Theme.of(context).colorScheme.primary,
               labelText: '$label ${required ? "*" : ""}',
               hintText: hint,
-              icon: Icon(icon,
-                  color: onPrimary ?? Theme.of(context).colorScheme.primary),
+              icon: Icon(
+                icon,
+              ),
               suffixIcon: isPassword ? obscureTextIcon() : null),
           validator: validator,
         ),
@@ -94,19 +76,10 @@ class SomTextInput extends StatelessWidget {
             ? Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: TextButton(
-                  style: TextButton.styleFrom(
-                    primary:
-                        secondary ?? Theme.of(context).colorScheme.secondary,
-                    surfaceTintColor:
-                        secondary ?? Theme.of(context).colorScheme.secondary,
-                  ),
                   onPressed: forgotPasswordHandler,
                   child: Text(
                     'Forgot password?',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: secondary ??
-                              Theme.of(context).colorScheme.secondary,
-                        ),
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                 ),
               )

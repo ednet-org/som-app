@@ -15,31 +15,37 @@ class InquiryAppBody extends StatelessWidget {
         'Refine your search with Filters',
         style: Theme.of(context).textTheme.titleSmall,
       ),
-      leftSplit: GridView.builder(
-        padding: const EdgeInsets.all(10.0),
-        itemCount: inquiries.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
-        itemBuilder: (BuildContext context, int index) {
-          final inquiry = Inquiry.fromJson(inquiries[index]);
-          switch (inquiry.status) {
-            case InquiryStatus.draft:
-              return InquiryCard(inquiry: inquiry);
-            case InquiryStatus.responded:
-              return InquiryCard(inquiry: inquiry);
-            case InquiryStatus.published:
-              return InquiryCard(inquiry: inquiry);
-            case InquiryStatus.closed:
-              return InquiryCard(inquiry: inquiry);
-            // return EntityCard(
-            //   item: inquiry,
-            //   mapping: const InquiryToCardMapping(),
-            // );
-            default:
-              return InquiryCard(inquiry: inquiry);
-          }
-        },
-      ),
+      leftSplit: LayoutBuilder(builder: (buildContext, constraints) {
+        final isMobile = constraints.maxWidth < 600;
+
+        return GridView.builder(
+          padding: const EdgeInsets.all(10.0),
+          itemCount: inquiries.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 3,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0),
+          itemBuilder: (BuildContext context, int index) {
+            final inquiry = Inquiry.fromJson(inquiries[index]);
+            switch (inquiry.status) {
+              case InquiryStatus.draft:
+                return InquiryCard(inquiry: inquiry);
+              case InquiryStatus.responded:
+                return InquiryCard(inquiry: inquiry);
+              case InquiryStatus.published:
+                return InquiryCard(inquiry: inquiry);
+              case InquiryStatus.closed:
+                return InquiryCard(inquiry: inquiry);
+              // return EntityCard(
+              //   item: inquiry,
+              //   mapping: const InquiryToCardMapping(),
+              // );
+              default:
+                return InquiryCard(inquiry: inquiry);
+            }
+          },
+        );
+      }),
       rightSplit: null,
       // rightSplit: Image.asset(
       //   'images/som/InquiryInfoCard.png',
