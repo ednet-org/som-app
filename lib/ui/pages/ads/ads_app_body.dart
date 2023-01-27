@@ -6,7 +6,7 @@ class AdsAppBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBody(
+    return const AppBody(
       contextMenu: Text('Context'),
       leftSplit: Text('Ads thingy'),
       rightSplit: Text('Ads right thingy'),

@@ -128,32 +128,8 @@ class MyApp extends StatelessWidget {
           ],
           title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-          theme: lightTheme?.copyWith(
-            textTheme: lightTheme?.textTheme.copyWith(
-              titleLarge: lightTheme?.textTheme.titleLarge?.copyWith(
-                fontSize:
-                    (lightTheme?.textTheme.titleLarge?.fontSize ?? 1) * 1.5,
-              ),
-            ),
-            scaffoldBackgroundColor: lightTheme?.colorScheme.onPrimary,
-            appBarTheme: lightTheme?.appBarTheme.copyWith(
-                toolbarHeight: 100,
-                elevation: 7,
-                backgroundColor: lightTheme?.colorScheme.primary,
-                foregroundColor: lightTheme?.colorScheme.onPrimary,
-                titleTextStyle: lightTheme?.textTheme.displaySmall
-                    ?.copyWith(color: lightTheme?.colorScheme.onPrimary)),
-          ),
-          darkTheme: darkTheme?.copyWith(
-            scaffoldBackgroundColor: darkTheme?.colorScheme.onPrimary,
-            appBarTheme: darkTheme?.appBarTheme.copyWith(
-                toolbarHeight: 100,
-                elevation: 7,
-                backgroundColor: darkTheme?.colorScheme.primary,
-                foregroundColor: darkTheme?.colorScheme.onPrimary,
-                titleTextStyle: darkTheme?.textTheme.displaySmall
-                    ?.copyWith(color: darkTheme?.colorScheme.onPrimary)),
-          ),
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
           builder: scrollBehaviour(),
           routerDelegate: routerDelegate,
         ),
@@ -201,8 +177,8 @@ parseJson(String text) {
 }
 
 Future<void> initTheming() async {
-  darkTheme = await EdsAppTheme.som["dark"];
-  lightTheme = await EdsAppTheme.som["light"];
+  darkTheme = await EdsAppTheme.eds["dark"];
+  lightTheme = await EdsAppTheme.eds["light"];
 }
 
 //endregion

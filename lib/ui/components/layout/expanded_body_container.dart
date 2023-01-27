@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HorizontalBody extends StatelessWidget {
+class ExpandedBodyContainer extends StatelessWidget {
   final expandedBodyMenu;
 
   final expandedBodyContentSplitLeft;
 
   final expandedBodyContentSplitRight;
 
-  const HorizontalBody({
+  const ExpandedBodyContainer({
     Key? key,
     this.expandedBodyMenu,
     this.expandedBodyContentSplitLeft,
@@ -30,31 +30,59 @@ class HorizontalBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (buildContext, constraints) {
       final isMobile = constraints.maxWidth < 600;
+
+      /// Row or Column
       final responsiveContainer = isMobile
+
+          /// MOBILE LAYOUT
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                expandedBodyMenu,
-                expandedHorizontalDivider(context),
-                expandedBodyContentSplitLeft,
-                if (expandedBodyContentSplitRight != null)
+                /// For existing Menu show also a divider
+                if (expandedBodyMenu != null) ...[
+                  expandedBodyMenu,
                   expandedHorizontalDivider(context),
-                if (expandedBodyContentSplitRight != null)
+                ],
+
+                /// ALWAYS rendered
+                expandedBodyContentSplitLeft,
+
+                /// For existing right split show also a divider
+                if (expandedBodyContentSplitRight != null) ...[
+                  expandedHorizontalDivider(context),
                   expandedBodyContentSplitRight,
+                ]
               ],
             )
+
+          /// DESKTOP LAYOUT
           : Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                expandedBodyMenu,
-                expandedVerticalDivider(context),
+                /// For existing Menu show also a divider
+                if (expandedBodyMenu != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text('DEBUG'),
+                      expandedBodyMenu,
+                    ],
+                  ),
+                if (expandedBodyMenu != null) expandedVerticalDivider(context),
+
+                /// ALWAYS rendered
                 expandedBodyContentSplitLeft,
-                if (expandedBodyContentSplitRight != null)
-                  expandedHorizontalDivider(context),
-                if (expandedBodyContentSplitRight != null)
+
+                /// For existing right split show also a divider
+                if (expandedBodyContentSplitRight != null) ...[
                   expandedBodyContentSplitRight,
+                  expandedHorizontalDivider(context),
+                ]
               ],
             );
 

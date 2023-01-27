@@ -160,7 +160,7 @@ Widget appBarTitleWidget(context, String title,
                   alignment: Alignment.center,
                   child: Image.asset(
                     'images/som/logo.png',
-                    height: 80,
+                    height: 40,
                     fit: BoxFit.fitHeight,
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),

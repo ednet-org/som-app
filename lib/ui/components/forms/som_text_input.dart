@@ -24,6 +24,8 @@ class SomTextInput extends StatelessWidget {
 
   final bool displayForgotPassword;
 
+  final String? Function(String?)? validator;
+
   // final Function? forgotPasswordHandler;
 
   const SomTextInput({
@@ -46,6 +48,7 @@ class SomTextInput extends StatelessWidget {
     this.secondary,
     this.onSecondary,
     this.onPrimary,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -85,6 +88,7 @@ class SomTextInput extends StatelessWidget {
               icon: Icon(icon,
                   color: onPrimary ?? Theme.of(context).colorScheme.primary),
               suffixIcon: isPassword ? obscureTextIcon() : null),
+          validator: validator,
         ),
         isPassword && displayForgotPassword
             ? Padding(

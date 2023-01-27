@@ -11,11 +11,9 @@ class ExpandedSplit extends StatelessWidget {
       flex: 9,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: child,
-          ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: child,
         ),
       ),
     );

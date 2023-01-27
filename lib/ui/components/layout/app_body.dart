@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/ui/components/layout/extended_split.dart';
-import 'package:som/ui/components/layout/horizontal_body.dart';
+import 'package:som/ui/components/layout/expanded_body_container.dart';
 import 'package:som/ui/components/layout/spaced_container.dart';
 
 class AppBody extends StatelessWidget {
@@ -11,16 +11,23 @@ class AppBody extends StatelessWidget {
 
   final body;
 
-  const AppBody(
-      {Key? key, this.leftSplit, this.rightSplit, this.contextMenu, this.body})
-      : super(key: key);
+  const AppBody({
+    super.key,
+    this.leftSplit,
+    this.rightSplit,
+    this.contextMenu,
+    this.body,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SpacedContainer(
       horizontalBody: body != null
-          ? ExpandedSplit(child: body)
-          : HorizontalBody(
+          ? ExpandedBodyContainer(
+              expandedBodyMenu: contextMenu,
+              expandedBodyContentSplitLeft: ExpandedSplit(child: body),
+            )
+          : ExpandedBodyContainer(
               expandedBodyMenu: contextMenu,
               expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
               expandedBodyContentSplitRight:

@@ -14,7 +14,7 @@ class CompanyBeamLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
-      BeamPage(
+      const BeamPage(
         key: ValueKey('company page'),
         title: 'Company',
         child: CompanyAppBody(),
