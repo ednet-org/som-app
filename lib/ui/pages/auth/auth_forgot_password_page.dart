@@ -21,10 +21,11 @@ class AuthForgotPasswordPage extends StatelessWidget {
           child: SizedBox(
             width: 350,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                FunnyLogo(),
+                const FunnyLogo(),
                 const SizedBox(
                   height: 50,
                 ),
@@ -50,9 +51,6 @@ class AuthForgotPasswordPage extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             SomTextInput(
-                              primary: Theme.of(context).colorScheme.secondary,
-                              onPrimary:
-                                  Theme.of(context).colorScheme.onSecondary,
                               label: 'Email',
                               value: authForgotPasswordState.email,
                               required: true,
@@ -122,9 +120,6 @@ class AuthForgotPasswordPage extends StatelessWidget {
                         ],
                       )
                     : Container(),
-                const SizedBox(
-                  height: 200,
-                ),
                 authForgotPasswordState.errorMessage.isNotEmpty
                     ? Text(
                         authForgotPasswordState.errorMessage,
@@ -135,9 +130,6 @@ class AuthForgotPasswordPage extends StatelessWidget {
                             ),
                       )
                     : Container(),
-                const SizedBox(
-                  height: 200,
-                ),
                 ActionButton(
                   width: 300.0,
                   // onPrimary: Theme.of(context).colorScheme.error,

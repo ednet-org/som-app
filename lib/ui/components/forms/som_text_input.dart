@@ -14,11 +14,9 @@ class SomTextInput extends StatelessWidget {
   final onToggleShowPassword;
   final bool required;
 
-  final Color? primary;
   final Color? onPrimary;
 
   final Color? secondary;
-  final Color? onSecondary;
 
   final void Function()? forgotPasswordHandler;
 
@@ -44,9 +42,7 @@ class SomTextInput extends StatelessWidget {
     this.isPassword = false,
     this.displayForgotPassword = false,
     this.forgotPasswordHandler,
-    this.primary,
     this.secondary,
-    this.onSecondary,
     this.onPrimary,
     this.validator,
   }) : super(key: key);

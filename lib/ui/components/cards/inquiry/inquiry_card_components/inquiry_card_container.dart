@@ -11,7 +11,6 @@ class InquiryCardContainer extends StatelessWidget {
         child: SizedBox(
           width: 400,
           height: 375,
-          child: Center(child: Text('Elevated Card')),
         ),
       ),
     );
