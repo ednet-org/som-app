@@ -10,13 +10,9 @@ class InquiryCardDescription<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return SizedBox(
-      width: 380,
-      child: Text(
-        inquiry.description.toString(),
+    return Text(inquiry.description,
         maxLines: 10,
         style: theme.textTheme.bodyMedium,
-      ),
-    );
+        overflow: TextOverflow.ellipsis);
   }
 }

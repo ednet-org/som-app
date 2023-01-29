@@ -437,10 +437,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: "749b3342ea3e95cbf61a0fec31a62606e837377b8b6d0caa7367a7ef80f38b7d"
+      sha256: "155556c4aba56c8474308d51b4e5446b80a07db9ab66a3cb74aff05c110df982"
       url: "https://pub.dev"
     source: hosted
-    version: "0.55.2"
+    version: "0.60.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -482,26 +482,26 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "57d0012730780fe137260dd180e072c18a73fbeeb924cdc029c18aaa0f338d64"
+      sha256: "293995f94e120c8afce768981bd1fa9c5d6de67c547568e3b42ae2defdcbb4a0"
       url: "https://pub.dev"
     source: hosted
-    version: "9.9.1"
+    version: "13.0.0"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
       name: flutter_local_notifications_linux
-      sha256: b472bfc173791b59ede323661eae20f7fff0b6908fea33dd720a6ef5d576bae8
+      sha256: "8f6c1611e0c4a88a382691a97bb3c3feb24cc0c0b54152b8b5fb7ffb837f7fbf"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "3.0.0"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
-      sha256: "21bceee103a66a53b30ea9daf677f990e5b9e89b62f222e60dd241cd08d63d3a"
+      sha256: "5ec1feac5f7f7d9266759488bc5f76416152baba9aa1b26fe572246caa00d1ab"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -572,10 +572,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_vector_icons
-      sha256: "0eaf906404dae0023aedd6d7f19bbf8a471505595b818303d2696856b072a849"
+      sha256: "20a77e282f8cb438c8edcee4eec85d8497d5f4cbeb07d116e9d2d01c9edfc5e2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -701,7 +701,7 @@ packages:
     source: hosted
     version: "2.1.1"
   google_fonts:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: google_fonts
       sha256: "8f099045e2f2a30e4d4d0a35f40c6bc941a8f2ca0e10ad9d214ee9edd3f37483"
@@ -1008,10 +1008,10 @@ packages:
     dependency: "direct main"
     description:
       name: lottie
-      sha256: "893da7a0022ec2fcaa616f34529a081f617e86cc501105b856e5a3184c58c7c2"
+      sha256: "49bbc544e44bf0c734ccda29b182e3516a12f5021ea98b206cf31a168b0f97da"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.3"
+    version: "2.2.0"
   matcher:
     dependency: transitive
     description:
@@ -1080,10 +1080,10 @@ packages:
     dependency: "direct main"
     description:
       name: nb_utils
-      sha256: c0b0ad53014c121d6ceffeb50b780d328e4a2eb9763978b875e0fd2afa915396
+      sha256: f27e3afcee7875707f4c70f52000ec0da0a8572d5b78d077d11f7d822ee70166
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.25"
+    version: "5.0.0"
   nested:
     dependency: transitive
     description:
@@ -1307,6 +1307,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
+  readmore:
+    dependency: "direct main"
+    description:
+      name: readmore
+      sha256: "99c2483202f7c7e98c50834d72be2b119aefecf4497ca1960ae9d5f418eb1481"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   rxdart:
     dependency: transitive
     description:
@@ -1399,10 +1407,10 @@ packages:
     dependency: "direct main"
     description:
       name: showcaseview
-      sha256: "09b534d806572135c38e06901de4b36b2bbd61739ec56c5fa9242d10748e19df"
+      sha256: "34ffa07c4ae9bfb6153d93d11aec83b57e1719fb7b23baa1da89433d4bf44e74"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.8"
+    version: "2.0.0+1"
   signature:
     dependency: "direct main"
     description:
@@ -1415,10 +1423,10 @@ packages:
     dependency: "direct main"
     description:
       name: simple_animations
-      sha256: cd8b4685de36a1d4bd7082d860415baf3772403402a8a022bd209cf856164386
+      sha256: "6da9a59389d7f6695391f702b0893a0fc63aed2b4d41509cfc1f8781218db635"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "5.0.0+3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1556,10 +1564,10 @@ packages:
     dependency: transitive
     description:
       name: timezone
-      sha256: "57b35f6e8ef731f18529695bffc62f92c6189fac2e52c12d478dec1931afb66e"
+      sha256: "24c8fcdd49a805d95777a39064862133ff816ebfffe0ceff110fb5960e557964"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0"
+    version: "0.9.1"
   timing:
     dependency: transitive
     description:
@@ -1724,34 +1732,34 @@ packages:
     dependency: "direct main"
     description:
       name: webview_flutter
-      sha256: "392c1d83b70fe2495de3ea2c84531268d5b8de2de3f01086a53334d8b6030a88"
+      sha256: f7ec234830f86d0ef2bd664e8460b0038b8c1a83ff076035cad74ac70273753c
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.4"
+    version: "4.0.2"
   webview_flutter_android:
     dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: "8b3b2450e98876c70bfcead876d9390573b34b9418c19e28168b74f6cb252dbd"
+      sha256: "9d97fa2bae0f1900553c48a2ef0aaa3864367fd7bb625d683c460754b691312c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.4"
+    version: "3.2.1"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
       name: webview_flutter_platform_interface
-      sha256: "812165e4e34ca677bdfbfa58c01e33b27fd03ab5fa75b70832d4b7d4ca1fa8cf"
+      sha256: "8b2262dda5d26eabc600a7282a8c16a9473a0c765526afb0ffc33eef912f7968"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.5"
+    version: "2.0.1"
   webview_flutter_wkwebview:
     dependency: transitive
     description:
       name: webview_flutter_wkwebview
-      sha256: a5364369c758892aa487cbf59ea41d9edd10f9d9baf06a94e80f1bd1b4c7bbc0
+      sha256: "523aff9168af9bb2170e4809e0499d7dee065c3919799fd3341d3e616c137960"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.5"
+    version: "3.0.2"
   win32:
     dependency: transitive
     description:

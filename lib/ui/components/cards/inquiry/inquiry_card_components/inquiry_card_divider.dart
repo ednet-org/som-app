@@ -6,8 +6,9 @@ class InquiryCardDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 380,
+      height: 20,
       child: Divider(
+        thickness: 3,
         height: 1,
         // thickness: 1,
       ),

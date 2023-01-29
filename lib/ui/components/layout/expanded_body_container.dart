@@ -15,10 +15,10 @@ class ExpandedBodyContainer extends StatelessWidget {
   }) : super(key: key);
 
   Expanded expandedVerticalDivider(context) =>
-      const Expanded(flex: 1, child: VerticalDivider());
+      const Expanded(flex: 0, child: VerticalDivider());
 
   Expanded expandedHorizontalDivider(context) =>
-      const Expanded(flex: 1, child: Divider());
+      const Expanded(flex: 0, child: Divider());
 
   @override
   Widget build(BuildContext context) {

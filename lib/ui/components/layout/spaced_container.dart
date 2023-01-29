@@ -9,13 +9,13 @@ class SpacedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
+      padding: const EdgeInsets.all(7.5),
       child: Center(
         child: Column(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(7.5),
                 child: Container(
                   child: horizontalBody,
                 ),

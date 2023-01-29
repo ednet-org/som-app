@@ -6,7 +6,6 @@ import 'inquiry_card_components/inquiry_card_container.dart';
 import 'inquiry_card_components/inquiry_card_description.dart';
 import 'inquiry_card_components/inquiry_card_status.dart';
 import 'inquiry_card_components/inquiry_card_title.dart';
-import 'positioned _info.dart';
 
 class InquiryCard extends StatelessWidget {
   final Inquiry inquiry;
@@ -15,55 +14,68 @@ class InquiryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      height: 375,
-      child: Stack(
-        children: <Widget>[
-          const PositionedInfo(
-            top: 0,
-            left: 0,
-            child: InquiryCardContainer(),
-          ),
-          PositionedInfo(
-            top: 20,
-            left: 20,
-            child: InquiryCardStatus(inquiry: inquiry),
-          ),
-          PositionedInfo(
-            top: 20,
-            left: 50,
-            child: InquiryCardTitle(inquiry: inquiry),
-          ),
-          const PositionedInfo(
-            top: 70,
-            left: 10,
-            child: InquiryCardDivider(),
-          ),
-          PositionedInfo(
-            top: 80,
-            left: 10,
-            child: InquiryCardDescription(inquiry: inquiry),
-          ),
-          PositionedInfo(
-            top: 260,
-            left: 10,
-            child: InquiryBranch(inquiry: inquiry),
-          ),
-          PositionedInfo(
-            top: 260,
-            left: 250,
-            child: InquiryCategory(inquiry: inquiry),
-          ),
-          const PositionedInfo(
-            top: 300,
-            left: 10,
-            child: InquiryCardDivider(),
-          ),
-        ],
+    return Center(
+      child: Card(
+        elevation: 5,
+        child: Container(
+            constraints: const BoxConstraints(
+              maxWidth: 400,
+              maxHeight: 800,
+              minWidth: 300,
+              minHeight: 400,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      InquiryCardStatus(inquiry: inquiry),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InquiryCardTitle(inquiry: inquiry),
+                    ],
+                  ),
+                  const InquiryCardDivider(),
+                  InquiryCardDescription(inquiry: inquiry),
+                  const Flexible(
+                    fit: FlexFit.tight,
+                    child: SizedBox(),
+                  ),
+                  const InquiryCardDivider(),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InquiryBranch(inquiry: inquiry),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const VerticalDivider(),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InquiryCategory(inquiry: inquiry),
+                    ],
+                  ),
+                ],
+              ),
+            )),
       ),
     );
   }
+
+  ///     return const Center(
+//       child: Card(
+//         elevation: 5,
+//         child: SizedBox(
+//           width: 400,
+//           height: 375,
+//         ),
+//       ),
+//     );
 }
 
 class InquiryBranch extends StatelessWidget {
