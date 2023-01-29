@@ -26,13 +26,13 @@ class InquiryCard extends StatelessWidget {
             child: InquiryCardContainer(),
           ),
           PositionedInfo(
-            top: 10,
-            left: 10,
+            top: 20,
+            left: 20,
             child: InquiryCardStatus(inquiry: inquiry),
           ),
           PositionedInfo(
-            top: 10,
-            left: 40,
+            top: 20,
+            left: 50,
             child: InquiryCardTitle(inquiry: inquiry),
           ),
           const PositionedInfo(

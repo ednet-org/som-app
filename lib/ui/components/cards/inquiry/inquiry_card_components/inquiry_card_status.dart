@@ -26,11 +26,11 @@ class InquiryCardStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 17,
-      height: 15,
+      width: 20,
+      height: 20,
       decoration: BoxDecoration(
         color: inquiryStatusColor,
-        borderRadius: const BorderRadius.all(Radius.elliptical(17, 15)),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
     );
   }
