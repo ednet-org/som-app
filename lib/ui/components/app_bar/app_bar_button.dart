@@ -25,6 +25,7 @@ class _AppBarButtonState extends State<AppBarButton> {
   @override
   void initState() {
     super.initState();
+
     /// only if mounted
     if (mounted) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) => widget
@@ -35,32 +36,27 @@ class _AppBarButtonState extends State<AppBarButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding:
-            const EdgeInsets.only(right: 100, top: 10, bottom: 10, left: 1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            IconButton(
-              // hoverColor: Theme.of(context).colorScheme.secondary,
-              icon: ImageIcon(
-                AssetImage(widget.child),
-                // color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              onPressed: () => widget.beamer.currentState?.routerDelegate
-                  .beamToNamed(widget.uri),
-              tooltip: '${widget.title} management page',
-              iconSize: 50,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ],
-        ));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          // hoverColor: Theme.of(context).colorScheme.secondary,
+          icon: ImageIcon(
+            AssetImage(widget.child),
+            // color: Theme.of(context).colorScheme.primaryContainer,
+          ),
+          onPressed: () => widget.beamer.currentState?.routerDelegate
+              .beamToNamed(widget.uri),
+          tooltip: '${widget.title} management page',
+          iconSize: 50,
+        ),
+        Text(
+          widget.title,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+      ],
+    );
   }
 
   @override

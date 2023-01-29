@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:provider/provider.dart';
 import 'package:som/main.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/components/funny_logo.dart';
 
-import 'AppColors.dart';
 import 'AppConstant.dart';
 import 'ListModels.dart';
 import 'clusteringGoogleMaps/lat_lang_geohash.dart';
@@ -34,7 +32,7 @@ Widget text(
     maxLines: isLongText ? null : maxLine,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
-      fontFamily: fontFamily ?? null,
+      fontFamily: fontFamily,
       fontSize: fontSize,
       height: 1.5,
       letterSpacing: latterSpacing,
@@ -52,7 +50,7 @@ BoxDecoration boxDecoration(
   return BoxDecoration(
     boxShadow: showShadow
         ? defaultBoxShadow(shadowColor: shadowColorGlobal)
-        : [BoxShadow(color: Colors.transparent)],
+        : [const BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
@@ -125,14 +123,14 @@ Widget settingItem(context, String text,
           Row(
             children: <Widget>[
               Container(
-                  child: leading ?? SizedBox(),
+                  child: leading ?? const SizedBox(),
                   width: 30,
                   alignment: Alignment.center),
-              leading != null ? 10.width : SizedBox(),
+              leading != null ? 10.width : const SizedBox(),
               Text(text).expand(),
             ],
           ).expand(),
-          detail ?? Icon(Icons.arrow_forward_ios, size: 16),
+          detail ?? const Icon(Icons.arrow_forward_ios, size: 16),
         ],
       ).paddingOnly(left: 16, right: 16, top: 8, bottom: 8),
     ),
@@ -141,39 +139,20 @@ Widget settingItem(context, String text,
 
 Widget appBarTitleWidget(context, String title,
     {Color? color, Color? textColor}) {
-  final appStore = Provider.of<Application>(context);
-  print(MediaQuery.of(context).size.width);
   return LayoutBuilder(
     builder: (context, constraints) {
-      print(constraints.maxWidth);
-      print(constraints.maxHeight);
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
         // height: 60,
         child: Row(
           children: <Widget>[
-            GestureDetector(
-                onTap: () {
-                  appStore.toggleDarkMode();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'images/som/logo.png',
-                    height: 40,
-                    fit: BoxFit.fitHeight,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                )),
-            SizedBox(width: 15),
+            const FunnyLogo(height: 50),
+            const SizedBox(width: 15),
             constraints.maxWidth > 200
                 ? Text(
                     title,
                     maxLines: 3,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: textColor ??
-                              Theme.of(context).colorScheme.onPrimary,
-                        ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ).expand()
                 : Container(),
           ],
@@ -212,20 +191,20 @@ class ExampleItemWidget extends StatelessWidget {
   final Function onTap;
   final bool showTrailing;
 
-  ExampleItemWidget(this.tabBarType,
-      {required this.onTap, this.showTrailing = false});
+  const ExampleItemWidget(this.tabBarType,
+      {super.key, required this.onTap, this.showTrailing = false});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
       elevation: 2.0,
       shadowColor: Colors.black,
       child: ListTile(
         onTap: () => onTap(),
         title: Text(tabBarType.name!, style: boldTextStyle()),
         trailing: showTrailing
-            ? Icon(Icons.arrow_forward_ios, size: 15)
+            ? const Icon(Icons.arrow_forward_ios, size: 15)
             : tabBarType.isNew.validate()
                 ? Text('New', style: secondaryTextStyle(color: Colors.red))
                 : null,
@@ -248,17 +227,12 @@ String convertDate(date) {
 class CustomTheme extends StatelessWidget {
   final Widget? child;
 
-  CustomTheme({required this.child});
+  const CustomTheme({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: appStore.isDarkModeOn
-          ? ThemeData.dark().copyWith(
-              accentColor: appColorPrimary,
-              backgroundColor: context.scaffoldBackgroundColor,
-            )
-          : ThemeData.light(),
+      data: appStore.isDarkModeOn ? ThemeData.dark() : ThemeData.light(),
       child: child!,
     );
   }
@@ -343,7 +317,7 @@ class ContainerX extends StatelessWidget {
   final Widget? web;
   final bool? useFullWidth;
 
-  const ContainerX({this.mobile, this.web, this.useFullWidth});
+  const ContainerX({super.key, this.mobile, this.web, this.useFullWidth});
 
   @override
   Widget build(BuildContext context) {
