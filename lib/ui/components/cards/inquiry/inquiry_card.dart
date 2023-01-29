@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:som/ui/components/cards/inquiry/inquiry_card_components/inquiry_card_divider.dart';
 
 import '../../../../domain/model/inquiry_management/inquiry.dart';
-import 'inquiry_card_components/inquiry_card_container.dart';
 import 'inquiry_card_components/inquiry_card_description.dart';
 import 'inquiry_card_components/inquiry_card_status.dart';
 import 'inquiry_card_components/inquiry_card_title.dart';

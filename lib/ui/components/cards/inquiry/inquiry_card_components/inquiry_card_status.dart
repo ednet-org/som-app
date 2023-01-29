@@ -7,31 +7,46 @@ class InquiryCardStatus extends StatelessWidget {
 
   const InquiryCardStatus({super.key, required this.inquiry});
 
-  Color get inquiryStatusColor {
+  Map<String, Color> inquiryStatusColor(context) {
     var inquiryStatus = inquiry.status;
     switch (inquiryStatus) {
       case InquiryStatus.closed:
-        return Colors.green;
+        return {
+          "textColor": Theme.of(context).colorScheme.onPrimary,
+          "backgroundColor": Theme.of(context).colorScheme.primary,
+        };
       case InquiryStatus.responded:
-        return Colors.yellow;
+        return {
+          "textColor": Theme.of(context).colorScheme.onPrimary,
+          "backgroundColor": Theme.of(context).colorScheme.primary,
+        };
       case InquiryStatus.published:
-        return Colors.red;
+        return {
+          "textColor": Theme.of(context).colorScheme.onPrimary,
+          "backgroundColor": Theme.of(context).colorScheme.primary,
+        };
+
       case InquiryStatus.draft:
-        return Colors.grey;
+        return {
+          "textColor": Theme.of(context).colorScheme.onPrimary,
+          "backgroundColor": Theme.of(context).colorScheme.primary,
+        };
       default:
-        return Colors.black;
+        return {
+          "textColor": Theme.of(context).colorScheme.onPrimary,
+          "backgroundColor": Theme.of(context).colorScheme.primary,
+        };
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      decoration: BoxDecoration(
-        color: inquiryStatusColor,
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-      ),
+    final status = inquiryStatusColor(context);
+    return Badge(
+      label: Text(inquiry.status.toString().split('.').last),
+      textStyle: Theme.of(context).textTheme.labelSmall,
+      textColor: status["textColor"],
+      backgroundColor: status["backgroundColor"],
     );
   }
 }
