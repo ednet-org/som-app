@@ -18,21 +18,19 @@ class SomDropDown extends StatelessWidget {
         showSelectedItems: true,
         modalBottomSheetProps: ModalBottomSheetProps(
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(const Radius.circular(15)),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           constraints:
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.3),
-          // backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 10,
         ),
         itemBuilder: (context, value, displayValue) {
           return ListTile(
             // style: ListTileTheme.of(context).style,
-            focusColor: Theme.of(context).colorScheme.secondary,
-            title: Text(value,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    )),
+            title: Text(
+              value,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
           );
         },
         emptyBuilder: (context, _) {
@@ -40,9 +38,7 @@ class SomDropDown extends StatelessWidget {
             child: Text(
               textAlign: TextAlign.center,
               'No data found',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           );
         },
@@ -54,20 +50,11 @@ class SomDropDown extends StatelessWidget {
         searchFieldProps: TextFieldProps(
           padding: const EdgeInsets.all(20),
           autofocus: true,
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+          style: Theme.of(context).textTheme.labelLarge,
           decoration: InputDecoration(
             filled: true,
             hintText: 'Search here...',
-            hintStyle: Theme.of(context)
-                .textTheme
-                .labelLarge
-                ?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
-            fillColor: Theme.of(context).colorScheme.secondary,
-            focusColor: Theme.of(context).colorScheme.onSecondary,
-            hoverColor: Theme.of(context).colorScheme.primary,
+            hintStyle: Theme.of(context).textTheme.labelLarge,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
@@ -78,7 +65,6 @@ class SomDropDown extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: widget,
           );
@@ -86,9 +72,7 @@ class SomDropDown extends StatelessWidget {
       ),
       dropdownBuilder: (context, value) {
         return Text(value ?? 'n/a',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ));
+            style: Theme.of(context).textTheme.labelLarge);
       },
       items: items,
       onChanged: onChanged,
@@ -96,16 +80,11 @@ class SomDropDown extends StatelessWidget {
       dropdownDecoratorProps: DropDownDecoratorProps(
           textAlign: TextAlign.center,
           textAlignVertical: TextAlignVertical.center,
-          baseStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+          baseStyle: Theme.of(context).textTheme.labelLarge,
           dropdownSearchDecoration: InputDecoration(
             icon: const Icon(Icons.edit_location),
             labelText: 'Country',
             hintText: hint,
-            fillColor: Theme.of(context).colorScheme.secondary,
-            focusColor: Theme.of(context).colorScheme.secondary,
-            hoverColor: Theme.of(context).colorScheme.secondary,
           )),
       // clearButtonProps: ClearButtonProps(
       //   icon: const Icon(Icons.clear),

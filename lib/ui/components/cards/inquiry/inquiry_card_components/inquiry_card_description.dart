@@ -12,10 +12,11 @@ class InquiryCardDescription<T> extends StatelessWidget {
 
     return SizedBox(
       width: 380,
-      child: Text(inquiry.description.toString(),
-          maxLines: 10,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurface)),
+      child: Text(
+        inquiry.description.toString(),
+        maxLines: 10,
+        style: theme.textTheme.bodyMedium,
+      ),
     );
   }
 }

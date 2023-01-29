@@ -132,12 +132,12 @@ class MyApp extends StatelessWidget {
           themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
           theme: ThemeData(
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: seedColor, brightness: Brightness.light)),
+              colorSchemeSeed: seedColor,
+              brightness: Brightness.light),
           darkTheme: ThemeData(
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: seedColor, brightness: Brightness.dark)),
+              colorSchemeSeed: seedColor,
+              brightness: Brightness.dark),
           builder: scrollBehaviour(),
           routerDelegate: routerDelegate,
         ),

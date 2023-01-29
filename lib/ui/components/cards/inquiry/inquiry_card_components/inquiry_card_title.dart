@@ -11,10 +11,11 @@ class InquiryCardTitle extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     return SizedBox(
       width: 295,
-      child: Text(inquiry.title,
-          maxLines: 4,
-          style: theme.textTheme.titleSmall
-              ?.copyWith(color: theme.colorScheme.onSurface)),
+      child: Text(
+        inquiry.title,
+        maxLines: 4,
+        style: theme.textTheme.titleSmall,
+      ),
     );
   }
 }

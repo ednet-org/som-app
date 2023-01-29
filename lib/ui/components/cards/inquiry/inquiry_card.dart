@@ -15,8 +15,6 @@ class InquiryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
     return SizedBox(
       width: 400,
       height: 375,
@@ -79,10 +77,11 @@ class InquiryBranch extends StatelessWidget {
 
     return SizedBox(
       width: 150,
-      child: Text(inquiry.branch.toString(),
-          maxLines: 2,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurface)),
+      child: Text(
+        inquiry.branch.toString(),
+        maxLines: 2,
+        style: theme.textTheme.bodyMedium,
+      ),
     );
   }
 }
@@ -98,10 +97,11 @@ class InquiryCategory extends StatelessWidget {
 
     return SizedBox(
       width: 150,
-      child: Text(inquiry.category.toString(),
-          maxLines: 2,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurface)),
+      child: Text(
+        inquiry.category.toString(),
+        maxLines: 2,
+        style: theme.textTheme.bodyMedium,
+      ),
     );
   }
 }

@@ -22,7 +22,7 @@ class Badge extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-              color: color ?? Theme.of(context).errorColor,
+              color: color,
               borderRadius: BorderRadius.circular(10),
             ),
             constraints: const BoxConstraints(

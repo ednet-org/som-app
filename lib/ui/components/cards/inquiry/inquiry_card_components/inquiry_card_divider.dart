@@ -5,12 +5,9 @@ class InquiryCardDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return SizedBox(
+    return const SizedBox(
       width: 380,
       child: Divider(
-        color: theme.colorScheme.onSurface,
         height: 1,
         // thickness: 1,
       ),
