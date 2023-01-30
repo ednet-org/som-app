@@ -16,6 +16,13 @@ mixin _$Application on _Application, Store {
           Computed<dynamic>(() => super.isAuthenticated,
               name: '_Application.isAuthenticated'))
       .value;
+  Computed<CurrentLayoutAndUIConstraints>? _$layoutComputed;
+
+  @override
+  CurrentLayoutAndUIConstraints get layout => (_$layoutComputed ??=
+          Computed<CurrentLayoutAndUIConstraints>(() => super.layout,
+              name: '_Application.layout'))
+      .value;
 
   late final _$applicationWidthAtom =
       Atom(name: '_Application.applicationWidth', context: context);
@@ -129,6 +136,22 @@ mixin _$Application on _Application, Store {
     });
   }
 
+  late final _$boxConstraintsAtom =
+      Atom(name: '_Application.boxConstraints', context: context);
+
+  @override
+  BoxConstraints? get boxConstraints {
+    _$boxConstraintsAtom.reportRead();
+    return super.boxConstraints;
+  }
+
+  @override
+  set boxConstraints(BoxConstraints? value) {
+    _$boxConstraintsAtom.reportWrite(value, super.boxConstraints, () {
+      super.boxConstraints = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('_Application.login', context: context);
 
@@ -205,7 +228,9 @@ isDarkModeOn: ${isDarkModeOn},
 selectedLanguage: ${selectedLanguage},
 selectedDrawerItem: ${selectedDrawerItem},
 authorization: ${authorization},
-isAuthenticated: ${isAuthenticated}
+boxConstraints: ${boxConstraints},
+isAuthenticated: ${isAuthenticated},
+layout: ${layout}
     ''';
   }
 }

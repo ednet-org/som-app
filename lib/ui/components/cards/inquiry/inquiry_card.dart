@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/components/cards/inquiry/inquiry_card_components/inquiry_card_divider.dart';
 
 import '../../../../domain/model/inquiry_management/inquiry.dart';
-import 'inquiry_card_components/inquiry_card_container.dart';
 import 'inquiry_card_components/inquiry_card_description.dart';
 import 'inquiry_card_components/inquiry_card_status.dart';
 import 'inquiry_card_components/inquiry_card_title.dart';
@@ -14,15 +15,17 @@ class InquiryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = Provider.of<Application>(context);
+    final CurrentLayoutAndUIConstraints layout = appStore.layout;
     return Center(
       child: Card(
         elevation: 5,
         child: Container(
-            constraints: const BoxConstraints(
-              maxWidth: 400,
-              maxHeight: 800,
-              minWidth: 300,
-              minHeight: 400,
+            constraints: BoxConstraints(
+              maxWidth: layout.constraints.containerLayout.maxWidth,
+              maxHeight: layout.constraints.containerLayout.maxHeight,
+              minWidth: layout.constraints.containerLayout.minWidth,
+              minHeight: layout.constraints.containerLayout.minHeight,
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
