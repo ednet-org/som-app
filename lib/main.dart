@@ -107,42 +107,45 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: getProviders,
-      child: Observer(
-        builder: (_) => MaterialApp.router(
-          routeInformationParser: BeamerParser(),
-          // android back button behavior
-          backButtonDispatcher:
-              BeamerBackButtonDispatcher(delegate: routerDelegate),
-          localizationsDelegates: const [
-            SomLocalizations.delegate,
-            ...GlobalMaterialLocalizations.delegates,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          localeResolutionCallback: (locale, supportedLocales) =>
-              Locale(appStore.selectedLanguage),
-          locale: Locale(appStore.selectedLanguage),
-          supportedLocales: const [
-            Locale('en'),
-            Locale('de'),
-            Locale('sr'),
-          ],
-          title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
-          themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-          theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: seedColor, brightness: Brightness.light)),
-          darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                  seedColor: seedColor, brightness: Brightness.dark)),
-          builder: scrollBehaviour(),
-          routerDelegate: routerDelegate,
+    return LayoutBuilder(builder: (context, constraints) {
+      appStore.boxConstraints = constraints;
+      return MultiProvider(
+        providers: getProviders,
+        child: Observer(
+          builder: (_) => MaterialApp.router(
+            routeInformationParser: BeamerParser(),
+            // android back button behavior
+            backButtonDispatcher:
+                BeamerBackButtonDispatcher(delegate: routerDelegate),
+            localizationsDelegates: const [
+              SomLocalizations.delegate,
+              ...GlobalMaterialLocalizations.delegates,
+              GlobalWidgetsLocalizations.delegate
+            ],
+            localeResolutionCallback: (locale, supportedLocales) =>
+                Locale(appStore.selectedLanguage),
+            locale: Locale(appStore.selectedLanguage),
+            supportedLocales: const [
+              Locale('en'),
+              Locale('de'),
+              Locale('sr'),
+            ],
+            title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+            themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+            theme: ThemeData(
+                useMaterial3: true,
+                colorSchemeSeed: seedColor,
+                brightness: Brightness.light),
+            darkTheme: ThemeData(
+                useMaterial3: true,
+                colorSchemeSeed: seedColor,
+                brightness: Brightness.dark),
+            builder: scrollBehaviour(),
+            routerDelegate: routerDelegate,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   get getProviders {

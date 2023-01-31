@@ -1080,10 +1080,10 @@ packages:
     dependency: "direct main"
     description:
       name: nb_utils
-      sha256: f27e3afcee7875707f4c70f52000ec0da0a8572d5b78d077d11f7d822ee70166
+      sha256: "99a73a829a4d0067f745370a6f57a43196700cd96ee8330118886d27ab3ecf8c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.3"
   nested:
     dependency: transitive
     description:
