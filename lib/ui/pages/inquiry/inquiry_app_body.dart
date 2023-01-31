@@ -133,7 +133,7 @@ In vel consectetur leo. Proin finibus tortor eros, sit amet viverra tortor ornar
       "companySize": "upTo10",
     },
     "attachments": "[]",
-    "status": "published",
+    "status": "expired",
     "offers": "",
   },
   {
