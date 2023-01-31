@@ -1,6 +1,152 @@
 import 'package:flutter/material.dart';
 
-/// # Default Layout configuration for mobile devices up to 500px and [DisplaySize] of up to [DisplaySize.small] (5.5 inches)
+enum Position { upperLeft, upperRight, lowerLeft, lowerRight }
+
+enum Direction { horizontal, vertical }
+
+class AppFooter {
+  Widget? leftThumb;
+  Widget? rightThumb;
+}
+
+enum DisplaySize {
+  /// 0 - 599
+  mobile(0, 599),
+
+  /// 600 - 1023
+  tablet(600, 1023),
+
+  /// 1024 - 1920
+  laptop(1024, 1919),
+
+  /// 1K - 2K
+  desktop(1920, 2047),
+
+  /// 2K - 4K
+  projector(2048, 4095),
+
+  ///above 4K
+  billboard(4096, 9999);
+
+  final int min;
+
+  final int max;
+
+  const DisplaySize(this.min, this.max);
+}
+
+/// Media breakpoints extension for [MediaQueryData]
+extension MediaBreakPointsExtension on MediaQueryData {
+  /// Returns [DisplaySize] for current [MediaQueryData]
+  DisplaySize get mediaBreakPoints {
+    final size = this.size;
+    final width = size.width;
+
+    if (width >= DisplaySize.mobile.min && width <= DisplaySize.mobile.max) {
+      return DisplaySize.mobile;
+    } else if (width >= DisplaySize.tablet.min &&
+        width <= DisplaySize.tablet.max) {
+      return DisplaySize.tablet;
+    } else if (width >= DisplaySize.laptop.min &&
+        width <= DisplaySize.laptop.max) {
+      return DisplaySize.laptop;
+    } else if (width >= DisplaySize.desktop.min &&
+        width <= DisplaySize.desktop.max) {
+      return DisplaySize.desktop;
+    } else if (width >= DisplaySize.projector.min &&
+        width <= DisplaySize.projector.max) {
+      return DisplaySize.projector;
+    } else if (width >= DisplaySize.billboard.min &&
+        width <= DisplaySize.billboard.max) {
+      return DisplaySize.billboard;
+    } else {
+      return DisplaySize.mobile;
+    }
+  }
+}
+
+abstract class ResponsiveWidget extends StatelessWidget {
+  final DisplaySize displaySize;
+
+  const ResponsiveWidget({
+    super.key,
+    required this.displaySize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    switch (displaySize) {
+      case DisplaySize.mobile:
+        return mobile(context);
+      case DisplaySize.tablet:
+        return tablet(context);
+      case DisplaySize.laptop:
+        return laptop(context);
+      case DisplaySize.desktop:
+        return desktop(context);
+      case DisplaySize.projector:
+        return projector(context);
+      case DisplaySize.billboard:
+        return billboard(context);
+      default:
+        return mobile(context);
+    }
+  }
+
+  Widget mobile(BuildContext context);
+
+  Widget tablet(BuildContext context);
+
+  Widget laptop(BuildContext context);
+
+  Widget desktop(BuildContext context);
+
+  Widget projector(BuildContext context);
+
+  Widget billboard(BuildContext context);
+}
+
+/// Layout configuration template of basic application
+///
+/// # Configuration
+///
+/// It is used to configure, constrain and position:
+///    * [AppContainer],
+///
+/// # [AppContainer]
+///    * [AppHeader]
+///    * [AppBody],
+///    * [AppFooter]
+///
+/// # [AppHeader]
+///    * [MainMenuButton]
+///
+/// ## [AppBody]
+///    * [ItemCard]
+///    * [ItemDocument]
+///
+/// ## [AppFooter]
+abstract class ResponsiveLayout extends ResponsiveWidget {
+  final AppContainer appContainer;
+  final AppHeader appHeader;
+  final AppFooter appFooter;
+  final AppBody appBody;
+  final ItemCard itemCard;
+  final ItemDocument itemDocument;
+
+  const ResponsiveLayout({
+    super.key,
+    required super.displaySize,
+    required this.appContainer,
+    required this.appHeader,
+    required this.appFooter,
+    required this.appBody,
+    required this.itemCard,
+    required this.itemDocument,
+  });
+}
+
+/// # Small devices of size class [DisplaySize.mobile]
 ///
 /// ## How it used?
 /// It is used to configure, constrain and position [AppBody], [MainMenuButton]
@@ -32,89 +178,65 @@ import 'package:flutter/material.dart';
 /// #### [ItemDocument] configuration
 /// [ItemDocument] is [ItemCard] full screen view and in small devices
 /// ([AppBody.itemCardinality] == 1) it is implemented as scrollable list of [ItemCardField]s.
-class SmallDeviceLayout {
-  final DisplaySize displaySize;
-  final AppContainer appContainer;
-  final AppHeader appHeader;
-  final AppFooter appFooter;
-  final AppBody appBody;
-  final ItemCard itemCard;
-  final ItemDocument itemDocument;
-
+class SmallDeviceLayout extends ResponsiveLayout {
   const SmallDeviceLayout({
-    required this.displaySize,
-    required this.appContainer,
-    required this.appHeader,
-    required this.appFooter,
-    required this.appBody,
-    required this.itemCard,
-    required this.itemDocument,
+    super.key,
+    required super.displaySize,
+    required super.appContainer,
+    required super.appHeader,
+    required super.appFooter,
+    required super.appBody,
+    required super.itemCard,
+    required super.itemDocument,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appHeader.appBar,
+      body: appContainer.build(context),
+      floatingActionButton: appContainer.mainMenuButton,
+      floatingActionButtonLocation: appContainer.mainMenuButtonPosition,
+      bottomNavigationBar: appFooter.build(context),
+    );
+  }
+
+  @override
+  Widget billboard(BuildContext context) {
+    // TODO: implement billboard
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget desktop(BuildContext context) {
+    // TODO: implement desktop
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget laptop(BuildContext context) {
+    // TODO: implement laptop
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget mobile(BuildContext context) {
+    // TODO: implement mobile
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget projector(BuildContext context) {
+    // TODO: implement projector
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget tablet(BuildContext context) {
+    // TODO: implement tablet
+    throw UnimplementedError();
+  }
 }
-
-enum DisplaySize { small, medium, large }
-
-enum DeviceType { iot, mobile, tablet, laptop, desktop, projector }
-
-enum DefaultIoTWidth {
-  icon(45),
-  label(45),
-  input(100),
-  button(100),
-  container(400),
-  split(400),
-  body(400),
-  itemCard(375),
-  itemCardField(150),
-  itemDocument(400),
-  itemDocumentField(150);
-
-  final double value;
-  final DeviceType deviceType = DeviceType.iot;
-
-  const DefaultIoTWidth(
-    this.value,
-  );
-}
-
-enum DefaultMobileWidth {
-  icon(45),
-  label(45),
-  input(100),
-  button(100),
-  container(400),
-  split(400),
-  body(400),
-  itemCard(375),
-  itemCardField(150),
-  itemDocument(400),
-  itemDocumentField(150);
-
-  final double value;
-  final DeviceType deviceType = DeviceType.mobile;
-
-  const DefaultMobileWidth(this.value);
-}
-
-enum DefaultTabletWidth {
-  icon(45),
-  label(45),
-  input(100),
-  button(100),
-  container(400),
-  split(400),
-  body(400),
-  itemCard(375),
-  itemCardField(150),
-  itemDocument(400),
-  itemDocumentField(150);
-
-  final double value;
-
-  const DefaultTabletWidth(this.value);
-}
-
-enum Direction { horizontal, vertical }
 
 enum LayoutType {
   icon,
@@ -236,26 +358,18 @@ class LayoutConstraints {
   }
 }
 
-enum Position { upperLeft, upperRight, lowerLeft, lowerRight }
+class AppHeader {
+  final AppBar appBar;
 
-class AppHeader {}
+  const AppHeader({
+    required this.appBar,
+  });
+}
 
 class AppBody {
   final int itemCardinality = 1;
 }
 
-class AppFooter {
-  Widget? leftThumb;
-  Widget? rightThumb;
-}
-
-class ItemCard {}
-
-class ItemCardField {}
-
-class ItemSummary {}
-
-/// Data for adaptive Material 3 condensed info widget with notification Badge on top right corner
 class ItemHeaderSummary {
   final String label;
   final String? subtitle;
@@ -270,11 +384,27 @@ class ItemHeaderSummary {
   });
 }
 
+/// Media breakpoints mapped
+
 class ItemDocument {}
 
-class AppContainer {}
-
-/// Media breakpoints mapped
-enum MediaBreakPoints {
-  
+class AppContainer {
+  build(BuildContext context) {
+    return Column(children: [
+      Expanded(
+        child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            return Text('$index');
+          },
+        ),
+      ),
+    ]);
+  }
 }
+
+class ItemCard {}
+
+class ItemCardField {}
+
+class ItemSummary {}

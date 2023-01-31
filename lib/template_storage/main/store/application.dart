@@ -155,13 +155,6 @@ enum DisplayResolution {
   final double max;
 }
 
-enum DeviceType {
-  mobile,
-  tablet,
-  laptop,
-  desktop,
-}
-
 /// Classification based on actual screen size in inches to be inhered from enviroment available data of running Flutter context
 enum PhysicalViewPortSize {
   /// 0.0 - 5.0 inches, IoT displays various capabilities, mono, color, touch,
@@ -336,4 +329,62 @@ class ContainerLayout {
         maxHeight = currentLayoutAndUIConstraints.physicalViewPortSize.max;
 }
 
-//
+enum DeviceType { iot, mobile, tablet, laptop, desktop, projector }
+
+enum DefaultIoTWidth {
+  icon(45),
+  label(45),
+  input(100),
+  button(100),
+  container(400),
+  split(400),
+  body(400),
+  itemCard(375),
+  itemCardField(150),
+  itemDocument(400),
+  itemDocumentField(150);
+
+  final double value;
+  final DeviceType deviceType = DeviceType.iot;
+
+  const DefaultIoTWidth(
+    this.value,
+  );
+}
+
+enum DefaultMobileWidth {
+  icon(45),
+  label(45),
+  input(100),
+  button(100),
+  container(400),
+  split(400),
+  body(400),
+  itemCard(375),
+  itemCardField(150),
+  itemDocument(400),
+  itemDocumentField(150);
+
+  final double value;
+  final DeviceType deviceType = DeviceType.mobile;
+
+  const DefaultMobileWidth(this.value);
+}
+
+enum DefaultTabletWidth {
+  icon(45),
+  label(45),
+  input(100),
+  button(100),
+  container(400),
+  split(400),
+  body(400),
+  itemCard(375),
+  itemCardField(150),
+  itemDocument(400),
+  itemDocumentField(150);
+
+  final double value;
+
+  const DefaultTabletWidth(this.value);
+}
