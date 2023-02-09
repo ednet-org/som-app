@@ -7,6 +7,18 @@ enum Direction { horizontal, vertical }
 class AppFooter {
   Widget? leftThumb;
   Widget? rightThumb;
+
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      child: Row(
+        children: [
+          if (leftThumb != null) leftThumb!,
+          if (rightThumb != null) rightThumb!,
+        ],
+      ),
+    );
+  }
 }
 
 enum DisplaySize {
@@ -389,6 +401,15 @@ class ItemHeaderSummary {
 class ItemDocument {}
 
 class AppContainer {
+  final Widget mainMenuButton;
+
+  final FloatingActionButtonLocation? mainMenuButtonPosition;
+
+  const AppContainer({
+    required this.mainMenuButton,
+    required this.mainMenuButtonPosition,
+  });
+
   build(BuildContext context) {
     return Column(children: [
       Expanded(
