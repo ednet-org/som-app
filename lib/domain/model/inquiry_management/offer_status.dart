@@ -5,9 +5,8 @@ enum OfferStatus {
   rejected,
   static;
 
-  OfferStatus fromJson(String value) {
-    return OfferStatus.values
-        .firstWhere((e) => e.name == value.toLowerCase());
+  static OfferStatus fromJson(String value) {
+    return OfferStatus.values.firstWhere((e) => e.name == value.toLowerCase());
   }
 
   String toJson() {

@@ -11,3 +11,4 @@ enum UserRoleAtCompany {
     return toString().split('.').last;
   }
 }
+

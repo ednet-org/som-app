@@ -2,14 +2,13 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import 'attachment.dart';
-import 'inquiry.dart';
 import 'offer_status.dart';
-import 'user.dart';
+import 'provider.dart';
 
-/// [Offer] is [Provider] business response to the [Inquiry]
+/// [Offer] is [Provider] business response to the [String]
 class Offer {
   final String id;
-  final Inquiry inquiry;
+  final String inquiryId;
 
   final Provider provider;
   final String? description;
@@ -23,7 +22,7 @@ class Offer {
 
   const Offer({
     required this.id,
-    required this.inquiry,
+    required this.inquiryId,
     required this.provider,
     required this.price,
     required this.deliveryTime,
@@ -39,16 +38,17 @@ class Offer {
 
     return Offer(
       id: json['id'] ?? uuid.v4(),
-      inquiry: Inquiry.fromJson(json['inquiry']),
+      inquiryId: json['inquiryId'],
       provider: Provider.fromJson(json['provider']),
       price: json['price'],
       deliveryTime: json['deliveryTime'],
-      attachments: json['attachments'] != null
-          ? (json['attachments'] as List)
-              .map((attachment) => Attachment.fromJson(attachment))
-              .toList()
-          : [],
-      status: json['status'] as OfferStatus,
+      // attachments: json['attachments'] != null
+      //     ? (json['attachments'] as List)
+      //         .map((attachment) => Attachment.fromJson(attachment))
+      //         .toList()
+      //     : [],
+      attachments: [],
+      status: OfferStatus.fromJson(json['status']),
       expirationDate: DateFormat(dateFormat).parse(json['expirationDate']),
       description: json['description'],
     );
@@ -57,7 +57,7 @@ class Offer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'inquiry': inquiry.toJson(),
+      'inquiryId': inquiryId,
       'provider': provider.toJson(),
       'price': price,
       'deliveryTime': deliveryTime,
@@ -71,7 +71,7 @@ class Offer {
 
   Offer copyWith({
     String? id,
-    Inquiry? inquiry,
+    String? inquiryId,
     Provider? provider,
     double? price,
     String? deliveryTime,
@@ -82,7 +82,7 @@ class Offer {
   }) {
     return Offer(
       id: id ?? this.id,
-      inquiry: inquiry ?? this.inquiry,
+      inquiryId: inquiryId ?? this.inquiryId,
       provider: provider ?? this.provider,
       price: price ?? this.price,
       deliveryTime: deliveryTime ?? this.deliveryTime,

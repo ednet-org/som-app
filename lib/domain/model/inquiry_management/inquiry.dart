@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
+import 'package:som/domain/model/inquiry_management/email.dart';
 import 'package:uuid/uuid.dart';
 
 import 'attachment.dart';
 import 'inquiry_status.dart';
 import 'offer.dart';
+import 'phone_number.dart';
 import 'provider_criteria.dart';
 import 'user.dart';
 
@@ -55,14 +57,15 @@ class Inquiry {
       branch: json['branch'],
       publishingDate: DateFormat(dateFormat).parse(json['publishingDate']),
       expirationDate: DateFormat(dateFormat).parse(json['expirationDate']),
-      buyer: User.fromJson(json['user']),
+      buyer: User.fromJson(json['buyer']),
       deliveryLocation: json['deliveryLocation'],
-      providerCriteria: ProviderCriteria.fromJson(json['provider']),
-      attachments: json['attachments'] != null
-          ? jsonDecode(json['attachments'])
-              .map<Attachment>((e) => Attachment.fromJson(e))
-              .toList()
-          : [],
+      providerCriteria: ProviderCriteria.fromJson(json['providerCriteria']),
+      attachments: [],
+      // attachments: json['attachments'] != null
+      //     ? jsonDecode(json['attachments'])
+      //         .map<Attachment>((e) => Attachment.fromJson(e))
+      //         .toList()
+      //     : [],
       status: InquiryStatus.fromJson(json['status']),
       offers: json['offers'] != null && json['offers'].isNotEmpty
           ? jsonDecode(json['offers'])

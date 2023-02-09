@@ -26,11 +26,11 @@ class InquiryCard extends StatelessWidget {
         surfaceTintColor: status["front"],
         elevation: 5,
         child: Container(
-            constraints: BoxConstraints(
-              maxWidth: layout.constraints.containerLayout.maxWidth,
-              maxHeight: layout.constraints.containerLayout.maxHeight,
-              minWidth: layout.constraints.containerLayout.minWidth,
-              minHeight: layout.constraints.containerLayout.minHeight,
+            constraints: const BoxConstraints(
+              maxWidth: 450, // layout.constraints.containerLayout.maxWidth,
+              maxHeight: 500, //layout.constraints.containerLayout.maxHeight,
+              minWidth: 350, //layout.constraints.containerLayout.minWidth,
+              minHeight: 350, //layout.constraints.containerLayout.minHeight,
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
