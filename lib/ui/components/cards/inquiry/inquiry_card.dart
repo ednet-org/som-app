@@ -43,10 +43,11 @@ class InquiryCard extends StatelessWidget {
                   Row(
                     children: [
                       InquiryCardTitle(inquiry: inquiry),
-                      const SizedBox(
-                        width: 10,
+                      Expanded(
+                        child: InquiryCardStatus(
+                          inquiry: inquiry,
+                        ),
                       ),
-                      InquiryCardStatus(inquiry: inquiry),
                     ],
                   ),
                   const InquiryCardDivider(),

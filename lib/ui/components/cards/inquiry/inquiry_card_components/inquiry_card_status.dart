@@ -12,26 +12,25 @@ class InquiryCardStatus extends StatelessWidget {
     Color backgroundColor = Colors.black;
     switch (inquiry.status) {
       case InquiryStatus.draft:
-        backgroundColor = Colors.green;
+        backgroundColor = Colors.grey;
         break;
       case InquiryStatus.published:
-        backgroundColor = Colors.red;
+        backgroundColor = Colors.orange;
         break;
       case InquiryStatus.responded:
-        backgroundColor = Colors.yellow;
-        break;
-      case InquiryStatus.expired:
         backgroundColor = Colors.blue;
         break;
+      case InquiryStatus.expired:
+        backgroundColor = Colors.red;
+        break;
       case InquiryStatus.closed:
-        backgroundColor = Colors.purple;
+        backgroundColor = Colors.green;
         break;
     }
     return Badge(
       label: Text(inquiry.status.toString().split('.').last),
-      textStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: Colors.white,
-          ),
+      textStyle: Theme.of(context).textTheme.labelSmall,
+      textColor: Colors.white,
       backgroundColor: backgroundColor,
     );
   }
