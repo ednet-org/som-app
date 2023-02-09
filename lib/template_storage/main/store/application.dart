@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:som/domain/model/customer_management/roles.dart';
@@ -90,7 +91,7 @@ enum UserRoles {
   admin,
 }
 
-enum UIDensity {
+enum UIDensityFromBoxConstraints {
   /// 0.0 - 1.0 density, low density, e.g. LDPI
   upToLDPI(0.0, 1.0),
 
@@ -109,7 +110,7 @@ enum UIDensity {
   /// 4.0 - 5.0 density, high density, e.g. XXXHDPI
   upToXXXHDPI(4.0, 5.0);
 
-  const UIDensity(this.min, this.max);
+  const UIDensityFromBoxConstraints(this.min, this.max);
 
   final double min;
   final double max;
@@ -149,10 +150,10 @@ enum DisplayResolution {
   /// 7680.0 - 15360.0 pixels, high resolution, e.g. 16K
   upTo16K(7680.0, 15360.0);
 
-  const DisplayResolution(this.min, this.max);
+  const DisplayResolution(this.minWidth, this.maxWidth);
 
-  final double min;
-  final double max;
+  final double minWidth;
+  final double maxWidth;
 }
 
 /// Classification based on actual screen size in inches to be inhered from enviroment available data of running Flutter context
@@ -195,7 +196,7 @@ enum PhysicalViewPortSize {
 ///  - [PhysicalViewPortSize],
 ///  - [DeviceType],
 ///  - [DisplayResolution],
-///  - [UIDensity] and
+///  - [UIDensityFromBoxConstraints] and
 ///  - [UIScale] and provide a Layout object to the UI
 ///  to know max and min constraints for single UI patterns like:
 ///  - how much splits main container should support for parallel display of full fledged Documents (up to 1080p pro full document)
@@ -207,76 +208,44 @@ class CurrentLayoutAndUIConstraints {
   final PhysicalViewPortSize physicalViewPortSize;
   final DeviceType deviceType;
   final DisplayResolution displayResolution;
-  final UIDensity uiDensity;
+  final UIDensityFromBoxConstraints uiDensity;
 
-  const CurrentLayoutAndUIConstraints(
-      {required this.physicalViewPortSize,
-      required this.deviceType,
-      required this.displayResolution,
-      required this.uiDensity});
+  final DeviceOrientation deviceOrientation;
+
+  const CurrentLayoutAndUIConstraints({
+    required this.physicalViewPortSize,
+    required this.deviceType,
+    required this.displayResolution,
+    required this.uiDensity,
+    required this.deviceOrientation,
+  });
 
   factory CurrentLayoutAndUIConstraints.fromBoxConstraints(
       BoxConstraints constraints) {
-    var physicalViewPortSize = PhysicalViewPortSize.small;
-    var deviceType = DeviceType.mobile;
-    var displayResolution = DisplayResolution.upTo1080p;
-    var uiDensity = UIDensity.upToXXHDPI;
-
-    /// How to get from Flutter environment physicalViewPortSize?
-
-    // deviceType
-    if (constraints.maxWidth < 500.0) {
-      deviceType = DeviceType.mobile;
-    } else if (constraints.maxWidth < 1000.0) {
-      deviceType = DeviceType.tablet;
-    } else if (constraints.maxWidth < 1500.0) {
-      deviceType = DeviceType.laptop;
-    } else {
-      deviceType = DeviceType.desktop;
-    }
-
-    // displayResolution
-    if (constraints.maxWidth < DisplayResolution.upTo240p.max) {
-      displayResolution = DisplayResolution.upTo240p;
-    } else if (constraints.maxWidth < DisplayResolution.upTo360p.max) {
-      displayResolution = DisplayResolution.upTo360p;
-    } else if (constraints.maxWidth < DisplayResolution.upTo480p.max) {
-      displayResolution = DisplayResolution.upTo480p;
-    } else if (constraints.maxWidth < DisplayResolution.upTo720p.max) {
-      displayResolution = DisplayResolution.upTo720p;
-    } else if (constraints.maxWidth < DisplayResolution.upTo1080p.max) {
-      displayResolution = DisplayResolution.upTo1080p;
-    } else if (constraints.maxWidth < DisplayResolution.upTo2K.max) {
-      displayResolution = DisplayResolution.upTo2K;
-    } else if (constraints.maxWidth < DisplayResolution.upTo4K.max) {
-      displayResolution = DisplayResolution.upTo4K;
-    } else if (constraints.maxWidth < DisplayResolution.upTo8K.max) {
-      displayResolution = DisplayResolution.upTo8K;
-    } else {
-      displayResolution = DisplayResolution.upTo8K;
-    }
-
-    // uiDensity
-    if (constraints.maxWidth < UIDensity.upToLDPI.max) {
-      uiDensity = UIDensity.upToLDPI;
-    } else if (constraints.maxWidth < UIDensity.upToMDPI.max) {
-      uiDensity = UIDensity.upToMDPI;
-    } else if (constraints.maxWidth < UIDensity.upToHDPI.max) {
-      uiDensity = UIDensity.upToHDPI;
-    } else if (constraints.maxWidth < UIDensity.upToXHDPI.max) {
-      uiDensity = UIDensity.upToXHDPI;
-    } else if (constraints.maxWidth < UIDensity.upToXXHDPI.max) {
-      uiDensity = UIDensity.upToXXHDPI;
-    } else {
-      uiDensity = UIDensity.upToXXXHDPI;
-    }
-
     return CurrentLayoutAndUIConstraints(
-      physicalViewPortSize: physicalViewPortSize,
-      deviceType: deviceType,
-      displayResolution: displayResolution,
-      uiDensity: uiDensity,
+      physicalViewPortSize: _getPhysicalViewPortSize(constraints),
+      deviceType: _getDeviceType(constraints),
+      displayResolution: _getDisplayResolution(constraints),
+      uiDensity: _getUIDensity(constraints),
+      deviceOrientation: _getDeviceOrientation(constraints),
     );
+  }
+
+  static PhysicalViewPortSize _getPhysicalViewPortSize(
+      BoxConstraints constraints) {
+    if (constraints.maxWidth < PhysicalViewPortSize.small.max) {
+      return PhysicalViewPortSize.small;
+    } else if (constraints.maxWidth < PhysicalViewPortSize.medium.max) {
+      return PhysicalViewPortSize.medium;
+    } else if (constraints.maxWidth < PhysicalViewPortSize.large.max) {
+      return PhysicalViewPortSize.large;
+    } else if (constraints.maxWidth < PhysicalViewPortSize.xlarge.max) {
+      return PhysicalViewPortSize.xlarge;
+    } else if (constraints.maxWidth < PhysicalViewPortSize.smallProjector.max) {
+      return PhysicalViewPortSize.smallProjector;
+    } else {
+      return PhysicalViewPortSize.smallProjector;
+    }
   }
 
   /// Based on [CurrentLayoutAndUIConstraints] we provide a Layout object to the UI
@@ -293,6 +262,73 @@ class CurrentLayoutAndUIConstraints {
       uiDensity: uiDensity,
     );
   }
+
+  static _getDeviceType(BoxConstraints constraints) {
+    /// How to get from Flutter environment deviceType?
+    if (constraints.maxWidth < 500.0) {
+      return DeviceType.mobile;
+    } else if (constraints.maxWidth < 1000.0) {
+      return DeviceType.tablet;
+    } else if (constraints.maxWidth < 1500.0) {
+      return DeviceType.laptop;
+    } else {
+      return DeviceType.desktop;
+    }
+  }
+
+  static _getDisplayResolution(BoxConstraints constraints) {
+    if (constraints.maxWidth < DisplayResolution.upTo240p.maxWidth) {
+      return DisplayResolution.upTo240p;
+    } else if (constraints.maxWidth < DisplayResolution.upTo360p.maxWidth) {
+      return DisplayResolution.upTo360p;
+    } else if (constraints.maxWidth < DisplayResolution.upTo480p.maxWidth) {
+      return DisplayResolution.upTo480p;
+    } else if (constraints.maxWidth < DisplayResolution.upTo720p.maxWidth) {
+      return DisplayResolution.upTo720p;
+    } else if (constraints.maxWidth < DisplayResolution.upTo1080p.maxWidth) {
+      return DisplayResolution.upTo1080p;
+    } else if (constraints.maxWidth < DisplayResolution.upTo2K.maxWidth) {
+      return DisplayResolution.upTo2K;
+    } else if (constraints.maxWidth < DisplayResolution.upTo4K.maxWidth) {
+      return DisplayResolution.upTo4K;
+    } else if (constraints.maxWidth < DisplayResolution.upTo8K.maxWidth) {
+      return DisplayResolution.upTo8K;
+    } else {
+      return DisplayResolution.upTo8K;
+    }
+  }
+
+  // TODO: not good, just WIP
+  static _getUIDensity(BoxConstraints constraints) {
+    if (constraints.maxWidth < UIDensityFromBoxConstraints.upToLDPI.max) {
+      return UIDensityFromBoxConstraints.upToLDPI;
+    } else if (constraints.maxWidth <
+        UIDensityFromBoxConstraints.upToMDPI.max) {
+      return UIDensityFromBoxConstraints.upToMDPI;
+    } else if (constraints.maxWidth <
+        UIDensityFromBoxConstraints.upToHDPI.max) {
+      return UIDensityFromBoxConstraints.upToHDPI;
+    } else if (constraints.maxWidth <
+        UIDensityFromBoxConstraints.upToXHDPI.max) {
+      return UIDensityFromBoxConstraints.upToXHDPI;
+    } else if (constraints.maxWidth <
+        UIDensityFromBoxConstraints.upToXXHDPI.max) {
+      return UIDensityFromBoxConstraints.upToXXHDPI;
+    } else if (constraints.maxWidth <
+        UIDensityFromBoxConstraints.upToXXXHDPI.max) {
+      return UIDensityFromBoxConstraints.upToXXXHDPI;
+    } else {
+      return UIDensityFromBoxConstraints.upToXXXHDPI;
+    }
+  }
+
+  static _getDeviceOrientation(BoxConstraints constraints) {
+    if (constraints.maxHeight > constraints.maxWidth) {
+      return DeviceOrientation.portraitUp;
+    } else {
+      return DeviceOrientation.landscapeLeft;
+    }
+  }
 }
 
 class Layout {
@@ -302,14 +338,10 @@ class Layout {
     required PhysicalViewPortSize physicalViewPortSize,
     required DeviceType deviceType,
     required DisplayResolution displayResolution,
-    required UIDensity uiDensity,
+    required UIDensityFromBoxConstraints uiDensity,
   }) : containerLayout = ContainerLayout(
-          CurrentLayoutAndUIConstraints(
-            physicalViewPortSize: physicalViewPortSize,
-            deviceType: deviceType,
-            displayResolution: displayResolution,
-            uiDensity: uiDensity,
-          ),
+          CurrentLayoutAndUIConstraints.fromBoxConstraints(
+              const BoxConstraints()),
         );
 }
 
@@ -323,10 +355,10 @@ class ContainerLayout {
 
   /// default constructor for absent constraints, based on mobile defaults
   ContainerLayout(this.currentLayoutAndUIConstraints)
-      : minWidth = currentLayoutAndUIConstraints.displayResolution.min,
-        maxWidth = currentLayoutAndUIConstraints.displayResolution.max,
-        minHeight = currentLayoutAndUIConstraints.displayResolution.min,
-        maxHeight = currentLayoutAndUIConstraints.physicalViewPortSize.max;
+      : minWidth = currentLayoutAndUIConstraints.displayResolution.minWidth,
+        maxWidth = currentLayoutAndUIConstraints.displayResolution.maxWidth,
+        minHeight = currentLayoutAndUIConstraints.displayResolution.minWidth,
+        maxHeight = currentLayoutAndUIConstraints.displayResolution.maxWidth;
 }
 
 enum DeviceType { iot, mobile, tablet, laptop, desktop, projector }
