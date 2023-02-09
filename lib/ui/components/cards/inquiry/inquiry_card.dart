@@ -22,9 +22,13 @@ class InquiryCard extends StatelessWidget {
     final CurrentLayoutAndUIConstraints layout = appStore.layout;
     return Center(
       child: Card(
-        color: status["back"],
-        surfaceTintColor: status["front"],
-        elevation: 5,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
         child: Container(
             constraints: const BoxConstraints(
               maxWidth: 450, // layout.constraints.containerLayout.maxWidth,
@@ -38,11 +42,11 @@ class InquiryCard extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      InquiryCardStatus(inquiry: inquiry),
+                      InquiryCardTitle(inquiry: inquiry),
                       const SizedBox(
                         width: 10,
                       ),
-                      InquiryCardTitle(inquiry: inquiry),
+                      InquiryCardStatus(inquiry: inquiry),
                     ],
                   ),
                   const InquiryCardDivider(),
