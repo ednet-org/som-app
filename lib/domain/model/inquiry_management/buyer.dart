@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 import 'company.dart';
-import 'company_role.dart';
+import 'enums/company_role.dart';
 import 'email.dart';
 import 'phone_number.dart';
 import 'user.dart';

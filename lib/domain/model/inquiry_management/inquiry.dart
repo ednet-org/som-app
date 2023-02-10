@@ -5,7 +5,7 @@ import 'package:som/domain/model/inquiry_management/email.dart';
 import 'package:uuid/uuid.dart';
 
 import 'attachment.dart';
-import 'inquiry_status.dart';
+import 'enums/inquiry_status.dart';
 import 'offer.dart';
 import 'phone_number.dart';
 import 'provider_criteria.dart';

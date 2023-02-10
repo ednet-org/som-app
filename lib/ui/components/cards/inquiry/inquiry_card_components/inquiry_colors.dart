@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
+import 'package:som/domain/model/inquiry_management/enums/inquiry_status.dart';
 
 class InquiryColors {
   static Map<String, Color> inquiryStatusColor(context, status) {

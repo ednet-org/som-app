@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import 'attachment.dart';
-import 'offer_status.dart';
+import 'enums/offer_status.dart';
 import 'provider.dart';
 
 /// [Offer] is [Provider] business response to the [String]

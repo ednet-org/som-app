@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
 
-import 'company_role.dart';
+import 'enums/company_role.dart';
 
 class Company {
   final String id;

@@ -1,5 +1,5 @@
-import 'company_size.dart';
-import 'company_type.dart';
+import 'enums/company_size.dart';
+import 'enums/company_type.dart';
 
 class ProviderCriteria {
   final String deliveryLocation;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
 import 'package:som/domain/model/inquiry_management/offer.dart';
-import 'package:som/domain/model/inquiry_management/offer_status.dart';
 import 'package:som/domain/model/inquiry_management/test/mock.dart';
 import 'package:som/ui/components/layout/app_body.dart';
 

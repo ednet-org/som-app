@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry.dart';
-import 'package:som/domain/model/inquiry_management/inquiry_status.dart';
+import 'package:som/domain/model/inquiry_management/enums/inquiry_status.dart';
 
 class InquiryCardStatus extends StatelessWidget {
   final Inquiry inquiry;
