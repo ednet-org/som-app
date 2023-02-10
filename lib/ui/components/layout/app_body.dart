@@ -4,12 +4,10 @@ import 'package:som/ui/components/layout/expanded_body_container.dart';
 import 'package:som/ui/components/layout/spaced_container.dart';
 
 class AppBody extends StatelessWidget {
-  final contextMenu;
-
-  final leftSplit;
-  final rightSplit;
-
-  final body;
+  final Widget? contextMenu;
+  final Widget? leftSplit;
+  final Widget? rightSplit;
+  final Widget? body;
 
   const AppBody({
     super.key,

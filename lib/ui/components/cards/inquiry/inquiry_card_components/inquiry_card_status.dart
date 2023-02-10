@@ -10,7 +10,7 @@ class InquiryCardStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = Colors.black;
-    switch (inquiry.status) {
+    switch (inquiry.status.value) {
       case InquiryStatus.draft:
         backgroundColor = Colors.grey;
         break;

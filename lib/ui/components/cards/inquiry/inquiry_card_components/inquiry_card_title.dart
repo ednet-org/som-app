@@ -12,7 +12,7 @@ class InquiryCardTitle extends StatelessWidget {
     return SizedBox(
       width: 295,
       child: Text(
-        inquiry.title,
+        inquiry.title.value ?? '',
         maxLines: 4,
         style: theme.textTheme.titleSmall,
       ),

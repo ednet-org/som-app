@@ -10,9 +10,11 @@ class InquiryCardDescription<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return Text(inquiry.description,
-        maxLines: 10,
-        style: theme.textTheme.bodyMedium,
-        overflow: TextOverflow.ellipsis);
+    return Text(
+      inquiry.description.value ?? '',
+      maxLines: 10,
+      style: theme.textTheme.bodyMedium,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 }
