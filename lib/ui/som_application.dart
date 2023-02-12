@@ -6,7 +6,7 @@ import 'package:som/ui/utils/AppWidget.dart';
 
 import 'components/low/app_bar/app_bar_button.dart';
 import 'components/low/layout/app_body.dart';
-import 'domain/application/application.dart';
+import 'domain/app_config/application.dart';
 import 'routes/authenticated_pages_delegate.dart';
 import 'routes/beamer_provided_key.dart';
 import 'routes/locations/auth/auth_login_page_location.dart';
