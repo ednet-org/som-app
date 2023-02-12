@@ -63,7 +63,7 @@ class ExpandedBodyContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      const Text('DEBUG'),
+                      const Text('Filters'),
                       expandedBodyMenu,
                     ],
                   ),
