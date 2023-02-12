@@ -66,7 +66,7 @@ class EntityFilter<T extends IFilter> extends StatelessWidget {
   SomTextInput renderInput() {
     return SomTextInput(
       key: key,
-      label: filter.toString(),
+      label: filter.name,
       onChanged: (value) {
         print(value);
       },
