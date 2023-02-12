@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'entity_filter.dart';
-import '../core/filter.dart';
 import '../core/i_filter.dart';
 
-class EntityFilters<T> extends StatelessWidget {
+class EntityFilters<F, T> extends StatelessWidget {
   final List<IFilter> filters;
   final List<Sort> sorts;
+
+  final List<T> items;
 
   const EntityFilters({
     super.key,
     required this.filters,
     this.sorts = const [],
+    required this.items,
   });
+
+  onFilterChange(IFilter filter) {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,10 @@ class EntityFilters<T> extends StatelessWidget {
             child: ListView.builder(
               itemCount: filters.length,
               itemBuilder: (context, index) {
-                return EntityFilter<IFilter>(filters[index]);
+                return EntityFilter(
+                  filters[index],
+                  onChanged: onFilterChange,
+                );
               },
             ),
           ),

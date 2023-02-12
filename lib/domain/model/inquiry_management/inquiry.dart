@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,6 +7,10 @@ import 'enums/inquiry_status.dart';
 import 'offer.dart';
 import 'provider_criteria.dart';
 import 'user.dart';
+
+const uuid = Uuid();
+
+
 
 /// [Inquiry] is a [Buyer] business request to the [Provider]
 class Inquiry {
@@ -28,8 +30,8 @@ class Inquiry {
 
   final Arr<InquiryStatus> status;
 
-  const Inquiry({
-    required this.id,
+  Inquiry({
+    id,
     required this.title,
     required this.description,
     required this.category,
@@ -42,7 +44,7 @@ class Inquiry {
     required this.attachments,
     required this.status,
     required this.offers,
-  });
+  }) : id = id ?? Arr<String>(name: 'id', value: uuid.v4());
 
   static Inquiry fromJson(Map<String, dynamic> json) {
     const dateFormat = 'dd.MM.yyyy';
@@ -101,20 +103,21 @@ class Inquiry {
     };
   }
 
-  Inquiry copyWith(
-      {Arr<String>? id,
-      Arr<String>? title,
-      Arr<String>? description,
-      Arr<String>? category,
-      Arr<String>? branch,
-      Arr<DateTime>? publishingDate,
-      Arr<DateTime>? expirationDate,
-      Arr<User>? buyer,
-      Arr<String>? deliveryLocation,
-      Arr<ProviderCriteria>? providerCriteria,
-      Arr<List<Attachment>>? attachments,
-      Arr<InquiryStatus>? status,
-      Arr<List<Offer>>? offers}) {
+  Inquiry copyWith({
+    Arr<String>? id,
+    Arr<String>? title,
+    Arr<String>? description,
+    Arr<String>? category,
+    Arr<String>? branch,
+    Arr<DateTime>? publishingDate,
+    Arr<DateTime>? expirationDate,
+    Arr<User>? buyer,
+    Arr<String>? deliveryLocation,
+    Arr<ProviderCriteria>? providerCriteria,
+    Arr<List<Attachment>>? attachments,
+    Arr<InquiryStatus>? status,
+    Arr<List<Offer>>? offers,
+  }) {
     return Inquiry(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -130,5 +133,24 @@ class Inquiry {
       status: status ?? this.status,
       offers: offers ?? this.offers,
     );
+  }
+
+  // get attributes that can be used in filters
+  List<Arr> getFilterableAttributes() {
+    return [
+      id,
+      title,
+      description,
+      category,
+      branch,
+      publishingDate,
+      expirationDate,
+      buyer,
+      deliveryLocation,
+      providerCriteria,
+      attachments,
+      status,
+      offers,
+    ];
   }
 }

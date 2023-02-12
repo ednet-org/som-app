@@ -6,20 +6,22 @@ import '../core/i_filter.dart';
 
 class EntityFilter<T extends IFilter> extends StatelessWidget {
   final T filter;
+  final onChanged;
 
   const EntityFilter(
     this.filter, {
     super.key,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    getRender();
-
     return SizedBox(
       width: 295,
       child: Column(
-        children: [],
+        children: [
+          getRender(),
+        ],
       ),
     );
   }
@@ -27,66 +29,62 @@ class EntityFilter<T extends IFilter> extends StatelessWidget {
   Widget getRender() {
     switch (filter.mode) {
       case DisplayMode.label:
-        return Text(filter.name.toString());
-
-        break;
+        return renderLabel();
       case DisplayMode.input:
-        return SomTextInput(
-          key: key,
-          label: filter.toString(),
-          onChanged: (value) {
-            print(value);
-          },
-        );
+        return renderInput();
       case DisplayMode.dropdown:
-        return SomDropDown(
-          // key: key,
-          label: filter.toString(),
-          onChanged: (value) {
-            print(value);
-          },
-        );
+        return renderSelect();
       case DisplayMode.checkbox:
-        return Checkbox(
-          value: filter.value as bool,
-          onChanged: (value) {
-            print(value);
-          },
-        );
+        return renderCheckBox();
+      case DisplayMode.list:
+        return renderList();
+      case DisplayMode.grid:
+        return renderGrid();
       default:
-        return Text(filter.name.toString());
-
-      // case DisplayMode.checkbox:
-      //   render = _renderCheckbox();
-      //   break;
-      // case DisplayMode.radio:
-      //   render = _renderRadio();
-      //   break;
-      // case DisplayMode.date:
-      //   render = _renderDate();
-      //   break;
-      // case DisplayMode.dateRange:
-      //   render = _renderDateRange();
-      //   break;
-      // case DisplayMode.time:
-      //   render = _renderTime();
-      //   break;
-      // case DisplayMode.timeRange:
-      //   render = _renderTimeRange();
-      //   break;
-      // case DisplayMode.dateTime:
-      //   render = _renderDateTime();
-      //   break;
-      // case DisplayMode.dateTimeRange:
-      //   render = _renderDateTimeRange();
-      //   break;
-      // case DisplayMode.slider:
-      //   render = _renderSlider();
-      //   break;
-      // case DisplayMode.switch:
-      //   render = _renderSwitch();
-      //   break;
-      //
+        return renderLabel();
     }
+  }
+
+  Checkbox renderCheckBox() {
+    return Checkbox(
+      value: filter.value as bool,
+      onChanged: onChanged,
+    );
+  }
+
+  SomDropDown renderSelect() {
+    return SomDropDown(
+      // key: key,
+      items: filter.allowedValues?.map((a) => a.name).toList(),
+      label: filter.name,
+      onChanged: (value) {
+        print(value);
+      },
+    );
+  }
+
+  SomTextInput renderInput() {
+    return SomTextInput(
+      key: key,
+      label: filter.toString(),
+      onChanged: (value) {
+        print(value);
+      },
+    );
+  }
+
+  // filter string summary
+  Text renderLabel() {
+    return Text(
+      '${filter.name}: ${filter.value}',
+    );
+  }
+
+  Widget renderList() {
+    throw Exception('Not implemented');
+  }
+
+  Widget renderGrid() {
+    throw Exception('Not implemented');
   }
 }
