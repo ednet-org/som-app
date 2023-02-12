@@ -19,16 +19,9 @@ import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_
 import 'package:som/domain/model/customer_management/auth_forgot_password_page_state.dart';
 import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/routes/beamer_provided_key.dart';
-import 'package:som/routes/locations/auth/auth_confirm_email_page_location.dart';
-import 'package:som/routes/locations/auth/auth_forgot_password_page_location.dart';
-import 'package:som/routes/locations/auth/auth_login_page_location.dart';
-import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
-import 'package:som/routes/locations/guest/customer_register_page_location.dart';
-import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
-import 'package:som/routes/locations/splash_page_beam_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/pages/not_found_page.dart';
+import 'package:som/ui/routes/routes.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 import 'template_storage/main/utils/intl/som_localizations.dart';

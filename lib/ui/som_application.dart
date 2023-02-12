@@ -2,14 +2,14 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/routes/authenticated_pages_delegate.dart';
-import 'package:som/routes/beamer_provided_key.dart';
-import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
 import 'components/low/app_bar/app_bar_button.dart';
 import 'components/low/layout/app_body.dart';
+import 'routes/authenticated_pages_delegate.dart';
+import 'routes/beamer_provided_key.dart';
+import 'routes/locations/auth/auth_login_page_location.dart';
 
 class SomApplication extends StatelessWidget {
   static String tag = '/SmartOfferManagement';
