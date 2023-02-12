@@ -23,8 +23,8 @@ import 'package:som/ui/utils/AppConstant.dart';
 
 import 'ui/domain/app_config/application.dart';
 import 'ui/domain/app_config/som_localizations.dart';
-import 'ui/domain/core/model/login/email_login_store.dart';
-import 'ui/domain/core/model/user_account_confirmation/user_account_confirmation.dart';
+import 'ui/domain/login/email_login_store.dart';
+import 'ui/domain/user_account_confirmation/user_account_confirmation.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
