@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:som/domain/model/customer_management/roles.dart';
 
-part '../../../template_storage/main/store/application.g.dart';
+part 'application.g.dart';
 
 class Application = _Application with _$Application;
 
