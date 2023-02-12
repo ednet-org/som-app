@@ -19,12 +19,12 @@ import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_
 import 'package:som/domain/model/customer_management/auth_forgot_password_page_state.dart';
 import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/ui/model/application/application.dart';
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
-import 'ui/model/infrastructure/som_localizations.dart';
+import 'ui/domain/application/application.dart';
+import 'ui/domain/infrastructure/som_localizations.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
