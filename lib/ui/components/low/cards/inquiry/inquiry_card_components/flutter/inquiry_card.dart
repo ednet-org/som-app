@@ -77,16 +77,6 @@ class InquiryCard extends StatelessWidget {
       ),
     );
   }
-
-  ///     return const Center(
-//       child: Card(
-//         elevation: 5,
-//         child: SizedBox(
-//           width: 400,
-//           height: 375,
-//         ),
-//       ),
-//     );
 }
 
 class InquiryBranch extends StatelessWidget {
