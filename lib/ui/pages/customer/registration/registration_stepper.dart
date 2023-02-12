@@ -5,8 +5,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer_management/payment-interval.dart';
 import 'package:som/domain/model/customer_management/registration_request.dart';
-import 'package:som/ui/pages/customer/registration/FormSectionHeader.dart';
-import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
+import 'package:som/ui/pages/customer/registration/form_section_header.dart';
+import 'package:som/ui/pages/customer/registration/subscription_selector.dart';
 
 import '../../../components/low/buttons/action_button.dart';
 import '../../../components/low/forms/countries.dart';
@@ -15,7 +15,7 @@ import '../../../components/low/forms/som_tags.dart';
 import '../../../components/low/forms/som_text_input.dart';
 import '../../../domain/app_config/application.dart';
 import '../../../routes/routes.dart';
-import 'RoleSelection.dart';
+import 'role_selection.dart';
 
 class RegistrationStepper extends StatefulWidget {
   const RegistrationStepper({Key? key}) : super(key: key);

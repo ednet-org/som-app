@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:som/ui/components/high/funny_logo.dart';
-import 'package:som/ui/pages/customer/registration/RegistrationStepper.dart';
+import 'package:som/ui/pages/customer/registration/registration_stepper.dart';
 
-import '../../components/low/layout/MainBody.dart';
+import '../../components/low/layout/main_body.dart';
 
 class CustomerRegisterPage extends StatefulWidget {
   static String tag = '/CustomerRegistrationPage';

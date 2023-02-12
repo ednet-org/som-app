@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../domain/model/shared/som.dart';
 import '../domain/app_config/application.dart';
 import '../routes/routes.dart';
-import '../utils/AppConstant.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
@@ -27,8 +26,6 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void navigationPage() async {
-    setValue(appOpenCount, (getIntAsync(appOpenCount)) + 1);
-
     if (!await isNetworkAvailable()) {
       toastLong(errorInternetNotAvailable);
     }

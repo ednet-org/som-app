@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/utils/AppWidget.dart';
 
 class MainBody extends StatelessWidget {
   final child;
@@ -13,7 +12,7 @@ class MainBody extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 50),
           child: SizedBox(
-            width: dynamicWidth(context),
+            width: 800,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: child,

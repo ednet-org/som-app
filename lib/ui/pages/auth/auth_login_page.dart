@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/components/high/funny_logo.dart';
 import 'package:som/ui/som_application.dart';
 
-import '../../components/high/Login.dart';
+import '../../components/high/login.dart';
 import '../../domain/app_config/application.dart';
 
 class AuthLoginPage extends StatelessWidget {

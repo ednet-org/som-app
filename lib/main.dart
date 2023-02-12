@@ -19,7 +19,6 @@ import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
-import 'package:som/ui/utils/AppConstant.dart';
 
 import 'ui/domain/app_config/application.dart';
 import 'ui/domain/app_config/som_localizations.dart';
@@ -123,7 +122,7 @@ class MyApp extends StatelessWidget {
               Locale('de'),
               Locale('sr'),
             ],
-            title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+            title: 'SOM${!isMobile ? ' ${platformName()}' : ''}',
             themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             theme: ThemeData(
                 useMaterial3: true,

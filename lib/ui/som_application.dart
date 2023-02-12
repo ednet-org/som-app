@@ -2,7 +2,6 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/utils/AppWidget.dart';
 
 import 'components/low/app_bar/app_bar_button.dart';
 import 'components/low/layout/app_body.dart';
@@ -30,7 +29,7 @@ class SomApplication extends StatelessWidget {
             backgroundImage:
                 Image.network('https://picsum.photos/id/2/80/80').image,
           ).paddingRight(10.0),
-        ), /* TODO: mobile - ContainerX is again broken*/
+        ),
       ]),
     );
   }
@@ -42,7 +41,7 @@ class SomApplication extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: appBarTitleWidget(context, 'Smart Offer Management'),
+          title: const Text('Smart Offer Management'),
           actions: [
             const SizedBox(width: 10),
             AppBarButton(

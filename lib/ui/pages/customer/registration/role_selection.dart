@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/domain/model/customer_management/roles.dart';
 import 'package:som/main.dart';
-import 'package:som/ui/utils/AppWidget.dart';
 
 class RoleSelection extends StatelessWidget {
   const RoleSelection({Key? key}) : super(key: key);
@@ -35,9 +34,9 @@ class RoleSelection extends StatelessWidget {
   }
 
   Widget selectionCards(context, registrationRequest) {
-    return ContainerX(
-        web: web(context, registrationRequest),
-        mobile: mobile(context, registrationRequest));
+    return isMobile
+        ? mobile(context, registrationRequest)
+        : web(context, registrationRequest);
   }
 
   ElevatedButton providerSelector(context, registrationRequest) {

@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/utils/AppConstant.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
 import '../../domain/login/email_login_store.dart';
@@ -129,7 +128,7 @@ class Login extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           // TODO impl read more able components
         ),
-        const SizedBox(height: spacing_large),
+        const SizedBox(height: 100),
       ],
     );
   }
