@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/model/application/application.dart';
-
-import '../../../../../../domain/model/inquiry_management/inquiry.dart';
+import '../../../../../../../domain/model/inquiry_management/inquiry.dart';
+import '../../../../../../domain/app_config/application.dart';
 import 'inquiry/inquiry_card_description.dart';
 import 'inquiry/inquiry_card_divider.dart';
 import 'inquiry/inquiry_card_status.dart';
 import 'inquiry/inquiry_card_title.dart';
-import 'inquiry/inquiry_colors.dart';
 
 class InquiryCard extends StatelessWidget {
   final Inquiry inquiry;

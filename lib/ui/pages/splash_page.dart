@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/shared/som.dart';
-import 'package:som/routes/beamer_provided_key.dart';
-import 'package:som/routes/locations/auth/auth_login_page_location.dart';
-import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
-import 'package:som/ui/model/application/application.dart';
-import 'package:som/ui/utils/AppConstant.dart';
+
+import '../../domain/model/shared/som.dart';
+import '../domain/app_config/application.dart';
+import '../routes/routes.dart';
+import '../utils/AppConstant.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';

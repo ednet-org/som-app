@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../ui/components/low/cards/inquiry/inquiry_card_components/core/arr.dart';
 import 'attachment.dart';
 import 'enums/inquiry_status.dart';
 import 'offer.dart';

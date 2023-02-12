@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/forms/som_text_input.dart';
+
+import '../../components/low/forms/som_text_input.dart';
 
 class CompanyDTO {
   String id;
@@ -14,8 +15,8 @@ class CompanyDTO {
   int? numAcceptedOffers;
   String? registrationDate;
   String? subscriptionPackageType;
-  String? IBAN;
-  String? BIC;
+  String? iban;
+  String? bic;
   String? accountHolder;
   String? paymentInterval;
 
@@ -32,8 +33,8 @@ class CompanyDTO {
     this.numAcceptedOffers,
     this.registrationDate,
     this.subscriptionPackageType,
-    this.IBAN,
-    this.BIC,
+    this.iban,
+    this.bic,
     this.accountHolder,
     this.paymentInterval,
   });
@@ -52,8 +53,8 @@ class CompanyDTO {
         numAcceptedOffers: json['numAcceptedOffers'],
         registrationDate: json['registrationDate'],
         subscriptionPackageType: json['subscriptionPackageType'],
-        IBAN: json['IBAN'],
-        BIC: json['BIC'],
+        iban: json['IBAN'],
+        bic: json['BIC'],
         accountHolder: json['accountHolder'],
         paymentInterval: json['paymentInterval']);
   }
@@ -72,8 +73,8 @@ class CompanyDTO {
       'numAcceptedOffers': numAcceptedOffers,
       'registrationDate': registrationDate,
       'subscriptionPackageType': subscriptionPackageType,
-      'IBAN': IBAN,
-      'BIC': BIC,
+      'IBAN': iban,
+      'BIC': bic,
       'accountHolder': accountHolder,
       'paymentInterval': paymentInterval,
     };
@@ -92,8 +93,8 @@ class CompanyDTO {
     int? numAcceptedOffers,
     String? registrationDate,
     String? subscriptionPackageType,
-    String? IBAN,
-    String? BIC,
+    String? iban,
+    String? bic,
     String? accountHolder,
     String? paymentInterval,
   }) {
@@ -111,8 +112,8 @@ class CompanyDTO {
       registrationDate: registrationDate ?? this.registrationDate,
       subscriptionPackageType:
           subscriptionPackageType ?? this.subscriptionPackageType,
-      IBAN: IBAN ?? this.IBAN,
-      BIC: BIC ?? this.BIC,
+      iban: iban ?? this.iban,
+      bic: bic ?? this.bic,
       accountHolder: accountHolder ?? this.accountHolder,
       paymentInterval: paymentInterval ?? this.paymentInterval,
     );
@@ -203,7 +204,7 @@ class _EditCompanyFormState extends State<EditCompanyForm> {
                 },
               ),
               TextFormField(
-                initialValue: widget.company.IBAN,
+                initialValue: widget.company.iban,
                 decoration: const InputDecoration(
                   labelText: 'IBAN',
                 ),
@@ -215,7 +216,7 @@ class _EditCompanyFormState extends State<EditCompanyForm> {
                 },
               ),
               TextFormField(
-                initialValue: widget.company.BIC,
+                initialValue: widget.company.bic,
                 decoration: const InputDecoration(
                   labelText: 'BIC',
                 ),

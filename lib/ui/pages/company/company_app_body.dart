@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/layout/app_body.dart';
 
+import '../../components/low/layout/app_body.dart';
 import 'edit_company_form.dart';
 
 class CompanyAppBody extends StatelessWidget {
@@ -9,7 +9,7 @@ class CompanyAppBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      contextMenu: Text('Company', style: Theme.of(context).textTheme.caption),
+      contextMenu: Text('Company', style: Theme.of(context).textTheme.bodySmall),
       // body: Text('Company'),
       leftSplit: l,
       rightSplit: r,

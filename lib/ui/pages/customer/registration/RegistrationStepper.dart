@@ -5,17 +5,16 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/model/customer_management/payment-interval.dart';
 import 'package:som/domain/model/customer_management/registration_request.dart';
-import 'package:som/routes/locations/auth/auth_login_page_location.dart';
-import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
-import 'package:som/ui/model/application/application.dart';
-import 'package:som/ui/components/buttons/action_button.dart';
-import 'package:som/ui/components/forms/countries.dart';
-import 'package:som/ui/components/forms/som_drop_down.dart';
-import 'package:som/ui/components/forms/som_tags.dart';
-import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/pages/customer/registration/FormSectionHeader.dart';
 import 'package:som/ui/pages/customer/registration/SubscriptionSelector.dart';
 
+import '../../../components/low/buttons/action_button.dart';
+import '../../../components/low/forms/countries.dart';
+import '../../../components/low/forms/som_drop_down.dart';
+import '../../../components/low/forms/som_tags.dart';
+import '../../../components/low/forms/som_text_input.dart';
+import '../../../domain/app_config/application.dart';
+import '../../../routes/routes.dart';
 import 'RoleSelection.dart';
 
 class RegistrationStepper extends StatefulWidget {
@@ -235,6 +234,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 value: request.company.address.country,
                 onChanged: request.company.address.setCountry,
                 hint: 'Select country',
+                label: 'Country',
                 items: countries,
               ),
               SomTextInput(

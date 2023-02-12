@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/core/model/future_store.dart';
 import 'package:som/domain/model/shared/som.dart';
 import 'package:som/ui/pages/customer/registration/PlanModal.dart';
+
+import '../../../domain/future_store.dart';
 
 class SubscriptionSelector extends StatefulWidget {
   const SubscriptionSelector({Key? key}) : super(key: key);

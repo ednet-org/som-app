@@ -1,6 +1,8 @@
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
+import '../app_config/application.dart';
+
 part 'email_login_store.g.dart';
 
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;

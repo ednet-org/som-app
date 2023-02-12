@@ -2,12 +2,12 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/core/model/user_account_confirmation/user_account_confirmation.dart';
-import 'package:som/routes/locations/auth/auth_login_page_location.dart';
-import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
-import 'package:som/ui/model/application/application.dart';
-import 'package:som/ui/components/buttons/action_button.dart';
-import 'package:som/ui/components/forms/som_text_input.dart';
+
+import '../../components/low/buttons/action_button.dart';
+import '../../components/low/forms/som_text_input.dart';
+import '../../domain/app_config/application.dart';
+import '../../domain/user_account_confirmation/user_account_confirmation.dart';
+import '../../routes/routes.dart';
 
 class AuthConfirmEmailPage extends StatefulWidget {
   static String tag = '/ConfirmEmailPage';
@@ -24,16 +24,6 @@ class AuthConfirmEmailPage extends StatefulWidget {
 
 class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
     with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   void didChangeDependencies() {
     final userAccountConfirmation =

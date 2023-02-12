@@ -4,11 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/core/model/login/email_login_store.dart';
-import 'package:som/routes/locations/auth/auth_forgot_password_page_location.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
+import '../../domain/login/email_login_store.dart';
+import '../../routes/locations/auth/auth_forgot_password_page_location.dart';
 import '../low/buttons/action_button.dart';
 import '../low/forms/som_text_input.dart';
 

@@ -1,5 +1,4 @@
-import 'package:som/ui/components/cards/inquiry/inquiry_card_components/core/arr.dart';
-
+import 'arr.dart';
 import 'i_filter.dart';
 
 class Filter<T extends Arr> extends IFilter<T> {

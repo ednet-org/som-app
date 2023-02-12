@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/layout/app_body.dart';
+
+import '../../components/low/layout/app_body.dart';
 
 class AdsAppBody extends StatelessWidget {
   const AdsAppBody({Key? key}) : super(key: key);

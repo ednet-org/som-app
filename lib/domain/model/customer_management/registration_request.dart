@@ -2,8 +2,8 @@ import 'package:built_collection/src/list.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/ui/model/application/application.dart';
 
+import '../../../ui/domain/app_config/application.dart';
 import 'company.dart';
 
 part 'registration_request.g.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/layout/extended_split.dart';
-import 'package:som/ui/components/layout/expanded_body_container.dart';
-import 'package:som/ui/components/layout/spaced_container.dart';
+
+import 'expanded_body_container.dart';
+import 'extended_split.dart';
+import 'spaced_container.dart';
 
 class AppBody extends StatelessWidget {
   final Widget? contextMenu;

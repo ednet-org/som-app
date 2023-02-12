@@ -7,9 +7,16 @@ class SomDropDown extends StatelessWidget {
   final String? hint;
   final items;
 
-  const SomDropDown(
-      {Key? key, this.onChanged, this.value, this.hint, this.items})
-      : super(key: key);
+  final String? label;
+
+  const SomDropDown({
+    Key? key,
+    this.label,
+    this.onChanged,
+    this.value,
+    this.hint,
+    this.items,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +90,7 @@ class SomDropDown extends StatelessWidget {
           baseStyle: Theme.of(context).textTheme.labelLarge,
           dropdownSearchDecoration: InputDecoration(
             icon: const Icon(Icons.edit_location),
-            labelText: 'Country',
+            labelText: label,
             hintText: hint,
           )),
       // clearButtonProps: ClearButtonProps(

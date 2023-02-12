@@ -11,7 +11,7 @@ class ModelVisitor extends SimpleElementVisitor<dynamic> {
     final elementReturnType = element.type.returnType.toString();
 
     // DartType ends with '*', which needs to be eliminated
-    // for the generated code to be accurate.
+    // for the generated code to be accurate.tter
     className = elementReturnType.replaceFirst('*', '');
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/forms/som_text_input.dart';
-import 'package:som/ui/utils/AppWidget.dart';
 
+import '../../../../forms/som_drop_down.dart';
+import '../../../../forms/som_text_input.dart';
 import '../core/i_filter.dart';
 
 class EntityFilter<T extends IFilter> extends StatelessWidget {
@@ -39,16 +39,13 @@ class EntityFilter<T extends IFilter> extends StatelessWidget {
           },
         );
       case DisplayMode.dropdown:
-        return DropdownButton(
-            items: filter.allowedValues
-                ?.map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e.toString()),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              print(value);
-            });
+        return SomDropDown(
+          // key: key,
+          label: filter.toString(),
+          onChanged: (value) {
+            print(value);
+          },
+        );
       case DisplayMode.checkbox:
         return Checkbox(
           value: filter.value as bool,
