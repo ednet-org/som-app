@@ -16,8 +16,8 @@ class EntityFilters<F, T> extends StatelessWidget {
     required this.items,
   });
 
-  onFilterChange(IFilter filter) {
-
+  void onFilterChange(dynamic filter) {
+    print(filter);
   }
 
   @override

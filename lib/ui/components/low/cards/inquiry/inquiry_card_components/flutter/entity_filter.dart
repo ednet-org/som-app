@@ -6,6 +6,8 @@ import '../core/i_filter.dart';
 
 class EntityFilter<T extends IFilter> extends StatelessWidget {
   final T filter;
+
+  // on changed
   final onChanged;
 
   const EntityFilter(
@@ -57,9 +59,7 @@ class EntityFilter<T extends IFilter> extends StatelessWidget {
       // key: key,
       items: filter.allowedValues?.map((a) => a.name).toList(),
       label: filter.name,
-      onChanged: (value) {
-        print(value);
-      },
+      onChanged: onChanged,
     );
   }
 
