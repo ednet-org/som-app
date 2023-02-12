@@ -7,7 +7,7 @@ import 'package:som/domain/model/shared/som.dart';
 import 'package:som/routes/beamer_provided_key.dart';
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/model/application/application.dart';
 import 'package:som/ui/utils/AppConstant.dart';
 
 class SplashPage extends StatefulWidget {

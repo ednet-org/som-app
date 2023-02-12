@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/core/model/login/email_login_store.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/model/application/application.dart';
 
 part 'user_account_confirmation.g.dart';
 

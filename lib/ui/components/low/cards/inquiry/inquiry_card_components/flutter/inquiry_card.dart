@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/model/application/application.dart';
 
 import '../../../../../../domain/model/inquiry_management/inquiry.dart';
 import 'inquiry/inquiry_card_description.dart';

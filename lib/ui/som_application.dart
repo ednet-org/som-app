@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/model/application/application.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
 import 'components/low/app_bar/app_bar_button.dart';

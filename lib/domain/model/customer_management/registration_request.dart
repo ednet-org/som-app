@@ -2,7 +2,7 @@ import 'package:built_collection/src/list.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
-import 'package:som/template_storage/main/store/application.dart';
+import 'package:som/ui/model/application/application.dart';
 
 import 'company.dart';
 
