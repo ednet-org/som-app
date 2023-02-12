@@ -6,9 +6,10 @@ import 'package:som/routes/authenticated_pages_delegate.dart';
 import 'package:som/routes/beamer_provided_key.dart';
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/app_bar/app_bar_button.dart';
-import 'package:som/ui/components/layout/app_body.dart';
 import 'package:som/ui/utils/AppWidget.dart';
+
+import 'components/low/app_bar/app_bar_button.dart';
+import 'components/low/layout/app_body.dart';
 
 class SomApplication extends StatelessWidget {
   static String tag = '/SmartOfferManagement';

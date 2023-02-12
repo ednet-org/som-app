@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/funny_logo.dart';
+import 'package:som/ui/components/high/funny_logo.dart';
 import 'package:som/ui/som_application.dart';
 
 import '../../components/Login.dart';

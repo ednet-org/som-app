@@ -6,7 +6,7 @@ import 'package:som/domain/core/model/user_account_confirmation/user_account_con
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/routes/locations/authenticated/smart_offer_management_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/ActionButton.dart';
+import 'package:som/ui/components/buttons/action_button.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 
 class AuthConfirmEmailPage extends StatefulWidget {

@@ -7,7 +7,7 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:som/main.dart';
-import 'package:som/ui/components/funny_logo.dart';
+import 'package:som/ui/components/high/funny_logo.dart';
 
 import 'AppConstant.dart';
 import 'ListModels.dart';

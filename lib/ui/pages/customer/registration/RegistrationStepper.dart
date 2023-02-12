@@ -8,7 +8,7 @@ import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/routes/locations/auth/auth_login_page_location.dart';
 import 'package:som/routes/locations/guest/customer_register_success_page_location.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/ActionButton.dart';
+import 'package:som/ui/components/buttons/action_button.dart';
 import 'package:som/ui/components/forms/countries.dart';
 import 'package:som/ui/components/forms/som_drop_down.dart';
 import 'package:som/ui/components/forms/som_tags.dart';
