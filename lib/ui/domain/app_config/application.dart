@@ -1,7 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/model/customer_management/roles.dart';
+
+import '../model/customer_management/roles.dart';
 
 part 'application.g.dart';
 

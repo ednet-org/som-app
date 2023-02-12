@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/model/customer_management/provider_registration_request.dart';
-import 'package:som/domain/model/customer_management/registration_user.dart';
-import 'package:som/domain/model/customer_management/roles.dart';
+import 'package:som/ui/domain/model/customer_management/roles.dart';
 
 import 'address.dart';
+import 'provider_registration_request.dart';
+import 'registration_user.dart';
 
 part 'company.g.dart';
 

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer_management/registration_request.dart';
-import 'package:som/domain/model/customer_management/roles.dart';
 import 'package:som/main.dart';
+
+import '../../../domain/model/customer_management/registration_request.dart';
+import '../../../domain/model/customer_management/roles.dart';
 
 class RoleSelection extends StatelessWidget {
   const RoleSelection({Key? key}) : super(key: key);

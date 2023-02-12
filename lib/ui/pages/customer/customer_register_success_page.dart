@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:som/domain/model/customer_management/registration_request.dart';
 import 'package:som/ui/components/high/funny_logo.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
+
+import '../../domain/model/customer_management/registration_request.dart';
 
 class CustomerRegisterSuccessPage extends StatelessWidget {
   const CustomerRegisterSuccessPage({Key? key}) : super(key: key);

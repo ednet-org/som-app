@@ -1,9 +1,9 @@
-import 'package:built_collection/src/list.dart';
+import 'package:built_collection/src/list.dart' show ListBuilder;
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/model/shared/som.dart';
 
-import '../../../ui/domain/app_config/application.dart';
+import '../../app_config/application.dart';
 import 'company.dart';
 
 part 'registration_request.g.dart';
@@ -17,7 +17,7 @@ abstract class _RegistrationRequest with Store {
   final sharedPrefs;
 
   _RegistrationRequest(this.som, this.api, this.appStore, this.sharedPrefs)
-      : this.company = Company(appStore, sharedPrefs);
+      : company = Company(appStore, sharedPrefs);
 
   @observable
   bool isRegistering = false;
