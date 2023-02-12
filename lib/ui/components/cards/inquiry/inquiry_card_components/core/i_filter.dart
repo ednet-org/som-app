@@ -1,4 +1,4 @@
-import 'package:som/ui/components/cards/inquiry/inquiry_card_components/arr.dart';
+import 'package:som/ui/components/cards/inquiry/inquiry_card_components/core/arr.dart';
 
 abstract class IFilter<T extends Arr> {
   late String name;

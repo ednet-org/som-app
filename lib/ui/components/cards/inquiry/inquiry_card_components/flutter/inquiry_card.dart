@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:som/template_storage/main/store/application.dart';
-import 'package:som/ui/components/cards/inquiry/inquiry_card_components/inquiry_card_divider.dart';
-import 'package:som/ui/components/cards/inquiry/inquiry_card_components/inquiry_colors.dart';
 
-import '../../../../domain/model/inquiry_management/inquiry.dart';
-import 'inquiry_card_components/inquiry_card_description.dart';
-import 'inquiry_card_components/inquiry_card_status.dart';
-import 'inquiry_card_components/inquiry_card_title.dart';
+import '../../../../../../domain/model/inquiry_management/inquiry.dart';
+import 'inquiry/inquiry_card_description.dart';
+import 'inquiry/inquiry_card_divider.dart';
+import 'inquiry/inquiry_card_status.dart';
+import 'inquiry/inquiry_card_title.dart';
+import 'inquiry/inquiry_colors.dart';
 
 class InquiryCard extends StatelessWidget {
   final Inquiry inquiry;
@@ -16,7 +16,7 @@ class InquiryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status = InquiryColors.inquiryStatusColor(context, inquiry.status);
+    // final status = InquiryColors.inquiryStatusColor(context, inquiry.status);
 
     final appStore = Provider.of<Application>(context);
     final CurrentLayoutAndUIConstraints layout = appStore.layout;

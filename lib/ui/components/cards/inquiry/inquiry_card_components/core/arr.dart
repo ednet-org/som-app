@@ -1,4 +1,4 @@
-import 'serializable.dart';
+import '../serializable.dart';
 
 class Arr<T> implements Serializable<T> {
   final String name;
@@ -18,3 +18,5 @@ class Arr<T> implements Serializable<T> {
     return json as T;
   }
 }
+
+

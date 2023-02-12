@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'entity_filter.dart';
-import 'filter.dart';
-import 'i_filter.dart';
+import '../core/filter.dart';
+import '../core/i_filter.dart';
 
 class EntityFilters<T> extends StatelessWidget {
   final List<IFilter> filters;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:som/ui/components/forms/som_text_input.dart';
 import 'package:som/ui/utils/AppWidget.dart';
 
-import 'i_filter.dart';
+import '../core/i_filter.dart';
 
 class EntityFilter<T extends IFilter> extends StatelessWidget {
   final T filter;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/inquiry.dart';
-import 'package:som/ui/pages/inquiry/entity_filters.dart';
-import 'package:som/ui/pages/inquiry/i_filter.dart';
+import 'package:som/ui/components/cards/inquiry/inquiry_card_components/flutter/entity_filters.dart';
+import 'package:som/ui/components/cards/inquiry/inquiry_card_components/core/i_filter.dart';
 
 class EntityList<T> extends StatelessWidget {
   final EntityFilters<Inquiry> filters;

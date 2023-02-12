@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
-import 'package:som/ui/components/cards/inquiry/inquiry_card_components/arr.dart';
+import 'package:som/ui/components/cards/inquiry/inquiry_card_components/core/arr.dart';
 import 'package:uuid/uuid.dart';
 
 import 'attachment.dart';
