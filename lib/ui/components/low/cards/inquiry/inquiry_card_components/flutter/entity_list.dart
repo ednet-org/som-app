@@ -11,6 +11,8 @@ class EntityList<T> {
   final List<Sort> sorts;
   final List<T> entities;
 
+  final ListMode listMode;
+
   final Widget Function(T) entityBuilder;
 
   final EntityFilters<Arr, T> filters;
@@ -20,20 +22,36 @@ class EntityList<T> {
     filters,
     required this.entityBuilder,
     this.sorts = const [],
+    this.listMode = ListMode.grid,
   }) : filters = EntityFilters(filters: filters, items: entities);
 
   build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            itemCount: entities.length,
-            itemBuilder: (context, index) {
-              return entityBuilder(entities[index]);
-            },
-          ),
+          child: listMode == ListMode.list
+              ? ListView.builder(
+                  itemCount: entities.length,
+                  itemBuilder: (context, index) {
+                    return entityBuilder(entities[index]);
+                  },
+                )
+              : GridView.builder(
+                  itemCount: entities.length,
+                  itemBuilder: (context, index) {
+                    return entityBuilder(entities[index]);
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                ),
         ),
       ],
     );
   }
+}
+
+enum ListMode {
+  list,
+  grid,
 }
