@@ -28,7 +28,7 @@ packages:
   annotations:
     dependency: "direct main"
     description:
-      path: "lib/domain/domain_generator/annotations"
+      path: "lib/playground/domain_generator/annotations"
       relative: true
     source: path
     version: "1.0.0"
@@ -640,7 +640,7 @@ packages:
   generators:
     dependency: "direct dev"
     description:
-      path: "lib/domain/domain_generator/generators"
+      path: "lib/playground/domain_generator/generators"
       relative: true
     source: path
     version: "1.0.0"

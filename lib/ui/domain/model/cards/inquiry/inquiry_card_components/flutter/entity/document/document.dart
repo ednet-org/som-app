@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../entity.dart';
+import '../../../../../../../../../domain/model/core/entity.dart';
 import '../../inquiry/entity_title.dart';
 
 // TODO: refactor to document structure fromm AppBody

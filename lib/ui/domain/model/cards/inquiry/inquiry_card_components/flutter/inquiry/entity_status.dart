@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:som/domain/model/inquiry_management/enums/inquiry_status.dart';
 
-import '../entity.dart';
+import '../../../../../../../../domain/model/core/entity.dart';
 
 class EntityStatus<T extends Entity> extends StatelessWidget {
   final Entity entity;

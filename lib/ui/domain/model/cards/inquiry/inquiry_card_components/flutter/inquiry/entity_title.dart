@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../entity.dart';
+import '../../../../../../../../domain/model/core/entity.dart';
 
 class EntityTitle<T extends Entity> extends StatelessWidget {
   final Entity entity;

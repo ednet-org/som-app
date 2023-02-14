@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../domain/model/inquiry_management/inquiry.dart';
-import 'entity.dart';
+import '../../../../../../../domain/model/core/entity.dart';
 import 'inquiry/description.dart';
 import 'inquiry/entity_title.dart';
 import 'inquiry/inquiry_card_divider.dart';

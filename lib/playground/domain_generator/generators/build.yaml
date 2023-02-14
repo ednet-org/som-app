@@ -7,7 +7,7 @@ targets:
 builders:
   generators:
     target: ":generators"
-    import: "package:som/domain/domain_generator/generators/lib/builder.dart"
+    import: "package:som/playground/domain_generator/generators/lib/builder.dart"
     builder_factories: ["generateSubclass", "generateExtension"]
     build_extensions: { ".dart": [".g.dart"] }
     auto_apply: dependents
