@@ -2,8 +2,8 @@ import 'package:built_collection/src/list.dart' show ListBuilder;
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
-import '../../../shared/som.dart';
 import '../../app_config/application.dart';
+import '../shared/som.dart';
 import 'company.dart';
 
 part 'registration_request.g.dart';

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/pages/customer/registration/plan_modal.dart';
 
 import '../../../domain/future_store.dart';
-import '../../../shared/som.dart';
+import '../../../domain/model/shared/som.dart';
 
 class SubscriptionSelector extends StatefulWidget {
   const SubscriptionSelector({Key? key}) : super(key: key);
