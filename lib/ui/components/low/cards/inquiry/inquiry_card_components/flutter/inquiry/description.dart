@@ -16,7 +16,7 @@ class Description<T extends Entity> extends StatelessWidget {
         summary.firstWhere((element) => element.name == 'description');
 
     return Text(
-      description ?? '',
+      description?.value ?? '',
       maxLines: 10,
       style: theme.textTheme.bodyMedium,
       overflow: TextOverflow.ellipsis,

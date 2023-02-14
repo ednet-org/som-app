@@ -28,11 +28,12 @@ class EntityCard<T extends Entity> extends StatelessWidget {
               maxWidth: 450, // layout.constraints.containerLayout.maxWidth,
               maxHeight: 500, //layout.constraints.containerLayout.maxHeight,
               minWidth: 350, //layout.constraints.containerLayout.minWidth,
-              minHeight: 350, //layout.constraints.containerLayout.minHeight,
+              minHeight: 450, //layout.constraints.containerLayout.minHeight,
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Row(
                     children: [
