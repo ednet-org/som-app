@@ -176,4 +176,5 @@ class Inquiry extends Entity<Arr> {
       attachments,
       offers,
     ];
+  }
 }

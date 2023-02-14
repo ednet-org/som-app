@@ -6,6 +6,7 @@ import '../../../domain/model/inquiry_management/inquiry.dart';
 import '../../components/low/cards/inquiry/inquiry_card_components/core/arr.dart';
 import '../../components/low/cards/inquiry/inquiry_card_components/core/filter.dart';
 import '../../components/low/cards/inquiry/inquiry_card_components/core/i_filter.dart';
+import '../../components/low/cards/inquiry/inquiry_card_components/flutter/entity/document/document.dart';
 import '../../components/low/cards/inquiry/inquiry_card_components/flutter/entity_list.dart';
 import '../../components/low/cards/inquiry/inquiry_card_components/flutter/entity_card.dart';
 import '../../components/low/layout/app_body.dart';
@@ -19,13 +20,14 @@ class InquiryAppBody extends StatefulWidget {
 
 class _InquiryAppBodyState extends State<InquiryAppBody> {
   late EntityList entityList;
+  Widget? details;
 
   @override
   Widget build(BuildContext context) {
     return AppBody(
       contextMenu: entityList.filters,
       leftSplit: entityList,
-      rightSplit: entityList.details,
+      rightSplit: details,
     );
   }
 
@@ -34,6 +36,13 @@ class _InquiryAppBodyState extends State<InquiryAppBody> {
     super.initState();
 
     entityList = EntityList<Inquiry>(
+      entities: InquiryService.getParsedInquiries(),
+      entityBuilder: (inquiry) => EntityCard<Inquiry>(
+        entity: inquiry,
+      ),
+      detailsBuilder: (entity) => EntityDocument<Inquiry>(
+        entity: entity,
+      ),
       filters: [
         Filter(
           name: 'Status',
@@ -89,11 +98,17 @@ class _InquiryAppBodyState extends State<InquiryAppBody> {
           ],
         ),
       ],
-      entities: InquiryService.getParsedInquiries(),
-      entityBuilder: (inquiry) => EntityCard(
-        entity: inquiry,
-      ),
-      detailsBuilder: (entity) => EntityDocument<Inquiry>(entity),
+      onEntitySelected: (entity) {
+        if (entity != null) {
+          setState(() {
+            details = EntityDocument(entity: entity);
+          });
+        } else {
+          setState(() => {details = null});
+        }
+        print('Entity selected');
+        print(entity?.title);
+      },
     );
   }
 }

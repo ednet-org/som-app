@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../domain/model/inquiry_management/inquiry.dart';
 import 'entity.dart';
-import 'inquiry/inquiry_card_description.dart';
+import 'inquiry/description.dart';
+import 'inquiry/entity_title.dart';
 import 'inquiry/inquiry_card_divider.dart';
-import 'inquiry/inquiry_card_status.dart';
-import 'inquiry/inquiry_card_title.dart';
+import 'inquiry/entity_status.dart';
 
 class EntityCard<T extends Entity> extends StatelessWidget {
   final T entity;
@@ -13,8 +13,7 @@ class EntityCard<T extends Entity> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final status = InquiryColors.inquiryStatusColor(context, inquiry.status);
-
+    final summary = entity.getSummaryAttributes();
     return Center(
       child: Card(
         elevation: 0,
@@ -37,16 +36,19 @@ class EntityCard<T extends Entity> extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      InquiryCardTitle(inquiry: entity),
+                      SizedBox(
+                        height: 300,
+                        child: EntityTitle(entity: entity),
+                      ),
                       Expanded(
-                        child: InquiryCardStatus(
-                          inquiry: entity,
+                        child: EntityStatus(
+                          entity: entity,
                         ),
                       ),
                     ],
                   ),
                   const InquiryCardDivider(),
-                  InquiryCardDescription(inquiry: entity),
+                  Description(entity: entity),
                   const Flexible(
                     fit: FlexFit.tight,
                     child: SizedBox(),
@@ -57,7 +59,7 @@ class EntityCard<T extends Entity> extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      InquiryBranch(inquiry: entity),
+                      EntityBranch(entity: entity),
                       const SizedBox(
                         width: 10,
                       ),
@@ -65,7 +67,7 @@ class EntityCard<T extends Entity> extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      InquiryCategory(inquiry: entity),
+                      EntityCategory(entity: entity),
                     ],
                   ),
                 ],
@@ -76,19 +78,22 @@ class EntityCard<T extends Entity> extends StatelessWidget {
   }
 }
 
-class InquiryBranch extends StatelessWidget {
-  final Inquiry inquiry;
+class EntityBranch<T extends Entity> extends StatelessWidget {
+  final T entity;
 
-  const InquiryBranch({super.key, required this.inquiry});
+  const EntityBranch({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
+    final attributes = entity.getDocumentAttributes();
+    final branch = attributes.firstWhere((element) => element.name == 'branch');
+
     return SizedBox(
       width: 150,
       child: Text(
-        inquiry.branch.toString(),
+        branch.value,
         maxLines: 2,
         style: theme.textTheme.bodyMedium,
       ),
@@ -96,19 +101,22 @@ class InquiryBranch extends StatelessWidget {
   }
 }
 
-class InquiryCategory extends StatelessWidget {
-  final Inquiry inquiry;
+class EntityCategory<T extends Entity> extends StatelessWidget {
+  final T entity;
 
-  const InquiryCategory({super.key, required this.inquiry});
+  const EntityCategory({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
+    final attributes = entity.getDocumentAttributes();
+    final category = attributes.firstWhere((element) => element.name == 'category');
+
     return SizedBox(
       width: 150,
       child: Text(
-        inquiry.category.toString(),
+        category.value,
         maxLines: 2,
         style: theme.textTheme.bodyMedium,
       ),

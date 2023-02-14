@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:som/domain/model/inquiry_management/inquiry.dart';
 import 'package:som/domain/model/inquiry_management/enums/inquiry_status.dart';
 
-class InquiryCardStatus extends StatelessWidget {
-  final Inquiry inquiry;
+import '../entity.dart';
 
-  const InquiryCardStatus({super.key, required this.inquiry});
+class EntityStatus<T extends Entity> extends StatelessWidget {
+  final Entity entity;
+
+  const EntityStatus({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = Colors.black;
-    switch (inquiry.status.value) {
+    switch (entity.status.value) {
       case InquiryStatus.draft:
         backgroundColor = Colors.grey;
         break;
@@ -28,7 +29,7 @@ class InquiryCardStatus extends StatelessWidget {
         break;
     }
     return Badge(
-      label: Text(inquiry.status.toString().split('.').last),
+      label: Text(entity.status.toString().split('.').last),
       textStyle: Theme.of(context).textTheme.labelSmall,
       textColor: Colors.white,
       backgroundColor: backgroundColor,

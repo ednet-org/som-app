@@ -17,6 +17,9 @@ class EntityList<T> extends StatefulWidget {
 
   final EntityFilters<Arr, T> filters;
 
+  final void Function(T?)? onEntitySelected;
+  final Widget? Function(T entity) detailsBuilder;
+
   EntityList({
     super.key,
     required this.entities,
@@ -24,6 +27,8 @@ class EntityList<T> extends StatefulWidget {
     required this.entityBuilder,
     this.sorts = const [],
     this.listMode = ListMode.grid,
+    this.onEntitySelected,
+    required this.detailsBuilder,
   }) : filters = EntityFilters(filters: filters, items: entities);
 
   @override
@@ -33,9 +38,6 @@ class EntityList<T> extends StatefulWidget {
 class _EntityListState<T> extends State<EntityList<T>> {
   bool isDetailsMode = false;
   T? selectedEntity;
-  EntityDetails? selectedEntityDetails;
-
-  get details {}
 
   @override
   build(BuildContext context) {
@@ -44,36 +46,52 @@ class _EntityListState<T> extends State<EntityList<T>> {
         Expanded(
           child: widget.listMode == ListMode.list
               ? ListView.builder(
-            itemCount: widget.entities.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                  onTap: switchDetailMode(context, index),
-                  child: widget.entityBuilder(widget.entities[index]));
-            },
-          )
+                  itemCount: widget.entities.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () => loadDocument(context, index),
+                        child: widget.entityBuilder(widget.entities[index]));
+                  },
+                )
               : GridView.builder(
-            itemCount: widget.entities.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                  onTap: switchDetailMode(context, index),
-                  child: widget.entityBuilder(widget.entities[index]));
-            },
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-            ),
-          ),
+                  itemCount: widget.entities.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () => loadDocument(context, index),
+                        child: widget.entityBuilder(widget.entities[index]));
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                ),
         ),
       ],
     );
   }
 
-  switchDetailMode(BuildContext context, int index) {
-    if (selectedEntityDetails != null) {
-      isDetailsMode = !isDetailsMode;
-      return selectedEntityDetails;
+  loadDocument(BuildContext context, int index) {
+    selectedEntity = widget.entities[index];
+    isDetailsMode = true;
+    if (widget.onEntitySelected != null && selectedEntity != null) {
+      widget.onEntitySelected!(selectedEntity as T);
+    }
+  }
+
+  unloadDocument() {
+    isDetailsMode = false;
+    selectedEntity = null;
+
+    if (widget.onEntitySelected != null) {
+      widget.onEntitySelected!(null);
     }
 
-    return null;
+    setState(() {});
+  }
+
+  details(BuildContext context) {
+    if (selectedEntity != null) {
+      return widget.detailsBuilder(selectedEntity as T);
+    }
   }
 }
 
@@ -86,9 +104,9 @@ class EntityDetails extends StatelessWidget {
   final bool isDetailsMode;
 
   const EntityDetails({
-    super.key,
-    isDetailsMode,
-  }) : isDetailsMode = isDetailsMode ?? false;
+    Key? key,
+    this.isDetailsMode = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,15 +120,9 @@ class EntityDetails extends StatelessWidget {
       child: Column(
         children: [
           Text('Document Title',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleMedium),
+              style: Theme.of(context).textTheme.titleMedium),
           const Divider(),
-          Text('Document body', style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium),
+          Text('Document body', style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
