@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/domain/model/shared/som.dart';
+
+import '../../../shared/som.dart';
 
 // import 'package:flutter_tags/flutter_tags.dart';
 // https://medium.com/nonstopio/flutter-tags-7410bd6a5835

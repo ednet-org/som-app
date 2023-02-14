@@ -4,9 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/model/shared/som.dart';
 import '../domain/app_config/application.dart';
 import '../routes/routes.dart';
+import '../shared/som.dart';
 
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';

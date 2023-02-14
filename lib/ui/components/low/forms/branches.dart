@@ -1,4 +1,4 @@
-import 'package:som/domain/model/shared/som.dart';
+import '../../../shared/som.dart';
 
 final branchTags = branches
     .asMap()

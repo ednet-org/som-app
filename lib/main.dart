@@ -14,7 +14,6 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
-import 'package:som/domain/model/shared/som.dart';
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
 
@@ -24,6 +23,7 @@ import 'ui/domain/login/email_login_store.dart';
 import 'ui/domain/model/customer_management/auth_forgot_password_page_state.dart';
 import 'ui/domain/model/customer_management/registration_request.dart';
 import 'ui/domain/user_account_confirmation/user_account_confirmation.dart';
+import 'ui/shared/som.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
