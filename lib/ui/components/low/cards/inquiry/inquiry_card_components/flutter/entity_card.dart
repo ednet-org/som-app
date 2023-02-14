@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../../../../../domain/model/inquiry_management/inquiry.dart';
-import '../../../../../../domain/app_config/application.dart';
+import 'entity.dart';
 import 'inquiry/inquiry_card_description.dart';
 import 'inquiry/inquiry_card_divider.dart';
 import 'inquiry/inquiry_card_status.dart';
 import 'inquiry/inquiry_card_title.dart';
 
-class InquiryCard extends StatelessWidget {
-  final Inquiry inquiry;
+class EntityCard<T extends Entity> extends StatelessWidget {
+  final T entity;
 
-  const InquiryCard({super.key, required this.inquiry});
+  const EntityCard({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     // final status = InquiryColors.inquiryStatusColor(context, inquiry.status);
 
-    final appStore = Provider.of<Application>(context);
-    final CurrentLayoutAndUIConstraints layout = appStore.layout;
     return Center(
       child: Card(
         elevation: 0,
@@ -40,16 +37,16 @@ class InquiryCard extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      InquiryCardTitle(inquiry: inquiry),
+                      InquiryCardTitle(inquiry: entity),
                       Expanded(
                         child: InquiryCardStatus(
-                          inquiry: inquiry,
+                          inquiry: entity,
                         ),
                       ),
                     ],
                   ),
                   const InquiryCardDivider(),
-                  InquiryCardDescription(inquiry: inquiry),
+                  InquiryCardDescription(inquiry: entity),
                   const Flexible(
                     fit: FlexFit.tight,
                     child: SizedBox(),
@@ -60,7 +57,7 @@ class InquiryCard extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      InquiryBranch(inquiry: inquiry),
+                      InquiryBranch(inquiry: entity),
                       const SizedBox(
                         width: 10,
                       ),
@@ -68,7 +65,7 @@ class InquiryCard extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      InquiryCategory(inquiry: inquiry),
+                      InquiryCategory(inquiry: entity),
                     ],
                   ),
                 ],

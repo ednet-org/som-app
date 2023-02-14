@@ -32,6 +32,7 @@ class ExpandedBodyContainer extends StatelessWidget {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 /// For existing Menu show also a divider
                 if (expandedBodyMenu != null) ...[
@@ -54,7 +55,7 @@ class ExpandedBodyContainer extends StatelessWidget {
           : Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 /// For existing Menu show also a divider
                 if (expandedBodyMenu != null)

@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../ui/components/low/cards/inquiry/inquiry_card_components/core/arr.dart';
+import '../../../ui/components/low/cards/inquiry/inquiry_card_components/flutter/entity.dart';
 import 'attachment.dart';
 import 'enums/inquiry_status.dart';
 import 'offer.dart';
@@ -10,10 +11,8 @@ import 'user.dart';
 
 const uuid = Uuid();
 
-
-
 /// [Inquiry] is a [Buyer] business request to the [Provider]
-class Inquiry {
+class Inquiry extends Entity<Arr> {
   final Arr<String> id;
   final Arr<String> title;
   final Arr<String> description;
@@ -28,6 +27,7 @@ class Inquiry {
   final Arr<List<Attachment>> attachments;
   final Arr<List<Offer>> offers;
 
+  @override
   final Arr<InquiryStatus> status;
 
   Inquiry({
@@ -53,36 +53,28 @@ class Inquiry {
 
     // DateFormat(dateFormat).parse(json['publishingDate'])
     return Inquiry(
-        id: arrUuid,
-        title: Arr<String>(name: 'title', value: json['title']),
-        description:
-            Arr<String>(name: 'description', value: json['description']),
-        category: Arr<String>(name: 'category', value: json['category']),
-        branch: Arr<String>(name: 'branch', value: json['branch']),
-        publishingDate: Arr<DateTime>(
-            name: 'publishingDate',
-            value: DateFormat(dateFormat).parse(json['publishingDate'])),
-        expirationDate: Arr<DateTime>(
-            name: 'expirationDate',
-            value: DateFormat(dateFormat).parse(json['expirationDate'])),
-        buyer: Arr<User>(name: 'buyer', value: User.fromJson(json['buyer'])),
-        deliveryLocation: Arr<String>(
-            name: 'deliveryLocation', value: json['deliveryLocation']),
-        providerCriteria: Arr<ProviderCriteria>(
-            name: 'providerCriteria',
-            value: ProviderCriteria.fromJson(json['providerCriteria'])),
-        attachments:
-            const Arr<List<Attachment>>(name: 'attachments', value: []),
-        status: Arr<InquiryStatus>(
-            name: 'status', value: InquiryStatus.fromJson(json['status'])),
-        offers: const Arr<List<Offer>>(name: 'offers', value: [])
-        // offers: json['offers'] != null && json['offers'].isNotEmpty
-        //     ? jsonDecode(json['offers'])
-        //         .map<Offer>((e) => Offer.fromJson(e))
-        //         .map((e) => Arr<Offer>(name: 'offers', value: e))
-        //         .toList<Arr<Offer>>()
-        //     : [],
-        );
+      id: arrUuid,
+      title: Arr<String>(name: 'title', value: json['title']),
+      description: Arr<String>(name: 'description', value: json['description']),
+      category: Arr<String>(name: 'category', value: json['category']),
+      branch: Arr<String>(name: 'branch', value: json['branch']),
+      publishingDate: Arr<DateTime>(
+          name: 'publishingDate',
+          value: DateFormat(dateFormat).parse(json['publishingDate'])),
+      expirationDate: Arr<DateTime>(
+          name: 'expirationDate',
+          value: DateFormat(dateFormat).parse(json['expirationDate'])),
+      buyer: Arr<User>(name: 'buyer', value: User.fromJson(json['buyer'])),
+      deliveryLocation: Arr<String>(
+          name: 'deliveryLocation', value: json['deliveryLocation']),
+      providerCriteria: Arr<ProviderCriteria>(
+          name: 'providerCriteria',
+          value: ProviderCriteria.fromJson(json['providerCriteria'])),
+      attachments: const Arr<List<Attachment>>(name: 'attachments', value: []),
+      status: Arr<InquiryStatus>(
+          name: 'status', value: InquiryStatus.fromJson(json['status'])),
+      offers: const Arr<List<Offer>>(name: 'offers', value: []),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -136,9 +128,9 @@ class Inquiry {
   }
 
   // get attributes that can be used in filters
+  @override
   List<Arr> getFilterableAttributes() {
     return [
-      id,
       title,
       description,
       category,
@@ -153,4 +145,35 @@ class Inquiry {
       offers,
     ];
   }
+
+  @override
+  Iterable<Arr> getDocumentAttributes() {
+    // all attributes that are editable
+    return [
+      title,
+      description,
+      category,
+      branch,
+      expirationDate,
+      deliveryLocation,
+      providerCriteria,
+      attachments,
+      status,
+      offers,
+      providerCriteria,
+    ];
+  }
+
+  @override
+  Iterable<Arr> getSummaryAttributes() {
+    return [
+      id,
+      title,
+      status,
+      description,
+      category,
+      branch,
+      attachments,
+      offers,
+    ];
 }
