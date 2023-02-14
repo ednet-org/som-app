@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/low/forms/som_text_input.dart';
+import '../../domain/model/model.dart';
 
 class CompanyDTO {
   String id;

@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/pages/customer/registration/plan_modal.dart';
 
-import '../../../domain/future_store.dart';
+import '../../../domain/infrastructure/future_store.dart';
 import '../../../domain/model/shared/som.dart';
 
 class SubscriptionSelector extends StatefulWidget {

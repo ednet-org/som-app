@@ -1,7 +1,7 @@
 import 'package:openapi/openapi.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
 
-import '../../../../../ui/domain/i_repository.dart';
+import '../../../../../ui/domain/infrastructure/i_repository.dart';
 
 class ApiSubscriptionRepository extends IRepository<Subscription> {
   final SubscriptionsApi subscriptionService;

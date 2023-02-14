@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/low/cards/inquiry/inquiry_card_components/core/arr.dart';
 
+import '../core/arr.dart';
 import '../core/i_filter.dart';
 import 'entity_filters.dart';
 

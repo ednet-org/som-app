@@ -17,13 +17,10 @@ import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
 
-import 'ui/domain/app_config/application.dart';
-import 'ui/domain/app_config/som_localizations.dart';
-import 'ui/domain/login/email_login_store.dart';
-import 'ui/domain/model/customer_management/auth_forgot_password_page_state.dart';
-import 'ui/domain/model/customer_management/registration_request.dart';
-import 'ui/domain/model/shared/som.dart';
-import 'ui/domain/user_account_confirmation/user_account_confirmation.dart';
+import 'ui/domain/application/application.dart';
+import 'ui/domain/application/som_localizations.dart';
+import 'ui/domain/model/model.dart';
+import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

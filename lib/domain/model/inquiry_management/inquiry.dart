@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../ui/components/low/cards/inquiry/inquiry_card_components/core/arr.dart';
-import '../../../ui/components/low/cards/inquiry/inquiry_card_components/flutter/entity.dart';
+import '../../../ui/domain/model/cards/inquiry/inquiry_card_components/core/arr.dart';
+import '../../../ui/domain/model/cards/inquiry/inquiry_card_components/flutter/entity.dart';
 import 'attachment.dart';
 import 'enums/inquiry_status.dart';
 import 'offer.dart';

@@ -1,7 +1,8 @@
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
-import '../app_config/application.dart';
+import '../../application/application.dart';
+
 
 part 'email_login_store.g.dart';
 

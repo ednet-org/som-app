@@ -2,12 +2,9 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/components/high/funny_logo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../components/low/buttons/action_button.dart';
-import '../../components/low/forms/som_text_input.dart';
-import '../../domain/model/customer_management/auth_forgot_password_page_state.dart';
+import '../../domain/model/model.dart';
 
 class AuthForgotPasswordPage extends StatelessWidget {
   const AuthForgotPasswordPage({Key? key}) : super(key: key);

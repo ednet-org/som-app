@@ -2,7 +2,7 @@ import 'package:built_collection/src/list.dart' show ListBuilder;
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
-import '../../app_config/application.dart';
+import '../../application/application.dart';
 import '../shared/som.dart';
 import 'company.dart';
 

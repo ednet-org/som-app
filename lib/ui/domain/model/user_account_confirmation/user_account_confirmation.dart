@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
-import '../app_config/application.dart';
+import '../../application/application.dart';
 import '../login/email_login_store.dart';
 
 part 'user_account_confirmation.g.dart';

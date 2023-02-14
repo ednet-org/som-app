@@ -1,8 +1,8 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/components/high/funny_logo.dart';
+import 'package:som/ui/domain/model/funny_logo.dart';
 
-import '../components/low/buttons/action_button.dart';
+import '../domain/model/model.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({Key? key}) : super(key: key);

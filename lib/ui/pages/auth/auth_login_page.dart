@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/components/high/funny_logo.dart';
+import 'package:som/ui/domain/model/funny_logo.dart';
 import 'package:som/ui/som_application.dart';
 
-import '../../components/high/login.dart';
-import '../../domain/app_config/application.dart';
+import '../../domain/application/application.dart';
+import '../../domain/model/login.dart';
 
 class AuthLoginPage extends StatelessWidget {
   static String tag = '/DTLogin';

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
-import 'components/low/app_bar/app_bar_button.dart';
-import 'components/low/layout/app_body.dart';
-import 'domain/app_config/application.dart';
+import 'domain/application/application.dart';
+import 'domain/model/model.dart';
 import 'routes/authenticated_pages_delegate.dart';
 import 'routes/beamer_provided_key.dart';
 import 'routes/locations/auth/auth_login_page_location.dart';

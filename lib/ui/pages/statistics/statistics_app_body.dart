@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../components/low/layout/app_body.dart';
+import '../../domain/model/model.dart';
+
 
 class StatisticsAppBody extends StatelessWidget {
   const StatisticsAppBody({Key? key}) : super(key: key);

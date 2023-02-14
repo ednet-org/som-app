@@ -6,14 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/pages/customer/registration/form_section_header.dart';
 import 'package:som/ui/pages/customer/registration/subscription_selector.dart';
 
-import '../../../components/low/buttons/action_button.dart';
-import '../../../components/low/forms/countries.dart';
-import '../../../components/low/forms/som_drop_down.dart';
-import '../../../components/low/forms/som_tags.dart';
-import '../../../components/low/forms/som_text_input.dart';
-import '../../../domain/app_config/application.dart';
-import '../../../domain/model/customer_management/payment-interval.dart';
-import '../../../domain/model/customer_management/registration_request.dart';
+import '../../../domain/application/application.dart';
+import '../../../domain/model/model.dart';
 import '../../../routes/routes.dart';
 import 'role_selection.dart';
 
@@ -181,7 +175,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         title: stepTitle('Role selection'),
         isActive: currStep == 0,
         state: StepState.indexed,
-        content: RoleSelection(),
+        content: const RoleSelection(),
       ),
       Step(
           title: stepTitle('Company details'),
@@ -283,7 +277,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         title: stepTitle('Subscription model'),
         isActive: currStep == 3,
         state: StepState.indexed,
-        content: SubscriptionSelector(),
+        content: const SubscriptionSelector(),
       ),
       Step(
           title: stepTitle('Payment details'),

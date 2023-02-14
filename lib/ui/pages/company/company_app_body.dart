@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/low/layout/app_body.dart';
+import '../../domain/model/model.dart';
 import 'edit_company_form.dart';
 
 class CompanyAppBody extends StatelessWidget {

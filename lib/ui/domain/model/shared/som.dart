@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
 
-import '../../../components/low/forms/branches.dart';
-import '../../future_store.dart';
-import '../../i_repository.dart';
+import '../../infrastructure/future_store.dart';
+import '../../infrastructure/i_repository.dart';
+import '../forms/branches.dart';
 
 part 'som.g.dart';
 

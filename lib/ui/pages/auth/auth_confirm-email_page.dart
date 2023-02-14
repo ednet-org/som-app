@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/low/buttons/action_button.dart';
-import '../../components/low/forms/som_text_input.dart';
-import '../../domain/app_config/application.dart';
-import '../../domain/user_account_confirmation/user_account_confirmation.dart';
+import '../../domain/application/application.dart';
+import '../../domain/model/model.dart';
+import '../../domain/model/user_account_confirmation/user_account_confirmation.dart';
 import '../../routes/routes.dart';
 
 class AuthConfirmEmailPage extends StatefulWidget {
