@@ -36,6 +36,7 @@ class _InquiryAppBodyState extends State<InquiryAppBody> {
     super.initState();
 
     entityList = EntityList<Inquiry>(
+      listMode: ListMode.list,
       entities: InquiryService.getParsedInquiries(),
       entityBuilder: (inquiry) => EntityCard<Inquiry>(
         entity: inquiry,
