@@ -73,17 +73,7 @@ void testSomManagerOffers(
     }); 
  
     test("Add offer unique error", () { 
-      var offerConcept = offers.concept; 
-      var offerCount = offers.length; 
-      var offer = Offer(offerConcept); 
-      var randomOffer = offers.random(); 
-      offer.id = randomOffer.id; 
-      var added = offers.add(offer); 
-      expect(added, isFalse); 
-      expect(offers.length, equals(offerCount)); 
-      expect(offers.exceptions.length, greaterThan(0)); 
- 
-      offers.exceptions.display(title: "Add offer unique error"); 
+      // no id attribute 
     }); 
  
     test("Not found offer by oid", () { 
@@ -100,11 +90,7 @@ void testSomManagerOffers(
     }); 
  
     test("Find offer by attribute id", () { 
-      var randomOffer = offers.random(); 
-      var offer = 
-          offers.singleWhereAttributeId("id", randomOffer.id); 
-      expect(offer, isNotNull); 
-      expect(offer!.id, equals(randomOffer.id)); 
+      // no id attribute 
     }); 
  
     test("Find offer by required attribute", () { 
@@ -114,20 +100,20 @@ void testSomManagerOffers(
     test("Find offer by attribute", () { 
       var randomOffer = offers.random(); 
       var offer = 
-          offers.firstWhereAttribute("inquiry", randomOffer.inquiry); 
+          offers.firstWhereAttribute("description", randomOffer.description); 
       expect(offer, isNotNull); 
-      expect(offer.inquiry, equals(randomOffer.inquiry)); 
+      expect(offer.description, equals(randomOffer.description)); 
     }); 
  
     test("Select offers by attribute", () { 
       var randomOffer = offers.random(); 
       var selectedOffers = 
-          offers.selectWhereAttribute("inquiry", randomOffer.inquiry); 
+          offers.selectWhereAttribute("description", randomOffer.description); 
       expect(selectedOffers.isEmpty, isFalse); 
       selectedOffers.forEach((se) => 
-          expect(se.inquiry, equals(randomOffer.inquiry))); 
+          expect(se.description, equals(randomOffer.description))); 
  
-      //selectedOffers.display(title: "Select offers by inquiry"); 
+      //selectedOffers.display(title: "Select offers by description"); 
     }); 
  
     test("Select offers by required attribute", () { 
@@ -137,21 +123,17 @@ void testSomManagerOffers(
     test("Select offers by attribute, then add", () { 
       var randomOffer = offers.random(); 
       var selectedOffers = 
-          offers.selectWhereAttribute("inquiry", randomOffer.inquiry); 
+          offers.selectWhereAttribute("description", randomOffer.description); 
       expect(selectedOffers.isEmpty, isFalse); 
       expect(selectedOffers.source?.isEmpty, isFalse); 
       var offersCount = offers.length; 
  
       var offer = Offer(offers.concept); 
-      offer.id = 'hat'; 
-      offer.inquiry = 'highway'; 
-      offer.provider = 'beach'; 
-      offer.description = 'down'; 
-      offer.deliveryTime = 'sin'; 
-      offer.attachments = 'software'; 
-      offer.status = 'corner'; 
+      offer.description = 'economy'; 
+      offer.deliveryTime = 'grading'; 
+      offer.status = 'table'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 20.883956982802555; 
+      offer.price = 97.59717753513524; 
       var added = selectedOffers.add(offer); 
       expect(added, isTrue); 
       expect(offers.length, equals(++offersCount)); 
@@ -164,7 +146,7 @@ void testSomManagerOffers(
     test("Select offers by attribute, then remove", () { 
       var randomOffer = offers.random(); 
       var selectedOffers = 
-          offers.selectWhereAttribute("inquiry", randomOffer.inquiry); 
+          offers.selectWhereAttribute("description", randomOffer.description); 
       expect(selectedOffers.isEmpty, isFalse); 
       expect(selectedOffers.source?.isEmpty, isFalse); 
       var offersCount = offers.length; 
@@ -180,12 +162,19 @@ void testSomManagerOffers(
     }); 
  
     test("Sort offers", () { 
+      // no id attribute 
+      // add compareTo method in the specific Offer class 
+      /* 
       offers.sort(); 
  
       //offers.display(title: "Sort offers"); 
+      */ 
     }); 
  
     test("Order offers", () { 
+      // no id attribute 
+      // add compareTo method in the specific Offer class 
+      /* 
       var orderedOffers = offers.order(); 
       expect(orderedOffers.isEmpty, isFalse); 
       expect(orderedOffers.length, equals(offers.length)); 
@@ -194,6 +183,7 @@ void testSomManagerOffers(
       expect(orderedOffers, isNot(same(offers))); 
  
       //orderedOffers.display(title: "Order offers"); 
+      */ 
     }); 
  
     test("Copy offers", () { 
@@ -224,46 +214,22 @@ void testSomManagerOffers(
     }); 
  
     test("Update offer id with try", () { 
-      var randomOffer = offers.random(); 
-      var beforeUpdate = randomOffer.id; 
-      try { 
-        randomOffer.id = 'edition'; 
-      } on UpdateException catch (e) { 
-        expect(randomOffer.id, equals(beforeUpdate)); 
-      } 
+      // no id attribute 
     }); 
  
     test("Update offer id without try", () { 
-      var randomOffer = offers.random(); 
-      var beforeUpdateValue = randomOffer.id; 
-      expect(() => randomOffer.id = 'car', throws); 
-      expect(randomOffer.id, equals(beforeUpdateValue)); 
+      // no id attribute 
     }); 
  
     test("Update offer id with success", () { 
-      var randomOffer = offers.random(); 
-      var afterUpdateEntity = randomOffer.copy(); 
-      var attribute = randomOffer.concept.attributes.singleWhereCode("id"); 
-      expect(attribute?.update, isFalse); 
-      attribute?.update = true; 
-      afterUpdateEntity.id = 'beach'; 
-      expect(afterUpdateEntity.id, equals('beach')); 
-      attribute?.update = false; 
-      var updated = offers.update(randomOffer, afterUpdateEntity); 
-      expect(updated, isTrue); 
- 
-      var entity = offers.singleWhereAttributeId("id", 'beach'); 
-      expect(entity, isNotNull); 
-      expect(entity!.id, equals('beach')); 
- 
-      //offers.display("After update offer id"); 
+      // no id attribute 
     }); 
  
     test("Update offer non id attribute with failure", () { 
       var randomOffer = offers.random(); 
       var afterUpdateEntity = randomOffer.copy(); 
-      afterUpdateEntity.inquiry = 'cash'; 
-      expect(afterUpdateEntity.inquiry, equals('cash')); 
+      afterUpdateEntity.description = 'secretary'; 
+      expect(afterUpdateEntity.description, equals('secretary')); 
       // offers.update can only be used if oid, code or id is set. 
       expect(() => offers.update(randomOffer, afterUpdateEntity), throws); 
     }); 
@@ -276,45 +242,22 @@ void testSomManagerOffers(
       expect(randomOffer, equals(randomOfferCopy)); 
       expect(randomOffer.oid, equals(randomOfferCopy.oid)); 
       expect(randomOffer.code, equals(randomOfferCopy.code)); 
-      expect(randomOffer.id, equals(randomOfferCopy.id)); 
-      expect(randomOffer.inquiry, equals(randomOfferCopy.inquiry)); 
-      expect(randomOffer.provider, equals(randomOfferCopy.provider)); 
       expect(randomOffer.description, equals(randomOfferCopy.description)); 
       expect(randomOffer.deliveryTime, equals(randomOfferCopy.deliveryTime)); 
-      expect(randomOffer.attachments, equals(randomOfferCopy.attachments)); 
       expect(randomOffer.status, equals(randomOfferCopy.status)); 
       expect(randomOffer.expirationDate, equals(randomOfferCopy.expirationDate)); 
       expect(randomOffer.price, equals(randomOfferCopy.price)); 
  
-      expect(randomOffer.id, isNotNull); 
-      expect(randomOfferCopy.id, isNotNull); 
-      expect(randomOffer.id, equals(randomOfferCopy.id)); 
- 
-      var idsEqual = false; 
-      if (randomOffer.id == randomOfferCopy.id) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
- 
-      idsEqual = false; 
-      if (randomOffer.id!.equals(randomOfferCopy.id!)) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
     }); 
  
     test("offer action undo and redo", () { 
       var offerCount = offers.length; 
       var offer = Offer(offers.concept); 
-        offer.id = 'brad'; 
-      offer.inquiry = 'consciousness'; 
-      offer.provider = 'architecture'; 
-      offer.description = 'fascination'; 
-      offer.deliveryTime = 'park'; 
-      offer.attachments = 'flower'; 
-      offer.status = 'beans'; 
+        offer.description = 'girl'; 
+      offer.deliveryTime = 'feeling'; 
+      offer.status = 'mind'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 74.11150649000213; 
+      offer.price = 3.803801149624575; 
     var offerInquiry = inquiries.random(); 
     offer.inquiry = offerInquiry; 
     var offerProvider = providerCriterias.random(); 
@@ -340,15 +283,11 @@ void testSomManagerOffers(
     test("offer session undo and redo", () { 
       var offerCount = offers.length; 
       var offer = Offer(offers.concept); 
-        offer.id = 'performance'; 
-      offer.inquiry = 'enquiry'; 
-      offer.provider = 'performance'; 
-      offer.description = 'enquiry'; 
-      offer.deliveryTime = 'answer'; 
-      offer.attachments = 'mile'; 
-      offer.status = 'dinner'; 
+        offer.description = 'big'; 
+      offer.deliveryTime = 'rice'; 
+      offer.status = 'slate'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 11.484796529481722; 
+      offer.price = 28.328045740692108; 
     var offerInquiry = inquiries.random(); 
     offer.inquiry = offerInquiry; 
     var offerProvider = providerCriterias.random(); 
@@ -373,14 +312,14 @@ void testSomManagerOffers(
  
     test("Offer update undo and redo", () { 
       var offer = offers.random(); 
-      var action = SetAttributeCommand(session, offer, "inquiry", 'debt'); 
+      var action = SetAttributeCommand(session, offer, "description", 'understanding'); 
       action.doIt(); 
  
       session.past.undo(); 
-      expect(offer.inquiry, equals(action.before)); 
+      expect(offer.description, equals(action.before)); 
  
       session.past.redo(); 
-      expect(offer.inquiry, equals(action.after)); 
+      expect(offer.description, equals(action.after)); 
     }); 
  
     test("Offer action with multiple undos and redos", () { 
@@ -474,15 +413,11 @@ void testSomManagerOffers(
  
       somDomain.startCommandReaction(reaction); 
       var offer = Offer(offers.concept); 
-        offer.id = 'salad'; 
-      offer.inquiry = 'agreement'; 
-      offer.provider = 'home'; 
-      offer.description = 'dvd'; 
-      offer.deliveryTime = 'chairman'; 
-      offer.attachments = 'effort'; 
-      offer.status = 'plate'; 
+        offer.description = 'river'; 
+      offer.deliveryTime = 'theme'; 
+      offer.status = 'point'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 43.032426347579914; 
+      offer.price = 83.61989477545104; 
     var offerInquiry = inquiries.random(); 
     offer.inquiry = offerInquiry; 
     var offerProvider = providerCriterias.random(); 
@@ -501,7 +436,7 @@ void testSomManagerOffers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, offer, "inquiry", 'brad'); 
+        session, offer, "description", 'training'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

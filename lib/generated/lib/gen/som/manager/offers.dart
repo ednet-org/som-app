@@ -23,23 +23,11 @@ abstract class OfferGen extends Entity<Offer> {
   ProviderCriteria get provider => getParent("provider") as ProviderCriteria; 
   void set provider(ProviderCriteria p) { setParent("provider", p); } 
   
-  String get id => getAttribute("id"); 
-  void set id(String a) { setAttribute("id", a); } 
-  
-  String get inquiry => getAttribute("inquiry"); 
-  void set inquiry(String a) { setAttribute("inquiry", a); } 
-  
-  String get provider => getAttribute("provider"); 
-  void set provider(String a) { setAttribute("provider", a); } 
-  
   String get description => getAttribute("description"); 
   void set description(String a) { setAttribute("description", a); } 
   
   String get deliveryTime => getAttribute("deliveryTime"); 
   void set deliveryTime(String a) { setAttribute("deliveryTime", a); } 
-  
-  String get attachments => getAttribute("attachments"); 
-  void set attachments(String a) { setAttribute("attachments", a); } 
   
   String get status => getAttribute("status"); 
   void set status(String a) { setAttribute("status", a); } 

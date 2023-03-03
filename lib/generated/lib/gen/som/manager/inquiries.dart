@@ -23,9 +23,6 @@ abstract class InquiryGen extends Entity<Inquiry> {
   User get buyer => getParent("buyer") as User; 
   void set buyer(User p) { setParent("buyer", p); } 
   
-  String get id => getAttribute("id"); 
-  void set id(String a) { setAttribute("id", a); } 
-  
   String get title => getAttribute("title"); 
   void set title(String a) { setAttribute("title", a); } 
   
@@ -44,20 +41,11 @@ abstract class InquiryGen extends Entity<Inquiry> {
   DateTime get expirationDate => getAttribute("expirationDate"); 
   void set expirationDate(DateTime a) { setAttribute("expirationDate", a); } 
   
-  String get buyer => getAttribute("buyer"); 
-  void set buyer(String a) { setAttribute("buyer", a); } 
-  
   String get deliveryLocation => getAttribute("deliveryLocation"); 
   void set deliveryLocation(String a) { setAttribute("deliveryLocation", a); } 
   
   String get providerCriteria => getAttribute("providerCriteria"); 
   void set providerCriteria(String a) { setAttribute("providerCriteria", a); } 
-  
-  String get attachments => getAttribute("attachments"); 
-  void set attachments(String a) { setAttribute("attachments", a); } 
-  
-  String get offers => getAttribute("offers"); 
-  void set offers(String a) { setAttribute("offers", a); } 
   
   String get status => getAttribute("status"); 
   void set status(String a) { setAttribute("status", a); } 

@@ -1,0 +1,88 @@
+{
+  "width": 990,
+  "lines": [
+    {
+      "box1Name": "Category",
+      "box2Name": "Tag",
+      "box1box2Name": "tag",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "category",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "twin",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "Category",
+      "box2Name": "Tag",
+      "box1box2Name": "category",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "tag",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "twin",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    }
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Category",
+      "entry": false,
+      "x": 107,
+      "y": 175,
+      "width": 222,
+      "height": 258,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "title",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Tag",
+      "entry": false,
+      "x": 107,
+      "y": 175,
+      "width": 222,
+      "height": 258,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "title",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

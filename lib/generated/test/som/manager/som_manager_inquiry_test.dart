@@ -73,17 +73,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Add inquiry unique error", () { 
-      var inquiryConcept = inquiries.concept; 
-      var inquiryCount = inquiries.length; 
-      var inquiry = Inquiry(inquiryConcept); 
-      var randomInquiry = inquiries.random(); 
-      inquiry.id = randomInquiry.id; 
-      var added = inquiries.add(inquiry); 
-      expect(added, isFalse); 
-      expect(inquiries.length, equals(inquiryCount)); 
-      expect(inquiries.exceptions.length, greaterThan(0)); 
- 
-      inquiries.exceptions.display(title: "Add inquiry unique error"); 
+      // no id attribute 
     }); 
  
     test("Not found inquiry by oid", () { 
@@ -100,11 +90,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Find inquiry by attribute id", () { 
-      var randomInquiry = inquiries.random(); 
-      var inquiry = 
-          inquiries.singleWhereAttributeId("id", randomInquiry.id); 
-      expect(inquiry, isNotNull); 
-      expect(inquiry!.id, equals(randomInquiry.id)); 
+      // no id attribute 
     }); 
  
     test("Find inquiry by required attribute", () { 
@@ -143,19 +129,15 @@ void testSomManagerInquiries(
       var inquiriesCount = inquiries.length; 
  
       var inquiry = Inquiry(inquiries.concept); 
-      inquiry.id = 'winter'; 
-      inquiry.title = 'kids'; 
-      inquiry.description = 'up'; 
-      inquiry.category = 'money'; 
-      inquiry.branch = 'observation'; 
+      inquiry.title = 'agile'; 
+      inquiry.description = 'tension'; 
+      inquiry.category = 'college'; 
+      inquiry.branch = 'umbrella'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.buyer = 'algorithm'; 
-      inquiry.deliveryLocation = 'letter'; 
-      inquiry.providerCriteria = 'place'; 
-      inquiry.attachments = 'craving'; 
-      inquiry.offers = 'series'; 
-      inquiry.status = 'lake'; 
+      inquiry.deliveryLocation = 'room'; 
+      inquiry.providerCriteria = 'call'; 
+      inquiry.status = 'call'; 
       var added = selectedInquiries.add(inquiry); 
       expect(added, isTrue); 
       expect(inquiries.length, equals(++inquiriesCount)); 
@@ -184,12 +166,19 @@ void testSomManagerInquiries(
     }); 
  
     test("Sort inquiries", () { 
+      // no id attribute 
+      // add compareTo method in the specific Inquiry class 
+      /* 
       inquiries.sort(); 
  
       //inquiries.display(title: "Sort inquiries"); 
+      */ 
     }); 
  
     test("Order inquiries", () { 
+      // no id attribute 
+      // add compareTo method in the specific Inquiry class 
+      /* 
       var orderedInquiries = inquiries.order(); 
       expect(orderedInquiries.isEmpty, isFalse); 
       expect(orderedInquiries.length, equals(inquiries.length)); 
@@ -198,6 +187,7 @@ void testSomManagerInquiries(
       expect(orderedInquiries, isNot(same(inquiries))); 
  
       //orderedInquiries.display(title: "Order inquiries"); 
+      */ 
     }); 
  
     test("Copy inquiries", () { 
@@ -207,8 +197,6 @@ void testSomManagerInquiries(
       expect(copiedInquiries, isNot(same(inquiries))); 
       copiedInquiries.forEach((e) => 
         expect(e, equals(inquiries.singleWhereOid(e.oid)))); 
-      copiedInquiries.forEach((e) => 
-        expect(e, isNot(same(inquiries.singleWhereId(e.id!))))); 
  
       //copiedInquiries.display(title: "Copy inquiries"); 
     }); 
@@ -228,46 +216,22 @@ void testSomManagerInquiries(
     }); 
  
     test("Update inquiry id with try", () { 
-      var randomInquiry = inquiries.random(); 
-      var beforeUpdate = randomInquiry.id; 
-      try { 
-        randomInquiry.id = 'knowledge'; 
-      } on UpdateException catch (e) { 
-        expect(randomInquiry.id, equals(beforeUpdate)); 
-      } 
+      // no id attribute 
     }); 
  
     test("Update inquiry id without try", () { 
-      var randomInquiry = inquiries.random(); 
-      var beforeUpdateValue = randomInquiry.id; 
-      expect(() => randomInquiry.id = 'season', throws); 
-      expect(randomInquiry.id, equals(beforeUpdateValue)); 
+      // no id attribute 
     }); 
  
     test("Update inquiry id with success", () { 
-      var randomInquiry = inquiries.random(); 
-      var afterUpdateEntity = randomInquiry.copy(); 
-      var attribute = randomInquiry.concept.attributes.singleWhereCode("id"); 
-      expect(attribute?.update, isFalse); 
-      attribute?.update = true; 
-      afterUpdateEntity.id = 'end'; 
-      expect(afterUpdateEntity.id, equals('end')); 
-      attribute?.update = false; 
-      var updated = inquiries.update(randomInquiry, afterUpdateEntity); 
-      expect(updated, isTrue); 
- 
-      var entity = inquiries.singleWhereAttributeId("id", 'end'); 
-      expect(entity, isNotNull); 
-      expect(entity!.id, equals('end')); 
- 
-      //inquiries.display("After update inquiry id"); 
+      // no id attribute 
     }); 
  
     test("Update inquiry non id attribute with failure", () { 
       var randomInquiry = inquiries.random(); 
       var afterUpdateEntity = randomInquiry.copy(); 
-      afterUpdateEntity.title = 'school'; 
-      expect(afterUpdateEntity.title, equals('school')); 
+      afterUpdateEntity.title = 'cardboard'; 
+      expect(afterUpdateEntity.title, equals('cardboard')); 
       // inquiries.update can only be used if oid, code or id is set. 
       expect(() => inquiries.update(randomInquiry, afterUpdateEntity), throws); 
     }); 
@@ -280,53 +244,30 @@ void testSomManagerInquiries(
       expect(randomInquiry, equals(randomInquiryCopy)); 
       expect(randomInquiry.oid, equals(randomInquiryCopy.oid)); 
       expect(randomInquiry.code, equals(randomInquiryCopy.code)); 
-      expect(randomInquiry.id, equals(randomInquiryCopy.id)); 
       expect(randomInquiry.title, equals(randomInquiryCopy.title)); 
       expect(randomInquiry.description, equals(randomInquiryCopy.description)); 
       expect(randomInquiry.category, equals(randomInquiryCopy.category)); 
       expect(randomInquiry.branch, equals(randomInquiryCopy.branch)); 
       expect(randomInquiry.publishingDate, equals(randomInquiryCopy.publishingDate)); 
       expect(randomInquiry.expirationDate, equals(randomInquiryCopy.expirationDate)); 
-      expect(randomInquiry.buyer, equals(randomInquiryCopy.buyer)); 
       expect(randomInquiry.deliveryLocation, equals(randomInquiryCopy.deliveryLocation)); 
       expect(randomInquiry.providerCriteria, equals(randomInquiryCopy.providerCriteria)); 
-      expect(randomInquiry.attachments, equals(randomInquiryCopy.attachments)); 
-      expect(randomInquiry.offers, equals(randomInquiryCopy.offers)); 
       expect(randomInquiry.status, equals(randomInquiryCopy.status)); 
  
-      expect(randomInquiry.id, isNotNull); 
-      expect(randomInquiryCopy.id, isNotNull); 
-      expect(randomInquiry.id, equals(randomInquiryCopy.id)); 
- 
-      var idsEqual = false; 
-      if (randomInquiry.id == randomInquiryCopy.id) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
- 
-      idsEqual = false; 
-      if (randomInquiry.id!.equals(randomInquiryCopy.id!)) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
     }); 
  
     test("inquiry action undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.id = 'home'; 
-      inquiry.title = 'corner'; 
-      inquiry.description = 'series'; 
-      inquiry.category = 'judge'; 
-      inquiry.branch = 'college'; 
+        inquiry.title = 'cloud'; 
+      inquiry.description = 'hospital'; 
+      inquiry.category = 'explanation'; 
+      inquiry.branch = 'table'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.buyer = 'seed'; 
-      inquiry.deliveryLocation = 'book'; 
-      inquiry.providerCriteria = 'tax'; 
-      inquiry.attachments = 'milk'; 
-      inquiry.offers = 'algorithm'; 
-      inquiry.status = 'mind'; 
+      inquiry.deliveryLocation = 'electronic'; 
+      inquiry.providerCriteria = 'east'; 
+      inquiry.status = 'letter'; 
     var inquiryBuyer = users.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -349,19 +290,15 @@ void testSomManagerInquiries(
     test("inquiry session undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.id = 'test'; 
-      inquiry.title = 'measuremewnt'; 
-      inquiry.description = 'capacity'; 
-      inquiry.category = 'body'; 
-      inquiry.branch = 'east'; 
+        inquiry.title = 'wave'; 
+      inquiry.description = 'grading'; 
+      inquiry.category = 'present'; 
+      inquiry.branch = 'universe'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.buyer = 'camping'; 
-      inquiry.deliveryLocation = 'time'; 
-      inquiry.providerCriteria = 'present'; 
-      inquiry.attachments = 'observation'; 
-      inquiry.offers = 'course'; 
-      inquiry.status = 'vessel'; 
+      inquiry.deliveryLocation = 'lunch'; 
+      inquiry.providerCriteria = 'fascination'; 
+      inquiry.status = 'milk'; 
     var inquiryBuyer = users.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -383,7 +320,7 @@ void testSomManagerInquiries(
  
     test("Inquiry update undo and redo", () { 
       var inquiry = inquiries.random(); 
-      var action = SetAttributeCommand(session, inquiry, "title", 'picture'); 
+      var action = SetAttributeCommand(session, inquiry, "title", 'rice'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -484,19 +421,15 @@ void testSomManagerInquiries(
  
       somDomain.startCommandReaction(reaction); 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.id = 'plate'; 
-      inquiry.title = 'beach'; 
-      inquiry.description = 'tension'; 
-      inquiry.category = 'beer'; 
-      inquiry.branch = 'craving'; 
+        inquiry.title = 'meter'; 
+      inquiry.description = 'big'; 
+      inquiry.category = 'price'; 
+      inquiry.branch = 'vacation'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.buyer = 'entrance'; 
-      inquiry.deliveryLocation = 'do'; 
-      inquiry.providerCriteria = 'guest'; 
-      inquiry.attachments = 'hell'; 
-      inquiry.offers = 'photo'; 
-      inquiry.status = 'river'; 
+      inquiry.deliveryLocation = 'video'; 
+      inquiry.providerCriteria = 'debt'; 
+      inquiry.status = 'place'; 
     var inquiryBuyer = users.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -512,7 +445,7 @@ void testSomManagerInquiries(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, inquiry, "title", 'book'); 
+        session, inquiry, "title", 'cabinet'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

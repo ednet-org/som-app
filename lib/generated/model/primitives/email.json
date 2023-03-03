@@ -1,0 +1,17 @@
+{
+  "width": 990,
+  "lines": [
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Email",
+      "entry": false,
+      "x": 775,
+      "y": 364,
+      "width": 105,
+      "height": 78,
+      "items": []
+    }
+  ]
+}

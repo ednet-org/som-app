@@ -1,0 +1,147 @@
+{
+  "width": 990,
+  "lines": [
+    {
+      "box1Name": "Company",
+      "box2Name": "Category",
+      "box1box2Name": "categories",
+      "box1box2Min": "1",
+      "box1box2Max": "N",
+      "box2box1Name": "companies",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "twin",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "Category",
+      "box2Name": "Company",
+      "box1box2Name": "companies",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "categories",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "twin",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    }
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Company",
+      "entry": true,
+      "x": 775,
+      "y": 79,
+      "width": 133,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "role",
+          "type": "CompanyRoleAtSom",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "address",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "uidNumber",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "registrationNumber",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "numberOfEmployees",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 6,
+          "category": "attribute",
+          "name": "websiteUrl",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "CompanyRoleAtSom",
+      "entry": false,
+      "x": 995,
+      "y": 79,
+      "width": 164,
+      "height": 91,
+      "items": []
+    },
+    {
+      "name": "CompanyType",
+      "entry": false,
+      "x": 775,
+      "y": 490,
+      "width": 133,
+      "height": 103,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "type",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "CompanySize",
+      "entry": false,
+      "x": 995,
+      "y": 490,
+      "width": 164,
+      "height": 103,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "size",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

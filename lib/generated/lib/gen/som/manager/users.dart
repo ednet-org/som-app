@@ -23,32 +23,14 @@ abstract class UserGen extends Entity<User> {
   Company get company => getParent("company") as Company; 
   void set company(Company p) { setParent("company", p); } 
   
-  Reference get companyReference => getReference("company") as Reference; 
-  void set companyReference(Reference reference) { setReference("company", reference); } 
-  
-  Company get company => getParent("company") as Company; 
-  void set company(Company p) { setParent("company", p); } 
-  
-  String get id => getAttribute("id"); 
-  void set id(String a) { setAttribute("id", a); } 
-  
   String get username => getAttribute("username"); 
   void set username(String a) { setAttribute("username", a); } 
-  
-  String get company => getAttribute("company"); 
-  void set company(String a) { setAttribute("company", a); } 
   
   String get roleAtSom => getAttribute("roleAtSom"); 
   void set roleAtSom(String a) { setAttribute("roleAtSom", a); } 
   
   String get roleAtCompany => getAttribute("roleAtCompany"); 
   void set roleAtCompany(String a) { setAttribute("roleAtCompany", a); } 
-  
-  String get phoneNumber => getAttribute("phoneNumber"); 
-  void set phoneNumber(String a) { setAttribute("phoneNumber", a); } 
-  
-  String get email => getAttribute("email"); 
-  void set email(String a) { setAttribute("email", a); } 
   
   Inquiries get inquiries => getChild("inquiries") as Inquiries; 
   

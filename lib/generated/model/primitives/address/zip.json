@@ -1,0 +1,26 @@
+{
+  "width": 500,
+  "height": 500,
+  "boxes": [
+    {
+      "name": "ZIP",
+      "entry": false,
+      "x": 250,
+      "y": 200,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "code",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "lines": [
+  ]
+}

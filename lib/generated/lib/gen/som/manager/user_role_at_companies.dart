@@ -8,9 +8,6 @@ abstract class UserRoleAtCompanyGen extends Entity<UserRoleAtCompany> {
     this.concept = concept; 
   } 
  
-  String get id => getAttribute("id"); 
-  void set id(String a) { setAttribute("id", a); } 
-  
   String get role => getAttribute("role"); 
   void set role(String a) { setAttribute("role", a); } 
   

@@ -1,0 +1,206 @@
+{
+  "width": 990,
+  "lines": [
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "User",
+      "box1box2Name": "buyer",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "inquiries",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "ProviderCriteria",
+      "box1box2Name": "inquiry",
+      "box1box2Min": "0",
+      "box1box2Max": "1",
+      "box2box1Name": "provider",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "Attachment",
+      "box1box2Name": "attachments",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "inquiry",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "Offer",
+      "box1box2Name": "offers",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "inquiry",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    }
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Inquiry",
+      "entry": false,
+      "x": 107,
+      "y": 175,
+      "width": 222,
+      "height": 258,
+      "items": [
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "title",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "category",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "branch",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 6,
+          "category": "attribute",
+          "name": "publishingDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "expirationDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 9,
+          "category": "attribute",
+          "name": "deliveryLocation",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 10,
+          "category": "relationship",
+          "name": "providerCriteria",
+          "type": "ProviderCriteria",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 13,
+          "name": "status",
+          "category": "attribute",
+          "type": "InquiryStatus",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "InquiryStatus",
+      "entry": false,
+      "x": 107,
+      "y": 677,
+      "width": 222,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "status",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "ProviderCriteria",
+      "entry": false,
+      "x": 107,
+      "y": 677,
+      "width": 222,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "deliveryLocation",
+          "type": "Address",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "radius",
+          "type": "int",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "companyType",
+          "type": "CompanyType",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "companySize",
+          "type": "CompanySize",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

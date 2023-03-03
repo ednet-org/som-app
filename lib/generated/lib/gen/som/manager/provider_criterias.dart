@@ -20,6 +20,9 @@ abstract class ProviderCriteriaGen extends Entity<ProviderCriteria> {
   String get deliveryLocation => getAttribute("deliveryLocation"); 
   void set deliveryLocation(String a) { setAttribute("deliveryLocation", a); } 
   
+  int get radius => getAttribute("radius"); 
+  void set radius(int a) { setAttribute("radius", a); } 
+  
   String get companyType => getAttribute("companyType"); 
   void set companyType(String a) { setAttribute("companyType", a); } 
   
