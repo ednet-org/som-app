@@ -11,17 +11,17 @@ abstract class OfferGen extends Entity<Offer> {
     setChild("attachments", Attachments(attachmentConcept!)); 
   } 
  
+  Reference get providerReference => getReference("provider") as Reference; 
+  void set providerReference(Reference reference) { setReference("provider", reference); } 
+  
+  Provider get provider => getParent("provider") as Provider; 
+  void set provider(Provider p) { setParent("provider", p); } 
+  
   Reference get inquiryReference => getReference("inquiry") as Reference; 
   void set inquiryReference(Reference reference) { setReference("inquiry", reference); } 
   
   Inquiry get inquiry => getParent("inquiry") as Inquiry; 
   void set inquiry(Inquiry p) { setParent("inquiry", p); } 
-  
-  Reference get providerReference => getReference("provider") as Reference; 
-  void set providerReference(Reference reference) { setReference("provider", reference); } 
-  
-  ProviderCriteria get provider => getParent("provider") as ProviderCriteria; 
-  void set provider(ProviderCriteria p) { setParent("provider", p); } 
   
   String get description => getAttribute("description"); 
   void set description(String a) { setAttribute("description", a); } 

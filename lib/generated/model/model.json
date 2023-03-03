@@ -275,7 +275,7 @@
     },
     {
       "name": "Inquiry",
-      "entry": false,
+      "entry": true,
       "x": 107,
       "y": 175,
       "width": 222,
@@ -528,7 +528,7 @@
     },
     {
       "name": "User",
-      "entry": false,
+      "entry": true,
       "x": 545,
       "y": 164,
       "width": 157,

@@ -48,7 +48,7 @@
   "boxes": [
     {
       "name": "User",
-      "entry": false,
+      "entry": true,
       "x": 545,
       "y": 164,
       "width": 157,

@@ -4,7 +4,19 @@ part of som_manager;
 // http://jsonformatter.curiousconcept.com/ 
  
 // lib/som/manager/json/data.dart 
+var somManagerProviderEntry = r""" 
+ 
+"""; 
+ 
+var somManagerInquiryEntry = r""" 
+ 
+"""; 
+ 
 var somManagerCompanyEntry = r""" 
+ 
+"""; 
+ 
+var somManagerUserEntry = r""" 
  
 """; 
  

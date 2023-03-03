@@ -77,6 +77,9 @@ part "som/manager/tags.dart";
 part "som/manager/registrations.dart";
 
 
+part "som/manager/providers.dart";
+
+
 part "som/manager/inquiries.dart";
 
 
@@ -141,6 +144,9 @@ part "gen/som/manager/tags.dart";
 
 
 part "gen/som/manager/registrations.dart";
+
+
+part "gen/som/manager/providers.dart";
 
 
 part "gen/som/manager/inquiries.dart";

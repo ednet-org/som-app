@@ -264,8 +264,26 @@ var somManagerModelJson = r'''
       ]
     },
     {
+      "name": "Provider",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "company",
+          "type": "Company",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    },
+    {
       "name": "Inquiry",
-      "entry": false,
+      "entry": true,
       "x": 107,
       "y": 175,
       "width": 222,
@@ -518,7 +536,7 @@ var somManagerModelJson = r'''
     },
     {
       "name": "User",
-      "entry": false,
+      "entry": true,
       "x": 545,
       "y": 164,
       "width": 157,
@@ -672,6 +690,20 @@ var somManagerModelJson = r'''
       "box2box1Id": false
     },
     {
+      "box1Name": "Offer",
+      "box2Name": "Provider",
+      "box1box2Name": "provider",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "offers",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
       "box1Name": "Inquiry",
       "box2Name": "User",
       "box1box2Name": "buyer",
@@ -796,20 +828,6 @@ var somManagerModelJson = r'''
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": true
-    },
-    {
-      "box1Name": "Offer",
-      "box2Name": "ProviderCriteria",
-      "box1box2Name": "provider",
-      "box1box2Min": "1",
-      "box1box2Max": "1",
-      "box2box1Name": "offers",
-      "box2box1Min": "0",
-      "box2box1Max": "N",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
     }
   ]
 }

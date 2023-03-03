@@ -9,8 +9,14 @@ class ManagerEntries extends ModelEntries {
   Map<String, Entities> newEntries() { 
     var entries = Map<String, Entities>(); 
     var concept; 
+    concept = model.concepts.singleWhereCode("Provider"); 
+    entries["Provider"] = Providers(concept); 
+    concept = model.concepts.singleWhereCode("Inquiry"); 
+    entries["Inquiry"] = Inquiries(concept); 
     concept = model.concepts.singleWhereCode("Company"); 
     entries["Company"] = Companies(concept); 
+    concept = model.concepts.singleWhereCode("User"); 
+    entries["User"] = Users(concept); 
     concept = model.concepts.singleWhereCode("Buyer"); 
     entries["Buyer"] = Buyers(concept); 
     concept = model.concepts.singleWhereCode("Offer"); 
@@ -55,6 +61,9 @@ class ManagerEntries extends ModelEntries {
     } 
     if (concept.code == "Registration") { 
       return Registrations(concept); 
+    } 
+    if (concept.code == "Provider") { 
+      return Providers(concept); 
     } 
     if (concept.code == "Inquiry") { 
       return Inquiries(concept); 
@@ -130,6 +139,9 @@ class ManagerEntries extends ModelEntries {
     if (concept.code == "Registration") { 
       return Registration(concept); 
     } 
+    if (concept.code == "Provider") { 
+      return Provider(concept); 
+    } 
     if (concept.code == "Inquiry") { 
       return Inquiry(concept); 
     } 
@@ -166,7 +178,10 @@ class ManagerEntries extends ModelEntries {
     return null; 
   } 
  
+  Providers get providers => getEntry("Provider") as Providers; 
+  Inquiries get inquiries => getEntry("Inquiry") as Inquiries; 
   Companies get companies => getEntry("Company") as Companies; 
+  Users get users => getEntry("User") as Users; 
   Buyers get buyers => getEntry("Buyer") as Buyers; 
   Offers get offers => getEntry("Offer") as Offers; 
  

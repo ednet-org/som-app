@@ -6,9 +6,6 @@ abstract class ProviderCriteriaGen extends Entity<ProviderCriteria> {
  
   ProviderCriteriaGen(Concept concept) { 
     this.concept = concept; 
-    Concept? offerConcept = concept.model.concepts.singleWhereCode("Offer"); 
-    assert(offerConcept!= null); 
-    setChild("offers", Offers(offerConcept!)); 
   } 
  
   Reference get providerReference => getReference("provider") as Reference; 
@@ -28,8 +25,6 @@ abstract class ProviderCriteriaGen extends Entity<ProviderCriteria> {
   
   String get companySize => getAttribute("companySize"); 
   void set companySize(String a) { setAttribute("companySize", a); } 
-  
-  Offers get offers => getChild("offers") as Offers; 
   
   ProviderCriteria newEntity() => ProviderCriteria(concept); 
   ProviderCriterias newEntities() => ProviderCriterias(concept); 
