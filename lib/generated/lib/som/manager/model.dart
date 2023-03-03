@@ -34,10 +34,10 @@ class ManagerModel extends ManagerEntries {
   }
 
   void init() {
+    initCompanies();
     initUsers();
     initBuyers();
     initProviders();
-    initCompanies();
     initInquiries();
     initOffers();
   }

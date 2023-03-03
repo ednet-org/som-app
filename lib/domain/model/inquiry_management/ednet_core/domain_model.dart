@@ -1,7 +1,7 @@
 import 'package:ednet_core/ednet_core.dart';
 
 class Inquiry extends Entity<Inquiry> {
-  String get name => code;
+  String get name => code ?? 'Inquiry';
 
   set name(String name) => code = name;
 
@@ -48,7 +48,7 @@ class Inquiry extends Entity<Inquiry> {
 }
 
 class Offer extends Entity<Offer> {
-  String get name => code;
+  String get name => code ?? 'Offer';
 
   set name(String name) => code = name;
 
@@ -73,7 +73,7 @@ class Offer extends Entity<Offer> {
 }
 
 class Company extends Entity<Company> {
-  String get name => code;
+  String get name => code ?? 'Company';
 
   set name(String name) => code = name;
 
@@ -110,7 +110,7 @@ class Company extends Entity<Company> {
 }
 
 class Branch extends Entity<Branch> {
-  String get name => code;
+  String get name => code ?? 'Branch';
 
   set name(String name) => code = name;
 
@@ -120,5 +120,5 @@ class Branch extends Entity<Branch> {
 }
 
 class Provider extends Entity<Provider> {
-  String get name => code;
+  String get name => code ?? 'Provider';
 }

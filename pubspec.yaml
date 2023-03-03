@@ -92,8 +92,8 @@ dependencies:
       url: git@gitlab.com:ednet/supernova-material.git
       ref: design_system
 
-  #  ednet_core:
-  #    path: ../../projects/ednet_core
+  ednet_core:
+    path: ../ednet/libs/cms/packages/ednet_core
   #  #    git:
   #  #      url: git@github.com:ednet-dev/ednet_core.git
   #  #      ref: main
