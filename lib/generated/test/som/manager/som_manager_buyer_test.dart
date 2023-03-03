@@ -361,7 +361,6 @@ void main() {
   ManagerModel managerModel =
       somDomain.getModelEntries("Manager") as ManagerModel;
   assert(managerModel != null);
-  managerModel.init();
   var buyers = managerModel.buyers;
   testSomManagerBuyers(somDomain, managerModel, buyers);
 }

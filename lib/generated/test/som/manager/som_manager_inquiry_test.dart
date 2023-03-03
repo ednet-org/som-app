@@ -128,6 +128,7 @@ void testSomManagerInquiries(SomDomain somDomain, ManagerModel managerModel,
 
       var inquiry = Inquiry(inquiries.concept);
       inquiry.title = 'heaven';
+      inquiry.buyer = users.random();
       inquiry.description = 'circle';
       inquiry.category = 'taxi';
       inquiry.branch = 'yellow';

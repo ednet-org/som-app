@@ -11,78 +11,17 @@ var somManagerModelJson = r'''
   "height": 1080,
   "boxes": [
     {
-      "name": "Email",
-      "entry": false,
-      "x": 775,
-      "y": 364,
-      "width": 105,
-      "height": 78,
-      "items": []
-    },
-    {
-      "name": "PhoneNumber",
-      "entry": false,
-      "x": 545,
-      "y": 364,
-      "width": 149,
-      "height": 78,
+      "name": "Offer",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
       "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "number",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "StreetDetails",
-      "entry": false,
-      "x": 250,
-      "y": 350,
-      "width": 150,
-      "height": 100,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "details",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "Address",
-      "entry": false,
-      "x": 0,
-      "y": 0,
-      "width": 200,
-      "height": 400,
-      "items": [
-        {
-          "sequence": 2,
-          "category": "attribute",
-          "name": "city",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 3,
-          "category": "attribute",
-          "name": "street",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
         {
           "sequence": 4,
           "category": "attribute",
-          "name": "number",
+          "name": "description",
           "type": "String",
           "essential": false,
           "sensitive": false
@@ -90,63 +29,112 @@ var somManagerModelJson = r'''
         {
           "sequence": 5,
           "category": "attribute",
-          "name": "zip",
+          "name": "deliveryTime",
           "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "status",
+          "type": "OfferStatus",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 8,
+          "category": "attribute",
+          "name": "expirationDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 9,
+          "category": "attribute",
+          "name": "price",
+          "type": "double",
           "essential": false,
           "sensitive": false
         }
       ]
     },
     {
-      "name": "ZIP",
-      "entry": false,
-      "x": 250,
-      "y": 200,
-      "width": 150,
-      "height": 100,
+      "name": "User",
+      "entry": true,
+      "x": 545,
+      "y": 164,
+      "width": 157,
+      "height": 125,
       "items": [
         {
-          "sequence": 1,
+          "sequence": 2,
           "category": "attribute",
-          "name": "code",
+          "name": "username",
           "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "roleAtSom",
+          "type": "CompanyRoleAtSom",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "roleAtCompany",
+          "type": "UserRoleAtCompany",
           "essential": true,
           "sensitive": false
         }
       ]
     },
     {
-      "name": "Street",
-      "entry": false,
-      "x": 250,
-      "y": 350,
-      "width": 150,
+      "name": "Buyer",
+      "entry": true,
+      "x": 0,
+      "y": 0,
+      "width": 100,
       "height": 100,
+      "items": []
+    },
+    {
+      "name": "UserRoleAtCompany",
+      "entry": false,
+      "x": 995,
+      "y": 246,
+      "width": 164,
+      "height": 91,
       "items": [
         {
-          "sequence": 1,
+          "sequence": 2,
           "category": "attribute",
-          "name": "name",
-          "type": "String",
+          "name": "role",
+          "type": "UserRole",
           "essential": true,
           "sensitive": false
         }
       ]
     },
     {
-      "name": "Country",
-      "entry": false,
-      "x": 250,
-      "y": 50,
-      "width": 150,
-      "height": 100,
+      "name": "Provider",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
       "items": [
         {
           "sequence": 1,
           "category": "attribute",
-          "name": "name",
-          "type": "String",
-          "essential": true,
+          "name": "company",
+          "type": "Company",
+          "essential": false,
           "sensitive": false
         }
       ]
@@ -246,6 +234,33 @@ var somManagerModelJson = r'''
       ]
     },
     {
+      "name": "PhoneNumber",
+      "entry": false,
+      "x": 545,
+      "y": 364,
+      "width": 149,
+      "height": 78,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "number",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Email",
+      "entry": false,
+      "x": 775,
+      "y": 364,
+      "width": 105,
+      "height": 78,
+      "items": []
+    },
+    {
       "name": "Registration",
       "entry": false,
       "x": 250,
@@ -264,19 +279,115 @@ var somManagerModelJson = r'''
       ]
     },
     {
-      "name": "Provider",
-      "entry": true,
-      "x": 335,
-      "y": 490,
-      "width": 157,
-      "height": 125,
+      "name": "Country",
+      "entry": false,
+      "x": 250,
+      "y": 50,
+      "width": 150,
+      "height": 100,
       "items": [
         {
           "sequence": 1,
           "category": "attribute",
-          "name": "company",
-          "type": "Company",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "entry": false,
+      "x": 0,
+      "y": 0,
+      "width": 200,
+      "height": 400,
+      "items": [
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "city",
+          "type": "String",
           "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "street",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "number",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "zip",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "StreetDetails",
+      "entry": false,
+      "x": 250,
+      "y": 350,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "details",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Street",
+      "entry": false,
+      "x": 250,
+      "y": 350,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "ZIP",
+      "entry": false,
+      "x": 250,
+      "y": 200,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "code",
+          "type": "String",
+          "essential": true,
           "sensitive": false
         }
       ]
@@ -533,132 +644,77 @@ var somManagerModelJson = r'''
           "sensitive": false
         }
       ]
-    },
-    {
-      "name": "User",
-      "entry": true,
-      "x": 545,
-      "y": 164,
-      "width": 157,
-      "height": 125,
-      "items": [
-        {
-          "sequence": 2,
-          "category": "attribute",
-          "name": "username",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 4,
-          "category": "attribute",
-          "name": "roleAtSom",
-          "type": "CompanyRoleAtSom",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 5,
-          "category": "attribute",
-          "name": "roleAtCompany",
-          "type": "UserRoleAtCompany",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "Buyer",
-      "entry": true,
-      "x": 0,
-      "y": 0,
-      "width": 100,
-      "height": 100,
-      "items": []
-    },
-    {
-      "name": "UserRoleAtCompany",
-      "entry": false,
-      "x": 995,
-      "y": 246,
-      "width": 164,
-      "height": 91,
-      "items": [
-        {
-          "sequence": 2,
-          "category": "attribute",
-          "name": "role",
-          "type": "UserRole",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "Offer",
-      "entry": true,
-      "x": 335,
-      "y": 490,
-      "width": 157,
-      "height": 125,
-      "items": [
-        {
-          "sequence": 4,
-          "category": "attribute",
-          "name": "description",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 5,
-          "category": "attribute",
-          "name": "deliveryTime",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 7,
-          "category": "attribute",
-          "name": "status",
-          "type": "OfferStatus",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 8,
-          "category": "attribute",
-          "name": "expirationDate",
-          "type": "DateTime",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 9,
-          "category": "attribute",
-          "name": "price",
-          "type": "double",
-          "essential": false,
-          "sensitive": false
-        }
-      ]
     }
   ],
   "lines": [
     {
-      "box1Name": "Address",
-      "box2Name": "Country",
-      "box1box2Name": "country",
+      "box1Name": "Offer",
+      "box2Name": "Attachment",
+      "box1box2Name": "attachments",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "offer",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "Company",
+      "box1box2Name": "company",
       "box1box2Min": "1",
       "box1box2Max": "1",
-      "box2box1Name": "addresses",
+      "box2box1Name": "employees",
       "box2box1Min": "0",
       "box2box1Max": "N",
       "category": "relationship",
       "internal": false,
-      "box1box2Id": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "PhoneNumber",
+      "box1box2Name": "phoneNumber",
+      "box1box2Min": "0",
+      "box1box2Max": "1",
+      "box2box1Name": "owner",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "Email",
+      "box1box2Name": "email",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "owner",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "Offer",
+      "box2Name": "Provider",
+      "box1box2Name": "provider",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "offers",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
       "box2box1Id": false
     },
     {
@@ -690,17 +746,17 @@ var somManagerModelJson = r'''
       "box2box1Id": false
     },
     {
-      "box1Name": "Offer",
-      "box2Name": "Provider",
-      "box1box2Name": "provider",
+      "box1Name": "Address",
+      "box2Name": "Country",
+      "box1box2Name": "country",
       "box1box2Min": "1",
       "box1box2Max": "1",
-      "box2box1Name": "offers",
+      "box2box1Name": "addresses",
       "box2box1Min": "0",
       "box2box1Max": "N",
       "category": "relationship",
       "internal": false,
-      "box1box2Id": true,
+      "box1box2Id": false,
       "box2box1Id": false
     },
     {
@@ -772,62 +828,6 @@ var somManagerModelJson = r'''
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": false
-    },
-    {
-      "box1Name": "User",
-      "box2Name": "Company",
-      "box1box2Name": "company",
-      "box1box2Min": "1",
-      "box1box2Max": "1",
-      "box2box1Name": "employees",
-      "box2box1Min": "0",
-      "box2box1Max": "N",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
-    },
-    {
-      "box1Name": "User",
-      "box2Name": "PhoneNumber",
-      "box1box2Name": "phoneNumber",
-      "box1box2Min": "0",
-      "box1box2Max": "1",
-      "box2box1Name": "owner",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
-    },
-    {
-      "box1Name": "User",
-      "box2Name": "Email",
-      "box1box2Name": "email",
-      "box1box2Min": "1",
-      "box1box2Max": "1",
-      "box2box1Name": "owner",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
-    },
-    {
-      "box1Name": "Offer",
-      "box2Name": "Attachment",
-      "box1box2Name": "attachments",
-      "box1box2Min": "0",
-      "box1box2Max": "N",
-      "box2box1Name": "offer",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": false,
-      "box2box1Id": true
     }
   ]
 }

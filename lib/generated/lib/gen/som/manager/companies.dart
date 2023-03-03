@@ -6,12 +6,12 @@ abstract class CompanyGen extends Entity<Company> {
  
   CompanyGen(Concept concept) { 
     this.concept = concept; 
-    Concept? categoryConcept = concept.model.concepts.singleWhereCode("Category"); 
-    assert(categoryConcept!= null); 
-    setChild("branches", Categories(categoryConcept!)); 
     Concept? userConcept = concept.model.concepts.singleWhereCode("User"); 
     assert(userConcept!= null); 
     setChild("employees", Users(userConcept!)); 
+    Concept? categoryConcept = concept.model.concepts.singleWhereCode("Category"); 
+    assert(categoryConcept!= null); 
+    setChild("branches", Categories(categoryConcept!)); 
   } 
  
   String get name => getAttribute("name"); 
@@ -35,9 +35,9 @@ abstract class CompanyGen extends Entity<Company> {
   String get websiteUrl => getAttribute("websiteUrl"); 
   void set websiteUrl(String a) { setAttribute("websiteUrl", a); } 
   
-  Categories get branches => getChild("branches") as Categories; 
-  
   Users get employees => getChild("employees") as Users; 
+  
+  Categories get branches => getChild("branches") as Categories; 
   
   Company newEntity() => Company(concept); 
   Companies newEntities() => Companies(concept); 
