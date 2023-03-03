@@ -1,0 +1,644 @@
+{
+  "width": 990,
+  "lines": [
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "User",
+      "box1box2Name": "buyer",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "inquiries",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "Company",
+      "box1box2Name": "company",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "employees",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "PhoneNumber",
+      "box1box2Name": "phoneNumber",
+      "box1box2Min": "0",
+      "box1box2Max": "1",
+      "box2box1Name": "owner",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "Email",
+      "box1box2Name": "email",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "owner",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "ProviderCriteria",
+      "box1box2Name": "inquiry",
+      "box1box2Min": "0",
+      "box1box2Max": "1",
+      "box2box1Name": "provider",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "Attachment",
+      "box1box2Name": "attachments",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "inquiry",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "Offer",
+      "box1box2Name": "offers",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "inquiry",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "User",
+      "box2Name": "Company",
+      "box1box2Name": "company",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "users",
+      "box2box1Min": "1",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Offer",
+      "box2Name": "Attachment",
+      "box1box2Name": "attachments",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "offer",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "Offer",
+      "box2Name": "ProviderCriteria",
+      "box1box2Name": "provider",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "offers",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    }
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Inquiry",
+      "entry": true,
+      "x": 107,
+      "y": 175,
+      "width": 222,
+      "height": 258,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "id",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "title",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "category",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "branch",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 6,
+          "category": "attribute",
+          "name": "publishingDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "expirationDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 8,
+          "category": "relationship",
+          "name": "buyer",
+          "type": "User",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 9,
+          "category": "attribute",
+          "name": "deliveryLocation",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 10,
+          "category": "relationship",
+          "name": "providerCriteria",
+          "type": "ProviderCriteria",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 11,
+          "category": "relationship",
+          "name": "attachments",
+          "type": "Attachments",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 12,
+          "category": "relationship",
+          "name": "offers",
+          "type": "Offers",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 13,
+          "name": "status",
+          "category": "attribute",
+          "type": "InquiryStatus",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "entry": false,
+      "x": 545,
+      "y": 164,
+      "width": 157,
+      "height": 125,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "id",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "username",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "relationship",
+          "name": "company",
+          "type": "Company",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "roleAtSom",
+          "type": "CompanyRoleAtSom",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "roleAtCompany",
+          "type": "UserRoleAtCompany",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 6,
+          "category": "attribute",
+          "name": "phoneNumber",
+          "type": "PhoneNumber",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "email",
+          "type": "Email",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Company",
+      "entry": false,
+      "x": 775,
+      "y": 79,
+      "width": 133,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "id",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "role",
+          "type": "CompanyRoleAtSom",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "address",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "CompanyRoleAtSom",
+      "entry": false,
+      "x": 995,
+      "y": 79,
+      "width": 164,
+      "height": 91,
+      "items": []
+    },
+    {
+      "name": "UserRoleAtCompany",
+      "entry": false,
+      "x": 995,
+      "y": 246,
+      "width": 164,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "id",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "role",
+          "type": "UserRole",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "PhoneNumber",
+      "entry": false,
+      "x": 545,
+      "y": 364,
+      "width": 149,
+      "height": 78,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "number",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Email",
+      "entry": false,
+      "x": 775,
+      "y": 364,
+      "width": 105,
+      "height": 78,
+      "items": []
+    },
+    {
+      "name": "ProviderCriteria",
+      "entry": false,
+      "x": 545,
+      "y": 490,
+      "width": 157,
+      "height": 103,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "deliveryLocation",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "companyType",
+          "type": "CompanyType",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "companySize",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "CompanyType",
+      "entry": false,
+      "x": 775,
+      "y": 490,
+      "width": 133,
+      "height": 103,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "type",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "CompanySize",
+      "entry": false,
+      "x": 995,
+      "y": 490,
+      "width": 164,
+      "height": 103,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "size",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Attachment",
+      "entry": false,
+      "x": 107,
+      "y": 490,
+      "width": 156,
+      "height": 125,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "type",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "data",
+          "type": "Uint8List",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "relationship",
+          "name": "belongsTo",
+          "type": "Inquiry",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Offer",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "id",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "relationship",
+          "name": "inquiry",
+          "type": "Inquiry",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "relationship",
+          "name": "provider",
+          "type": "Provider",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "deliveryTime",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 6,
+          "category": "relationship",
+          "name": "attachments",
+          "type": "Attachments",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "status",
+          "type": "OfferStatus",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 8,
+          "category": "attribute",
+          "name": "expirationDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 9,
+          "category": "attribute",
+          "name": "price",
+          "type": "double",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "InquiryStatus",
+      "entry": false,
+      "x": 107,
+      "y": 677,
+      "width": 222,
+      "height": 91,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "identifier",
+          "name": "status",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}
