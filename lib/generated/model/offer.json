@@ -14,20 +14,6 @@
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": true
-    },
-    {
-      "box1Name": "Offer",
-      "box2Name": "ProviderCriteria",
-      "box1box2Name": "provider",
-      "box1box2Min": "1",
-      "box1box2Max": "1",
-      "box2box1Name": "offers",
-      "box2box1Min": "0",
-      "box2box1Max": "N",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
     }
   ],
   "height": 1105,

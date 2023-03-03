@@ -256,6 +256,24 @@
       ]
     },
     {
+      "name": "Provider",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "company",
+          "type": "Company",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    },
+    {
       "name": "Inquiry",
       "entry": false,
       "x": 107,
@@ -664,6 +682,20 @@
       "box2box1Id": false
     },
     {
+      "box1Name": "Offer",
+      "box2Name": "Provider",
+      "box1box2Name": "provider",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "offers",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": true,
+      "box2box1Id": false
+    },
+    {
       "box1Name": "Inquiry",
       "box2Name": "User",
       "box1box2Name": "buyer",
@@ -788,20 +820,6 @@
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": true
-    },
-    {
-      "box1Name": "Offer",
-      "box2Name": "ProviderCriteria",
-      "box1box2Name": "provider",
-      "box1box2Min": "1",
-      "box1box2Max": "1",
-      "box2box1Name": "offers",
-      "box2box1Min": "0",
-      "box2box1Max": "N",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
     }
   ]
 }
