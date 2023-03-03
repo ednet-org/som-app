@@ -13,7 +13,7 @@
         {
           "sequence": 1,
           "category": "attribute",
-          "name": "name",
+          "name": "details",
           "type": "String",
           "essential": true,
           "sensitive": false

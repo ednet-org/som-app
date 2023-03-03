@@ -40,7 +40,7 @@
         {
           "sequence": 1,
           "category": "attribute",
-          "name": "name",
+          "name": "details",
           "type": "String",
           "essential": true,
           "sensitive": false
@@ -55,14 +55,6 @@
       "width": 200,
       "height": 400,
       "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "country",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
         {
           "sequence": 2,
           "category": "attribute",
@@ -98,24 +90,6 @@
       ]
     },
     {
-      "name": "Country",
-      "entry": false,
-      "x": 250,
-      "y": 50,
-      "width": 150,
-      "height": 100,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "name",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
       "name": "ZIP",
       "entry": false,
       "x": 250,
@@ -138,6 +112,24 @@
       "entry": false,
       "x": 250,
       "y": 350,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    },
+    {
+      "name": "Country",
+      "entry": false,
+      "x": 250,
+      "y": 50,
       "width": 150,
       "height": 100,
       "items": [
@@ -557,16 +549,7 @@
       "y": 0,
       "width": 100,
       "height": 100,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "identifier",
-          "name": "id",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
+      "items": []
     },
     {
       "name": "UserRoleAtCompany",
@@ -642,9 +625,9 @@
       "box1Name": "Address",
       "box2Name": "Country",
       "box1box2Name": "country",
-      "box1box2Min": "0",
+      "box1box2Min": "1",
       "box1box2Max": "1",
-      "box2box1Name": "address",
+      "box2box1Name": "addresses",
       "box2box1Min": "0",
       "box2box1Max": "N",
       "category": "relationship",
@@ -739,27 +722,13 @@
     {
       "box1Name": "Company",
       "box2Name": "Category",
-      "box1box2Name": "categories",
+      "box1box2Name": "branches",
       "box1box2Min": "1",
       "box1box2Max": "N",
       "box2box1Name": "companies",
       "box2box1Min": "1",
       "box2box1Max": "1",
-      "category": "twin",
-      "internal": false,
-      "box1box2Id": false,
-      "box2box1Id": false
-    },
-    {
-      "box1Name": "Category",
-      "box2Name": "Company",
-      "box1box2Name": "companies",
-      "box1box2Min": "0",
-      "box1box2Max": "N",
-      "box2box1Name": "categories",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "twin",
+      "category": "relationship",
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": false

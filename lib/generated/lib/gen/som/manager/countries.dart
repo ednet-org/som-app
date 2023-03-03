@@ -8,13 +8,13 @@ abstract class CountryGen extends Entity<Country> {
     this.concept = concept; 
     Concept? addressConcept = concept.model.concepts.singleWhereCode("Address"); 
     assert(addressConcept!= null); 
-    setChild("address", Addresss(addressConcept!)); 
+    setChild("addresses", Addresss(addressConcept!)); 
   } 
  
   String get name => getAttribute("name"); 
   void set name(String a) { setAttribute("name", a); } 
   
-  Addresss get address => getChild("address") as Addresss; 
+  Addresss get addresses => getChild("addresses") as Addresss; 
   
   Country newEntity() => Country(concept); 
   Countries newEntities() => Countries(concept); 

@@ -8,9 +8,6 @@ abstract class BuyerGen extends Entity<Buyer> {
     this.concept = concept; 
   } 
  
-  String get id => getAttribute("id"); 
-  void set id(String a) { setAttribute("id", a); } 
-  
   Buyer newEntity() => Buyer(concept); 
   Buyers newEntities() => Buyers(concept); 
   

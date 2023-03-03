@@ -35,14 +35,14 @@ class ManagerEntries extends ModelEntries {
     if (concept.code == "Address") { 
       return Addresss(concept); 
     } 
-    if (concept.code == "Country") { 
-      return Countries(concept); 
-    } 
     if (concept.code == "ZIP") { 
       return ZIPs(concept); 
     } 
     if (concept.code == "Street") { 
       return Streets(concept); 
+    } 
+    if (concept.code == "Country") { 
+      return Countries(concept); 
     } 
     if (concept.code == "Attachment") { 
       return Attachments(concept); 
@@ -109,14 +109,14 @@ class ManagerEntries extends ModelEntries {
     if (concept.code == "Address") { 
       return Address(concept); 
     } 
-    if (concept.code == "Country") { 
-      return Country(concept); 
-    } 
     if (concept.code == "ZIP") { 
       return ZIP(concept); 
     } 
     if (concept.code == "Street") { 
       return Street(concept); 
+    } 
+    if (concept.code == "Country") { 
+      return Country(concept); 
     } 
     if (concept.code == "Attachment") { 
       return Attachment(concept); 

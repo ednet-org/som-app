@@ -8,8 +8,8 @@ abstract class StreetDetailsGen extends Entity<StreetDetails> {
     this.concept = concept; 
   } 
  
-  String get name => getAttribute("name"); 
-  void set name(String a) { setAttribute("name", a); } 
+  String get details => getAttribute("details"); 
+  void set details(String a) { setAttribute("details", a); } 
   
   StreetDetails newEntity() => StreetDetails(concept); 
   StreetDetailss newEntities() => StreetDetailss(concept); 

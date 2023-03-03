@@ -73,17 +73,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Add buyer unique error", () { 
-      var buyerConcept = buyers.concept; 
-      var buyerCount = buyers.length; 
-      var buyer = Buyer(buyerConcept); 
-      var randomBuyer = buyers.random(); 
-      buyer.id = randomBuyer.id; 
-      var added = buyers.add(buyer); 
-      expect(added, isFalse); 
-      expect(buyers.length, equals(buyerCount)); 
-      expect(buyers.exceptions.length, greaterThan(0)); 
- 
-      buyers.exceptions.display(title: "Add buyer unique error"); 
+      // no id attribute 
     }); 
  
     test("Not found buyer by oid", () { 
@@ -100,11 +90,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Find buyer by attribute id", () { 
-      var randomBuyer = buyers.random(); 
-      var buyer = 
-          buyers.singleWhereAttributeId("id", randomBuyer.id); 
-      expect(buyer, isNotNull); 
-      expect(buyer!.id, equals(randomBuyer.id)); 
+      // no id attribute 
     }); 
  
     test("Find buyer by required attribute", () { 
@@ -132,12 +118,19 @@ void testSomManagerBuyers(
     }); 
  
     test("Sort buyers", () { 
+      // no id attribute 
+      // add compareTo method in the specific Buyer class 
+      /* 
       buyers.sort(); 
  
       //buyers.display(title: "Sort buyers"); 
+      */ 
     }); 
  
     test("Order buyers", () { 
+      // no id attribute 
+      // add compareTo method in the specific Buyer class 
+      /* 
       var orderedBuyers = buyers.order(); 
       expect(orderedBuyers.isEmpty, isFalse); 
       expect(orderedBuyers.length, equals(buyers.length)); 
@@ -146,6 +139,7 @@ void testSomManagerBuyers(
       expect(orderedBuyers, isNot(same(buyers))); 
  
       //orderedBuyers.display(title: "Order buyers"); 
+      */ 
     }); 
  
     test("Copy buyers", () { 
@@ -155,8 +149,6 @@ void testSomManagerBuyers(
       expect(copiedBuyers, isNot(same(buyers))); 
       copiedBuyers.forEach((e) => 
         expect(e, equals(buyers.singleWhereOid(e.oid)))); 
-      copiedBuyers.forEach((e) => 
-        expect(e, isNot(same(buyers.singleWhereId(e.id!))))); 
  
       //copiedBuyers.display(title: "Copy buyers"); 
     }); 
@@ -176,39 +168,15 @@ void testSomManagerBuyers(
     }); 
  
     test("Update buyer id with try", () { 
-      var randomBuyer = buyers.random(); 
-      var beforeUpdate = randomBuyer.id; 
-      try { 
-        randomBuyer.id = 'output'; 
-      } on UpdateException catch (e) { 
-        expect(randomBuyer.id, equals(beforeUpdate)); 
-      } 
+      // no id attribute 
     }); 
  
     test("Update buyer id without try", () { 
-      var randomBuyer = buyers.random(); 
-      var beforeUpdateValue = randomBuyer.id; 
-      expect(() => randomBuyer.id = 'concern', throws); 
-      expect(randomBuyer.id, equals(beforeUpdateValue)); 
+      // no id attribute 
     }); 
  
     test("Update buyer id with success", () { 
-      var randomBuyer = buyers.random(); 
-      var afterUpdateEntity = randomBuyer.copy(); 
-      var attribute = randomBuyer.concept.attributes.singleWhereCode("id"); 
-      expect(attribute?.update, isFalse); 
-      attribute?.update = true; 
-      afterUpdateEntity.id = 'table'; 
-      expect(afterUpdateEntity.id, equals('table')); 
-      attribute?.update = false; 
-      var updated = buyers.update(randomBuyer, afterUpdateEntity); 
-      expect(updated, isTrue); 
- 
-      var entity = buyers.singleWhereAttributeId("id", 'table'); 
-      expect(entity, isNotNull); 
-      expect(entity!.id, equals('table')); 
- 
-      //buyers.display("After update buyer id"); 
+      // no id attribute 
     }); 
  
     test("Update buyer non id attribute with failure", () { 
@@ -223,30 +191,13 @@ void testSomManagerBuyers(
       expect(randomBuyer, equals(randomBuyerCopy)); 
       expect(randomBuyer.oid, equals(randomBuyerCopy.oid)); 
       expect(randomBuyer.code, equals(randomBuyerCopy.code)); 
-      expect(randomBuyer.id, equals(randomBuyerCopy.id)); 
  
-      expect(randomBuyer.id, isNotNull); 
-      expect(randomBuyerCopy.id, isNotNull); 
-      expect(randomBuyer.id, equals(randomBuyerCopy.id)); 
- 
-      var idsEqual = false; 
-      if (randomBuyer.id == randomBuyerCopy.id) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
- 
-      idsEqual = false; 
-      if (randomBuyer.id!.equals(randomBuyerCopy.id!)) { 
-        idsEqual = true; 
-      } 
-      expect(idsEqual, isTrue); 
     }); 
  
     test("buyer action undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.id = 'autobus'; 
-      buyers.add(buyer); 
+        buyers.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 
@@ -265,8 +216,7 @@ void testSomManagerBuyers(
     test("buyer session undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.id = 'beginning'; 
-      buyers.add(buyer); 
+        buyers.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 
@@ -377,8 +327,7 @@ void testSomManagerBuyers(
  
       somDomain.startCommandReaction(reaction); 
       var buyer = Buyer(buyers.concept); 
-        buyer.id = 'teaching'; 
-      buyers.add(buyer); 
+        buyers.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 

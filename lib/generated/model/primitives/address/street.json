@@ -3,92 +3,6 @@
   "height": 500,
   "boxes": [
     {
-      "name": "Address",
-      "entry": false,
-      "x": 0,
-      "y": 0,
-      "width": 200,
-      "height": 400,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "country",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 2,
-          "category": "attribute",
-          "name": "city",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 3,
-          "category": "attribute",
-          "name": "street",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 4,
-          "category": "attribute",
-          "name": "number",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        },
-        {
-          "sequence": 5,
-          "category": "attribute",
-          "name": "zip",
-          "type": "String",
-          "essential": false,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "Country",
-      "entry": false,
-      "x": 250,
-      "y": 50,
-      "width": 150,
-      "height": 100,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "name",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "ZIP",
-      "entry": false,
-      "x": 250,
-      "y": 200,
-      "width": 150,
-      "height": 100,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "code",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
       "name": "Street",
       "entry": false,
       "x": 250,
@@ -108,19 +22,6 @@
     }
   ],
   "lines": [
-    {
-      "box1Name": "Address",
-      "box2Name": "Country",
-      "box1box2Name": "country",
-      "box1box2Min": "0",
-      "box1box2Max": "1",
-      "box2box1Name": "address",
-      "box2box1Min": "0",
-      "box2box1Max": "N",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": false,
-      "box2box1Id": false
-    }
+
   ]
 }

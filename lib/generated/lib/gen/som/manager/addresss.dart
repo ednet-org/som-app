@@ -14,9 +14,6 @@ abstract class AddressGen extends Entity<Address> {
   Country get country => getParent("country") as Country; 
   void set country(Country p) { setParent("country", p); } 
   
-  String get country => getAttribute("country"); 
-  void set country(String a) { setAttribute("country", a); } 
-  
   String get city => getAttribute("city"); 
   void set city(String a) { setAttribute("city", a); } 
   

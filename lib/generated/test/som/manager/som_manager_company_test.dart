@@ -129,13 +129,13 @@ void testSomManagerCompanies(
       var companiesCount = companies.length; 
  
       var company = Company(companies.concept); 
-      company.name = 'baby'; 
-      company.role = 'crisis'; 
-      company.address = 'right'; 
-      company.uidNumber = 'present'; 
-      company.registrationNumber = 'electronic'; 
-      company.numberOfEmployees = 'sailing'; 
-      company.websiteUrl = 'tent'; 
+      company.name = 'highway'; 
+      company.role = 'picture'; 
+      company.address = 'hat'; 
+      company.uidNumber = 'cream'; 
+      company.registrationNumber = 'account'; 
+      company.numberOfEmployees = 'smog'; 
+      company.websiteUrl = 'dvd'; 
       var added = selectedCompanies.add(company); 
       expect(added, isTrue); 
       expect(companies.length, equals(++companiesCount)); 
@@ -228,8 +228,8 @@ void testSomManagerCompanies(
     test("Update company non id attribute with failure", () { 
       var randomCompany = companies.random(); 
       var afterUpdateEntity = randomCompany.copy(); 
-      afterUpdateEntity.name = 'sun'; 
-      expect(afterUpdateEntity.name, equals('sun')); 
+      afterUpdateEntity.name = 'theme'; 
+      expect(afterUpdateEntity.name, equals('theme')); 
       // companies.update can only be used if oid, code or id is set. 
       expect(() => companies.update(randomCompany, afterUpdateEntity), throws); 
     }); 
@@ -255,17 +255,14 @@ void testSomManagerCompanies(
     test("company action undo and redo", () { 
       var companyCount = companies.length; 
       var company = Company(companies.concept); 
-        company.name = 'milk'; 
-      company.role = 'candy'; 
-      company.address = 'message'; 
+        company.name = 'money'; 
+      company.role = 'guest'; 
+      company.address = 'universe'; 
       company.uidNumber = 'cash'; 
-      company.registrationNumber = 'cream'; 
-      company.numberOfEmployees = 'present'; 
-      company.websiteUrl = 'question'; 
-    var companyCategories = categories.random(); 
-    company.categories = companyCategories; 
+      company.registrationNumber = 'blue'; 
+      company.numberOfEmployees = 'plate'; 
+      company.websiteUrl = 'distance'; 
       companies.add(company); 
-    companyCategories.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -284,17 +281,14 @@ void testSomManagerCompanies(
     test("company session undo and redo", () { 
       var companyCount = companies.length; 
       var company = Company(companies.concept); 
-        company.name = 'fascination'; 
-      company.role = 'consciousness'; 
-      company.address = 'park'; 
-      company.uidNumber = 'right'; 
-      company.registrationNumber = 'selfdo'; 
-      company.numberOfEmployees = 'body'; 
-      company.websiteUrl = 'service'; 
-    var companyCategories = categories.random(); 
-    company.categories = companyCategories; 
+        company.name = 'candy'; 
+      company.role = 'judge'; 
+      company.address = 'paper'; 
+      company.uidNumber = 'consulting'; 
+      company.registrationNumber = 'boat'; 
+      company.numberOfEmployees = 'selfdo'; 
+      company.websiteUrl = 'blue'; 
       companies.add(company); 
-    companyCategories.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -312,7 +306,7 @@ void testSomManagerCompanies(
  
     test("Company update undo and redo", () { 
       var company = companies.random(); 
-      var action = SetAttributeCommand(session, company, "name", 'grading'); 
+      var action = SetAttributeCommand(session, company, "name", 'season'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -413,17 +407,14 @@ void testSomManagerCompanies(
  
       somDomain.startCommandReaction(reaction); 
       var company = Company(companies.concept); 
-        company.name = 'dog'; 
-      company.role = 'candy'; 
-      company.address = 'privacy'; 
-      company.uidNumber = 'selfie'; 
-      company.registrationNumber = 'answer'; 
-      company.numberOfEmployees = 'teacher'; 
-      company.websiteUrl = 'beer'; 
-    var companyCategories = categories.random(); 
-    company.categories = companyCategories; 
+        company.name = 'nothingness'; 
+      company.role = 'line'; 
+      company.address = 'tape'; 
+      company.uidNumber = 'accident'; 
+      company.registrationNumber = 'teaching'; 
+      company.numberOfEmployees = 'point'; 
+      company.websiteUrl = 'hunting'; 
       companies.add(company); 
-    companyCategories.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -435,7 +426,7 @@ void testSomManagerCompanies(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, company, "name", 'explanation'); 
+        session, company, "name", 'organization'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 
