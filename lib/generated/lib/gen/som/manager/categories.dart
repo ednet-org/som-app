@@ -9,7 +9,7 @@ abstract class CategoryGen extends Entity<Category> {
     Concept? tagConcept = concept.model.concepts.singleWhereCode("Tag"); 
     assert(tagConcept!= null); 
     setChild("tag", Tags(tagConcept!)); 
-    setChild("category", Tags(tagConcept!)); 
+    setChild("category", Tags(tagConcept));
   } 
  
   Reference get companiesReference => getReference("companies") as Reference; 
