@@ -39,8 +39,8 @@ abstract class CompanyGen extends Entity<Company> {
   
   Categories get branches => getChild("branches") as Categories; 
   
-  Company newEntity() => Company(concept); 
-  Companies newEntities() => Companies(concept); 
+  Company newEntity() => Company(concept!); 
+  Companies newEntities() => Companies(concept!); 
   
 } 
  
@@ -50,8 +50,8 @@ abstract class CompaniesGen extends Entities<Company> {
     this.concept = concept; 
   } 
  
-  Companies newEntities() => Companies(concept); 
-  Company newEntity() => Company(concept); 
+  Companies newEntities() => Companies(concept!); 
+  Company newEntity() => Company(concept!); 
   
 } 
  

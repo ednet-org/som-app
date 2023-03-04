@@ -57,9 +57,9 @@ abstract class UserGen extends Entity<User> {
 
   Inquiries get inquiries => getChild("inquiries") as Inquiries;
 
-  User newEntity() => User(concept);
+  User newEntity() => User(concept!);
 
-  Users newEntities() => Users(concept);
+  Users newEntities() => Users(concept!);
 }
 
 abstract class UsersGen extends Entities<User> {
@@ -67,7 +67,7 @@ abstract class UsersGen extends Entities<User> {
     this.concept = concept;
   }
 
-  Users newEntities() => Users(concept);
+  Users newEntities() => Users(concept!);
 
-  User newEntity() => User(concept);
+  User newEntity() => User(concept!);
 }

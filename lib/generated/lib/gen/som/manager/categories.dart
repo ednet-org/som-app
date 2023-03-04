@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class CategoryGen extends Entity<Category> { 
  
-  CategoryGen(Concept concept) { 
+  CategoryGen(Concept concept) {
     this.concept = concept; 
     Concept? tagConcept = concept.model.concepts.singleWhereCode("Tag"); 
     assert(tagConcept!= null); 
@@ -28,19 +28,19 @@ abstract class CategoryGen extends Entity<Category> {
   
   Tags get category => getChild("category") as Tags; 
   
-  Category newEntity() => Category(concept); 
-  Categories newEntities() => Categories(concept); 
+  Category newEntity() => Category(concept!);
+  Categories newEntities() => Categories(concept!);
   
 } 
  
 abstract class CategoriesGen extends Entities<Category> { 
  
-  CategoriesGen(Concept concept) { 
+  CategoriesGen(Concept concept) {
     this.concept = concept; 
   } 
  
-  Categories newEntities() => Categories(concept); 
-  Category newEntity() => Category(concept); 
+  Categories newEntities() => Categories(concept!);
+  Category newEntity() => Category(concept!);
   
 } 
  

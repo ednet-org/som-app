@@ -127,7 +127,7 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
       expect(selectedOffers.source?.isEmpty, isFalse);
       var offersCount = offers.length;
 
-      var offer = Offer(offers.concept);
+      var offer = Offer(offers.concept!);
       offer.description = 'restaurant';
       offer.deliveryTime = 'body';
       offer.status = 'universe';
@@ -252,7 +252,7 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
 
     test("offer action undo and redo", () {
       var offerCount = offers.length;
-      var offer = Offer(offers.concept);
+      var offer = Offer(offers.concept!);
       offer.description = 'explanation';
       offer.deliveryTime = 'email';
       offer.status = 'judge';
@@ -282,7 +282,7 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
 
     test("offer session undo and redo", () {
       var offerCount = offers.length;
-      var offer = Offer(offers.concept);
+      var offer = Offer(offers.concept!);
       offer.description = 'oil';
       offer.deliveryTime = 'explanation';
       offer.status = 'dinner';
@@ -412,7 +412,7 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
       expect(reaction, isNotNull);
 
       somDomain.startCommandReaction(reaction);
-      var offer = Offer(offers.concept);
+      var offer = Offer(offers.concept!);
       offer.description = 'revolution';
       offer.deliveryTime = 'marriage';
       offer.status = 'wheat';

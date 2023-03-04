@@ -4,7 +4,7 @@ part of som_manager;
  
 class Buyer extends BuyerGen { 
  
-  Buyer(Concept concept) : super(concept); 
+  Buyer(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Buyer extends BuyerGen {
  
 class Buyers extends BuyersGen { 
  
-  Buyers(Concept concept) : super(concept); 
+  Buyers(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

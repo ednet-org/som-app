@@ -4,7 +4,7 @@ part of som_manager;
  
 class Offer extends OfferGen { 
  
-  Offer(Concept concept) : super(concept); 
+  Offer(Concept concept) : super(concept!);
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Offer extends OfferGen {
  
 class Offers extends OffersGen { 
  
-  Offers(Concept concept) : super(concept); 
+  Offers(Concept concept) : super(concept!);
  
   // added after code gen - begin 
  

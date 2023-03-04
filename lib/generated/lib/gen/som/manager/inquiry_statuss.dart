@@ -11,8 +11,8 @@ abstract class InquiryStatusGen extends Entity<InquiryStatus> {
   String get status => getAttribute("status"); 
   void set status(String a) { setAttribute("status", a); } 
   
-  InquiryStatus newEntity() => InquiryStatus(concept); 
-  InquiryStatuss newEntities() => InquiryStatuss(concept); 
+  InquiryStatus newEntity() => InquiryStatus(concept!); 
+  InquiryStatuss newEntities() => InquiryStatuss(concept!); 
   
 } 
  
@@ -22,8 +22,8 @@ abstract class InquiryStatussGen extends Entities<InquiryStatus> {
     this.concept = concept; 
   } 
  
-  InquiryStatuss newEntities() => InquiryStatuss(concept); 
-  InquiryStatus newEntity() => InquiryStatus(concept); 
+  InquiryStatuss newEntities() => InquiryStatuss(concept!); 
+  InquiryStatus newEntity() => InquiryStatus(concept!); 
   
 } 
  

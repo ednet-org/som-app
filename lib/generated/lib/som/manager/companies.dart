@@ -4,7 +4,7 @@ part of som_manager;
  
 class Company extends CompanyGen { 
  
-  Company(Concept concept) : super(concept); 
+  Company(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Company extends CompanyGen {
  
 class Companies extends CompaniesGen { 
  
-  Companies(Concept concept) : super(concept); 
+  Companies(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

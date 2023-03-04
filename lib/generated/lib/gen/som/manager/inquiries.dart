@@ -56,8 +56,8 @@ abstract class InquiryGen extends Entity<Inquiry> {
   
   Offers get offers => getChild("offers") as Offers; 
   
-  Inquiry newEntity() => Inquiry(concept); 
-  Inquiries newEntities() => Inquiries(concept); 
+  Inquiry newEntity() => Inquiry(concept!); 
+  Inquiries newEntities() => Inquiries(concept!); 
   
 } 
  
@@ -67,8 +67,8 @@ abstract class InquiriesGen extends Entities<Inquiry> {
     this.concept = concept; 
   } 
  
-  Inquiries newEntities() => Inquiries(concept); 
-  Inquiry newEntity() => Inquiry(concept); 
+  Inquiries newEntities() => Inquiries(concept!); 
+  Inquiry newEntity() => Inquiry(concept!); 
   
 } 
  

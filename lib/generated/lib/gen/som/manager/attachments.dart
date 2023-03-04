@@ -32,8 +32,8 @@ abstract class AttachmentGen extends Entity<Attachment> {
   String get belongsTo => getAttribute("belongsTo"); 
   void set belongsTo(String a) { setAttribute("belongsTo", a); } 
   
-  Attachment newEntity() => Attachment(concept); 
-  Attachments newEntities() => Attachments(concept); 
+  Attachment newEntity() => Attachment(concept!); 
+  Attachments newEntities() => Attachments(concept!); 
   
 } 
  
@@ -43,8 +43,8 @@ abstract class AttachmentsGen extends Entities<Attachment> {
     this.concept = concept; 
   } 
  
-  Attachments newEntities() => Attachments(concept); 
-  Attachment newEntity() => Attachment(concept); 
+  Attachments newEntities() => Attachments(concept!); 
+  Attachment newEntity() => Attachment(concept!); 
   
 } 
  

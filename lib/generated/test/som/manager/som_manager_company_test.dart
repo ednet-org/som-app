@@ -128,7 +128,7 @@ void testSomManagerCompanies(
       expect(selectedCompanies.source?.isEmpty, isFalse); 
       var companiesCount = companies.length; 
  
-      var company = Company(companies.concept); 
+      var company = Company(companies.concept!); 
       company.name = 'highway'; 
       company.role = 'parfem'; 
       company.address = 'slate'; 
@@ -254,7 +254,7 @@ void testSomManagerCompanies(
  
     test("company action undo and redo", () { 
       var companyCount = companies.length; 
-      var company = Company(companies.concept); 
+      var company = Company(companies.concept!); 
         company.name = 'vacation'; 
       company.role = 'ship'; 
       company.address = 'course'; 
@@ -280,7 +280,7 @@ void testSomManagerCompanies(
  
     test("company session undo and redo", () { 
       var companyCount = companies.length; 
-      var company = Company(companies.concept); 
+      var company = Company(companies.concept!); 
         company.name = 'interest'; 
       company.role = 'photo'; 
       company.address = 'election'; 
@@ -406,7 +406,7 @@ void testSomManagerCompanies(
       expect(reaction, isNotNull); 
  
       somDomain.startCommandReaction(reaction); 
-      var company = Company(companies.concept); 
+      var company = Company(companies.concept!); 
         company.name = 'crisis'; 
       company.role = 'seed'; 
       company.address = 'yellow'; 

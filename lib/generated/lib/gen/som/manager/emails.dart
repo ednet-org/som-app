@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class EmailGen extends Entity<Email> { 
  
-  EmailGen(Concept concept) { 
+  EmailGen(Concept concept) {
     this.concept = concept; 
   } 
  
@@ -14,19 +14,19 @@ abstract class EmailGen extends Entity<Email> {
   User get owner => getParent("owner") as User; 
   void set owner(User p) { setParent("owner", p); } 
   
-  Email newEntity() => Email(concept); 
-  Emails newEntities() => Emails(concept); 
+  Email newEntity() => Email(concept!);
+  Emails newEntities() => Emails(concept!);
   
 } 
  
 abstract class EmailsGen extends Entities<Email> { 
  
-  EmailsGen(Concept concept) { 
+  EmailsGen(Concept concept) {
     this.concept = concept; 
   } 
  
-  Emails newEntities() => Emails(concept); 
-  Email newEntity() => Email(concept); 
+  Emails newEntities() => Emails(concept!);
+  Email newEntity() => Email(concept!);
   
 } 
  

@@ -126,7 +126,7 @@ void testSomManagerUsers(SomDomain somDomain, ManagerModel managerModel,
       expect(selectedUsers.source?.isEmpty, isFalse);
       var usersCount = users.length;
 
-      var user = User(users.concept);
+      var user = User(users.concept!);
       user.username = 'home';
       user.roleAtSom = 'video';
       user.roleAtCompany = 'unit';
@@ -245,7 +245,7 @@ void testSomManagerUsers(SomDomain somDomain, ManagerModel managerModel,
 
     test("user action undo and redo", () {
       var userCount = users.length;
-      var user = User(users.concept);
+      var user = User(users.concept!);
       user.username = 'sentence';
       user.roleAtSom = 'tree';
       user.roleAtCompany = 'computer';
@@ -270,7 +270,7 @@ void testSomManagerUsers(SomDomain somDomain, ManagerModel managerModel,
 
     test("user session undo and redo", () {
       var userCount = users.length;
-      var user = User(users.concept);
+      var user = User(users.concept!);
       user.username = 'lifespan';
       user.roleAtSom = 'observation';
       user.roleAtCompany = 'void';
@@ -396,7 +396,7 @@ void testSomManagerUsers(SomDomain somDomain, ManagerModel managerModel,
       expect(reaction, isNotNull);
 
       somDomain.startCommandReaction(reaction);
-      var user = User(users.concept);
+      var user = User(users.concept!);
       user.username = 'place';
       user.roleAtSom = 'time';
       user.roleAtCompany = 'small';

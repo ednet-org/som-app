@@ -194,7 +194,7 @@ void testSomManagerBuyers(
 
     test("buyer action undo and redo", () {
       var buyerCount = buyers.length;
-      var buyer = Buyer(buyers.concept);
+      var buyer = Buyer(buyers.concept!);
       buyers.add(buyer);
       expect(buyers.length, equals(++buyerCount));
       buyers.remove(buyer);
@@ -213,7 +213,7 @@ void testSomManagerBuyers(
 
     test("buyer session undo and redo", () {
       var buyerCount = buyers.length;
-      var buyer = Buyer(buyers.concept);
+      var buyer = Buyer(buyers.concept!);
       buyers.add(buyer);
       expect(buyers.length, equals(++buyerCount));
       buyers.remove(buyer);
@@ -324,7 +324,7 @@ void testSomManagerBuyers(
       expect(reaction, isNotNull);
 
       somDomain.startCommandReaction(reaction);
-      var buyer = Buyer(buyers.concept);
+      var buyer = Buyer(buyers.concept!);
       buyers.add(buyer);
       expect(buyers.length, equals(++buyerCount));
       buyers.remove(buyer);

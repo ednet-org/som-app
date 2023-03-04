@@ -126,7 +126,7 @@ void testSomManagerInquiries(SomDomain somDomain, ManagerModel managerModel,
       expect(selectedInquiries.source?.isEmpty, isFalse);
       var inquiriesCount = inquiries.length;
 
-      var inquiry = Inquiry(inquiries.concept);
+      var inquiry = Inquiry(inquiries.concept!);
       inquiry.title = 'heaven';
       inquiry.buyer = users.random();
       inquiry.description = 'circle';
@@ -260,7 +260,7 @@ void testSomManagerInquiries(SomDomain somDomain, ManagerModel managerModel,
 
     test("inquiry action undo and redo", () {
       var inquiryCount = inquiries.length;
-      var inquiry = Inquiry(inquiries.concept);
+      var inquiry = Inquiry(inquiries.concept!);
       inquiry.title = 'school';
       inquiry.description = 'college';
       inquiry.category = 'economy';
@@ -291,7 +291,7 @@ void testSomManagerInquiries(SomDomain somDomain, ManagerModel managerModel,
 
     test("inquiry session undo and redo", () {
       var inquiryCount = inquiries.length;
-      var inquiry = Inquiry(inquiries.concept);
+      var inquiry = Inquiry(inquiries.concept!);
       inquiry.title = 'answer';
       inquiry.description = 'slate';
       inquiry.category = 'celebration';
@@ -422,7 +422,7 @@ void testSomManagerInquiries(SomDomain somDomain, ManagerModel managerModel,
       expect(reaction, isNotNull);
 
       somDomain.startCommandReaction(reaction);
-      var inquiry = Inquiry(inquiries.concept);
+      var inquiry = Inquiry(inquiries.concept!);
       inquiry.title = 'brave';
       inquiry.description = 'ocean';
       inquiry.category = 'tag';

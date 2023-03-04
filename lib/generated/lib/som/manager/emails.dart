@@ -4,7 +4,7 @@ part of som_manager;
  
 class Email extends EmailGen { 
  
-  Email(Concept concept) : super(concept); 
+  Email(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Email extends EmailGen {
  
 class Emails extends EmailsGen { 
  
-  Emails(Concept concept) : super(concept); 
+  Emails(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

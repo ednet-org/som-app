@@ -128,7 +128,7 @@ void testSomManagerProviders(
       expect(selectedProviders.source?.isEmpty, isFalse); 
       var providersCount = providers.length; 
  
-      var provider = Provider(providers.concept); 
+      var provider = Provider(providers.concept!);
       provider.company = 'hall'; 
       var added = selectedProviders.add(provider); 
       expect(added, isTrue); 
@@ -242,7 +242,7 @@ void testSomManagerProviders(
  
     test("provider action undo and redo", () { 
       var providerCount = providers.length; 
-      var provider = Provider(providers.concept); 
+      var provider = Provider(providers.concept!);
         provider.company = 'redo'; 
       providers.add(provider); 
       expect(providers.length, equals(++providerCount)); 
@@ -262,7 +262,7 @@ void testSomManagerProviders(
  
     test("provider session undo and redo", () { 
       var providerCount = providers.length; 
-      var provider = Provider(providers.concept); 
+      var provider = Provider(providers.concept!);
         provider.company = 'accomodation'; 
       providers.add(provider); 
       expect(providers.length, equals(++providerCount)); 
@@ -382,7 +382,7 @@ void testSomManagerProviders(
       expect(reaction, isNotNull); 
  
       somDomain.startCommandReaction(reaction); 
-      var provider = Provider(providers.concept); 
+      var provider = Provider(providers.concept!);
         provider.company = 'course'; 
       providers.add(provider); 
       expect(providers.length, equals(++providerCount)); 

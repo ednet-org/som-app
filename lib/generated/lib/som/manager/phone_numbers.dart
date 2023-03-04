@@ -4,7 +4,7 @@ part of som_manager;
  
 class PhoneNumber extends PhoneNumberGen { 
  
-  PhoneNumber(Concept concept) : super(concept); 
+  PhoneNumber(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class PhoneNumber extends PhoneNumberGen {
  
 class PhoneNumbers extends PhoneNumbersGen { 
  
-  PhoneNumbers(Concept concept) : super(concept); 
+  PhoneNumbers(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

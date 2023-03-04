@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class CountryGen extends Entity<Country> { 
  
-  CountryGen(Concept concept) { 
+  CountryGen(Concept concept) {
     this.concept = concept; 
     Concept? addressConcept = concept.model.concepts.singleWhereCode("Address"); 
     assert(addressConcept!= null); 
@@ -16,19 +16,19 @@ abstract class CountryGen extends Entity<Country> {
   
   Addresss get addresses => getChild("addresses") as Addresss; 
   
-  Country newEntity() => Country(concept); 
-  Countries newEntities() => Countries(concept); 
+  Country newEntity() => Country(concept!);
+  Countries newEntities() => Countries(concept!);
   
 } 
  
 abstract class CountriesGen extends Entities<Country> { 
  
-  CountriesGen(Concept concept) { 
+  CountriesGen(Concept concept) {
     this.concept = concept; 
   } 
  
-  Countries newEntities() => Countries(concept); 
-  Country newEntity() => Country(concept); 
+  Countries newEntities() => Countries(concept!);
+  Country newEntity() => Country(concept!);
   
 } 
  

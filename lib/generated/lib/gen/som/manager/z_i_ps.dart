@@ -4,23 +4,23 @@ part of som_manager;
  
 abstract class ZIPGen extends Entity<ZIP> { 
  
-  ZIPGen(Concept concept) { 
+  ZIPGen(Concept concept) {
     this.concept = concept; 
   } 
  
-  ZIP newEntity() => ZIP(concept); 
-  ZIPs newEntities() => ZIPs(concept); 
+  ZIP newEntity() => ZIP(concept!);
+  ZIPs newEntities() => ZIPs(concept!);
   
 } 
  
 abstract class ZIPsGen extends Entities<ZIP> { 
  
-  ZIPsGen(Concept concept) { 
+  ZIPsGen(Concept concept) {
     this.concept = concept; 
   } 
  
-  ZIPs newEntities() => ZIPs(concept); 
-  ZIP newEntity() => ZIP(concept); 
+  ZIPs newEntities() => ZIPs(concept!);
+  ZIP newEntity() => ZIP(concept!);
   
 } 
  
