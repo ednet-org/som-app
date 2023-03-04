@@ -133,8 +133,8 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
       offer.status = 'universe';
       offer.expirationDate = new DateTime.now();
       offer.price = 34.5064770044062;
-      var added = selectedOffers.add(offer);
-      expect(added, isTrue);
+      var isAdded = selectedOffers.add(offer);
+      expect(isAdded, isTrue);
       expect(offers.length, equals(++offersCount));
 
       //selectedOffers.display(title:
