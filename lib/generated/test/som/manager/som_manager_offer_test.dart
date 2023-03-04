@@ -230,7 +230,8 @@ void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
       afterUpdateEntity.description = 'top';
       expect(afterUpdateEntity.description, equals('top'));
       // offers.update can only be used if oid, code or id is set.
-      expect(() => offers.update(randomOffer, afterUpdateEntity), throws);
+      expect(() => offers.update(randomOffer, afterUpdateEntity),
+          throwsA(isA<Exception>()));
     });
 
     test("Copy Equality", () {
