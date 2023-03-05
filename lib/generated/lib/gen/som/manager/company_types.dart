@@ -22,8 +22,8 @@ abstract class CompanyTypesGen extends Entities<CompanyType> {
     this.concept = concept; 
   } 
  
-  CompanyTypes newEntities() => CompanyTypes(concept!); 
-  CompanyType newEntity() => CompanyType(concept!); 
+  CompanyTypes newEntities() => CompanyTypes(concept);
+  CompanyType newEntity() => CompanyType(concept);
   
 } 
  
