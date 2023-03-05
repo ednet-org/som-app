@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class ProviderGen extends Entity<Provider> { 
  
-  ProviderGen(Concept concept) {
+  ProviderGen(Concept concept) { 
     this.concept = concept; 
     Concept? offerConcept = concept.model.concepts.singleWhereCode("Offer"); 
     assert(offerConcept!= null); 
@@ -16,19 +16,19 @@ abstract class ProviderGen extends Entity<Provider> {
   
   Offers get offers => getChild("offers") as Offers; 
   
-  Provider newEntity() => Provider(concept!);
-  Providers newEntities() => Providers(concept!);
+  Provider newEntity() => Provider(concept); 
+  Providers newEntities() => Providers(concept); 
   
 } 
  
 abstract class ProvidersGen extends Entities<Provider> { 
  
-  ProvidersGen(Concept concept) {
+  ProvidersGen(Concept concept) { 
     this.concept = concept; 
   } 
  
-  Providers newEntities() => Providers(concept!);
-  Provider newEntity() => Provider(concept!);
+  Providers newEntities() => Providers(concept!); 
+  Provider newEntity() => Provider(concept!); 
   
 } 
  

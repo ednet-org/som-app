@@ -26,8 +26,8 @@ abstract class AddressGen extends Entity<Address> {
   String get zip => getAttribute("zip"); 
   void set zip(String a) { setAttribute("zip", a); } 
   
-  Address newEntity() => Address(concept!); 
-  Addresss newEntities() => Addresss(concept!); 
+  Address newEntity() => Address(concept); 
+  Addresss newEntities() => Addresss(concept); 
   
 } 
  

@@ -4,7 +4,7 @@ part of som_manager;
  
 class ProviderCriteria extends ProviderCriteriaGen { 
  
-  ProviderCriteria(Concept concept) : super(concept!);
+  ProviderCriteria(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class ProviderCriteria extends ProviderCriteriaGen {
  
 class ProviderCriterias extends ProviderCriteriasGen { 
  
-  ProviderCriterias(Concept concept) : super(concept!);
+  ProviderCriterias(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class PhoneNumberGen extends Entity<PhoneNumber> { 
  
-  PhoneNumberGen(Concept concept) {
+  PhoneNumberGen(Concept concept) { 
     this.concept = concept; 
   } 
  
@@ -17,19 +17,19 @@ abstract class PhoneNumberGen extends Entity<PhoneNumber> {
   String get number => getAttribute("number"); 
   void set number(String a) { setAttribute("number", a); } 
   
-  PhoneNumber newEntity() => PhoneNumber(concept!);
-  PhoneNumbers newEntities() => PhoneNumbers(concept!);
+  PhoneNumber newEntity() => PhoneNumber(concept); 
+  PhoneNumbers newEntities() => PhoneNumbers(concept); 
   
 } 
  
 abstract class PhoneNumbersGen extends Entities<PhoneNumber> { 
  
-  PhoneNumbersGen(Concept concept) {
+  PhoneNumbersGen(Concept concept) { 
     this.concept = concept; 
   } 
  
-  PhoneNumbers newEntities() => PhoneNumbers(concept!);
-  PhoneNumber newEntity() => PhoneNumber(concept!);
+  PhoneNumbers newEntities() => PhoneNumbers(concept!); 
+  PhoneNumber newEntity() => PhoneNumber(concept!); 
   
 } 
  

@@ -11,8 +11,8 @@ abstract class StreetDetailsGen extends Entity<StreetDetails> {
   String get details => getAttribute("details"); 
   void set details(String a) { setAttribute("details", a); } 
   
-  StreetDetails newEntity() => StreetDetails(concept!); 
-  StreetDetailss newEntities() => StreetDetailss(concept!); 
+  StreetDetails newEntity() => StreetDetails(concept); 
+  StreetDetailss newEntities() => StreetDetailss(concept); 
   
 } 
  

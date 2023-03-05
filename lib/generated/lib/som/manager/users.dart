@@ -4,7 +4,7 @@ part of som_manager;
  
 class User extends UserGen { 
  
-  User(Concept concept) : super(concept!);
+  User(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class User extends UserGen {
  
 class Users extends UsersGen { 
  
-  Users(Concept concept) : super(concept!);
+  Users(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

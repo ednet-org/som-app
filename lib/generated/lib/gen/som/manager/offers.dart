@@ -40,8 +40,8 @@ abstract class OfferGen extends Entity<Offer> {
   
   Attachments get attachments => getChild("attachments") as Attachments; 
   
-  Offer newEntity() => Offer(concept!); 
-  Offers newEntities() => Offers(concept!); 
+  Offer newEntity() => Offer(concept); 
+  Offers newEntities() => Offers(concept); 
   
 } 
  

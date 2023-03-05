@@ -11,8 +11,8 @@ abstract class UserRoleAtCompanyGen extends Entity<UserRoleAtCompany> {
   String get role => getAttribute("role"); 
   void set role(String a) { setAttribute("role", a); } 
   
-  UserRoleAtCompany newEntity() => UserRoleAtCompany(concept!); 
-  UserRoleAtCompanies newEntities() => UserRoleAtCompanies(concept!); 
+  UserRoleAtCompany newEntity() => UserRoleAtCompany(concept); 
+  UserRoleAtCompanies newEntities() => UserRoleAtCompanies(concept); 
   
 } 
  

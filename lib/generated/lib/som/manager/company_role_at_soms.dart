@@ -4,7 +4,7 @@ part of som_manager;
  
 class CompanyRoleAtSom extends CompanyRoleAtSomGen { 
  
-  CompanyRoleAtSom(Concept concept) : super(concept!);
+  CompanyRoleAtSom(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class CompanyRoleAtSom extends CompanyRoleAtSomGen {
  
 class CompanyRoleAtSoms extends CompanyRoleAtSomsGen { 
  
-  CompanyRoleAtSoms(Concept concept) : super(concept!);
+  CompanyRoleAtSoms(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

@@ -11,8 +11,8 @@ abstract class CompanyTypeGen extends Entity<CompanyType> {
   String get type => getAttribute("type"); 
   void set type(String a) { setAttribute("type", a); } 
   
-  CompanyType newEntity() => CompanyType(concept!); 
-  CompanyTypes newEntities() => CompanyTypes(concept!); 
+  CompanyType newEntity() => CompanyType(concept); 
+  CompanyTypes newEntities() => CompanyTypes(concept); 
   
 } 
  

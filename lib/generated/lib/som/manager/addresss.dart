@@ -4,7 +4,7 @@ part of som_manager;
  
 class Address extends AddressGen { 
  
-  Address(Concept concept) : super(concept!);
+  Address(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Address extends AddressGen {
  
 class Addresss extends AddresssGen { 
  
-  Addresss(Concept concept) : super(concept!);
+  Addresss(Concept concept) : super(concept!); 
  
   // added after code gen - begin 
  

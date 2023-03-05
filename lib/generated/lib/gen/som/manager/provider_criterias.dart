@@ -26,8 +26,8 @@ abstract class ProviderCriteriaGen extends Entity<ProviderCriteria> {
   String get companySize => getAttribute("companySize"); 
   void set companySize(String a) { setAttribute("companySize", a); } 
   
-  ProviderCriteria newEntity() => ProviderCriteria(concept!); 
-  ProviderCriterias newEntities() => ProviderCriterias(concept!); 
+  ProviderCriteria newEntity() => ProviderCriteria(concept); 
+  ProviderCriterias newEntities() => ProviderCriterias(concept); 
   
 } 
  

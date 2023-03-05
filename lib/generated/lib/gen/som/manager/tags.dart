@@ -4,7 +4,7 @@ part of som_manager;
  
 abstract class TagGen extends Entity<Tag> { 
  
-  TagGen(Concept concept) {
+  TagGen(Concept concept) { 
     this.concept = concept; 
   } 
  
@@ -26,19 +26,19 @@ abstract class TagGen extends Entity<Tag> {
   String get description => getAttribute("description"); 
   void set description(String a) { setAttribute("description", a); } 
   
-  Tag newEntity() => Tag(concept!);
-  Tags newEntities() => Tags(concept!);
+  Tag newEntity() => Tag(concept); 
+  Tags newEntities() => Tags(concept); 
   
 } 
  
 abstract class TagsGen extends Entities<Tag> { 
  
-  TagsGen(Concept concept) {
+  TagsGen(Concept concept) { 
     this.concept = concept; 
   } 
  
-  Tags newEntities() => Tags(concept!);
-  Tag newEntity() => Tag(concept!);
+  Tags newEntities() => Tags(concept!); 
+  Tag newEntity() => Tag(concept!); 
   
 } 
  

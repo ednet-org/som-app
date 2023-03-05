@@ -46,11 +46,11 @@ class ManagerModel extends ManagerEntries {
  
   void initOffers() { 
     var offer1 = Offer(offers.concept!); 
-    offer1.description = 'video'; 
-    offer1.deliveryTime = 'undo'; 
-    offer1.status = 'software'; 
+    offer1.description = 'smog'; 
+    offer1.deliveryTime = 'message'; 
+    offer1.status = 'coffee'; 
     offer1.expirationDate = new DateTime.now(); 
-    offer1.price = 87.15689391914314; 
+    offer1.price = 55.42256188644402; 
     var offer1Provider = providers.random(); 
     offer1.provider = offer1Provider; 
     var offer1Inquiry = inquiries.random(); 
@@ -60,11 +60,11 @@ class ManagerModel extends ManagerEntries {
     offer1Inquiry.offers.add(offer1); 
  
     var offer2 = Offer(offers.concept!); 
-    offer2.description = 'life'; 
-    offer2.deliveryTime = 'smog'; 
-    offer2.status = 'policeman'; 
+    offer2.description = 'health'; 
+    offer2.deliveryTime = 'consciousness'; 
+    offer2.status = 'security'; 
     offer2.expirationDate = new DateTime.now(); 
-    offer2.price = 42.21968965438305; 
+    offer2.price = 98.41121030126715; 
     var offer2Provider = providers.random(); 
     offer2.provider = offer2Provider; 
     var offer2Inquiry = inquiries.random(); 
@@ -74,11 +74,11 @@ class ManagerModel extends ManagerEntries {
     offer2Inquiry.offers.add(offer2); 
  
     var offer3 = Offer(offers.concept!); 
-    offer3.description = 'darts'; 
-    offer3.deliveryTime = 'account'; 
-    offer3.status = 'beach'; 
+    offer3.description = 'hat'; 
+    offer3.deliveryTime = 'test'; 
+    offer3.status = 'country'; 
     offer3.expirationDate = new DateTime.now(); 
-    offer3.price = 11.959987270068417; 
+    offer3.price = 29.011237955745717; 
     var offer3Provider = providers.random(); 
     offer3.provider = offer3Provider; 
     var offer3Inquiry = inquiries.random(); 
@@ -91,27 +91,27 @@ class ManagerModel extends ManagerEntries {
  
   void initUsers() { 
     var user1 = User(users.concept!); 
-    user1.username = 'instruction'; 
-    user1.roleAtSom = 'redo'; 
-    user1.roleAtCompany = 'agreement'; 
+    user1.username = 'wheat'; 
+    user1.roleAtSom = 'paper'; 
+    user1.roleAtCompany = 'void'; 
     var user1Company = companies.random(); 
     user1.company = user1Company; 
     users.add(user1); 
     user1Company.employees.add(user1); 
  
     var user2 = User(users.concept!); 
-    user2.username = 'observation'; 
-    user2.roleAtSom = 'message'; 
-    user2.roleAtCompany = 'answer'; 
+    user2.username = 'crisis'; 
+    user2.roleAtSom = 'void'; 
+    user2.roleAtCompany = 'big'; 
     var user2Company = companies.random(); 
     user2.company = user2Company; 
     users.add(user2); 
     user2Company.employees.add(user2); 
  
     var user3 = User(users.concept!); 
-    user3.username = 'notch'; 
-    user3.roleAtSom = 'taxi'; 
-    user3.roleAtCompany = 'tax'; 
+    user3.username = 'down'; 
+    user3.roleAtSom = 'center'; 
+    user3.roleAtCompany = 'family'; 
     var user3Company = companies.random(); 
     user3.company = user3Company; 
     users.add(user3); 
@@ -133,60 +133,60 @@ class ManagerModel extends ManagerEntries {
  
   void initProviders() { 
     var provider1 = Provider(providers.concept!); 
-    provider1.company = 'chemist'; 
+    provider1.company = 'car'; 
     providers.add(provider1); 
  
     var provider2 = Provider(providers.concept!); 
-    provider2.company = 'web'; 
+    provider2.company = 'letter'; 
     providers.add(provider2); 
  
     var provider3 = Provider(providers.concept!); 
-    provider3.company = 'place'; 
+    provider3.company = 'music'; 
     providers.add(provider3); 
  
   } 
  
   void initInquiries() { 
     var inquiry1 = Inquiry(inquiries.concept!); 
-    inquiry1.title = 'question'; 
-    inquiry1.description = 'music'; 
-    inquiry1.category = 'computer'; 
-    inquiry1.branch = 'tension'; 
+    inquiry1.title = 'horse'; 
+    inquiry1.description = 'thing'; 
+    inquiry1.category = 'dog'; 
+    inquiry1.branch = 'brad'; 
     inquiry1.publishingDate = new DateTime.now(); 
     inquiry1.expirationDate = new DateTime.now(); 
-    inquiry1.deliveryLocation = 'beach'; 
-    inquiry1.providerCriteria = 'beans'; 
-    inquiry1.status = 'kids'; 
+    inquiry1.deliveryLocation = 'vacation'; 
+    inquiry1.providerCriteria = 'navigation'; 
+    inquiry1.status = 'sun'; 
     var inquiry1Buyer = users.random(); 
     inquiry1.buyer = inquiry1Buyer; 
     inquiries.add(inquiry1); 
     inquiry1Buyer.inquiries.add(inquiry1); 
  
     var inquiry2 = Inquiry(inquiries.concept!); 
-    inquiry2.title = 'organization'; 
-    inquiry2.description = 'sand'; 
-    inquiry2.category = 'distance'; 
-    inquiry2.branch = 'feeling'; 
+    inquiry2.title = 'sand'; 
+    inquiry2.description = 'bird'; 
+    inquiry2.category = 'text'; 
+    inquiry2.branch = 'software'; 
     inquiry2.publishingDate = new DateTime.now(); 
     inquiry2.expirationDate = new DateTime.now(); 
-    inquiry2.deliveryLocation = 'top'; 
-    inquiry2.providerCriteria = 'highway'; 
-    inquiry2.status = 'top'; 
+    inquiry2.deliveryLocation = 'lunch'; 
+    inquiry2.providerCriteria = 'organization'; 
+    inquiry2.status = 'school'; 
     var inquiry2Buyer = users.random(); 
     inquiry2.buyer = inquiry2Buyer; 
     inquiries.add(inquiry2); 
     inquiry2Buyer.inquiries.add(inquiry2); 
  
     var inquiry3 = Inquiry(inquiries.concept!); 
-    inquiry3.title = 'auto'; 
-    inquiry3.description = 'smog'; 
-    inquiry3.category = 'nothingness'; 
-    inquiry3.branch = 'highway'; 
+    inquiry3.title = 'tall'; 
+    inquiry3.description = 'web'; 
+    inquiry3.category = 'plaho'; 
+    inquiry3.branch = 'economy'; 
     inquiry3.publishingDate = new DateTime.now(); 
     inquiry3.expirationDate = new DateTime.now(); 
-    inquiry3.deliveryLocation = 'edition'; 
-    inquiry3.providerCriteria = 'body'; 
-    inquiry3.status = 'parfem'; 
+    inquiry3.deliveryLocation = 'dinner'; 
+    inquiry3.providerCriteria = 'debt'; 
+    inquiry3.status = 'abstract'; 
     var inquiry3Buyer = users.random(); 
     inquiry3.buyer = inquiry3Buyer; 
     inquiries.add(inquiry3); 
@@ -196,33 +196,33 @@ class ManagerModel extends ManagerEntries {
  
   void initCompanies() { 
     var company1 = Company(companies.concept!); 
-    company1.name = 'hot'; 
-    company1.role = 'seed'; 
-    company1.address = 'coffee'; 
-    company1.uidNumber = 'thing'; 
-    company1.registrationNumber = 'hunting'; 
-    company1.numberOfEmployees = 'series'; 
-    company1.websiteUrl = 'course'; 
+    company1.name = 'nothingness'; 
+    company1.role = 'output'; 
+    company1.address = 'down'; 
+    company1.uidNumber = 'big'; 
+    company1.registrationNumber = 'place'; 
+    company1.numberOfEmployees = 'element'; 
+    company1.websiteUrl = 'sentence'; 
     companies.add(company1); 
  
     var company2 = Company(companies.concept!); 
-    company2.name = 'auto'; 
-    company2.role = 'word'; 
-    company2.address = 'vessel'; 
-    company2.uidNumber = 'ship'; 
-    company2.registrationNumber = 'country'; 
-    company2.numberOfEmployees = 'security'; 
-    company2.websiteUrl = 'season'; 
+    company2.name = 'cinema'; 
+    company2.role = 'capacity'; 
+    company2.address = 'up'; 
+    company2.uidNumber = 'health'; 
+    company2.registrationNumber = 'walking'; 
+    company2.numberOfEmployees = 'undo'; 
+    company2.websiteUrl = 'tree'; 
     companies.add(company2); 
  
     var company3 = Company(companies.concept!); 
-    company3.name = 'table'; 
-    company3.role = 'ticket'; 
-    company3.address = 'notch'; 
-    company3.uidNumber = 'umbrella'; 
-    company3.registrationNumber = 'effort'; 
-    company3.numberOfEmployees = 'offence'; 
-    company3.websiteUrl = 'cash'; 
+    company3.name = 'auto'; 
+    company3.role = 'body'; 
+    company3.address = 'revolution'; 
+    company3.uidNumber = 'productivity'; 
+    company3.registrationNumber = 'call'; 
+    company3.numberOfEmployees = 'train'; 
+    company3.websiteUrl = 'restaurant'; 
     companies.add(company3); 
  
   } 
