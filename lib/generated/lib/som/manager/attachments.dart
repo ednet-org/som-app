@@ -4,7 +4,7 @@ part of som_manager;
  
 class Attachment extends AttachmentGen { 
  
-  Attachment(Concept concept) : super(concept!); 
+  Attachment(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Attachment extends AttachmentGen {
  
 class Attachments extends AttachmentsGen { 
  
-  Attachments(Concept concept) : super(concept!); 
+  Attachments(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

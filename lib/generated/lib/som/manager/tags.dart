@@ -4,7 +4,7 @@ part of som_manager;
  
 class Tag extends TagGen { 
  
-  Tag(Concept concept) : super(concept!); 
+  Tag(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Tag extends TagGen {
  
 class Tags extends TagsGen { 
  
-  Tags(Concept concept) : super(concept!); 
+  Tags(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

@@ -45,7 +45,7 @@ class ManagerModel extends ManagerEntries {
   } 
  
   void initOffers() { 
-    var offer1 = Offer(offers.concept!); 
+    var offer1 = Offer(offers.concept);
     offer1.description = 'smog'; 
     offer1.deliveryTime = 'message'; 
     offer1.status = 'coffee'; 
@@ -59,7 +59,7 @@ class ManagerModel extends ManagerEntries {
     offer1Provider.offers.add(offer1); 
     offer1Inquiry.offers.add(offer1); 
  
-    var offer2 = Offer(offers.concept!); 
+    var offer2 = Offer(offers.concept);
     offer2.description = 'health'; 
     offer2.deliveryTime = 'consciousness'; 
     offer2.status = 'security'; 
@@ -73,7 +73,7 @@ class ManagerModel extends ManagerEntries {
     offer2Provider.offers.add(offer2); 
     offer2Inquiry.offers.add(offer2); 
  
-    var offer3 = Offer(offers.concept!); 
+    var offer3 = Offer(offers.concept);
     offer3.description = 'hat'; 
     offer3.deliveryTime = 'test'; 
     offer3.status = 'country'; 
@@ -90,7 +90,7 @@ class ManagerModel extends ManagerEntries {
   } 
  
   void initUsers() { 
-    var user1 = User(users.concept!); 
+    var user1 = User(users.concept);
     user1.username = 'wheat'; 
     user1.roleAtSom = 'paper'; 
     user1.roleAtCompany = 'void'; 
@@ -99,7 +99,7 @@ class ManagerModel extends ManagerEntries {
     users.add(user1); 
     user1Company.employees.add(user1); 
  
-    var user2 = User(users.concept!); 
+    var user2 = User(users.concept);
     user2.username = 'crisis'; 
     user2.roleAtSom = 'void'; 
     user2.roleAtCompany = 'big'; 
@@ -108,7 +108,7 @@ class ManagerModel extends ManagerEntries {
     users.add(user2); 
     user2Company.employees.add(user2); 
  
-    var user3 = User(users.concept!); 
+    var user3 = User(users.concept);
     user3.username = 'down'; 
     user3.roleAtSom = 'center'; 
     user3.roleAtCompany = 'family'; 
@@ -120,34 +120,34 @@ class ManagerModel extends ManagerEntries {
   } 
  
   void initBuyers() { 
-    var buyer1 = Buyer(buyers.concept!); 
+    var buyer1 = Buyer(buyers.concept);
     buyers.add(buyer1); 
  
-    var buyer2 = Buyer(buyers.concept!); 
+    var buyer2 = Buyer(buyers.concept);
     buyers.add(buyer2); 
  
-    var buyer3 = Buyer(buyers.concept!); 
+    var buyer3 = Buyer(buyers.concept);
     buyers.add(buyer3); 
  
   } 
  
   void initProviders() { 
-    var provider1 = Provider(providers.concept!); 
+    var provider1 = Provider(providers.concept);
     provider1.company = 'car'; 
     providers.add(provider1); 
  
-    var provider2 = Provider(providers.concept!); 
+    var provider2 = Provider(providers.concept);
     provider2.company = 'letter'; 
     providers.add(provider2); 
  
-    var provider3 = Provider(providers.concept!); 
+    var provider3 = Provider(providers.concept);
     provider3.company = 'music'; 
     providers.add(provider3); 
  
   } 
  
   void initInquiries() { 
-    var inquiry1 = Inquiry(inquiries.concept!); 
+    var inquiry1 = Inquiry(inquiries.concept);
     inquiry1.title = 'horse'; 
     inquiry1.description = 'thing'; 
     inquiry1.category = 'dog'; 
@@ -162,7 +162,7 @@ class ManagerModel extends ManagerEntries {
     inquiries.add(inquiry1); 
     inquiry1Buyer.inquiries.add(inquiry1); 
  
-    var inquiry2 = Inquiry(inquiries.concept!); 
+    var inquiry2 = Inquiry(inquiries.concept);
     inquiry2.title = 'sand'; 
     inquiry2.description = 'bird'; 
     inquiry2.category = 'text'; 
@@ -177,7 +177,7 @@ class ManagerModel extends ManagerEntries {
     inquiries.add(inquiry2); 
     inquiry2Buyer.inquiries.add(inquiry2); 
  
-    var inquiry3 = Inquiry(inquiries.concept!); 
+    var inquiry3 = Inquiry(inquiries.concept);
     inquiry3.title = 'tall'; 
     inquiry3.description = 'web'; 
     inquiry3.category = 'plaho'; 
@@ -195,7 +195,7 @@ class ManagerModel extends ManagerEntries {
   } 
  
   void initCompanies() { 
-    var company1 = Company(companies.concept!); 
+    var company1 = Company(companies.concept);
     company1.name = 'nothingness'; 
     company1.role = 'output'; 
     company1.address = 'down'; 
@@ -205,7 +205,7 @@ class ManagerModel extends ManagerEntries {
     company1.websiteUrl = 'sentence'; 
     companies.add(company1); 
  
-    var company2 = Company(companies.concept!); 
+    var company2 = Company(companies.concept);
     company2.name = 'cinema'; 
     company2.role = 'capacity'; 
     company2.address = 'up'; 
@@ -215,7 +215,7 @@ class ManagerModel extends ManagerEntries {
     company2.websiteUrl = 'tree'; 
     companies.add(company2); 
  
-    var company3 = Company(companies.concept!); 
+    var company3 = Company(companies.concept);
     company3.name = 'auto'; 
     company3.role = 'body'; 
     company3.address = 'revolution'; 

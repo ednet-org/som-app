@@ -4,7 +4,7 @@ part of som_manager;
  
 class StreetDetails extends StreetDetailsGen { 
  
-  StreetDetails(Concept concept) : super(concept!); 
+  StreetDetails(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class StreetDetails extends StreetDetailsGen {
  
 class StreetDetailss extends StreetDetailssGen { 
  
-  StreetDetailss(Concept concept) : super(concept!); 
+  StreetDetailss(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

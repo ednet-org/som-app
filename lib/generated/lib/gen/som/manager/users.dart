@@ -49,8 +49,8 @@ abstract class UsersGen extends Entities<User> {
     this.concept = concept; 
   } 
  
-  Users newEntities() => Users(concept!); 
-  User newEntity() => User(concept!); 
+  Users newEntities() => Users(concept);
+  User newEntity() => User(concept);
   
 } 
  

@@ -4,7 +4,7 @@ part of som_manager;
  
 class ZIP extends ZIPGen { 
  
-  ZIP(Concept concept) : super(concept!); 
+  ZIP(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class ZIP extends ZIPGen {
  
 class ZIPs extends ZIPsGen { 
  
-  ZIPs(Concept concept) : super(concept!); 
+  ZIPs(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

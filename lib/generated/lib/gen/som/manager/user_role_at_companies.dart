@@ -22,8 +22,8 @@ abstract class UserRoleAtCompaniesGen extends Entities<UserRoleAtCompany> {
     this.concept = concept; 
   } 
  
-  UserRoleAtCompanies newEntities() => UserRoleAtCompanies(concept!); 
-  UserRoleAtCompany newEntity() => UserRoleAtCompany(concept!); 
+  UserRoleAtCompanies newEntities() => UserRoleAtCompanies(concept);
+  UserRoleAtCompany newEntity() => UserRoleAtCompany(concept);
   
 } 
  

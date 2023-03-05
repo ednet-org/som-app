@@ -4,7 +4,7 @@ part of som_manager;
  
 class Inquiry extends InquiryGen { 
  
-  Inquiry(Concept concept) : super(concept!); 
+  Inquiry(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Inquiry extends InquiryGen {
  
 class Inquiries extends InquiriesGen { 
  
-  Inquiries(Concept concept) : super(concept!); 
+  Inquiries(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

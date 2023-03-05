@@ -19,8 +19,8 @@ abstract class BuyersGen extends Entities<Buyer> {
     this.concept = concept; 
   } 
  
-  Buyers newEntities() => Buyers(concept!); 
-  Buyer newEntity() => Buyer(concept!); 
+  Buyers newEntities() => Buyers(concept);
+  Buyer newEntity() => Buyer(concept);
   
 } 
  

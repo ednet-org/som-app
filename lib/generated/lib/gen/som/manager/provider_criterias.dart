@@ -37,8 +37,8 @@ abstract class ProviderCriteriasGen extends Entities<ProviderCriteria> {
     this.concept = concept; 
   } 
  
-  ProviderCriterias newEntities() => ProviderCriterias(concept!); 
-  ProviderCriteria newEntity() => ProviderCriteria(concept!); 
+  ProviderCriterias newEntities() => ProviderCriterias(concept);
+  ProviderCriteria newEntity() => ProviderCriteria(concept);
   
 } 
  

@@ -51,8 +51,8 @@ abstract class OffersGen extends Entities<Offer> {
     this.concept = concept; 
   } 
  
-  Offers newEntities() => Offers(concept!); 
-  Offer newEntity() => Offer(concept!); 
+  Offers newEntities() => Offers(concept);
+  Offer newEntity() => Offer(concept);
   
 } 
  

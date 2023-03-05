@@ -4,7 +4,7 @@ part of som_manager;
  
 class Registration extends RegistrationGen { 
  
-  Registration(Concept concept) : super(concept!); 
+  Registration(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Registration extends RegistrationGen {
  
 class Registrations extends RegistrationsGen { 
  
-  Registrations(Concept concept) : super(concept!); 
+  Registrations(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

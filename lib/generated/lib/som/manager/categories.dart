@@ -4,7 +4,7 @@ part of som_manager;
  
 class Category extends CategoryGen { 
  
-  Category(Concept concept) : super(concept!); 
+  Category(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Category extends CategoryGen {
  
 class Categories extends CategoriesGen { 
  
-  Categories(Concept concept) : super(concept!); 
+  Categories(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

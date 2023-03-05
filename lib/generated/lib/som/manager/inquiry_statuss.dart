@@ -4,7 +4,7 @@ part of som_manager;
  
 class InquiryStatus extends InquiryStatusGen { 
  
-  InquiryStatus(Concept concept) : super(concept!); 
+  InquiryStatus(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class InquiryStatus extends InquiryStatusGen {
  
 class InquiryStatuss extends InquiryStatussGen { 
  
-  InquiryStatuss(Concept concept) : super(concept!); 
+  InquiryStatuss(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

@@ -27,8 +27,8 @@ abstract class CountriesGen extends Entities<Country> {
     this.concept = concept; 
   } 
  
-  Countries newEntities() => Countries(concept!); 
-  Country newEntity() => Country(concept!); 
+  Countries newEntities() => Countries(concept);
+  Country newEntity() => Country(concept);
   
 } 
  

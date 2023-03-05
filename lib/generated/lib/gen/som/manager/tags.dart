@@ -37,8 +37,8 @@ abstract class TagsGen extends Entities<Tag> {
     this.concept = concept; 
   } 
  
-  Tags newEntities() => Tags(concept!); 
-  Tag newEntity() => Tag(concept!); 
+  Tags newEntities() => Tags(concept);
+  Tag newEntity() => Tag(concept);
   
 } 
  

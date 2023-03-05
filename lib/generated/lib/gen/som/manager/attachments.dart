@@ -43,8 +43,8 @@ abstract class AttachmentsGen extends Entities<Attachment> {
     this.concept = concept; 
   } 
  
-  Attachments newEntities() => Attachments(concept!); 
-  Attachment newEntity() => Attachment(concept!); 
+  Attachments newEntities() => Attachments(concept);
+  Attachment newEntity() => Attachment(concept);
   
 } 
  

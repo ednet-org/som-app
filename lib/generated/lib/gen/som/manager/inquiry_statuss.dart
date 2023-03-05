@@ -22,8 +22,8 @@ abstract class InquiryStatussGen extends Entities<InquiryStatus> {
     this.concept = concept; 
   } 
  
-  InquiryStatuss newEntities() => InquiryStatuss(concept!); 
-  InquiryStatus newEntity() => InquiryStatus(concept!); 
+  InquiryStatuss newEntities() => InquiryStatuss(concept);
+  InquiryStatus newEntity() => InquiryStatus(concept);
   
 } 
  

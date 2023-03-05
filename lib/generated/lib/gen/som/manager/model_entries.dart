@@ -30,73 +30,73 @@ class ManagerEntries extends ModelEntries {
       throw ConceptError("${conceptCode} concept does not exist.") ; 
     } 
     if (concept.code == "Offer") { 
-      return Offers(concept!); 
+      return Offers(concept);
     } 
     if (concept.code == "User") { 
-      return Users(concept!); 
+      return Users(concept);
     } 
     if (concept.code == "Buyer") { 
-      return Buyers(concept!); 
+      return Buyers(concept);
     } 
     if (concept.code == "UserRoleAtCompany") { 
-      return UserRoleAtCompanies(concept!); 
+      return UserRoleAtCompanies(concept);
     } 
     if (concept.code == "Provider") { 
-      return Providers(concept!); 
+      return Providers(concept);
     } 
     if (concept.code == "Attachment") { 
-      return Attachments(concept!); 
+      return Attachments(concept);
     } 
     if (concept.code == "Category") { 
-      return Categories(concept!); 
+      return Categories(concept);
     } 
     if (concept.code == "Tag") { 
-      return Tags(concept!); 
+      return Tags(concept);
     } 
     if (concept.code == "PhoneNumber") { 
-      return PhoneNumbers(concept!); 
+      return PhoneNumbers(concept);
     } 
     if (concept.code == "Email") { 
-      return Emails(concept!); 
+      return Emails(concept);
     } 
     if (concept.code == "Registration") { 
-      return Registrations(concept!); 
+      return Registrations(concept);
     } 
     if (concept.code == "Country") { 
-      return Countries(concept!); 
+      return Countries(concept);
     } 
     if (concept.code == "Address") { 
-      return Addresss(concept!); 
+      return Addresss(concept);
     } 
     if (concept.code == "StreetDetails") { 
-      return StreetDetailss(concept!); 
+      return StreetDetailss(concept);
     } 
     if (concept.code == "Street") { 
-      return Streets(concept!); 
+      return Streets(concept);
     } 
     if (concept.code == "ZIP") { 
-      return ZIPs(concept!); 
+      return ZIPs(concept);
     } 
     if (concept.code == "Inquiry") { 
-      return Inquiries(concept!); 
+      return Inquiries(concept);
     } 
     if (concept.code == "InquiryStatus") { 
-      return InquiryStatuss(concept!); 
+      return InquiryStatuss(concept);
     } 
     if (concept.code == "ProviderCriteria") { 
-      return ProviderCriterias(concept!); 
+      return ProviderCriterias(concept);
     } 
     if (concept.code == "Company") { 
-      return Companies(concept!); 
+      return Companies(concept);
     } 
     if (concept.code == "CompanyRoleAtSom") { 
-      return CompanyRoleAtSoms(concept!); 
+      return CompanyRoleAtSoms(concept);
     } 
     if (concept.code == "CompanyType") { 
-      return CompanyTypes(concept!); 
+      return CompanyTypes(concept);
     } 
     if (concept.code == "CompanySize") { 
-      return CompanySizes(concept!); 
+      return CompanySizes(concept);
     } 
     return null; 
   } 
@@ -107,73 +107,73 @@ class ManagerEntries extends ModelEntries {
       throw ConceptError("${conceptCode} concept does not exist.") ; 
     } 
     if (concept.code == "Offer") { 
-      return Offer(concept!); 
+      return Offer(concept);
     } 
     if (concept.code == "User") { 
-      return User(concept!); 
+      return User(concept);
     } 
     if (concept.code == "Buyer") { 
-      return Buyer(concept!); 
+      return Buyer(concept);
     } 
     if (concept.code == "UserRoleAtCompany") { 
-      return UserRoleAtCompany(concept!); 
+      return UserRoleAtCompany(concept);
     } 
     if (concept.code == "Provider") { 
-      return Provider(concept!); 
+      return Provider(concept);
     } 
     if (concept.code == "Attachment") { 
-      return Attachment(concept!); 
+      return Attachment(concept);
     } 
     if (concept.code == "Category") { 
-      return Category(concept!); 
+      return Category(concept);
     } 
     if (concept.code == "Tag") { 
-      return Tag(concept!); 
+      return Tag(concept);
     } 
     if (concept.code == "PhoneNumber") { 
-      return PhoneNumber(concept!); 
+      return PhoneNumber(concept);
     } 
     if (concept.code == "Email") { 
-      return Email(concept!); 
+      return Email(concept);
     } 
     if (concept.code == "Registration") { 
-      return Registration(concept!); 
+      return Registration(concept);
     } 
     if (concept.code == "Country") { 
-      return Country(concept!); 
+      return Country(concept);
     } 
     if (concept.code == "Address") { 
-      return Address(concept!); 
+      return Address(concept);
     } 
     if (concept.code == "StreetDetails") { 
-      return StreetDetails(concept!); 
+      return StreetDetails(concept);
     } 
     if (concept.code == "Street") { 
-      return Street(concept!); 
+      return Street(concept);
     } 
     if (concept.code == "ZIP") { 
-      return ZIP(concept!); 
+      return ZIP(concept);
     } 
     if (concept.code == "Inquiry") { 
-      return Inquiry(concept!); 
+      return Inquiry(concept);
     } 
     if (concept.code == "InquiryStatus") { 
-      return InquiryStatus(concept!); 
+      return InquiryStatus(concept);
     } 
     if (concept.code == "ProviderCriteria") { 
-      return ProviderCriteria(concept!); 
+      return ProviderCriteria(concept);
     } 
     if (concept.code == "Company") { 
-      return Company(concept!); 
+      return Company(concept);
     } 
     if (concept.code == "CompanyRoleAtSom") { 
-      return CompanyRoleAtSom(concept!); 
+      return CompanyRoleAtSom(concept);
     } 
     if (concept.code == "CompanyType") { 
-      return CompanyType(concept!); 
+      return CompanyType(concept);
     } 
     if (concept.code == "CompanySize") { 
-      return CompanySize(concept!); 
+      return CompanySize(concept);
     } 
     return null; 
   } 

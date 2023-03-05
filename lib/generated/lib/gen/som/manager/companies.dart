@@ -50,8 +50,8 @@ abstract class CompaniesGen extends Entities<Company> {
     this.concept = concept; 
   } 
  
-  Companies newEntities() => Companies(concept!); 
-  Company newEntity() => Company(concept!); 
+  Companies newEntities() => Companies(concept);
+  Company newEntity() => Company(concept);
   
 } 
  

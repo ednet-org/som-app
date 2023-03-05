@@ -4,7 +4,7 @@ part of som_manager;
  
 class Provider extends ProviderGen { 
  
-  Provider(Concept concept) : super(concept!); 
+  Provider(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Provider extends ProviderGen {
  
 class Providers extends ProvidersGen { 
  
-  Providers(Concept concept) : super(concept!); 
+  Providers(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  

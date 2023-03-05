@@ -27,8 +27,8 @@ abstract class ProvidersGen extends Entities<Provider> {
     this.concept = concept; 
   } 
  
-  Providers newEntities() => Providers(concept!); 
-  Provider newEntity() => Provider(concept!); 
+  Providers newEntities() => Providers(concept);
+  Provider newEntity() => Provider(concept);
   
 } 
  

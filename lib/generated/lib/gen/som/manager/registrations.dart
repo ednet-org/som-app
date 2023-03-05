@@ -22,8 +22,8 @@ abstract class RegistrationsGen extends Entities<Registration> {
     this.concept = concept; 
   } 
  
-  Registrations newEntities() => Registrations(concept!); 
-  Registration newEntity() => Registration(concept!); 
+  Registrations newEntities() => Registrations(concept);
+  Registration newEntity() => Registration(concept);
   
 } 
  

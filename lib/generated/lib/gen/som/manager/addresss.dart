@@ -37,8 +37,8 @@ abstract class AddresssGen extends Entities<Address> {
     this.concept = concept; 
   } 
  
-  Addresss newEntities() => Addresss(concept!); 
-  Address newEntity() => Address(concept!); 
+  Addresss newEntities() => Addresss(concept);
+  Address newEntity() => Address(concept);
   
 } 
  

@@ -4,7 +4,7 @@ part of som_manager;
  
 class Country extends CountryGen { 
  
-  Country(Concept concept) : super(concept!); 
+  Country(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -14,7 +14,7 @@ class Country extends CountryGen {
  
 class Countries extends CountriesGen { 
  
-  Countries(Concept concept) : super(concept!); 
+  Countries(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
