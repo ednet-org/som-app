@@ -115,7 +115,9 @@ class ManagerModel extends ManagerEntries {
     var user3Company = companies.random(); 
     user3.company = user3Company; 
     users.add(user3); 
-    user3Company.employees.add(user3); 
+    user3Company.employees.add(user3);
+
+    users.exceptions.display();
  
   } 
  
