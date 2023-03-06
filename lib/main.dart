@@ -1,16 +1,19 @@
 //region imports
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:beamer/beamer.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
+import 'package:ednet_core/ednet_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som_manager/som_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
@@ -46,6 +49,7 @@ var apiCompanyService;
 const env = String.fromEnvironment('env', defaultValue: 'dev');
 
 void main() async {
+  initDomainModel();
   // nb_utils - Must be initialize before using shared preference
   await initialize();
 
@@ -182,3 +186,36 @@ Future<void> initTheming() async {
 }
 
 //endregion
+void initDomainModel() async {
+  var repository = Repository();
+  SomDomain somDomain = repository.getDomainModels("Som") as SomDomain;
+  assert(somDomain != null);
+  ManagerModel managerModel =
+      somDomain.getModelEntries("Manager") as ManagerModel;
+  assert(managerModel != null);
+  var companies = managerModel.companies;
+
+  print(companies.length);
+
+  // Load the data from the JSON file if it exists
+  final dbFile = File('db.json');
+  if (await dbFile.exists()) {
+    final dbData = await dbFile.readAsString();
+    managerModel.fromJson(dbData);
+  }
+
+  // Perform some operations on the domain models
+  // For example:
+  // final oid = Oid.ts(1678097187526);
+  // final existingProvider = managerModel.providers.singleWhereOid(oid);
+  // final newProvider = SomProvider(managerModel.providers.concept);
+  // managerModel.providers.add(newProvider);
+
+  final jsonString = json.encode(managerModel.toJsonMap());
+  // Save the updated data to the JSON file
+  if (await dbFile.exists()) {
+    await dbFile.writeAsString(jsonString);
+  } else {
+    await dbFile.create().then((_) => dbFile.writeAsString(jsonString));
+  }
+}

@@ -16,7 +16,7 @@ class ManagerEntries extends ModelEntries {
     concept = model.concepts.singleWhereCode("Buyer"); 
     entries["Buyer"] = Buyers(concept!); 
     concept = model.concepts.singleWhereCode("Provider"); 
-    entries["Provider"] = Providers(concept!); 
+    entries["Provider"] = SomProviders(concept!); 
     concept = model.concepts.singleWhereCode("Inquiry"); 
     entries["Inquiry"] = Inquiries(concept!); 
     concept = model.concepts.singleWhereCode("Company"); 
@@ -42,7 +42,7 @@ class ManagerEntries extends ModelEntries {
       return UserRoleAtCompanies(concept);
     } 
     if (concept.code == "Provider") { 
-      return Providers(concept);
+      return SomProviders(concept);
     } 
     if (concept.code == "Attachment") { 
       return Attachments(concept);
@@ -119,7 +119,7 @@ class ManagerEntries extends ModelEntries {
       return UserRoleAtCompany(concept);
     } 
     if (concept.code == "Provider") { 
-      return Provider(concept);
+      return SomProvider(concept);
     } 
     if (concept.code == "Attachment") { 
       return Attachment(concept);
@@ -181,7 +181,7 @@ class ManagerEntries extends ModelEntries {
   Offers get offers => getEntry("Offer") as Offers; 
   Users get users => getEntry("User") as Users; 
   Buyers get buyers => getEntry("Buyer") as Buyers; 
-  Providers get providers => getEntry("Provider") as Providers; 
+  SomProviders get providers => getEntry("Provider") as SomProviders; 
   Inquiries get inquiries => getEntry("Inquiry") as Inquiries; 
   Companies get companies => getEntry("Company") as Companies; 
  

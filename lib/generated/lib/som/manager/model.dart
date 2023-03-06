@@ -134,15 +134,15 @@ class ManagerModel extends ManagerEntries {
   } 
  
   void initProviders() { 
-    var provider1 = Provider(providers.concept);
+    var provider1 = SomProvider(providers.concept);
     provider1.company = 'car'; 
     providers.add(provider1); 
  
-    var provider2 = Provider(providers.concept);
+    var provider2 = SomProvider(providers.concept);
     provider2.company = 'letter'; 
     providers.add(provider2); 
  
-    var provider3 = Provider(providers.concept);
+    var provider3 = SomProvider(providers.concept);
     provider3.company = 'music'; 
     providers.add(provider3); 
  

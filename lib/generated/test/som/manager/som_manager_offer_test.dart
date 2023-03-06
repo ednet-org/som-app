@@ -5,7 +5,7 @@ import "package:ednet_core/ednet_core.dart";
 import "package:som_manager/som_manager.dart";
 
 void testSomManagerOffers(SomDomain somDomain, ManagerModel managerModel,
-    Offers offers, Providers providers, Inquiries inquiries) {
+    Offers offers, SomProviders providers, Inquiries inquiries) {
   DomainSession session;
   group("Testing Som.Manager.Offer", () {
     session = somDomain.newSession();

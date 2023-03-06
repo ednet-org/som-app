@@ -14,8 +14,8 @@ abstract class OfferGen extends Entity<Offer> {
   Reference get providerReference => getReference("provider") as Reference; 
   void set providerReference(Reference reference) { setReference("provider", reference); } 
   
-  Provider get provider => getParent("provider") as Provider; 
-  void set provider(Provider p) { setParent("provider", p); } 
+  SomProvider get provider => getParent("provider") as SomProvider; 
+  void set provider(SomProvider p) { setParent("provider", p); } 
   
   Reference get inquiryReference => getReference("inquiry") as Reference; 
   void set inquiryReference(Reference reference) { setReference("inquiry", reference); } 

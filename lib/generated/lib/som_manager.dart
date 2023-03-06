@@ -125,7 +125,7 @@ part "gen/som/manager/buyers.dart";
 part "gen/som/manager/user_role_at_companies.dart";
 
 
-part "gen/som/manager/providers.dart";
+part "gen/som/manager/som_providers.dart";
 
 
 part "gen/som/manager/attachments.dart";

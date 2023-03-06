@@ -1,10 +1,10 @@
 part of som_manager; 
  
-// lib/som/manager/providers.dart 
+// lib/som/manager/som_providers.dart
  
-class Provider extends ProviderGen { 
+class SomProvider extends SomProviderGen {
  
-  Provider(Concept concept) : super(concept); 
+  SomProvider(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
@@ -12,9 +12,9 @@ class Provider extends ProviderGen {
  
 } 
  
-class Providers extends ProvidersGen { 
+class SomProviders extends SomProvidersGen { 
  
-  Providers(Concept concept) : super(concept); 
+  SomProviders(Concept concept) : super(concept); 
  
   // added after code gen - begin 
  
