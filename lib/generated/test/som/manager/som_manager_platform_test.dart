@@ -83,7 +83,7 @@ void testSomManagerPlatforms(
     }); 
  
     test("Find platform by oid", () { 
-      var randomPlatform = platforms.random(); 
+      var randomPlatform = managerModel.platforms.random(); 
       var platform = platforms.singleWhereOid(randomPlatform.oid); 
       expect(platform, isNotNull); 
       expect(platform, equals(randomPlatform)); 
@@ -158,9 +158,9 @@ void testSomManagerPlatforms(
     }); 
  
     test("Random platform", () { 
-      var platform1 = platforms.random(); 
+      var platform1 = managerModel.platforms.random(); 
       expect(platform1, isNotNull); 
-      var platform2 = platforms.random(); 
+      var platform2 = managerModel.platforms.random(); 
       expect(platform2, isNotNull); 
  
       //platform1.display(prefix: "random1"); 
@@ -184,7 +184,7 @@ void testSomManagerPlatforms(
     }); 
  
     test("Copy Equality", () { 
-      var randomPlatform = platforms.random(); 
+      var randomPlatform = managerModel.platforms.random(); 
       randomPlatform.display(prefix:"before copy: "); 
       var randomPlatformCopy = randomPlatform.copy(); 
       randomPlatformCopy.display(prefix:"after copy: "); 
@@ -238,13 +238,13 @@ void testSomManagerPlatforms(
  
     test("Platform action with multiple undos and redos", () { 
       var platformCount = platforms.length; 
-      var platform1 = platforms.random(); 
+      var platform1 = managerModel.platforms.random(); 
  
       var action1 = RemoveCommand(session, platforms, platform1); 
       action1.doIt(); 
       expect(platforms.length, equals(--platformCount)); 
  
-      var platform2 = platforms.random(); 
+      var platform2 = managerModel.platforms.random(); 
  
       var action2 = RemoveCommand(session, platforms, platform2); 
       action2.doIt(); 
@@ -271,10 +271,10 @@ void testSomManagerPlatforms(
  
     test("Transaction undo and redo", () { 
       var platformCount = platforms.length; 
-      var platform1 = platforms.random(); 
-      var platform2 = platforms.random(); 
+      var platform1 = managerModel.platforms.random(); 
+      var platform2 = managerModel.platforms.random(); 
       while (platform1 == platform2) { 
-        platform2 = platforms.random();  
+        platform2 = managerModel.platforms.random();  
       } 
       var action1 = RemoveCommand(session, platforms, platform1); 
       var action2 = RemoveCommand(session, platforms, platform2); 
@@ -303,7 +303,7 @@ void testSomManagerPlatforms(
  
     test("Transaction with one action error", () { 
       var platformCount = platforms.length; 
-      var platform1 = platforms.random(); 
+      var platform1 = managerModel.platforms.random(); 
       var platform2 = platform1; 
       var action1 = RemoveCommand(session, platforms, platform1); 
       var action2 = RemoveCommand(session, platforms, platform2); 

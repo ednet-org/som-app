@@ -83,7 +83,7 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Find platformRole by oid", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var platformRole = platformRoles.singleWhereOid(randomPlatformRole.oid); 
       expect(platformRole, isNotNull); 
       expect(platformRole, equals(randomPlatformRole)); 
@@ -98,7 +98,7 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Find platformRole by attribute", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var platformRole = 
           platformRoles.firstWhereAttribute("name", randomPlatformRole.name); 
       expect(platformRole, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Select platformRoles by attribute", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var selectedPlatformRoles = 
           platformRoles.selectWhereAttribute("name", randomPlatformRole.name); 
       expect(selectedPlatformRoles.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Select platformRoles by attribute, then add", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var selectedPlatformRoles = 
           platformRoles.selectWhereAttribute("name", randomPlatformRole.name); 
       expect(selectedPlatformRoles.isEmpty, isFalse); 
@@ -129,8 +129,8 @@ void testSomManagerPlatformRoles(
       var platformRolesCount = platformRoles.length; 
  
       var platformRole = PlatformRole(platformRoles.concept); 
-      platformRole.name = 'money'; 
-      platformRole.value = 'objective'; 
+      platformRole.name = 'sand'; 
+      platformRole.value = 'tape'; 
       var added = selectedPlatformRoles.add(platformRole); 
       expect(added, isTrue); 
       expect(platformRoles.length, equals(++platformRolesCount)); 
@@ -141,7 +141,7 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Select platformRoles by attribute, then remove", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var selectedPlatformRoles = 
           platformRoles.selectWhereAttribute("name", randomPlatformRole.name); 
       expect(selectedPlatformRoles.isEmpty, isFalse); 
@@ -201,9 +201,9 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Random platformRole", () { 
-      var platformRole1 = platformRoles.random(); 
+      var platformRole1 = managerModel.platformRoles.random(); 
       expect(platformRole1, isNotNull); 
-      var platformRole2 = platformRoles.random(); 
+      var platformRole2 = managerModel.platformRoles.random(); 
       expect(platformRole2, isNotNull); 
  
       //platformRole1.display(prefix: "random1"); 
@@ -223,16 +223,16 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("Update platformRole non id attribute with failure", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       var afterUpdateEntity = randomPlatformRole.copy(); 
-      afterUpdateEntity.name = 'wheat'; 
-      expect(afterUpdateEntity.name, equals('wheat')); 
+      afterUpdateEntity.name = 'office'; 
+      expect(afterUpdateEntity.name, equals('office')); 
       // platformRoles.update can only be used if oid, code or id is set. 
       expect(() => platformRoles.update(randomPlatformRole, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomPlatformRole = platformRoles.random(); 
+      var randomPlatformRole = managerModel.platformRoles.random(); 
       randomPlatformRole.display(prefix:"before copy: "); 
       var randomPlatformRoleCopy = randomPlatformRole.copy(); 
       randomPlatformRoleCopy.display(prefix:"after copy: "); 
@@ -247,11 +247,11 @@ void testSomManagerPlatformRoles(
     test("platformRole action undo and redo", () { 
       var platformRoleCount = platformRoles.length; 
       var platformRole = PlatformRole(platformRoles.concept); 
-        platformRole.name = 'plaho'; 
-      platformRole.value = 'picture'; 
-    var platformRoleUser = users.random(); 
+        platformRole.name = 'end'; 
+      platformRole.value = 'teaching'; 
+    var platformRoleUser = managerModel.users.random(); 
     platformRole.user = platformRoleUser; 
-    var platformRolePlatform = platforms.random(); 
+    var platformRolePlatform = managerModel.platforms.random(); 
     platformRole.platform = platformRolePlatform; 
       platformRoles.add(platformRole); 
     platformRoleUser.platformRoles.add(platformRole); 
@@ -274,11 +274,11 @@ void testSomManagerPlatformRoles(
     test("platformRole session undo and redo", () { 
       var platformRoleCount = platformRoles.length; 
       var platformRole = PlatformRole(platformRoles.concept); 
-        platformRole.name = 'baby'; 
-      platformRole.value = 'test'; 
-    var platformRoleUser = users.random(); 
+        platformRole.name = 'center'; 
+      platformRole.value = 'cloud'; 
+    var platformRoleUser = managerModel.users.random(); 
     platformRole.user = platformRoleUser; 
-    var platformRolePlatform = platforms.random(); 
+    var platformRolePlatform = managerModel.platforms.random(); 
     platformRole.platform = platformRolePlatform; 
       platformRoles.add(platformRole); 
     platformRoleUser.platformRoles.add(platformRole); 
@@ -299,8 +299,8 @@ void testSomManagerPlatformRoles(
     }); 
  
     test("PlatformRole update undo and redo", () { 
-      var platformRole = platformRoles.random(); 
-      var action = SetAttributeCommand(session, platformRole, "name", 'saving'); 
+      var platformRole = managerModel.platformRoles.random(); 
+      var action = SetAttributeCommand(session, platformRole, "name", 'job'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -312,13 +312,13 @@ void testSomManagerPlatformRoles(
  
     test("PlatformRole action with multiple undos and redos", () { 
       var platformRoleCount = platformRoles.length; 
-      var platformRole1 = platformRoles.random(); 
+      var platformRole1 = managerModel.platformRoles.random(); 
  
       var action1 = RemoveCommand(session, platformRoles, platformRole1); 
       action1.doIt(); 
       expect(platformRoles.length, equals(--platformRoleCount)); 
  
-      var platformRole2 = platformRoles.random(); 
+      var platformRole2 = managerModel.platformRoles.random(); 
  
       var action2 = RemoveCommand(session, platformRoles, platformRole2); 
       action2.doIt(); 
@@ -345,10 +345,10 @@ void testSomManagerPlatformRoles(
  
     test("Transaction undo and redo", () { 
       var platformRoleCount = platformRoles.length; 
-      var platformRole1 = platformRoles.random(); 
-      var platformRole2 = platformRoles.random(); 
+      var platformRole1 = managerModel.platformRoles.random(); 
+      var platformRole2 = managerModel.platformRoles.random(); 
       while (platformRole1 == platformRole2) { 
-        platformRole2 = platformRoles.random();  
+        platformRole2 = managerModel.platformRoles.random();  
       } 
       var action1 = RemoveCommand(session, platformRoles, platformRole1); 
       var action2 = RemoveCommand(session, platformRoles, platformRole2); 
@@ -377,7 +377,7 @@ void testSomManagerPlatformRoles(
  
     test("Transaction with one action error", () { 
       var platformRoleCount = platformRoles.length; 
-      var platformRole1 = platformRoles.random(); 
+      var platformRole1 = managerModel.platformRoles.random(); 
       var platformRole2 = platformRole1; 
       var action1 = RemoveCommand(session, platformRoles, platformRole1); 
       var action2 = RemoveCommand(session, platformRoles, platformRole2); 
@@ -401,11 +401,11 @@ void testSomManagerPlatformRoles(
  
       somDomain.startCommandReaction(reaction); 
       var platformRole = PlatformRole(platformRoles.concept); 
-        platformRole.name = 'milk'; 
-      platformRole.value = 'lunch'; 
-    var platformRoleUser = users.random(); 
+        platformRole.name = 'guest'; 
+      platformRole.value = 'redo'; 
+    var platformRoleUser = managerModel.users.random(); 
     platformRole.user = platformRoleUser; 
-    var platformRolePlatform = platforms.random(); 
+    var platformRolePlatform = managerModel.platforms.random(); 
     platformRole.platform = platformRolePlatform; 
       platformRoles.add(platformRole); 
     platformRoleUser.platformRoles.add(platformRole); 
@@ -421,7 +421,7 @@ void testSomManagerPlatformRoles(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, platformRole, "name", 'privacy'); 
+        session, platformRole, "name", 'price'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

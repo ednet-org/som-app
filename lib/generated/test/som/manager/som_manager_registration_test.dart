@@ -83,7 +83,7 @@ void testSomManagerRegistrations(
     }); 
  
     test("Find registration by oid", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var registration = registrations.singleWhereOid(randomRegistration.oid); 
       expect(registration, isNotNull); 
       expect(registration, equals(randomRegistration)); 
@@ -98,7 +98,7 @@ void testSomManagerRegistrations(
     }); 
  
     test("Find registration by attribute", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var registration = 
           registrations.firstWhereAttribute("company", randomRegistration.company); 
       expect(registration, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerRegistrations(
     }); 
  
     test("Select registrations by attribute", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var selectedRegistrations = 
           registrations.selectWhereAttribute("company", randomRegistration.company); 
       expect(selectedRegistrations.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerRegistrations(
     }); 
  
     test("Select registrations by attribute, then add", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var selectedRegistrations = 
           registrations.selectWhereAttribute("company", randomRegistration.company); 
       expect(selectedRegistrations.isEmpty, isFalse); 
@@ -129,9 +129,9 @@ void testSomManagerRegistrations(
       var registrationsCount = registrations.length; 
  
       var registration = Registration(registrations.concept); 
-      registration.company = 'software'; 
-      registration.user = 'picture'; 
-      registration.platformRole = 'left'; 
+      registration.company = 'cup'; 
+      registration.user = 'television'; 
+      registration.platformRole = 'beer'; 
       var added = selectedRegistrations.add(registration); 
       expect(added, isTrue); 
       expect(registrations.length, equals(++registrationsCount)); 
@@ -142,7 +142,7 @@ void testSomManagerRegistrations(
     }); 
  
     test("Select registrations by attribute, then remove", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var selectedRegistrations = 
           registrations.selectWhereAttribute("company", randomRegistration.company); 
       expect(selectedRegistrations.isEmpty, isFalse); 
@@ -200,9 +200,9 @@ void testSomManagerRegistrations(
     }); 
  
     test("Random registration", () { 
-      var registration1 = registrations.random(); 
+      var registration1 = managerModel.registrations.random(); 
       expect(registration1, isNotNull); 
-      var registration2 = registrations.random(); 
+      var registration2 = managerModel.registrations.random(); 
       expect(registration2, isNotNull); 
  
       //registration1.display(prefix: "random1"); 
@@ -222,16 +222,16 @@ void testSomManagerRegistrations(
     }); 
  
     test("Update registration non id attribute with failure", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       var afterUpdateEntity = randomRegistration.copy(); 
-      afterUpdateEntity.company = 'cash'; 
-      expect(afterUpdateEntity.company, equals('cash')); 
+      afterUpdateEntity.company = 'plaho'; 
+      expect(afterUpdateEntity.company, equals('plaho')); 
       // registrations.update can only be used if oid, code or id is set. 
       expect(() => registrations.update(randomRegistration, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomRegistration = registrations.random(); 
+      var randomRegistration = managerModel.registrations.random(); 
       randomRegistration.display(prefix:"before copy: "); 
       var randomRegistrationCopy = randomRegistration.copy(); 
       randomRegistrationCopy.display(prefix:"after copy: "); 
@@ -247,9 +247,9 @@ void testSomManagerRegistrations(
     test("registration action undo and redo", () { 
       var registrationCount = registrations.length; 
       var registration = Registration(registrations.concept); 
-        registration.company = 'mile'; 
-      registration.user = 'big'; 
-      registration.platformRole = 'celebration'; 
+        registration.company = 'guest'; 
+      registration.user = 'authority'; 
+      registration.platformRole = 'sand'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -269,9 +269,9 @@ void testSomManagerRegistrations(
     test("registration session undo and redo", () { 
       var registrationCount = registrations.length; 
       var registration = Registration(registrations.concept); 
-        registration.company = 'girl'; 
-      registration.user = 'vacation'; 
-      registration.platformRole = 'wave'; 
+        registration.company = 'holiday'; 
+      registration.user = 'parfem'; 
+      registration.platformRole = 'head'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -289,8 +289,8 @@ void testSomManagerRegistrations(
     }); 
  
     test("Registration update undo and redo", () { 
-      var registration = registrations.random(); 
-      var action = SetAttributeCommand(session, registration, "company", 'restaurant'); 
+      var registration = managerModel.registrations.random(); 
+      var action = SetAttributeCommand(session, registration, "company", 'course'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -302,13 +302,13 @@ void testSomManagerRegistrations(
  
     test("Registration action with multiple undos and redos", () { 
       var registrationCount = registrations.length; 
-      var registration1 = registrations.random(); 
+      var registration1 = managerModel.registrations.random(); 
  
       var action1 = RemoveCommand(session, registrations, registration1); 
       action1.doIt(); 
       expect(registrations.length, equals(--registrationCount)); 
  
-      var registration2 = registrations.random(); 
+      var registration2 = managerModel.registrations.random(); 
  
       var action2 = RemoveCommand(session, registrations, registration2); 
       action2.doIt(); 
@@ -335,10 +335,10 @@ void testSomManagerRegistrations(
  
     test("Transaction undo and redo", () { 
       var registrationCount = registrations.length; 
-      var registration1 = registrations.random(); 
-      var registration2 = registrations.random(); 
+      var registration1 = managerModel.registrations.random(); 
+      var registration2 = managerModel.registrations.random(); 
       while (registration1 == registration2) { 
-        registration2 = registrations.random();  
+        registration2 = managerModel.registrations.random();  
       } 
       var action1 = RemoveCommand(session, registrations, registration1); 
       var action2 = RemoveCommand(session, registrations, registration2); 
@@ -367,7 +367,7 @@ void testSomManagerRegistrations(
  
     test("Transaction with one action error", () { 
       var registrationCount = registrations.length; 
-      var registration1 = registrations.random(); 
+      var registration1 = managerModel.registrations.random(); 
       var registration2 = registration1; 
       var action1 = RemoveCommand(session, registrations, registration1); 
       var action2 = RemoveCommand(session, registrations, registration2); 
@@ -391,9 +391,9 @@ void testSomManagerRegistrations(
  
       somDomain.startCommandReaction(reaction); 
       var registration = Registration(registrations.concept); 
-        registration.company = 'drink'; 
-      registration.user = 'teacher'; 
-      registration.platformRole = 'concern'; 
+        registration.company = 'table'; 
+      registration.user = 'cup'; 
+      registration.platformRole = 'edition'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -406,7 +406,7 @@ void testSomManagerRegistrations(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, registration, "company", 'text'); 
+        session, registration, "company", 'book'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

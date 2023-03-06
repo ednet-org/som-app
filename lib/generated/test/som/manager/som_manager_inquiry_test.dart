@@ -83,7 +83,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Find inquiry by oid", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var inquiry = inquiries.singleWhereOid(randomInquiry.oid); 
       expect(inquiry, isNotNull); 
       expect(inquiry, equals(randomInquiry)); 
@@ -98,7 +98,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Find inquiry by attribute", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var inquiry = 
           inquiries.firstWhereAttribute("title", randomInquiry.title); 
       expect(inquiry, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Select inquiries by attribute", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var selectedInquiries = 
           inquiries.selectWhereAttribute("title", randomInquiry.title); 
       expect(selectedInquiries.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Select inquiries by attribute, then add", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var selectedInquiries = 
           inquiries.selectWhereAttribute("title", randomInquiry.title); 
       expect(selectedInquiries.isEmpty, isFalse); 
@@ -129,14 +129,14 @@ void testSomManagerInquiries(
       var inquiriesCount = inquiries.length; 
  
       var inquiry = Inquiry(inquiries.concept); 
-      inquiry.title = 'girl'; 
-      inquiry.description = 'dvd'; 
-      inquiry.category = 'energy'; 
-      inquiry.branch = 'element'; 
+      inquiry.title = 'line'; 
+      inquiry.description = 'deep'; 
+      inquiry.category = 'hot'; 
+      inquiry.branch = 'heating'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'darts'; 
-      inquiry.attachments = 'point'; 
+      inquiry.deliveryLocation = 'holiday'; 
+      inquiry.attachments = 'paper'; 
       var added = selectedInquiries.add(inquiry); 
       expect(added, isTrue); 
       expect(inquiries.length, equals(++inquiriesCount)); 
@@ -147,7 +147,7 @@ void testSomManagerInquiries(
     }); 
  
     test("Select inquiries by attribute, then remove", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var selectedInquiries = 
           inquiries.selectWhereAttribute("title", randomInquiry.title); 
       expect(selectedInquiries.isEmpty, isFalse); 
@@ -205,9 +205,9 @@ void testSomManagerInquiries(
     }); 
  
     test("Random inquiry", () { 
-      var inquiry1 = inquiries.random(); 
+      var inquiry1 = managerModel.inquiries.random(); 
       expect(inquiry1, isNotNull); 
-      var inquiry2 = inquiries.random(); 
+      var inquiry2 = managerModel.inquiries.random(); 
       expect(inquiry2, isNotNull); 
  
       //inquiry1.display(prefix: "random1"); 
@@ -227,16 +227,16 @@ void testSomManagerInquiries(
     }); 
  
     test("Update inquiry non id attribute with failure", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       var afterUpdateEntity = randomInquiry.copy(); 
-      afterUpdateEntity.title = 'rice'; 
-      expect(afterUpdateEntity.title, equals('rice')); 
+      afterUpdateEntity.title = 'bank'; 
+      expect(afterUpdateEntity.title, equals('bank')); 
       // inquiries.update can only be used if oid, code or id is set. 
       expect(() => inquiries.update(randomInquiry, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomInquiry = inquiries.random(); 
+      var randomInquiry = managerModel.inquiries.random(); 
       randomInquiry.display(prefix:"before copy: "); 
       var randomInquiryCopy = randomInquiry.copy(); 
       randomInquiryCopy.display(prefix:"after copy: "); 
@@ -257,15 +257,15 @@ void testSomManagerInquiries(
     test("inquiry action undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'crisis'; 
-      inquiry.description = 'bird'; 
-      inquiry.category = 'accomodation'; 
-      inquiry.branch = 'tree'; 
+        inquiry.title = 'course'; 
+      inquiry.description = 'electronic'; 
+      inquiry.category = 'family'; 
+      inquiry.branch = 'computer'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'web'; 
-      inquiry.attachments = 'smog'; 
-    var inquiryBuyer = buyers.random(); 
+      inquiry.deliveryLocation = 'fish'; 
+      inquiry.attachments = 'rice'; 
+    var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
     inquiryBuyer.inquiries.add(inquiry); 
@@ -287,15 +287,15 @@ void testSomManagerInquiries(
     test("inquiry session undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'mile'; 
-      inquiry.description = 'service'; 
-      inquiry.category = 'accomodation'; 
-      inquiry.branch = 'bank'; 
+        inquiry.title = 'down'; 
+      inquiry.description = 'down'; 
+      inquiry.category = 'executive'; 
+      inquiry.branch = 'time'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'college'; 
-      inquiry.attachments = 'tent'; 
-    var inquiryBuyer = buyers.random(); 
+      inquiry.deliveryLocation = 'university'; 
+      inquiry.attachments = 'car'; 
+    var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
     inquiryBuyer.inquiries.add(inquiry); 
@@ -315,8 +315,8 @@ void testSomManagerInquiries(
     }); 
  
     test("Inquiry update undo and redo", () { 
-      var inquiry = inquiries.random(); 
-      var action = SetAttributeCommand(session, inquiry, "title", 'brad'); 
+      var inquiry = managerModel.inquiries.random(); 
+      var action = SetAttributeCommand(session, inquiry, "title", 'fish'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -328,13 +328,13 @@ void testSomManagerInquiries(
  
     test("Inquiry action with multiple undos and redos", () { 
       var inquiryCount = inquiries.length; 
-      var inquiry1 = inquiries.random(); 
+      var inquiry1 = managerModel.inquiries.random(); 
  
       var action1 = RemoveCommand(session, inquiries, inquiry1); 
       action1.doIt(); 
       expect(inquiries.length, equals(--inquiryCount)); 
  
-      var inquiry2 = inquiries.random(); 
+      var inquiry2 = managerModel.inquiries.random(); 
  
       var action2 = RemoveCommand(session, inquiries, inquiry2); 
       action2.doIt(); 
@@ -361,10 +361,10 @@ void testSomManagerInquiries(
  
     test("Transaction undo and redo", () { 
       var inquiryCount = inquiries.length; 
-      var inquiry1 = inquiries.random(); 
-      var inquiry2 = inquiries.random(); 
+      var inquiry1 = managerModel.inquiries.random(); 
+      var inquiry2 = managerModel.inquiries.random(); 
       while (inquiry1 == inquiry2) { 
-        inquiry2 = inquiries.random();  
+        inquiry2 = managerModel.inquiries.random();  
       } 
       var action1 = RemoveCommand(session, inquiries, inquiry1); 
       var action2 = RemoveCommand(session, inquiries, inquiry2); 
@@ -393,7 +393,7 @@ void testSomManagerInquiries(
  
     test("Transaction with one action error", () { 
       var inquiryCount = inquiries.length; 
-      var inquiry1 = inquiries.random(); 
+      var inquiry1 = managerModel.inquiries.random(); 
       var inquiry2 = inquiry1; 
       var action1 = RemoveCommand(session, inquiries, inquiry1); 
       var action2 = RemoveCommand(session, inquiries, inquiry2); 
@@ -417,15 +417,15 @@ void testSomManagerInquiries(
  
       somDomain.startCommandReaction(reaction); 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'cabinet'; 
-      inquiry.description = 'heating'; 
-      inquiry.category = 'craving'; 
-      inquiry.branch = 'fish'; 
+        inquiry.title = 'fish'; 
+      inquiry.description = 'sun'; 
+      inquiry.category = 'taxi'; 
+      inquiry.branch = 'capacity'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'dinner'; 
-      inquiry.attachments = 'entertainment'; 
-    var inquiryBuyer = buyers.random(); 
+      inquiry.deliveryLocation = 'car'; 
+      inquiry.attachments = 'television'; 
+    var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
     inquiryBuyer.inquiries.add(inquiry); 
@@ -440,7 +440,7 @@ void testSomManagerInquiries(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, inquiry, "title", 'text'); 
+        session, inquiry, "title", 'opinion'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

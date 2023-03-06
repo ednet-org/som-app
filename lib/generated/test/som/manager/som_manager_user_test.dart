@@ -83,7 +83,7 @@ void testSomManagerUsers(
     }); 
  
     test("Find user by oid", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var user = users.singleWhereOid(randomUser.oid); 
       expect(user, isNotNull); 
       expect(user, equals(randomUser)); 
@@ -98,7 +98,7 @@ void testSomManagerUsers(
     }); 
  
     test("Find user by attribute", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var user = 
           users.firstWhereAttribute("username", randomUser.username); 
       expect(user, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerUsers(
     }); 
  
     test("Select users by attribute", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var selectedUsers = 
           users.selectWhereAttribute("username", randomUser.username); 
       expect(selectedUsers.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerUsers(
     }); 
  
     test("Select users by attribute, then add", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var selectedUsers = 
           users.selectWhereAttribute("username", randomUser.username); 
       expect(selectedUsers.isEmpty, isFalse); 
@@ -129,9 +129,9 @@ void testSomManagerUsers(
       var usersCount = users.length; 
  
       var user = User(users.concept); 
-      user.username = 'ball'; 
-      user.roleAtSom = 'beans'; 
-      user.roleAtCompany = 'right'; 
+      user.username = 'concern'; 
+      user.roleAtSom = 'agreement'; 
+      user.roleAtCompany = 'election'; 
       var added = selectedUsers.add(user); 
       expect(added, isTrue); 
       expect(users.length, equals(++usersCount)); 
@@ -142,7 +142,7 @@ void testSomManagerUsers(
     }); 
  
     test("Select users by attribute, then remove", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var selectedUsers = 
           users.selectWhereAttribute("username", randomUser.username); 
       expect(selectedUsers.isEmpty, isFalse); 
@@ -202,9 +202,9 @@ void testSomManagerUsers(
     }); 
  
     test("Random user", () { 
-      var user1 = users.random(); 
+      var user1 = managerModel.users.random(); 
       expect(user1, isNotNull); 
-      var user2 = users.random(); 
+      var user2 = managerModel.users.random(); 
       expect(user2, isNotNull); 
  
       //user1.display(prefix: "random1"); 
@@ -224,16 +224,16 @@ void testSomManagerUsers(
     }); 
  
     test("Update user non id attribute with failure", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       var afterUpdateEntity = randomUser.copy(); 
-      afterUpdateEntity.username = 'cup'; 
-      expect(afterUpdateEntity.username, equals('cup')); 
+      afterUpdateEntity.username = 'family'; 
+      expect(afterUpdateEntity.username, equals('family')); 
       // users.update can only be used if oid, code or id is set. 
       expect(() => users.update(randomUser, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomUser = users.random(); 
+      var randomUser = managerModel.users.random(); 
       randomUser.display(prefix:"before copy: "); 
       var randomUserCopy = randomUser.copy(); 
       randomUserCopy.display(prefix:"after copy: "); 
@@ -249,12 +249,12 @@ void testSomManagerUsers(
     test("user action undo and redo", () { 
       var userCount = users.length; 
       var user = User(users.concept); 
-        user.username = 'tape'; 
-      user.roleAtSom = 'heating'; 
-      user.roleAtCompany = 'heaven'; 
-    var userTenantRole = tenantRoles.random(); 
+        user.username = 'sin'; 
+      user.roleAtSom = 'baby'; 
+      user.roleAtCompany = 'objective'; 
+    var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
-    var userCompany = companies.random(); 
+    var userCompany = managerModel.companies.random(); 
     user.company = userCompany; 
       users.add(user); 
     userTenantRole.users.add(user); 
@@ -277,12 +277,12 @@ void testSomManagerUsers(
     test("user session undo and redo", () { 
       var userCount = users.length; 
       var user = User(users.concept); 
-        user.username = 'house'; 
-      user.roleAtSom = 'revolution'; 
-      user.roleAtCompany = 'east'; 
-    var userTenantRole = tenantRoles.random(); 
+        user.username = 'seed'; 
+      user.roleAtSom = 'service'; 
+      user.roleAtCompany = 'ticket'; 
+    var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
-    var userCompany = companies.random(); 
+    var userCompany = managerModel.companies.random(); 
     user.company = userCompany; 
       users.add(user); 
     userTenantRole.users.add(user); 
@@ -303,8 +303,8 @@ void testSomManagerUsers(
     }); 
  
     test("User update undo and redo", () { 
-      var user = users.random(); 
-      var action = SetAttributeCommand(session, user, "username", 'message'); 
+      var user = managerModel.users.random(); 
+      var action = SetAttributeCommand(session, user, "username", 'truck'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -316,13 +316,13 @@ void testSomManagerUsers(
  
     test("User action with multiple undos and redos", () { 
       var userCount = users.length; 
-      var user1 = users.random(); 
+      var user1 = managerModel.users.random(); 
  
       var action1 = RemoveCommand(session, users, user1); 
       action1.doIt(); 
       expect(users.length, equals(--userCount)); 
  
-      var user2 = users.random(); 
+      var user2 = managerModel.users.random(); 
  
       var action2 = RemoveCommand(session, users, user2); 
       action2.doIt(); 
@@ -349,10 +349,10 @@ void testSomManagerUsers(
  
     test("Transaction undo and redo", () { 
       var userCount = users.length; 
-      var user1 = users.random(); 
-      var user2 = users.random(); 
+      var user1 = managerModel.users.random(); 
+      var user2 = managerModel.users.random(); 
       while (user1 == user2) { 
-        user2 = users.random();  
+        user2 = managerModel.users.random();  
       } 
       var action1 = RemoveCommand(session, users, user1); 
       var action2 = RemoveCommand(session, users, user2); 
@@ -381,7 +381,7 @@ void testSomManagerUsers(
  
     test("Transaction with one action error", () { 
       var userCount = users.length; 
-      var user1 = users.random(); 
+      var user1 = managerModel.users.random(); 
       var user2 = user1; 
       var action1 = RemoveCommand(session, users, user1); 
       var action2 = RemoveCommand(session, users, user2); 
@@ -405,12 +405,12 @@ void testSomManagerUsers(
  
       somDomain.startCommandReaction(reaction); 
       var user = User(users.concept); 
-        user.username = 'plaho'; 
-      user.roleAtSom = 'algorithm'; 
-      user.roleAtCompany = 'guest'; 
-    var userTenantRole = tenantRoles.random(); 
+        user.username = 'body'; 
+      user.roleAtSom = 'present'; 
+      user.roleAtCompany = 'cinema'; 
+    var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
-    var userCompany = companies.random(); 
+    var userCompany = managerModel.companies.random(); 
     user.company = userCompany; 
       users.add(user); 
     userTenantRole.users.add(user); 
@@ -426,7 +426,7 @@ void testSomManagerUsers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, user, "username", 'account'); 
+        session, user, "username", 'mile'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

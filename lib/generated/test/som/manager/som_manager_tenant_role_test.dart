@@ -83,7 +83,7 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Find tenantRole by oid", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var tenantRole = tenantRoles.singleWhereOid(randomTenantRole.oid); 
       expect(tenantRole, isNotNull); 
       expect(tenantRole, equals(randomTenantRole)); 
@@ -98,7 +98,7 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Find tenantRole by attribute", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var tenantRole = 
           tenantRoles.firstWhereAttribute("name", randomTenantRole.name); 
       expect(tenantRole, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Select tenantRoles by attribute", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var selectedTenantRoles = 
           tenantRoles.selectWhereAttribute("name", randomTenantRole.name); 
       expect(selectedTenantRoles.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Select tenantRoles by attribute, then add", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var selectedTenantRoles = 
           tenantRoles.selectWhereAttribute("name", randomTenantRole.name); 
       expect(selectedTenantRoles.isEmpty, isFalse); 
@@ -129,8 +129,8 @@ void testSomManagerTenantRoles(
       var tenantRolesCount = tenantRoles.length; 
  
       var tenantRole = TenantRole(tenantRoles.concept); 
-      tenantRole.name = 'series'; 
-      tenantRole.value = 'electronic'; 
+      tenantRole.name = 'chemist'; 
+      tenantRole.value = 'craving'; 
       var added = selectedTenantRoles.add(tenantRole); 
       expect(added, isTrue); 
       expect(tenantRoles.length, equals(++tenantRolesCount)); 
@@ -141,7 +141,7 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Select tenantRoles by attribute, then remove", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var selectedTenantRoles = 
           tenantRoles.selectWhereAttribute("name", randomTenantRole.name); 
       expect(selectedTenantRoles.isEmpty, isFalse); 
@@ -199,9 +199,9 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Random tenantRole", () { 
-      var tenantRole1 = tenantRoles.random(); 
+      var tenantRole1 = managerModel.tenantRoles.random(); 
       expect(tenantRole1, isNotNull); 
-      var tenantRole2 = tenantRoles.random(); 
+      var tenantRole2 = managerModel.tenantRoles.random(); 
       expect(tenantRole2, isNotNull); 
  
       //tenantRole1.display(prefix: "random1"); 
@@ -221,16 +221,16 @@ void testSomManagerTenantRoles(
     }); 
  
     test("Update tenantRole non id attribute with failure", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       var afterUpdateEntity = randomTenantRole.copy(); 
-      afterUpdateEntity.name = 'instruction'; 
-      expect(afterUpdateEntity.name, equals('instruction')); 
+      afterUpdateEntity.name = 'text'; 
+      expect(afterUpdateEntity.name, equals('text')); 
       // tenantRoles.update can only be used if oid, code or id is set. 
       expect(() => tenantRoles.update(randomTenantRole, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomTenantRole = tenantRoles.random(); 
+      var randomTenantRole = managerModel.tenantRoles.random(); 
       randomTenantRole.display(prefix:"before copy: "); 
       var randomTenantRoleCopy = randomTenantRole.copy(); 
       randomTenantRoleCopy.display(prefix:"after copy: "); 
@@ -245,8 +245,8 @@ void testSomManagerTenantRoles(
     test("tenantRole action undo and redo", () { 
       var tenantRoleCount = tenantRoles.length; 
       var tenantRole = TenantRole(tenantRoles.concept); 
-        tenantRole.name = 'instruction'; 
-      tenantRole.value = 'question'; 
+        tenantRole.name = 'energy'; 
+      tenantRole.value = 'darts'; 
       tenantRoles.add(tenantRole); 
       expect(tenantRoles.length, equals(++tenantRoleCount)); 
       tenantRoles.remove(tenantRole); 
@@ -266,8 +266,8 @@ void testSomManagerTenantRoles(
     test("tenantRole session undo and redo", () { 
       var tenantRoleCount = tenantRoles.length; 
       var tenantRole = TenantRole(tenantRoles.concept); 
-        tenantRole.name = 'agreement'; 
-      tenantRole.value = 'sailing'; 
+        tenantRole.name = 'hot'; 
+      tenantRole.value = 'architecture'; 
       tenantRoles.add(tenantRole); 
       expect(tenantRoles.length, equals(++tenantRoleCount)); 
       tenantRoles.remove(tenantRole); 
@@ -285,8 +285,8 @@ void testSomManagerTenantRoles(
     }); 
  
     test("TenantRole update undo and redo", () { 
-      var tenantRole = tenantRoles.random(); 
-      var action = SetAttributeCommand(session, tenantRole, "name", 'price'); 
+      var tenantRole = managerModel.tenantRoles.random(); 
+      var action = SetAttributeCommand(session, tenantRole, "name", 'chairman'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -298,13 +298,13 @@ void testSomManagerTenantRoles(
  
     test("TenantRole action with multiple undos and redos", () { 
       var tenantRoleCount = tenantRoles.length; 
-      var tenantRole1 = tenantRoles.random(); 
+      var tenantRole1 = managerModel.tenantRoles.random(); 
  
       var action1 = RemoveCommand(session, tenantRoles, tenantRole1); 
       action1.doIt(); 
       expect(tenantRoles.length, equals(--tenantRoleCount)); 
  
-      var tenantRole2 = tenantRoles.random(); 
+      var tenantRole2 = managerModel.tenantRoles.random(); 
  
       var action2 = RemoveCommand(session, tenantRoles, tenantRole2); 
       action2.doIt(); 
@@ -331,10 +331,10 @@ void testSomManagerTenantRoles(
  
     test("Transaction undo and redo", () { 
       var tenantRoleCount = tenantRoles.length; 
-      var tenantRole1 = tenantRoles.random(); 
-      var tenantRole2 = tenantRoles.random(); 
+      var tenantRole1 = managerModel.tenantRoles.random(); 
+      var tenantRole2 = managerModel.tenantRoles.random(); 
       while (tenantRole1 == tenantRole2) { 
-        tenantRole2 = tenantRoles.random();  
+        tenantRole2 = managerModel.tenantRoles.random();  
       } 
       var action1 = RemoveCommand(session, tenantRoles, tenantRole1); 
       var action2 = RemoveCommand(session, tenantRoles, tenantRole2); 
@@ -363,7 +363,7 @@ void testSomManagerTenantRoles(
  
     test("Transaction with one action error", () { 
       var tenantRoleCount = tenantRoles.length; 
-      var tenantRole1 = tenantRoles.random(); 
+      var tenantRole1 = managerModel.tenantRoles.random(); 
       var tenantRole2 = tenantRole1; 
       var action1 = RemoveCommand(session, tenantRoles, tenantRole1); 
       var action2 = RemoveCommand(session, tenantRoles, tenantRole2); 
@@ -387,8 +387,8 @@ void testSomManagerTenantRoles(
  
       somDomain.startCommandReaction(reaction); 
       var tenantRole = TenantRole(tenantRoles.concept); 
-        tenantRole.name = 'truck'; 
-      tenantRole.value = 'vacation'; 
+        tenantRole.name = 'tape'; 
+      tenantRole.value = 'head'; 
       tenantRoles.add(tenantRole); 
       expect(tenantRoles.length, equals(++tenantRoleCount)); 
       tenantRoles.remove(tenantRole); 
@@ -401,7 +401,7 @@ void testSomManagerTenantRoles(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, tenantRole, "name", 'done'); 
+        session, tenantRole, "name", 'job'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

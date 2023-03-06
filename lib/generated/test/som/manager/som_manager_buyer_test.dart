@@ -83,7 +83,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Find buyer by oid", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var buyer = buyers.singleWhereOid(randomBuyer.oid); 
       expect(buyer, isNotNull); 
       expect(buyer, equals(randomBuyer)); 
@@ -98,7 +98,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Find buyer by attribute", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var buyer = 
           buyers.firstWhereAttribute("user", randomBuyer.user); 
       expect(buyer, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Select buyers by attribute", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var selectedBuyers = 
           buyers.selectWhereAttribute("user", randomBuyer.user); 
       expect(selectedBuyers.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Select buyers by attribute, then add", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var selectedBuyers = 
           buyers.selectWhereAttribute("user", randomBuyer.user); 
       expect(selectedBuyers.isEmpty, isFalse); 
@@ -129,7 +129,7 @@ void testSomManagerBuyers(
       var buyersCount = buyers.length; 
  
       var buyer = Buyer(buyers.concept); 
-      buyer.user = 'professor'; 
+      buyer.user = 'notch'; 
       var added = selectedBuyers.add(buyer); 
       expect(added, isTrue); 
       expect(buyers.length, equals(++buyersCount)); 
@@ -140,7 +140,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Select buyers by attribute, then remove", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var selectedBuyers = 
           buyers.selectWhereAttribute("user", randomBuyer.user); 
       expect(selectedBuyers.isEmpty, isFalse); 
@@ -198,9 +198,9 @@ void testSomManagerBuyers(
     }); 
  
     test("Random buyer", () { 
-      var buyer1 = buyers.random(); 
+      var buyer1 = managerModel.buyers.random(); 
       expect(buyer1, isNotNull); 
-      var buyer2 = buyers.random(); 
+      var buyer2 = managerModel.buyers.random(); 
       expect(buyer2, isNotNull); 
  
       //buyer1.display(prefix: "random1"); 
@@ -220,7 +220,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Update buyer non id attribute with failure", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       var afterUpdateEntity = randomBuyer.copy(); 
       afterUpdateEntity.user = 'security'; 
       expect(afterUpdateEntity.user, equals('security')); 
@@ -229,7 +229,7 @@ void testSomManagerBuyers(
     }); 
  
     test("Copy Equality", () { 
-      var randomBuyer = buyers.random(); 
+      var randomBuyer = managerModel.buyers.random(); 
       randomBuyer.display(prefix:"before copy: "); 
       var randomBuyerCopy = randomBuyer.copy(); 
       randomBuyerCopy.display(prefix:"after copy: "); 
@@ -243,8 +243,8 @@ void testSomManagerBuyers(
     test("buyer action undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'lifespan'; 
-    var buyerRegistration = registrations.random(); 
+        buyer.user = 'cardboard'; 
+    var buyerRegistration = managerModel.registrations.random(); 
     buyer.registration = buyerRegistration; 
       buyers.add(buyer); 
     buyerRegistration.buyer.add(buyer); 
@@ -266,8 +266,8 @@ void testSomManagerBuyers(
     test("buyer session undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'distance'; 
-    var buyerRegistration = registrations.random(); 
+        buyer.user = 'selfie'; 
+    var buyerRegistration = managerModel.registrations.random(); 
     buyer.registration = buyerRegistration; 
       buyers.add(buyer); 
     buyerRegistration.buyer.add(buyer); 
@@ -287,8 +287,8 @@ void testSomManagerBuyers(
     }); 
  
     test("Buyer update undo and redo", () { 
-      var buyer = buyers.random(); 
-      var action = SetAttributeCommand(session, buyer, "user", 'country'); 
+      var buyer = managerModel.buyers.random(); 
+      var action = SetAttributeCommand(session, buyer, "user", 'boat'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -300,13 +300,13 @@ void testSomManagerBuyers(
  
     test("Buyer action with multiple undos and redos", () { 
       var buyerCount = buyers.length; 
-      var buyer1 = buyers.random(); 
+      var buyer1 = managerModel.buyers.random(); 
  
       var action1 = RemoveCommand(session, buyers, buyer1); 
       action1.doIt(); 
       expect(buyers.length, equals(--buyerCount)); 
  
-      var buyer2 = buyers.random(); 
+      var buyer2 = managerModel.buyers.random(); 
  
       var action2 = RemoveCommand(session, buyers, buyer2); 
       action2.doIt(); 
@@ -333,10 +333,10 @@ void testSomManagerBuyers(
  
     test("Transaction undo and redo", () { 
       var buyerCount = buyers.length; 
-      var buyer1 = buyers.random(); 
-      var buyer2 = buyers.random(); 
+      var buyer1 = managerModel.buyers.random(); 
+      var buyer2 = managerModel.buyers.random(); 
       while (buyer1 == buyer2) { 
-        buyer2 = buyers.random();  
+        buyer2 = managerModel.buyers.random();  
       } 
       var action1 = RemoveCommand(session, buyers, buyer1); 
       var action2 = RemoveCommand(session, buyers, buyer2); 
@@ -365,7 +365,7 @@ void testSomManagerBuyers(
  
     test("Transaction with one action error", () { 
       var buyerCount = buyers.length; 
-      var buyer1 = buyers.random(); 
+      var buyer1 = managerModel.buyers.random(); 
       var buyer2 = buyer1; 
       var action1 = RemoveCommand(session, buyers, buyer1); 
       var action2 = RemoveCommand(session, buyers, buyer2); 
@@ -389,8 +389,8 @@ void testSomManagerBuyers(
  
       somDomain.startCommandReaction(reaction); 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'salary'; 
-    var buyerRegistration = registrations.random(); 
+        buyer.user = 'beach'; 
+    var buyerRegistration = managerModel.registrations.random(); 
     buyer.registration = buyerRegistration; 
       buyers.add(buyer); 
     buyerRegistration.buyer.add(buyer); 
@@ -405,7 +405,7 @@ void testSomManagerBuyers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, buyer, "user", 'lake'); 
+        session, buyer, "user", 'holiday'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

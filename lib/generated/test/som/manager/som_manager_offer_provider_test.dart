@@ -83,7 +83,7 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Find offerProvider by oid", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var offerProvider = offerProviders.singleWhereOid(randomOfferProvider.oid); 
       expect(offerProvider, isNotNull); 
       expect(offerProvider, equals(randomOfferProvider)); 
@@ -98,7 +98,7 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Find offerProvider by attribute", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var offerProvider = 
           offerProviders.firstWhereAttribute("company", randomOfferProvider.company); 
       expect(offerProvider, isNotNull); 
@@ -106,7 +106,7 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Select offerProviders by attribute", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var selectedOfferProviders = 
           offerProviders.selectWhereAttribute("company", randomOfferProvider.company); 
       expect(selectedOfferProviders.isEmpty, isFalse); 
@@ -121,7 +121,7 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Select offerProviders by attribute, then add", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var selectedOfferProviders = 
           offerProviders.selectWhereAttribute("company", randomOfferProvider.company); 
       expect(selectedOfferProviders.isEmpty, isFalse); 
@@ -129,8 +129,8 @@ void testSomManagerOfferProviders(
       var offerProvidersCount = offerProviders.length; 
  
       var offerProvider = OfferProvider(offerProviders.concept); 
-      offerProvider.company = 'call'; 
-      offerProvider.user = 'hall'; 
+      offerProvider.company = 'tall'; 
+      offerProvider.user = 'nothingness'; 
       var added = selectedOfferProviders.add(offerProvider); 
       expect(added, isTrue); 
       expect(offerProviders.length, equals(++offerProvidersCount)); 
@@ -141,7 +141,7 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Select offerProviders by attribute, then remove", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var selectedOfferProviders = 
           offerProviders.selectWhereAttribute("company", randomOfferProvider.company); 
       expect(selectedOfferProviders.isEmpty, isFalse); 
@@ -199,9 +199,9 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Random offerProvider", () { 
-      var offerProvider1 = offerProviders.random(); 
+      var offerProvider1 = managerModel.offerProviders.random(); 
       expect(offerProvider1, isNotNull); 
-      var offerProvider2 = offerProviders.random(); 
+      var offerProvider2 = managerModel.offerProviders.random(); 
       expect(offerProvider2, isNotNull); 
  
       //offerProvider1.display(prefix: "random1"); 
@@ -221,16 +221,16 @@ void testSomManagerOfferProviders(
     }); 
  
     test("Update offerProvider non id attribute with failure", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       var afterUpdateEntity = randomOfferProvider.copy(); 
-      afterUpdateEntity.company = 'home'; 
-      expect(afterUpdateEntity.company, equals('home')); 
+      afterUpdateEntity.company = 'interest'; 
+      expect(afterUpdateEntity.company, equals('interest')); 
       // offerProviders.update can only be used if oid, code or id is set. 
       expect(() => offerProviders.update(randomOfferProvider, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
-      var randomOfferProvider = offerProviders.random(); 
+      var randomOfferProvider = managerModel.offerProviders.random(); 
       randomOfferProvider.display(prefix:"before copy: "); 
       var randomOfferProviderCopy = randomOfferProvider.copy(); 
       randomOfferProviderCopy.display(prefix:"after copy: "); 
@@ -245,9 +245,9 @@ void testSomManagerOfferProviders(
     test("offerProvider action undo and redo", () { 
       var offerProviderCount = offerProviders.length; 
       var offerProvider = OfferProvider(offerProviders.concept); 
-        offerProvider.company = 'tax'; 
-      offerProvider.user = 'sun'; 
-    var offerProviderRegistration = registrations.random(); 
+        offerProvider.company = 'price'; 
+      offerProvider.user = 'children'; 
+    var offerProviderRegistration = managerModel.registrations.random(); 
     offerProvider.registration = offerProviderRegistration; 
       offerProviders.add(offerProvider); 
     offerProviderRegistration.provider.add(offerProvider); 
@@ -269,9 +269,9 @@ void testSomManagerOfferProviders(
     test("offerProvider session undo and redo", () { 
       var offerProviderCount = offerProviders.length; 
       var offerProvider = OfferProvider(offerProviders.concept); 
-        offerProvider.company = 'output'; 
-      offerProvider.user = 'productivity'; 
-    var offerProviderRegistration = registrations.random(); 
+        offerProvider.company = 'picture'; 
+      offerProvider.user = 'word'; 
+    var offerProviderRegistration = managerModel.registrations.random(); 
     offerProvider.registration = offerProviderRegistration; 
       offerProviders.add(offerProvider); 
     offerProviderRegistration.provider.add(offerProvider); 
@@ -291,8 +291,8 @@ void testSomManagerOfferProviders(
     }); 
  
     test("OfferProvider update undo and redo", () { 
-      var offerProvider = offerProviders.random(); 
-      var action = SetAttributeCommand(session, offerProvider, "company", 'mile'); 
+      var offerProvider = managerModel.offerProviders.random(); 
+      var action = SetAttributeCommand(session, offerProvider, "company", 'brave'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -304,13 +304,13 @@ void testSomManagerOfferProviders(
  
     test("OfferProvider action with multiple undos and redos", () { 
       var offerProviderCount = offerProviders.length; 
-      var offerProvider1 = offerProviders.random(); 
+      var offerProvider1 = managerModel.offerProviders.random(); 
  
       var action1 = RemoveCommand(session, offerProviders, offerProvider1); 
       action1.doIt(); 
       expect(offerProviders.length, equals(--offerProviderCount)); 
  
-      var offerProvider2 = offerProviders.random(); 
+      var offerProvider2 = managerModel.offerProviders.random(); 
  
       var action2 = RemoveCommand(session, offerProviders, offerProvider2); 
       action2.doIt(); 
@@ -337,10 +337,10 @@ void testSomManagerOfferProviders(
  
     test("Transaction undo and redo", () { 
       var offerProviderCount = offerProviders.length; 
-      var offerProvider1 = offerProviders.random(); 
-      var offerProvider2 = offerProviders.random(); 
+      var offerProvider1 = managerModel.offerProviders.random(); 
+      var offerProvider2 = managerModel.offerProviders.random(); 
       while (offerProvider1 == offerProvider2) { 
-        offerProvider2 = offerProviders.random();  
+        offerProvider2 = managerModel.offerProviders.random();  
       } 
       var action1 = RemoveCommand(session, offerProviders, offerProvider1); 
       var action2 = RemoveCommand(session, offerProviders, offerProvider2); 
@@ -369,7 +369,7 @@ void testSomManagerOfferProviders(
  
     test("Transaction with one action error", () { 
       var offerProviderCount = offerProviders.length; 
-      var offerProvider1 = offerProviders.random(); 
+      var offerProvider1 = managerModel.offerProviders.random(); 
       var offerProvider2 = offerProvider1; 
       var action1 = RemoveCommand(session, offerProviders, offerProvider1); 
       var action2 = RemoveCommand(session, offerProviders, offerProvider2); 
@@ -393,9 +393,9 @@ void testSomManagerOfferProviders(
  
       somDomain.startCommandReaction(reaction); 
       var offerProvider = OfferProvider(offerProviders.concept); 
-        offerProvider.company = 'finger'; 
-      offerProvider.user = 'dog'; 
-    var offerProviderRegistration = registrations.random(); 
+        offerProvider.company = 'tall'; 
+      offerProvider.user = 'call'; 
+    var offerProviderRegistration = managerModel.registrations.random(); 
     offerProvider.registration = offerProviderRegistration; 
       offerProviders.add(offerProvider); 
     offerProviderRegistration.provider.add(offerProvider); 
@@ -410,7 +410,7 @@ void testSomManagerOfferProviders(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, offerProvider, "company", 'executive'); 
+        session, offerProvider, "company", 'cabinet'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

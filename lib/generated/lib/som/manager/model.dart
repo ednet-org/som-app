@@ -55,40 +55,40 @@ class ManagerModel extends ManagerEntries {
     fromJson(somManagerModel); 
   } 
  
-  void init() { 
-    initPlatforms(); 
-    initTenantRoles(); 
-    initRegistrations(); 
-    initInquiries(); 
+  void init() {
+    initPlatforms();
+    initTenantRoles();
+    initPlatformRoles();
+    initRegistrations();
+    initBuyers();
+    initInquiries();
     initOfferProviders(); 
-    initBuyers(); 
-    initConsultants(); 
-    initUsers(); 
-    initPlatformRoles(); 
-    initOffers(); 
-    initCompanies(); 
-  } 
+    initConsultants();
+    initCompanies();
+    initUsers();
+    initOffers();
+  }
  
   void initOfferProviders() { 
     var offerProvider1 = OfferProvider(offerProviders.concept); 
-    offerProvider1.company = 'course'; 
-    offerProvider1.user = 'email'; 
+    offerProvider1.company = 'measuremewnt'; 
+    offerProvider1.user = 'team'; 
     var offerProvider1Registration = registrations.random(); 
     offerProvider1.registration = offerProvider1Registration; 
     offerProviders.add(offerProvider1); 
     offerProvider1Registration.provider.add(offerProvider1); 
  
     var offerProvider2 = OfferProvider(offerProviders.concept); 
-    offerProvider2.company = 'answer'; 
-    offerProvider2.user = 'measuremewnt'; 
+    offerProvider2.company = 'ball'; 
+    offerProvider2.user = 'big'; 
     var offerProvider2Registration = registrations.random(); 
     offerProvider2.registration = offerProvider2Registration; 
     offerProviders.add(offerProvider2); 
     offerProvider2Registration.provider.add(offerProvider2); 
  
     var offerProvider3 = OfferProvider(offerProviders.concept); 
-    offerProvider3.company = 'money'; 
-    offerProvider3.user = 'table'; 
+    offerProvider3.company = 'present'; 
+    offerProvider3.user = 'book'; 
     var offerProvider3Registration = registrations.random(); 
     offerProvider3.registration = offerProvider3Registration; 
     offerProviders.add(offerProvider3); 
@@ -98,57 +98,48 @@ class ManagerModel extends ManagerEntries {
  
   void initPlatformRoles() { 
     var platformRole1 = PlatformRole(platformRoles.concept); 
-    platformRole1.name = 'money'; 
-    platformRole1.value = 'effort'; 
-    var platformRole1User = users.random(); 
-    platformRole1.user = platformRole1User; 
-    var platformRole1Platform = platforms.random(); 
+    platformRole1.name = 'television'; 
+    platformRole1.value = 'place'; 
+    var platformRole1Platform = platforms.random();
     platformRole1.platform = platformRole1Platform; 
     platformRoles.add(platformRole1); 
-    platformRole1User.platformRoles.add(platformRole1); 
-    platformRole1Platform.roles.add(platformRole1); 
+    platformRole1Platform.roles.add(platformRole1);
  
     var platformRole2 = PlatformRole(platformRoles.concept); 
-    platformRole2.name = 'table'; 
-    platformRole2.value = 'children'; 
-    var platformRole2User = users.random(); 
-    platformRole2.user = platformRole2User; 
-    var platformRole2Platform = platforms.random(); 
+    platformRole2.name = 'letter'; 
+    platformRole2.value = 'software'; 
+    var platformRole2Platform = platforms.random();
     platformRole2.platform = platformRole2Platform; 
     platformRoles.add(platformRole2); 
-    platformRole2User.platformRoles.add(platformRole2); 
-    platformRole2Platform.roles.add(platformRole2); 
+    platformRole2Platform.roles.add(platformRole2);
  
     var platformRole3 = PlatformRole(platformRoles.concept); 
-    platformRole3.name = 'craving'; 
-    platformRole3.value = 'void'; 
-    var platformRole3User = users.random(); 
-    platformRole3.user = platformRole3User; 
-    var platformRole3Platform = platforms.random(); 
+    platformRole3.name = 'ticket'; 
+    platformRole3.value = 'dinner'; 
+    var platformRole3Platform = platforms.random();
     platformRole3.platform = platformRole3Platform; 
     platformRoles.add(platformRole3); 
-    platformRole3User.platformRoles.add(platformRole3); 
-    platformRole3Platform.roles.add(platformRole3); 
+    platformRole3Platform.roles.add(platformRole3);
  
   } 
  
   void initConsultants() { 
     var consultant1 = Consultant(consultants.concept); 
-    consultant1.user = 'team'; 
+    consultant1.user = 'hell'; 
     var consultant1Platform = platforms.random(); 
     consultant1.platform = consultant1Platform; 
     consultants.add(consultant1); 
     consultant1Platform.consultants.add(consultant1); 
  
     var consultant2 = Consultant(consultants.concept); 
-    consultant2.user = 'hunting'; 
+    consultant2.user = 'theme'; 
     var consultant2Platform = platforms.random(); 
     consultant2.platform = consultant2Platform; 
     consultants.add(consultant2); 
     consultant2Platform.consultants.add(consultant2); 
  
     var consultant3 = Consultant(consultants.concept); 
-    consultant3.user = 'selfdo'; 
+    consultant3.user = 'wife'; 
     var consultant3Platform = platforms.random(); 
     consultant3.platform = consultant3Platform; 
     consultants.add(consultant3); 
@@ -158,21 +149,21 @@ class ManagerModel extends ManagerEntries {
  
   void initBuyers() { 
     var buyer1 = Buyer(buyers.concept); 
-    buyer1.user = 'theme'; 
+    buyer1.user = 'flower'; 
     var buyer1Registration = registrations.random(); 
     buyer1.registration = buyer1Registration; 
     buyers.add(buyer1); 
     buyer1Registration.buyer.add(buyer1); 
  
     var buyer2 = Buyer(buyers.concept); 
-    buyer2.user = 'entrance'; 
+    buyer2.user = 'feeling'; 
     var buyer2Registration = registrations.random(); 
     buyer2.registration = buyer2Registration; 
     buyers.add(buyer2); 
     buyer2Registration.buyer.add(buyer2); 
  
     var buyer3 = Buyer(buyers.concept); 
-    buyer3.user = 'cable'; 
+    buyer3.user = 'vacation'; 
     var buyer3Registration = registrations.random(); 
     buyer3.registration = buyer3Registration; 
     buyers.add(buyer3); 
@@ -182,18 +173,18 @@ class ManagerModel extends ManagerEntries {
  
   void initTenantRoles() { 
     var tenantRole1 = TenantRole(tenantRoles.concept); 
-    tenantRole1.name = 'college'; 
-    tenantRole1.value = 'office'; 
+    tenantRole1.name = 'bank'; 
+    tenantRole1.value = 'message'; 
     tenantRoles.add(tenantRole1); 
  
     var tenantRole2 = TenantRole(tenantRoles.concept); 
-    tenantRole2.name = 'mile'; 
-    tenantRole2.value = 'abstract'; 
+    tenantRole2.name = 'meter'; 
+    tenantRole2.value = 'up'; 
     tenantRoles.add(tenantRole2); 
  
     var tenantRole3 = TenantRole(tenantRoles.concept); 
-    tenantRole3.name = 'university'; 
-    tenantRole3.value = 'candy'; 
+    tenantRole3.name = 'hunting'; 
+    tenantRole3.value = 'head'; 
     tenantRoles.add(tenantRole3); 
  
   } 
@@ -212,13 +203,13 @@ class ManagerModel extends ManagerEntries {
  
   void initCompanies() { 
     var company1 = Company(companies.concept); 
-    company1.name = 'explanation'; 
-    company1.role = 'cloud'; 
-    company1.address = 'cup'; 
-    company1.uidNumber = 'cloud'; 
-    company1.registrationNumber = 'wave'; 
-    company1.numberOfEmployees = 'electronic'; 
-    company1.websiteUrl = 'end'; 
+    company1.name = 'sentence'; 
+    company1.role = 'revolution'; 
+    company1.address = 'vacation'; 
+    company1.uidNumber = 'executive'; 
+    company1.registrationNumber = 'vessel'; 
+    company1.numberOfEmployees = 'price'; 
+    company1.websiteUrl = 'answer'; 
     var company1PlatformRole = platformRoles.random(); 
     company1.platformRole = company1PlatformRole; 
     var company1TenantRole = tenantRoles.random(); 
@@ -231,13 +222,13 @@ class ManagerModel extends ManagerEntries {
     company1Platform.companies.add(company1); 
  
     var company2 = Company(companies.concept); 
-    company2.name = 'cabinet'; 
-    company2.role = 'darts'; 
-    company2.address = 'selfdo'; 
-    company2.uidNumber = 'top'; 
-    company2.registrationNumber = 'theme'; 
-    company2.numberOfEmployees = 'tension'; 
-    company2.websiteUrl = 'tree'; 
+    company2.name = 'lifespan'; 
+    company2.role = 'test'; 
+    company2.address = 'architecture'; 
+    company2.uidNumber = 'feeling'; 
+    company2.registrationNumber = 'measuremewnt'; 
+    company2.numberOfEmployees = 'table'; 
+    company2.websiteUrl = 'yellow'; 
     var company2PlatformRole = platformRoles.random(); 
     company2.platformRole = company2PlatformRole; 
     var company2TenantRole = tenantRoles.random(); 
@@ -250,13 +241,13 @@ class ManagerModel extends ManagerEntries {
     company2Platform.companies.add(company2); 
  
     var company3 = Company(companies.concept); 
-    company3.name = 'beach'; 
-    company3.role = 'selfie'; 
-    company3.address = 'university'; 
-    company3.uidNumber = 'electronic'; 
-    company3.registrationNumber = 'measuremewnt'; 
-    company3.numberOfEmployees = 'lifespan'; 
-    company3.websiteUrl = 'explanation'; 
+    company3.name = 'picture'; 
+    company3.role = 'grading'; 
+    company3.address = 'country'; 
+    company3.uidNumber = 'do'; 
+    company3.registrationNumber = 'professor'; 
+    company3.numberOfEmployees = 'right'; 
+    company3.websiteUrl = 'distance'; 
     var company3PlatformRole = platformRoles.random(); 
     company3.platformRole = company3PlatformRole; 
     var company3TenantRole = tenantRoles.random(); 
@@ -270,118 +261,118 @@ class ManagerModel extends ManagerEntries {
  
   } 
  
-  void initUsers() { 
-    var user1 = User(users.concept); 
-    user1.username = 'election'; 
-    user1.roleAtSom = 'time'; 
-    user1.roleAtCompany = 'plate'; 
-    var user1TenantRole = tenantRoles.random(); 
-    user1.tenantRole = user1TenantRole; 
-    var user1Company = companies.random(); 
-    user1.company = user1Company; 
-    users.add(user1); 
-    user1TenantRole.users.add(user1); 
-    user1Company.employees.add(user1); 
- 
-    var user2 = User(users.concept); 
-    user2.username = 'cable'; 
-    user2.roleAtSom = 'place'; 
-    user2.roleAtCompany = 'salary'; 
-    var user2TenantRole = tenantRoles.random(); 
-    user2.tenantRole = user2TenantRole; 
-    var user2Company = companies.random(); 
-    user2.company = user2Company; 
-    users.add(user2); 
-    user2TenantRole.users.add(user2); 
-    user2Company.employees.add(user2); 
- 
-    var user3 = User(users.concept); 
-    user3.username = 'secretary'; 
-    user3.roleAtSom = 'unit'; 
-    user3.roleAtCompany = 'agile'; 
-    var user3TenantRole = tenantRoles.random(); 
-    user3.tenantRole = user3TenantRole; 
-    var user3Company = companies.random(); 
-    user3.company = user3Company; 
-    users.add(user3); 
-    user3TenantRole.users.add(user3); 
-    user3Company.employees.add(user3); 
- 
-  } 
- 
+  void initUsers() {
+    var user1 = User(users.concept);
+    user1.username = 'autobus';
+    user1.roleAtSom = 'marriage';
+    user1.roleAtCompany = 'music';
+    var user1TenantRole = tenantRoles.random();
+    user1.tenantRole = user1TenantRole;
+    var user1Company = companies.random();
+    user1.company = user1Company;
+    users.add(user1);
+    user1TenantRole.users.add(user1);
+    user1Company.employees.add(user1);
+
+    var user2 = User(users.concept);
+    user2.username = 'wave';
+    user2.roleAtSom = 'camping';
+    user2.roleAtCompany = 'money';
+    var user2TenantRole = tenantRoles.random();
+    user2.tenantRole = user2TenantRole;
+    var user2Company = companies.random();
+    user2.company = user2Company;
+    users.add(user2);
+    user2TenantRole.users.add(user2);
+    user2Company.employees.add(user2);
+
+    var user3 = User(users.concept);
+    user3.username = 'place';
+    user3.roleAtSom = 'capacity';
+    user3.roleAtCompany = 'algorithm';
+    var user3TenantRole = tenantRoles.random();
+    user3.tenantRole = user3TenantRole;
+    var user3Company = companies.random();
+    user3.company = user3Company;
+    users.add(user3);
+    user3TenantRole.users.add(user3);
+    user3Company.employees.add(user3);
+
+  }
+
   void initInquiries() { 
     var inquiry1 = Inquiry(inquiries.concept); 
-    inquiry1.title = 'time'; 
-    inquiry1.description = 'bank'; 
-    inquiry1.category = 'service'; 
-    inquiry1.branch = 'instruction'; 
+    inquiry1.title = 'policeman'; 
+    inquiry1.description = 'election'; 
+    inquiry1.category = 'cabinet'; 
+    inquiry1.branch = 'grading'; 
     inquiry1.publishingDate = new DateTime.now(); 
     inquiry1.expirationDate = new DateTime.now(); 
-    inquiry1.deliveryLocation = 'place'; 
-    inquiry1.attachments = 'ocean'; 
+    inquiry1.deliveryLocation = 'policeman'; 
+    inquiry1.attachments = 'table'; 
     var inquiry1Buyer = buyers.random(); 
     inquiry1.buyer = inquiry1Buyer; 
     inquiries.add(inquiry1); 
     inquiry1Buyer.inquiries.add(inquiry1); 
  
     var inquiry2 = Inquiry(inquiries.concept); 
-    inquiry2.title = 'concern'; 
-    inquiry2.description = 'coffee'; 
-    inquiry2.category = 'center'; 
-    inquiry2.branch = 'place'; 
+    inquiry2.title = 'ticket'; 
+    inquiry2.description = 'health'; 
+    inquiry2.category = 'secretary'; 
+    inquiry2.branch = 'tape'; 
     inquiry2.publishingDate = new DateTime.now(); 
     inquiry2.expirationDate = new DateTime.now(); 
-    inquiry2.deliveryLocation = 'ship'; 
-    inquiry2.attachments = 'sin'; 
+    inquiry2.deliveryLocation = 'productivity'; 
+    inquiry2.attachments = 'redo'; 
     var inquiry2Buyer = buyers.random(); 
     inquiry2.buyer = inquiry2Buyer; 
     inquiries.add(inquiry2); 
     inquiry2Buyer.inquiries.add(inquiry2); 
  
     var inquiry3 = Inquiry(inquiries.concept); 
-    inquiry3.title = 'rice'; 
-    inquiry3.description = 'life'; 
-    inquiry3.category = 'room'; 
-    inquiry3.branch = 'kids'; 
+    inquiry3.title = 'dog'; 
+    inquiry3.description = 'notch'; 
+    inquiry3.category = 'teacher'; 
+    inquiry3.branch = 'baby'; 
     inquiry3.publishingDate = new DateTime.now(); 
     inquiry3.expirationDate = new DateTime.now(); 
-    inquiry3.deliveryLocation = 'winter'; 
-    inquiry3.attachments = 'chemist'; 
+    inquiry3.deliveryLocation = 'team'; 
+    inquiry3.attachments = 'auto'; 
     var inquiry3Buyer = buyers.random(); 
     inquiry3.buyer = inquiry3Buyer; 
     inquiries.add(inquiry3); 
     inquiry3Buyer.inquiries.add(inquiry3); 
  
-  } 
- 
+  }
+
   void initRegistrations() { 
     var registration1 = Registration(registrations.concept); 
-    registration1.company = 'rice'; 
-    registration1.user = 'performance'; 
-    registration1.platformRole = 'call'; 
+    registration1.company = 'finger'; 
+    registration1.user = 'judge'; 
+    registration1.platformRole = 'security'; 
     registrations.add(registration1); 
  
     var registration2 = Registration(registrations.concept); 
-    registration2.company = 'opinion'; 
-    registration2.user = 'nothingness'; 
-    registration2.platformRole = 'call'; 
+    registration2.company = 'picture'; 
+    registration2.user = 'truck'; 
+    registration2.platformRole = 'teaching'; 
     registrations.add(registration2); 
  
     var registration3 = Registration(registrations.concept); 
-    registration3.company = 'up'; 
-    registration3.user = 'objective'; 
-    registration3.platformRole = 'autobus'; 
+    registration3.company = 'craving'; 
+    registration3.user = 'down'; 
+    registration3.platformRole = 'mind'; 
     registrations.add(registration3); 
  
   } 
  
   void initOffers() { 
     var offer1 = Offer(offers.concept); 
-    offer1.description = 'seed'; 
-    offer1.deliveryTime = 'video'; 
-    offer1.status = 'policeman'; 
+    offer1.description = 'college'; 
+    offer1.deliveryTime = 'service'; 
+    offer1.status = 'school'; 
     offer1.expirationDate = new DateTime.now(); 
-    offer1.price = 26.56184938658316; 
+    offer1.price = 30.837425587177904; 
     var offer1Provider = offerProviders.random(); 
     offer1.provider = offer1Provider; 
     var offer1Inquiry = inquiries.random(); 
@@ -391,11 +382,11 @@ class ManagerModel extends ManagerEntries {
     offer1Inquiry.offers.add(offer1); 
  
     var offer2 = Offer(offers.concept); 
-    offer2.description = 'cinema'; 
-    offer2.deliveryTime = 'computer'; 
-    offer2.status = 'dog'; 
+    offer2.description = 'letter'; 
+    offer2.deliveryTime = 'baby'; 
+    offer2.status = 'park'; 
     offer2.expirationDate = new DateTime.now(); 
-    offer2.price = 94.45217698264018; 
+    offer2.price = 44.29753430722313; 
     var offer2Provider = offerProviders.random(); 
     offer2.provider = offer2Provider; 
     var offer2Inquiry = inquiries.random(); 
@@ -405,11 +396,11 @@ class ManagerModel extends ManagerEntries {
     offer2Inquiry.offers.add(offer2); 
  
     var offer3 = Offer(offers.concept); 
-    offer3.description = 'time'; 
-    offer3.deliveryTime = 'school'; 
-    offer3.status = 'big'; 
+    offer3.description = 'plaho'; 
+    offer3.deliveryTime = 'dvd'; 
+    offer3.status = 'selfdo'; 
     offer3.expirationDate = new DateTime.now(); 
-    offer3.price = 83.60107555017213; 
+    offer3.price = 59.77070038951254; 
     var offer3Provider = offerProviders.random(); 
     offer3.provider = offer3Provider; 
     var offer3Inquiry = inquiries.random(); 
@@ -418,8 +409,8 @@ class ManagerModel extends ManagerEntries {
     offer3Provider.offers.add(offer3); 
     offer3Inquiry.offers.add(offer3); 
  
-  } 
- 
+  }
+
   // added after code gen - begin 
  
   // added after code gen - end 
