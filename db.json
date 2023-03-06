@@ -1,1 +1,74 @@
-{"Offer":{"domain":"Som","model":"Manager","entry":"Offer","entities":[]},"User":{"domain":"Som","model":"Manager","entry":"User","entities":[]},"Buyer":{"domain":"Som","model":"Manager","entry":"Buyer","entities":[]},"Provider":{"domain":"Som","model":"Manager","entry":"Provider","entities":[{"oid":"1678097187526","code":"","whenAdded":"2023-03-06 11:33:06.929664","whenSet":"null","whenRemoved":"null"},{"oid":"1678098241359","code":"","whenAdded":"2023-03-06 11:33:06.929725","whenSet":"null","whenRemoved":"null"},{"oid":"1678098558615","code":"","whenAdded":"2023-03-06 11:33:06.929767","whenSet":"null","whenRemoved":"null"},{"oid":"1678098579278","code":"","whenAdded":"2023-03-06 11:33:06.929811","whenSet":"null","whenRemoved":"null"},{"oid":"1678098619847","code":"","whenAdded":"2023-03-06 11:33:06.929853","whenSet":"null","whenRemoved":"null"}]},"Inquiry":{"domain":"Som","model":"Manager","entry":"Inquiry","entities":[]},"Company":{"domain":"Som","model":"Manager","entry":"Company","entities":[]}}
+{
+  "Offer": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "Offer",
+    "entities": []
+  },
+  "User": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "User",
+    "entities": []
+  },
+  "Buyer": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "Buyer",
+    "entities": []
+  },
+  "Provider": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "Provider",
+    "entities": [
+      {
+        "oid": "1678097187526",
+        "code": "",
+        "whenAdded": "2023-03-06 11:33:06.929664",
+        "whenSet": "null",
+        "whenRemoved": "null"
+      },
+      {
+        "oid": "1678098241359",
+        "code": "",
+        "whenAdded": "2023-03-06 11:33:06.929725",
+        "whenSet": "null",
+        "whenRemoved": "null"
+      },
+      {
+        "oid": "1678098558615",
+        "code": "",
+        "whenAdded": "2023-03-06 11:33:06.929767",
+        "whenSet": "null",
+        "whenRemoved": "null"
+      },
+      {
+        "oid": "1678098579278",
+        "code": "",
+        "whenAdded": "2023-03-06 11:33:06.929811",
+        "whenSet": "null",
+        "whenRemoved": "null"
+      },
+      {
+        "oid": "1678098619847",
+        "code": "",
+        "whenAdded": "2023-03-06 11:33:06.929853",
+        "whenSet": "null",
+        "whenRemoved": "null"
+      }
+    ]
+  },
+  "Inquiry": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "Inquiry",
+    "entities": []
+  },
+  "Company": {
+    "domain": "Som",
+    "model": "Manager",
+    "entry": "Company",
+    "entities": []
+  }
+}

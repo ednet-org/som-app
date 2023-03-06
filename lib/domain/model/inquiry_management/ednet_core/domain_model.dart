@@ -56,8 +56,8 @@ class Offer extends Entity<Offer> {
   Company provider;
   DateTime offerCreationDate;
   String offerPDF;
-  String buyerAction;
-  String providerAction;
+  String buyerCommand;
+  String providerCommand;
   DateTime forwardDate;
   DateTime resolveDate;
 
@@ -66,8 +66,8 @@ class Offer extends Entity<Offer> {
       this.provider,
       this.offerCreationDate,
       this.offerPDF,
-      this.buyerAction,
-      this.providerAction,
+      this.buyerCommand,
+      this.providerCommand,
       this.forwardDate,
       this.resolveDate);
 }
