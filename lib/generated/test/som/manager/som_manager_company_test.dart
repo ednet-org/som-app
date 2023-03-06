@@ -128,14 +128,14 @@ void testSomManagerCompanies(
       expect(selectedCompanies.source?.isEmpty, isFalse); 
       var companiesCount = companies.length; 
  
-      var company = Company(companies.concept!); 
-      company.name = 'highway'; 
-      company.role = 'parfem'; 
-      company.address = 'slate'; 
-      company.uidNumber = 'chairman'; 
-      company.registrationNumber = 'algorithm'; 
-      company.numberOfEmployees = 'message'; 
-      company.websiteUrl = 'concern'; 
+      var company = Company(companies.concept); 
+      company.name = 'architecture'; 
+      company.role = 'thing'; 
+      company.address = 'seed'; 
+      company.uidNumber = 'flower'; 
+      company.registrationNumber = 'bank'; 
+      company.numberOfEmployees = 'call'; 
+      company.websiteUrl = 'college'; 
       var added = selectedCompanies.add(company); 
       expect(added, isTrue); 
       expect(companies.length, equals(++companiesCount)); 
@@ -195,6 +195,8 @@ void testSomManagerCompanies(
       expect(copiedCompanies, isNot(same(companies))); 
       copiedCompanies.forEach((e) => 
         expect(e, equals(companies.singleWhereOid(e.oid)))); 
+      copiedCompanies.forEach((e) => 
+        expect(e, isNot(same(companies.singleWhereId(e.id!))))); 
  
       //copiedCompanies.display(title: "Copy companies"); 
     }); 
@@ -228,10 +230,10 @@ void testSomManagerCompanies(
     test("Update company non id attribute with failure", () { 
       var randomCompany = companies.random(); 
       var afterUpdateEntity = randomCompany.copy(); 
-      afterUpdateEntity.name = 'tree'; 
-      expect(afterUpdateEntity.name, equals('tree')); 
+      afterUpdateEntity.name = 'lunch'; 
+      expect(afterUpdateEntity.name, equals('lunch')); 
       // companies.update can only be used if oid, code or id is set. 
-      expect(() => companies.update(randomCompany, afterUpdateEntity), throws); 
+      expect(() => companies.update(randomCompany, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
  
     test("Copy Equality", () { 
@@ -254,15 +256,24 @@ void testSomManagerCompanies(
  
     test("company action undo and redo", () { 
       var companyCount = companies.length; 
-      var company = Company(companies.concept!); 
-        company.name = 'vacation'; 
-      company.role = 'ship'; 
-      company.address = 'course'; 
-      company.uidNumber = 'feeling'; 
-      company.registrationNumber = 'consciousness'; 
-      company.numberOfEmployees = 'auto'; 
-      company.websiteUrl = 'theme'; 
+      var company = Company(companies.concept); 
+        company.name = 'walking'; 
+      company.role = 'girl'; 
+      company.address = 'vessel'; 
+      company.uidNumber = 'video'; 
+      company.registrationNumber = 'room'; 
+      company.numberOfEmployees = 'advisor'; 
+      company.websiteUrl = 'plaho'; 
+    var companyPlatformRole = platformRoles.random(); 
+    company.platformRole = companyPlatformRole; 
+    var companyTenantRole = tenantRoles.random(); 
+    company.tenantRole = companyTenantRole; 
+    var companyPlatform = platforms.random(); 
+    company.platform = companyPlatform; 
       companies.add(company); 
+    companyPlatformRole.companies.add(company); 
+    companyTenantRole.companies.add(company); 
+    companyPlatform.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -280,15 +291,24 @@ void testSomManagerCompanies(
  
     test("company session undo and redo", () { 
       var companyCount = companies.length; 
-      var company = Company(companies.concept!); 
-        company.name = 'interest'; 
-      company.role = 'photo'; 
-      company.address = 'election'; 
-      company.uidNumber = 'objective'; 
-      company.registrationNumber = 'cup'; 
-      company.numberOfEmployees = 'nothingness'; 
-      company.websiteUrl = 'nothingness'; 
+      var company = Company(companies.concept); 
+        company.name = 'right'; 
+      company.role = 'music'; 
+      company.address = 'email'; 
+      company.uidNumber = 'revolution'; 
+      company.registrationNumber = 'observation'; 
+      company.numberOfEmployees = 'web'; 
+      company.websiteUrl = 'selfie'; 
+    var companyPlatformRole = platformRoles.random(); 
+    company.platformRole = companyPlatformRole; 
+    var companyTenantRole = tenantRoles.random(); 
+    company.tenantRole = companyTenantRole; 
+    var companyPlatform = platforms.random(); 
+    company.platform = companyPlatform; 
       companies.add(company); 
+    companyPlatformRole.companies.add(company); 
+    companyTenantRole.companies.add(company); 
+    companyPlatform.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -306,7 +326,7 @@ void testSomManagerCompanies(
  
     test("Company update undo and redo", () { 
       var company = companies.random(); 
-      var action = SetAttributeCommand(session, company, "name", 'message'); 
+      var action = SetAttributeCommand(session, company, "name", 'darts'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -406,15 +426,24 @@ void testSomManagerCompanies(
       expect(reaction, isNotNull); 
  
       somDomain.startCommandReaction(reaction); 
-      var company = Company(companies.concept!); 
-        company.name = 'crisis'; 
-      company.role = 'seed'; 
-      company.address = 'yellow'; 
-      company.uidNumber = 'bird'; 
-      company.registrationNumber = 'advisor'; 
-      company.numberOfEmployees = 'brave'; 
-      company.websiteUrl = 'undo'; 
+      var company = Company(companies.concept); 
+        company.name = 'end'; 
+      company.role = 'lifespan'; 
+      company.address = 'slate'; 
+      company.uidNumber = 'teaching'; 
+      company.registrationNumber = 'cream'; 
+      company.numberOfEmployees = 'revolution'; 
+      company.websiteUrl = 'opinion'; 
+    var companyPlatformRole = platformRoles.random(); 
+    company.platformRole = companyPlatformRole; 
+    var companyTenantRole = tenantRoles.random(); 
+    company.tenantRole = companyTenantRole; 
+    var companyPlatform = platforms.random(); 
+    company.platform = companyPlatform; 
       companies.add(company); 
+    companyPlatformRole.companies.add(company); 
+    companyTenantRole.companies.add(company); 
+    companyPlatform.companies.add(company); 
       expect(companies.length, equals(++companyCount)); 
       companies.remove(company); 
       expect(companies.length, equals(--companyCount)); 
@@ -426,7 +455,7 @@ void testSomManagerCompanies(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, company, "name", 'salary'); 
+        session, company, "name", 'line'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

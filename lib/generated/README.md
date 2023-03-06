@@ -1,6 +1,6 @@
 # som_manager 
 
-**Categories**: ednet_core, class models. 
+**Categories**: ednet_core, domain models. 
 
 ## Description: 
 som_manager project uses 

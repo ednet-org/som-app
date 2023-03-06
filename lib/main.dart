@@ -6,7 +6,6 @@ import 'package:beamer/beamer.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:ednet_component_library/ednet_component_library.dart';
-import 'package:ednet_core/ednet_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

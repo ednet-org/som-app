@@ -19,8 +19,8 @@ abstract class ZIPsGen extends Entities<ZIP> {
     this.concept = concept; 
   } 
  
-  ZIPs newEntities() => ZIPs(concept);
-  ZIP newEntity() => ZIP(concept);
+  ZIPs newEntities() => ZIPs(concept); 
+  ZIP newEntity() => ZIP(concept); 
   
 } 
  

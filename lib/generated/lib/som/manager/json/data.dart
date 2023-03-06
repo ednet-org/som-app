@@ -4,11 +4,15 @@ part of som_manager;
 // http://jsonformatter.curiousconcept.com/ 
  
 // lib/som/manager/json/data.dart 
-var somManagerOfferEntry = r""" 
+var somManagerOfferProviderEntry = r""" 
  
 """; 
  
-var somManagerUserEntry = r""" 
+var somManagerPlatformRoleEntry = r""" 
+ 
+"""; 
+ 
+var somManagerConsultantEntry = r""" 
  
 """; 
  
@@ -16,7 +20,19 @@ var somManagerBuyerEntry = r"""
  
 """; 
  
-var somManagerProviderEntry = r""" 
+var somManagerTenantRoleEntry = r""" 
+ 
+"""; 
+ 
+var somManagerPlatformEntry = r""" 
+ 
+"""; 
+ 
+var somManagerCompanyEntry = r""" 
+ 
+"""; 
+ 
+var somManagerUserEntry = r""" 
  
 """; 
  
@@ -24,7 +40,11 @@ var somManagerInquiryEntry = r"""
  
 """; 
  
-var somManagerCompanyEntry = r""" 
+var somManagerRegistrationEntry = r""" 
+ 
+"""; 
+ 
+var somManagerOfferEntry = r""" 
  
 """; 
  

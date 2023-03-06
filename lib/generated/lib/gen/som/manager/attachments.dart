@@ -14,12 +14,6 @@ abstract class AttachmentGen extends Entity<Attachment> {
   Offer get offer => getParent("offer") as Offer; 
   void set offer(Offer p) { setParent("offer", p); } 
   
-  Reference get inquiryReference => getReference("inquiry") as Reference; 
-  void set inquiryReference(Reference reference) { setReference("inquiry", reference); } 
-  
-  Inquiry get inquiry => getParent("inquiry") as Inquiry; 
-  void set inquiry(Inquiry p) { setParent("inquiry", p); } 
-  
   String get name => getAttribute("name"); 
   void set name(String a) { setAttribute("name", a); } 
   
@@ -43,8 +37,8 @@ abstract class AttachmentsGen extends Entities<Attachment> {
     this.concept = concept; 
   } 
  
-  Attachments newEntities() => Attachments(concept);
-  Attachment newEntity() => Attachment(concept);
+  Attachments newEntities() => Attachments(concept); 
+  Attachment newEntity() => Attachment(concept); 
   
 } 
  

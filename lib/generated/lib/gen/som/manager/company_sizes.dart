@@ -22,8 +22,8 @@ abstract class CompanySizesGen extends Entities<CompanySize> {
     this.concept = concept; 
   } 
  
-  CompanySizes newEntities() => CompanySizes(concept);
-  CompanySize newEntity() => CompanySize(concept);
+  CompanySizes newEntities() => CompanySizes(concept); 
+  CompanySize newEntity() => CompanySize(concept); 
   
 } 
  

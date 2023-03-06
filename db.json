@@ -17,10 +17,10 @@
     "entry": "Buyer",
     "entities": []
   },
-  "Provider": {
+  "OfferProvider": {
     "domain": "Som",
     "model": "Manager",
-    "entry": "Provider",
+    "entry": "OfferProvider",
     "entities": [
       {
         "oid": "1678097187526",

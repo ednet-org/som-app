@@ -1,0 +1,42 @@
+{
+  "width": 500,
+  "height": 500,
+  "boxes": [
+    {
+      "name": "Registration",
+      "entry": true,
+      "x": 250,
+      "y": 50,
+      "width": 150,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "company",
+          "type": "Company",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "user",
+          "type": "User",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "platformRole",
+          "type": "PlatformRole",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "lines": [
+  ]
+}

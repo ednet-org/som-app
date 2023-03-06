@@ -6,16 +6,16 @@ abstract class OfferGen extends Entity<Offer> {
  
   OfferGen(Concept concept) { 
     this.concept = concept; 
-    Concept? attachmentConcept = concept.model.concepts.singleWhereCode("Attachment"); 
-    assert(attachmentConcept!= null); 
-    setChild("attachments", Attachments(attachmentConcept!)); 
+    Concept attachmentConcept = concept.model.concepts.singleWhereCode("Attachment") as Concept; 
+    assert(attachmentConcept != null); 
+    setChild("attachments", Attachments(attachmentConcept)); 
   } 
  
   Reference get providerReference => getReference("provider") as Reference; 
   void set providerReference(Reference reference) { setReference("provider", reference); } 
   
-  SomProvider get provider => getParent("provider") as SomProvider; 
-  void set provider(SomProvider p) { setParent("provider", p); } 
+  OfferProvider get provider => getParent("provider") as OfferProvider; 
+  void set provider(OfferProvider p) { setParent("provider", p); } 
   
   Reference get inquiryReference => getReference("inquiry") as Reference; 
   void set inquiryReference(Reference reference) { setReference("inquiry", reference); } 
@@ -51,8 +51,8 @@ abstract class OffersGen extends Entities<Offer> {
     this.concept = concept; 
   } 
  
-  Offers newEntities() => Offers(concept);
-  Offer newEntity() => Offer(concept);
+  Offers newEntities() => Offers(concept); 
+  Offer newEntity() => Offer(concept); 
   
 } 
  

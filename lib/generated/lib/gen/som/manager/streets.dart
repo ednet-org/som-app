@@ -22,8 +22,8 @@ abstract class StreetsGen extends Entities<Street> {
     this.concept = concept; 
   } 
  
-  Streets newEntities() => Streets(concept);
-  Street newEntity() => Street(concept);
+  Streets newEntities() => Streets(concept); 
+  Street newEntity() => Street(concept); 
   
 } 
  

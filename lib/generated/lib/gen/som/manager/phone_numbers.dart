@@ -28,8 +28,8 @@ abstract class PhoneNumbersGen extends Entities<PhoneNumber> {
     this.concept = concept; 
   } 
  
-  PhoneNumbers newEntities() => PhoneNumbers(concept);
-  PhoneNumber newEntity() => PhoneNumber(concept);
+  PhoneNumbers newEntities() => PhoneNumbers(concept); 
+  PhoneNumber newEntity() => PhoneNumber(concept); 
   
 } 
  

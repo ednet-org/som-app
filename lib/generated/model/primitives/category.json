@@ -3,8 +3,8 @@
   "lines": [
     {
       "box1Name": "Category",
-      "box2Name": "Tag",
-      "box1box2Name": "tag",
+      "box2Name": "Category",
+      "box1box2Name": "tags",
       "box1box2Min": "0",
       "box1box2Max": "N",
       "box2box1Name": "category",
@@ -17,8 +17,8 @@
     },
     {
       "box1Name": "Category",
-      "box2Name": "Tag",
-      "box1box2Name": "category",
+      "box2Name": "Category",
+      "box1box2Name": "categories",
       "box1box2Min": "0",
       "box1box2Max": "N",
       "box2box1Name": "tag",
@@ -34,32 +34,6 @@
   "boxes": [
     {
       "name": "Category",
-      "entry": false,
-      "x": 107,
-      "y": 175,
-      "width": 222,
-      "height": 258,
-      "items": [
-        {
-          "sequence": 1,
-          "category": "attribute",
-          "name": "title",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 2,
-          "category": "attribute",
-          "name": "description",
-          "type": "String",
-          "essential": true,
-          "sensitive": false
-        }
-      ]
-    },
-    {
-      "name": "Tag",
       "entry": false,
       "x": 107,
       "y": 175,

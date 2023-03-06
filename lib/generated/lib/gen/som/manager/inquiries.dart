@@ -6,22 +6,22 @@ abstract class InquiryGen extends Entity<Inquiry> {
  
   InquiryGen(Concept concept) { 
     this.concept = concept; 
-    Concept? providerCriteriaConcept = concept.model.concepts.singleWhereCode("ProviderCriteria"); 
-    assert(providerCriteriaConcept!= null); 
-    setChild("inquiry", ProviderCriterias(providerCriteriaConcept!)); 
-    Concept? attachmentConcept = concept.model.concepts.singleWhereCode("Attachment"); 
-    assert(attachmentConcept!= null); 
-    setChild("attachments", Attachments(attachmentConcept!)); 
-    Concept? offerConcept = concept.model.concepts.singleWhereCode("Offer"); 
-    assert(offerConcept!= null); 
-    setChild("offers", Offers(offerConcept!)); 
+    Concept providerCriteriaConcept = concept.model.concepts.singleWhereCode("ProviderCriteria") as Concept; 
+    assert(providerCriteriaConcept != null); 
+    setChild("providerCriteria", ProviderCriterias(providerCriteriaConcept)); 
+    Concept offerConcept = concept.model.concepts.singleWhereCode("Offer") as Concept; 
+    assert(offerConcept != null); 
+    setChild("offers", Offers(offerConcept)); 
+    Concept inquiryStatusConcept = concept.model.concepts.singleWhereCode("InquiryStatus") as Concept; 
+    assert(inquiryStatusConcept != null); 
+    setChild("status", InquiryStatuss(inquiryStatusConcept)); 
   } 
  
   Reference get buyerReference => getReference("buyer") as Reference; 
   void set buyerReference(Reference reference) { setReference("buyer", reference); } 
   
-  User get buyer => getParent("buyer") as User; 
-  void set buyer(User p) { setParent("buyer", p); } 
+  Buyer get buyer => getParent("buyer") as Buyer; 
+  void set buyer(Buyer p) { setParent("buyer", p); } 
   
   String get title => getAttribute("title"); 
   void set title(String a) { setAttribute("title", a); } 
@@ -44,17 +44,14 @@ abstract class InquiryGen extends Entity<Inquiry> {
   String get deliveryLocation => getAttribute("deliveryLocation"); 
   void set deliveryLocation(String a) { setAttribute("deliveryLocation", a); } 
   
-  String get providerCriteria => getAttribute("providerCriteria"); 
-  void set providerCriteria(String a) { setAttribute("providerCriteria", a); } 
+  String get attachments => getAttribute("attachments"); 
+  void set attachments(String a) { setAttribute("attachments", a); } 
   
-  String get status => getAttribute("status"); 
-  void set status(String a) { setAttribute("status", a); } 
-  
-  ProviderCriterias get inquiry => getChild("inquiry") as ProviderCriterias; 
-  
-  Attachments get attachments => getChild("attachments") as Attachments; 
+  ProviderCriterias get providerCriteria => getChild("providerCriteria") as ProviderCriterias; 
   
   Offers get offers => getChild("offers") as Offers; 
+  
+  InquiryStatuss get status => getChild("status") as InquiryStatuss; 
   
   Inquiry newEntity() => Inquiry(concept); 
   Inquiries newEntities() => Inquiries(concept); 
@@ -67,8 +64,8 @@ abstract class InquiriesGen extends Entities<Inquiry> {
     this.concept = concept; 
   } 
  
-  Inquiries newEntities() => Inquiries(concept);
-  Inquiry newEntity() => Inquiry(concept);
+  Inquiries newEntities() => Inquiries(concept); 
+  Inquiry newEntity() => Inquiry(concept); 
   
 } 
  

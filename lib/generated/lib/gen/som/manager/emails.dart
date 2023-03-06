@@ -25,8 +25,8 @@ abstract class EmailsGen extends Entities<Email> {
     this.concept = concept; 
   } 
  
-  Emails newEntities() => Emails(concept);
-  Email newEntity() => Email(concept);
+  Emails newEntities() => Emails(concept); 
+  Email newEntity() => Email(concept); 
   
 } 
  

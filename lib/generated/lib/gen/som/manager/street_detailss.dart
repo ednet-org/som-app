@@ -22,8 +22,8 @@ abstract class StreetDetailssGen extends Entities<StreetDetails> {
     this.concept = concept; 
   } 
  
-  StreetDetailss newEntities() => StreetDetailss(concept);
-  StreetDetails newEntity() => StreetDetails(concept);
+  StreetDetailss newEntities() => StreetDetailss(concept); 
+  StreetDetails newEntity() => StreetDetails(concept); 
   
 } 
  

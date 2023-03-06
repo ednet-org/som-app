@@ -1,0 +1,40 @@
+{
+  "width": 990,
+  "lines": [
+    {
+      "box1Name": "Consultant",
+      "box2Name": "Platform",
+      "box1box2Name": "platform",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "consultants",
+      "box2box1Min": "0",
+      "box2box1Max": "N",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": false
+    }
+  ],
+  "height": 1105,
+  "boxes": [
+    {
+      "name": "Consultant",
+      "entry": true,
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "items": [
+        {
+          "sequence": 1,
+          "name": "user",
+          "type": "User",
+          "essential": true,
+          "sensitive": false,
+          "category": "attribute"
+        }
+      ]
+    }
+  ]
+}

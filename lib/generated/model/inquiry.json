@@ -3,7 +3,7 @@
   "lines": [
     {
       "box1Name": "Inquiry",
-      "box2Name": "User",
+      "box2Name": "Buyer",
       "box1box2Name": "buyer",
       "box1box2Min": "1",
       "box1box2Max": "1",
@@ -18,23 +18,9 @@
     {
       "box1Name": "Inquiry",
       "box2Name": "ProviderCriteria",
-      "box1box2Name": "inquiry",
+      "box1box2Name": "providerCriteria",
       "box1box2Min": "0",
       "box1box2Max": "1",
-      "box2box1Name": "provider",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": false,
-      "box2box1Id": true
-    },
-    {
-      "box1Name": "Inquiry",
-      "box2Name": "Attachment",
-      "box1box2Name": "attachments",
-      "box1box2Min": "0",
-      "box1box2Max": "N",
       "box2box1Name": "inquiry",
       "box2box1Min": "1",
       "box2box1Max": "1",
@@ -56,6 +42,34 @@
       "internal": false,
       "box1box2Id": false,
       "box2box1Id": true
+    },
+    {
+      "box1Name": "Inquiry",
+      "box2Name": "InquiryStatus",
+      "box1box2Name": "status",
+      "box1box2Min": "1",
+      "box1box2Max": "1",
+      "box2box1Name": "inquiry",
+      "box2box1Min": "1",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": false,
+      "box1box2Id": false,
+      "box2box1Id": true
+    },
+    {
+      "box1Name": "ProviderCriteria",
+      "box2Name": "Category",
+      "box1box2Name": "categories",
+      "box1box2Min": "0",
+      "box1box2Max": "N",
+      "box2box1Name": "inquiries",
+      "box2box1Min": "0",
+      "box2box1Max": "1",
+      "category": "relationship",
+      "internal": true,
+      "box1box2Id": false,
+      "box2box1Id": false
     }
   ],
   "height": 1105,
@@ -125,18 +139,10 @@
           "sensitive": false
         },
         {
-          "sequence": 10,
-          "category": "relationship",
-          "name": "providerCriteria",
-          "type": "ProviderCriteria",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 13,
-          "name": "status",
+          "sequence": 14,
+          "name": "attachments",
           "category": "attribute",
-          "type": "InquiryStatus",
+          "type": "Attachments",
           "essential": true,
           "sensitive": false
         }
@@ -177,7 +183,7 @@
           "sensitive": false
         },
         {
-          "sequence": 1,
+          "sequence": 2,
           "category": "attribute",
           "name": "radius",
           "type": "int",
@@ -185,7 +191,7 @@
           "sensitive": false
         },
         {
-          "sequence": 1,
+          "sequence": 3,
           "category": "attribute",
           "name": "companyType",
           "type": "CompanyType",
@@ -193,7 +199,7 @@
           "sensitive": false
         },
         {
-          "sequence": 1,
+          "sequence": 4,
           "category": "attribute",
           "name": "companySize",
           "type": "CompanySize",

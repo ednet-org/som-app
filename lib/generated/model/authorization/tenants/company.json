@@ -91,7 +91,24 @@
       "y": 79,
       "width": 164,
       "height": 91,
-      "items": []
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "value",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
     },
     {
       "name": "CompanyType",
