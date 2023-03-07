@@ -17,6 +17,14 @@
           "type": "String",
           "essential": true,
           "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "countryCode",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
         }
       ]
     }

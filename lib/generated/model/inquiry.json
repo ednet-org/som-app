@@ -76,7 +76,7 @@
   "boxes": [
     {
       "name": "Inquiry",
-      "entry": true,
+      "entry": false,
       "x": 107,
       "y": 175,
       "width": 222,

@@ -11,7 +11,16 @@
       "y": 364,
       "width": 105,
       "height": 78,
-      "items": []
+      "items": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "value",
+          "type": "string",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
     }
   ]
 }

@@ -129,14 +129,14 @@ void testSomManagerInquiries(
       var inquiriesCount = inquiries.length; 
  
       var inquiry = Inquiry(inquiries.concept); 
-      inquiry.title = 'line'; 
-      inquiry.description = 'deep'; 
-      inquiry.category = 'hot'; 
-      inquiry.branch = 'heating'; 
+      inquiry.title = 'chairman'; 
+      inquiry.description = 'seed'; 
+      inquiry.category = 'secretary'; 
+      inquiry.branch = 'cinema'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'holiday'; 
-      inquiry.attachments = 'paper'; 
+      inquiry.deliveryLocation = 'restaurant'; 
+      inquiry.attachments = 'executive'; 
       var added = selectedInquiries.add(inquiry); 
       expect(added, isTrue); 
       expect(inquiries.length, equals(++inquiriesCount)); 
@@ -229,8 +229,8 @@ void testSomManagerInquiries(
     test("Update inquiry non id attribute with failure", () { 
       var randomInquiry = managerModel.inquiries.random(); 
       var afterUpdateEntity = randomInquiry.copy(); 
-      afterUpdateEntity.title = 'bank'; 
-      expect(afterUpdateEntity.title, equals('bank')); 
+      afterUpdateEntity.title = 'craving'; 
+      expect(afterUpdateEntity.title, equals('craving')); 
       // inquiries.update can only be used if oid, code or id is set. 
       expect(() => inquiries.update(randomInquiry, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -257,14 +257,14 @@ void testSomManagerInquiries(
     test("inquiry action undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'course'; 
-      inquiry.description = 'electronic'; 
-      inquiry.category = 'family'; 
-      inquiry.branch = 'computer'; 
+        inquiry.title = 'left'; 
+      inquiry.description = 'knowledge'; 
+      inquiry.category = 'paper'; 
+      inquiry.branch = 'security'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'fish'; 
-      inquiry.attachments = 'rice'; 
+      inquiry.deliveryLocation = 'marriage'; 
+      inquiry.attachments = 'hospital'; 
     var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -287,14 +287,14 @@ void testSomManagerInquiries(
     test("inquiry session undo and redo", () { 
       var inquiryCount = inquiries.length; 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'down'; 
-      inquiry.description = 'down'; 
-      inquiry.category = 'executive'; 
-      inquiry.branch = 'time'; 
+        inquiry.title = 'music'; 
+      inquiry.description = 'service'; 
+      inquiry.category = 'election'; 
+      inquiry.branch = 'book'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'university'; 
-      inquiry.attachments = 'car'; 
+      inquiry.deliveryLocation = 'web'; 
+      inquiry.attachments = 'test'; 
     var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -316,7 +316,7 @@ void testSomManagerInquiries(
  
     test("Inquiry update undo and redo", () { 
       var inquiry = managerModel.inquiries.random(); 
-      var action = SetAttributeCommand(session, inquiry, "title", 'fish'); 
+      var action = SetAttributeCommand(session, inquiry, "title", 'school'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -417,14 +417,14 @@ void testSomManagerInquiries(
  
       somDomain.startCommandReaction(reaction); 
       var inquiry = Inquiry(inquiries.concept); 
-        inquiry.title = 'fish'; 
-      inquiry.description = 'sun'; 
-      inquiry.category = 'taxi'; 
-      inquiry.branch = 'capacity'; 
+        inquiry.title = 'knowledge'; 
+      inquiry.description = 'enquiry'; 
+      inquiry.category = 'objective'; 
+      inquiry.branch = 'secretary'; 
       inquiry.publishingDate = new DateTime.now(); 
       inquiry.expirationDate = new DateTime.now(); 
-      inquiry.deliveryLocation = 'car'; 
-      inquiry.attachments = 'television'; 
+      inquiry.deliveryLocation = 'guest'; 
+      inquiry.attachments = 'bird'; 
     var inquiryBuyer = managerModel.buyers.random(); 
     inquiry.buyer = inquiryBuyer; 
       inquiries.add(inquiry); 
@@ -440,7 +440,7 @@ void testSomManagerInquiries(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, inquiry, "title", 'opinion'); 
+        session, inquiry, "title", 'tag'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

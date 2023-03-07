@@ -34,7 +34,7 @@
   "boxes": [
     {
       "name": "Platform",
-      "entry": true,
+      "entry": false,
       "x": 995,
       "y": 79,
       "width": 164,

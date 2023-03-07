@@ -14,6 +14,9 @@ abstract class CountryGen extends Entity<Country> {
   String get name => getAttribute("name"); 
   void set name(String a) { setAttribute("name", a); } 
   
+  String get countryCode => getAttribute("countryCode"); 
+  void set countryCode(String a) { setAttribute("countryCode", a); } 
+  
   Addresss get addresses => getChild("addresses") as Addresss; 
   
   Country newEntity() => Country(concept); 

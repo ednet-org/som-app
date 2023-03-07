@@ -24,17 +24,17 @@ abstract class CategoryGen extends Entity<Category> {
   Category get tag => getParent("tag") as Category; 
   void set tag(Category p) { setParent("tag", p); } 
   
-  Reference get companiesReference => getReference("companies") as Reference; 
-  void set companiesReference(Reference reference) { setReference("companies", reference); } 
-  
-  Company get companies => getParent("companies") as Company; 
-  void set companies(Company p) { setParent("companies", p); } 
-  
   Reference get inquiriesReference => getReference("inquiries") as Reference; 
   void set inquiriesReference(Reference reference) { setReference("inquiries", reference); } 
   
   ProviderCriteria get inquiries => getParent("inquiries") as ProviderCriteria; 
   void set inquiries(ProviderCriteria p) { setParent("inquiries", p); } 
+  
+  Reference get companiesReference => getReference("companies") as Reference; 
+  void set companiesReference(Reference reference) { setReference("companies", reference); } 
+  
+  Company get companies => getParent("companies") as Company; 
+  void set companies(Company p) { setParent("companies", p); } 
   
   String get title => getAttribute("title"); 
   void set title(String a) { setAttribute("title", a); } 

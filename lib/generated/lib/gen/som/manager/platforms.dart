@@ -6,9 +6,6 @@ abstract class PlatformGen extends Entity<Platform> {
  
   PlatformGen(Concept concept) { 
     this.concept = concept; 
-    Concept consultantConcept = concept.model.concepts.singleWhereCode("Consultant") as Concept; 
-    assert(consultantConcept != null); 
-    setChild("consultants", Consultants(consultantConcept)); 
     Concept companyConcept = concept.model.concepts.singleWhereCode("Company") as Concept; 
     assert(companyConcept != null); 
     setChild("companies", Companies(companyConcept)); 
@@ -17,8 +14,6 @@ abstract class PlatformGen extends Entity<Platform> {
     setChild("roles", PlatformRoles(platformRoleConcept)); 
   } 
  
-  Consultants get consultants => getChild("consultants") as Consultants; 
-  
   Companies get companies => getChild("companies") as Companies; 
   
   PlatformRoles get roles => getChild("roles") as PlatformRoles; 

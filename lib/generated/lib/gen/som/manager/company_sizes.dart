@@ -6,10 +6,15 @@ abstract class CompanySizeGen extends Entity<CompanySize> {
  
   CompanySizeGen(Concept concept) { 
     this.concept = concept; 
+    Concept companyConcept = concept.model.concepts.singleWhereCode("Company") as Concept; 
+    assert(companyConcept != null); 
+    setChild("companies", Companies(companyConcept)); 
   } 
  
-  String get size => getAttribute("size"); 
-  void set size(String a) { setAttribute("size", a); } 
+  String get value => getAttribute("value"); 
+  void set value(String a) { setAttribute("value", a); } 
+  
+  Companies get companies => getChild("companies") as Companies; 
   
   CompanySize newEntity() => CompanySize(concept); 
   CompanySizes newEntities() => CompanySizes(concept); 

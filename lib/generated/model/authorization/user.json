@@ -17,20 +17,6 @@
     },
     {
       "box1Name": "User",
-      "box2Name": "PhoneNumber",
-      "box1box2Name": "phoneNumber",
-      "box1box2Min": "0",
-      "box1box2Max": "1",
-      "box2box1Name": "owner",
-      "box2box1Min": "1",
-      "box2box1Max": "1",
-      "category": "relationship",
-      "internal": false,
-      "box1box2Id": true,
-      "box2box1Id": false
-    },
-    {
-      "box1Name": "User",
       "box2Name": "Email",
       "box1box2Name": "email",
       "box1box2Min": "1",
@@ -48,7 +34,7 @@
   "boxes": [
     {
       "name": "User",
-      "entry": true,
+      "entry": false,
       "x": 545,
       "y": 164,
       "width": 157,
@@ -63,18 +49,10 @@
           "sensitive": false
         },
         {
-          "sequence": 4,
+          "sequence": 6,
           "category": "attribute",
-          "name": "roleAtSom",
-          "type": "CompanyRoleAtSom",
-          "essential": true,
-          "sensitive": false
-        },
-        {
-          "sequence": 5,
-          "category": "attribute",
-          "name": "roleAtCompany",
-          "type": "UserRoleAtCompany",
+          "name": "phoneNumber",
+          "type": "Telephone",
           "essential": true,
           "sensitive": false
         }

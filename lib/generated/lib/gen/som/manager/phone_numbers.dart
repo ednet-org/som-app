@@ -8,12 +8,6 @@ abstract class PhoneNumberGen extends Entity<PhoneNumber> {
     this.concept = concept; 
   } 
  
-  Reference get ownerReference => getReference("owner") as Reference; 
-  void set ownerReference(Reference reference) { setReference("owner", reference); } 
-  
-  User get owner => getParent("owner") as User; 
-  void set owner(User p) { setParent("owner", p); } 
-  
   String get number => getAttribute("number"); 
   void set number(String a) { setAttribute("number", a); } 
   

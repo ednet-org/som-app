@@ -129,7 +129,7 @@ void testSomManagerBuyers(
       var buyersCount = buyers.length; 
  
       var buyer = Buyer(buyers.concept); 
-      buyer.user = 'notch'; 
+      buyer.user = 'month'; 
       var added = selectedBuyers.add(buyer); 
       expect(added, isTrue); 
       expect(buyers.length, equals(++buyersCount)); 
@@ -222,8 +222,8 @@ void testSomManagerBuyers(
     test("Update buyer non id attribute with failure", () { 
       var randomBuyer = managerModel.buyers.random(); 
       var afterUpdateEntity = randomBuyer.copy(); 
-      afterUpdateEntity.user = 'security'; 
-      expect(afterUpdateEntity.user, equals('security')); 
+      afterUpdateEntity.user = 'observation'; 
+      expect(afterUpdateEntity.user, equals('observation')); 
       // buyers.update can only be used if oid, code or id is set. 
       expect(() => buyers.update(randomBuyer, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -243,11 +243,8 @@ void testSomManagerBuyers(
     test("buyer action undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'cardboard'; 
-    var buyerRegistration = managerModel.registrations.random(); 
-    buyer.registration = buyerRegistration; 
+        buyer.user = 'celebration'; 
       buyers.add(buyer); 
-    buyerRegistration.buyer.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 
@@ -266,11 +263,8 @@ void testSomManagerBuyers(
     test("buyer session undo and redo", () { 
       var buyerCount = buyers.length; 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'selfie'; 
-    var buyerRegistration = managerModel.registrations.random(); 
-    buyer.registration = buyerRegistration; 
+        buyer.user = 'coffee'; 
       buyers.add(buyer); 
-    buyerRegistration.buyer.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 
@@ -288,7 +282,7 @@ void testSomManagerBuyers(
  
     test("Buyer update undo and redo", () { 
       var buyer = managerModel.buyers.random(); 
-      var action = SetAttributeCommand(session, buyer, "user", 'boat'); 
+      var action = SetAttributeCommand(session, buyer, "user", 'electronic'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -389,11 +383,8 @@ void testSomManagerBuyers(
  
       somDomain.startCommandReaction(reaction); 
       var buyer = Buyer(buyers.concept); 
-        buyer.user = 'beach'; 
-    var buyerRegistration = managerModel.registrations.random(); 
-    buyer.registration = buyerRegistration; 
+        buyer.user = 'circle'; 
       buyers.add(buyer); 
-    buyerRegistration.buyer.add(buyer); 
       expect(buyers.length, equals(++buyerCount)); 
       buyers.remove(buyer); 
       expect(buyers.length, equals(--buyerCount)); 
@@ -405,7 +396,7 @@ void testSomManagerBuyers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, buyer, "user", 'holiday'); 
+        session, buyer, "user", 'circle'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

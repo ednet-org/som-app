@@ -129,9 +129,9 @@ void testSomManagerRegistrations(
       var registrationsCount = registrations.length; 
  
       var registration = Registration(registrations.concept); 
-      registration.company = 'cup'; 
-      registration.user = 'television'; 
-      registration.platformRole = 'beer'; 
+      registration.company = 'truck'; 
+      registration.user = 'line'; 
+      registration.platformRole = 'blue'; 
       var added = selectedRegistrations.add(registration); 
       expect(added, isTrue); 
       expect(registrations.length, equals(++registrationsCount)); 
@@ -224,8 +224,8 @@ void testSomManagerRegistrations(
     test("Update registration non id attribute with failure", () { 
       var randomRegistration = managerModel.registrations.random(); 
       var afterUpdateEntity = randomRegistration.copy(); 
-      afterUpdateEntity.company = 'plaho'; 
-      expect(afterUpdateEntity.company, equals('plaho')); 
+      afterUpdateEntity.company = 'music'; 
+      expect(afterUpdateEntity.company, equals('music')); 
       // registrations.update can only be used if oid, code or id is set. 
       expect(() => registrations.update(randomRegistration, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -247,9 +247,9 @@ void testSomManagerRegistrations(
     test("registration action undo and redo", () { 
       var registrationCount = registrations.length; 
       var registration = Registration(registrations.concept); 
-        registration.company = 'guest'; 
-      registration.user = 'authority'; 
-      registration.platformRole = 'sand'; 
+        registration.company = 'entertainment'; 
+      registration.user = 'email'; 
+      registration.platformRole = 'judge'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -269,9 +269,9 @@ void testSomManagerRegistrations(
     test("registration session undo and redo", () { 
       var registrationCount = registrations.length; 
       var registration = Registration(registrations.concept); 
-        registration.company = 'holiday'; 
-      registration.user = 'parfem'; 
-      registration.platformRole = 'head'; 
+        registration.company = 'cream'; 
+      registration.user = 'circle'; 
+      registration.platformRole = 'edition'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -290,7 +290,7 @@ void testSomManagerRegistrations(
  
     test("Registration update undo and redo", () { 
       var registration = managerModel.registrations.random(); 
-      var action = SetAttributeCommand(session, registration, "company", 'course'); 
+      var action = SetAttributeCommand(session, registration, "company", 'table'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -391,9 +391,9 @@ void testSomManagerRegistrations(
  
       somDomain.startCommandReaction(reaction); 
       var registration = Registration(registrations.concept); 
-        registration.company = 'table'; 
-      registration.user = 'cup'; 
-      registration.platformRole = 'edition'; 
+        registration.company = 'message'; 
+      registration.user = 'lake'; 
+      registration.platformRole = 'redo'; 
       registrations.add(registration); 
       expect(registrations.length, equals(++registrationCount)); 
       registrations.remove(registration); 
@@ -406,7 +406,7 @@ void testSomManagerRegistrations(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, registration, "company", 'book'); 
+        session, registration, "company", 'cash'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

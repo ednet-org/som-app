@@ -392,6 +392,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  ednet_core_default_app:
+    dependency: transitive
+    description:
+      path: "../ednet/libs/experiments/ednet_core_default_app"
+      relative: true
+    source: path
+    version: "1.0.3"
   equatable:
     dependency: transitive
     description:
@@ -1487,6 +1494,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+1"
+  som_manager:
+    dependency: "direct main"
+    description:
+      path: "lib/generated"
+      relative: true
+    source: path
+    version: "0.0.1"
   source_gen:
     dependency: transitive
     description:
