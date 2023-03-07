@@ -1,0 +1,72 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "Offer",
+      "to": "Attachment",
+      "fromToName": "attachments",
+      "fromToMin": "0",
+      "fromToMax": "N",
+      "toFromName": "offer",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": true
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "Offer",
+      "entry": false,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
+      "attributes": [
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "description",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "deliveryTime",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 7,
+          "category": "attribute",
+          "name": "status",
+          "type": "OfferStatus",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 8,
+          "category": "attribute",
+          "name": "expirationDate",
+          "type": "DateTime",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 9,
+          "category": "attribute",
+          "name": "price",
+          "type": "double",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

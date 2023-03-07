@@ -129,7 +129,7 @@ void testSomManagerConsultants(
       var consultantsCount = consultants.length; 
  
       var consultant = Consultant(consultants.concept); 
-      consultant.user = 'flower'; 
+      consultant.user = 'yellow'; 
       var added = selectedConsultants.add(consultant); 
       expect(added, isTrue); 
       expect(consultants.length, equals(++consultantsCount)); 
@@ -222,8 +222,8 @@ void testSomManagerConsultants(
     test("Update consultant non id attribute with failure", () { 
       var randomConsultant = managerModel.consultants.random(); 
       var afterUpdateEntity = randomConsultant.copy(); 
-      afterUpdateEntity.user = 'team'; 
-      expect(afterUpdateEntity.user, equals('team')); 
+      afterUpdateEntity.user = 'account'; 
+      expect(afterUpdateEntity.user, equals('account')); 
       // consultants.update can only be used if oid, code or id is set. 
       expect(() => consultants.update(randomConsultant, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -243,8 +243,11 @@ void testSomManagerConsultants(
     test("consultant action undo and redo", () { 
       var consultantCount = consultants.length; 
       var consultant = Consultant(consultants.concept); 
-        consultant.user = 'software'; 
+        consultant.user = 'done'; 
+    var consultantPlatform = managerModel.platforms.random(); 
+    consultant.platform = consultantPlatform; 
       consultants.add(consultant); 
+    consultantPlatform.consultants.add(consultant); 
       expect(consultants.length, equals(++consultantCount)); 
       consultants.remove(consultant); 
       expect(consultants.length, equals(--consultantCount)); 
@@ -263,8 +266,11 @@ void testSomManagerConsultants(
     test("consultant session undo and redo", () { 
       var consultantCount = consultants.length; 
       var consultant = Consultant(consultants.concept); 
-        consultant.user = 'chemist'; 
+        consultant.user = 'saving'; 
+    var consultantPlatform = managerModel.platforms.random(); 
+    consultant.platform = consultantPlatform; 
       consultants.add(consultant); 
+    consultantPlatform.consultants.add(consultant); 
       expect(consultants.length, equals(++consultantCount)); 
       consultants.remove(consultant); 
       expect(consultants.length, equals(--consultantCount)); 
@@ -282,7 +288,7 @@ void testSomManagerConsultants(
  
     test("Consultant update undo and redo", () { 
       var consultant = managerModel.consultants.random(); 
-      var action = SetAttributeCommand(session, consultant, "user", 'job'); 
+      var action = SetAttributeCommand(session, consultant, "user", 'picture'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -383,8 +389,11 @@ void testSomManagerConsultants(
  
       somDomain.startCommandReaction(reaction); 
       var consultant = Consultant(consultants.concept); 
-        consultant.user = 'account'; 
+        consultant.user = 'point'; 
+    var consultantPlatform = managerModel.platforms.random(); 
+    consultant.platform = consultantPlatform; 
       consultants.add(consultant); 
+    consultantPlatform.consultants.add(consultant); 
       expect(consultants.length, equals(++consultantCount)); 
       consultants.remove(consultant); 
       expect(consultants.length, equals(--consultantCount)); 
@@ -396,7 +405,7 @@ void testSomManagerConsultants(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, consultant, "user", 'coffee'); 
+        session, consultant, "user", 'meter'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

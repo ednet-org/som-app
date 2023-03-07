@@ -129,9 +129,9 @@ void testSomManagerUsers(
       var usersCount = users.length; 
  
       var user = User(users.concept); 
-      user.username = 'tall'; 
-      user.roleAtSom = 'question'; 
-      user.roleAtCompany = 'consciousness'; 
+      user.username = 'season'; 
+      user.roleAtSom = 'east'; 
+      user.roleAtCompany = 'deep'; 
       var added = selectedUsers.add(user); 
       expect(added, isTrue); 
       expect(users.length, equals(++usersCount)); 
@@ -226,8 +226,8 @@ void testSomManagerUsers(
     test("Update user non id attribute with failure", () { 
       var randomUser = managerModel.users.random(); 
       var afterUpdateEntity = randomUser.copy(); 
-      afterUpdateEntity.username = 'holiday'; 
-      expect(afterUpdateEntity.username, equals('holiday')); 
+      afterUpdateEntity.username = 'marriage'; 
+      expect(afterUpdateEntity.username, equals('marriage')); 
       // users.update can only be used if oid, code or id is set. 
       expect(() => users.update(randomUser, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -249,9 +249,9 @@ void testSomManagerUsers(
     test("user action undo and redo", () { 
       var userCount = users.length; 
       var user = User(users.concept); 
-        user.username = 'winter'; 
-      user.roleAtSom = 'ball'; 
-      user.roleAtCompany = 'hat'; 
+        user.username = 'book'; 
+      user.roleAtSom = 'text'; 
+      user.roleAtCompany = 'girl'; 
     var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
     var userCompany = managerModel.companies.random(); 
@@ -277,9 +277,9 @@ void testSomManagerUsers(
     test("user session undo and redo", () { 
       var userCount = users.length; 
       var user = User(users.concept); 
-        user.username = 'objective'; 
-      user.roleAtSom = 'time'; 
-      user.roleAtCompany = 'saving'; 
+        user.username = 'tent'; 
+      user.roleAtSom = 'mile'; 
+      user.roleAtCompany = 'call'; 
     var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
     var userCompany = managerModel.companies.random(); 
@@ -304,7 +304,7 @@ void testSomManagerUsers(
  
     test("User update undo and redo", () { 
       var user = managerModel.users.random(); 
-      var action = SetAttributeCommand(session, user, "username", 'message'); 
+      var action = SetAttributeCommand(session, user, "username", 'bank'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -405,9 +405,9 @@ void testSomManagerUsers(
  
       somDomain.startCommandReaction(reaction); 
       var user = User(users.concept); 
-        user.username = 'walking'; 
-      user.roleAtSom = 'highway'; 
-      user.roleAtCompany = 'service'; 
+        user.username = 'agile'; 
+      user.roleAtSom = 'lake'; 
+      user.roleAtCompany = 'children'; 
     var userTenantRole = managerModel.tenantRoles.random(); 
     user.tenantRole = userTenantRole; 
     var userCompany = managerModel.companies.random(); 
@@ -426,7 +426,7 @@ void testSomManagerUsers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, user, "username", 'beer'); 
+        session, user, "username", 'account'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

@@ -214,7 +214,7 @@
               "text/plain": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/UserDto"
                   }
                 }
@@ -222,7 +222,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/UserDto"
                   }
                 }
@@ -230,7 +230,7 @@
               "text/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/UserDto"
                   }
                 }
@@ -437,7 +437,7 @@
               "text/plain": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/CompanyDto"
                   }
                 }
@@ -445,7 +445,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/CompanyDto"
                   }
                 }
@@ -453,7 +453,7 @@
               "text/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
+                  "attributes": {
                     "$ref": "#/components/schemas/CompanyDto"
                   }
                 }
@@ -748,7 +748,7 @@
           },
           "branchIds": {
             "type": "array",
-            "items": {
+            "attributes": {
               "type": "string",
               "format": "uuid"
             },
@@ -790,7 +790,7 @@
           },
           "users": {
             "type": "array",
-            "items": {
+            "attributes": {
               "$ref": "#/components/schemas/UserDto"
             },
             "nullable": true
@@ -872,7 +872,7 @@
           },
           "rules": {
             "type": "array",
-            "items": {
+            "attributes": {
               "$ref": "#/components/schemas/SubscriptionRuleDto"
             },
             "nullable": true,
@@ -908,7 +908,7 @@
         "properties": {
           "subscriptions": {
             "type": "array",
-            "items": {
+            "attributes": {
               "$ref": "#/components/schemas/SubscriptionPlanDto"
             },
             "nullable": true
@@ -937,7 +937,7 @@
           },
           "roles": {
             "type": "array",
-            "items": {
+            "attributes": {
               "$ref": "#/components/schemas/Roles"
             },
             "nullable": true

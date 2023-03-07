@@ -975,13 +975,13 @@ class BranchIds {
   String toRawJson() => json.encode(toJson());
 
   factory BranchIds.fromJson(Map<String, dynamic> json) => BranchIds(
-        items: BranchIdsItems.fromJson(json["items"]),
+        items: BranchIdsItems.fromJson(json["attributes"]),
         nullable: json["nullable"],
         type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
-        "items": items.toJson(),
+        "attributes": items.toJson(),
         "nullable": nullable,
         "type": type,
       };
@@ -1259,13 +1259,13 @@ class Users {
   String toRawJson() => json.encode(toJson());
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
-        items: UsersItems.fromJson(json["items"]),
+        items: UsersItems.fromJson(json["attributes"]),
         nullable: json["nullable"],
         type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
-        "items": items.toJson(),
+        "attributes": items.toJson(),
         "nullable": nullable,
         "type": type,
       };
@@ -1723,13 +1723,13 @@ class RolesClass {
   String toRawJson() => json.encode(toJson());
 
   factory RolesClass.fromJson(Map<String, dynamic> json) => RolesClass(
-        items: RolesItems.fromJson(json["items"]),
+        items: RolesItems.fromJson(json["attributes"]),
         nullable: json["nullable"],
         type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
-        "items": items.toJson(),
+        "attributes": items.toJson(),
         "nullable": nullable,
         "type": type,
       };

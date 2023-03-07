@@ -1,0 +1,26 @@
+{
+  "width": 500,
+  "height": 500,
+  "concepts": [
+    {
+      "name": "StreetDetails",
+      "entry": false,
+      "x": 250,
+      "y": 350,
+      "width": 150,
+      "height": 100,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "details",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "relations": [
+  ]
+}

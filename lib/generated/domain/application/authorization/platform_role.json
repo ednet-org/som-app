@@ -1,0 +1,62 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "User",
+      "to": "PlatformRole",
+      "fromToName": "platformRoles",
+      "fromToMin": "1",
+      "fromToMax": "N",
+      "toFromName": "user",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": false
+    },
+    {
+      "from": "PlatformRole",
+      "to": "Company",
+      "fromToName": "companies",
+      "fromToMin": "0",
+      "fromToMax": "N",
+      "toFromName": "platformRole",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": false
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "PlatformRole",
+      "entry": true,
+      "x": 995,
+      "y": 79,
+      "width": 164,
+      "height": 91,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "value",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

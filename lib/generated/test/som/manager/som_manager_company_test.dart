@@ -129,13 +129,13 @@ void testSomManagerCompanies(
       var companiesCount = companies.length; 
  
       var company = Company(companies.concept); 
-      company.name = 'element'; 
-      company.role = 'executive'; 
-      company.address = 'discount'; 
-      company.uidNumber = 'river'; 
-      company.registrationNumber = 'place'; 
-      company.numberOfEmployees = 'ocean'; 
-      company.websiteUrl = 'office'; 
+      company.name = 'cabinet'; 
+      company.role = 'entertainment'; 
+      company.address = 'children'; 
+      company.uidNumber = 'beans'; 
+      company.registrationNumber = 'line'; 
+      company.numberOfEmployees = 'election'; 
+      company.websiteUrl = 'book'; 
       var added = selectedCompanies.add(company); 
       expect(added, isTrue); 
       expect(companies.length, equals(++companiesCount)); 
@@ -230,8 +230,8 @@ void testSomManagerCompanies(
     test("Update company non id attribute with failure", () { 
       var randomCompany = managerModel.companies.random(); 
       var afterUpdateEntity = randomCompany.copy(); 
-      afterUpdateEntity.name = 'end'; 
-      expect(afterUpdateEntity.name, equals('end')); 
+      afterUpdateEntity.name = 'plaho'; 
+      expect(afterUpdateEntity.name, equals('plaho')); 
       // companies.update can only be used if oid, code or id is set. 
       expect(() => companies.update(randomCompany, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -257,13 +257,13 @@ void testSomManagerCompanies(
     test("company action undo and redo", () { 
       var companyCount = companies.length; 
       var company = Company(companies.concept); 
-        company.name = 'ship'; 
-      company.role = 'consciousness'; 
-      company.address = 'cardboard'; 
-      company.uidNumber = 'lake'; 
-      company.registrationNumber = 'season'; 
-      company.numberOfEmployees = 'dvd'; 
-      company.websiteUrl = 'girl'; 
+        company.name = 'city'; 
+      company.role = 'energy'; 
+      company.address = 'distance'; 
+      company.uidNumber = 'season'; 
+      company.registrationNumber = 'table'; 
+      company.numberOfEmployees = 'tree'; 
+      company.websiteUrl = 'sin'; 
     var companyPlatformRole = managerModel.platformRoles.random(); 
     company.platformRole = companyPlatformRole; 
     var companyTenantRole = managerModel.tenantRoles.random(); 
@@ -292,13 +292,13 @@ void testSomManagerCompanies(
     test("company session undo and redo", () { 
       var companyCount = companies.length; 
       var company = Company(companies.concept); 
-        company.name = 'future'; 
-      company.role = 'car'; 
-      company.address = 'corner'; 
-      company.uidNumber = 'boat'; 
-      company.registrationNumber = 'rice'; 
-      company.numberOfEmployees = 'pattern'; 
-      company.websiteUrl = 'tent'; 
+        company.name = 'craving'; 
+      company.role = 'vacation'; 
+      company.address = 'undo'; 
+      company.uidNumber = 'milk'; 
+      company.registrationNumber = 'health'; 
+      company.numberOfEmployees = 'blue'; 
+      company.websiteUrl = 'table'; 
     var companyPlatformRole = managerModel.platformRoles.random(); 
     company.platformRole = companyPlatformRole; 
     var companyTenantRole = managerModel.tenantRoles.random(); 
@@ -326,7 +326,7 @@ void testSomManagerCompanies(
  
     test("Company update undo and redo", () { 
       var company = managerModel.companies.random(); 
-      var action = SetAttributeCommand(session, company, "name", 'university'); 
+      var action = SetAttributeCommand(session, company, "name", 'top'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -427,13 +427,13 @@ void testSomManagerCompanies(
  
       somDomain.startCommandReaction(reaction); 
       var company = Company(companies.concept); 
-        company.name = 'tent'; 
-      company.role = 'crisis'; 
-      company.address = 'saving'; 
-      company.uidNumber = 'house'; 
-      company.registrationNumber = 'circle'; 
-      company.numberOfEmployees = 'tape'; 
-      company.websiteUrl = 'accomodation'; 
+        company.name = 'notch'; 
+      company.role = 'picture'; 
+      company.address = 'organization'; 
+      company.uidNumber = 'capacity'; 
+      company.registrationNumber = 'universe'; 
+      company.numberOfEmployees = 'office'; 
+      company.websiteUrl = 'crisis'; 
     var companyPlatformRole = managerModel.platformRoles.random(); 
     company.platformRole = companyPlatformRole; 
     var companyTenantRole = managerModel.tenantRoles.random(); 
@@ -455,7 +455,7 @@ void testSomManagerCompanies(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, company, "name", 'home'); 
+        session, company, "name", 'text'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 

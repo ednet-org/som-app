@@ -1,0 +1,84 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "User",
+      "to": "Company",
+      "fromToName": "company",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "employees",
+      "toFromMin": "0",
+      "toFromMax": "N",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": true,
+      "toFromId": false
+    },
+    {
+      "from": "User",
+      "to": "PhoneNumber",
+      "fromToName": "phoneNumber",
+      "fromToMin": "0",
+      "fromToMax": "1",
+      "toFromName": "owner",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": true,
+      "toFromId": false
+    },
+    {
+      "from": "User",
+      "to": "Email",
+      "fromToName": "email",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "owner",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": true,
+      "toFromId": false
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "User",
+      "entry": true,
+      "x": 545,
+      "y": 164,
+      "width": 157,
+      "height": 125,
+      "attributes": [
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "username",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "roleAtSom",
+          "type": "CompanyRoleAtSom",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "roleAtCompany",
+          "type": "UserRoleAtCompany",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

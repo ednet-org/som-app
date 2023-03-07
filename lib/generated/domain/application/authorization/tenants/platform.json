@@ -1,0 +1,45 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "Platform",
+      "to": "Company",
+      "fromToName": "companies",
+      "fromToMin": "0",
+      "fromToMax": "N",
+      "toFromName": "platform",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": true
+    },
+    {
+      "from": "Platform",
+      "to": "PlatformRole",
+      "fromToName": "roles",
+      "fromToMin": "0",
+      "fromToMax": "N",
+      "toFromName": "platform",
+      "toFromMin": "1",
+      "toFromMax": "1",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": true
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "Platform",
+      "entry": true,
+      "x": 995,
+      "y": 79,
+      "width": 164,
+      "height": 91,
+      "attributes": []
+    }
+  ]
+}

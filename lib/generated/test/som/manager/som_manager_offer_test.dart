@@ -129,11 +129,11 @@ void testSomManagerOffers(
       var offersCount = offers.length; 
  
       var offer = Offer(offers.concept); 
-      offer.description = 'darts'; 
-      offer.deliveryTime = 'hall'; 
-      offer.status = 'circle'; 
+      offer.description = 'advisor'; 
+      offer.deliveryTime = 'university'; 
+      offer.status = 'celebration'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 6.593843594517434; 
+      offer.price = 42.6498570999543; 
       var added = selectedOffers.add(offer); 
       expect(added, isTrue); 
       expect(offers.length, equals(++offersCount)); 
@@ -228,8 +228,8 @@ void testSomManagerOffers(
     test("Update offer non id attribute with failure", () { 
       var randomOffer = managerModel.offers.random(); 
       var afterUpdateEntity = randomOffer.copy(); 
-      afterUpdateEntity.description = 'executive'; 
-      expect(afterUpdateEntity.description, equals('executive')); 
+      afterUpdateEntity.description = 'judge'; 
+      expect(afterUpdateEntity.description, equals('judge')); 
       // offers.update can only be used if oid, code or id is set. 
       expect(() => offers.update(randomOffer, afterUpdateEntity), throwsA(isA<Exception>())); 
     }); 
@@ -253,11 +253,11 @@ void testSomManagerOffers(
     test("offer action undo and redo", () { 
       var offerCount = offers.length; 
       var offer = Offer(offers.concept); 
-        offer.description = 'left'; 
-      offer.deliveryTime = 'effort'; 
-      offer.status = 'big'; 
+        offer.description = 'drink'; 
+      offer.deliveryTime = 'output'; 
+      offer.status = 'cup'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 50.60564983984596; 
+      offer.price = 85.90426730183653; 
     var offerProvider = managerModel.offerProviders.random(); 
     offer.provider = offerProvider; 
     var offerInquiry = managerModel.inquiries.random(); 
@@ -283,11 +283,11 @@ void testSomManagerOffers(
     test("offer session undo and redo", () { 
       var offerCount = offers.length; 
       var offer = Offer(offers.concept); 
-        offer.description = 'phone'; 
-      offer.deliveryTime = 'up'; 
-      offer.status = 'executive'; 
+        offer.description = 'selfdo'; 
+      offer.deliveryTime = 'energy'; 
+      offer.status = 'auto'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 7.387202545218052; 
+      offer.price = 58.18739793923; 
     var offerProvider = managerModel.offerProviders.random(); 
     offer.provider = offerProvider; 
     var offerInquiry = managerModel.inquiries.random(); 
@@ -312,7 +312,7 @@ void testSomManagerOffers(
  
     test("Offer update undo and redo", () { 
       var offer = managerModel.offers.random(); 
-      var action = SetAttributeCommand(session, offer, "description", 'accomodation'); 
+      var action = SetAttributeCommand(session, offer, "description", 'time'); 
       action.doIt(); 
  
       session.past.undo(); 
@@ -413,11 +413,11 @@ void testSomManagerOffers(
  
       somDomain.startCommandReaction(reaction); 
       var offer = Offer(offers.concept); 
-        offer.description = 'pencil'; 
-      offer.deliveryTime = 'cash'; 
-      offer.status = 'teaching'; 
+        offer.description = 'hunting'; 
+      offer.deliveryTime = 'circle'; 
+      offer.status = 'entertainment'; 
       offer.expirationDate = new DateTime.now(); 
-      offer.price = 40.45854296212307; 
+      offer.price = 6.593958969122681; 
     var offerProvider = managerModel.offerProviders.random(); 
     offer.provider = offerProvider; 
     var offerInquiry = managerModel.inquiries.random(); 
@@ -436,7 +436,7 @@ void testSomManagerOffers(
       expect(reaction.reactedOnAdd, isTrue); 
  
       var setAttributeCommand = SetAttributeCommand( 
-        session, offer, "description", 'brad'); 
+        session, offer, "description", 'cable'); 
       setAttributeCommand.doIt(); 
       expect(reaction.reactedOnUpdate, isTrue); 
       somDomain.cancelCommandReaction(reaction); 
