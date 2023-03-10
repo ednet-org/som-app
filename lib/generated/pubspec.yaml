@@ -3,7 +3,7 @@ version: 0.0.1
 
 description: som_manager application that uses ednet_core for its model.
 
-homepage: https://ednet.dev/
+homepage: https://som.at/
 
 environment:
   sdk: '>=2.18.6 <3.0.0'

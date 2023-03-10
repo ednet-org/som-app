@@ -96,7 +96,8 @@ dependencies:
     path: lib/generated
 
   ednet_core:
-    path: ../ednet/libs/cms/packages/ednet_core
+    path: ../../ednet/cms/packages/core
+
   #  #    git:
   #  #      url: git@github.com:ednet-dev/ednet_core.git
   #  #      ref: main
