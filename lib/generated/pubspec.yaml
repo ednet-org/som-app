@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   ednet_core:
-    path: ../../../../ednet/ednet_cms/packages/core
+    path: ../../../../ednet/cms/packages/core
   ednet_core_default_app:
     path: ../../../../ednet/experiments/dartling/ednet_core_default_app
   
