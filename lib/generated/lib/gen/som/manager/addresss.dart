@@ -6,9 +6,6 @@ abstract class AddressGen extends Entity<Address> {
  
   AddressGen(Concept concept) { 
     this.concept = concept; 
-    Concept companyConcept = concept.model.concepts.singleWhereCode("Company") as Concept; 
-    assert(companyConcept != null); 
-    setChild("companies", Companies(companyConcept)); 
   } 
  
   Reference get countryReference => getReference("country") as Reference; 
@@ -28,8 +25,6 @@ abstract class AddressGen extends Entity<Address> {
   
   String get zip => getAttribute("zip"); 
   void set zip(String a) { setAttribute("zip", a); } 
-  
-  Companies get companies => getChild("companies") as Companies; 
   
   Address newEntity() => Address(concept); 
   Addresss newEntities() => Addresss(concept); 

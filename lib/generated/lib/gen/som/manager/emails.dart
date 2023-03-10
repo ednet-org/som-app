@@ -14,9 +14,6 @@ abstract class EmailGen extends Entity<Email> {
   User get owner => getParent("owner") as User; 
   void set owner(User p) { setParent("owner", p); } 
   
-  String get value => getAttribute("value"); 
-  void set value(String a) { setAttribute("value", a); } 
-  
   Email newEntity() => Email(concept); 
   Emails newEntities() => Emails(concept); 
   

@@ -6,13 +6,16 @@ abstract class PlatformRoleGen extends Entity<PlatformRole> {
  
   PlatformRoleGen(Concept concept) { 
     this.concept = concept; 
+    Concept companyConcept = concept.model.concepts.singleWhereCode("Company") as Concept; 
+    assert(companyConcept != null); 
+    setChild("companies", Companies(companyConcept)); 
   } 
  
-  Reference get companyReference => getReference("company") as Reference; 
-  void set companyReference(Reference reference) { setReference("company", reference); } 
+  Reference get userReference => getReference("user") as Reference; 
+  void set userReference(Reference reference) { setReference("user", reference); } 
   
-  Company get company => getParent("company") as Company; 
-  void set company(Company p) { setParent("company", p); } 
+  User get user => getParent("user") as User; 
+  void set user(User p) { setParent("user", p); } 
   
   Reference get platformReference => getReference("platform") as Reference; 
   void set platformReference(Reference reference) { setReference("platform", reference); } 
@@ -25,6 +28,8 @@ abstract class PlatformRoleGen extends Entity<PlatformRole> {
   
   String get value => getAttribute("value"); 
   void set value(String a) { setAttribute("value", a); } 
+  
+  Companies get companies => getChild("companies") as Companies; 
   
   PlatformRole newEntity() => PlatformRole(concept); 
   PlatformRoles newEntities() => PlatformRoles(concept); 

@@ -6,20 +6,20 @@ abstract class CompanyGen extends Entity<Company> {
  
   CompanyGen(Concept concept) { 
     this.concept = concept; 
-    Concept registrationConcept = concept.model.concepts.singleWhereCode("Registration") as Concept; 
-    assert(registrationConcept != null); 
-    setChild("registration", Registrations(registrationConcept)); 
-    Concept userConcept = concept.model.concepts.singleWhereCode("User") as Concept; 
-    assert(userConcept != null); 
-    setChild("employees", Users(userConcept)); 
-    Concept platformRoleConcept = concept.model.concepts.singleWhereCode("PlatformRole") as Concept; 
-    assert(platformRoleConcept != null); 
-    setChild("platformRoles", PlatformRoles(platformRoleConcept)); 
     Concept categoryConcept = concept.model.concepts.singleWhereCode("Category") as Concept; 
     assert(categoryConcept != null); 
     setChild("branches", Categories(categoryConcept)); 
+    Concept userConcept = concept.model.concepts.singleWhereCode("User") as Concept; 
+    assert(userConcept != null); 
+    setChild("employees", Users(userConcept)); 
   } 
  
+  Reference get platformRoleReference => getReference("platformRole") as Reference; 
+  void set platformRoleReference(Reference reference) { setReference("platformRole", reference); } 
+  
+  PlatformRole get platformRole => getParent("platformRole") as PlatformRole; 
+  void set platformRole(PlatformRole p) { setParent("platformRole", p); } 
+  
   Reference get tenantRoleReference => getReference("tenantRole") as Reference; 
   void set tenantRoleReference(Reference reference) { setReference("tenantRole", reference); } 
   
@@ -32,26 +32,14 @@ abstract class CompanyGen extends Entity<Company> {
   Platform get platform => getParent("platform") as Platform; 
   void set platform(Platform p) { setParent("platform", p); } 
   
-  Reference get typeReference => getReference("type") as Reference; 
-  void set typeReference(Reference reference) { setReference("type", reference); } 
-  
-  CompanyType get type => getParent("type") as CompanyType; 
-  void set type(CompanyType p) { setParent("type", p); } 
-  
-  Reference get sizeReference => getReference("size") as Reference; 
-  void set sizeReference(Reference reference) { setReference("size", reference); } 
-  
-  CompanySize get size => getParent("size") as CompanySize; 
-  void set size(CompanySize p) { setParent("size", p); } 
-  
-  Reference get addressReference => getReference("address") as Reference; 
-  void set addressReference(Reference reference) { setReference("address", reference); } 
-  
-  Address get address => getParent("address") as Address; 
-  void set address(Address p) { setParent("address", p); } 
-  
   String get name => getAttribute("name"); 
   void set name(String a) { setAttribute("name", a); } 
+  
+  String get role => getAttribute("role"); 
+  void set role(String a) { setAttribute("role", a); } 
+  
+  String get address => getAttribute("address"); 
+  void set address(String a) { setAttribute("address", a); } 
   
   String get uidNumber => getAttribute("uidNumber"); 
   void set uidNumber(String a) { setAttribute("uidNumber", a); } 
@@ -65,13 +53,9 @@ abstract class CompanyGen extends Entity<Company> {
   String get websiteUrl => getAttribute("websiteUrl"); 
   void set websiteUrl(String a) { setAttribute("websiteUrl", a); } 
   
-  Registrations get registration => getChild("registration") as Registrations; 
+  Categories get branches => getChild("branches") as Categories; 
   
   Users get employees => getChild("employees") as Users; 
-  
-  PlatformRoles get platformRoles => getChild("platformRoles") as PlatformRoles; 
-  
-  Categories get branches => getChild("branches") as Categories; 
   
   Company newEntity() => Company(concept); 
   Companies newEntities() => Companies(concept); 

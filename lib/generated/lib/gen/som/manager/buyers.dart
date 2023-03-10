@@ -11,6 +11,12 @@ abstract class BuyerGen extends Entity<Buyer> {
     setChild("inquiries", Inquiries(inquiryConcept)); 
   } 
  
+  Reference get registrationReference => getReference("registration") as Reference; 
+  void set registrationReference(Reference reference) { setReference("registration", reference); } 
+  
+  Registration get registration => getParent("registration") as Registration; 
+  void set registration(Registration p) { setParent("registration", p); } 
+  
   String get user => getAttribute("user"); 
   void set user(String a) { setAttribute("user", a); } 
   

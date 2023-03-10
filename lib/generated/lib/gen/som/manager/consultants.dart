@@ -8,6 +8,12 @@ abstract class ConsultantGen extends Entity<Consultant> {
     this.concept = concept; 
   } 
  
+  Reference get platformReference => getReference("platform") as Reference; 
+  void set platformReference(Reference reference) { setReference("platform", reference); } 
+  
+  Platform get platform => getParent("platform") as Platform; 
+  void set platform(Platform p) { setParent("platform", p); } 
+  
   String get user => getAttribute("user"); 
   void set user(String a) { setAttribute("user", a); } 
   

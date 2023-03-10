@@ -11,6 +11,12 @@ abstract class OfferProviderGen extends Entity<OfferProvider> {
     setChild("offers", Offers(offerConcept)); 
   } 
  
+  Reference get registrationReference => getReference("registration") as Reference; 
+  void set registrationReference(Reference reference) { setReference("registration", reference); } 
+  
+  Registration get registration => getParent("registration") as Registration; 
+  void set registration(Registration p) { setParent("registration", p); } 
+  
   String get company => getAttribute("company"); 
   void set company(String a) { setAttribute("company", a); } 
   

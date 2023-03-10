@@ -44,25 +44,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     part "som/manager/json/data.dart";
     part "som/manager/json/model.dart";
     
-part "som/manager/offers.dart";
-
-
-part "som/manager/offer_providers.dart";
-
-
-part "som/manager/attachments.dart";
-
-
-part "som/manager/categories.dart";
+part "som/manager/emails.dart";
 
 
 part "som/manager/phone_numbers.dart";
 
 
-part "som/manager/emails.dart";
-
-
-part "som/manager/countries.dart";
+part "som/manager/street_detailss.dart";
 
 
 part "som/manager/addresss.dart";
@@ -71,7 +59,49 @@ part "som/manager/addresss.dart";
 part "som/manager/z_i_ps.dart";
 
 
-part "som/manager/registrations.dart";
+part "som/manager/streets.dart";
+
+
+part "som/manager/countries.dart";
+
+
+part "som/manager/attachments.dart";
+
+
+part "som/manager/categories.dart";
+
+
+part "som/manager/offer_providers.dart";
+
+
+part "som/manager/platform_roles.dart";
+
+
+part "som/manager/consultants.dart";
+
+
+part "som/manager/buyers.dart";
+
+
+part "som/manager/tenant_roles.dart";
+
+
+part "som/manager/platforms.dart";
+
+
+part "som/manager/companies.dart";
+
+
+part "som/manager/company_role_at_soms.dart";
+
+
+part "som/manager/company_types.dart";
+
+
+part "som/manager/company_sizes.dart";
+
+
+part "som/manager/users.dart";
 
 
 part "som/manager/inquiries.dart";
@@ -83,52 +113,19 @@ part "som/manager/inquiry_statuss.dart";
 part "som/manager/provider_criterias.dart";
 
 
-part "som/manager/users.dart";
+part "som/manager/registrations.dart";
 
 
-part "som/manager/platform_roles.dart";
-
-
-part "som/manager/tenant_roles.dart";
-
-
-part "som/manager/consultants.dart";
-
-
-part "som/manager/buyers.dart";
-
-
-part "som/manager/platforms.dart";
-
-
-part "som/manager/companies.dart";
-
-
-part "som/manager/company_types.dart";
-
-
-part "som/manager/company_sizes.dart";
+part "som/manager/offers.dart";
 
     
-part "gen/som/manager/offers.dart";
-
-
-part "gen/som/manager/offer_providers.dart";
-
-
-part "gen/som/manager/attachments.dart";
-
-
-part "gen/som/manager/categories.dart";
+part "gen/som/manager/emails.dart";
 
 
 part "gen/som/manager/phone_numbers.dart";
 
 
-part "gen/som/manager/emails.dart";
-
-
-part "gen/som/manager/countries.dart";
+part "gen/som/manager/street_detailss.dart";
 
 
 part "gen/som/manager/addresss.dart";
@@ -137,7 +134,49 @@ part "gen/som/manager/addresss.dart";
 part "gen/som/manager/z_i_ps.dart";
 
 
-part "gen/som/manager/registrations.dart";
+part "gen/som/manager/streets.dart";
+
+
+part "gen/som/manager/countries.dart";
+
+
+part "gen/som/manager/attachments.dart";
+
+
+part "gen/som/manager/categories.dart";
+
+
+part "gen/som/manager/offer_providers.dart";
+
+
+part "gen/som/manager/platform_roles.dart";
+
+
+part "gen/som/manager/consultants.dart";
+
+
+part "gen/som/manager/buyers.dart";
+
+
+part "gen/som/manager/tenant_roles.dart";
+
+
+part "gen/som/manager/platforms.dart";
+
+
+part "gen/som/manager/companies.dart";
+
+
+part "gen/som/manager/company_role_at_soms.dart";
+
+
+part "gen/som/manager/company_types.dart";
+
+
+part "gen/som/manager/company_sizes.dart";
+
+
+part "gen/som/manager/users.dart";
 
 
 part "gen/som/manager/inquiries.dart";
@@ -149,31 +188,10 @@ part "gen/som/manager/inquiry_statuss.dart";
 part "gen/som/manager/provider_criterias.dart";
 
 
-part "gen/som/manager/users.dart";
+part "gen/som/manager/registrations.dart";
 
 
-part "gen/som/manager/platform_roles.dart";
-
-
-part "gen/som/manager/tenant_roles.dart";
-
-
-part "gen/som/manager/consultants.dart";
-
-
-part "gen/som/manager/buyers.dart";
-
-
-part "gen/som/manager/platforms.dart";
-
-
-part "gen/som/manager/companies.dart";
-
-
-part "gen/som/manager/company_types.dart";
-
-
-part "gen/som/manager/company_sizes.dart";
+part "gen/som/manager/offers.dart";
 
     
   
