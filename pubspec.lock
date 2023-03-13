@@ -382,14 +382,14 @@ packages:
       path: "../../ednet/cms/packages/ednet_cms"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3-dev.1"
   ednet_code_generation:
     dependency: transitive
     description:
       path: "../../ednet/cms/packages/ednet_code_generation"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   ednet_component_library:
     dependency: "direct main"
     description:
