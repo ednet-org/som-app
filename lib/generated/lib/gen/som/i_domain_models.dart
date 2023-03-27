@@ -6,7 +6,7 @@ class SomModels extends DomainModels {
   SomModels(Domain domain) : super(domain) {
     // fromJsonToModel function from ednet_core/lib/domain/model/transfer.json.dart
 
-    Model model = fromJsonToModel(somManagerModelJson, domain, "Manager", '');
+    Model model = fromJsonToModel(somManagerModelJson, domain, "Manager", {});
     ManagerModel managerModel = ManagerModel(model);
     add(managerModel);
   }

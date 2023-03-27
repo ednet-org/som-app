@@ -400,7 +400,7 @@ packages:
     source: git
     version: "0.0.1"
   ednet_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../../ednet/cms/packages/core"
       relative: true

@@ -95,6 +95,8 @@ dependencies:
   som_manager:
     path: lib/generated
 
+  ednet_core:
+    path: ../../ednet/cms/packages/core
   ednet_cms:
     path: ../../ednet/cms/packages/ednet_cms
 

@@ -12,7 +12,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
-import 'package:som_manager/som_manager.dart';
+import 'package:som_manager/som_manager.dart' as som;
+import 'package:ednet_core/ednet_core.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
@@ -186,35 +187,36 @@ Future<void> initTheming() async {
 
 //endregion
 void initDomainModel() async {
-  var repository = Repository();
-  SomDomain somDomain = repository.getDomainModels("Som") as SomDomain;
-  assert(somDomain != null);
-  ManagerModel managerModel =
-      somDomain.getModelEntries("Manager") as ManagerModel;
-  assert(managerModel != null);
-  var companies = managerModel.companies;
-
-  print(companies.length);
-
-  // Load the data from the JSON file if it exists
-  final dbFile = File('db.json');
-  if (await dbFile.exists()) {
-    final dbData = await dbFile.readAsString();
-    managerModel.fromJson(dbData);
-  }
-
-  // Perform some operations on the domain models
-  // For example:
-  // final oid = Oid.ts(1678097187526);
-  // final existingProvider = managerModel.providers.singleWhereOid(oid);
-  // final newProvider = SomProvider(managerModel.providers.concept);
-  // managerModel.providers.add(newProvider);
-
-  final jsonString = json.encode(managerModel.toJsonMap());
-  // Save the updated data to the JSON file
-  if (await dbFile.exists()) {
-    await dbFile.writeAsString(jsonString);
-  } else {
-    await dbFile.create().then((_) => dbFile.writeAsString(jsonString));
-  }
+  // var repository = som.Repository();
+  // som.SomDomain somDomain = repository.getDomainModels("Som") as som.SomDomain;
+  // assert(somDomain != null);
+  // som.ManagerModel managerModel =
+  //     somDomain.getModelEntries("Manager") as som.ManagerModel;
+  // assert(managerModel != null);
+  // var companies = managerModel.companies;
+  //
+  // print(companies.length);
+  //
+  // // Load the data from the JSON file if it exists
+  // final dbFile = File('db.json');
+  // if (await dbFile.exists()) {
+  //   final dbData = await dbFile.readAsString();
+  //   managerModel.fromJson(dbData);
+  // }
+  //
+  // // Perform some operations on the domain models
+  // // For example:
+  // // final oid = Oid.ts(1678097187526);
+  // final companyConcept = managerModel.companies.concept;
+  // final newCompany = som.Company(companyConcept);
+  // newCompany.name = "NewCompany";
+  // managerModel.companies.add(newCompany);
+  //
+  // final jsonString = json.encode(managerModel.toJsonMap());
+  // // Save the updated data to the JSON file
+  // if (await dbFile.exists()) {
+  //   await dbFile.writeAsString(jsonString);
+  // } else {
+  //   await dbFile.create().then((_) => dbFile.writeAsString(jsonString));
+  // }
 }
