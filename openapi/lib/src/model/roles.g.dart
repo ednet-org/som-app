@@ -48,7 +48,7 @@ class _$RolesMeta {
   BuiltSet<Roles> get values => _$values;
 }
 
-abstract class _$RolesMixin {
+mixin class _$RolesMixin {
   // ignore: non_constant_identifier_names
   _$RolesMeta get Roles => const _$RolesMeta();
 }

@@ -1,19 +1,15 @@
 //region imports
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:beamer/beamer.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
-import 'package:ednet_component_library/ednet_component_library.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
-import 'package:som_manager/som_manager.dart' as som;
-import 'package:ednet_core/ednet_core.dart';
 import 'package:provider/provider.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
@@ -181,8 +177,8 @@ parseJson(String text) {
 }
 
 Future<void> initTheming() async {
-  darkTheme = await EdsAppTheme.eds["dark"];
-  lightTheme = await EdsAppTheme.eds["light"];
+  // darkTheme = await EdsAppTheme.eds["dark"];
+  // lightTheme = await EdsAppTheme.eds["light"];
 }
 
 //endregion

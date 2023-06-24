@@ -4,7 +4,7 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dependencies:
   url_launcher: ^6.1.8
   nb_utils: ^5.0.0
   animations: ^2.0.7
-  intl: ^0.17.0
+  intl: ^0.18.0
   http: ^0.13.5
   html: ^0.15.1
   share: ^2.0.4
@@ -87,18 +87,13 @@ dependencies:
   google_mobile_ads: ^2.3.0
 
   # refactor to ednet_design_system
-  ednet_component_library:
-    git:
-      url: git@gitlab.com:ednet/supernova-material.git
-      ref: design_system
-
   som_manager:
     path: lib/generated
 
   ednet_core:
-    path: ../../ednet/cms/packages/core
+    path: ../cms/packages/core
   ednet_cms:
-    path: ../../ednet/cms/packages/ednet_cms
+    path: ../cms/packages/ednet_cms
 
   #  #    git:
   #  #      url: git@github.com:ednet-dev/ednet_core.git
@@ -126,6 +121,7 @@ dependencies:
   jwt_decode: ^0.3.1
   connectivity:
   readmore: ^2.2.0
+  connectivity_plus_web: ^1.2.5
 
 dev_dependencies:
   flutter_lints: ^2.0.1

@@ -54,7 +54,7 @@ class _$RestrictionTypeMeta {
   BuiltSet<RestrictionType> get values => _$values;
 }
 
-abstract class _$RestrictionTypeMixin {
+mixin class _$RestrictionTypeMixin {
   // ignore: non_constant_identifier_names
   _$RestrictionTypeMeta get RestrictionType => const _$RestrictionTypeMeta();
 }

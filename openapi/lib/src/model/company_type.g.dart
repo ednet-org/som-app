@@ -34,7 +34,7 @@ class _$CompanyTypeMeta {
   BuiltSet<CompanyType> get values => _$values;
 }
 
-abstract class _$CompanyTypeMixin {
+mixin class _$CompanyTypeMixin {
   // ignore: non_constant_identifier_names
   _$CompanyTypeMeta get CompanyType => const _$CompanyTypeMeta();
 }

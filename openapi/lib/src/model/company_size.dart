@@ -9,7 +9,6 @@ import 'package:built_value/serializer.dart';
 part 'company_size.g.dart';
 
 class CompanySize extends EnumClass {
-
   @BuiltValueEnumConst(wireNumber: 0)
   static const CompanySize number0 = _$number0;
   @BuiltValueEnumConst(wireNumber: 1)
@@ -27,7 +26,7 @@ class CompanySize extends EnumClass {
 
   static Serializer<CompanySize> get serializer => _$companySizeSerializer;
 
-  const CompanySize._(String name): super(name);
+  const CompanySize._(String name) : super(name);
 
   static BuiltSet<CompanySize> get values => _$values;
   static CompanySize valueOf(String name) => _$valueOf(name);
@@ -40,4 +39,3 @@ class CompanySize extends EnumClass {
 ///
 /// Trigger mixin generation by writing a line like this one next to your enum.
 abstract class CompanySizeMixin = Object with _$CompanySizeMixin;
-

@@ -34,7 +34,7 @@ class _$PaymentIntervalMeta {
   BuiltSet<PaymentInterval> get values => _$values;
 }
 
-abstract class _$PaymentIntervalMixin {
+mixin class _$PaymentIntervalMixin {
   // ignore: non_constant_identifier_names
   _$PaymentIntervalMeta get PaymentInterval => const _$PaymentIntervalMeta();
 }
