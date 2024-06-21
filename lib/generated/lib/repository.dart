@@ -4,7 +4,7 @@ part of som_manager;
  
 class Repository extends CoreRepository { 
  
-  static const REPOSITORY = "Repository"; 
+  static const REPOSITORY = "Repository";
  
   Repository([String code=REPOSITORY]) : super(code) { 
     var domain = Domain("Som"); 

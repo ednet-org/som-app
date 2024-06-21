@@ -57,14 +57,14 @@ class ManagerModel extends ManagerEntries {
     initPlatforms();
     initTenantRoles();
     initRegistrations();
+    initBuyers();
     initInquiries();
     initOfferProviders();
-    initBuyers();
     initConsultants();
     initUsers();
     initPlatformRoles();
-    initOffers();
     initCompanies();
+    initOffers();
   }
 
   void initOfferProviders() {

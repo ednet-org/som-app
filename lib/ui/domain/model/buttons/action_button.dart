@@ -34,7 +34,7 @@ class ActionButton extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
             child: Text(
               textContent,
-              style: Theme.of(context).textTheme.button?.copyWith(
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   // backgroundColor: primary,
                   // color: onPrimary,
                   ),
