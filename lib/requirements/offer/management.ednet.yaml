@@ -1,0 +1,230 @@
+domain: offer
+model: management
+concepts:
+  - name: Email
+    attributes:
+      - name: emailId
+        category: identifier
+        essential: true
+      - name: address
+        category: required
+        essential: true
+
+  - name: PhoneNumber
+    attributes:
+      - name: number
+        essential: true
+
+  - name: Address
+    attributes:
+      - name: number
+
+  - name: ZIP
+    attributes:
+      - name: code
+        essential: true
+
+  - name: Street
+    attributes:
+      - name: name
+        essential: true
+      - name: additionalDetails
+
+  - name: Country
+    attributes:
+      - name: name
+        essential: true
+
+  - name: City
+    attributes:
+      - name: name
+        essential: true
+
+  - name: Attachment
+    attributes:
+      - name: name
+        essential: true
+      - name: type
+        essential: true
+      - name: data
+        type: Uint8List
+
+  - name: Category
+    
+    attributes:
+      - sequence: 1
+        
+        name: title
+        
+        essential: true
+
+      - sequence: 2
+        
+        name: description
+        
+        essential: true
+
+  - name: OfferProvider
+    entry: true
+    attributes:
+      - sequence: 1
+        
+        name: company
+        type: Company
+
+
+      - sequence: 1
+        name: user
+        type: User
+        essential: true
+
+
+  - name: PlatformRole
+    entry: true
+    attributes:
+      - sequence: 1
+        
+        name: name
+        
+        essential: true
+  - name: User
+    entry: true
+    attributes:
+      - sequence: 2
+        
+        name: username
+        
+        essential: true
+
+      - sequence: 4
+        
+        name: roleAtSom
+        type: CompanyRoleAtSom
+        essential: true
+
+      - sequence: 5
+        
+        name: roleAtCompany
+        type: UserRoleAtCompany
+        essential: true
+
+  - name: Inquiry
+    entry: true
+    attributes:
+      - sequence: 2
+        
+        name: title
+        
+        essential: true
+
+      - sequence: 3
+        
+        name: description
+        
+        essential: true
+
+      - sequence: 4
+        
+        name: category
+        
+        essential: true
+
+      - sequence: 5
+        
+        name: branch
+        
+        essential: true
+
+      - sequence: 6
+        
+        name: publishingDate
+        type: DateTime
+        essential: true
+
+      - sequence: 7
+        
+        name: expirationDate
+        type: DateTime
+        essential: true
+
+      - sequence: 9
+        
+        name: deliveryLocation
+        
+        essential: true
+
+      - sequence: 14
+        name: attachments
+        
+        type: Attachments
+        essential: true
+
+  - name: InquiryStatus
+    
+    attributes:
+      - sequence: 1
+        category: identifier
+        name: status
+        
+        essential: true
+
+  - name: ProviderCriteria
+    
+    attributes:
+      - sequence: 1
+        
+        name: deliveryLocation
+        type: Address
+        essential: true
+
+      - sequence: 2
+        
+        name: radius
+        type: int
+        essential: true
+
+      - sequence: 3
+        
+        name: companyType
+        type: CompanyType
+        essential: true
+
+      - sequence: 4
+        
+        name: companySize
+        type: CompanySize
+        essential: true
+
+  - name: Registration
+    entry: true
+    attributes:
+      - sequence: 1
+        
+        name: company
+        type: Company
+        essential: true
+
+      - sequence: 2
+        
+        name: user
+        type: User
+        essential: true
+
+      - sequence: 3
+        
+        name: platformRole
+        type: PlatformRole
+        essential: true
+
+  - name: Offer
+    entry: true
+    attributes:
+      - sequence: 4
+        
+        name: description
+
+
+
+      -
+
+
