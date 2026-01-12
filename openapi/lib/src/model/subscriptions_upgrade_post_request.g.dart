@@ -13,13 +13,9 @@ class _$SubscriptionsUpgradePostRequest
 
   factory _$SubscriptionsUpgradePostRequest(
           [void Function(SubscriptionsUpgradePostRequestBuilder)? updates]) =>
-      (new SubscriptionsUpgradePostRequestBuilder()..update(updates))._build();
+      (SubscriptionsUpgradePostRequestBuilder()..update(updates))._build();
 
-  _$SubscriptionsUpgradePostRequest._({required this.planId}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        planId, r'SubscriptionsUpgradePostRequest', 'planId');
-  }
-
+  _$SubscriptionsUpgradePostRequest._({required this.planId}) : super._();
   @override
   SubscriptionsUpgradePostRequest rebuild(
           void Function(SubscriptionsUpgradePostRequestBuilder) updates) =>
@@ -27,7 +23,7 @@ class _$SubscriptionsUpgradePostRequest
 
   @override
   SubscriptionsUpgradePostRequestBuilder toBuilder() =>
-      new SubscriptionsUpgradePostRequestBuilder()..replace(this);
+      SubscriptionsUpgradePostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -76,7 +72,6 @@ class SubscriptionsUpgradePostRequestBuilder
 
   @override
   void replace(SubscriptionsUpgradePostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionsUpgradePostRequest;
   }
 
@@ -90,7 +85,7 @@ class SubscriptionsUpgradePostRequestBuilder
 
   _$SubscriptionsUpgradePostRequest _build() {
     final _$result = _$v ??
-        new _$SubscriptionsUpgradePostRequest._(
+        _$SubscriptionsUpgradePostRequest._(
           planId: BuiltValueNullFieldError.checkNotNull(
               planId, r'SubscriptionsUpgradePostRequest', 'planId'),
         );

@@ -15,17 +15,18 @@ Future<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _listCompanies(RequestContext context) async {
-  final companies = context.read<CompanyRepository>().listAll();
+  final companies = await context.read<CompanyRepository>().listAll();
   final filterType = context.request.uri.queryParameters['type'];
   final body = companies
       .where((company) => filterType == null || company.type == filterType)
       .map((company) => {
+            'id': company.id,
             'name': company.name,
             'address': company.address.toJson(),
             'uidNr': company.uidNr,
             'registrationNr': company.registrationNr,
             'companySize': companySizeToWire(company.companySize),
-            'type': company.type == 'provider' ? 1 : 0,
+            'type': companyTypeToWire(company.type),
             'websiteUrl': company.websiteUrl,
           })
       .toList();

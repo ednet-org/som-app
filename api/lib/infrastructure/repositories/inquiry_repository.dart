@@ -52,7 +52,8 @@ class InquiryRepository {
     if (status != null) {
       query = query.eq('status', status);
     }
-    final rows = await query.order('created_at', ascending: false) as List<dynamic>;
+    final rows =
+        await query.order('created_at', ascending: false) as List<dynamic>;
     return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
@@ -106,7 +107,9 @@ class InquiryRepository {
       status: row['status'] as String,
       branchId: row['branch_id'] as String,
       categoryId: row['category_id'] as String,
-      productTags: decodeJsonList(row['product_tags_json']).map((e) => e.toString()).toList(),
+      productTags: decodeJsonList(row['product_tags_json'])
+          .map((e) => e.toString())
+          .toList(),
       deadline: parseDate(row['deadline']),
       deliveryZips: decodeStringList(row['delivery_zips']),
       numberOfProviders: row['number_of_providers'] as int,

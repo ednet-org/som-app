@@ -33,7 +33,8 @@ class OfferRepository {
   }
 
   Future<OfferRecord?> findById(String id) async {
-    final rows = await _client.from('offers').select().eq('id', id) as List<dynamic>;
+    final rows =
+        await _client.from('offers').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }

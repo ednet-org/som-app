@@ -11,7 +11,6 @@ import 'package:openapi/src/auth/bearer_auth.dart';
 import 'package:openapi/src/auth/oauth.dart';
 import 'package:openapi/src/api/ads_api.dart';
 import 'package:openapi/src/api/auth_api.dart';
-import 'package:openapi/src/api/authentication_api.dart';
 import 'package:openapi/src/api/branches_api.dart';
 import 'package:openapi/src/api/companies_api.dart';
 import 'package:openapi/src/api/consultants_api.dart';
@@ -37,8 +36,8 @@ class Openapi {
         this.dio = dio ??
             Dio(BaseOptions(
               baseUrl: basePathOverride ?? basePath,
-              connectTimeout: 5000,
-              receiveTimeout: 3000,
+              connectTimeout: const Duration(milliseconds: 5000),
+              receiveTimeout: const Duration(milliseconds: 3000),
             )) {
     if (interceptors == null) {
       this.dio.interceptors.addAll([
@@ -86,12 +85,6 @@ class Openapi {
   /// by doing that all interceptors will not be executed
   AuthApi getAuthApi() {
     return AuthApi(dio, serializers);
-  }
-
-  /// Get AuthenticationApi instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  AuthenticationApi getAuthenticationApi() {
-    return AuthenticationApi(dio, serializers);
   }
 
   /// Get BranchesApi instance, base route and serializer can be overridden by a given but be careful,

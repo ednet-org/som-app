@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
+import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
@@ -24,29 +25,123 @@ Future<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _handleList(RequestContext context) async {
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
   }
   final repo = context.read<InquiryRepository>();
-  final status = context.request.uri.queryParameters['status'];
+  final params = context.request.uri.queryParameters;
+  final statusFilter = params['status'];
+  final branchIdFilter = params['branchId'];
+  final branchFilter = params['branch'];
+  final providerTypeFilter = params['providerType'];
+  final providerSizeFilter = params['providerSize'];
+  final createdFrom = _parseDate(params['createdFrom']);
+  final createdTo = _parseDate(params['createdTo']);
+  final deadlineFrom = _parseDate(params['deadlineFrom']);
+  final deadlineTo = _parseDate(params['deadlineTo']);
+  final editorIds = _parseCsv(params['editorIds'] ?? params['editor']);
+
   List<InquiryRecord> inquiries;
   if (auth.roles.contains('consultant')) {
-    inquiries = repo.listAll(status: status);
+    inquiries = await repo.listAll();
   } else if (auth.roles.contains('provider')) {
-    inquiries = repo.listAssignedToProvider(auth.companyId);
+    inquiries = await repo.listAssignedToProvider(auth.companyId);
   } else {
-    inquiries = repo.listByBuyerCompany(auth.companyId);
+    inquiries = await repo.listByBuyerCompany(auth.companyId);
   }
+
+  if (branchFilter != null && branchFilter.isNotEmpty) {
+    final branches = await context.read<BranchRepository>().listBranches();
+    final matchingIds = branches
+        .where((branch) =>
+            branch.name.toLowerCase().contains(branchFilter.toLowerCase()))
+        .map((branch) => branch.id)
+        .toSet();
+    inquiries = inquiries
+        .where((inquiry) => matchingIds.contains(inquiry.branchId))
+        .toList();
+  }
+  if (branchIdFilter != null && branchIdFilter.isNotEmpty) {
+    inquiries = inquiries
+        .where((inquiry) => inquiry.branchId == branchIdFilter)
+        .toList();
+  }
+  if (providerTypeFilter != null && providerTypeFilter.isNotEmpty) {
+    inquiries = inquiries
+        .where((inquiry) =>
+            (inquiry.providerCriteria.providerType ?? '') == providerTypeFilter)
+        .toList();
+  }
+  if (providerSizeFilter != null && providerSizeFilter.isNotEmpty) {
+    inquiries = inquiries
+        .where((inquiry) =>
+            (inquiry.providerCriteria.companySize ?? '') == providerSizeFilter)
+        .toList();
+  }
+  if (createdFrom != null) {
+    inquiries = inquiries
+        .where((inquiry) => inquiry.createdAt.isAfter(createdFrom))
+        .toList();
+  }
+  if (createdTo != null) {
+    inquiries = inquiries
+        .where((inquiry) => inquiry.createdAt.isBefore(createdTo))
+        .toList();
+  }
+  if (deadlineFrom != null) {
+    inquiries = inquiries
+        .where((inquiry) => inquiry.deadline.isAfter(deadlineFrom))
+        .toList();
+  }
+  if (deadlineTo != null) {
+    inquiries = inquiries
+        .where((inquiry) => inquiry.deadline.isBefore(deadlineTo))
+        .toList();
+  }
+  if (editorIds.isNotEmpty &&
+      (auth.roles.contains('admin') || auth.roles.contains('consultant'))) {
+    inquiries = inquiries
+        .where((inquiry) => editorIds.contains(inquiry.createdByUserId))
+        .toList();
+  }
+
+  final offersRepository = context.read<OfferRepository>();
+  Map<String, String>? providerStatusMap;
+  if (auth.roles.contains('provider')) {
+    providerStatusMap = {};
+    for (final inquiry in inquiries) {
+      final offers = await offersRepository.listByInquiry(inquiry.id);
+      OfferRecord? offer;
+      for (final candidate in offers) {
+        if (candidate.providerCompanyId == auth.companyId) {
+          offer = candidate;
+          break;
+        }
+      }
+      providerStatusMap[inquiry.id] = _providerStatus(offer);
+    }
+    if (statusFilter != null && statusFilter.isNotEmpty) {
+      inquiries = inquiries
+          .where((inquiry) => providerStatusMap![inquiry.id] == statusFilter)
+          .toList();
+    }
+  } else if (statusFilter != null && statusFilter.isNotEmpty) {
+    inquiries =
+        inquiries.where((inquiry) => inquiry.status == statusFilter).toList();
+  }
+
   if (context.request.uri.queryParameters['format'] == 'csv') {
     final offersRepository = context.read<OfferRepository>();
     final buffer = StringBuffer();
     buffer.writeln('id,status,creator,branch,deadline,createdAt,offers');
     for (final inquiry in inquiries) {
-      final offers = offersRepository.listByInquiry(inquiry.id);
+      final offers = await offersRepository.listByInquiry(inquiry.id);
       final offersSummary = offers
           .map((offer) =>
               '${offer.id}|${offer.providerCompanyId}|${offer.status}|${offer.forwardedAt?.toIso8601String() ?? ''}|${offer.resolvedAt?.toIso8601String() ?? ''}')
@@ -55,16 +150,25 @@ Future<Response> _handleList(RequestContext context) async {
         '${inquiry.id},${inquiry.status},${inquiry.createdByUserId},${inquiry.branchId},${inquiry.deadline.toIso8601String()},${inquiry.createdAt.toIso8601String()},$offersSummary',
       );
     }
-    return Response(headers: {'content-type': 'text/csv'}, body: buffer.toString());
+    return Response(
+        headers: {'content-type': 'text/csv'}, body: buffer.toString());
   }
-  final body = inquiries.map((inquiry) => inquiry.toJson()).toList();
+  final body = inquiries.map((inquiry) {
+    final json = inquiry.toJson();
+    if (providerStatusMap != null) {
+      json['providerStatus'] = providerStatusMap![inquiry.id];
+    }
+    return json;
+  }).toList();
   return Response.json(body: body);
 }
 
 Future<Response> _handleCreate(RequestContext context) async {
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
@@ -76,7 +180,9 @@ Future<Response> _handleCreate(RequestContext context) async {
 
   Map<String, dynamic> data;
   String? pdfPath;
-  if (context.request.headers['content-type']?.contains('multipart/form-data') ?? false) {
+  if (context.request.headers['content-type']
+          ?.contains('multipart/form-data') ??
+      false) {
     final form = await context.request.formData();
     data = form.fields.map((key, value) => MapEntry(key, value));
     final file = form.files['file'];
@@ -94,11 +200,13 @@ Future<Response> _handleCreate(RequestContext context) async {
 
   final deadline = DateTime.parse(data['deadline'] as String);
   if (!isAtLeastBusinessDaysInFuture(deadline, 3)) {
-    return Response.json(statusCode: 400, body: 'Deadline must be at least 3 business days in the future');
+    return Response.json(
+        statusCode: 400,
+        body: 'Deadline must be at least 3 business days in the future');
   }
 
-  final company = companyRepo.findById(auth.companyId);
-  final user = userRepo.findById(auth.userId);
+  final company = await companyRepo.findById(auth.companyId);
+  final user = await userRepo.findById(auth.userId);
   if (company == null || user == null) {
     return Response(statusCode: 400);
   }
@@ -122,17 +230,25 @@ Future<Response> _handleCreate(RequestContext context) async {
     categoryId: data['categoryId'] as String? ?? '',
     productTags: (data['productTags'] is List)
         ? (data['productTags'] as List).map((e) => e.toString()).toList()
-        : (data['productTags'] as String? ?? '').split(',').where((e) => e.isNotEmpty).toList(),
+        : (data['productTags'] as String? ?? '')
+            .split(',')
+            .where((e) => e.isNotEmpty)
+            .toList(),
     deadline: deadline,
     deliveryZips: (data['deliveryZips'] is List)
         ? (data['deliveryZips'] as List).map((e) => e.toString()).toList()
-        : (data['deliveryZips'] as String? ?? '').split(',').where((e) => e.isNotEmpty).toList(),
+        : (data['deliveryZips'] as String? ?? '')
+            .split(',')
+            .where((e) => e.isNotEmpty)
+            .toList(),
     numberOfProviders: int.parse(data['numberOfProviders']?.toString() ?? '1'),
     description: data['description'] as String?,
     pdfPath: pdfPath,
     providerCriteria: ProviderCriteria(
       providerZip: data['providerZip'] as String?,
-      radiusKm: data['radiusKm'] == null ? null : int.tryParse(data['radiusKm'].toString()),
+      radiusKm: data['radiusKm'] == null
+          ? null
+          : int.tryParse(data['radiusKm'].toString()),
       providerType: data['providerType'] as String?,
       companySize: data['providerCompanySize'] as String?,
     ),
@@ -154,6 +270,42 @@ Future<Response> _handleCreate(RequestContext context) async {
     return Response.json(statusCode: 400, body: error.toString());
   }
 
-  inquiryRepo.create(inquiry);
+  await inquiryRepo.create(inquiry);
   return Response.json(body: inquiry.toJson());
+}
+
+DateTime? _parseDate(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+  return DateTime.parse(value).toUtc();
+}
+
+List<String> _parseCsv(String? value) {
+  if (value == null || value.isEmpty) {
+    return [];
+  }
+  return value
+      .split(',')
+      .map((entry) => entry.trim())
+      .where((entry) => entry.isNotEmpty)
+      .toList();
+}
+
+String _providerStatus(OfferRecord? offer) {
+  if (offer == null) {
+    return 'open';
+  }
+  switch (offer.status) {
+    case 'accepted':
+      return 'won';
+    case 'rejected':
+      return 'lost';
+    case 'ignored':
+      return 'ignored';
+    case 'offer_uploaded':
+      return 'offer_created';
+    default:
+      return offer.status;
+  }
 }

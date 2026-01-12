@@ -13,7 +13,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
@@ -40,7 +41,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       await email.send(
         to: admin.email,
         subject: 'New inquiry assigned',
-        text: 'A new inquiry has been assigned to your company. Inquiry ID: $inquiryId',
+        text:
+            'A new inquiry has been assigned to your company. Inquiry ID: $inquiryId',
       );
     }
   }

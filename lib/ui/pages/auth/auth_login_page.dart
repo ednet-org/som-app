@@ -40,15 +40,17 @@ class AuthLoginPage extends StatelessWidget {
                         slivers: !is4K
                             ? [
                                 SliverFillRemaining(
-                                  hasScrollBody: false,
-                                  child: Column(
-                                    // mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: expandedItems(is4K, context,
-                                        emailLoginStore, constraints),
+                                  hasScrollBody: true,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      // mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: expandedItems(is4K, context,
+                                          emailLoginStore, constraints),
+                                    ),
                                   ),
                                 )
                               ]
@@ -75,14 +77,16 @@ class AuthLoginPage extends StatelessWidget {
 
   List<Widget> expandedItems(bool is4K, BuildContext context,
       Application emailLoginStore, constraints) {
+    final logo = splitWithLogo(context, emailLoginStore, is4K);
+    final login = splitWithLogin(context, is4K, constraints);
+
+    if (!is4K) {
+      return [logo, login];
+    }
+
     return [
-      Expanded(
-          flex: is4K ? 5 : 1,
-          child: splitWithLogo(context, emailLoginStore, is4K)),
-      Expanded(
-        flex: is4K ? 7 : 3,
-        child: splitWithLogin(context, is4K, constraints),
-      ),
+      Expanded(flex: 5, child: logo),
+      Expanded(flex: 7, child: login),
     ];
   }
 

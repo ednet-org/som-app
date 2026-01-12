@@ -32,7 +32,7 @@ class _$UsersLoadUserWithCompanyGet200Response
   factory _$UsersLoadUserWithCompanyGet200Response(
           [void Function(UsersLoadUserWithCompanyGet200ResponseBuilder)?
               updates]) =>
-      (new UsersLoadUserWithCompanyGet200ResponseBuilder()..update(updates))
+      (UsersLoadUserWithCompanyGet200ResponseBuilder()..update(updates))
           ._build();
 
   _$UsersLoadUserWithCompanyGet200Response._(
@@ -47,7 +47,6 @@ class _$UsersLoadUserWithCompanyGet200Response
       this.companyName,
       this.companyAddress})
       : super._();
-
   @override
   UsersLoadUserWithCompanyGet200Response rebuild(
           void Function(UsersLoadUserWithCompanyGet200ResponseBuilder)
@@ -56,7 +55,7 @@ class _$UsersLoadUserWithCompanyGet200Response
 
   @override
   UsersLoadUserWithCompanyGet200ResponseBuilder toBuilder() =>
-      new UsersLoadUserWithCompanyGet200ResponseBuilder()..replace(this);
+      UsersLoadUserWithCompanyGet200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -153,7 +152,7 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
 
   AddressBuilder? _companyAddress;
   AddressBuilder get companyAddress =>
-      _$this._companyAddress ??= new AddressBuilder();
+      _$this._companyAddress ??= AddressBuilder();
   set companyAddress(AddressBuilder? companyAddress) =>
       _$this._companyAddress = companyAddress;
 
@@ -181,7 +180,6 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
 
   @override
   void replace(UsersLoadUserWithCompanyGet200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UsersLoadUserWithCompanyGet200Response;
   }
 
@@ -198,7 +196,7 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
     _$UsersLoadUserWithCompanyGet200Response _$result;
     try {
       _$result = _$v ??
-          new _$UsersLoadUserWithCompanyGet200Response._(
+          _$UsersLoadUserWithCompanyGet200Response._(
             userId: userId,
             salutation: salutation,
             title: title,
@@ -216,7 +214,7 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
         _$failedField = 'companyAddress';
         _companyAddress?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UsersLoadUserWithCompanyGet200Response',
             _$failedField,
             e.toString());

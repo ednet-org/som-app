@@ -47,6 +47,7 @@ ThemeData? lightTheme;
 const env = String.fromEnvironment('env', defaultValue: 'dev');
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   initDomainModel();
   // nb_utils - Must be initialize before using shared preference
   await initialize();
@@ -60,13 +61,12 @@ void main() async {
   appStore = Application();
 
   // dio perform awful if not spawn to own worker
-  (apiInstance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
-      parseJson;
+  apiInstance.dio.transformer = BackgroundTransformer()
+    ..jsonDecodeCallback = parseJson;
 
   await initTheming();
 
   //region Entry Point
-  WidgetsFlutterBinding.ensureInitialized();
   // we do not need # in url
   // Beamer.setPathUrlStrategy();
   runApp(MyApp());

@@ -10,8 +10,8 @@ Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
       json['id'] as String,
       name: json['name'] as String?,
       registrationNr: json['registrationNr'] as String?,
-      companySize: json['companySize'] as int?,
-      type: json['type'] as int?,
+      companySize: (json['companySize'] as num?)?.toInt(),
+      type: (json['type'] as num?)?.toInt(),
       websiteUrl: json['websiteUrl'] as String?,
     );
 

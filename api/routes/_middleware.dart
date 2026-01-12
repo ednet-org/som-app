@@ -5,7 +5,9 @@ import 'dart:async';
 import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/infrastructure/clock.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
+import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
+import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
@@ -37,6 +39,8 @@ final _providers = ProviderRepository(_supabase.adminClient);
 final _inquiries = InquiryRepository(_supabase.adminClient);
 final _offers = OfferRepository(_supabase.adminClient);
 final _ads = AdsRepository(_supabase.adminClient);
+final _billing = BillingRepository(_supabase.adminClient);
+final _cancellations = CancellationRepository(_supabase.adminClient);
 final _storage =
     FileStorage(client: _supabase.adminClient, bucket: _supabase.storageBucket);
 final _notifications = NotificationService(
@@ -100,6 +104,8 @@ Handler middleware(Handler handler) {
       .use(provider<InquiryRepository>((_) => _inquiries))
       .use(provider<OfferRepository>((_) => _offers))
       .use(provider<AdsRepository>((_) => _ads))
+      .use(provider<BillingRepository>((_) => _billing))
+      .use(provider<CancellationRepository>((_) => _cancellations))
       .use(provider<FileStorage>((_) => _storage))
       .use(provider<AuthService>((_) => _auth))
       .use(provider<RegistrationService>((_) => _registration))

@@ -33,7 +33,7 @@ class OffersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<Offer>] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<Offer>>> inquiriesInquiryIdOffersGet({ 
     required String inquiryId,
     CancelToken? cancelToken,
@@ -80,12 +80,13 @@ class OffersApi {
       ) as BuiltList<Offer>;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<BuiltList<Offer>>(
@@ -114,7 +115,7 @@ class OffersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [InquiriesInquiryIdOffersGet200Response] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<InquiriesInquiryIdOffersGet200Response>> inquiriesInquiryIdOffersPost({ 
     required String inquiryId,
     MultipartFile? file,
@@ -153,14 +154,15 @@ class OffersApi {
       });
 
     } catch(error, stackTrace) {
-      throw DioError(
+      throw DioException(
          requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     final _response = await _dio.request<Object>(
@@ -182,12 +184,13 @@ class OffersApi {
       ) as InquiriesInquiryIdOffersGet200Response;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<InquiriesInquiryIdOffersGet200Response>(
@@ -215,7 +218,7 @@ class OffersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> offersOfferIdAcceptPost({ 
     required String offerId,
     CancelToken? cancelToken,
@@ -268,7 +271,7 @@ class OffersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> offersOfferIdRejectPost({ 
     required String offerId,
     CancelToken? cancelToken,

@@ -1,5 +1,7 @@
 import 'package:supabase/supabase.dart';
 
+import '../models/models.dart';
+
 class StatisticsService {
   StatisticsService(this._client);
 
@@ -73,14 +75,65 @@ class StatisticsService {
     DateTime? from,
     DateTime? to,
   }) async {
-    final openCount =
-        await _countInquiries(from: from, to: to, status: 'open');
+    final openCount = await _countInquiries(from: from, to: to, status: 'open');
     final closedCount =
         await _countInquiries(from: from, to: to, status: 'closed');
+    final wonCount = await _countOffersGlobal(
+      from: from,
+      to: to,
+      status: 'accepted',
+    );
+    final lostCount = await _countOffersGlobal(
+      from: from,
+      to: to,
+      status: 'rejected',
+    );
     return {
       'open': openCount,
       'closed': closedCount,
+      'won': wonCount,
+      'lost': lostCount,
     };
+  }
+
+  Future<Map<String, int>> consultantPeriodStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key =
+          '${inquiry.createdAt.year}-${inquiry.createdAt.month.toString().padLeft(2, '0')}';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
+  }
+
+  Future<Map<String, int>> consultantProviderTypeStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key = inquiry.providerCriteria.providerType ?? 'unknown';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
+  }
+
+  Future<Map<String, int>> consultantProviderSizeStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key = inquiry.providerCriteria.companySize ?? 'unknown';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
   }
 
   Future<int> _countInquiries({
@@ -126,5 +179,64 @@ class StatisticsService {
     }
     final rows = await query as List<dynamic>;
     return rows.length;
+  }
+
+  Future<int> _countOffersGlobal({
+    DateTime? from,
+    DateTime? to,
+    required String status,
+  }) async {
+    var query = _client.from('offers').select('id').eq('status', status);
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<List<InquiryRecord>> _listInquiries({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    var query = _client.from('inquiries').select();
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.map((row) => _mapInquiry(row as Map<String, dynamic>)).toList();
+  }
+
+  InquiryRecord _mapInquiry(Map<String, dynamic> row) {
+    return InquiryRecord(
+      id: row['id'] as String,
+      buyerCompanyId: row['buyer_company_id'] as String,
+      createdByUserId: row['created_by_user_id'] as String,
+      status: row['status'] as String,
+      branchId: row['branch_id'] as String,
+      categoryId: row['category_id'] as String,
+      productTags: decodeJsonList(row['product_tags_json'])
+          .map((e) => e.toString())
+          .toList(),
+      deadline: parseDate(row['deadline']),
+      deliveryZips: decodeStringList(row['delivery_zips']),
+      numberOfProviders: row['number_of_providers'] as int,
+      description: row['description'] as String?,
+      pdfPath: row['pdf_path'] as String?,
+      providerCriteria: ProviderCriteria.fromJson(
+        decodeJsonMap(row['provider_criteria_json']),
+      ),
+      contactInfo: ContactInfo.fromJson(
+        decodeJsonMap(row['contact_json']),
+      ),
+      notifiedAt: parseDateOrNull(row['notified_at']),
+      createdAt: parseDate(row['created_at']),
+      updatedAt: parseDate(row['updated_at']),
+    );
   }
 }

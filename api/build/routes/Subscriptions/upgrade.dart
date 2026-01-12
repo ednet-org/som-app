@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -12,9 +13,11 @@ Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.post) {
     return Response(statusCode: 405);
   }
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('admin')) {
     return Response(statusCode: 403);
@@ -26,7 +29,8 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final subscriptionRepo = context.read<SubscriptionRepository>();
   final providerRepo = context.read<ProviderRepository>();
-  final current = subscriptionRepo.findSubscriptionByCompany(auth.companyId);
+  final current =
+      await subscriptionRepo.findSubscriptionByCompany(auth.companyId);
   if (current != null && current.planId == planId) {
     return Response(statusCode: 200);
   }
@@ -34,7 +38,7 @@ Future<Response> onRequest(RequestContext context) async {
   final startDate = DateTime.utc(now.year, now.month + 1, 1);
   final endDate = DateTime.utc(startDate.year + 1, startDate.month, 1)
       .subtract(const Duration(days: 1));
-  subscriptionRepo.createSubscription(
+  await subscriptionRepo.createSubscription(
     SubscriptionRecord(
       id: const Uuid().v4(),
       companyId: auth.companyId,
@@ -46,9 +50,9 @@ Future<Response> onRequest(RequestContext context) async {
       createdAt: now,
     ),
   );
-  final profile = providerRepo.findByCompany(auth.companyId);
+  final profile = await providerRepo.findByCompany(auth.companyId);
   if (profile != null) {
-    providerRepo.update(
+    await providerRepo.update(
       ProviderProfileRecord(
         companyId: profile.companyId,
         bankDetails: profile.bankDetails,

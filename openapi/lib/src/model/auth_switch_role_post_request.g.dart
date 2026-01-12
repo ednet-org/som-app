@@ -12,13 +12,9 @@ class _$AuthSwitchRolePostRequest extends AuthSwitchRolePostRequest {
 
   factory _$AuthSwitchRolePostRequest(
           [void Function(AuthSwitchRolePostRequestBuilder)? updates]) =>
-      (new AuthSwitchRolePostRequestBuilder()..update(updates))._build();
+      (AuthSwitchRolePostRequestBuilder()..update(updates))._build();
 
-  _$AuthSwitchRolePostRequest._({required this.role}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        role, r'AuthSwitchRolePostRequest', 'role');
-  }
-
+  _$AuthSwitchRolePostRequest._({required this.role}) : super._();
   @override
   AuthSwitchRolePostRequest rebuild(
           void Function(AuthSwitchRolePostRequestBuilder) updates) =>
@@ -26,7 +22,7 @@ class _$AuthSwitchRolePostRequest extends AuthSwitchRolePostRequest {
 
   @override
   AuthSwitchRolePostRequestBuilder toBuilder() =>
-      new AuthSwitchRolePostRequestBuilder()..replace(this);
+      AuthSwitchRolePostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -74,7 +70,6 @@ class AuthSwitchRolePostRequestBuilder
 
   @override
   void replace(AuthSwitchRolePostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthSwitchRolePostRequest;
   }
 
@@ -88,7 +83,7 @@ class AuthSwitchRolePostRequestBuilder
 
   _$AuthSwitchRolePostRequest _build() {
     final _$result = _$v ??
-        new _$AuthSwitchRolePostRequest._(
+        _$AuthSwitchRolePostRequest._(
           role: BuiltValueNullFieldError.checkNotNull(
               role, r'AuthSwitchRolePostRequest', 'role'),
         );

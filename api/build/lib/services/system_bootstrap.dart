@@ -16,7 +16,7 @@ class SystemBootstrap {
   final UserRepository users;
   final AuthService auth;
 
-  void ensureSystemAdmin() {
+  Future<void> ensureSystemAdmin() async {
     final email = const String.fromEnvironment(
       'SYSTEM_ADMIN_EMAIL',
       defaultValue: 'system-admin@som.local',
@@ -25,14 +25,19 @@ class SystemBootstrap {
       'SYSTEM_ADMIN_PASSWORD',
       defaultValue: 'ChangeMe123!',
     );
-    final existing = users.findByEmail(email);
+    final existing = await users.findByEmail(email);
     if (existing != null) {
       return;
     }
-    final systemCompany = _ensureSystemCompany();
+    final systemCompany = await _ensureSystemCompany();
     final now = DateTime.now().toUtc();
+    final authUserId = await auth.ensureAuthUser(
+      email: email,
+      password: password,
+      emailConfirmed: true,
+    );
     final user = UserRecord(
-      id: const Uuid().v4(),
+      id: authUserId,
       companyId: systemCompany.id,
       email: email,
       firstName: 'System',
@@ -46,13 +51,12 @@ class SystemBootstrap {
       lastLoginRole: 'consultant',
       createdAt: now,
       updatedAt: now,
-      passwordHash: auth.hashPassword(password),
     );
-    users.create(user);
+    await users.create(user);
   }
 
-  CompanyRecord _ensureSystemCompany() {
-    final existing = companies.findByRegistrationNr('SYSTEM');
+  Future<CompanyRecord> _ensureSystemCompany() async {
+    final existing = await companies.findByRegistrationNr('SYSTEM');
     if (existing != null) {
       return existing;
     }
@@ -76,7 +80,7 @@ class SystemBootstrap {
       createdAt: now,
       updatedAt: now,
     );
-    companies.create(company);
+    await companies.create(company);
     return company;
   }
 }

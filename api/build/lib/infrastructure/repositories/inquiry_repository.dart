@@ -1,121 +1,105 @@
+import 'package:supabase/supabase.dart';
+
 import '../../models/models.dart';
-import '../db.dart';
 
 class InquiryRepository {
-  InquiryRepository(this._db);
+  InquiryRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void create(InquiryRecord inquiry) {
-    _db.execute(
-      '''
-      INSERT INTO inquiries (
-        id, buyer_company_id, created_by_user_id, status, branch_id, category_id,
-        product_tags_json, deadline, delivery_zips, number_of_providers,
-        description, pdf_path, provider_criteria_json, contact_json,
-        notified_at, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        inquiry.id,
-        inquiry.buyerCompanyId,
-        inquiry.createdByUserId,
-        inquiry.status,
-        inquiry.branchId,
-        inquiry.categoryId,
-        encodeJson(inquiry.productTags),
-        inquiry.deadline.toIso8601String(),
-        inquiry.deliveryZips.join(','),
-        inquiry.numberOfProviders,
-        inquiry.description,
-        inquiry.pdfPath,
-        encodeJson(inquiry.providerCriteria.toJson()),
-        encodeJson(inquiry.contactInfo.toJson()),
-        inquiry.notifiedAt?.toIso8601String(),
-        inquiry.createdAt.toIso8601String(),
-        inquiry.updatedAt.toIso8601String(),
-      ],
-    );
+  Future<void> create(InquiryRecord inquiry) async {
+    await _client.from('inquiries').insert({
+      'id': inquiry.id,
+      'buyer_company_id': inquiry.buyerCompanyId,
+      'created_by_user_id': inquiry.createdByUserId,
+      'status': inquiry.status,
+      'branch_id': inquiry.branchId,
+      'category_id': inquiry.categoryId,
+      'product_tags_json': inquiry.productTags,
+      'deadline': inquiry.deadline.toIso8601String(),
+      'delivery_zips': inquiry.deliveryZips,
+      'number_of_providers': inquiry.numberOfProviders,
+      'description': inquiry.description,
+      'pdf_path': inquiry.pdfPath,
+      'provider_criteria_json': inquiry.providerCriteria.toJson(),
+      'contact_json': inquiry.contactInfo.toJson(),
+      'notified_at': inquiry.notifiedAt?.toIso8601String(),
+      'created_at': inquiry.createdAt.toIso8601String(),
+      'updated_at': inquiry.updatedAt.toIso8601String(),
+    });
   }
 
-  InquiryRecord? findById(String id) {
-    final rows = _db.select('SELECT * FROM inquiries WHERE id = ?', [id]);
+  Future<InquiryRecord?> findById(String id) async {
+    final rows =
+        await _client.from('inquiries').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRow(rows.first);
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 
-  List<InquiryRecord> listByBuyerCompany(String companyId) {
-    final rows = _db.select(
-      'SELECT * FROM inquiries WHERE buyer_company_id = ? ORDER BY created_at DESC',
-      [companyId],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<InquiryRecord>> listByBuyerCompany(String companyId) async {
+    final rows = await _client
+        .from('inquiries')
+        .select()
+        .eq('buyer_company_id', companyId)
+        .order('created_at', ascending: false) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  List<InquiryRecord> listAll({String? status}) {
-    final rows = status == null
-        ? _db.select('SELECT * FROM inquiries ORDER BY created_at DESC')
-        : _db.select(
-            'SELECT * FROM inquiries WHERE status = ? ORDER BY created_at DESC',
-            [status],
-          );
-    return rows.map(_mapRow).toList();
+  Future<List<InquiryRecord>> listAll({String? status}) async {
+    var query = _client.from('inquiries').select();
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    final rows =
+        await query.order('created_at', ascending: false) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  List<InquiryRecord> listAssignedToProvider(String providerCompanyId) {
-    final rows = _db.select(
-      '''
-      SELECT i.* FROM inquiries i
-      JOIN inquiry_assignments ia ON ia.inquiry_id = i.id
-      WHERE ia.provider_company_id = ?
-      ORDER BY i.created_at DESC
-      ''',
-      [providerCompanyId],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<InquiryRecord>> listAssignedToProvider(
+    String providerCompanyId,
+  ) async {
+    final rows = await _client
+        .from('inquiries')
+        .select('*, inquiry_assignments!inner(*)')
+        .eq('inquiry_assignments.provider_company_id', providerCompanyId)
+        .order('created_at', ascending: false) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  void updateStatus(String id, String status) {
-    _db.execute(
-      'UPDATE inquiries SET status = ?, updated_at = ? WHERE id = ?',
-      [status, DateTime.now().toUtc().toIso8601String(), id],
-    );
+  Future<void> updateStatus(String id, String status) async {
+    await _client.from('inquiries').update({
+      'status': status,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
   }
 
-  void markNotified(String id, DateTime notifiedAt) {
-    _db.execute(
-      'UPDATE inquiries SET notified_at = ?, updated_at = ? WHERE id = ?',
-      [notifiedAt.toIso8601String(), DateTime.now().toUtc().toIso8601String(), id],
-    );
+  Future<void> markNotified(String id, DateTime notifiedAt) async {
+    await _client.from('inquiries').update({
+      'notified_at': notifiedAt.toIso8601String(),
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
   }
 
-  void assignToProviders({
+  Future<void> assignToProviders({
     required String inquiryId,
     required String assignedByUserId,
     required List<String> providerCompanyIds,
-  }) {
+  }) async {
     final now = DateTime.now().toUtc().toIso8601String();
     for (final providerCompanyId in providerCompanyIds) {
-      _db.execute(
-        '''
-        INSERT INTO inquiry_assignments (
-          id, inquiry_id, provider_company_id, assigned_at, assigned_by_user_id
-        ) VALUES (?, ?, ?, ?, ?)
-        ''',
-        [
-          '${inquiryId}_$providerCompanyId',
-          inquiryId,
-          providerCompanyId,
-          now,
-          assignedByUserId,
-        ],
-      );
+      await _client.from('inquiry_assignments').insert({
+        'id': '${inquiryId}_$providerCompanyId',
+        'inquiry_id': inquiryId,
+        'provider_company_id': providerCompanyId,
+        'assigned_at': now,
+        'assigned_by_user_id': assignedByUserId,
+      });
     }
   }
 
-  InquiryRecord _mapRow(Map<String, Object?> row) {
+  InquiryRecord _mapRow(Map<String, dynamic> row) {
     return InquiryRecord(
       id: row['id'] as String,
       buyerCompanyId: row['buyer_company_id'] as String,
@@ -123,25 +107,23 @@ class InquiryRepository {
       status: row['status'] as String,
       branchId: row['branch_id'] as String,
       categoryId: row['category_id'] as String,
-      productTags: decodeJsonList(row['product_tags_json'] as String)
+      productTags: decodeJsonList(row['product_tags_json'])
           .map((e) => e.toString())
           .toList(),
-      deadline: DateTime.parse(row['deadline'] as String),
-      deliveryZips: (row['delivery_zips'] as String).split(','),
+      deadline: parseDate(row['deadline']),
+      deliveryZips: decodeStringList(row['delivery_zips']),
       numberOfProviders: row['number_of_providers'] as int,
       description: row['description'] as String?,
       pdfPath: row['pdf_path'] as String?,
       providerCriteria: ProviderCriteria.fromJson(
-        decodeJsonMap(row['provider_criteria_json'] as String),
+        decodeJsonMap(row['provider_criteria_json']),
       ),
       contactInfo: ContactInfo.fromJson(
-        decodeJsonMap(row['contact_json'] as String),
+        decodeJsonMap(row['contact_json']),
       ),
-      notifiedAt: row['notified_at'] == null
-          ? null
-          : DateTime.parse(row['notified_at'] as String),
-      createdAt: DateTime.parse(row['created_at'] as String),
-      updatedAt: DateTime.parse(row['updated_at'] as String),
+      notifiedAt: parseDateOrNull(row['notified_at']),
+      createdAt: parseDate(row['created_at']),
+      updatedAt: parseDate(row['updated_at']),
     );
   }
 }

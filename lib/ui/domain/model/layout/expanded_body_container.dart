@@ -29,26 +29,28 @@ class ExpandedBodyContainer extends StatelessWidget {
       final responsiveContainer = isMobile
 
           /// MOBILE LAYOUT
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /// For existing Menu show also a divider
-                if (expandedBodyMenu != null) ...[
-                  expandedBodyMenu,
-                  expandedHorizontalDivider(context),
+          ? SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /// For existing Menu show also a divider
+                  if (expandedBodyMenu != null) ...[
+                    expandedBodyMenu,
+                    expandedHorizontalDivider(context),
+                  ],
+
+                  /// ALWAYS rendered
+                  expandedBodyContentSplitLeft,
+
+                  /// For existing right split show also a divider
+                  if (expandedBodyContentSplitRight != null) ...[
+                    expandedHorizontalDivider(context),
+                    expandedBodyContentSplitRight,
+                  ]
                 ],
-
-                /// ALWAYS rendered
-                expandedBodyContentSplitLeft,
-
-                /// For existing right split show also a divider
-                if (expandedBodyContentSplitRight != null) ...[
-                  expandedHorizontalDivider(context),
-                  expandedBodyContentSplitRight,
-                ]
-              ],
+              ),
             )
 
           /// DESKTOP LAYOUT
@@ -59,14 +61,20 @@ class ExpandedBodyContainer extends StatelessWidget {
               children: [
                 /// For existing Menu show also a divider
                 if (expandedBodyMenu != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const Text('Filters'),
-                      expandedBodyMenu,
-                    ],
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text('Filters'),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: expandedBodyMenu,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 if (expandedBodyMenu != null) expandedVerticalDivider(context),
 

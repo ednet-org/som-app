@@ -16,18 +16,12 @@ class _$ConsultantsRegisterCompanyPostRequest
   factory _$ConsultantsRegisterCompanyPostRequest(
           [void Function(ConsultantsRegisterCompanyPostRequestBuilder)?
               updates]) =>
-      (new ConsultantsRegisterCompanyPostRequestBuilder()..update(updates))
+      (ConsultantsRegisterCompanyPostRequestBuilder()..update(updates))
           ._build();
 
   _$ConsultantsRegisterCompanyPostRequest._(
       {required this.company, required this.users})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        company, r'ConsultantsRegisterCompanyPostRequest', 'company');
-    BuiltValueNullFieldError.checkNotNull(
-        users, r'ConsultantsRegisterCompanyPostRequest', 'users');
-  }
-
+      : super._();
   @override
   ConsultantsRegisterCompanyPostRequest rebuild(
           void Function(ConsultantsRegisterCompanyPostRequestBuilder)
@@ -36,7 +30,7 @@ class _$ConsultantsRegisterCompanyPostRequest
 
   @override
   ConsultantsRegisterCompanyPostRequestBuilder toBuilder() =>
-      new ConsultantsRegisterCompanyPostRequestBuilder()..replace(this);
+      ConsultantsRegisterCompanyPostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -73,12 +67,12 @@ class ConsultantsRegisterCompanyPostRequestBuilder
 
   CompanyRegistrationBuilder? _company;
   CompanyRegistrationBuilder get company =>
-      _$this._company ??= new CompanyRegistrationBuilder();
+      _$this._company ??= CompanyRegistrationBuilder();
   set company(CompanyRegistrationBuilder? company) => _$this._company = company;
 
   ListBuilder<UserRegistration>? _users;
   ListBuilder<UserRegistration> get users =>
-      _$this._users ??= new ListBuilder<UserRegistration>();
+      _$this._users ??= ListBuilder<UserRegistration>();
   set users(ListBuilder<UserRegistration>? users) => _$this._users = users;
 
   ConsultantsRegisterCompanyPostRequestBuilder() {
@@ -97,7 +91,6 @@ class ConsultantsRegisterCompanyPostRequestBuilder
 
   @override
   void replace(ConsultantsRegisterCompanyPostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ConsultantsRegisterCompanyPostRequest;
   }
 
@@ -114,7 +107,7 @@ class ConsultantsRegisterCompanyPostRequestBuilder
     _$ConsultantsRegisterCompanyPostRequest _$result;
     try {
       _$result = _$v ??
-          new _$ConsultantsRegisterCompanyPostRequest._(
+          _$ConsultantsRegisterCompanyPostRequest._(
             company: company.build(),
             users: users.build(),
           );
@@ -126,7 +119,7 @@ class ConsultantsRegisterCompanyPostRequestBuilder
         _$failedField = 'users';
         users.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ConsultantsRegisterCompanyPostRequest',
             _$failedField,
             e.toString());

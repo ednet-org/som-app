@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'login_service.dart';
@@ -6,15 +7,16 @@ part of 'login_service.dart';
 // ChopperGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_brace_in_string_interps
-class _$LoginService extends LoginService {
+// coverage:ignore-file
+// ignore_for_file: type=lint
+final class _$LoginService extends LoginService {
   _$LoginService([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
   }
 
   @override
-  final definitionType = LoginService;
+  final Type definitionType = LoginService;
 
   @override
   Future<Response<AuthenticationResponseDto>> login(

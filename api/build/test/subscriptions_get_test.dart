@@ -5,17 +5,14 @@ import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
-import 'package:som_api/services/subscription_seed.dart';
-import 'package:som_api/infrastructure/clock.dart';
 import '../routes/Subscriptions/index.dart' as route;
 import 'test_utils.dart';
 
 void main() {
   group('GET /Subscriptions', () {
     test('returns seeded subscriptions', () async {
-      final db = createTestDb();
-      final repo = SubscriptionRepository(db);
-      SubscriptionSeeder(repository: repo, clock: const Clock()).seedDefaults();
+      final repo = InMemorySubscriptionRepository();
+      await seedSubscriptions(repo);
 
       final context = TestRequestContext(
         path: '/Subscriptions',

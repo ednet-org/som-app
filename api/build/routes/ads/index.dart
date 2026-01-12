@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/services/file_storage.dart';
@@ -13,8 +14,37 @@ import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.get) {
-    final branchId = context.request.uri.queryParameters['branchId'];
-    final ads = context.read<AdsRepository>().listActive(branchId: branchId);
+    final params = context.request.uri.queryParameters;
+    final branchId = params['branchId'];
+    final scope = params['scope'];
+    final status = params['status'];
+    final companyIdParam = params['companyId'];
+    List<AdRecord> ads;
+    if (scope == 'company' || scope == 'all') {
+      final auth = await parseAuth(
+        context,
+        secret: const String.fromEnvironment(
+          'SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret',
+        ),
+        users: context.read<UserRepository>(),
+      );
+      if (auth == null) {
+        return Response(statusCode: 401);
+      }
+      if (scope == 'all' && !auth.roles.contains('consultant')) {
+        return Response(statusCode: 403);
+      }
+      final companyId = companyIdParam ?? auth.companyId;
+      if (companyId != auth.companyId && !auth.roles.contains('consultant')) {
+        return Response(statusCode: 403);
+      }
+      ads = await context
+          .read<AdsRepository>()
+          .listAll(companyId: companyId, status: status);
+    } else {
+      ads = await context.read<AdsRepository>().listActive(branchId: branchId);
+    }
     return Response.json(
       body: ads
           .map((ad) => {
@@ -35,9 +65,11 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   if (context.request.method == HttpMethod.post) {
-    final auth = parseAuth(
+    final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
@@ -47,7 +79,9 @@ Future<Response> onRequest(RequestContext context) async {
     final subscriptionRepo = context.read<SubscriptionRepository>();
     Map<String, dynamic> data = {};
     String? imagePath;
-    if (context.request.headers['content-type']?.contains('multipart/form-data') ?? false) {
+    if (context.request.headers['content-type']
+            ?.contains('multipart/form-data') ??
+        false) {
       final form = await context.request.formData();
       data = form.fields.map((key, value) => MapEntry(key, value));
       final file = form.files['image'];
@@ -65,32 +99,43 @@ Future<Response> onRequest(RequestContext context) async {
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
-    final bannerDate = data['bannerDate'] == null ? null : DateTime.parse(data['bannerDate'] as String);
+    final bannerDate = data['bannerDate'] == null
+        ? null
+        : DateTime.parse(data['bannerDate'] as String);
     if (type == 'banner' && bannerDate == null) {
       return Response.json(statusCode: 400, body: 'Banner date is required');
     }
-    final profile = providerRepo.findByCompany(auth.companyId);
+    final profile = await providerRepo.findByCompany(auth.companyId);
     if (profile != null) {
-      final plan = subscriptionRepo.findPlanById(profile.subscriptionPlanId);
+      final plan =
+          await subscriptionRepo.findPlanById(profile.subscriptionPlanId);
       if (plan != null) {
         final maxNormalAds = _ruleUpperLimit(plan.rules, 1);
         final maxBannerAds = _ruleUpperLimit(plan.rules, 2);
         if (type == 'banner' && maxBannerAds <= 0) {
-          return Response.json(statusCode: 403, body: 'Banner ads are not available for your plan');
+          return Response.json(
+              statusCode: 403,
+              body: 'Banner ads are not available for your plan');
         }
         if (type != 'banner' && status == 'active') {
-          final activeCount = context.read<AdsRepository>().countActiveByCompanyInMonth(auth.companyId, now);
+          final activeCount = await context
+              .read<AdsRepository>()
+              .countActiveByCompanyInMonth(auth.companyId, now);
           if (maxNormalAds > 0 && activeCount >= maxNormalAds) {
-            return Response.json(statusCode: 400, body: 'Monthly ad limit reached');
+            return Response.json(
+                statusCode: 400, body: 'Monthly ad limit reached');
           }
         }
       }
     }
     if (type == 'banner' && bannerDate != null) {
       const maxBannerSlots = 10;
-      final bannerCount = context.read<AdsRepository>().countBannerForDate(bannerDate);
+      final bannerCount =
+          await context.read<AdsRepository>().countBannerForDate(bannerDate);
       if (bannerCount >= maxBannerSlots) {
-        return Response.json(statusCode: 400, body: 'No banner slots available for selected day');
+        return Response.json(
+            statusCode: 400,
+            body: 'No banner slots available for selected day');
       }
     }
     final domain = context.read<SomDomainModel>();
@@ -104,8 +149,12 @@ Future<Response> onRequest(RequestContext context) async {
       imagePath: imagePath ?? (data['imagePath'] as String? ?? ''),
       headline: data['headline'] as String?,
       description: data['description'] as String?,
-      startDate: data['startDate'] == null ? null : DateTime.parse(data['startDate'] as String),
-      endDate: data['endDate'] == null ? null : DateTime.parse(data['endDate'] as String),
+      startDate: data['startDate'] == null
+          ? null
+          : DateTime.parse(data['startDate'] as String),
+      endDate: data['endDate'] == null
+          ? null
+          : DateTime.parse(data['endDate'] as String),
       bannerDate: bannerDate,
       createdAt: now,
       updatedAt: now,
@@ -119,7 +168,7 @@ Future<Response> onRequest(RequestContext context) async {
     } catch (error) {
       return Response.json(statusCode: 400, body: error.toString());
     }
-    context.read<AdsRepository>().create(ad);
+    await context.read<AdsRepository>().create(ad);
     return Response.json(body: {'id': ad.id});
   }
   return Response(statusCode: 405);

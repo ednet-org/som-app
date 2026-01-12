@@ -19,6 +19,7 @@ tags:
   - name: Consultants
   - name: Providers
   - name: Stats
+  - name: Billing
 
 components:
   securitySchemes:
@@ -70,7 +71,7 @@ components:
           description: 0 = monthly, 1 = yearly
     CompanyRegistration:
       type: object
-      required: [name, address, uidNr, registrationNr, companySize, type]
+      required: [name, address, uidNr, registrationNr, companySize, type, termsAccepted, privacyAccepted]
       properties:
         name:
           type: string
@@ -86,13 +87,17 @@ components:
           description: 0=0-10, 1=11-50, 2=51-100, 3=101-250, 4=251-500, 5=500+
         type:
           type: integer
-          enum: [0, 1]
-          description: 0=buyer, 1=provider
+          enum: [0, 1, 2]
+          description: 0=buyer, 1=provider, 2=buyer+provider
         websiteUrl:
           type: string
           format: uri
         providerData:
           $ref: '#/components/schemas/ProviderRegistrationData'
+        termsAccepted:
+          type: boolean
+        privacyAccepted:
+          type: boolean
     UserRegistration:
       type: object
       required: [email, firstName, lastName, salutation, roles]
@@ -427,6 +432,57 @@ components:
         createdAt:
           type: string
           format: date-time
+    BillingRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        amountInSubunit:
+          type: integer
+        currency:
+          type: string
+        status:
+          type: string
+        periodStart:
+          type: string
+          format: date-time
+        periodEnd:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        paidAt:
+          type: string
+          format: date-time
+          nullable: true
+    SubscriptionCancellation:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        requestedByUserId:
+          type: string
+        reason:
+          type: string
+          nullable: true
+        status:
+          type: string
+        requestedAt:
+          type: string
+          format: date-time
+        effectiveEndDate:
+          type: string
+          format: date-time
+          nullable: true
+        resolvedAt:
+          type: string
+          format: date-time
+          nullable: true
 
 paths:
   /auth/login:
@@ -873,6 +929,133 @@ paths:
           description: Updated
         '403':
           description: Forbidden
+  /Subscriptions/cancel:
+    post:
+      tags: [Subscriptions]
+      summary: Request subscription cancellation
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+      responses:
+        '200':
+          description: Cancellation requested
+  /Subscriptions/cancellations:
+    get:
+      tags: [Subscriptions]
+      summary: List subscription cancellation requests
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: companyId
+          schema:
+            type: string
+        - in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cancellation requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionCancellation'
+  /Subscriptions/cancellations/{cancellationId}:
+    put:
+      tags: [Subscriptions]
+      summary: Resolve cancellation request
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: cancellationId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Updated
+  /billing:
+    get:
+      tags: [Billing]
+      summary: List billing records
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: companyId
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Billing records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BillingRecord'
+    post:
+      tags: [Billing]
+      summary: Create billing record
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingRecord'
+      responses:
+        '200':
+          description: Created
+  /billing/{billingId}:
+    put:
+      tags: [Billing]
+      summary: Update billing record
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: billingId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                paidAt:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Updated
   /inquiries:
     get:
       tags: [Inquiries]
@@ -884,6 +1067,47 @@ paths:
           name: status
           schema:
             type: string
+        - in: query
+          name: branchId
+          schema:
+            type: string
+        - in: query
+          name: branch
+          schema:
+            type: string
+        - in: query
+          name: providerType
+          schema:
+            type: string
+        - in: query
+          name: providerSize
+          schema:
+            type: string
+        - in: query
+          name: createdFrom
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: createdTo
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: deadlineFrom
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: deadlineTo
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: editorIds
+          schema:
+            type: string
+          description: Comma-separated list of editor user IDs (admin/consultant only)
         - in: query
           name: format
           schema:
@@ -989,6 +1213,23 @@ paths:
           description: Invalid request
         '403':
           description: Forbidden
+  /inquiries/{inquiryId}/ignore:
+    post:
+      tags: [Inquiries]
+      summary: Provider ignores inquiry
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: inquiryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ignored
+        '403':
+          description: Forbidden
   /inquiries/{inquiryId}/offers:
     get:
       tags: [Offers]
@@ -1092,12 +1333,29 @@ paths:
   /ads:
     get:
       tags: [Ads]
-      summary: List active ads
+      summary: List ads
+      description: Public calls return active ads. Use scope=company or scope=all with Bearer auth to list managed ads.
       parameters:
         - in: query
           name: branchId
           schema:
             type: string
+        - in: query
+          name: scope
+          schema:
+            type: string
+            enum: [company, all]
+          description: company = list ads for the authenticated company, all = list ads across companies (consultant only)
+        - in: query
+          name: companyId
+          schema:
+            type: string
+          description: Optional company id when scope=all
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Filter by ad status (e.g. active, draft, expired)
       responses:
         '200':
           description: Ads
@@ -1482,6 +1740,11 @@ paths:
           schema:
             type: string
             format: date-time
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [status, period, providerType, providerSize]
         - in: query
           name: format
           schema:

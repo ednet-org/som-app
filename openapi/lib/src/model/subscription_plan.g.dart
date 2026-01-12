@@ -22,7 +22,7 @@ class _$SubscriptionPlan extends SubscriptionPlan {
 
   factory _$SubscriptionPlan(
           [void Function(SubscriptionPlanBuilder)? updates]) =>
-      (new SubscriptionPlanBuilder()..update(updates))._build();
+      (SubscriptionPlanBuilder()..update(updates))._build();
 
   _$SubscriptionPlan._(
       {this.id,
@@ -32,14 +32,13 @@ class _$SubscriptionPlan extends SubscriptionPlan {
       this.rules,
       this.createdAt})
       : super._();
-
   @override
   SubscriptionPlan rebuild(void Function(SubscriptionPlanBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionPlanBuilder toBuilder() =>
-      new SubscriptionPlanBuilder()..replace(this);
+      SubscriptionPlanBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -102,7 +101,7 @@ class SubscriptionPlanBuilder
 
   ListBuilder<SubscriptionPlanRulesInner>? _rules;
   ListBuilder<SubscriptionPlanRulesInner> get rules =>
-      _$this._rules ??= new ListBuilder<SubscriptionPlanRulesInner>();
+      _$this._rules ??= ListBuilder<SubscriptionPlanRulesInner>();
   set rules(ListBuilder<SubscriptionPlanRulesInner>? rules) =>
       _$this._rules = rules;
 
@@ -130,7 +129,6 @@ class SubscriptionPlanBuilder
 
   @override
   void replace(SubscriptionPlan other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionPlan;
   }
 
@@ -146,7 +144,7 @@ class SubscriptionPlanBuilder
     _$SubscriptionPlan _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionPlan._(
+          _$SubscriptionPlan._(
             id: id,
             sortPriority: sortPriority,
             isActive: isActive,
@@ -160,7 +158,7 @@ class SubscriptionPlanBuilder
         _$failedField = 'rules';
         _rules?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionPlan', _$failedField, e.toString());
       }
       rethrow;

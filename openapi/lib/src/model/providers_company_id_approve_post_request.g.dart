@@ -14,12 +14,10 @@ class _$ProvidersCompanyIdApprovePostRequest
   factory _$ProvidersCompanyIdApprovePostRequest(
           [void Function(ProvidersCompanyIdApprovePostRequestBuilder)?
               updates]) =>
-      (new ProvidersCompanyIdApprovePostRequestBuilder()..update(updates))
-          ._build();
+      (ProvidersCompanyIdApprovePostRequestBuilder()..update(updates))._build();
 
   _$ProvidersCompanyIdApprovePostRequest._({this.approvedBranchIds})
       : super._();
-
   @override
   ProvidersCompanyIdApprovePostRequest rebuild(
           void Function(ProvidersCompanyIdApprovePostRequestBuilder) updates) =>
@@ -27,7 +25,7 @@ class _$ProvidersCompanyIdApprovePostRequest
 
   @override
   ProvidersCompanyIdApprovePostRequestBuilder toBuilder() =>
-      new ProvidersCompanyIdApprovePostRequestBuilder()..replace(this);
+      ProvidersCompanyIdApprovePostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -60,7 +58,7 @@ class ProvidersCompanyIdApprovePostRequestBuilder
 
   ListBuilder<String>? _approvedBranchIds;
   ListBuilder<String> get approvedBranchIds =>
-      _$this._approvedBranchIds ??= new ListBuilder<String>();
+      _$this._approvedBranchIds ??= ListBuilder<String>();
   set approvedBranchIds(ListBuilder<String>? approvedBranchIds) =>
       _$this._approvedBranchIds = approvedBranchIds;
 
@@ -79,7 +77,6 @@ class ProvidersCompanyIdApprovePostRequestBuilder
 
   @override
   void replace(ProvidersCompanyIdApprovePostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProvidersCompanyIdApprovePostRequest;
   }
 
@@ -96,7 +93,7 @@ class ProvidersCompanyIdApprovePostRequestBuilder
     _$ProvidersCompanyIdApprovePostRequest _$result;
     try {
       _$result = _$v ??
-          new _$ProvidersCompanyIdApprovePostRequest._(
+          _$ProvidersCompanyIdApprovePostRequest._(
             approvedBranchIds: _approvedBranchIds?.build(),
           );
     } catch (_) {
@@ -105,7 +102,7 @@ class ProvidersCompanyIdApprovePostRequestBuilder
         _$failedField = 'approvedBranchIds';
         _approvedBranchIds?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProvidersCompanyIdApprovePostRequest',
             _$failedField,
             e.toString());

@@ -20,6 +20,10 @@ class SomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DropdownSearchOnFind<String>? resolvedItems = items is List<String>
+        ? (String filter, LoadProps? loadProps) => items as List<String>
+        : items as DropdownSearchOnFind<String>?;
+
     return DropdownSearch<String>(
       popupProps: PopupProps.modalBottomSheet(
         showSelectedItems: true,
@@ -31,7 +35,7 @@ class SomDropDown extends StatelessWidget {
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.3),
           elevation: 10,
         ),
-        itemBuilder: (context, value, displayValue) {
+        itemBuilder: (context, value, isDisabled, isSelected) {
           return ListTile(
             // style: ListTileTheme.of(context).style,
             title: Text(
@@ -81,18 +85,19 @@ class SomDropDown extends StatelessWidget {
         return Text(value ?? 'n/a',
             style: Theme.of(context).textTheme.labelLarge);
       },
-      items: items,
+      items: resolvedItems,
       onChanged: onChanged,
       selectedItem: value,
-      dropdownDecoratorProps: DropDownDecoratorProps(
-          textAlign: TextAlign.center,
-          textAlignVertical: TextAlignVertical.center,
-          baseStyle: Theme.of(context).textTheme.labelLarge,
-          dropdownSearchDecoration: InputDecoration(
-            icon: const Icon(Icons.edit_location),
-            labelText: label,
-            hintText: hint,
-          )),
+      decoratorProps: DropDownDecoratorProps(
+        textAlign: TextAlign.center,
+        textAlignVertical: TextAlignVertical.center,
+        baseStyle: Theme.of(context).textTheme.labelLarge,
+        decoration: InputDecoration(
+          icon: const Icon(Icons.edit_location),
+          labelText: label,
+          hintText: hint,
+        ),
+      ),
       // clearButtonProps: ClearButtonProps(
       //   icon: const Icon(Icons.clear),
       //   color: Theme.of(context).colorScheme.secondary,

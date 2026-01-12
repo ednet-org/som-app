@@ -1,4 +1,6 @@
-import '../db.dart';
+import 'package:supabase/supabase.dart';
+
+import '../../models/models.dart';
 
 class TokenRecord {
   TokenRecord({
@@ -39,128 +41,110 @@ class RefreshTokenRecord {
 }
 
 class TokenRepository {
-  TokenRepository(this._db);
+  TokenRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void create(TokenRecord record) {
-    _db.execute(
-      '''
-      INSERT INTO user_tokens (
-        id, user_id, type, token_hash, expires_at, created_at, used_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        record.id,
-        record.userId,
-        record.type,
-        record.tokenHash,
-        record.expiresAt.toIso8601String(),
-        record.createdAt.toIso8601String(),
-        record.usedAt?.toIso8601String(),
-      ],
-    );
+  Future<void> create(TokenRecord record) async {
+    await _client.from('user_tokens').insert({
+      'id': record.id,
+      'user_id': record.userId,
+      'type': record.type,
+      'token_hash': record.tokenHash,
+      'expires_at': record.expiresAt.toIso8601String(),
+      'created_at': record.createdAt.toIso8601String(),
+      'used_at': record.usedAt?.toIso8601String(),
+    });
   }
 
-  TokenRecord? findValidByHash(String type, String tokenHash) {
-    final rows = _db.select(
-      '''
-      SELECT * FROM user_tokens
-      WHERE type = ? AND token_hash = ? AND used_at IS NULL
-      ''',
-      [type, tokenHash],
-    );
+  Future<TokenRecord?> findValidByHash(String type, String tokenHash) async {
+    final rows = await _client
+        .from('user_tokens')
+        .select()
+        .eq('type', type)
+        .eq('token_hash', tokenHash)
+        .isFilter('used_at', null) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRow(rows.first);
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 
-  List<TokenRecord> findExpiringSoon(String type, DateTime before) {
-    final rows = _db.select(
-      '''
-      SELECT * FROM user_tokens
-      WHERE type = ? AND used_at IS NULL AND expires_at <= ?
-      ''',
-      [type, before.toIso8601String()],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<TokenRecord>> findExpiringSoon(
+    String type,
+    DateTime before,
+  ) async {
+    final rows = await _client
+        .from('user_tokens')
+        .select()
+        .eq('type', type)
+        .isFilter('used_at', null)
+        .lte('expires_at', before.toIso8601String()) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  void markUsed(String id, DateTime usedAt) {
-    _db.execute(
-      'UPDATE user_tokens SET used_at = ? WHERE id = ?',
-      [usedAt.toIso8601String(), id],
-    );
+  Future<void> markUsed(String id, DateTime usedAt) async {
+    await _client.from('user_tokens').update({
+      'used_at': usedAt.toIso8601String(),
+    }).eq('id', id);
   }
 
-  void deleteExpired(DateTime now) {
-    _db.execute(
-      'DELETE FROM user_tokens WHERE used_at IS NULL AND expires_at < ?',
-      [now.toIso8601String()],
-    );
+  Future<void> deleteExpired(DateTime now) async {
+    await _client
+        .from('user_tokens')
+        .delete()
+        .isFilter('used_at', null)
+        .lt('expires_at', now.toIso8601String());
   }
 
-  void createRefresh(RefreshTokenRecord record) {
-    _db.execute(
-      '''
-      INSERT INTO refresh_tokens (
-        id, user_id, token_hash, expires_at, created_at, revoked_at
-      ) VALUES (?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        record.id,
-        record.userId,
-        record.tokenHash,
-        record.expiresAt.toIso8601String(),
-        record.createdAt.toIso8601String(),
-        record.revokedAt?.toIso8601String(),
-      ],
-    );
+  Future<void> createRefresh(RefreshTokenRecord record) async {
+    await _client.from('refresh_tokens').insert({
+      'id': record.id,
+      'user_id': record.userId,
+      'token_hash': record.tokenHash,
+      'expires_at': record.expiresAt.toIso8601String(),
+      'created_at': record.createdAt.toIso8601String(),
+      'revoked_at': record.revokedAt?.toIso8601String(),
+    });
   }
 
-  RefreshTokenRecord? findRefreshByHash(String tokenHash) {
-    final rows = _db.select(
-      'SELECT * FROM refresh_tokens WHERE token_hash = ?',
-      [tokenHash],
-    );
+  Future<RefreshTokenRecord?> findRefreshByHash(String tokenHash) async {
+    final rows = await _client
+        .from('refresh_tokens')
+        .select()
+        .eq('token_hash', tokenHash) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRefreshRow(rows.first);
+    return _mapRefreshRow(rows.first as Map<String, dynamic>);
   }
 
-  void revokeRefresh(String id, DateTime revokedAt) {
-    _db.execute(
-      'UPDATE refresh_tokens SET revoked_at = ? WHERE id = ?',
-      [revokedAt.toIso8601String(), id],
-    );
+  Future<void> revokeRefresh(String id, DateTime revokedAt) async {
+    await _client.from('refresh_tokens').update({
+      'revoked_at': revokedAt.toIso8601String(),
+    }).eq('id', id);
   }
 
-  TokenRecord _mapRow(Map<String, Object?> row) {
+  TokenRecord _mapRow(Map<String, dynamic> row) {
     return TokenRecord(
       id: row['id'] as String,
       userId: row['user_id'] as String,
       type: row['type'] as String,
       tokenHash: row['token_hash'] as String,
-      expiresAt: DateTime.parse(row['expires_at'] as String),
-      createdAt: DateTime.parse(row['created_at'] as String),
-      usedAt: row['used_at'] == null
-          ? null
-          : DateTime.parse(row['used_at'] as String),
+      expiresAt: parseDate(row['expires_at']),
+      createdAt: parseDate(row['created_at']),
+      usedAt: parseDateOrNull(row['used_at']),
     );
   }
 
-  RefreshTokenRecord _mapRefreshRow(Map<String, Object?> row) {
+  RefreshTokenRecord _mapRefreshRow(Map<String, dynamic> row) {
     return RefreshTokenRecord(
       id: row['id'] as String,
       userId: row['user_id'] as String,
       tokenHash: row['token_hash'] as String,
-      expiresAt: DateTime.parse(row['expires_at'] as String),
-      createdAt: DateTime.parse(row['created_at'] as String),
-      revokedAt: row['revoked_at'] == null
-          ? null
-          : DateTime.parse(row['revoked_at'] as String),
+      expiresAt: parseDate(row['expires_at']),
+      createdAt: parseDate(row['created_at']),
+      revokedAt: parseDateOrNull(row['revoked_at']),
     );
   }
 }

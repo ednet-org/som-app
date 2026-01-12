@@ -544,6 +544,21 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                     ],
                   );
                 }),
+            const Divider(),
+            CheckboxListTile(
+              value: request.company.termsAccepted,
+              onChanged: (value) =>
+                  request.company.setTermsAccepted(value ?? false),
+              controlAffinity: ListTileControlAffinity.leading,
+              title: const Text('I accept the terms and conditions'),
+            ),
+            CheckboxListTile(
+              value: request.company.privacyAccepted,
+              onChanged: (value) =>
+                  request.company.setPrivacyAccepted(value ?? false),
+              controlAffinity: ListTileControlAffinity.leading,
+              title: const Text('I accept the privacy policy'),
+            ),
           ],
         ),
       ),

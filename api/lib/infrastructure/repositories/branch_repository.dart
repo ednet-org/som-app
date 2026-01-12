@@ -7,7 +7,8 @@ class BranchRecord {
 }
 
 class CategoryRecord {
-  CategoryRecord({required this.id, required this.branchId, required this.name});
+  CategoryRecord(
+      {required this.id, required this.branchId, required this.name});
   final String id;
   final String branchId;
   final String name;
@@ -60,8 +61,11 @@ class BranchRepository {
   }
 
   Future<BranchRecord?> findBranchByName(String name) async {
-    final rows =
-        await _client.from('branches').select().ilike('name', name).limit(1) as List<dynamic>;
+    final rows = await _client
+        .from('branches')
+        .select()
+        .ilike('name', name)
+        .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }

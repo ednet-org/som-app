@@ -25,7 +25,7 @@ class _$CompanyDto extends CompanyDto {
   final String? websiteUrl;
 
   factory _$CompanyDto([void Function(CompanyDtoBuilder)? updates]) =>
-      (new CompanyDtoBuilder()..update(updates))._build();
+      (CompanyDtoBuilder()..update(updates))._build();
 
   _$CompanyDto._(
       {this.id,
@@ -37,13 +37,12 @@ class _$CompanyDto extends CompanyDto {
       this.type,
       this.websiteUrl})
       : super._();
-
   @override
   CompanyDto rebuild(void Function(CompanyDtoBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CompanyDtoBuilder toBuilder() => new CompanyDtoBuilder()..replace(this);
+  CompanyDtoBuilder toBuilder() => CompanyDtoBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -101,7 +100,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   set name(String? name) => _$this._name = name;
 
   AddressBuilder? _address;
-  AddressBuilder get address => _$this._address ??= new AddressBuilder();
+  AddressBuilder get address => _$this._address ??= AddressBuilder();
   set address(AddressBuilder? address) => _$this._address = address;
 
   String? _uidNr;
@@ -147,7 +146,6 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
 
   @override
   void replace(CompanyDto other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyDto;
   }
 
@@ -163,7 +161,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
     _$CompanyDto _$result;
     try {
       _$result = _$v ??
-          new _$CompanyDto._(
+          _$CompanyDto._(
             id: id,
             name: name,
             address: _address?.build(),
@@ -179,7 +177,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
         _$failedField = 'address';
         _address?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyDto', _$failedField, e.toString());
       }
       rethrow;

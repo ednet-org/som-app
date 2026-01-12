@@ -37,48 +37,65 @@ class SomApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     final beamer = Provider.of<BeamerProvidedKey>(context);
+    final actionMaxWidth = MediaQuery.of(context).size.width - 200;
+    final constrainedActionWidth =
+        actionMaxWidth > 200 ? actionMaxWidth : MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Smart Offer Management'),
           actions: [
-            const SizedBox(width: 10),
-            AppBarButton(
-              key: const ValueKey('InquiriesManagementMenuItem'),
-              title: 'Inquiries',
-              child: AppBarIcons.inquiry.value,
-              beamer: beamer,
-              uri: '/inquiries',
+            SizedBox(
+              width: constrainedActionWidth,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      AppBarButton(
+                        key: const ValueKey('InquiriesManagementMenuItem'),
+                        title: 'Inquiries',
+                        child: AppBarIcons.inquiry.value,
+                        beamer: beamer,
+                        uri: '/inquiries',
+                      ),
+                      AppBarButton(
+                        key: const ValueKey('CompanyManagementMenuItem'),
+                        title: 'Company',
+                        child: AppBarIcons.company.value,
+                        beamer: beamer,
+                        uri: '/company',
+                      ),
+                      AppBarButton(
+                        key: const ValueKey('UserManagementMenuItem'),
+                        title: 'User',
+                        child: AppBarIcons.user.value,
+                        beamer: beamer,
+                        uri: '/user',
+                      ),
+                      AppBarButton(
+                        key: const ValueKey('AdsManagementMenuItem'),
+                        title: 'Ads',
+                        child: AppBarIcons.ads.value,
+                        beamer: beamer,
+                        uri: '/ads',
+                      ),
+                      AppBarButton(
+                        key: const ValueKey('StatisticsMenuItem'),
+                        title: 'Statistics',
+                        child: AppBarIcons.statistics.value,
+                        beamer: beamer,
+                        uri: '/statistics',
+                      ),
+                      buildPopupMenuButton(context, appStore),
+                    ],
+                  ),
+                ),
+              ),
             ),
-            AppBarButton(
-              key: const ValueKey('CompanyManagementMenuItem'),
-              title: 'Company',
-              child: AppBarIcons.company.value,
-              beamer: beamer,
-              uri: '/company',
-            ),
-            AppBarButton(
-              key: const ValueKey('UserManagementMenuItem'),
-              title: 'User',
-              child: AppBarIcons.user.value,
-              beamer: beamer,
-              uri: '/user',
-            ),
-            AppBarButton(
-              key: const ValueKey('AdsManagementMenuItem'),
-              title: 'Ads',
-              child: AppBarIcons.ads.value,
-              beamer: beamer,
-              uri: '/ads',
-            ),
-            AppBarButton(
-              key: const ValueKey('StatisticsMenuItem'),
-              title: 'Statistics',
-              child: AppBarIcons.statistics.value,
-              beamer: beamer,
-              uri: '/statistics',
-            ),
-            buildPopupMenuButton(context, appStore),
           ],
           automaticallyImplyLeading: false,
         ),

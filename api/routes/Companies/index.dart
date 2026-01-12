@@ -20,12 +20,13 @@ Future<Response> _listCompanies(RequestContext context) async {
   final body = companies
       .where((company) => filterType == null || company.type == filterType)
       .map((company) => {
+            'id': company.id,
             'name': company.name,
             'address': company.address.toJson(),
             'uidNr': company.uidNr,
             'registrationNr': company.registrationNr,
             'companySize': companySizeToWire(company.companySize),
-            'type': company.type == 'provider' ? 1 : 0,
+            'type': companyTypeToWire(company.type),
             'websiteUrl': company.websiteUrl,
           })
       .toList();

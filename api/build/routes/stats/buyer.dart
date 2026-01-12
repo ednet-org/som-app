@@ -1,5 +1,6 @@
 import 'package:dart_frog/dart_frog.dart';
 
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/request_auth.dart';
 import 'package:som_api/services/statistics_service.dart';
 
@@ -7,9 +8,11 @@ Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.get) {
     return Response(statusCode: 405);
   }
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('buyer')) {
     return Response(statusCode: 403);
@@ -18,7 +21,7 @@ Future<Response> onRequest(RequestContext context) async {
   final from = params['from'] == null ? null : DateTime.parse(params['from']!);
   final to = params['to'] == null ? null : DateTime.parse(params['to']!);
   final userId = params['userId'];
-  final stats = context.read<StatisticsService>().buyerStats(
+  final stats = await context.read<StatisticsService>().buyerStats(
         companyId: auth.companyId,
         userId: userId,
         from: from,

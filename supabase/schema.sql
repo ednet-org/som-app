@@ -9,6 +9,8 @@ create table if not exists companies (
   registration_nr text not null,
   company_size text not null,
   website_url text,
+  terms_accepted_at timestamptz,
+  privacy_accepted_at timestamptz,
   status text not null,
   created_at timestamptz not null,
   updated_at timestamptz not null
@@ -69,6 +71,29 @@ create table if not exists subscriptions (
   start_date timestamptz not null,
   end_date timestamptz not null,
   created_at timestamptz not null
+);
+
+create table if not exists billing_records (
+  id uuid primary key,
+  company_id uuid not null references companies(id) on delete cascade,
+  amount_in_subunit integer not null,
+  currency text not null,
+  status text not null,
+  period_start timestamptz not null,
+  period_end timestamptz not null,
+  created_at timestamptz not null,
+  paid_at timestamptz
+);
+
+create table if not exists subscription_cancellations (
+  id uuid primary key,
+  company_id uuid not null references companies(id) on delete cascade,
+  requested_by_user_id uuid not null references users(id) on delete cascade,
+  reason text,
+  status text not null,
+  requested_at timestamptz not null,
+  effective_end_date timestamptz,
+  resolved_at timestamptz
 );
 
 create table if not exists provider_profiles (

@@ -32,7 +32,7 @@ class ConsultantsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<UserDto>] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<UserDto>>> consultantsGet({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -78,12 +78,13 @@ class ConsultantsApi {
       ) as BuiltList<UserDto>;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<BuiltList<UserDto>>(
@@ -111,7 +112,7 @@ class ConsultantsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> consultantsPost({ 
     required UserRegistration userRegistration,
     CancelToken? cancelToken,
@@ -148,14 +149,15 @@ class ConsultantsApi {
       _bodyData = _serializers.serialize(userRegistration, specifiedType: _type);
 
     } catch(error, stackTrace) {
-      throw DioError(
+      throw DioException(
          requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     final _response = await _dio.request<Object>(
@@ -183,7 +185,7 @@ class ConsultantsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> consultantsRegisterCompanyPost({ 
     required ConsultantsRegisterCompanyPostRequest consultantsRegisterCompanyPostRequest,
     CancelToken? cancelToken,
@@ -220,14 +222,15 @@ class ConsultantsApi {
       _bodyData = _serializers.serialize(consultantsRegisterCompanyPostRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
-      throw DioError(
+      throw DioException(
          requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     final _response = await _dio.request<Object>(

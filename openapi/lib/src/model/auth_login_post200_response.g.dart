@@ -14,10 +14,9 @@ class _$AuthLoginPost200Response extends AuthLoginPost200Response {
 
   factory _$AuthLoginPost200Response(
           [void Function(AuthLoginPost200ResponseBuilder)? updates]) =>
-      (new AuthLoginPost200ResponseBuilder()..update(updates))._build();
+      (AuthLoginPost200ResponseBuilder()..update(updates))._build();
 
   _$AuthLoginPost200Response._({this.token, this.refreshToken}) : super._();
-
   @override
   AuthLoginPost200Response rebuild(
           void Function(AuthLoginPost200ResponseBuilder) updates) =>
@@ -25,7 +24,7 @@ class _$AuthLoginPost200Response extends AuthLoginPost200Response {
 
   @override
   AuthLoginPost200ResponseBuilder toBuilder() =>
-      new AuthLoginPost200ResponseBuilder()..replace(this);
+      AuthLoginPost200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -82,7 +81,6 @@ class AuthLoginPost200ResponseBuilder
 
   @override
   void replace(AuthLoginPost200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthLoginPost200Response;
   }
 
@@ -96,7 +94,7 @@ class AuthLoginPost200ResponseBuilder
 
   _$AuthLoginPost200Response _build() {
     final _$result = _$v ??
-        new _$AuthLoginPost200Response._(
+        _$AuthLoginPost200Response._(
           token: token,
           refreshToken: refreshToken,
         );

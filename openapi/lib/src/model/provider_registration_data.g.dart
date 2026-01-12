@@ -21,12 +21,12 @@ ProviderRegistrationDataPaymentIntervalEnum
     case 'number1':
       return _$providerRegistrationDataPaymentIntervalEnum_number1;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<ProviderRegistrationDataPaymentIntervalEnum>
-    _$providerRegistrationDataPaymentIntervalEnumValues = new BuiltSet<
+    _$providerRegistrationDataPaymentIntervalEnumValues = BuiltSet<
         ProviderRegistrationDataPaymentIntervalEnum>(const <ProviderRegistrationDataPaymentIntervalEnum>[
   _$providerRegistrationDataPaymentIntervalEnum_number0,
   _$providerRegistrationDataPaymentIntervalEnum_number1,
@@ -34,7 +34,7 @@ final BuiltSet<ProviderRegistrationDataPaymentIntervalEnum>
 
 Serializer<ProviderRegistrationDataPaymentIntervalEnum>
     _$providerRegistrationDataPaymentIntervalEnumSerializer =
-    new _$ProviderRegistrationDataPaymentIntervalEnumSerializer();
+    _$ProviderRegistrationDataPaymentIntervalEnumSerializer();
 
 class _$ProviderRegistrationDataPaymentIntervalEnumSerializer
     implements
@@ -81,7 +81,7 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
 
   factory _$ProviderRegistrationData(
           [void Function(ProviderRegistrationDataBuilder)? updates]) =>
-      (new ProviderRegistrationDataBuilder()..update(updates))._build();
+      (ProviderRegistrationDataBuilder()..update(updates))._build();
 
   _$ProviderRegistrationData._(
       {this.bankDetails,
@@ -89,7 +89,6 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
       this.subscriptionPlanId,
       this.paymentInterval})
       : super._();
-
   @override
   ProviderRegistrationData rebuild(
           void Function(ProviderRegistrationDataBuilder) updates) =>
@@ -97,7 +96,7 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
 
   @override
   ProviderRegistrationDataBuilder toBuilder() =>
-      new ProviderRegistrationDataBuilder()..replace(this);
+      ProviderRegistrationDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -138,13 +137,13 @@ class ProviderRegistrationDataBuilder
 
   BankDetailsBuilder? _bankDetails;
   BankDetailsBuilder get bankDetails =>
-      _$this._bankDetails ??= new BankDetailsBuilder();
+      _$this._bankDetails ??= BankDetailsBuilder();
   set bankDetails(BankDetailsBuilder? bankDetails) =>
       _$this._bankDetails = bankDetails;
 
   ListBuilder<String>? _branchIds;
   ListBuilder<String> get branchIds =>
-      _$this._branchIds ??= new ListBuilder<String>();
+      _$this._branchIds ??= ListBuilder<String>();
   set branchIds(ListBuilder<String>? branchIds) =>
       _$this._branchIds = branchIds;
 
@@ -178,7 +177,6 @@ class ProviderRegistrationDataBuilder
 
   @override
   void replace(ProviderRegistrationData other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProviderRegistrationData;
   }
 
@@ -194,7 +192,7 @@ class ProviderRegistrationDataBuilder
     _$ProviderRegistrationData _$result;
     try {
       _$result = _$v ??
-          new _$ProviderRegistrationData._(
+          _$ProviderRegistrationData._(
             bankDetails: _bankDetails?.build(),
             branchIds: _branchIds?.build(),
             subscriptionPlanId: subscriptionPlanId,
@@ -208,7 +206,7 @@ class ProviderRegistrationDataBuilder
         _$failedField = 'branchIds';
         _branchIds?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProviderRegistrationData', _$failedField, e.toString());
       }
       rethrow;

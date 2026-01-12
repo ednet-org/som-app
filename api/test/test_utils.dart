@@ -4,7 +4,9 @@ import 'package:uuid/uuid.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
+import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
+import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
@@ -50,7 +52,8 @@ class InMemoryCompanyRepository implements CompanyRepository {
 
   @override
   Future<bool> existsByName(String name) async {
-    return _companies.values.any((c) => c.name.toLowerCase() == name.toLowerCase());
+    return _companies.values
+        .any((c) => c.name.toLowerCase() == name.toLowerCase());
   }
 
   @override
@@ -87,9 +90,7 @@ class InMemoryUserRepository implements UserRepository {
 
   @override
   Future<List<UserRecord>> listByCompany(String companyId) async {
-    return _users.values
-        .where((u) => u.companyId == companyId)
-        .toList()
+    return _users.values.where((u) => u.companyId == companyId).toList()
       ..sort((a, b) => a.email.compareTo(b.email));
   }
 
@@ -254,7 +255,8 @@ class InMemorySubscriptionRepository implements SubscriptionRepository {
   }
 
   @override
-  Future<SubscriptionRecord?> findSubscriptionByCompany(String companyId) async {
+  Future<SubscriptionRecord?> findSubscriptionByCompany(
+      String companyId) async {
     final items =
         _subscriptions.where((s) => s.companyId == companyId).toList();
     if (items.isEmpty) return null;
@@ -418,7 +420,9 @@ class InMemoryInquiryRepository implements InquiryRepository {
     required List<String> providerCompanyIds,
   }) async {
     for (final providerCompanyId in providerCompanyIds) {
-      _assignments.putIfAbsent(providerCompanyId, () => <String>{}).add(inquiryId);
+      _assignments
+          .putIfAbsent(providerCompanyId, () => <String>{})
+          .add(inquiryId);
     }
   }
 }
@@ -485,6 +489,15 @@ class InMemoryAdsRepository implements AdsRepository {
   }
 
   @override
+  Future<List<AdRecord>> listAll({String? companyId, String? status}) async {
+    return _ads.values
+        .where((a) =>
+            (companyId == null || a.companyId == companyId) &&
+            (status == null || status.isEmpty || a.status == status))
+        .toList();
+  }
+
+  @override
   Future<List<AdRecord>> listByCompany(String companyId) async {
     return _ads.values.where((a) => a.companyId == companyId).toList();
   }
@@ -531,6 +544,60 @@ class InMemoryAdsRepository implements AdsRepository {
   }
 }
 
+class InMemoryBillingRepository implements BillingRepository {
+  final Map<String, BillingRecord> _records = {};
+
+  @override
+  Future<void> create(BillingRecord record) async {
+    _records[record.id] = record;
+  }
+
+  @override
+  Future<List<BillingRecord>> list({String? companyId}) async {
+    return _records.values
+        .where((record) => companyId == null || record.companyId == companyId)
+        .toList();
+  }
+
+  @override
+  Future<BillingRecord?> findById(String id) async => _records[id];
+
+  @override
+  Future<void> update(BillingRecord record) async {
+    _records[record.id] = record;
+  }
+}
+
+class InMemoryCancellationRepository implements CancellationRepository {
+  final Map<String, SubscriptionCancellationRecord> _records = {};
+
+  @override
+  Future<void> create(SubscriptionCancellationRecord record) async {
+    _records[record.id] = record;
+  }
+
+  @override
+  Future<List<SubscriptionCancellationRecord>> list({
+    String? companyId,
+    String? status,
+  }) async {
+    return _records.values
+        .where((record) =>
+            (companyId == null || record.companyId == companyId) &&
+            (status == null || status.isEmpty || record.status == status))
+        .toList();
+  }
+
+  @override
+  Future<SubscriptionCancellationRecord?> findById(String id) async =>
+      _records[id];
+
+  @override
+  Future<void> update(SubscriptionCancellationRecord record) async {
+    _records[record.id] = record;
+  }
+}
+
 class InMemoryTokenRepository implements TokenRepository {
   final Map<String, TokenRecord> _tokens = {};
   final Map<String, RefreshTokenRecord> _refreshTokens = {};
@@ -553,10 +620,14 @@ class InMemoryTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<List<TokenRecord>> findExpiringSoon(String type, DateTime before) async {
+  Future<List<TokenRecord>> findExpiringSoon(
+      String type, DateTime before) async {
     return _tokens.values
         .where(
-          (t) => t.type == type && t.usedAt == null && t.expiresAt.isBefore(before),
+          (t) =>
+              t.type == type &&
+              t.usedAt == null &&
+              t.expiresAt.isBefore(before),
         )
         .toList();
   }
@@ -740,7 +811,8 @@ TestAuthService createAuthService(UserRepository users) {
   final tokens = InMemoryTokenRepository();
   final clock = Clock();
   final email = EmailService(outboxPath: 'storage/test_outbox');
-  return TestAuthService(users: users, tokens: tokens, email: email, clock: clock);
+  return TestAuthService(
+      users: users, tokens: tokens, email: email, clock: clock);
 }
 
 Future<void> seedSubscriptions(SubscriptionRepository repository) async {

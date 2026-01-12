@@ -4,10 +4,11 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
+import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
-import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/file_storage.dart';
 import '../routes/ads/index.dart' as route;
 import 'test_utils.dart';
@@ -15,12 +16,19 @@ import 'test_utils.dart';
 void main() {
   group('POST /ads', () {
     test('creates ad for provider', () async {
-      final db = createTestDb();
-      final company = seedCompany(db, type: 'provider');
-      final authService = createAuthService(db);
-      final passwordHash = authService.hashPassword('secret');
-      final user = seedUser(db, company, email: 'provider@acme.test', passwordHash: passwordHash);
-      final token = authService.issueAccessToken(user, role: 'provider');
+      final companies = InMemoryCompanyRepository();
+      final users = InMemoryUserRepository();
+      final ads = InMemoryAdsRepository();
+      final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
+      final company = await seedCompany(companies, type: 'provider');
+      final user = await seedUser(
+        users,
+        company,
+        email: 'provider@acme.test',
+        roles: const ['provider'],
+      );
+      final token = buildTestJwt(userId: user.id);
 
       final context = TestRequestContext(
         path: '/ads',
@@ -39,10 +47,11 @@ void main() {
           'description': 'Desc'
         }),
       );
-      context.provide<AdsRepository>(AdsRepository(db));
-      context.provide<FileStorage>(FileStorage(basePath: 'storage/test_uploads'));
-      context.provide<ProviderRepository>(ProviderRepository(db));
-      context.provide<SubscriptionRepository>(SubscriptionRepository(db));
+      context.provide<AdsRepository>(ads);
+      context.provide<FileStorage>(TestFileStorage());
+      context.provide<ProviderRepository>(providers);
+      context.provide<SubscriptionRepository>(subscriptions);
+      context.provide<UserRepository>(users);
       context.provide<SomDomainModel>(SomDomainModel());
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 200);

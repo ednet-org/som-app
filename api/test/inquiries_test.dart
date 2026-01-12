@@ -40,7 +40,10 @@ void main() {
           'branchId': 'branch-1',
           'categoryId': 'cat-1',
           'productTags': ['tag1'],
-          'deadline': DateTime.now().toUtc().add(const Duration(days: 5)).toIso8601String(),
+          'deadline': DateTime.now()
+              .toUtc()
+              .add(const Duration(days: 5))
+              .toIso8601String(),
           'deliveryZips': ['1010'],
           'numberOfProviders': 1,
           'description': 'Test inquiry',

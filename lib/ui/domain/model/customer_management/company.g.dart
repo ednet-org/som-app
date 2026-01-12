@@ -221,6 +221,38 @@ mixin _$Company on _Company, Store {
     });
   }
 
+  late final _$termsAcceptedAtom =
+      Atom(name: '_Company.termsAccepted', context: context);
+
+  @override
+  bool get termsAccepted {
+    _$termsAcceptedAtom.reportRead();
+    return super.termsAccepted;
+  }
+
+  @override
+  set termsAccepted(bool value) {
+    _$termsAcceptedAtom.reportWrite(value, super.termsAccepted, () {
+      super.termsAccepted = value;
+    });
+  }
+
+  late final _$privacyAcceptedAtom =
+      Atom(name: '_Company.privacyAccepted', context: context);
+
+  @override
+  bool get privacyAccepted {
+    _$privacyAcceptedAtom.reportRead();
+    return super.privacyAccepted;
+  }
+
+  @override
+  set privacyAccepted(bool value) {
+    _$privacyAcceptedAtom.reportWrite(value, super.privacyAccepted, () {
+      super.privacyAccepted = value;
+    });
+  }
+
   late final _$numberOfUsersAtom =
       Atom(name: '_Company.numberOfUsers', context: context);
 
@@ -428,6 +460,28 @@ mixin _$Company on _Company, Store {
   }
 
   @override
+  void setTermsAccepted(bool value) {
+    final _$actionInfo = _$_CompanyActionController.startAction(
+        name: '_Company.setTermsAccepted');
+    try {
+      return super.setTermsAccepted(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPrivacyAccepted(bool value) {
+    final _$actionInfo = _$_CompanyActionController.startAction(
+        name: '_Company.setPrivacyAccepted');
+    try {
+      return super.setPrivacyAccepted(value);
+    } finally {
+      _$_CompanyActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 uidNr: ${uidNr},
@@ -442,6 +496,8 @@ role: ${role},
 providerData: ${providerData},
 users: ${users},
 admin: ${admin},
+termsAccepted: ${termsAccepted},
+privacyAccepted: ${privacyAccepted},
 numberOfUsers: ${numberOfUsers},
 isProvider: ${isProvider},
 isBuyer: ${isBuyer},

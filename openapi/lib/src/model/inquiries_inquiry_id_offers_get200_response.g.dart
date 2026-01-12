@@ -16,12 +16,11 @@ class _$InquiriesInquiryIdOffersGet200Response
   factory _$InquiriesInquiryIdOffersGet200Response(
           [void Function(InquiriesInquiryIdOffersGet200ResponseBuilder)?
               updates]) =>
-      (new InquiriesInquiryIdOffersGet200ResponseBuilder()..update(updates))
+      (InquiriesInquiryIdOffersGet200ResponseBuilder()..update(updates))
           ._build();
 
   _$InquiriesInquiryIdOffersGet200Response._({this.id, this.status})
       : super._();
-
   @override
   InquiriesInquiryIdOffersGet200Response rebuild(
           void Function(InquiriesInquiryIdOffersGet200ResponseBuilder)
@@ -30,7 +29,7 @@ class _$InquiriesInquiryIdOffersGet200Response
 
   @override
   InquiriesInquiryIdOffersGet200ResponseBuilder toBuilder() =>
-      new InquiriesInquiryIdOffersGet200ResponseBuilder()..replace(this);
+      InquiriesInquiryIdOffersGet200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -89,7 +88,6 @@ class InquiriesInquiryIdOffersGet200ResponseBuilder
 
   @override
   void replace(InquiriesInquiryIdOffersGet200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InquiriesInquiryIdOffersGet200Response;
   }
 
@@ -104,7 +102,7 @@ class InquiriesInquiryIdOffersGet200ResponseBuilder
 
   _$InquiriesInquiryIdOffersGet200Response _build() {
     final _$result = _$v ??
-        new _$InquiriesInquiryIdOffersGet200Response._(
+        _$InquiriesInquiryIdOffersGet200Response._(
           id: id,
           status: status,
         );

@@ -10,7 +10,8 @@ import 'package:som_api/services/request_auth.dart';
 Future<Response> onRequest(RequestContext context) async {
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
@@ -24,7 +25,8 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   if (context.request.method == HttpMethod.post) {
-    final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final body =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final email = (body['email'] as String? ?? '').toLowerCase();
     if (await userRepo.findByEmail(email) != null) {
       return Response.json(statusCode: 400, body: 'E-mail already used.');

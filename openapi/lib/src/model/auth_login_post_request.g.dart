@@ -14,16 +14,10 @@ class _$AuthLoginPostRequest extends AuthLoginPostRequest {
 
   factory _$AuthLoginPostRequest(
           [void Function(AuthLoginPostRequestBuilder)? updates]) =>
-      (new AuthLoginPostRequestBuilder()..update(updates))._build();
+      (AuthLoginPostRequestBuilder()..update(updates))._build();
 
   _$AuthLoginPostRequest._({required this.email, required this.password})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        email, r'AuthLoginPostRequest', 'email');
-    BuiltValueNullFieldError.checkNotNull(
-        password, r'AuthLoginPostRequest', 'password');
-  }
-
+      : super._();
   @override
   AuthLoginPostRequest rebuild(
           void Function(AuthLoginPostRequestBuilder) updates) =>
@@ -31,7 +25,7 @@ class _$AuthLoginPostRequest extends AuthLoginPostRequest {
 
   @override
   AuthLoginPostRequestBuilder toBuilder() =>
-      new AuthLoginPostRequestBuilder()..replace(this);
+      AuthLoginPostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -87,7 +81,6 @@ class AuthLoginPostRequestBuilder
 
   @override
   void replace(AuthLoginPostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthLoginPostRequest;
   }
 
@@ -101,7 +94,7 @@ class AuthLoginPostRequestBuilder
 
   _$AuthLoginPostRequest _build() {
     final _$result = _$v ??
-        new _$AuthLoginPostRequest._(
+        _$AuthLoginPostRequest._(
           email: BuiltValueNullFieldError.checkNotNull(
               email, r'AuthLoginPostRequest', 'email'),
           password: BuiltValueNullFieldError.checkNotNull(

@@ -7,10 +7,24 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/auth_service.dart';
 import 'package:som_api/services/mappings.dart';
+import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method != HttpMethod.post) {
     return Response(statusCode: 405);
+  }
+  final authResult = await parseAuth(
+    context,
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
+  );
+  if (authResult == null) {
+    return Response(statusCode: 401);
+  }
+  if (!authResult.roles.contains('admin') ||
+      authResult.companyId != companyId) {
+    return Response(statusCode: 403);
   }
   final repo = context.read<UserRepository>();
   final auth = context.read<AuthService>();

@@ -31,7 +31,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
       users: context.read<UserRepository>(),
     );
     if (auth == null || !auth.roles.contains('provider')) {
@@ -39,7 +40,9 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     }
     final storage = context.read<FileStorage>();
     String? pdfPath;
-    if (context.request.headers['content-type']?.contains('multipart/form-data') ?? false) {
+    if (context.request.headers['content-type']
+            ?.contains('multipart/form-data') ??
+        false) {
       final form = await context.request.formData();
       final file = form.files['file'];
       if (file != null) {
@@ -51,7 +54,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
         );
       }
     } else {
-      final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+      final body =
+          jsonDecode(await context.request.body()) as Map<String, dynamic>;
       if (body['pdfBase64'] != null) {
         final bytes = base64Decode(body['pdfBase64'] as String);
         pdfPath = await storage.saveFile(

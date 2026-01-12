@@ -27,7 +27,7 @@ class _$Offer extends Offer {
   final String? providerDecision;
 
   factory _$Offer([void Function(OfferBuilder)? updates]) =>
-      (new OfferBuilder()..update(updates))._build();
+      (OfferBuilder()..update(updates))._build();
 
   _$Offer._(
       {this.id,
@@ -40,13 +40,12 @@ class _$Offer extends Offer {
       this.buyerDecision,
       this.providerDecision})
       : super._();
-
   @override
   Offer rebuild(void Function(OfferBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  OfferBuilder toBuilder() => new OfferBuilder()..replace(this);
+  OfferBuilder toBuilder() => OfferBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -160,7 +159,6 @@ class OfferBuilder implements Builder<Offer, OfferBuilder> {
 
   @override
   void replace(Offer other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Offer;
   }
 
@@ -174,7 +172,7 @@ class OfferBuilder implements Builder<Offer, OfferBuilder> {
 
   _$Offer _build() {
     final _$result = _$v ??
-        new _$Offer._(
+        _$Offer._(
           id: id,
           inquiryId: inquiryId,
           providerCompanyId: providerCompanyId,

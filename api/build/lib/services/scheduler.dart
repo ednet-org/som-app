@@ -3,6 +3,7 @@ import 'dart:async';
 import '../infrastructure/clock.dart';
 import '../infrastructure/repositories/token_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
+import 'auth_service.dart';
 import 'email_service.dart';
 import 'notification_service.dart';
 
@@ -10,6 +11,7 @@ class Scheduler {
   Scheduler({
     required this.tokens,
     required this.users,
+    required this.auth,
     required this.email,
     required this.notifications,
     required this.clock,
@@ -17,6 +19,7 @@ class Scheduler {
 
   final TokenRepository tokens;
   final UserRepository users;
+  final AuthService auth;
   final EmailService email;
   final NotificationService notifications;
   final Clock clock;
@@ -29,15 +32,15 @@ class Scheduler {
 
   Future<void> _run() async {
     await _sendExpiryReminders();
-    _deleteExpiredInactiveUsers();
+    await _deleteExpiredInactiveUsers();
     await notifications.notifyBuyersForOfferCountOrDeadline();
   }
 
   Future<void> _sendExpiryReminders() async {
     final remindAt = clock.nowUtc().add(const Duration(days: 3));
-    final expiring = tokens.findExpiringSoon('confirm_email', remindAt);
+    final expiring = await tokens.findExpiringSoon('confirm_email', remindAt);
     for (final token in expiring) {
-      final user = users.findById(token.userId);
+      final user = await users.findById(token.userId);
       if (user == null || user.emailConfirmed) {
         continue;
       }
@@ -47,7 +50,7 @@ class Scheduler {
         text:
             'Your registration link will expire on ${token.expiresAt.toIso8601String()}. Please complete your registration.',
       );
-      final admins = users.listAdminsByCompany(user.companyId);
+      final admins = await users.listAdminsByCompany(user.companyId);
       for (final admin in admins) {
         await email.send(
           to: admin.email,
@@ -59,19 +62,20 @@ class Scheduler {
     }
   }
 
-  void _deleteExpiredInactiveUsers() {
+  Future<void> _deleteExpiredInactiveUsers() async {
     final now = clock.nowUtc();
-    final expired = tokens.findExpiringSoon('confirm_email', now);
+    final expired = await tokens.findExpiringSoon('confirm_email', now);
     for (final token in expired) {
-      final user = users.findById(token.userId);
+      final user = await users.findById(token.userId);
       if (user == null) {
         continue;
       }
       if (!user.emailConfirmed) {
-        users.deleteById(user.id);
+        await auth.deleteAuthUser(user.id);
+        await users.deleteById(user.id);
       }
-      tokens.markUsed(token.id, now);
+      await tokens.markUsed(token.id, now);
     }
-    tokens.deleteExpired(now);
+    await tokens.deleteExpired(now);
   }
 }

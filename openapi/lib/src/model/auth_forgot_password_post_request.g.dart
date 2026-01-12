@@ -12,13 +12,9 @@ class _$AuthForgotPasswordPostRequest extends AuthForgotPasswordPostRequest {
 
   factory _$AuthForgotPasswordPostRequest(
           [void Function(AuthForgotPasswordPostRequestBuilder)? updates]) =>
-      (new AuthForgotPasswordPostRequestBuilder()..update(updates))._build();
+      (AuthForgotPasswordPostRequestBuilder()..update(updates))._build();
 
-  _$AuthForgotPasswordPostRequest._({required this.email}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        email, r'AuthForgotPasswordPostRequest', 'email');
-  }
-
+  _$AuthForgotPasswordPostRequest._({required this.email}) : super._();
   @override
   AuthForgotPasswordPostRequest rebuild(
           void Function(AuthForgotPasswordPostRequestBuilder) updates) =>
@@ -26,7 +22,7 @@ class _$AuthForgotPasswordPostRequest extends AuthForgotPasswordPostRequest {
 
   @override
   AuthForgotPasswordPostRequestBuilder toBuilder() =>
-      new AuthForgotPasswordPostRequestBuilder()..replace(this);
+      AuthForgotPasswordPostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -75,7 +71,6 @@ class AuthForgotPasswordPostRequestBuilder
 
   @override
   void replace(AuthForgotPasswordPostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthForgotPasswordPostRequest;
   }
 
@@ -89,7 +84,7 @@ class AuthForgotPasswordPostRequestBuilder
 
   _$AuthForgotPasswordPostRequest _build() {
     final _$result = _$v ??
-        new _$AuthForgotPasswordPostRequest._(
+        _$AuthForgotPasswordPostRequest._(
           email: BuiltValueNullFieldError.checkNotNull(
               email, r'AuthForgotPasswordPostRequest', 'email'),
         );

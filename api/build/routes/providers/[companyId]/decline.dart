@@ -9,25 +9,29 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method != HttpMethod.post) {
     return Response(statusCode: 405);
   }
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
     return Response(statusCode: 403);
   }
   final repo = context.read<ProviderRepository>();
-  final profile = repo.findByCompany(companyId);
+  final profile = await repo.findByCompany(companyId);
   if (profile == null) {
     return Response(statusCode: 404);
   }
-  final admins = context.read<UserRepository>().listAdminsByCompany(companyId);
+  final admins =
+      await context.read<UserRepository>().listAdminsByCompany(companyId);
   final email = context.read<EmailService>();
   for (final admin in admins) {
     await email.send(
       to: admin.email,
       subject: 'Registration pending',
-      text: 'Your registration remains pending because the requested category was declined.',
+      text:
+          'Your registration remains pending because the requested category was declined.',
     );
   }
   return Response(statusCode: 200);

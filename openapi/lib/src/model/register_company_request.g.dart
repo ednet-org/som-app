@@ -14,16 +14,10 @@ class _$RegisterCompanyRequest extends RegisterCompanyRequest {
 
   factory _$RegisterCompanyRequest(
           [void Function(RegisterCompanyRequestBuilder)? updates]) =>
-      (new RegisterCompanyRequestBuilder()..update(updates))._build();
+      (RegisterCompanyRequestBuilder()..update(updates))._build();
 
   _$RegisterCompanyRequest._({required this.company, required this.users})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        company, r'RegisterCompanyRequest', 'company');
-    BuiltValueNullFieldError.checkNotNull(
-        users, r'RegisterCompanyRequest', 'users');
-  }
-
+      : super._();
   @override
   RegisterCompanyRequest rebuild(
           void Function(RegisterCompanyRequestBuilder) updates) =>
@@ -31,7 +25,7 @@ class _$RegisterCompanyRequest extends RegisterCompanyRequest {
 
   @override
   RegisterCompanyRequestBuilder toBuilder() =>
-      new RegisterCompanyRequestBuilder()..replace(this);
+      RegisterCompanyRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -65,12 +59,12 @@ class RegisterCompanyRequestBuilder
 
   CompanyRegistrationBuilder? _company;
   CompanyRegistrationBuilder get company =>
-      _$this._company ??= new CompanyRegistrationBuilder();
+      _$this._company ??= CompanyRegistrationBuilder();
   set company(CompanyRegistrationBuilder? company) => _$this._company = company;
 
   ListBuilder<UserRegistration>? _users;
   ListBuilder<UserRegistration> get users =>
-      _$this._users ??= new ListBuilder<UserRegistration>();
+      _$this._users ??= ListBuilder<UserRegistration>();
   set users(ListBuilder<UserRegistration>? users) => _$this._users = users;
 
   RegisterCompanyRequestBuilder() {
@@ -89,7 +83,6 @@ class RegisterCompanyRequestBuilder
 
   @override
   void replace(RegisterCompanyRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$RegisterCompanyRequest;
   }
 
@@ -105,7 +98,7 @@ class RegisterCompanyRequestBuilder
     _$RegisterCompanyRequest _$result;
     try {
       _$result = _$v ??
-          new _$RegisterCompanyRequest._(
+          _$RegisterCompanyRequest._(
             company: company.build(),
             users: users.build(),
           );
@@ -117,7 +110,7 @@ class RegisterCompanyRequestBuilder
         _$failedField = 'users';
         users.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'RegisterCompanyRequest', _$failedField, e.toString());
       }
       rethrow;

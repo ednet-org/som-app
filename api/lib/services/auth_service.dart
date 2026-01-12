@@ -35,7 +35,8 @@ class AuthService {
   final SupabaseClient _adminClient;
   final SupabaseClient _anonClient;
 
-  Future<AuthTokens> login({required String emailAddress, required String password}) async {
+  Future<AuthTokens> login(
+      {required String emailAddress, required String password}) async {
     final user = await users.findByEmail(emailAddress);
     if (user == null || !user.isActive) {
       throw AuthException('Invalid password or E-Mail');
@@ -56,8 +57,8 @@ class AuthService {
     if (session == null) {
       throw AuthException('Invalid password or E-Mail');
     }
-    final role =
-        user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : 'buyer');
+    final role = user.lastLoginRole ??
+        (user.roles.isNotEmpty ? user.roles.first : 'buyer');
     await users.updateLastLoginRole(user.id, role);
     return AuthTokens(
       accessToken: session.accessToken,
@@ -84,7 +85,8 @@ class AuthService {
     await email.send(
       to: user.email,
       subject: 'Reset your SOM password',
-      text: 'Use this link to reset your password: /auth/resetPassword?token=$raw&email=${user.email}',
+      text:
+          'Use this link to reset your password: /auth/resetPassword?token=$raw&email=${user.email}',
     );
   }
 
@@ -101,9 +103,12 @@ class AuthService {
     if (user == null) {
       throw AuthException('Invalid token');
     }
-    final record = await tokens.findValidByHash('reset_password', _hashToken(token));
+    final hash = _hashToken(token);
+    final record = await tokens.findValidByHash('reset_password', hash) ??
+        await tokens.findValidByHash('confirm_email', hash);
     if (record == null || record.expiresAt.isBefore(clock.nowUtc())) {
-      throw AuthException('Expired link, please contact the admin for new registration');
+      throw AuthException(
+          'Expired link, please contact the admin for new registration');
     }
     await tokens.markUsed(record.id, clock.nowUtc());
     await _adminClient.auth.admin.updateUserById(
@@ -116,21 +121,18 @@ class AuthService {
     await users.confirmEmail(user.id);
   }
 
-  Future<void> confirmEmail({required String emailAddress, required String token}) async {
+  Future<void> confirmEmail(
+      {required String emailAddress, required String token}) async {
     final user = await users.findByEmail(emailAddress);
     if (user == null) {
       throw AuthException('Invalid token');
     }
-    final record = await tokens.findValidByHash('confirm_email', _hashToken(token));
+    final record =
+        await tokens.findValidByHash('confirm_email', _hashToken(token));
     if (record == null || record.expiresAt.isBefore(clock.nowUtc())) {
-      throw AuthException('Expired link, please contact the admin for new registration');
+      throw AuthException(
+          'Expired link, please contact the admin for new registration');
     }
-    await tokens.markUsed(record.id, clock.nowUtc());
-    await _adminClient.auth.admin.updateUserById(
-      user.id,
-      attributes: AdminUserAttributes(emailConfirm: true),
-    );
-    await users.confirmEmail(user.id);
   }
 
   Future<String> createRegistrationToken(UserRecord user) async {
@@ -148,7 +150,8 @@ class AuthService {
     await email.send(
       to: user.email,
       subject: 'Complete your SOM registration',
-      text: 'Activate your account: /auth/confirmEmail?token=$raw&email=${user.email}',
+      text:
+          'Activate your account: /auth/confirmEmail?token=$raw&email=${user.email}',
     );
     return raw;
   }

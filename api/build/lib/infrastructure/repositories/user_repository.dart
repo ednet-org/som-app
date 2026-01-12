@@ -1,150 +1,122 @@
+import 'package:supabase/supabase.dart';
+
 import '../../models/models.dart';
-import '../db.dart';
 
 class UserRepository {
-  UserRepository(this._db);
+  UserRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void create(UserRecord user) {
-    _db.execute(
-      '''
-      INSERT INTO users (
-        id, company_id, email, password_hash, first_name, last_name,
-        salutation, title, telephone_nr, roles_json, is_active,
-        email_confirmed, last_login_role, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        user.id,
-        user.companyId,
-        user.email,
-        user.passwordHash,
-        user.firstName,
-        user.lastName,
-        user.salutation,
-        user.title,
-        user.telephoneNr,
-        encodeJson(user.roles),
-        user.isActive ? 1 : 0,
-        user.emailConfirmed ? 1 : 0,
-        user.lastLoginRole,
-        user.createdAt.toIso8601String(),
-        user.updatedAt.toIso8601String(),
-      ],
-    );
+  Future<void> create(UserRecord user) async {
+    await _client.from('users').insert({
+      'id': user.id,
+      'company_id': user.companyId,
+      'email': user.email,
+      'first_name': user.firstName,
+      'last_name': user.lastName,
+      'salutation': user.salutation,
+      'title': user.title,
+      'telephone_nr': user.telephoneNr,
+      'roles_json': user.roles,
+      'is_active': user.isActive,
+      'email_confirmed': user.emailConfirmed,
+      'last_login_role': user.lastLoginRole,
+      'created_at': user.createdAt.toIso8601String(),
+      'updated_at': user.updatedAt.toIso8601String(),
+    });
   }
 
-  UserRecord? findById(String id) {
-    final rows = _db.select('SELECT * FROM users WHERE id = ?', [id]);
+  Future<UserRecord?> findById(String id) async {
+    final rows =
+        await _client.from('users').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRow(rows.first);
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 
-  UserRecord? findByEmail(String email) {
-    final rows = _db.select(
-      'SELECT * FROM users WHERE lower(email) = lower(?)',
-      [email],
-    );
+  Future<UserRecord?> findByEmail(String email) async {
+    final rows = await _client
+        .from('users')
+        .select()
+        .ilike('email', email)
+        .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRow(rows.first);
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 
-  List<UserRecord> listByCompany(String companyId) {
-    final rows = _db.select(
-      'SELECT * FROM users WHERE company_id = ? ORDER BY email',
-      [companyId],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<UserRecord>> listByCompany(String companyId) async {
+    final rows = await _client
+        .from('users')
+        .select()
+        .eq('company_id', companyId)
+        .order('email') as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  List<UserRecord> listAdminsByCompany(String companyId) {
-    final rows = _db.select(
-      'SELECT * FROM users WHERE company_id = ? AND roles_json LIKE ?',
-      [companyId, '%admin%'],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<UserRecord>> listAdminsByCompany(String companyId) async {
+    final users = await listByCompany(companyId);
+    return users.where((user) => user.roles.contains('admin')).toList();
   }
 
-  List<UserRecord> listByRole(String role) {
-    final rows = _db.select(
-      'SELECT * FROM users WHERE roles_json LIKE ?',
-      ['%$role%'],
-    );
-    return rows.map(_mapRow).toList();
+  Future<List<UserRecord>> listByRole(String role) async {
+    final rows = await _client.from('users').select() as List<dynamic>;
+    return rows
+        .map((row) => _mapRow(row as Map<String, dynamic>))
+        .where((user) => user.roles.contains(role))
+        .toList();
   }
 
-  void update(UserRecord user) {
-    _db.execute(
-      '''
-      UPDATE users SET
-        email = ?,
-        first_name = ?,
-        last_name = ?,
-        salutation = ?,
-        title = ?,
-        telephone_nr = ?,
-        roles_json = ?,
-        is_active = ?,
-        email_confirmed = ?,
-        last_login_role = ?,
-        updated_at = ?
-      WHERE id = ?
-      ''',
-      [
-        user.email,
-        user.firstName,
-        user.lastName,
-        user.salutation,
-        user.title,
-        user.telephoneNr,
-        encodeJson(user.roles),
-        user.isActive ? 1 : 0,
-        user.emailConfirmed ? 1 : 0,
-        user.lastLoginRole,
-        user.updatedAt.toIso8601String(),
-        user.id,
-      ],
-    );
+  Future<void> update(UserRecord user) async {
+    await _client.from('users').update({
+      'email': user.email,
+      'first_name': user.firstName,
+      'last_name': user.lastName,
+      'salutation': user.salutation,
+      'title': user.title,
+      'telephone_nr': user.telephoneNr,
+      'roles_json': user.roles,
+      'is_active': user.isActive,
+      'email_confirmed': user.emailConfirmed,
+      'last_login_role': user.lastLoginRole,
+      'updated_at': user.updatedAt.toIso8601String(),
+    }).eq('id', user.id);
   }
 
-  void setPassword(String userId, String passwordHash) {
-    _db.execute(
-      'UPDATE users SET password_hash = ?, updated_at = ? WHERE id = ?',
-      [passwordHash, DateTime.now().toUtc().toIso8601String(), userId],
-    );
+  Future<void> setPassword(String userId, String passwordHash) async {
+    await _client.from('users').update({
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', userId);
   }
 
-  void confirmEmail(String userId) {
-    _db.execute(
-      'UPDATE users SET email_confirmed = 1, updated_at = ? WHERE id = ?',
-      [DateTime.now().toUtc().toIso8601String(), userId],
-    );
+  Future<void> confirmEmail(String userId) async {
+    await _client.from('users').update({
+      'email_confirmed': true,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', userId);
   }
 
-  void deactivate(String userId) {
-    _db.execute(
-      'UPDATE users SET is_active = 0, updated_at = ? WHERE id = ?',
-      [DateTime.now().toUtc().toIso8601String(), userId],
-    );
+  Future<void> deactivate(String userId) async {
+    await _client.from('users').update({
+      'is_active': false,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', userId);
   }
 
-  void updateLastLoginRole(String userId, String role) {
-    _db.execute(
-      'UPDATE users SET last_login_role = ?, updated_at = ? WHERE id = ?',
-      [role, DateTime.now().toUtc().toIso8601String(), userId],
-    );
+  Future<void> updateLastLoginRole(String userId, String role) async {
+    await _client.from('users').update({
+      'last_login_role': role,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', userId);
   }
 
-  void deleteById(String userId) {
-    _db.execute('DELETE FROM users WHERE id = ?', [userId]);
+  Future<void> deleteById(String userId) async {
+    await _client.from('users').delete().eq('id', userId);
   }
 
-  UserRecord _mapRow(Map<String, Object?> row) {
+  UserRecord _mapRow(Map<String, dynamic> row) {
     return UserRecord(
       id: row['id'] as String,
       companyId: row['company_id'] as String,
@@ -154,14 +126,13 @@ class UserRepository {
       salutation: row['salutation'] as String,
       title: row['title'] as String?,
       telephoneNr: row['telephone_nr'] as String?,
-      roles: (decodeJsonList(row['roles_json'] as String))
-          .map((e) => e.toString())
-          .toList(),
-      isActive: (row['is_active'] as int) == 1,
-      emailConfirmed: (row['email_confirmed'] as int) == 1,
+      roles:
+          decodeJsonList(row['roles_json']).map((e) => e.toString()).toList(),
+      isActive: row['is_active'] as bool? ?? false,
+      emailConfirmed: row['email_confirmed'] as bool? ?? false,
       lastLoginRole: row['last_login_role'] as String?,
-      createdAt: DateTime.parse(row['created_at'] as String),
-      updatedAt: DateTime.parse(row['updated_at'] as String),
+      createdAt: parseDate(row['created_at']),
+      updatedAt: parseDate(row['updated_at']),
       passwordHash: row['password_hash'] as String?,
     );
   }

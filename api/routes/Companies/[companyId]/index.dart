@@ -6,6 +6,7 @@ import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/mappings.dart';
+import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
   final repo = context.read<CompanyRepository>();
@@ -16,18 +17,35 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     }
     return Response.json(
       body: {
+        'id': company.id,
         'name': company.name,
         'address': company.address.toJson(),
         'uidNr': company.uidNr,
         'registrationNr': company.registrationNr,
         'companySize': companySizeToWire(company.companySize),
-        'type': company.type == 'provider' ? 1 : 0,
+        'type': companyTypeToWire(company.type),
         'websiteUrl': company.websiteUrl,
       },
     );
   }
   if (context.request.method == HttpMethod.put) {
-    final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final authResult = await parseAuth(
+      context,
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
+    );
+    if (authResult == null) {
+      return Response(statusCode: 401);
+    }
+    final allowed = authResult.roles.contains('consultant') ||
+        (authResult.roles.contains('admin') &&
+            authResult.companyId == companyId);
+    if (!allowed) {
+      return Response(statusCode: 403);
+    }
+    final body =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final existing = await repo.findById(companyId);
     if (existing == null) {
       return Response(statusCode: 404);
@@ -40,11 +58,14 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
           ? existing.address
           : Address.fromJson(body['address'] as Map<String, dynamic>),
       uidNr: body['uidNr'] as String? ?? existing.uidNr,
-      registrationNr: body['registrationNr'] as String? ?? existing.registrationNr,
+      registrationNr:
+          body['registrationNr'] as String? ?? existing.registrationNr,
       companySize: body['companySize'] == null
           ? existing.companySize
           : companySizeFromWire(body['companySize'] as int),
       websiteUrl: body['websiteUrl'] as String? ?? existing.websiteUrl,
+      termsAcceptedAt: existing.termsAcceptedAt,
+      privacyAcceptedAt: existing.privacyAcceptedAt,
       status: existing.status,
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),
@@ -53,6 +74,21 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.delete) {
+    final authResult = await parseAuth(
+      context,
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
+    );
+    if (authResult == null) {
+      return Response(statusCode: 401);
+    }
+    final allowed = authResult.roles.contains('consultant') ||
+        (authResult.roles.contains('admin') &&
+            authResult.companyId == companyId);
+    if (!allowed) {
+      return Response(statusCode: 403);
+    }
     final existing = await repo.findById(companyId);
     if (existing == null) {
       return Response(statusCode: 404);
@@ -66,6 +102,8 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       registrationNr: existing.registrationNr,
       companySize: existing.companySize,
       websiteUrl: existing.websiteUrl,
+      termsAcceptedAt: existing.termsAcceptedAt,
+      privacyAcceptedAt: existing.privacyAcceptedAt,
       status: 'inactive',
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),

@@ -6,7 +6,7 @@ part of 'serializers.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializers _$serializers = (new Serializers().toBuilder()
+Serializers _$serializers = (Serializers().toBuilder()
       ..add(Ad.serializer)
       ..add(Address.serializer)
       ..add(AuthForgotPasswordPostRequest.serializer)
@@ -50,48 +50,48 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(UsersLoadUserWithCompanyGet200Response.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Category)]),
-          () => new ListBuilder<Category>())
+          () => ListBuilder<Category>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SubscriptionPlan)]),
-          () => new ListBuilder<SubscriptionPlan>())
+          () => ListBuilder<SubscriptionPlan>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(SubscriptionPlanRulesInner)]),
-          () => new ListBuilder<SubscriptionPlanRulesInner>())
+          () => ListBuilder<SubscriptionPlanRulesInner>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserRegistration)]),
-          () => new ListBuilder<UserRegistration>())
+          () => ListBuilder<UserRegistration>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserRegistration)]),
-          () => new ListBuilder<UserRegistration>())
+          () => ListBuilder<UserRegistration>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(UserRegistrationRolesEnum)]),
-          () => new ListBuilder<UserRegistrationRolesEnum>())
+          () => ListBuilder<UserRegistrationRolesEnum>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
-          () => new ListBuilder<int>()))
+          () => ListBuilder<int>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

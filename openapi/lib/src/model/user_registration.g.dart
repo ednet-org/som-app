@@ -30,12 +30,12 @@ UserRegistrationRolesEnum _$userRegistrationRolesEnumValueOf(String name) {
     case 'number4':
       return _$userRegistrationRolesEnum_number4;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<UserRegistrationRolesEnum> _$userRegistrationRolesEnumValues =
-    new BuiltSet<UserRegistrationRolesEnum>(const <UserRegistrationRolesEnum>[
+    BuiltSet<UserRegistrationRolesEnum>(const <UserRegistrationRolesEnum>[
   _$userRegistrationRolesEnum_number0,
   _$userRegistrationRolesEnum_number1,
   _$userRegistrationRolesEnum_number2,
@@ -44,7 +44,7 @@ final BuiltSet<UserRegistrationRolesEnum> _$userRegistrationRolesEnumValues =
 ]);
 
 Serializer<UserRegistrationRolesEnum> _$userRegistrationRolesEnumSerializer =
-    new _$UserRegistrationRolesEnumSerializer();
+    _$UserRegistrationRolesEnumSerializer();
 
 class _$UserRegistrationRolesEnumSerializer
     implements PrimitiveSerializer<UserRegistrationRolesEnum> {
@@ -99,7 +99,7 @@ class _$UserRegistration extends UserRegistration {
 
   factory _$UserRegistration(
           [void Function(UserRegistrationBuilder)? updates]) =>
-      (new UserRegistrationBuilder()..update(updates))._build();
+      (UserRegistrationBuilder()..update(updates))._build();
 
   _$UserRegistration._(
       {required this.email,
@@ -109,24 +109,14 @@ class _$UserRegistration extends UserRegistration {
       this.title,
       this.telephoneNr,
       required this.roles})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(email, r'UserRegistration', 'email');
-    BuiltValueNullFieldError.checkNotNull(
-        firstName, r'UserRegistration', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(
-        lastName, r'UserRegistration', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(
-        salutation, r'UserRegistration', 'salutation');
-    BuiltValueNullFieldError.checkNotNull(roles, r'UserRegistration', 'roles');
-  }
-
+      : super._();
   @override
   UserRegistration rebuild(void Function(UserRegistrationBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   UserRegistrationBuilder toBuilder() =>
-      new UserRegistrationBuilder()..replace(this);
+      UserRegistrationBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -199,7 +189,7 @@ class UserRegistrationBuilder
 
   ListBuilder<UserRegistrationRolesEnum>? _roles;
   ListBuilder<UserRegistrationRolesEnum> get roles =>
-      _$this._roles ??= new ListBuilder<UserRegistrationRolesEnum>();
+      _$this._roles ??= ListBuilder<UserRegistrationRolesEnum>();
   set roles(ListBuilder<UserRegistrationRolesEnum>? roles) =>
       _$this._roles = roles;
 
@@ -224,7 +214,6 @@ class UserRegistrationBuilder
 
   @override
   void replace(UserRegistration other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserRegistration;
   }
 
@@ -240,7 +229,7 @@ class UserRegistrationBuilder
     _$UserRegistration _$result;
     try {
       _$result = _$v ??
-          new _$UserRegistration._(
+          _$UserRegistration._(
             email: BuiltValueNullFieldError.checkNotNull(
                 email, r'UserRegistration', 'email'),
             firstName: BuiltValueNullFieldError.checkNotNull(
@@ -259,7 +248,7 @@ class UserRegistrationBuilder
         _$failedField = 'roles';
         roles.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserRegistration', _$failedField, e.toString());
       }
       rethrow;

@@ -12,12 +12,9 @@ class _$BranchesGetRequest extends BranchesGetRequest {
 
   factory _$BranchesGetRequest(
           [void Function(BranchesGetRequestBuilder)? updates]) =>
-      (new BranchesGetRequestBuilder()..update(updates))._build();
+      (BranchesGetRequestBuilder()..update(updates))._build();
 
-  _$BranchesGetRequest._({required this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'BranchesGetRequest', 'name');
-  }
-
+  _$BranchesGetRequest._({required this.name}) : super._();
   @override
   BranchesGetRequest rebuild(
           void Function(BranchesGetRequestBuilder) updates) =>
@@ -25,7 +22,7 @@ class _$BranchesGetRequest extends BranchesGetRequest {
 
   @override
   BranchesGetRequestBuilder toBuilder() =>
-      new BranchesGetRequestBuilder()..replace(this);
+      BranchesGetRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -72,7 +69,6 @@ class BranchesGetRequestBuilder
 
   @override
   void replace(BranchesGetRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BranchesGetRequest;
   }
 
@@ -86,7 +82,7 @@ class BranchesGetRequestBuilder
 
   _$BranchesGetRequest _build() {
     final _$result = _$v ??
-        new _$BranchesGetRequest._(
+        _$BranchesGetRequest._(
           name: BuiltValueNullFieldError.checkNotNull(
               name, r'BranchesGetRequest', 'name'),
         );

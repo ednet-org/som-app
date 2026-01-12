@@ -33,7 +33,7 @@ class _$Ad extends Ad {
   final DateTime? bannerDate;
 
   factory _$Ad([void Function(AdBuilder)? updates]) =>
-      (new AdBuilder()..update(updates))._build();
+      (AdBuilder()..update(updates))._build();
 
   _$Ad._(
       {this.id,
@@ -49,13 +49,12 @@ class _$Ad extends Ad {
       this.endDate,
       this.bannerDate})
       : super._();
-
   @override
   Ad rebuild(void Function(AdBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AdBuilder toBuilder() => new AdBuilder()..replace(this);
+  AdBuilder toBuilder() => AdBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -190,7 +189,6 @@ class AdBuilder implements Builder<Ad, AdBuilder> {
 
   @override
   void replace(Ad other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Ad;
   }
 
@@ -204,7 +202,7 @@ class AdBuilder implements Builder<Ad, AdBuilder> {
 
   _$Ad _build() {
     final _$result = _$v ??
-        new _$Ad._(
+        _$Ad._(
           id: id,
           companyId: companyId,
           type: type,

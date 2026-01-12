@@ -41,10 +41,27 @@ class RegistrationService {
     final companyId = const Uuid().v4();
     final now = clock.nowUtc();
     final companyType = companyTypeFromWire(companyJson['type'] as int? ?? 0);
+    final termsAccepted = companyJson['termsAccepted'] == true;
+    final privacyAccepted = companyJson['privacyAccepted'] == true;
 
     final address = Address.fromJson(
       (companyJson['address'] as Map<String, dynamic>? ?? {}),
     );
+
+    final websiteUrl = companyJson['websiteUrl'] as String?;
+    if (websiteUrl != null && websiteUrl.isNotEmpty) {
+      final parsed = Uri.tryParse(websiteUrl);
+      final validScheme = parsed != null &&
+          (parsed.scheme == 'http' || parsed.scheme == 'https') &&
+          parsed.hasAuthority;
+      if (!validScheme && !allowIncomplete) {
+        throw RegistrationException('Website URL must be a valid URL.');
+      }
+    }
+
+    if (!allowIncomplete && (!termsAccepted || !privacyAccepted)) {
+      throw RegistrationException('Terms and privacy policy must be accepted.');
+    }
 
     final companyRecord = CompanyRecord(
       id: companyId,
@@ -54,7 +71,9 @@ class RegistrationService {
       uidNr: companyJson['uidNr'] as String? ?? '',
       registrationNr: companyJson['registrationNr'] as String? ?? '',
       companySize: companySizeFromWire(companyJson['companySize'] as int? ?? 0),
-      websiteUrl: companyJson['websiteUrl'] as String?,
+      websiteUrl: websiteUrl,
+      termsAcceptedAt: termsAccepted ? now : null,
+      privacyAcceptedAt: privacyAccepted ? now : null,
       status: 'active',
       createdAt: now,
       updatedAt: now,
@@ -77,13 +96,28 @@ class RegistrationService {
 
     await companies.create(companyRecord);
 
-    if (companyType == 'provider') {
+    if (companyType == 'provider' || companyType == 'buyer_provider') {
       final providerData = companyJson['providerData'] as Map<String, dynamic>?;
+      if (!allowIncomplete && providerData == null) {
+        throw RegistrationException('Provider registration data is required.');
+      }
       final bankDetailsJson =
           providerData?['bankDetails'] as Map<String, dynamic>? ?? {};
       final branchIds = (providerData?['branchIds'] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList();
+
+      if (!allowIncomplete) {
+        final iban = bankDetailsJson['iban'] as String? ?? '';
+        final bic = bankDetailsJson['bic'] as String? ?? '';
+        final owner = bankDetailsJson['accountOwner'] as String? ?? '';
+        if (iban.isEmpty || bic.isEmpty || owner.isEmpty) {
+          throw RegistrationException('Bank details are required.');
+        }
+        if (branchIds.isEmpty) {
+          throw RegistrationException('At least one branch is required.');
+        }
+      }
 
       final existingBranches = await branches.listBranches();
       final pendingBranchIds = <String>[];
@@ -99,8 +133,11 @@ class RegistrationService {
 
       final subscriptionPlanId =
           providerData?['subscriptionPlanId'] as String? ?? '';
-      final paymentInterval =
-          paymentIntervalFromWire(providerData?['paymentInterval'] as int? ?? 0);
+      final paymentInterval = paymentIntervalFromWire(
+          providerData?['paymentInterval'] as int? ?? 0);
+      if (!allowIncomplete && subscriptionPlanId.isEmpty) {
+        throw RegistrationException('Subscription plan is required.');
+      }
 
       await providers.createProfile(
         ProviderProfileRecord(
@@ -182,7 +219,8 @@ class RegistrationService {
       createdUsers.add(user);
     }
 
-    final adminExists = createdUsers.any((user) => user.roles.contains('admin'));
+    final adminExists =
+        createdUsers.any((user) => user.roles.contains('admin'));
     if (!adminExists) {
       throw RegistrationException('Admin user is required');
     }

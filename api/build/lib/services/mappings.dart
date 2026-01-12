@@ -2,9 +2,23 @@ String companyTypeFromWire(int value) {
   switch (value) {
     case 1:
       return 'provider';
+    case 2:
+      return 'buyer_provider';
     case 0:
     default:
       return 'buyer';
+  }
+}
+
+int companyTypeToWire(String value) {
+  switch (value) {
+    case 'provider':
+      return 1;
+    case 'buyer_provider':
+      return 2;
+    case 'buyer':
+    default:
+      return 0;
   }
 }
 

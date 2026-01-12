@@ -30,7 +30,7 @@ class SubscriptionsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [SubscriptionsGet200Response] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<SubscriptionsGet200Response>> subscriptionsGet({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -70,12 +70,13 @@ class SubscriptionsApi {
       ) as SubscriptionsGet200Response;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<SubscriptionsGet200Response>(
@@ -103,7 +104,7 @@ class SubscriptionsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> subscriptionsUpgradePost({ 
     required SubscriptionsUpgradePostRequest subscriptionsUpgradePostRequest,
     CancelToken? cancelToken,
@@ -140,14 +141,15 @@ class SubscriptionsApi {
       _bodyData = _serializers.serialize(subscriptionsUpgradePostRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
-      throw DioError(
+      throw DioException(
          requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     final _response = await _dio.request<Object>(

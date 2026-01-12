@@ -28,8 +28,8 @@ class SubscriptionRepository {
   }
 
   Future<SubscriptionPlanRecord?> findPlanById(String id) async {
-    final rows =
-        await _client.from('subscription_plans').select().eq('id', id) as List<dynamic>;
+    final rows = await _client.from('subscription_plans').select().eq('id', id)
+        as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
@@ -37,10 +37,8 @@ class SubscriptionRepository {
   }
 
   Future<bool> hasPlans() async {
-    final rows = await _client
-        .from('subscription_plans')
-        .select('id')
-        .limit(1) as List<dynamic>;
+    final rows = await _client.from('subscription_plans').select('id').limit(1)
+        as List<dynamic>;
     return rows.isNotEmpty;
   }
 

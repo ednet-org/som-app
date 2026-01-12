@@ -41,12 +41,12 @@ CompanyRegistrationCompanySizeEnum _$companyRegistrationCompanySizeEnumValueOf(
     case 'number5':
       return _$companyRegistrationCompanySizeEnum_number5;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<CompanyRegistrationCompanySizeEnum>
-    _$companyRegistrationCompanySizeEnumValues = new BuiltSet<
+    _$companyRegistrationCompanySizeEnumValues = BuiltSet<
         CompanyRegistrationCompanySizeEnum>(const <CompanyRegistrationCompanySizeEnum>[
   _$companyRegistrationCompanySizeEnum_number0,
   _$companyRegistrationCompanySizeEnum_number1,
@@ -60,6 +60,8 @@ const CompanyRegistrationTypeEnum _$companyRegistrationTypeEnum_number0 =
     const CompanyRegistrationTypeEnum._('number0');
 const CompanyRegistrationTypeEnum _$companyRegistrationTypeEnum_number1 =
     const CompanyRegistrationTypeEnum._('number1');
+const CompanyRegistrationTypeEnum _$companyRegistrationTypeEnum_number2 =
+    const CompanyRegistrationTypeEnum._('number2');
 
 CompanyRegistrationTypeEnum _$companyRegistrationTypeEnumValueOf(String name) {
   switch (name) {
@@ -67,24 +69,27 @@ CompanyRegistrationTypeEnum _$companyRegistrationTypeEnumValueOf(String name) {
       return _$companyRegistrationTypeEnum_number0;
     case 'number1':
       return _$companyRegistrationTypeEnum_number1;
+    case 'number2':
+      return _$companyRegistrationTypeEnum_number2;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<CompanyRegistrationTypeEnum>
-    _$companyRegistrationTypeEnumValues = new BuiltSet<
-        CompanyRegistrationTypeEnum>(const <CompanyRegistrationTypeEnum>[
+    _$companyRegistrationTypeEnumValues =
+    BuiltSet<CompanyRegistrationTypeEnum>(const <CompanyRegistrationTypeEnum>[
   _$companyRegistrationTypeEnum_number0,
   _$companyRegistrationTypeEnum_number1,
+  _$companyRegistrationTypeEnum_number2,
 ]);
 
 Serializer<CompanyRegistrationCompanySizeEnum>
     _$companyRegistrationCompanySizeEnumSerializer =
-    new _$CompanyRegistrationCompanySizeEnumSerializer();
+    _$CompanyRegistrationCompanySizeEnumSerializer();
 Serializer<CompanyRegistrationTypeEnum>
     _$companyRegistrationTypeEnumSerializer =
-    new _$CompanyRegistrationTypeEnumSerializer();
+    _$CompanyRegistrationTypeEnumSerializer();
 
 class _$CompanyRegistrationCompanySizeEnumSerializer
     implements PrimitiveSerializer<CompanyRegistrationCompanySizeEnum> {
@@ -129,10 +134,12 @@ class _$CompanyRegistrationTypeEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'number0': 0,
     'number1': 1,
+    'number2': 2,
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     0: 'number0',
     1: 'number1',
+    2: 'number2',
   };
 
   @override
@@ -170,10 +177,14 @@ class _$CompanyRegistration extends CompanyRegistration {
   final String? websiteUrl;
   @override
   final ProviderRegistrationData? providerData;
+  @override
+  final bool termsAccepted;
+  @override
+  final bool privacyAccepted;
 
   factory _$CompanyRegistration(
           [void Function(CompanyRegistrationBuilder)? updates]) =>
-      (new CompanyRegistrationBuilder()..update(updates))._build();
+      (CompanyRegistrationBuilder()..update(updates))._build();
 
   _$CompanyRegistration._(
       {required this.name,
@@ -183,20 +194,10 @@ class _$CompanyRegistration extends CompanyRegistration {
       required this.companySize,
       required this.type,
       this.websiteUrl,
-      this.providerData})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'CompanyRegistration', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        address, r'CompanyRegistration', 'address');
-    BuiltValueNullFieldError.checkNotNull(
-        uidNr, r'CompanyRegistration', 'uidNr');
-    BuiltValueNullFieldError.checkNotNull(
-        registrationNr, r'CompanyRegistration', 'registrationNr');
-    BuiltValueNullFieldError.checkNotNull(
-        companySize, r'CompanyRegistration', 'companySize');
-    BuiltValueNullFieldError.checkNotNull(type, r'CompanyRegistration', 'type');
-  }
-
+      this.providerData,
+      required this.termsAccepted,
+      required this.privacyAccepted})
+      : super._();
   @override
   CompanyRegistration rebuild(
           void Function(CompanyRegistrationBuilder) updates) =>
@@ -204,7 +205,7 @@ class _$CompanyRegistration extends CompanyRegistration {
 
   @override
   CompanyRegistrationBuilder toBuilder() =>
-      new CompanyRegistrationBuilder()..replace(this);
+      CompanyRegistrationBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -217,7 +218,9 @@ class _$CompanyRegistration extends CompanyRegistration {
         companySize == other.companySize &&
         type == other.type &&
         websiteUrl == other.websiteUrl &&
-        providerData == other.providerData;
+        providerData == other.providerData &&
+        termsAccepted == other.termsAccepted &&
+        privacyAccepted == other.privacyAccepted;
   }
 
   @override
@@ -231,6 +234,8 @@ class _$CompanyRegistration extends CompanyRegistration {
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, websiteUrl.hashCode);
     _$hash = $jc(_$hash, providerData.hashCode);
+    _$hash = $jc(_$hash, termsAccepted.hashCode);
+    _$hash = $jc(_$hash, privacyAccepted.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -245,7 +250,9 @@ class _$CompanyRegistration extends CompanyRegistration {
           ..add('companySize', companySize)
           ..add('type', type)
           ..add('websiteUrl', websiteUrl)
-          ..add('providerData', providerData))
+          ..add('providerData', providerData)
+          ..add('termsAccepted', termsAccepted)
+          ..add('privacyAccepted', privacyAccepted))
         .toString();
   }
 }
@@ -259,7 +266,7 @@ class CompanyRegistrationBuilder
   set name(String? name) => _$this._name = name;
 
   AddressBuilder? _address;
-  AddressBuilder get address => _$this._address ??= new AddressBuilder();
+  AddressBuilder get address => _$this._address ??= AddressBuilder();
   set address(AddressBuilder? address) => _$this._address = address;
 
   String? _uidNr;
@@ -286,9 +293,19 @@ class CompanyRegistrationBuilder
 
   ProviderRegistrationDataBuilder? _providerData;
   ProviderRegistrationDataBuilder get providerData =>
-      _$this._providerData ??= new ProviderRegistrationDataBuilder();
+      _$this._providerData ??= ProviderRegistrationDataBuilder();
   set providerData(ProviderRegistrationDataBuilder? providerData) =>
       _$this._providerData = providerData;
+
+  bool? _termsAccepted;
+  bool? get termsAccepted => _$this._termsAccepted;
+  set termsAccepted(bool? termsAccepted) =>
+      _$this._termsAccepted = termsAccepted;
+
+  bool? _privacyAccepted;
+  bool? get privacyAccepted => _$this._privacyAccepted;
+  set privacyAccepted(bool? privacyAccepted) =>
+      _$this._privacyAccepted = privacyAccepted;
 
   CompanyRegistrationBuilder() {
     CompanyRegistration._defaults(this);
@@ -305,6 +322,8 @@ class CompanyRegistrationBuilder
       _type = $v.type;
       _websiteUrl = $v.websiteUrl;
       _providerData = $v.providerData?.toBuilder();
+      _termsAccepted = $v.termsAccepted;
+      _privacyAccepted = $v.privacyAccepted;
       _$v = null;
     }
     return this;
@@ -312,7 +331,6 @@ class CompanyRegistrationBuilder
 
   @override
   void replace(CompanyRegistration other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyRegistration;
   }
 
@@ -328,7 +346,7 @@ class CompanyRegistrationBuilder
     _$CompanyRegistration _$result;
     try {
       _$result = _$v ??
-          new _$CompanyRegistration._(
+          _$CompanyRegistration._(
             name: BuiltValueNullFieldError.checkNotNull(
                 name, r'CompanyRegistration', 'name'),
             address: address.build(),
@@ -342,6 +360,10 @@ class CompanyRegistrationBuilder
                 type, r'CompanyRegistration', 'type'),
             websiteUrl: websiteUrl,
             providerData: _providerData?.build(),
+            termsAccepted: BuiltValueNullFieldError.checkNotNull(
+                termsAccepted, r'CompanyRegistration', 'termsAccepted'),
+            privacyAccepted: BuiltValueNullFieldError.checkNotNull(
+                privacyAccepted, r'CompanyRegistration', 'privacyAccepted'),
           );
     } catch (_) {
       late String _$failedField;
@@ -352,7 +374,7 @@ class CompanyRegistrationBuilder
         _$failedField = 'providerData';
         _providerData?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyRegistration', _$failedField, e.toString());
       }
       rethrow;

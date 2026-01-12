@@ -12,7 +12,8 @@ Future<Response> onRequest(RequestContext context, String adId) async {
   if (context.request.method == HttpMethod.delete) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
       users: context.read<UserRepository>(),
     );
     if (auth == null) {
@@ -24,13 +25,15 @@ Future<Response> onRequest(RequestContext context, String adId) async {
   if (context.request.method == HttpMethod.put) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
       users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
     }
-    final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final body =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final existing = await repo.findById(adId);
     if (existing == null) {
       return Response(statusCode: 404);

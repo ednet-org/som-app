@@ -14,11 +14,9 @@ class _$InquiriesInquiryIdOffersGetRequest
   factory _$InquiriesInquiryIdOffersGetRequest(
           [void Function(InquiriesInquiryIdOffersGetRequestBuilder)?
               updates]) =>
-      (new InquiriesInquiryIdOffersGetRequestBuilder()..update(updates))
-          ._build();
+      (InquiriesInquiryIdOffersGetRequestBuilder()..update(updates))._build();
 
   _$InquiriesInquiryIdOffersGetRequest._({this.pdfBase64}) : super._();
-
   @override
   InquiriesInquiryIdOffersGetRequest rebuild(
           void Function(InquiriesInquiryIdOffersGetRequestBuilder) updates) =>
@@ -26,7 +24,7 @@ class _$InquiriesInquiryIdOffersGetRequest
 
   @override
   InquiriesInquiryIdOffersGetRequestBuilder toBuilder() =>
-      new InquiriesInquiryIdOffersGetRequestBuilder()..replace(this);
+      InquiriesInquiryIdOffersGetRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -76,7 +74,6 @@ class InquiriesInquiryIdOffersGetRequestBuilder
 
   @override
   void replace(InquiriesInquiryIdOffersGetRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InquiriesInquiryIdOffersGetRequest;
   }
 
@@ -91,7 +88,7 @@ class InquiriesInquiryIdOffersGetRequestBuilder
 
   _$InquiriesInquiryIdOffersGetRequest _build() {
     final _$result = _$v ??
-        new _$InquiriesInquiryIdOffersGetRequest._(
+        _$InquiriesInquiryIdOffersGetRequest._(
           pdfBase64: pdfBase64,
         );
     replace(_$result);

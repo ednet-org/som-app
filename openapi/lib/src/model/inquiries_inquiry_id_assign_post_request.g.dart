@@ -14,15 +14,10 @@ class _$InquiriesInquiryIdAssignPostRequest
   factory _$InquiriesInquiryIdAssignPostRequest(
           [void Function(InquiriesInquiryIdAssignPostRequestBuilder)?
               updates]) =>
-      (new InquiriesInquiryIdAssignPostRequestBuilder()..update(updates))
-          ._build();
+      (InquiriesInquiryIdAssignPostRequestBuilder()..update(updates))._build();
 
   _$InquiriesInquiryIdAssignPostRequest._({required this.providerCompanyIds})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(providerCompanyIds,
-        r'InquiriesInquiryIdAssignPostRequest', 'providerCompanyIds');
-  }
-
+      : super._();
   @override
   InquiriesInquiryIdAssignPostRequest rebuild(
           void Function(InquiriesInquiryIdAssignPostRequestBuilder) updates) =>
@@ -30,7 +25,7 @@ class _$InquiriesInquiryIdAssignPostRequest
 
   @override
   InquiriesInquiryIdAssignPostRequestBuilder toBuilder() =>
-      new InquiriesInquiryIdAssignPostRequestBuilder()..replace(this);
+      InquiriesInquiryIdAssignPostRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -63,7 +58,7 @@ class InquiriesInquiryIdAssignPostRequestBuilder
 
   ListBuilder<String>? _providerCompanyIds;
   ListBuilder<String> get providerCompanyIds =>
-      _$this._providerCompanyIds ??= new ListBuilder<String>();
+      _$this._providerCompanyIds ??= ListBuilder<String>();
   set providerCompanyIds(ListBuilder<String>? providerCompanyIds) =>
       _$this._providerCompanyIds = providerCompanyIds;
 
@@ -82,7 +77,6 @@ class InquiriesInquiryIdAssignPostRequestBuilder
 
   @override
   void replace(InquiriesInquiryIdAssignPostRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InquiriesInquiryIdAssignPostRequest;
   }
 
@@ -99,7 +93,7 @@ class InquiriesInquiryIdAssignPostRequestBuilder
     _$InquiriesInquiryIdAssignPostRequest _$result;
     try {
       _$result = _$v ??
-          new _$InquiriesInquiryIdAssignPostRequest._(
+          _$InquiriesInquiryIdAssignPostRequest._(
             providerCompanyIds: providerCompanyIds.build(),
           );
     } catch (_) {
@@ -108,10 +102,8 @@ class InquiriesInquiryIdAssignPostRequestBuilder
         _$failedField = 'providerCompanyIds';
         providerCompanyIds.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'InquiriesInquiryIdAssignPostRequest',
-            _$failedField,
-            e.toString());
+        throw BuiltValueNestedFieldError(r'InquiriesInquiryIdAssignPostRequest',
+            _$failedField, e.toString());
       }
       rethrow;
     }

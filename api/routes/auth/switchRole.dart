@@ -14,7 +14,8 @@ Future<Response> onRequest(RequestContext context) async {
   final userRepo = context.read<UserRepository>();
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: userRepo,
   );
   if (auth == null) {
@@ -27,5 +28,7 @@ Future<Response> onRequest(RequestContext context) async {
     return Response(statusCode: 403);
   }
   await userRepo.updateLastLoginRole(user.id, role);
-  return Response.json(body: {'token': context.request.headers['authorization']?.substring(7) ?? ''});
+  return Response.json(body: {
+    'token': context.request.headers['authorization']?.substring(7) ?? ''
+  });
 }

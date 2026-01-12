@@ -79,7 +79,8 @@ mixin RequiredValidation<E extends Entity<E>> on Entity<E> {
   }
 }
 
-class SomCompany extends Entity<SomCompany> with RequiredValidation<SomCompany> {
+class SomCompany extends Entity<SomCompany>
+    with RequiredValidation<SomCompany> {
   SomCompany(Concept concept) {
     this.concept = concept;
   }
@@ -91,7 +92,8 @@ class SomUser extends Entity<SomUser> with RequiredValidation<SomUser> {
   }
 }
 
-class SomInquiry extends Entity<SomInquiry> with RequiredValidation<SomInquiry> {
+class SomInquiry extends Entity<SomInquiry>
+    with RequiredValidation<SomInquiry> {
   SomInquiry(Concept concept) {
     this.concept = concept;
   }

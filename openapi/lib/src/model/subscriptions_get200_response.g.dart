@@ -12,10 +12,9 @@ class _$SubscriptionsGet200Response extends SubscriptionsGet200Response {
 
   factory _$SubscriptionsGet200Response(
           [void Function(SubscriptionsGet200ResponseBuilder)? updates]) =>
-      (new SubscriptionsGet200ResponseBuilder()..update(updates))._build();
+      (SubscriptionsGet200ResponseBuilder()..update(updates))._build();
 
   _$SubscriptionsGet200Response._({this.subscriptions}) : super._();
-
   @override
   SubscriptionsGet200Response rebuild(
           void Function(SubscriptionsGet200ResponseBuilder) updates) =>
@@ -23,7 +22,7 @@ class _$SubscriptionsGet200Response extends SubscriptionsGet200Response {
 
   @override
   SubscriptionsGet200ResponseBuilder toBuilder() =>
-      new SubscriptionsGet200ResponseBuilder()..replace(this);
+      SubscriptionsGet200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -56,7 +55,7 @@ class SubscriptionsGet200ResponseBuilder
 
   ListBuilder<SubscriptionPlan>? _subscriptions;
   ListBuilder<SubscriptionPlan> get subscriptions =>
-      _$this._subscriptions ??= new ListBuilder<SubscriptionPlan>();
+      _$this._subscriptions ??= ListBuilder<SubscriptionPlan>();
   set subscriptions(ListBuilder<SubscriptionPlan>? subscriptions) =>
       _$this._subscriptions = subscriptions;
 
@@ -75,7 +74,6 @@ class SubscriptionsGet200ResponseBuilder
 
   @override
   void replace(SubscriptionsGet200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionsGet200Response;
   }
 
@@ -91,7 +89,7 @@ class SubscriptionsGet200ResponseBuilder
     _$SubscriptionsGet200Response _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionsGet200Response._(
+          _$SubscriptionsGet200Response._(
             subscriptions: _subscriptions?.build(),
           );
     } catch (_) {
@@ -100,7 +98,7 @@ class SubscriptionsGet200ResponseBuilder
         _$failedField = 'subscriptions';
         _subscriptions?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionsGet200Response', _$failedField, e.toString());
       }
       rethrow;

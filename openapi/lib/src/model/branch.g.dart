@@ -15,16 +15,15 @@ class _$Branch extends Branch {
   final BuiltList<Category>? categories;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
-      (new BranchBuilder()..update(updates))._build();
+      (BranchBuilder()..update(updates))._build();
 
   _$Branch._({this.id, this.name, this.categories}) : super._();
-
   @override
   Branch rebuild(void Function(BranchBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  BranchBuilder toBuilder() => new BranchBuilder()..replace(this);
+  BranchBuilder toBuilder() => BranchBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -68,7 +67,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
 
   ListBuilder<Category>? _categories;
   ListBuilder<Category> get categories =>
-      _$this._categories ??= new ListBuilder<Category>();
+      _$this._categories ??= ListBuilder<Category>();
   set categories(ListBuilder<Category>? categories) =>
       _$this._categories = categories;
 
@@ -89,7 +88,6 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
 
   @override
   void replace(Branch other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Branch;
   }
 
@@ -105,7 +103,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
     _$Branch _$result;
     try {
       _$result = _$v ??
-          new _$Branch._(
+          _$Branch._(
             id: id,
             name: name,
             categories: _categories?.build(),
@@ -116,7 +114,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
         _$failedField = 'categories';
         _categories?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'Branch', _$failedField, e.toString());
       }
       rethrow;

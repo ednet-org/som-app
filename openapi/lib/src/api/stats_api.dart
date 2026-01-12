@@ -35,7 +35,7 @@ class StatsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [StatsBuyerGet200Response] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<StatsBuyerGet200Response>> statsBuyerGet({ 
     DateTime? from,
     DateTime? to,
@@ -93,12 +93,13 @@ class StatsApi {
       ) as StatsBuyerGet200Response;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<StatsBuyerGet200Response>(
@@ -128,7 +129,7 @@ class StatsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [StatsBuyerGet200Response] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<StatsBuyerGet200Response>> statsConsultantGet({ 
     DateTime? from,
     DateTime? to,
@@ -184,12 +185,13 @@ class StatsApi {
       ) as StatsBuyerGet200Response;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<StatsBuyerGet200Response>(
@@ -219,7 +221,7 @@ class StatsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [StatsProviderGet200Response] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<StatsProviderGet200Response>> statsProviderGet({ 
     DateTime? from,
     DateTime? to,
@@ -275,12 +277,13 @@ class StatsApi {
       ) as StatsProviderGet200Response;
 
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     return Response<StatsProviderGet200Response>(

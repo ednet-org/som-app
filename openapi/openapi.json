@@ -1,1319 +1,100 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "info": {
-    "title": "SOM Platform API",
-    "version": "v1"
+    "title": "SOM API",
+    "version": "1.0.0",
+    "description": "REST API for the SOM platform (buyers, providers, consultants)."
   },
   "servers": [
     {
-      "url": "http://localhost:8080"
+      "url": "http://localhost:8080",
+      "description": "Local development"
     }
   ],
-  "paths": {
-    "/Companies": {
-      "post": {
-        "tags": [
-          "Companies"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterCompanyRequest"
-              }
-            }
-          }
-        }
-      }
+  "tags": [
+    {
+      "name": "Auth"
     },
-    "/Companies/{companyId}": {
-      "delete": {
-        "tags": [
-          "Companies"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Companies"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompanyDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompanyDto"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "Companies"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompanyDto"
-              }
-            }
-          }
-        }
-      }
+    {
+      "name": "Companies"
     },
-    "/Companies/{companyId}/registerUser": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserRegistration"
-              }
-            }
-          }
-        }
-      }
+    {
+      "name": "Users"
     },
-    "/Companies/{companyId}/users/{userId}": {
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
+    {
+      "name": "Inquiries"
     },
-    "/Companies/{companyId}/users/{userId}/update": {
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDto"
-              }
-            }
-          }
-        }
-      }
+    {
+      "name": "Offers"
     },
-    "/Subscriptions": {
-      "get": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SubscriptionsGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SubscriptionsGet200Response"
-                }
-              }
-            }
-          }
-        }
-      }
+    {
+      "name": "Ads"
     },
-    "/Subscriptions/upgrade": {
-      "post": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SubscriptionsUpgradePostRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
+    {
+      "name": "Branches"
     },
-    "/Users/loadUserWithCompany": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersLoadUserWithCompanyGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersLoadUserWithCompanyGet200Response"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "companyId",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
+    {
+      "name": "Subscriptions"
     },
-    "/ads": {
-      "post": {
-        "tags": [
-          "Ads"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateAd200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateAd200Response"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateAdRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
+    {
+      "name": "Consultants"
     },
-    "/ads/{adId}": {
-      "delete": {
-        "tags": [
-          "Ads"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "adId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Ads"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Ad"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Ad"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "adId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "Ads"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "adId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "branchId",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Ad"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
+    {
+      "name": "Providers"
     },
-    "/auth/confirmEmail": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "token",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
+    {
+      "name": "Stats"
     },
-    "/auth/forgotPassword": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthForgotPasswordPostRequest"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthLoginPost200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthLoginPost200Response"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthLoginPostRequest"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/resetPassword": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthResetPasswordPostRequest"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/switchRole": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthSwitchRolePost200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthSwitchRolePost200Response"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthSwitchRolePostRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/branches": {
-      "post": {
-        "tags": [
-          "Branches"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BranchesGetRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/branches/{branchId}": {
-      "delete": {
-        "tags": [
-          "Branches"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "branchId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/branches/{branchId}/categories": {
-      "post": {
-        "tags": [
-          "Branches"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "branchId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BranchesGetRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/categories/{categoryId}": {
-      "delete": {
-        "tags": [
-          "Branches"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/consultants": {
-      "post": {
-        "tags": [
-          "Consultants"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserRegistration"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/consultants/registerCompany": {
-      "post": {
-        "tags": [
-          "Consultants"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConsultantsRegisterCompanyPostRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/inquiries": {
-      "post": {
-        "tags": [
-          "Inquiries"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inquiry"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inquiry"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateInquiryRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/inquiries/{inquiryId}": {
-      "get": {
-        "tags": [
-          "Inquiries"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inquiry"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inquiry"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "inquiryId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/inquiries/{inquiryId}/assign": {
-      "post": {
-        "tags": [
-          "Inquiries"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "inquiryId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/InquiriesInquiryIdAssignPostRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/inquiries/{inquiryId}/offers": {
-      "post": {
-        "tags": [
-          "Offers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InquiriesInquiryIdOffersGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InquiriesInquiryIdOffersGet200Response"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "inquiryId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/offers/{offerId}/accept": {
-      "post": {
-        "tags": [
-          "Offers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "offerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/offers/{offerId}/reject": {
-      "post": {
-        "tags": [
-          "Offers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "offerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/providers/{companyId}/approve": {
-      "post": {
-        "tags": [
-          "Providers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProvidersCompanyIdApprovePostRequest"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/providers/{companyId}/decline": {
-      "post": {
-        "tags": [
-          "Providers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/stats/buyer": {
-      "get": {
-        "tags": [
-          "Stats"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsBuyerGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsBuyerGet200Response"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "to",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/stats/consultant": {
-      "get": {
-        "tags": [
-          "Stats"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsBuyerGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsBuyerGet200Response"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "to",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/stats/provider": {
-      "get": {
-        "tags": [
-          "Stats"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsProviderGet200Response"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatsProviderGet200Response"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "to",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
+    {
+      "name": "Billing"
     }
-  },
+  ],
   "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
-      "BankDetailsDto": {
+      "ApiError": {
+        "type": "string"
+      },
+      "Address": {
         "type": "object",
+        "required": [
+          "country",
+          "city",
+          "street",
+          "number",
+          "zip"
+        ],
+        "properties": {
+          "country": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      },
+      "BankDetails": {
+        "type": "object",
+        "required": [
+          "iban",
+          "bic",
+          "accountOwner"
+        ],
         "properties": {
           "iban": {
             "type": "string"
@@ -1326,8 +107,143 @@
           }
         }
       },
-      "ConsultantsRegisterCompanyPostRequest": {
+      "ProviderRegistrationData": {
         "type": "object",
+        "properties": {
+          "bankDetails": {
+            "$ref": "#/components/schemas/BankDetails"
+          },
+          "branchIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subscriptionPlanId": {
+            "type": "string"
+          },
+          "paymentInterval": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "0 = monthly, 1 = yearly"
+          }
+        }
+      },
+      "CompanyRegistration": {
+        "type": "object",
+        "required": [
+          "name",
+          "address",
+          "uidNr",
+          "registrationNr",
+          "companySize",
+          "type",
+          "termsAccepted",
+          "privacyAccepted"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "uidNr": {
+            "type": "string"
+          },
+          "registrationNr": {
+            "type": "string"
+          },
+          "companySize": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "description": "0=0-10, 1=11-50, 2=51-100, 3=101-250, 4=251-500, 5=500+"
+          },
+          "type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "description": "0=buyer, 1=provider, 2=buyer+provider"
+          },
+          "websiteUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "providerData": {
+            "$ref": "#/components/schemas/ProviderRegistrationData"
+          },
+          "termsAccepted": {
+            "type": "boolean"
+          },
+          "privacyAccepted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserRegistration": {
+        "type": "object",
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "salutation",
+          "roles"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "salutation": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "telephoneNr": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            },
+            "description": "0=buyer,1=provider,2=buyer(default),3=consultant,4=admin"
+          }
+        }
+      },
+      "RegisterCompanyRequest": {
+        "type": "object",
+        "required": [
+          "company",
+          "users"
+        ],
         "properties": {
           "company": {
             "$ref": "#/components/schemas/CompanyRegistration"
@@ -1338,42 +254,58 @@
               "$ref": "#/components/schemas/UserRegistration"
             }
           }
-        },
-        "required": [
-          "company",
-          "users"
-        ]
-      },
-      "ProviderCriteria": {
-        "type": "object",
-        "properties": {
-          "providerZip": {
-            "type": "string"
-          },
-          "radiusKm": {
-            "type": "integer"
-          },
-          "providerType": {
-            "type": "string"
-          },
-          "companySize": {
-            "type": "string"
-          }
         }
       },
-      "InquiriesInquiryIdOffersGet200Response": {
+      "CreateAdRequest": {
         "type": "object",
+        "required": [
+          "branchId",
+          "url",
+          "type",
+          "status"
+        ],
         "properties": {
-          "id": {
+          "type": {
             "type": "string"
           },
           "status": {
+            "type": "string"
+          },
+          "branchId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "imagePath": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "bannerDate": {
             "type": "string"
           }
         }
       },
       "CreateInquiryRequest": {
         "type": "object",
+        "required": [
+          "branchId",
+          "categoryId",
+          "deadline",
+          "deliveryZips",
+          "numberOfProviders"
+        ],
         "properties": {
           "branchId": {
             "type": "string"
@@ -1431,112 +363,22 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "branchId",
-          "categoryId",
-          "deadline",
-          "deliveryZips",
-          "numberOfProviders"
-        ]
-      },
-      "ProvidersCompanyIdApprovePostRequest": {
-        "type": "object",
-        "properties": {
-          "approvedBranchIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "string",
+            "format": "email"
           }
         }
       },
-      "ProviderRegistrationData": {
+      "CompanyDto": {
         "type": "object",
         "properties": {
-          "bankDetails": {
-            "$ref": "#/components/schemas/BankDetails"
-          },
-          "branchIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "subscriptionPlanId": {
+          "id": {
             "type": "string"
           },
-          "paymentInterval": {
-            "type": "integer",
-            "enum": [
-              0,
-              1
-            ]
-          }
-        }
-      },
-      "AuthResetPasswordPostRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "token": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "confirmPassword": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "token",
-          "password",
-          "confirmPassword"
-        ]
-      },
-      "RegisterCompanyRequest": {
-        "type": "object",
-        "properties": {
-          "company": {
-            "$ref": "#/components/schemas/CompanyRegistration"
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserRegistration"
-            }
-          }
-        },
-        "required": [
-          "company",
-          "users"
-        ]
-      },
-      "SubscriptionPlanRulesInner": {
-        "type": "object",
-        "properties": {
-          "restriction": {
-            "type": "integer"
-          },
-          "upperLimit": {
-            "type": "integer"
-          }
-        }
-      },
-      "CreateCompanyDto": {
-        "type": "object",
-        "properties": {
           "name": {
             "type": "string"
           },
           "address": {
-            "$ref": "#/components/schemas/AddressDto"
+            "$ref": "#/components/schemas/Address"
           },
           "uidNr": {
             "type": "string"
@@ -1545,295 +387,29 @@
             "type": "string"
           },
           "companySize": {
-            "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "type": "integer"
           },
           "type": {
-            "type": "integer",
-            "enum": [
-              0,
-              1
-            ]
+            "type": "integer"
           },
           "websiteUrl": {
-            "type": "string"
-          },
-          "providerData": {
-            "$ref": "#/components/schemas/CreateProviderDto"
+            "type": "string",
+            "nullable": true
           }
         }
       },
-      "AddressDto": {
-        "type": "object",
-        "properties": {
-          "country": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "street": {
-            "type": "string"
-          },
-          "number": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "string"
-          }
-        }
-      },
-      "Offer": {
+      "UserDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "inquiryId": {
-            "type": "string"
-          },
-          "providerCompanyId": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "pdfPath": {
-            "type": "string"
-          },
-          "forwardedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "resolvedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "buyerDecision": {
-            "type": "string"
-          },
-          "providerDecision": {
-            "type": "string"
-          }
-        }
-      },
-      "Address": {
-        "type": "object",
-        "properties": {
-          "country": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "street": {
-            "type": "string"
-          },
-          "number": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "country",
-          "city",
-          "street",
-          "number",
-          "zip"
-        ]
-      },
-      "AuthenticateResultDto": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string"
-          },
-          "refreshToken": {
-            "type": "string"
-          }
-        }
-      },
-      "SubscriptionsGet200Response": {
-        "type": "object",
-        "properties": {
-          "subscriptions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubscriptionPlan"
-            }
-          }
-        }
-      },
-      "AuthenticateDto": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "SubscriptionPlanDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "sortPriority": {
-            "type": "integer"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "priceInSubunit": {
-            "type": "integer"
-          },
-          "rules": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubscriptionRuleDto"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "CreateAdRequest": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "branchId": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "imagePath": {
-            "type": "string"
-          },
-          "headline": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "startDate": {
-            "type": "string"
-          },
-          "endDate": {
-            "type": "string"
-          },
-          "bannerDate": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "type",
-          "status",
-          "branchId",
-          "url"
-        ]
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "UsersLoadUserWithCompanyGet200Response": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "salutation": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "telephoneNr": {
-            "type": "string"
-          },
-          "emailAddress": {
             "type": "string"
           },
           "companyId": {
             "type": "string"
           },
-          "companyName": {
-            "type": "string"
-          },
-          "companyAddress": {
-            "$ref": "#/components/schemas/Address"
-          }
-        }
-      },
-      "ForgotPasswordDto": {
-        "type": "object",
-        "properties": {
           "email": {
-            "type": "string"
-          }
-        }
-      },
-      "AuthLoginPost200Response": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string"
-          },
-          "refreshToken": {
-            "type": "string"
-          }
-        }
-      },
-      "SubscriptionsUpgradePostRequest": {
-        "type": "object",
-        "properties": {
-          "planId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "planId"
-        ]
-      },
-      "UserRegistration": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
+            "type": "string",
+            "format": "email"
           },
           "firstName": {
             "type": "string"
@@ -1845,164 +421,77 @@
             "type": "string"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "telephoneNr": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "roles": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "enum": [
-                0,
-                1,
-                2,
-                3,
-                4
-              ]
-            }
-          }
-        },
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "salutation",
-          "roles"
-        ]
-      },
-      "RegisterCompanyDto": {
-        "type": "object",
-        "properties": {
-          "company": {
-            "$ref": "#/components/schemas/CreateCompanyDto"
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserDto"
+              "type": "integer"
             }
           }
         }
       },
-      "SubscriptionPlan": {
+      "ProviderCriteria": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "sortPriority": {
-            "type": "integer"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "priceInSubunit": {
-            "type": "integer"
-          },
-          "rules": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubscriptionPlanRulesInner"
-            }
-          },
-          "createdAt": {
+          "providerZip": {
             "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "CompanyRegistration": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
+            "nullable": true
           },
-          "address": {
-            "$ref": "#/components/schemas/Address"
+          "radiusKm": {
+            "type": "integer",
+            "nullable": true
           },
-          "uidNr": {
-            "type": "string"
-          },
-          "registrationNr": {
-            "type": "string"
+          "providerType": {
+            "type": "string",
+            "nullable": true
           },
           "companySize": {
-            "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
-          },
-          "type": {
-            "type": "integer",
-            "enum": [
-              0,
-              1
-            ]
-          },
-          "websiteUrl": {
-            "type": "string"
-          },
-          "providerData": {
-            "$ref": "#/components/schemas/ProviderRegistrationData"
+            "type": "string",
+            "nullable": true
           }
-        },
-        "required": [
-          "name",
-          "address",
-          "uidNr",
-          "registrationNr",
-          "companySize",
-          "type"
-        ]
+        }
       },
-      "ResetPasswordDto": {
+      "ContactInfo": {
         "type": "object",
+        "required": [
+          "companyName",
+          "salutation",
+          "title",
+          "firstName",
+          "lastName",
+          "telephone",
+          "email"
+        ],
         "properties": {
-          "password": {
+          "companyName": {
             "type": "string"
           },
-          "confirmPassword": {
+          "salutation": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "telephone": {
             "type": "string"
           },
           "email": {
-            "type": "string"
-          },
-          "token": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "password"
-        ]
-      },
-      "SubscriptionsResponse": {
-        "type": "object",
-        "properties": {
-          "subscriptions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubscriptionPlanDto"
-            }
+            "type": "string",
+            "format": "email"
           }
         }
-      },
-      "AuthSwitchRolePostRequest": {
-        "type": "object",
-        "properties": {
-          "role": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "role"
-        ]
       },
       "Inquiry": {
         "type": "object",
@@ -2045,10 +534,12 @@
             "type": "integer"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "pdfPath": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "providerCriteria": {
             "$ref": "#/components/schemas/ProviderCriteria"
@@ -2058,7 +549,8 @@
           },
           "notifiedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "createdAt": {
             "type": "string",
@@ -2070,77 +562,42 @@
           }
         }
       },
-      "AuthForgotPasswordPostRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email"
-        ]
-      },
-      "BankDetails": {
-        "type": "object",
-        "properties": {
-          "iban": {
-            "type": "string"
-          },
-          "bic": {
-            "type": "string"
-          },
-          "accountOwner": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "iban",
-          "bic",
-          "accountOwner"
-        ]
-      },
-      "InquiriesInquiryIdOffersGetRequest": {
-        "type": "object",
-        "properties": {
-          "pdfBase64": {
-            "type": "string"
-          }
-        }
-      },
-      "BranchesGetRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name"
-        ]
-      },
-      "InquiriesInquiryIdOffersGetRequest1": {
-        "type": "object",
-        "properties": {
-          "pdfBase64": {
-            "type": "string"
-          }
-        }
-      },
-      "Branch": {
+      "Offer": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           },
-          "name": {
+          "inquiryId": {
             "type": "string"
           },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Category"
-            }
+          "providerCompanyId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "pdfPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "forwardedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "buyerDecision": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerDecision": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -2163,94 +620,38 @@
             "type": "string"
           },
           "url": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           "imagePath": {
             "type": "string"
           },
           "headline": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "startDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "endDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "bannerDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           }
         }
       },
-      "CreateAd200Response": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        }
-      },
-      "CreateProviderDto": {
-        "type": "object",
-        "properties": {
-          "bankDetails": {
-            "$ref": "#/components/schemas/BankDetailsDto"
-          },
-          "branchIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "paymentInterval": {
-            "type": "integer",
-            "enum": [
-              0,
-              1
-            ]
-          },
-          "subscriptionPlanId": {
-            "type": "string"
-          }
-        }
-      },
-      "AdsGet200Response": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        }
-      },
-      "SubscriptionRuleDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "upperLimit": {
-            "type": "integer"
-          },
-          "restriction": {
-            "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
-          }
-        }
-      },
-      "CompanyDto": {
+      "Branch": {
         "type": "object",
         "properties": {
           "id": {
@@ -2259,38 +660,61 @@
           "name": {
             "type": "string"
           },
-          "address": {
-            "$ref": "#/components/schemas/Address"
-          },
-          "uidNr": {
-            "type": "string"
-          },
-          "registrationNr": {
-            "type": "string"
-          },
-          "companySize": {
-            "type": "integer"
-          },
-          "type": {
-            "type": "integer"
-          },
-          "websiteUrl": {
-            "type": "string"
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
           }
         }
       },
-      "StatsBuyerGet200Response": {
+      "Category": {
         "type": "object",
         "properties": {
-          "open": {
-            "type": "integer"
+          "id": {
+            "type": "string"
           },
-          "closed": {
-            "type": "integer"
+          "name": {
+            "type": "string"
           }
         }
       },
-      "UserDto": {
+      "SubscriptionPlan": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sortPriority": {
+            "type": "integer"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "priceInSubunit": {
+            "type": "integer"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "restriction": {
+                  "type": "integer"
+                },
+                "upperLimit": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "BillingRecord": {
         "type": "object",
         "properties": {
           "id": {
@@ -2299,164 +723,2417 @@
           "companyId": {
             "type": "string"
           },
-          "email": {
+          "amountInSubunit": {
+            "type": "integer"
+          },
+          "currency": {
             "type": "string"
           },
-          "firstName": {
+          "status": {
             "type": "string"
           },
-          "lastName": {
-            "type": "string"
+          "periodStart": {
+            "type": "string",
+            "format": "date-time"
           },
-          "salutation": {
-            "type": "string"
+          "periodEnd": {
+            "type": "string",
+            "format": "date-time"
           },
-          "title": {
-            "type": "string"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           },
-          "telephoneNr": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
+          "paidAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },
-      "ContactInfo": {
+      "SubscriptionCancellation": {
         "type": "object",
         "properties": {
-          "companyName": {
-            "type": "string"
-          },
-          "salutation": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "telephone": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "companyName",
-          "salutation",
-          "title",
-          "firstName",
-          "lastName",
-          "telephone",
-          "email"
-        ]
-      },
-      "AuthLoginPostRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
-      "InquiriesInquiryIdAssignPostRequest": {
-        "type": "object",
-        "properties": {
-          "providerCompanyIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "providerCompanyIds"
-        ]
-      },
-      "UserWithCompanyDto": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "salutation": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "telephoneNr": {
-            "type": "string"
-          },
-          "emailAddress": {
+          "id": {
             "type": "string"
           },
           "companyId": {
             "type": "string"
           },
-          "companyName": {
+          "requestedByUserId": {
             "type": "string"
           },
-          "companyAddress": {
-            "$ref": "#/components/schemas/AddressDto"
-          }
-        }
-      },
-      "AuthSwitchRolePost200Response": {
-        "type": "object",
-        "properties": {
-          "token": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
             "type": "string"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "effectiveEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
-      },
-      "StatsProviderGet200Response": {
-        "type": "object",
-        "properties": {
-          "open": {
-            "type": "integer"
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "offer_created": {
-            "type": "integer"
-          },
-          "lost": {
-            "type": "integer"
-          },
-          "won": {
-            "type": "integer"
-          },
-          "ignored": {
-            "type": "integer"
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         }
       }
     },
-    "securitySchemes": {
-      "BearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+    "/auth/confirmEmail": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Confirm email registration token",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed"
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgotPassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send password reset email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/resetPassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset password with token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "token",
+                  "password",
+                  "confirmPassword"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "token": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/switchRole": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Switch role for current user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Role not allowed"
+          }
+        }
+      }
+    },
+    "/Companies": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "List companies",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string",
+              "description": "Filter by company type (buyer/provider)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Companies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Register buyer/provider company",
+        "operationId": "registerCompany",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterCompanyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered"
+          },
+          "400": {
+            "description": "Invalid registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Companies/{companyId}": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Get company",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Update company",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Deactivate company and users",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deactivated"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/Companies/{companyId}/registerUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Register a new user for a company",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Companies/{companyId}/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List company users",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Companies/{companyId}/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Deactivate user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deactivated"
+          },
+          "400": {
+            "description": "Admin constraint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/Companies/{companyId}/users/{userId}/update": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Admin constraint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/Users/loadUserWithCompany": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Load user and company details",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "companyId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with company",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string"
+                    },
+                    "salutation": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "telephoneNr": {
+                      "type": "string"
+                    },
+                    "emailAddress": {
+                      "type": "string"
+                    },
+                    "companyId": {
+                      "type": "string"
+                    },
+                    "companyName": {
+                      "type": "string"
+                    },
+                    "companyAddress": {
+                      "$ref": "#/components/schemas/Address"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/Subscriptions": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "List subscription plans",
+        "responses": {
+          "200": {
+            "description": "Plans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SubscriptionPlan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Subscriptions/upgrade": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Upgrade subscription plan",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "planId"
+                ],
+                "properties": {
+                  "planId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/Subscriptions/cancel": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Request subscription cancellation",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancellation requested"
+          }
+        }
+      }
+    },
+    "/Subscriptions/cancellations": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "List subscription cancellation requests",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancellation requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubscriptionCancellation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Subscriptions/cancellations/{cancellationId}": {
+      "put": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Resolve cancellation request",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cancellationId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      }
+    },
+    "/billing": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "List billing records",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Billing records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BillingRecord"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Create billing record",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BillingRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/billing/{billingId}": {
+      "put": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Update billing record",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "billingId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "paidAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      }
+    },
+    "/inquiries": {
+      "get": {
+        "tags": [
+          "Inquiries"
+        ],
+        "summary": "List inquiries",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "branchId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "branch",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "providerType",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "providerSize",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "createdFrom",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "createdTo",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "deadlineFrom",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "deadlineTo",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "editorIds",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of editor user IDs (admin/consultant only)"
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inquiries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inquiry"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inquiries"
+        ],
+        "summary": "Create inquiry",
+        "operationId": "createInquiry",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInquiryRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateInquiryRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "file": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created inquiry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inquiry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/inquiries/{inquiryId}": {
+      "get": {
+        "tags": [
+          "Inquiries"
+        ],
+        "summary": "Get inquiry",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inquiryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inquiry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inquiry"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/inquiries/{inquiryId}/assign": {
+      "post": {
+        "tags": [
+          "Inquiries"
+        ],
+        "summary": "Assign inquiry to providers",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inquiryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "providerCompanyIds"
+                ],
+                "properties": {
+                  "providerCompanyIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assigned"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/inquiries/{inquiryId}/ignore": {
+      "post": {
+        "tags": [
+          "Inquiries"
+        ],
+        "summary": "Provider ignores inquiry",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inquiryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ignored"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/inquiries/{inquiryId}/offers": {
+      "get": {
+        "tags": [
+          "Offers"
+        ],
+        "summary": "List offers for inquiry",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inquiryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Offer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Offers"
+        ],
+        "summary": "Create offer for inquiry",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inquiryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pdfBase64": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/offers/{offerId}/accept": {
+      "post": {
+        "tags": [
+          "Offers"
+        ],
+        "summary": "Accept offer",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "offerId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/offers/{offerId}/reject": {
+      "post": {
+        "tags": [
+          "Offers"
+        ],
+        "summary": "Reject offer",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "offerId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rejected"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/ads": {
+      "get": {
+        "tags": [
+          "Ads"
+        ],
+        "summary": "List ads",
+        "description": "Public calls return active ads. Use scope=company or scope=all with Bearer auth to list managed ads.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "branchId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "company",
+                "all"
+              ]
+            },
+            "description": "company = list ads for the authenticated company, all = list ads across companies (consultant only)"
+          },
+          {
+            "in": "query",
+            "name": "companyId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional company id when scope=all"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by ad status (e.g. active, draft, expired)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ads",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ad"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ads"
+        ],
+        "summary": "Create ad",
+        "operationId": "createAd",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateAdRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "image": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ads/{adId}": {
+      "get": {
+        "tags": [
+          "Ads"
+        ],
+        "summary": "Get ad",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "adId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ad",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ad"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ads"
+        ],
+        "summary": "Update ad",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "adId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ad"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ads"
+        ],
+        "summary": "Delete ad",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "adId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/branches": {
+      "get": {
+        "tags": [
+          "Branches"
+        ],
+        "summary": "List branches",
+        "responses": {
+          "200": {
+            "description": "Branches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Branch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Branches"
+        ],
+        "summary": "Create branch",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/branches/{branchId}": {
+      "delete": {
+        "tags": [
+          "Branches"
+        ],
+        "summary": "Delete branch",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "branchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/branches/{branchId}/categories": {
+      "post": {
+        "tags": [
+          "Branches"
+        ],
+        "summary": "Create category",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "branchId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/categories/{categoryId}": {
+      "delete": {
+        "tags": [
+          "Branches"
+        ],
+        "summary": "Delete category",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/consultants": {
+      "get": {
+        "tags": [
+          "Consultants"
+        ],
+        "summary": "List consultants",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consultants",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Consultants"
+        ],
+        "summary": "Create consultant",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Email exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consultants/registerCompany": {
+      "post": {
+        "tags": [
+          "Consultants"
+        ],
+        "summary": "Consultant registers company (allow incomplete)",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "company",
+                  "users"
+                ],
+                "properties": {
+                  "company": {
+                    "$ref": "#/components/schemas/CompanyRegistration"
+                  },
+                  "users": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserRegistration"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered"
+          },
+          "400": {
+            "description": "Invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/providers/{companyId}/approve": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "summary": "Approve provider branches",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "approvedBranchIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Approved"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/providers/{companyId}/decline": {
+      "post": {
+        "tags": [
+          "Providers"
+        ],
+        "summary": "Decline provider branch request",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Declined"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/stats/buyer": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Buyer statistics",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "open": {
+                      "type": "integer"
+                    },
+                    "closed": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/stats/provider": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Provider statistics",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "status",
+                "period",
+                "providerType",
+                "providerSize"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "open": {
+                      "type": "integer"
+                    },
+                    "offer_created": {
+                      "type": "integer"
+                    },
+                    "lost": {
+                      "type": "integer"
+                    },
+                    "won": {
+                      "type": "integer"
+                    },
+                    "ignored": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/stats/consultant": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Consultant statistics",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "csv"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "open": {
+                      "type": "integer"
+                    },
+                    "closed": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
       }
     }
   }

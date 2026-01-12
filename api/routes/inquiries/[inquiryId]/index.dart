@@ -10,7 +10,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null) {

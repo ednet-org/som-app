@@ -12,18 +12,20 @@ import 'test_utils.dart';
 void main() {
   group('GET /Users/loadUserWithCompany', () {
     test('returns combined dto', () async {
-      final db = createTestDb();
-      final company = seedCompany(db);
-      final auth = createAuthService(db);
-      final passwordHash = auth.hashPassword('secret');
-      final user = seedUser(db, company, email: 'user@acme.test', passwordHash: passwordHash);
+      final companies = InMemoryCompanyRepository();
+      final users = InMemoryUserRepository();
+      final company = await seedCompany(companies);
+      final user = await seedUser(users, company, email: 'user@acme.test');
+      final token = buildTestJwt(userId: user.id);
 
       final context = TestRequestContext(
-        path: '/Users/loadUserWithCompany?userId=${user.id}&companyId=${company.id}',
+        path:
+            '/Users/loadUserWithCompany?userId=${user.id}&companyId=${company.id}',
         method: HttpMethod.get,
+        headers: {'authorization': 'Bearer $token'},
       );
-      context.provide<UserRepository>(UserRepository(db));
-      context.provide<CompanyRepository>(CompanyRepository(db));
+      context.provide<UserRepository>(users);
+      context.provide<CompanyRepository>(companies);
 
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 200);

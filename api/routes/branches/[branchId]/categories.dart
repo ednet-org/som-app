@@ -13,7 +13,8 @@ Future<Response> onRequest(RequestContext context, String branchId) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
@@ -28,6 +29,7 @@ Future<Response> onRequest(RequestContext context, String branchId) async {
   if (await repo.findCategory(branchId, name) != null) {
     return Response.json(statusCode: 400, body: 'Category already exists');
   }
-  await repo.createCategory(CategoryRecord(id: const Uuid().v4(), branchId: branchId, name: name));
+  await repo.createCategory(
+      CategoryRecord(id: const Uuid().v4(), branchId: branchId, name: name));
   return Response(statusCode: 200);
 }

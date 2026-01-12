@@ -13,7 +13,8 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {

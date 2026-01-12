@@ -10,7 +10,8 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('provider')) {
@@ -27,7 +28,8 @@ Future<Response> onRequest(RequestContext context) async {
   if (params['format'] == 'csv') {
     final buffer = StringBuffer();
     buffer.writeln('email,open,offer_created,lost,won,ignored');
-    buffer.writeln('${auth.userId},${stats['open']},${stats['offer_created']},${stats['lost']},${stats['won']},${stats['ignored']}');
+    buffer.writeln(
+        '${auth.userId},${stats['open']},${stats['offer_created']},${stats['lost']},${stats['won']},${stats['ignored']}');
     return Response(
       headers: {'content-type': 'text/csv'},
       body: buffer.toString(),

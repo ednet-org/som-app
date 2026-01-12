@@ -12,11 +12,15 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
+  }
+  if (!auth.roles.contains('buyer')) {
+    return Response(statusCode: 403);
   }
   final repo = context.read<OfferRepository>();
   final offer = await repo.findById(offerId);
@@ -41,7 +45,8 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
     await email.send(
       to: admin.email,
       subject: 'Offer accepted',
-      text: 'Offer $offerId has been accepted. Contact: ${inquiry?.contactInfo.email ?? 'buyer'}',
+      text:
+          'Offer $offerId has been accepted. Contact: ${inquiry?.contactInfo.email ?? 'buyer'}',
     );
   }
   return Response(statusCode: 200);

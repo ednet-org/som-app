@@ -30,13 +30,15 @@ Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
       users: context.read<UserRepository>(),
     );
     if (auth == null || !auth.roles.contains('consultant')) {
       return Response(statusCode: 403);
     }
-    final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final body =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final name = body['name'] as String? ?? '';
     if (name.isEmpty) {
       return Response(statusCode: 400);

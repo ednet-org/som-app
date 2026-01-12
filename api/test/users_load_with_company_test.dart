@@ -16,10 +16,13 @@ void main() {
       final users = InMemoryUserRepository();
       final company = await seedCompany(companies);
       final user = await seedUser(users, company, email: 'user@acme.test');
+      final token = buildTestJwt(userId: user.id);
 
       final context = TestRequestContext(
-        path: '/Users/loadUserWithCompany?userId=${user.id}&companyId=${company.id}',
+        path:
+            '/Users/loadUserWithCompany?userId=${user.id}&companyId=${company.id}',
         method: HttpMethod.get,
+        headers: {'authorization': 'Bearer $token'},
       );
       context.provide<UserRepository>(users);
       context.provide<CompanyRepository>(companies);

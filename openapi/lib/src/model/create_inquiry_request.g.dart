@@ -44,7 +44,7 @@ class _$CreateInquiryRequest extends CreateInquiryRequest {
 
   factory _$CreateInquiryRequest(
           [void Function(CreateInquiryRequestBuilder)? updates]) =>
-      (new CreateInquiryRequestBuilder()..update(updates))._build();
+      (CreateInquiryRequestBuilder()..update(updates))._build();
 
   _$CreateInquiryRequest._(
       {required this.branchId,
@@ -64,19 +64,7 @@ class _$CreateInquiryRequest extends CreateInquiryRequest {
       this.lastName,
       this.telephone,
       this.email})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        branchId, r'CreateInquiryRequest', 'branchId');
-    BuiltValueNullFieldError.checkNotNull(
-        categoryId, r'CreateInquiryRequest', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(
-        deadline, r'CreateInquiryRequest', 'deadline');
-    BuiltValueNullFieldError.checkNotNull(
-        deliveryZips, r'CreateInquiryRequest', 'deliveryZips');
-    BuiltValueNullFieldError.checkNotNull(
-        numberOfProviders, r'CreateInquiryRequest', 'numberOfProviders');
-  }
-
+      : super._();
   @override
   CreateInquiryRequest rebuild(
           void Function(CreateInquiryRequestBuilder) updates) =>
@@ -84,7 +72,7 @@ class _$CreateInquiryRequest extends CreateInquiryRequest {
 
   @override
   CreateInquiryRequestBuilder toBuilder() =>
-      new CreateInquiryRequestBuilder()..replace(this);
+      CreateInquiryRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -171,7 +159,7 @@ class CreateInquiryRequestBuilder
 
   ListBuilder<String>? _productTags;
   ListBuilder<String> get productTags =>
-      _$this._productTags ??= new ListBuilder<String>();
+      _$this._productTags ??= ListBuilder<String>();
   set productTags(ListBuilder<String>? productTags) =>
       _$this._productTags = productTags;
 
@@ -181,7 +169,7 @@ class CreateInquiryRequestBuilder
 
   ListBuilder<String>? _deliveryZips;
   ListBuilder<String> get deliveryZips =>
-      _$this._deliveryZips ??= new ListBuilder<String>();
+      _$this._deliveryZips ??= ListBuilder<String>();
   set deliveryZips(ListBuilder<String>? deliveryZips) =>
       _$this._deliveryZips = deliveryZips;
 
@@ -266,7 +254,6 @@ class CreateInquiryRequestBuilder
 
   @override
   void replace(CreateInquiryRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreateInquiryRequest;
   }
 
@@ -282,7 +269,7 @@ class CreateInquiryRequestBuilder
     _$CreateInquiryRequest _$result;
     try {
       _$result = _$v ??
-          new _$CreateInquiryRequest._(
+          _$CreateInquiryRequest._(
             branchId: BuiltValueNullFieldError.checkNotNull(
                 branchId, r'CreateInquiryRequest', 'branchId'),
             categoryId: BuiltValueNullFieldError.checkNotNull(
@@ -316,7 +303,7 @@ class CreateInquiryRequestBuilder
         _$failedField = 'deliveryZips';
         deliveryZips.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CreateInquiryRequest', _$failedField, e.toString());
       }
       rethrow;

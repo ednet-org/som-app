@@ -31,7 +31,7 @@ class ProvidersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> providersCompanyIdApprovePost({ 
     required String companyId,
     ProvidersCompanyIdApprovePostRequest? providersCompanyIdApprovePostRequest,
@@ -69,14 +69,15 @@ class ProvidersApi {
       _bodyData = providersCompanyIdApprovePostRequest == null ? null : _serializers.serialize(providersCompanyIdApprovePostRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
-      throw DioError(
+      throw DioException(
          requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.other,
+        type: DioExceptionType.unknown,
         error: error,
-      )..stackTrace = stackTrace;
+        stackTrace: stackTrace,
+      );
     }
 
     final _response = await _dio.request<Object>(
@@ -104,7 +105,7 @@ class ProvidersApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> providersCompanyIdDeclinePost({ 
     required String companyId,
     CancelToken? cancelToken,

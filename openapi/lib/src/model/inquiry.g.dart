@@ -43,7 +43,7 @@ class _$Inquiry extends Inquiry {
   final DateTime? updatedAt;
 
   factory _$Inquiry([void Function(InquiryBuilder)? updates]) =>
-      (new InquiryBuilder()..update(updates))._build();
+      (InquiryBuilder()..update(updates))._build();
 
   _$Inquiry._(
       {this.id,
@@ -64,13 +64,12 @@ class _$Inquiry extends Inquiry {
       this.createdAt,
       this.updatedAt})
       : super._();
-
   @override
   Inquiry rebuild(void Function(InquiryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  InquiryBuilder toBuilder() => new InquiryBuilder()..replace(this);
+  InquiryBuilder toBuilder() => InquiryBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -174,7 +173,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
 
   ListBuilder<String>? _productTags;
   ListBuilder<String> get productTags =>
-      _$this._productTags ??= new ListBuilder<String>();
+      _$this._productTags ??= ListBuilder<String>();
   set productTags(ListBuilder<String>? productTags) =>
       _$this._productTags = productTags;
 
@@ -184,7 +183,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
 
   ListBuilder<String>? _deliveryZips;
   ListBuilder<String> get deliveryZips =>
-      _$this._deliveryZips ??= new ListBuilder<String>();
+      _$this._deliveryZips ??= ListBuilder<String>();
   set deliveryZips(ListBuilder<String>? deliveryZips) =>
       _$this._deliveryZips = deliveryZips;
 
@@ -203,13 +202,13 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
 
   ProviderCriteriaBuilder? _providerCriteria;
   ProviderCriteriaBuilder get providerCriteria =>
-      _$this._providerCriteria ??= new ProviderCriteriaBuilder();
+      _$this._providerCriteria ??= ProviderCriteriaBuilder();
   set providerCriteria(ProviderCriteriaBuilder? providerCriteria) =>
       _$this._providerCriteria = providerCriteria;
 
   ContactInfoBuilder? _contactInfo;
   ContactInfoBuilder get contactInfo =>
-      _$this._contactInfo ??= new ContactInfoBuilder();
+      _$this._contactInfo ??= ContactInfoBuilder();
   set contactInfo(ContactInfoBuilder? contactInfo) =>
       _$this._contactInfo = contactInfo;
 
@@ -256,7 +255,6 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
 
   @override
   void replace(Inquiry other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Inquiry;
   }
 
@@ -272,7 +270,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
     _$Inquiry _$result;
     try {
       _$result = _$v ??
-          new _$Inquiry._(
+          _$Inquiry._(
             id: id,
             buyerCompanyId: buyerCompanyId,
             createdByUserId: createdByUserId,
@@ -305,7 +303,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
         _$failedField = 'contactInfo';
         _contactInfo?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'Inquiry', _$failedField, e.toString());
       }
       rethrow;

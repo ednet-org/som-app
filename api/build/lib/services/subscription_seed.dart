@@ -10,12 +10,12 @@ class SubscriptionSeeder {
   final SubscriptionRepository repository;
   final Clock clock;
 
-  void seedDefaults() {
-    if (repository.hasPlans()) {
+  Future<void> seedDefaults() async {
+    if (await repository.hasPlans()) {
       return;
     }
     final now = clock.nowUtc();
-    repository.createPlan(
+    await repository.createPlan(
       SubscriptionPlanRecord(
         id: const Uuid().v4(),
         name: 'SOM Standard',
@@ -30,7 +30,7 @@ class SubscriptionSeeder {
         createdAt: now,
       ),
     );
-    repository.createPlan(
+    await repository.createPlan(
       SubscriptionPlanRecord(
         id: const Uuid().v4(),
         name: 'SOM Premium',
@@ -45,7 +45,7 @@ class SubscriptionSeeder {
         createdAt: now,
       ),
     );
-    repository.createPlan(
+    await repository.createPlan(
       SubscriptionPlanRecord(
         id: const Uuid().v4(),
         name: 'SOM Enterprise',

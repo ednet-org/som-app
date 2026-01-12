@@ -12,10 +12,9 @@ class _$AuthSwitchRolePost200Response extends AuthSwitchRolePost200Response {
 
   factory _$AuthSwitchRolePost200Response(
           [void Function(AuthSwitchRolePost200ResponseBuilder)? updates]) =>
-      (new AuthSwitchRolePost200ResponseBuilder()..update(updates))._build();
+      (AuthSwitchRolePost200ResponseBuilder()..update(updates))._build();
 
   _$AuthSwitchRolePost200Response._({this.token}) : super._();
-
   @override
   AuthSwitchRolePost200Response rebuild(
           void Function(AuthSwitchRolePost200ResponseBuilder) updates) =>
@@ -23,7 +22,7 @@ class _$AuthSwitchRolePost200Response extends AuthSwitchRolePost200Response {
 
   @override
   AuthSwitchRolePost200ResponseBuilder toBuilder() =>
-      new AuthSwitchRolePost200ResponseBuilder()..replace(this);
+      AuthSwitchRolePost200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -72,7 +71,6 @@ class AuthSwitchRolePost200ResponseBuilder
 
   @override
   void replace(AuthSwitchRolePost200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthSwitchRolePost200Response;
   }
 
@@ -86,7 +84,7 @@ class AuthSwitchRolePost200ResponseBuilder
 
   _$AuthSwitchRolePost200Response _build() {
     final _$result = _$v ??
-        new _$AuthSwitchRolePost200Response._(
+        _$AuthSwitchRolePost200Response._(
           token: token,
         );
     replace(_$result);

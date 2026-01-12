@@ -29,7 +29,7 @@ class _$CreateAdRequest extends CreateAdRequest {
   final String? bannerDate;
 
   factory _$CreateAdRequest([void Function(CreateAdRequestBuilder)? updates]) =>
-      (new CreateAdRequestBuilder()..update(updates))._build();
+      (CreateAdRequestBuilder()..update(updates))._build();
 
   _$CreateAdRequest._(
       {required this.type,
@@ -42,21 +42,13 @@ class _$CreateAdRequest extends CreateAdRequest {
       this.startDate,
       this.endDate,
       this.bannerDate})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'CreateAdRequest', 'type');
-    BuiltValueNullFieldError.checkNotNull(status, r'CreateAdRequest', 'status');
-    BuiltValueNullFieldError.checkNotNull(
-        branchId, r'CreateAdRequest', 'branchId');
-    BuiltValueNullFieldError.checkNotNull(url, r'CreateAdRequest', 'url');
-  }
-
+      : super._();
   @override
   CreateAdRequest rebuild(void Function(CreateAdRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CreateAdRequestBuilder toBuilder() =>
-      new CreateAdRequestBuilder()..replace(this);
+  CreateAdRequestBuilder toBuilder() => CreateAdRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -176,7 +168,6 @@ class CreateAdRequestBuilder
 
   @override
   void replace(CreateAdRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreateAdRequest;
   }
 
@@ -190,7 +181,7 @@ class CreateAdRequestBuilder
 
   _$CreateAdRequest _build() {
     final _$result = _$v ??
-        new _$CreateAdRequest._(
+        _$CreateAdRequest._(
           type: BuiltValueNullFieldError.checkNotNull(
               type, r'CreateAdRequest', 'type'),
           status: BuiltValueNullFieldError.checkNotNull(

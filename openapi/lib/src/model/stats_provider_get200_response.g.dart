@@ -20,12 +20,11 @@ class _$StatsProviderGet200Response extends StatsProviderGet200Response {
 
   factory _$StatsProviderGet200Response(
           [void Function(StatsProviderGet200ResponseBuilder)? updates]) =>
-      (new StatsProviderGet200ResponseBuilder()..update(updates))._build();
+      (StatsProviderGet200ResponseBuilder()..update(updates))._build();
 
   _$StatsProviderGet200Response._(
       {this.open, this.offerCreated, this.lost, this.won, this.ignored})
       : super._();
-
   @override
   StatsProviderGet200Response rebuild(
           void Function(StatsProviderGet200ResponseBuilder) updates) =>
@@ -33,7 +32,7 @@ class _$StatsProviderGet200Response extends StatsProviderGet200Response {
 
   @override
   StatsProviderGet200ResponseBuilder toBuilder() =>
-      new StatsProviderGet200ResponseBuilder()..replace(this);
+      StatsProviderGet200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -115,7 +114,6 @@ class StatsProviderGet200ResponseBuilder
 
   @override
   void replace(StatsProviderGet200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StatsProviderGet200Response;
   }
 
@@ -129,7 +127,7 @@ class StatsProviderGet200ResponseBuilder
 
   _$StatsProviderGet200Response _build() {
     final _$result = _$v ??
-        new _$StatsProviderGet200Response._(
+        _$StatsProviderGet200Response._(
           open: open,
           offerCreated: offerCreated,
           lost: lost,

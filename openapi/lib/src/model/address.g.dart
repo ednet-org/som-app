@@ -19,7 +19,7 @@ class _$Address extends Address {
   final String zip;
 
   factory _$Address([void Function(AddressBuilder)? updates]) =>
-      (new AddressBuilder()..update(updates))._build();
+      (AddressBuilder()..update(updates))._build();
 
   _$Address._(
       {required this.country,
@@ -27,20 +27,13 @@ class _$Address extends Address {
       required this.street,
       required this.number,
       required this.zip})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(country, r'Address', 'country');
-    BuiltValueNullFieldError.checkNotNull(city, r'Address', 'city');
-    BuiltValueNullFieldError.checkNotNull(street, r'Address', 'street');
-    BuiltValueNullFieldError.checkNotNull(number, r'Address', 'number');
-    BuiltValueNullFieldError.checkNotNull(zip, r'Address', 'zip');
-  }
-
+      : super._();
   @override
   Address rebuild(void Function(AddressBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AddressBuilder toBuilder() => new AddressBuilder()..replace(this);
+  AddressBuilder toBuilder() => AddressBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -119,7 +112,6 @@ class AddressBuilder implements Builder<Address, AddressBuilder> {
 
   @override
   void replace(Address other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Address;
   }
 
@@ -133,7 +125,7 @@ class AddressBuilder implements Builder<Address, AddressBuilder> {
 
   _$Address _build() {
     final _$result = _$v ??
-        new _$Address._(
+        _$Address._(
           country: BuiltValueNullFieldError.checkNotNull(
               country, r'Address', 'country'),
           city: BuiltValueNullFieldError.checkNotNull(city, r'Address', 'city'),

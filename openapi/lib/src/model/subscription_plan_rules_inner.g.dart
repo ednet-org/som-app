@@ -14,11 +14,10 @@ class _$SubscriptionPlanRulesInner extends SubscriptionPlanRulesInner {
 
   factory _$SubscriptionPlanRulesInner(
           [void Function(SubscriptionPlanRulesInnerBuilder)? updates]) =>
-      (new SubscriptionPlanRulesInnerBuilder()..update(updates))._build();
+      (SubscriptionPlanRulesInnerBuilder()..update(updates))._build();
 
   _$SubscriptionPlanRulesInner._({this.restriction, this.upperLimit})
       : super._();
-
   @override
   SubscriptionPlanRulesInner rebuild(
           void Function(SubscriptionPlanRulesInnerBuilder) updates) =>
@@ -26,7 +25,7 @@ class _$SubscriptionPlanRulesInner extends SubscriptionPlanRulesInner {
 
   @override
   SubscriptionPlanRulesInnerBuilder toBuilder() =>
-      new SubscriptionPlanRulesInnerBuilder()..replace(this);
+      SubscriptionPlanRulesInnerBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -83,7 +82,6 @@ class SubscriptionPlanRulesInnerBuilder
 
   @override
   void replace(SubscriptionPlanRulesInner other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionPlanRulesInner;
   }
 
@@ -97,7 +95,7 @@ class SubscriptionPlanRulesInnerBuilder
 
   _$SubscriptionPlanRulesInner _build() {
     final _$result = _$v ??
-        new _$SubscriptionPlanRulesInner._(
+        _$SubscriptionPlanRulesInner._(
           restriction: restriction,
           upperLimit: upperLimit,
         );

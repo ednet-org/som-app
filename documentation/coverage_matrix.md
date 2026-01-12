@@ -8,9 +8,9 @@
 
 | Area | Requirement (V2) | API / Route | DB (Supabase) | UI (Flutter) | Status | Delta |
 | --- | --- | --- | --- | --- | --- | --- |
-| Registration | Buyer/provider registration with admin user | `POST /Companies` | `companies`, `users`, `provider_profiles`, `subscriptions` | `CustomerRegisterPage` + `RegistrationStepper` | Partial | Hardcoded plan/branch, no T&C validation, no URL validation, no password‑set flow |
-| Registration | Email confirmation → set password → auto login | `GET /auth/confirmEmail`, `POST /auth/resetPassword` | `user_tokens`, `users` | `AuthConfirmEmailPage` | Missing | No set‑password endpoint, no auto‑login |
-| Registration | Terms acceptance required | n/a | n/a | Registration UI | Missing | Add DB fields + API validation |
+| Registration | Buyer/provider registration with admin user | `POST /Companies` | `companies`, `users`, `provider_profiles`, `subscriptions` | `CustomerRegisterPage` + `RegistrationStepper` | Partial | Hardcoded plan/branch, URL validation now enforced, terms required |
+| Registration | Email confirmation → set password → auto login | `GET /auth/confirmEmail`, `POST /auth/resetPassword` | `user_tokens`, `users` | `AuthConfirmEmailPage` | Partial | Confirm token now usable for password set; auto‑login handled by UI |
+| Registration | Terms acceptance required | n/a | `companies` | Registration UI | Done | Checkbox + API validation + persisted timestamps |
 | Login/Logout | Login & session | `POST /auth/login` | Supabase Auth | `AuthLoginPage` | Partial | Logout not wired to Supabase/session state |
 | Role Switch | Buyer↔Provider without re‑login | `POST /auth/switchRole` | `users.last_login_role` | n/a | Partial | Single company per user blocks dual role |
 | User Mgmt | Admin create/update/deactivate users | `POST/PUT/DELETE /Companies/{id}/users/*` | `users` | `UserAppBody` | Partial | Missing auth/role enforcement + UI wiring |
@@ -34,4 +34,3 @@
 3) UI is largely stubbed (inquiries/ads/stats) and not wired to API.
 4) Contract drift between `swagger.json` and `openapi/` breaks SDK coherence.
 5) Terms acceptance and role‑based authorization are missing on critical routes.
-

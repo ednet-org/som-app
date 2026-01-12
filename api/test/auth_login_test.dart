@@ -52,12 +52,14 @@ void main() {
 
     test('returns 400 for unconfirmed email', () async {
       final company = await seedCompany(companies);
-      await seedUser(users, company, email: 'pending@example.com', confirmed: false);
+      await seedUser(users, company,
+          email: 'pending@example.com', confirmed: false);
       (auth as TestAuthService).setPassword('pending@example.com', 'secret2');
       final context = TestRequestContext(
         path: '/auth/login',
         method: HttpMethod.post,
-        body: jsonEncode({'email': 'pending@example.com', 'password': 'secret2'}),
+        body:
+            jsonEncode({'email': 'pending@example.com', 'password': 'secret2'}),
         headers: {'content-type': 'application/json'},
       );
       context.provide<AuthService>(auth);

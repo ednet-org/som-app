@@ -27,7 +27,8 @@ class UserRepository {
   }
 
   Future<UserRecord?> findById(String id) async {
-    final rows = await _client.from('users').select().eq('id', id) as List<dynamic>;
+    final rows =
+        await _client.from('users').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
@@ -56,18 +57,16 @@ class UserRepository {
   }
 
   Future<List<UserRecord>> listAdminsByCompany(String companyId) async {
-    final rows = await _client
-        .from('users')
-        .select()
-        .eq('company_id', companyId)
-        .contains('roles_json', ['admin']) as List<dynamic>;
-    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
+    final users = await listByCompany(companyId);
+    return users.where((user) => user.roles.contains('admin')).toList();
   }
 
   Future<List<UserRecord>> listByRole(String role) async {
-    final rows =
-        await _client.from('users').select().contains('roles_json', [role]) as List<dynamic>;
-    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
+    final rows = await _client.from('users').select() as List<dynamic>;
+    return rows
+        .map((row) => _mapRow(row as Map<String, dynamic>))
+        .where((user) => user.roles.contains(role))
+        .toList();
   }
 
   Future<void> update(UserRecord user) async {
@@ -127,7 +126,8 @@ class UserRepository {
       salutation: row['salutation'] as String,
       title: row['title'] as String?,
       telephoneNr: row['telephone_nr'] as String?,
-      roles: decodeJsonList(row['roles_json']).map((e) => e.toString()).toList(),
+      roles:
+          decodeJsonList(row['roles_json']).map((e) => e.toString()).toList(),
       isActive: row['is_active'] as bool? ?? false,
       emailConfirmed: row['email_confirmed'] as bool? ?? false,
       lastLoginRole: row['last_login_role'] as String?,

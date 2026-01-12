@@ -15,7 +15,8 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('admin')) {
@@ -28,7 +29,8 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final subscriptionRepo = context.read<SubscriptionRepository>();
   final providerRepo = context.read<ProviderRepository>();
-  final current = await subscriptionRepo.findSubscriptionByCompany(auth.companyId);
+  final current =
+      await subscriptionRepo.findSubscriptionByCompany(auth.companyId);
   if (current != null && current.planId == planId) {
     return Response(statusCode: 200);
   }

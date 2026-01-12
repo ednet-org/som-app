@@ -23,7 +23,7 @@ class _$ContactInfo extends ContactInfo {
   final String email;
 
   factory _$ContactInfo([void Function(ContactInfoBuilder)? updates]) =>
-      (new ContactInfoBuilder()..update(updates))._build();
+      (ContactInfoBuilder()..update(updates))._build();
 
   _$ContactInfo._(
       {required this.companyName,
@@ -33,26 +33,13 @@ class _$ContactInfo extends ContactInfo {
       required this.lastName,
       required this.telephone,
       required this.email})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        companyName, r'ContactInfo', 'companyName');
-    BuiltValueNullFieldError.checkNotNull(
-        salutation, r'ContactInfo', 'salutation');
-    BuiltValueNullFieldError.checkNotNull(title, r'ContactInfo', 'title');
-    BuiltValueNullFieldError.checkNotNull(
-        firstName, r'ContactInfo', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(lastName, r'ContactInfo', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(
-        telephone, r'ContactInfo', 'telephone');
-    BuiltValueNullFieldError.checkNotNull(email, r'ContactInfo', 'email');
-  }
-
+      : super._();
   @override
   ContactInfo rebuild(void Function(ContactInfoBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ContactInfoBuilder toBuilder() => new ContactInfoBuilder()..replace(this);
+  ContactInfoBuilder toBuilder() => ContactInfoBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -147,7 +134,6 @@ class ContactInfoBuilder implements Builder<ContactInfo, ContactInfoBuilder> {
 
   @override
   void replace(ContactInfo other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ContactInfo;
   }
 
@@ -161,7 +147,7 @@ class ContactInfoBuilder implements Builder<ContactInfo, ContactInfoBuilder> {
 
   _$ContactInfo _build() {
     final _$result = _$v ??
-        new _$ContactInfo._(
+        _$ContactInfo._(
           companyName: BuiltValueNullFieldError.checkNotNull(
               companyName, r'ContactInfo', 'companyName'),
           salutation: BuiltValueNullFieldError.checkNotNull(

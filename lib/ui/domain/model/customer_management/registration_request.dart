@@ -5,6 +5,7 @@ import 'package:openapi/openapi.dart';
 import '../../application/application.dart';
 import '../shared/som.dart';
 import 'company.dart';
+import 'roles.dart';
 
 part 'registration_request.g.dart';
 
@@ -44,6 +45,13 @@ abstract class _RegistrationRequest with Store {
     isSuccess = false;
     errorMessage = '';
 
+    if (!company.termsAccepted || !company.privacyAccepted) {
+      isRegistering = false;
+      isFailedRegistration = true;
+      errorMessage = 'Please accept the terms and privacy policy to continue.';
+      return;
+    }
+
     final addressRequest = AddressBuilder()
       ..city = company.address.city
       ..country = company.address.country
@@ -69,10 +77,11 @@ abstract class _RegistrationRequest with Store {
     }
 
     final companyRequest = CompanyRegistrationBuilder()
-      // todo: hardcoded
-      ..type = company.isProvider
-          ? CompanyRegistrationTypeEnum.number1
-          : CompanyRegistrationTypeEnum.number0
+      ..type = company.role == Roles.ProviderAndBuyer
+          ? CompanyRegistrationTypeEnum.number2
+          : company.isProvider
+              ? CompanyRegistrationTypeEnum.number1
+              : CompanyRegistrationTypeEnum.number0
       ..address = addressRequest
       // todo: hardcoded
       ..companySize = CompanyRegistrationCompanySizeEnum.number4
@@ -81,7 +90,18 @@ abstract class _RegistrationRequest with Store {
       ..registrationNr = company.registrationNumber
       ..websiteUrl = company.url
       ..uidNr = company.uidNr
+      ..termsAccepted = company.termsAccepted
+      ..privacyAccepted = company.privacyAccepted
       ..build();
+
+    final List<UserRegistrationRolesEnum> defaultRoles = company.role == Roles.Provider
+        ? [UserRegistrationRolesEnum.number1]
+        : company.role == Roles.ProviderAndBuyer
+            ? [
+                UserRegistrationRolesEnum.number2,
+                UserRegistrationRolesEnum.number1
+              ]
+            : [UserRegistrationRolesEnum.number2];
 
     ListBuilder<UserRegistration>? usersRequest = ListBuilder<UserRegistration>(
         company.users.map((element) => (UserRegistrationBuilder()
@@ -90,8 +110,7 @@ abstract class _RegistrationRequest with Store {
               ..lastName = element.lastName
               ..salutation = element.salutation
               ..telephoneNr = element.phone
-              ..roles = ListBuilder<UserRegistrationRolesEnum>(
-                  [UserRegistrationRolesEnum.number2])
+              ..roles = ListBuilder<UserRegistrationRolesEnum>(defaultRoles)
               ..title = element.title)
             .build()))
           ..update((p0) => p0.add((UserRegistrationBuilder()

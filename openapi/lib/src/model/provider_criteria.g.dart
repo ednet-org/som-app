@@ -18,19 +18,18 @@ class _$ProviderCriteria extends ProviderCriteria {
 
   factory _$ProviderCriteria(
           [void Function(ProviderCriteriaBuilder)? updates]) =>
-      (new ProviderCriteriaBuilder()..update(updates))._build();
+      (ProviderCriteriaBuilder()..update(updates))._build();
 
   _$ProviderCriteria._(
       {this.providerZip, this.radiusKm, this.providerType, this.companySize})
       : super._();
-
   @override
   ProviderCriteria rebuild(void Function(ProviderCriteriaBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   ProviderCriteriaBuilder toBuilder() =>
-      new ProviderCriteriaBuilder()..replace(this);
+      ProviderCriteriaBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -102,7 +101,6 @@ class ProviderCriteriaBuilder
 
   @override
   void replace(ProviderCriteria other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProviderCriteria;
   }
 
@@ -116,7 +114,7 @@ class ProviderCriteriaBuilder
 
   _$ProviderCriteria _build() {
     final _$result = _$v ??
-        new _$ProviderCriteria._(
+        _$ProviderCriteria._(
           providerZip: providerZip,
           radiusKm: radiusKm,
           providerType: providerType,

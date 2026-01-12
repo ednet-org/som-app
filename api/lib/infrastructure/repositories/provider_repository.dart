@@ -22,8 +22,10 @@ class ProviderRepository {
   }
 
   Future<ProviderProfileRecord?> findByCompany(String companyId) async {
-    final rows =
-        await _client.from('provider_profiles').select().eq('company_id', companyId) as List<dynamic>;
+    final rows = await _client
+        .from('provider_profiles')
+        .select()
+        .eq('company_id', companyId) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
@@ -48,9 +50,12 @@ class ProviderRepository {
       bankDetails: BankDetails.fromJson(
         decodeJsonMap(row['bank_details_json']),
       ),
-      branchIds: decodeJsonList(row['branches_json']).map((e) => e.toString()).toList(),
-      pendingBranchIds:
-          decodeJsonList(row['pending_branches_json']).map((e) => e.toString()).toList(),
+      branchIds: decodeJsonList(row['branches_json'])
+          .map((e) => e.toString())
+          .toList(),
+      pendingBranchIds: decodeJsonList(row['pending_branches_json'])
+          .map((e) => e.toString())
+          .toList(),
       subscriptionPlanId: row['subscription_plan_id'] as String,
       paymentInterval: row['payment_interval'] as String,
       status: row['status'] as String,

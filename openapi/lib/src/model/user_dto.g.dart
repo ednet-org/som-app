@@ -27,7 +27,7 @@ class _$UserDto extends UserDto {
   final BuiltList<int>? roles;
 
   factory _$UserDto([void Function(UserDtoBuilder)? updates]) =>
-      (new UserDtoBuilder()..update(updates))._build();
+      (UserDtoBuilder()..update(updates))._build();
 
   _$UserDto._(
       {this.id,
@@ -40,13 +40,12 @@ class _$UserDto extends UserDto {
       this.telephoneNr,
       this.roles})
       : super._();
-
   @override
   UserDto rebuild(void Function(UserDtoBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserDtoBuilder toBuilder() => new UserDtoBuilder()..replace(this);
+  UserDtoBuilder toBuilder() => UserDtoBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -131,7 +130,7 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
   set telephoneNr(String? telephoneNr) => _$this._telephoneNr = telephoneNr;
 
   ListBuilder<int>? _roles;
-  ListBuilder<int> get roles => _$this._roles ??= new ListBuilder<int>();
+  ListBuilder<int> get roles => _$this._roles ??= ListBuilder<int>();
   set roles(ListBuilder<int>? roles) => _$this._roles = roles;
 
   UserDtoBuilder() {
@@ -157,7 +156,6 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
 
   @override
   void replace(UserDto other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserDto;
   }
 
@@ -173,7 +171,7 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
     _$UserDto _$result;
     try {
       _$result = _$v ??
-          new _$UserDto._(
+          _$UserDto._(
             id: id,
             companyId: companyId,
             email: email,
@@ -190,7 +188,7 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
         _$failedField = 'roles';
         _roles?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserDto', _$failedField, e.toString());
       }
       rethrow;

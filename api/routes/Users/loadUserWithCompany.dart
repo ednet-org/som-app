@@ -4,10 +4,20 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.get) {
     return Response(statusCode: 405);
+  }
+  final authResult = await parseAuth(
+    context,
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
+  );
+  if (authResult == null) {
+    return Response(statusCode: 401);
   }
   final params = context.request.uri.queryParameters;
   final userId = params['userId'];
@@ -20,6 +30,12 @@ Future<Response> onRequest(RequestContext context) async {
   final user = await userRepo.findById(userId);
   if (user == null) {
     return Response(statusCode: 404);
+  }
+  final isAdmin = authResult.roles.contains('admin') &&
+      authResult.companyId == user.companyId;
+  final isSelf = authResult.userId == userId;
+  if (!isAdmin && !isSelf && !authResult.roles.contains('consultant')) {
+    return Response(statusCode: 403);
   }
   final resolvedCompanyId = companyId ?? user.companyId;
   final company = await companyRepo.findById(resolvedCompanyId);

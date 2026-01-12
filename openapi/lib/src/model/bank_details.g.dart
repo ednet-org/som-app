@@ -15,23 +15,17 @@ class _$BankDetails extends BankDetails {
   final String accountOwner;
 
   factory _$BankDetails([void Function(BankDetailsBuilder)? updates]) =>
-      (new BankDetailsBuilder()..update(updates))._build();
+      (BankDetailsBuilder()..update(updates))._build();
 
   _$BankDetails._(
       {required this.iban, required this.bic, required this.accountOwner})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(iban, r'BankDetails', 'iban');
-    BuiltValueNullFieldError.checkNotNull(bic, r'BankDetails', 'bic');
-    BuiltValueNullFieldError.checkNotNull(
-        accountOwner, r'BankDetails', 'accountOwner');
-  }
-
+      : super._();
   @override
   BankDetails rebuild(void Function(BankDetailsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  BankDetailsBuilder toBuilder() => new BankDetailsBuilder()..replace(this);
+  BankDetailsBuilder toBuilder() => BankDetailsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -94,7 +88,6 @@ class BankDetailsBuilder implements Builder<BankDetails, BankDetailsBuilder> {
 
   @override
   void replace(BankDetails other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankDetails;
   }
 
@@ -108,7 +101,7 @@ class BankDetailsBuilder implements Builder<BankDetails, BankDetailsBuilder> {
 
   _$BankDetails _build() {
     final _$result = _$v ??
-        new _$BankDetails._(
+        _$BankDetails._(
           iban: BuiltValueNullFieldError.checkNotNull(
               iban, r'BankDetails', 'iban'),
           bic:

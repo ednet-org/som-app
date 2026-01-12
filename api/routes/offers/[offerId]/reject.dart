@@ -11,11 +11,15 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   }
   final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
+  }
+  if (!auth.roles.contains('buyer')) {
+    return Response(statusCode: 403);
   }
   final repo = context.read<OfferRepository>();
   final offer = await repo.findById(offerId);

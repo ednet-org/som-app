@@ -1,104 +1,242 @@
-import '../infrastructure/db.dart';
+import 'package:supabase/supabase.dart';
+
+import '../models/models.dart';
 
 class StatisticsService {
-  StatisticsService(this._db);
+  StatisticsService(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  Map<String, int> buyerStats({required String companyId, String? userId, DateTime? from, DateTime? to}) {
-    final where = <String>['buyer_company_id = ?'];
-    final args = <Object?>[companyId];
-    if (userId != null) {
-      where.add('created_by_user_id = ?');
-      args.add(userId);
-    }
-    if (from != null) {
-      where.add('created_at >= ?');
-      args.add(from.toIso8601String());
-    }
-    if (to != null) {
-      where.add('created_at <= ?');
-      args.add(to.toIso8601String());
-    }
-    final openRows = _db.select(
-      'SELECT COUNT(*) as count FROM inquiries ${_where(where..add('status = ?'))}',
-      [...args, 'open'],
+  Future<Map<String, int>> buyerStats({
+    required String companyId,
+    String? userId,
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final openCount = await _countInquiries(
+      companyId: companyId,
+      userId: userId,
+      from: from,
+      to: to,
+      status: 'open',
     );
-    where.removeLast();
-    final closedRows = _db.select(
-      'SELECT COUNT(*) as count FROM inquiries ${_where(where..add('status = ?'))}',
-      [...args, 'closed'],
+    final closedCount = await _countInquiries(
+      companyId: companyId,
+      userId: userId,
+      from: from,
+      to: to,
+      status: 'closed',
     );
     return {
-      'open': openRows.first['count'] as int,
-      'closed': closedRows.first['count'] as int,
+      'open': openCount,
+      'closed': closedCount,
     };
   }
 
-  Map<String, int> providerStats({required String companyId, DateTime? from, DateTime? to}) {
-    final where = <String>['provider_company_id = ?'];
-    final args = <Object?>[companyId];
-    if (from != null) {
-      where.add('created_at >= ?');
-      args.add(from.toIso8601String());
-    }
-    if (to != null) {
-      where.add('created_at <= ?');
-      args.add(to.toIso8601String());
-    }
-    final openRows = _db.select(
-      'SELECT COUNT(*) as count FROM offers ${_where(where..add('status = ?'))}',
-      [...args, 'open'],
+  Future<Map<String, int>> providerStats({
+    required String companyId,
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final openCount = await _countOffers(
+      companyId: companyId,
+      from: from,
+      to: to,
+      status: 'open',
     );
-    where.removeLast();
-    final createdRows = _db.select(
-      'SELECT COUNT(*) as count FROM offers ${_where(where..add('status = ?'))}',
-      [...args, 'offer_uploaded'],
+    final createdCount = await _countOffers(
+      companyId: companyId,
+      from: from,
+      to: to,
+      status: 'offer_uploaded',
     );
-    where.removeLast();
-    final lostRows = _db.select(
-      'SELECT COUNT(*) as count FROM offers ${_where(where..add('status = ?'))}',
-      [...args, 'rejected'],
+    final lostCount = await _countOffers(
+      companyId: companyId,
+      from: from,
+      to: to,
+      status: 'rejected',
     );
-    where.removeLast();
-    final wonRows = _db.select(
-      'SELECT COUNT(*) as count FROM offers ${_where(where..add('status = ?'))}',
-      [...args, 'accepted'],
+    final wonCount = await _countOffers(
+      companyId: companyId,
+      from: from,
+      to: to,
+      status: 'accepted',
     );
     return {
-      'open': openRows.first['count'] as int,
-      'offer_created': createdRows.first['count'] as int,
-      'lost': lostRows.first['count'] as int,
-      'won': wonRows.first['count'] as int,
+      'open': openCount,
+      'offer_created': createdCount,
+      'lost': lostCount,
+      'won': wonCount,
       'ignored': 0,
     };
   }
 
-  Map<String, int> consultantStatusStats({DateTime? from, DateTime? to}) {
-    final where = <String>[];
-    final args = <Object?>[];
-    if (from != null) {
-      where.add('created_at >= ?');
-      args.add(from.toIso8601String());
-    }
-    if (to != null) {
-      where.add('created_at <= ?');
-      args.add(to.toIso8601String());
-    }
-    final openRows = _db.select(
-      'SELECT COUNT(*) as count FROM inquiries ${_where(where..add('status = ?'))}',
-      [...args, 'open'],
+  Future<Map<String, int>> consultantStatusStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final openCount = await _countInquiries(from: from, to: to, status: 'open');
+    final closedCount =
+        await _countInquiries(from: from, to: to, status: 'closed');
+    final wonCount = await _countOffersGlobal(
+      from: from,
+      to: to,
+      status: 'accepted',
     );
-    where.removeLast();
-    final closedRows = _db.select(
-      'SELECT COUNT(*) as count FROM inquiries ${_where(where..add('status = ?'))}',
-      [...args, 'closed'],
+    final lostCount = await _countOffersGlobal(
+      from: from,
+      to: to,
+      status: 'rejected',
     );
     return {
-      'open': openRows.first['count'] as int,
-      'closed': closedRows.first['count'] as int,
+      'open': openCount,
+      'closed': closedCount,
+      'won': wonCount,
+      'lost': lostCount,
     };
   }
-}
 
-String _where(List<String> parts) => parts.isEmpty ? '' : 'WHERE ${parts.join(' AND ')}';
+  Future<Map<String, int>> consultantPeriodStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key =
+          '${inquiry.createdAt.year}-${inquiry.createdAt.month.toString().padLeft(2, '0')}';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
+  }
+
+  Future<Map<String, int>> consultantProviderTypeStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key = inquiry.providerCriteria.providerType ?? 'unknown';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
+  }
+
+  Future<Map<String, int>> consultantProviderSizeStats({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final inquiries = await _listInquiries(from: from, to: to);
+    final Map<String, int> buckets = {};
+    for (final inquiry in inquiries) {
+      final key = inquiry.providerCriteria.companySize ?? 'unknown';
+      buckets[key] = (buckets[key] ?? 0) + 1;
+    }
+    return buckets;
+  }
+
+  Future<int> _countInquiries({
+    String? companyId,
+    String? userId,
+    DateTime? from,
+    DateTime? to,
+    required String status,
+  }) async {
+    var query = _client.from('inquiries').select('id').eq('status', status);
+    if (companyId != null) {
+      query = query.eq('buyer_company_id', companyId);
+    }
+    if (userId != null) {
+      query = query.eq('created_by_user_id', userId);
+    }
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<int> _countOffers({
+    required String companyId,
+    DateTime? from,
+    DateTime? to,
+    required String status,
+  }) async {
+    var query = _client
+        .from('offers')
+        .select('id')
+        .eq('provider_company_id', companyId)
+        .eq('status', status);
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<int> _countOffersGlobal({
+    DateTime? from,
+    DateTime? to,
+    required String status,
+  }) async {
+    var query = _client.from('offers').select('id').eq('status', status);
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<List<InquiryRecord>> _listInquiries({
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    var query = _client.from('inquiries').select();
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.map((row) => _mapInquiry(row as Map<String, dynamic>)).toList();
+  }
+
+  InquiryRecord _mapInquiry(Map<String, dynamic> row) {
+    return InquiryRecord(
+      id: row['id'] as String,
+      buyerCompanyId: row['buyer_company_id'] as String,
+      createdByUserId: row['created_by_user_id'] as String,
+      status: row['status'] as String,
+      branchId: row['branch_id'] as String,
+      categoryId: row['category_id'] as String,
+      productTags: decodeJsonList(row['product_tags_json'])
+          .map((e) => e.toString())
+          .toList(),
+      deadline: parseDate(row['deadline']),
+      deliveryZips: decodeStringList(row['delivery_zips']),
+      numberOfProviders: row['number_of_providers'] as int,
+      description: row['description'] as String?,
+      pdfPath: row['pdf_path'] as String?,
+      providerCriteria: ProviderCriteria.fromJson(
+        decodeJsonMap(row['provider_criteria_json']),
+      ),
+      contactInfo: ContactInfo.fromJson(
+        decodeJsonMap(row['contact_json']),
+      ),
+      notifiedAt: parseDateOrNull(row['notified_at']),
+      createdAt: parseDate(row['created_at']),
+      updatedAt: parseDate(row['updated_at']),
+    );
+  }
+}

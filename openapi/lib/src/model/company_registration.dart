@@ -18,9 +18,11 @@ part 'company_registration.g.dart';
 /// * [uidNr] 
 /// * [registrationNr] 
 /// * [companySize] - 0=0-10, 1=11-50, 2=51-100, 3=101-250, 4=251-500, 5=500+
-/// * [type] - 0=buyer, 1=provider
+/// * [type] - 0=buyer, 1=provider, 2=buyer+provider
 /// * [websiteUrl] 
 /// * [providerData] 
+/// * [termsAccepted] 
+/// * [privacyAccepted] 
 abstract class CompanyRegistration implements Built<CompanyRegistration, CompanyRegistrationBuilder> {
     @BuiltValueField(wireName: r'name')
     String get name;
@@ -39,16 +41,22 @@ abstract class CompanyRegistration implements Built<CompanyRegistration, Company
     CompanyRegistrationCompanySizeEnum get companySize;
     // enum companySizeEnum {  0,  1,  2,  3,  4,  5,  };
 
-    /// 0=buyer, 1=provider
+    /// 0=buyer, 1=provider, 2=buyer+provider
     @BuiltValueField(wireName: r'type')
     CompanyRegistrationTypeEnum get type;
-    // enum typeEnum {  0,  1,  };
+    // enum typeEnum {  0,  1,  2,  };
 
     @BuiltValueField(wireName: r'websiteUrl')
     String? get websiteUrl;
 
     @BuiltValueField(wireName: r'providerData')
     ProviderRegistrationData? get providerData;
+
+    @BuiltValueField(wireName: r'termsAccepted')
+    bool get termsAccepted;
+
+    @BuiltValueField(wireName: r'privacyAccepted')
+    bool get privacyAccepted;
 
     CompanyRegistration._();
 
@@ -108,6 +116,14 @@ class _$CompanyRegistrationSerializer implements StructuredSerializer<CompanyReg
                 ..add(serializers.serialize(object.providerData,
                     specifiedType: const FullType(ProviderRegistrationData)));
         }
+        result
+            ..add(r'termsAccepted')
+            ..add(serializers.serialize(object.termsAccepted,
+                specifiedType: const FullType(bool)));
+        result
+            ..add(r'privacyAccepted')
+            ..add(serializers.serialize(object.privacyAccepted,
+                specifiedType: const FullType(bool)));
         return result;
     }
 
@@ -163,6 +179,16 @@ class _$CompanyRegistrationSerializer implements StructuredSerializer<CompanyReg
                         specifiedType: const FullType(ProviderRegistrationData)) as ProviderRegistrationData;
                     result.providerData.replace(valueDes);
                     break;
+                case r'termsAccepted':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(bool)) as bool;
+                    result.termsAccepted = valueDes;
+                    break;
+                case r'privacyAccepted':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(bool)) as bool;
+                    result.privacyAccepted = valueDes;
+                    break;
             }
         }
         return result.build();
@@ -200,12 +226,15 @@ class CompanyRegistrationCompanySizeEnum extends EnumClass {
 
 class CompanyRegistrationTypeEnum extends EnumClass {
 
-  /// 0=buyer, 1=provider
+  /// 0=buyer, 1=provider, 2=buyer+provider
   @BuiltValueEnumConst(wireNumber: 0)
   static const CompanyRegistrationTypeEnum number0 = _$companyRegistrationTypeEnum_number0;
-  /// 0=buyer, 1=provider
+  /// 0=buyer, 1=provider, 2=buyer+provider
   @BuiltValueEnumConst(wireNumber: 1)
   static const CompanyRegistrationTypeEnum number1 = _$companyRegistrationTypeEnum_number1;
+  /// 0=buyer, 1=provider, 2=buyer+provider
+  @BuiltValueEnumConst(wireNumber: 2)
+  static const CompanyRegistrationTypeEnum number2 = _$companyRegistrationTypeEnum_number2;
 
   static Serializer<CompanyRegistrationTypeEnum> get serializer => _$companyRegistrationTypeEnumSerializer;
 

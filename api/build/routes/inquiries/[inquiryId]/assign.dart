@@ -11,9 +11,11 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (context.request.method != HttpMethod.post) {
     return Response(statusCode: 405);
   }
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
     return Response(statusCode: 403);
@@ -26,7 +28,7 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     return Response(statusCode: 400);
   }
   final inquiryRepo = context.read<InquiryRepository>();
-  inquiryRepo.assignToProviders(
+  await inquiryRepo.assignToProviders(
     inquiryId: inquiryId,
     assignedByUserId: auth.userId,
     providerCompanyIds: providerIds,
@@ -34,12 +36,13 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   final email = context.read<EmailService>();
   final userRepo = context.read<UserRepository>();
   for (final providerId in providerIds) {
-    final admins = userRepo.listAdminsByCompany(providerId);
+    final admins = await userRepo.listAdminsByCompany(providerId);
     for (final admin in admins) {
       await email.send(
         to: admin.email,
         subject: 'New inquiry assigned',
-        text: 'A new inquiry has been assigned to your company. Inquiry ID: $inquiryId',
+        text:
+            'A new inquiry has been assigned to your company. Inquiry ID: $inquiryId',
       );
     }
   }

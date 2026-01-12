@@ -4,7 +4,11 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import '../infrastructure/repositories/user_repository.dart';
 
 class RequestAuth {
-  RequestAuth({required this.userId, required this.companyId, required this.roles, required this.activeRole});
+  RequestAuth(
+      {required this.userId,
+      required this.companyId,
+      required this.roles,
+      required this.activeRole});
   final String userId;
   final String companyId;
   final List<String> roles;
@@ -32,7 +36,8 @@ Future<RequestAuth?> parseAuth(
     if (user == null || !user.isActive) {
       return null;
     }
-    final activeRole = user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : '');
+    final activeRole =
+        user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : '');
     return RequestAuth(
       userId: user.id,
       companyId: user.companyId,

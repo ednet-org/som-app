@@ -13,16 +13,15 @@ class _$Category extends Category {
   final String? name;
 
   factory _$Category([void Function(CategoryBuilder)? updates]) =>
-      (new CategoryBuilder()..update(updates))._build();
+      (CategoryBuilder()..update(updates))._build();
 
   _$Category._({this.id, this.name}) : super._();
-
   @override
   Category rebuild(void Function(CategoryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CategoryBuilder toBuilder() => new CategoryBuilder()..replace(this);
+  CategoryBuilder toBuilder() => CategoryBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -75,7 +74,6 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
 
   @override
   void replace(Category other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Category;
   }
 
@@ -89,7 +87,7 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
 
   _$Category _build() {
     final _$result = _$v ??
-        new _$Category._(
+        _$Category._(
           id: id,
           name: name,
         );

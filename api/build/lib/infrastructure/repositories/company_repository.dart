@@ -1,109 +1,97 @@
-import 'package:collection/collection.dart';
+import 'package:supabase/supabase.dart';
 
 import '../../models/models.dart';
-import '../db.dart';
 
 class CompanyRepository {
-  CompanyRepository(this._db);
+  CompanyRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void create(CompanyRecord company) {
-    _db.execute(
-      '''
-      INSERT INTO companies (
-        id, name, type, address_json, uid_nr, registration_nr, company_size,
-        website_url, status, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        company.id,
-        company.name,
-        company.type,
-        encodeJson(company.address.toJson()),
-        company.uidNr,
-        company.registrationNr,
-        company.companySize,
-        company.websiteUrl,
-        company.status,
-        company.createdAt.toIso8601String(),
-        company.updatedAt.toIso8601String(),
-      ],
-    );
+  Future<void> create(CompanyRecord company) async {
+    await _client.from('companies').insert({
+      'id': company.id,
+      'name': company.name,
+      'type': company.type,
+      'address_json': company.address.toJson(),
+      'uid_nr': company.uidNr,
+      'registration_nr': company.registrationNr,
+      'company_size': company.companySize,
+      'website_url': company.websiteUrl,
+      'terms_accepted_at': company.termsAcceptedAt?.toIso8601String(),
+      'privacy_accepted_at': company.privacyAcceptedAt?.toIso8601String(),
+      'status': company.status,
+      'created_at': company.createdAt.toIso8601String(),
+      'updated_at': company.updatedAt.toIso8601String(),
+    });
   }
 
-  CompanyRecord? findById(String id) {
-    final rows = _db.select('SELECT * FROM companies WHERE id = ?', [id]);
+  Future<CompanyRecord?> findById(String id) async {
+    final rows =
+        await _client.from('companies').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapRow(rows.first);
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 
-  List<CompanyRecord> listAll() {
-    final rows = _db.select('SELECT * FROM companies ORDER BY name');
-    return rows.map(_mapRow).toList();
+  Future<List<CompanyRecord>> listAll() async {
+    final rows =
+        await _client.from('companies').select().order('name') as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
-  void update(CompanyRecord company) {
-    _db.execute(
-      '''
-      UPDATE companies SET
-        name = ?,
-        type = ?,
-        address_json = ?,
-        uid_nr = ?,
-        registration_nr = ?,
-        company_size = ?,
-        website_url = ?,
-        status = ?,
-        updated_at = ?
-      WHERE id = ?
-      ''',
-      [
-        company.name,
-        company.type,
-        encodeJson(company.address.toJson()),
-        company.uidNr,
-        company.registrationNr,
-        company.companySize,
-        company.websiteUrl,
-        company.status,
-        company.updatedAt.toIso8601String(),
-        company.id,
-      ],
-    );
+  Future<void> update(CompanyRecord company) async {
+    await _client.from('companies').update({
+      'name': company.name,
+      'type': company.type,
+      'address_json': company.address.toJson(),
+      'uid_nr': company.uidNr,
+      'registration_nr': company.registrationNr,
+      'company_size': company.companySize,
+      'website_url': company.websiteUrl,
+      'terms_accepted_at': company.termsAcceptedAt?.toIso8601String(),
+      'privacy_accepted_at': company.privacyAcceptedAt?.toIso8601String(),
+      'status': company.status,
+      'updated_at': company.updatedAt.toIso8601String(),
+    }).eq('id', company.id);
   }
 
-  CompanyRecord _mapRow(Map<String, Object?> row) {
+  CompanyRecord _mapRow(Map<String, dynamic> row) {
     return CompanyRecord(
       id: row['id'] as String,
       name: row['name'] as String,
       type: row['type'] as String,
-      address: Address.fromJson(decodeJsonMap(row['address_json'] as String)),
+      address: Address.fromJson(decodeJsonMap(row['address_json'])),
       uidNr: row['uid_nr'] as String,
       registrationNr: row['registration_nr'] as String,
       companySize: row['company_size'] as String,
       websiteUrl: row['website_url'] as String?,
+      termsAcceptedAt: parseDateOrNull(row['terms_accepted_at']),
+      privacyAcceptedAt: parseDateOrNull(row['privacy_accepted_at']),
       status: row['status'] as String,
-      createdAt: DateTime.parse(row['created_at'] as String),
-      updatedAt: DateTime.parse(row['updated_at'] as String),
+      createdAt: parseDate(row['created_at']),
+      updatedAt: parseDate(row['updated_at']),
     );
   }
 
-  bool existsByName(String name) {
-    final rows = _db.select(
-      'SELECT 1 FROM companies WHERE lower(name) = lower(?) LIMIT 1',
-      [name],
-    );
+  Future<bool> existsByName(String name) async {
+    final rows = await _client
+        .from('companies')
+        .select('id')
+        .ilike('name', name)
+        .limit(1) as List<dynamic>;
     return rows.isNotEmpty;
   }
 
-  CompanyRecord? findByRegistrationNr(String registrationNr) {
-    final rows = _db.select(
-      'SELECT * FROM companies WHERE registration_nr = ? LIMIT 1',
-      [registrationNr],
-    );
-    return rows.firstOrNull == null ? null : _mapRow(rows.first);
+  Future<CompanyRecord?> findByRegistrationNr(String registrationNr) async {
+    final rows = await _client
+        .from('companies')
+        .select()
+        .eq('registration_nr', registrationNr)
+        .limit(1) as List<dynamic>;
+    if (rows.isEmpty) {
+      return null;
+    }
+    return _mapRow(rows.first as Map<String, dynamic>);
   }
 }

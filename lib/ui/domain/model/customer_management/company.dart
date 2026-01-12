@@ -52,6 +52,12 @@ abstract class _Company with Store {
   @observable
   RegistrationUser admin = RegistrationUser();
 
+  @observable
+  bool termsAccepted = false;
+
+  @observable
+  bool privacyAccepted = false;
+
   @action
   void setAdmin(value) => admin = value;
 
@@ -198,4 +204,10 @@ abstract class _Company with Store {
 
   @action
   void addUser(RegistrationUser value) => users.add(value);
+
+  @action
+  void setTermsAccepted(bool value) => termsAccepted = value;
+
+  @action
+  void setPrivacyAccepted(bool value) => privacyAccepted = value;
 }

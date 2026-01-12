@@ -41,10 +41,27 @@ class RegistrationService {
     final companyId = const Uuid().v4();
     final now = clock.nowUtc();
     final companyType = companyTypeFromWire(companyJson['type'] as int? ?? 0);
+    final termsAccepted = companyJson['termsAccepted'] == true;
+    final privacyAccepted = companyJson['privacyAccepted'] == true;
 
     final address = Address.fromJson(
       (companyJson['address'] as Map<String, dynamic>? ?? {}),
     );
+
+    final websiteUrl = companyJson['websiteUrl'] as String?;
+    if (websiteUrl != null && websiteUrl.isNotEmpty) {
+      final parsed = Uri.tryParse(websiteUrl);
+      final validScheme = parsed != null &&
+          (parsed.scheme == 'http' || parsed.scheme == 'https') &&
+          parsed.hasAuthority;
+      if (!validScheme && !allowIncomplete) {
+        throw RegistrationException('Website URL must be a valid URL.');
+      }
+    }
+
+    if (!allowIncomplete && (!termsAccepted || !privacyAccepted)) {
+      throw RegistrationException('Terms and privacy policy must be accepted.');
+    }
 
     final companyRecord = CompanyRecord(
       id: companyId,
@@ -54,7 +71,9 @@ class RegistrationService {
       uidNr: companyJson['uidNr'] as String? ?? '',
       registrationNr: companyJson['registrationNr'] as String? ?? '',
       companySize: companySizeFromWire(companyJson['companySize'] as int? ?? 0),
-      websiteUrl: companyJson['websiteUrl'] as String?,
+      websiteUrl: websiteUrl,
+      termsAcceptedAt: termsAccepted ? now : null,
+      privacyAcceptedAt: privacyAccepted ? now : null,
       status: 'active',
       createdAt: now,
       updatedAt: now,
@@ -75,20 +94,36 @@ class RegistrationService {
       }
     }
 
-    companies.create(companyRecord);
+    await companies.create(companyRecord);
 
-    if (companyType == 'provider') {
+    if (companyType == 'provider' || companyType == 'buyer_provider') {
       final providerData = companyJson['providerData'] as Map<String, dynamic>?;
+      if (!allowIncomplete && providerData == null) {
+        throw RegistrationException('Provider registration data is required.');
+      }
       final bankDetailsJson =
           providerData?['bankDetails'] as Map<String, dynamic>? ?? {};
       final branchIds = (providerData?['branchIds'] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList();
 
+      if (!allowIncomplete) {
+        final iban = bankDetailsJson['iban'] as String? ?? '';
+        final bic = bankDetailsJson['bic'] as String? ?? '';
+        final owner = bankDetailsJson['accountOwner'] as String? ?? '';
+        if (iban.isEmpty || bic.isEmpty || owner.isEmpty) {
+          throw RegistrationException('Bank details are required.');
+        }
+        if (branchIds.isEmpty) {
+          throw RegistrationException('At least one branch is required.');
+        }
+      }
+
+      final existingBranches = await branches.listBranches();
       final pendingBranchIds = <String>[];
       final confirmedBranchIds = <String>[];
       for (final branchId in branchIds) {
-        final existing = branches.listBranches().any((b) => b.id == branchId);
+        final existing = existingBranches.any((b) => b.id == branchId);
         if (existing) {
           confirmedBranchIds.add(branchId);
         } else {
@@ -98,10 +133,13 @@ class RegistrationService {
 
       final subscriptionPlanId =
           providerData?['subscriptionPlanId'] as String? ?? '';
-      final paymentInterval =
-          paymentIntervalFromWire(providerData?['paymentInterval'] as int? ?? 0);
+      final paymentInterval = paymentIntervalFromWire(
+          providerData?['paymentInterval'] as int? ?? 0);
+      if (!allowIncomplete && subscriptionPlanId.isEmpty) {
+        throw RegistrationException('Subscription plan is required.');
+      }
 
-      providers.createProfile(
+      await providers.createProfile(
         ProviderProfileRecord(
           companyId: companyId,
           bankDetails: BankDetails.fromJson(bankDetailsJson),
@@ -119,7 +157,7 @@ class RegistrationService {
         final startDate = DateTime.utc(now.year, now.month + 1, 1);
         final endDate = DateTime.utc(startDate.year + 1, startDate.month, 1)
             .subtract(const Duration(days: 1));
-        subscriptions.createSubscription(
+        await subscriptions.createSubscription(
           SubscriptionRecord(
             id: const Uuid().v4(),
             companyId: companyId,
@@ -140,10 +178,18 @@ class RegistrationService {
       final roles = (userJson['roles'] as List<dynamic>? ?? [])
           .map((e) => roleFromWire(e as int? ?? 2))
           .toList();
+      final email = (userJson['email'] as String? ?? '').toLowerCase();
+      await _ensureUniqueEmail(email);
+      late final String authUserId;
+      try {
+        authUserId = await auth.ensureAuthUser(email: email);
+      } on AuthException catch (error) {
+        throw RegistrationException(error.message);
+      }
       final user = UserRecord(
-        id: const Uuid().v4(),
+        id: authUserId,
         companyId: companyId,
-        email: (userJson['email'] as String? ?? '').toLowerCase(),
+        email: email,
         firstName: userJson['firstName'] as String? ?? '',
         lastName: userJson['lastName'] as String? ?? '',
         salutation: userJson['salutation'] as String? ?? '',
@@ -169,12 +215,12 @@ class RegistrationService {
           throw RegistrationException(error.message);
         }
       }
-      _ensureUniqueEmail(user.email);
-      users.create(user);
+      await users.create(user);
       createdUsers.add(user);
     }
 
-    final adminExists = createdUsers.any((user) => user.roles.contains('admin'));
+    final adminExists =
+        createdUsers.any((user) => user.roles.contains('admin'));
     if (!adminExists) {
       throw RegistrationException('Admin user is required');
     }
@@ -186,8 +232,11 @@ class RegistrationService {
     return companyRecord;
   }
 
-  void _ensureUniqueEmail(String email) {
-    final existing = users.findByEmail(email);
+  Future<void> _ensureUniqueEmail(String email) async {
+    if (email.isEmpty) {
+      throw RegistrationException('E-mail is required.');
+    }
+    final existing = await users.findByEmail(email);
     if (existing != null) {
       throw RegistrationException('E-mail already used.');
     }

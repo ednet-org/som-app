@@ -135,6 +135,8 @@ class CompanyRecord {
     required this.registrationNr,
     required this.companySize,
     required this.websiteUrl,
+    this.termsAcceptedAt,
+    this.privacyAcceptedAt,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
@@ -148,6 +150,8 @@ class CompanyRecord {
   final String registrationNr;
   final String companySize;
   final String? websiteUrl;
+  final DateTime? termsAcceptedAt;
+  final DateTime? privacyAcceptedAt;
   final String status;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -161,6 +165,8 @@ class CompanyRecord {
         'registrationNr': registrationNr,
         'companySize': companySize,
         'websiteUrl': websiteUrl,
+        'termsAcceptedAt': termsAcceptedAt?.toIso8601String(),
+        'privacyAcceptedAt': privacyAcceptedAt?.toIso8601String(),
         'status': status,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
@@ -264,6 +270,75 @@ class SubscriptionRecord {
   final DateTime startDate;
   final DateTime endDate;
   final DateTime createdAt;
+}
+
+class BillingRecord {
+  BillingRecord({
+    required this.id,
+    required this.companyId,
+    required this.amountInSubunit,
+    required this.currency,
+    required this.status,
+    required this.periodStart,
+    required this.periodEnd,
+    required this.createdAt,
+    required this.paidAt,
+  });
+
+  final String id;
+  final String companyId;
+  final int amountInSubunit;
+  final String currency;
+  final String status;
+  final DateTime periodStart;
+  final DateTime periodEnd;
+  final DateTime createdAt;
+  final DateTime? paidAt;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'companyId': companyId,
+        'amountInSubunit': amountInSubunit,
+        'currency': currency,
+        'status': status,
+        'periodStart': periodStart.toIso8601String(),
+        'periodEnd': periodEnd.toIso8601String(),
+        'createdAt': createdAt.toIso8601String(),
+        'paidAt': paidAt?.toIso8601String(),
+      };
+}
+
+class SubscriptionCancellationRecord {
+  SubscriptionCancellationRecord({
+    required this.id,
+    required this.companyId,
+    required this.requestedByUserId,
+    required this.reason,
+    required this.status,
+    required this.requestedAt,
+    required this.effectiveEndDate,
+    required this.resolvedAt,
+  });
+
+  final String id;
+  final String companyId;
+  final String requestedByUserId;
+  final String? reason;
+  final String status;
+  final DateTime requestedAt;
+  final DateTime? effectiveEndDate;
+  final DateTime? resolvedAt;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'companyId': companyId,
+        'requestedByUserId': requestedByUserId,
+        'reason': reason,
+        'status': status,
+        'requestedAt': requestedAt.toIso8601String(),
+        'effectiveEndDate': effectiveEndDate?.toIso8601String(),
+        'resolvedAt': resolvedAt?.toIso8601String(),
+      };
 }
 
 class ProviderProfileRecord {
@@ -414,7 +489,68 @@ class AdRecord {
 
 String encodeJson(Object value) => jsonEncode(value);
 
-Map<String, dynamic> decodeJsonMap(String value) =>
-    jsonDecode(value) as Map<String, dynamic>;
+Map<String, dynamic> decodeJsonMap(Object? value) {
+  if (value == null) {
+    return <String, dynamic>{};
+  }
+  if (value is Map<String, dynamic>) {
+    return value;
+  }
+  if (value is Map) {
+    return value.cast<String, dynamic>();
+  }
+  if (value is String && value.isNotEmpty) {
+    return jsonDecode(value) as Map<String, dynamic>;
+  }
+  return <String, dynamic>{};
+}
 
-List<dynamic> decodeJsonList(String value) => jsonDecode(value) as List<dynamic>;
+List<dynamic> decodeJsonList(Object? value) {
+  if (value == null) {
+    return <dynamic>[];
+  }
+  if (value is List) {
+    return value;
+  }
+  if (value is String && value.isNotEmpty) {
+    return jsonDecode(value) as List<dynamic>;
+  }
+  return <dynamic>[];
+}
+
+DateTime parseDate(Object? value) {
+  if (value is DateTime) {
+    return value.toUtc();
+  }
+  if (value is String && value.isNotEmpty) {
+    return DateTime.parse(value).toUtc();
+  }
+  throw StateError('Invalid date value $value');
+}
+
+DateTime? parseDateOrNull(Object? value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is DateTime) {
+    return value.toUtc();
+  }
+  if (value is String && value.isNotEmpty) {
+    return DateTime.parse(value).toUtc();
+  }
+  return null;
+}
+
+List<String> decodeStringList(Object? value) {
+  if (value is List) {
+    return value.map((e) => e.toString()).toList();
+  }
+  if (value is String) {
+    return value
+        .split(',')
+        .map((entry) => entry.trim())
+        .where((entry) => entry.isNotEmpty)
+        .toList();
+  }
+  return <String>[];
+}

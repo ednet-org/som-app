@@ -31,20 +31,33 @@ class AdsRepository {
     if (branchId != null) {
       query = query.eq('branch_id', branchId);
     }
-    final rows = await query.order('created_at', ascending: false) as List<dynamic>;
+    final rows =
+        await query.order('created_at', ascending: false) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<AdRecord>> listAll({
+    String? companyId,
+    String? status,
+  }) async {
+    var query = _client.from('ads').select();
+    if (companyId != null) {
+      query = query.eq('company_id', companyId);
+    }
+    if (status != null && status.isNotEmpty) {
+      query = query.eq('status', status);
+    }
+    final rows =
+        await query.order('created_at', ascending: false) as List<dynamic>;
     return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
   Future<List<AdRecord>> listByCompany(String companyId) async {
-    final rows = await _client
-        .from('ads')
-        .select()
-        .eq('company_id', companyId)
-        .order('created_at', ascending: false) as List<dynamic>;
-    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
+    return listAll(companyId: companyId);
   }
 
-  Future<int> countActiveByCompanyInMonth(String companyId, DateTime month) async {
+  Future<int> countActiveByCompanyInMonth(
+      String companyId, DateTime month) async {
     final start = DateTime.utc(month.year, month.month, 1);
     final end = DateTime.utc(month.year, month.month + 1, 1);
     final rows = await _client
@@ -70,7 +83,8 @@ class AdsRepository {
   }
 
   Future<AdRecord?> findById(String id) async {
-    final rows = await _client.from('ads').select().eq('id', id) as List<dynamic>;
+    final rows =
+        await _client.from('ads').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }

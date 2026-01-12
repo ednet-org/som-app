@@ -12,10 +12,9 @@ class _$CreateAd200Response extends CreateAd200Response {
 
   factory _$CreateAd200Response(
           [void Function(CreateAd200ResponseBuilder)? updates]) =>
-      (new CreateAd200ResponseBuilder()..update(updates))._build();
+      (CreateAd200ResponseBuilder()..update(updates))._build();
 
   _$CreateAd200Response._({this.id}) : super._();
-
   @override
   CreateAd200Response rebuild(
           void Function(CreateAd200ResponseBuilder) updates) =>
@@ -23,7 +22,7 @@ class _$CreateAd200Response extends CreateAd200Response {
 
   @override
   CreateAd200ResponseBuilder toBuilder() =>
-      new CreateAd200ResponseBuilder()..replace(this);
+      CreateAd200ResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -69,7 +68,6 @@ class CreateAd200ResponseBuilder
 
   @override
   void replace(CreateAd200Response other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreateAd200Response;
   }
 
@@ -83,7 +81,7 @@ class CreateAd200ResponseBuilder
 
   _$CreateAd200Response _build() {
     final _$result = _$v ??
-        new _$CreateAd200Response._(
+        _$CreateAd200Response._(
           id: id,
         );
     replace(_$result);
