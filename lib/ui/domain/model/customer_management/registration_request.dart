@@ -44,38 +44,38 @@ abstract class _RegistrationRequest with Store {
     isSuccess = false;
     errorMessage = '';
 
-    final addressRequest = AddressDtoBuilder()
+    final addressRequest = AddressBuilder()
       ..city = company.address.city
       ..country = company.address.country
       ..number = company.address.number
       ..street = company.address.street
       ..zip = company.address.zip;
 
-    var providerData;
+    ProviderRegistrationDataBuilder? providerData;
 
     if (company.isProvider) {
-      final bankDetails;
-
-      bankDetails = BankDetailsDtoBuilder()
+      final bankDetails = BankDetailsBuilder()
         ..accountOwner = company.providerData.bankDetails!.accountOwner!
         ..bic = company.providerData.bankDetails!.bic!
         ..iban = company.providerData.bankDetails!.iban!;
 
-      providerData = CreateProviderDtoBuilder()
+      providerData = ProviderRegistrationDataBuilder()
         ..bankDetails = bankDetails
         // hardcoded
-        ..paymentInterval = PaymentInterval.number0
+        ..paymentInterval = ProviderRegistrationDataPaymentIntervalEnum.number0
         ..subscriptionPlanId = "68294d4c-dbed-11eb-82b1-028b3e4c7287"
         ..branchIds =
             ListBuilder<String>(["641d9ca8-380b-4ded-8e26-1c32065c703f"]);
     }
 
-    final companyRequest = CreateCompanyDtoBuilder()
+    final companyRequest = CompanyRegistrationBuilder()
       // todo: hardcoded
-      ..type = company.isProvider ? CompanyType.number1 : CompanyType.number0
+      ..type = company.isProvider
+          ? CompanyRegistrationTypeEnum.number1
+          : CompanyRegistrationTypeEnum.number0
       ..address = addressRequest
       // todo: hardcoded
-      ..companySize = CompanySize.number4
+      ..companySize = CompanyRegistrationCompanySizeEnum.number4
       ..name = company.name
       ..providerData = providerData
       ..registrationNr = company.registrationNumber
@@ -83,35 +83,38 @@ abstract class _RegistrationRequest with Store {
       ..uidNr = company.uidNr
       ..build();
 
-    ListBuilder<UserDto>? usersRequest =
-        ListBuilder<UserDto>(company.users.map((element) => (UserDtoBuilder()
+    ListBuilder<UserRegistration>? usersRequest = ListBuilder<UserRegistration>(
+        company.users.map((element) => (UserRegistrationBuilder()
               ..email = element.email
               ..firstName = element.firstName
               ..lastName = element.lastName
               ..salutation = element.salutation
               ..telephoneNr = element.phone
-              ..roles = ListBuilder<Roles>([Roles.number2])
+              ..roles = ListBuilder<UserRegistrationRolesEnum>(
+                  [UserRegistrationRolesEnum.number2])
               ..title = element.title)
             .build()))
-          ..update((p0) => p0.add((UserDtoBuilder()
+          ..update((p0) => p0.add((UserRegistrationBuilder()
                 ..email = company.admin.email
                 ..firstName = company.admin.firstName
                 ..lastName = company.admin.lastName
                 ..salutation = company.admin.salutation
                 ..telephoneNr = company.admin.phone
-                ..roles = ListBuilder<Roles>([Roles.number4])
+                ..roles = ListBuilder<UserRegistrationRolesEnum>(
+                    [UserRegistrationRolesEnum.number4])
                 ..title = company.admin.title)
               .build()));
 
-    final registerCompanyDto = RegisterCompanyDtoBuilder()
+    final registerCompanyRequest = RegisterCompanyRequestBuilder()
       ..company = companyRequest
       ..users = usersRequest;
 
-    final buildCompany = registerCompanyDto.build();
+    final buildCompany = registerCompanyRequest.build();
 
     try {
-      final response =
-          await api.companiesRegisterPost(registerCompanyDto: buildCompany);
+      final response = await api.registerCompany(
+        registerCompanyRequest: buildCompany,
+      );
 
       //todo: evaluate state, fix UI and check possible abstractions in behaviour - ex. error handling, success message, etc.
       if (response.statusCode == 200) {

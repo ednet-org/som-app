@@ -1,0 +1,11 @@
+abstract class {{collectionName}}Gen extends Entities<{{entityName}}> {
+  {{collectionName}}Gen(Concept concept) {
+    this.concept = concept;
+  }
+
+  @override
+  {{collectionName}} newEntities() => {{collectionName}}(concept);
+
+  @override
+  {{entityName}} newEntity() => {{entityName}}(concept);
+}

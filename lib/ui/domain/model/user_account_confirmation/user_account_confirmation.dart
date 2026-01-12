@@ -10,7 +10,7 @@ class UserAccountConfirmation = _UserAccountConfirmationBase
     with _$UserAccountConfirmation;
 
 abstract class _UserAccountConfirmationBase with Store {
-  final AuthenticationApi authService;
+  final AuthApi authService;
   final Application appStore;
   final EmailLoginStore emailLoginStore;
 
@@ -81,7 +81,7 @@ abstract class _UserAccountConfirmationBase with Store {
 
     try {
       isSettingPassword = true;
-      final resetPasswordDtoBuilder = ResetPasswordDtoBuilder()
+      final resetPasswordDtoBuilder = AuthResetPasswordPostRequestBuilder()
         ..token = resetPasswordToken
         ..confirmPassword = repeatedPassword
         ..email = email
@@ -89,16 +89,16 @@ abstract class _UserAccountConfirmationBase with Store {
 
       authService
           .authResetPasswordPost(
-              resetPasswordDto: resetPasswordDtoBuilder.build())
+              authResetPasswordPostRequest: resetPasswordDtoBuilder.build())
           .then((response) async {
         if (response.statusCode == 200) {
-          final authenticateDtoBuilder = AuthenticateDtoBuilder()
+          final authenticateDtoBuilder = AuthLoginPostRequestBuilder()
             ..email = email
             ..password = password;
           isPasswordSet = true;
           isSettingPassword = false;
           authService.authLoginPost(
-              authenticateDto: authenticateDtoBuilder.build());
+              authLoginPostRequest: authenticateDtoBuilder.build());
           emailLoginStore.setPassword(password);
           emailLoginStore.setEmail(email);
           isLoggingIn = true;
@@ -136,7 +136,7 @@ abstract class _UserAccountConfirmationBase with Store {
           .then((response) {
         isConfirming = false;
         if (response.statusCode == 200) {
-          resetPasswordToken = response.data as String;
+          resetPasswordToken = token;
           isConfirmed = true;
         }
       }).catchError((error) {

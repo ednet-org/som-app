@@ -5,31 +5,68 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**companiesCompanyIdGet**](CompaniesApi.md#companiescompanyidget) | **GET** /Companies/{companyId} | 
-[**companiesCompanyIdRegisterUserPost**](CompaniesApi.md#companiescompanyidregisteruserpost) | **POST** /Companies/{companyId}/registerUser | 
-[**companiesCompanyIdUsersGet**](CompaniesApi.md#companiescompanyidusersget) | **GET** /Companies/{companyId}/users | 
-[**companiesCompanyIdUsersUserIdDelete**](CompaniesApi.md#companiescompanyidusersuseriddelete) | **DELETE** /Companies/{companyId}/users/{userId} | 
-[**companiesCompanyIdUsersUserIdGet**](CompaniesApi.md#companiescompanyidusersuseridget) | **GET** /Companies/{companyId}/users/{userId} | 
-[**companiesCompanyIdUsersUserIdUpdatePut**](CompaniesApi.md#companiescompanyidusersuseridupdateput) | **PUT** /Companies/{companyId}/users/{userId}/update | 
-[**companiesGet**](CompaniesApi.md#companiesget) | **GET** /Companies | 
-[**companiesRegisterPost**](CompaniesApi.md#companiesregisterpost) | **POST** /Companies/register | 
+[**companiesCompanyIdDelete**](CompaniesApi.md#companiescompanyiddelete) | **DELETE** /Companies/{companyId} | Deactivate company and users
+[**companiesCompanyIdGet**](CompaniesApi.md#companiescompanyidget) | **GET** /Companies/{companyId} | Get company
+[**companiesCompanyIdPut**](CompaniesApi.md#companiescompanyidput) | **PUT** /Companies/{companyId} | Update company
+[**companiesGet**](CompaniesApi.md#companiesget) | **GET** /Companies | List companies
+[**registerCompany**](CompaniesApi.md#registercompany) | **POST** /Companies | Register buyer/provider company
 
 
-# **companiesCompanyIdGet**
-> CompanyDto companiesCompanyIdGet(companyId)
+# **companiesCompanyIdDelete**
+> companiesCompanyIdDelete(companyId)
 
-
+Deactivate company and users
 
 ### Example
 ```dart
 import 'package:openapi/api.dart';
 
 final api = Openapi().getCompaniesApi();
-final String companyId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final String companyId = companyId_example; // String | 
+
+try {
+    api.companiesCompanyIdDelete(companyId);
+} catch on DioError (e) {
+    print('Exception when calling CompaniesApi->companiesCompanyIdDelete: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **companyId** | **String**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companiesCompanyIdGet**
+> CompanyDto companiesCompanyIdGet(companyId)
+
+Get company
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getCompaniesApi();
+final String companyId = companyId_example; // String | 
 
 try {
     final response = api.companiesCompanyIdGet(companyId);
@@ -56,14 +93,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **companiesCompanyIdRegisterUserPost**
-> companiesCompanyIdRegisterUserPost(companyId, userDto)
+# **companiesCompanyIdPut**
+> companiesCompanyIdPut(companyId, companyDto)
 
-
+Update company
 
 ### Example
 ```dart
@@ -71,12 +108,12 @@ import 'package:openapi/api.dart';
 
 final api = Openapi().getCompaniesApi();
 final String companyId = companyId_example; // String | 
-final UserDto userDto = ; // UserDto | 
+final CompanyDto companyDto = ; // CompanyDto | 
 
 try {
-    api.companiesCompanyIdRegisterUserPost(companyId, userDto);
+    api.companiesCompanyIdPut(companyId, companyDto);
 } catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesCompanyIdRegisterUserPost: $e\n');
+    print('Exception when calling CompaniesApi->companiesCompanyIdPut: $e\n');
 }
 ```
 
@@ -85,7 +122,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **companyId** | **String**|  | 
- **userDto** | [**UserDto**](UserDto.md)|  | [optional] 
+ **companyDto** | [**CompanyDto**](CompanyDto.md)|  | 
 
 ### Return type
 
@@ -97,195 +134,25 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/*+json
+ - **Content-Type**: application/json
  - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **companiesCompanyIdUsersGet**
-> BuiltList<UserDto> companiesCompanyIdUsersGet(companyId)
-
-
-
-### Example
-```dart
-import 'package:openapi/api.dart';
-
-final api = Openapi().getCompaniesApi();
-final String companyId = companyId_example; // String | 
-
-try {
-    final response = api.companiesCompanyIdUsersGet(companyId);
-    print(response);
-} catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesCompanyIdUsersGet: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **companyId** | **String**|  | 
-
-### Return type
-
-[**BuiltList&lt;UserDto&gt;**](UserDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **companiesCompanyIdUsersUserIdDelete**
-> companiesCompanyIdUsersUserIdDelete(userId, companyId)
-
-
-
-### Example
-```dart
-import 'package:openapi/api.dart';
-
-final api = Openapi().getCompaniesApi();
-final String userId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final String companyId = companyId_example; // String | 
-
-try {
-    api.companiesCompanyIdUsersUserIdDelete(userId, companyId);
-} catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesCompanyIdUsersUserIdDelete: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userId** | **String**|  | 
- **companyId** | **String**|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **companiesCompanyIdUsersUserIdGet**
-> UserDto companiesCompanyIdUsersUserIdGet(userId, companyId)
-
-
-
-### Example
-```dart
-import 'package:openapi/api.dart';
-
-final api = Openapi().getCompaniesApi();
-final String userId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final String companyId = companyId_example; // String | 
-
-try {
-    final response = api.companiesCompanyIdUsersUserIdGet(userId, companyId);
-    print(response);
-} catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesCompanyIdUsersUserIdGet: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userId** | **String**|  | 
- **companyId** | **String**|  | 
-
-### Return type
-
-[**UserDto**](UserDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **companiesCompanyIdUsersUserIdUpdatePut**
-> UserDto companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto)
-
-
-
-### Example
-```dart
-import 'package:openapi/api.dart';
-
-final api = Openapi().getCompaniesApi();
-final String userId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final String companyId = companyId_example; // String | 
-final UserDto userDto = ; // UserDto | 
-
-try {
-    final response = api.companiesCompanyIdUsersUserIdUpdatePut(userId, companyId, userDto);
-    print(response);
-} catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesCompanyIdUsersUserIdUpdatePut: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userId** | **String**|  | 
- **companyId** | **String**|  | 
- **userDto** | [**UserDto**](UserDto.md)|  | [optional] 
-
-### Return type
-
-[**UserDto**](UserDto.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companiesGet**
-> BuiltList<CompanyDto> companiesGet()
+> BuiltList<CompanyDto> companiesGet(type)
 
-
+List companies
 
 ### Example
 ```dart
 import 'package:openapi/api.dart';
 
 final api = Openapi().getCompaniesApi();
+final String type = type_example; // String | 
 
 try {
-    final response = api.companiesGet();
+    final response = api.companiesGet(type);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling CompaniesApi->companiesGet: $e\n');
@@ -293,7 +160,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **type** | **String**|  | [optional] 
 
 ### Return type
 
@@ -306,26 +176,26 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **companiesRegisterPost**
-> companiesRegisterPost(registerCompanyDto)
+# **registerCompany**
+> registerCompany(registerCompanyRequest)
 
-
+Register buyer/provider company
 
 ### Example
 ```dart
 import 'package:openapi/api.dart';
 
 final api = Openapi().getCompaniesApi();
-final RegisterCompanyDto registerCompanyDto = ; // RegisterCompanyDto | 
+final RegisterCompanyRequest registerCompanyRequest = ; // RegisterCompanyRequest | 
 
 try {
-    api.companiesRegisterPost(registerCompanyDto);
+    api.registerCompany(registerCompanyRequest);
 } catch on DioError (e) {
-    print('Exception when calling CompaniesApi->companiesRegisterPost: $e\n');
+    print('Exception when calling CompaniesApi->registerCompany: $e\n');
 }
 ```
 
@@ -333,7 +203,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **registerCompanyDto** | [**RegisterCompanyDto**](RegisterCompanyDto.md)|  | 
+ **registerCompanyRequest** | [**RegisterCompanyRequest**](RegisterCompanyRequest.md)|  | 
 
 ### Return type
 
@@ -345,8 +215,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

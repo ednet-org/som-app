@@ -1,0 +1,65 @@
+part of ednet_core;
+
+final Logger _validationExceptionsLogger = Logger(
+  'ednet_core.validation_exceptions',
+);
+
+class ValidationExceptions implements IValidationExceptions {
+  final List<ValidationException> _exceptionList;
+
+  ValidationExceptions() : _exceptionList = <ValidationException>[];
+
+  @override
+  int get length => _exceptionList.length;
+
+  bool get isEmpty => length == 0;
+
+  Iterator<ValidationException> get iterator => _exceptionList.iterator;
+  @override
+  void add(IValidationExceptions exception) {
+    if (exception is ValidationException) {
+      _exceptionList.add(exception);
+    }
+  }
+
+  @override
+  void clear() {
+    _exceptionList.clear();
+  }
+
+  @override
+  List<IValidationExceptions> toList() =>
+      _exceptionList.cast<IValidationExceptions>().toList();
+
+  /// Returns a string that represents the exceptions.
+  @override
+  String toString() {
+    var messages = '';
+    for (var exception in _exceptionList) {
+      messages = '${exception.toString()} \n$messages';
+    }
+    return messages;
+  }
+
+  /// Displays (prints) a title, then exceptions.
+  void display({String title = 'Entities', bool withOid = true}) {
+    if (title == 'Entities') {
+      title = 'Errors';
+    }
+
+    final buffer = StringBuffer()
+      ..writeln('')
+      ..writeln('************************************************')
+      ..writeln('$title                                          ')
+      ..writeln('************************************************')
+      ..writeln('');
+
+    _validationExceptionsLogger.fine(buffer.toString());
+    for (ValidationException exception in _exceptionList) {
+      exception.display(prefix: '*** ');
+    }
+  }
+
+  @override
+  String get category => 'Validation';
+}

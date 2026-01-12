@@ -1,0 +1,51 @@
+{
+  "width": 990,
+  "relations": [
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "Attachment",
+      "entry": false,
+      "x": 107,
+      "y": 490,
+      "width": 156,
+      "height": 125,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "type",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "data",
+          "type": "Uint8List",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "relationship",
+          "name": "belongsTo",
+          "type": "Inquiry",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+
+  ]
+}

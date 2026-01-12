@@ -1,0 +1,34 @@
+{
+  "width": 500,
+  "height": 500,
+  "concepts": [
+    {
+      "name": "Country",
+      "entry": false,
+      "x": 250,
+      "y": 50,
+      "width": 150,
+      "height": 100,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        },
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "countryCode",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "relations": [
+  ]
+}

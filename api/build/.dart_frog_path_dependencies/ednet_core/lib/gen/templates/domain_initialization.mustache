@@ -1,0 +1,111 @@
+import 'package:ednet_core/ednet_core.dart';
+{{#concepts}}
+import 'domain/{{snakeCaseName}}.dart';
+{{/concepts}}
+
+/// {{domainName}} Domain Initialization
+///
+/// This class initializes the complete domain architecture for the
+/// {{description}}
+///
+/// Based on: {{yamlFileName}}
+/// Domain: {{domainName}}
+/// Model: {{modelName}}
+class {{domainName}}DomainInitializer {
+  static Domain? _{{lowerCamelCaseDomainName}}Domain;
+  static Model? _{{lowerCamelCaseModelName}}Model;
+  static final Map<String, Concept> _concepts = {};
+
+  /// Initialize the complete {{domainName}} domain
+  static void initialize() {
+    if (_{{lowerCamelCaseDomainName}}Domain != null) return; // Already initialized
+
+    // Create the root domain
+    _{{lowerCamelCaseDomainName}}Domain = Domain('{{domainName}}');
+    {{#hasDomainDescription}}
+    _{{lowerCamelCaseDomainName}}Domain!.description = '{{domainDescription}}';
+    {{/hasDomainDescription}}
+
+    // Create the {{modelName}} model
+    _{{lowerCamelCaseModelName}}Model = Model(_{{lowerCamelCaseDomainName}}Domain!, '{{modelName}}');
+    {{#hasModelDescription}}
+    _{{lowerCamelCaseModelName}}Model!.description = '{{modelDescription}}';
+    {{/hasModelDescription}}
+
+    // Initialize all {{conceptCount}} concepts
+    _initializeConcepts();
+  }
+
+  /// Initialize all domain concepts with complete attribute schemas
+  static void _initializeConcepts() {
+    {{#concepts}}
+    // {{name}} concept with all attributes{{#hasDescription}} and defaults{{/hasDescription}}
+    _concepts['{{name}}'] = Concept(_{{lowerCamelCaseModelName}}Model!, '{{name}}');
+    {{#hasDescription}}
+    _concepts['{{name}}']!.description = '{{description}}';
+    {{/hasDescription}}
+    _concepts['{{name}}']!.entry = {{isEntry}};
+    {{#hasAttributes}}
+    final {{lowerCamelCaseName}}Concept = _concepts['{{name}}']!;
+    {{#attributes}}
+    {{#hasDefault}}
+    Attribute({{lowerCamelCaseName}}Concept, '{{name}}')..init = {{&defaultValue}};
+    {{/hasDefault}}
+    {{^hasDefault}}
+    Attribute({{lowerCamelCaseName}}Concept, '{{name}}');
+    {{/hasDefault}}
+    {{/attributes}}
+    {{/hasAttributes}}
+
+    {{/concepts}}
+  }
+
+  /// Get the {{domainName}} domain
+  static Domain get {{lowerCamelCaseDomainName}}Domain {
+    if (_{{lowerCamelCaseDomainName}}Domain == null) initialize();
+    return _{{lowerCamelCaseDomainName}}Domain!;
+  }
+
+  /// Get the {{modelName}} model
+  static Model get {{lowerCamelCaseModelName}}Model {
+    if (_{{lowerCamelCaseModelName}}Model == null) initialize();
+    return _{{lowerCamelCaseModelName}}Model!;
+  }
+
+  /// Get a specific concept by name
+  static Concept getConcept(String conceptName) {
+    if (_concepts.isEmpty) initialize();
+    final concept = _concepts[conceptName];
+    if (concept == null) {
+      throw ArgumentError('Concept "$conceptName" not found. Available concepts: ${_concepts.keys.join(', ')}');
+    }
+    return concept;
+  }
+
+  /// Get all concepts
+  static Map<String, Concept> get allConcepts {
+    if (_concepts.isEmpty) initialize();
+    return Map.unmodifiable(_concepts);
+  }
+
+  /// Create a new entity instance for a given concept
+  static T createEntity<T>(String conceptName) {
+    final concept = getConcept(conceptName);
+
+    switch (conceptName) {
+      {{#concepts}}
+      case '{{name}}':
+        return {{name}}(concept) as T;
+      {{/concepts}}
+      default:
+        throw ArgumentError('Unknown concept type: $conceptName');
+    }
+  }
+
+  /// Reset the domain (for testing purposes)
+  static void reset() {
+    _{{lowerCamelCaseDomainName}}Domain = null;
+    _{{lowerCamelCaseModelName}}Model = null;
+    _concepts.clear();
+  }
+}

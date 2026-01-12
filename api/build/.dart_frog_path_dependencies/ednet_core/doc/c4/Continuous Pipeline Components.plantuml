@@ -1,0 +1,137 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Continuous Domain Modeling Pipeline Components
+
+' External Integration Pipeline
+Container_Boundary(external_pipeline, "External Integration Pipeline") {
+    Component(github_integration, "GitHub Integration", "Node.js/Octokit", "Repository and PR management")
+    Component(webhook_handler, "Webhook Handler", "Node.js/Express", "GitHub webhook processing")
+    Component(branch_manager, "Branch Manager", "Git/Node.js", "Feature branch automation")
+    Component(pr_automation, "PR Automation", "Node.js", "Automated pull request creation")
+    Component(merge_coordinator, "Merge Coordinator", "Node.js", "Merge strategy coordination")
+}
+
+' Breaking Change Detection
+Container_Boundary(change_detection, "Breaking Change Detection") {
+    Component(change_analyzer, "Change Analyzer", "Dart", "Domain model diff analysis")
+    Component(breaking_detector, "Breaking Detector", "Dart", "Breaking change identification")
+    Component(migration_generator, "Migration Generator", "Dart", "Automated migration scripts")
+    Component(impact_assessor, "Impact Assessor", "Dart", "Change impact analysis")
+    Component(stability_checker, "Stability Checker", "Dart", "Backward compatibility validation")
+}
+
+' Multi-Stack Code Generation
+Container_Boundary(multi_stack_generation, "Multi-Stack Code Generation") {
+    Component(adapter_registry, "Adapter Registry", "Dart", "Technology adapter management")
+    Component(dart_adapter, "Dart Adapter", "Dart", "EDNet Core code generation")
+    Component(java_adapter, "Java Adapter", "Dart", "Spring Boot code generation")
+    Component(typescript_adapter, "TypeScript Adapter", "Dart", "Node.js/React code generation")
+    Component(python_adapter, "Python Adapter", "Dart", "Django code generation")
+    Component(custom_adapter_framework, "Custom Adapter Framework", "Dart", "Extensible adapter system")
+}
+
+' Pipeline Orchestration
+Container_Boundary(pipeline_orchestration, "Pipeline Orchestration") {
+    Component(workflow_engine, "Workflow Engine", "Node.js", "Pipeline workflow coordination")
+    Component(event_dispatcher, "Event Dispatcher", "Node.js", "Domain model change events")
+    Component(hook_manager, "Hook Manager", "Node.js", "External hook management")
+    Component(notification_service, "Notification Service", "Node.js", "Stakeholder notifications")
+    Component(progress_tracker, "Progress Tracker", "Node.js", "Pipeline progress monitoring")
+}
+
+' Approval Workflow System
+Container_Boundary(approval_system, "Approval Workflow System") {
+    Component(approval_engine, "Approval Engine", "Node.js", "Multi-stakeholder approval logic")
+    Component(stakeholder_manager, "Stakeholder Manager", "Node.js", "Stakeholder role management")
+    Component(review_coordinator, "Review Coordinator", "Node.js", "Review process coordination")
+    Component(sign_off_tracker, "Sign-off Tracker", "Node.js", "Approval status tracking")
+    Component(escalation_handler, "Escalation Handler", "Node.js", "Approval escalation logic")
+}
+
+' Version Control System
+Container_Boundary(version_control, "Version Control System") {
+    Component(model_versioning, "Model Versioning", "Git-like", "Domain model version control")
+    Component(branch_strategy, "Branch Strategy", "Git", "Domain model branching")
+    Component(merge_resolver, "Merge Resolver", "Git", "Domain model merge conflicts")
+    Component(tag_manager, "Tag Manager", "Git", "Release tagging and versioning")
+    Component(history_tracker, "History Tracker", "Git", "Change history tracking")
+}
+
+' CI/CD Integration
+Container_Boundary(cicd_integration, "CI/CD Integration") {
+    Component(pipeline_trigger, "Pipeline Trigger", "Node.js", "CI/CD pipeline triggering")
+    Component(build_coordinator, "Build Coordinator", "Node.js", "Build process coordination")
+    Component(test_orchestrator, "Test Orchestrator", "Node.js", "Automated testing coordination")
+    Component(deployment_manager, "Deployment Manager", "Node.js", "Deployment automation")
+    Component(rollback_handler, "Rollback Handler", "Node.js", "Automated rollback on failures")
+}
+
+' EDNet Flutter Interpreter Integration
+Container_Boundary(flutter_interpreter, "EDNet Flutter Interpreter") {
+    Component(live_interpreter, "Live Interpreter", "Dart/Flutter", "Real-time domain model interpretation")
+    Component(in_vivo_editor, "In-Vivo Editor", "Flutter", "Live domain model editing")
+    Component(collaborative_canvas, "Collaborative Canvas", "Flutter", "Multi-user editing canvas")
+    Component(semantic_validator_ui, "Semantic Validator UI", "Flutter", "Real-time validation feedback")
+    Component(model_synchronizer, "Model Synchronizer", "Dart", "Domain model synchronization")
+}
+
+' External Integration Relationships
+Rel(github_integration, webhook_handler, "Processes webhooks via")
+Rel(webhook_handler, branch_manager, "Triggers branch creation")
+Rel(branch_manager, pr_automation, "Creates PRs via")
+Rel(pr_automation, merge_coordinator, "Coordinates merges via")
+
+' Change Detection Relationships
+Rel(change_analyzer, breaking_detector, "Analyzes changes for")
+Rel(breaking_detector, migration_generator, "Generates migrations for")
+Rel(migration_generator, impact_assessor, "Assesses impact of")
+Rel(impact_assessor, stability_checker, "Validates stability via")
+
+' Code Generation Relationships
+Rel(adapter_registry, dart_adapter, "Manages")
+Rel(adapter_registry, java_adapter, "Manages")
+Rel(adapter_registry, typescript_adapter, "Manages")
+Rel(adapter_registry, python_adapter, "Manages")
+Rel(custom_adapter_framework, adapter_registry, "Extends")
+
+' Pipeline Orchestration Relationships
+Rel(workflow_engine, event_dispatcher, "Dispatches events via")
+Rel(event_dispatcher, hook_manager, "Triggers hooks via")
+Rel(hook_manager, notification_service, "Sends notifications via")
+Rel(notification_service, progress_tracker, "Updates progress via")
+
+' Approval System Relationships
+Rel(approval_engine, stakeholder_manager, "Manages stakeholders via")
+Rel(stakeholder_manager, review_coordinator, "Coordinates reviews via")
+Rel(review_coordinator, sign_off_tracker, "Tracks sign-offs via")
+Rel(sign_off_tracker, escalation_handler, "Escalates via")
+
+' Version Control Relationships
+Rel(model_versioning, branch_strategy, "Uses branching via")
+Rel(branch_strategy, merge_resolver, "Resolves conflicts via")
+Rel(merge_resolver, tag_manager, "Tags releases via")
+Rel(tag_manager, history_tracker, "Tracks history via")
+
+' CI/CD Integration Relationships
+Rel(pipeline_trigger, build_coordinator, "Triggers builds via")
+Rel(build_coordinator, test_orchestrator, "Orchestrates tests via")
+Rel(test_orchestrator, deployment_manager, "Manages deployments via")
+Rel(deployment_manager, rollback_handler, "Handles rollbacks via")
+
+' Flutter Interpreter Relationships
+Rel(live_interpreter, in_vivo_editor, "Enables editing via")
+Rel(in_vivo_editor, collaborative_canvas, "Provides canvas via")
+Rel(collaborative_canvas, semantic_validator_ui, "Validates via")
+Rel(semantic_validator_ui, model_synchronizer, "Synchronizes via")
+
+' Cross-Container Relationships
+Rel(workflow_engine, approval_engine, "Triggers approvals")
+Rel(approval_engine, github_integration, "Authorizes PRs")
+Rel(change_analyzer, adapter_registry, "Triggers generation")
+Rel(model_synchronizer, change_analyzer, "Provides changes to")
+Rel(pipeline_trigger, workflow_engine, "Initiates workflows")
+
+@enduml 

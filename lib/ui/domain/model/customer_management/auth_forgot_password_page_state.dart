@@ -7,7 +7,7 @@ class AuthForgotPasswordPageState = _AuthForgotPasswordPageState
     with _$AuthForgotPasswordPageState;
 
 abstract class _AuthForgotPasswordPageState with Store {
-  final AuthenticationApi authApi;
+  final AuthApi authApi;
 
   _AuthForgotPasswordPageState(this.authApi);
 
@@ -35,9 +35,12 @@ abstract class _AuthForgotPasswordPageState with Store {
     isSendingEmailLink = true;
     await Future.delayed(Duration(seconds: 3));
     try {
-      final forgotPasswordDto = ForgotPasswordDtoBuilder()..email = email;
+      final forgotPasswordDto = AuthForgotPasswordPostRequestBuilder()
+        ..email = email;
       authApi
-          .authForgotPasswordPost(forgotPasswordDto: forgotPasswordDto.build())
+          .authForgotPasswordPost(
+            authForgotPasswordPostRequest: forgotPasswordDto.build(),
+          )
           .then((response) {
         if (response.statusCode == 200) {
           url = response.data as String;

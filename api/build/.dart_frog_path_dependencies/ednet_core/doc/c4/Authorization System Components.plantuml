@@ -1,0 +1,96 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Authorization System Components
+
+' Multi-Tenant Management
+Container_Boundary(tenant_management, "Tenant Management") {
+    Component(tenant_registry, "Tenant Registry", "Node.js", "Tenant configuration and metadata")
+    Component(tenant_isolator, "Tenant Isolator", "Node.js", "Data and resource isolation")
+    Component(tenant_provisioner, "Tenant Provisioner", "Node.js", "Automated tenant setup")
+    Component(billing_integrator, "Billing Integrator", "Node.js", "Usage tracking and billing")
+    Component(tenant_monitor, "Tenant Monitor", "Node.js", "Health and performance monitoring")
+}
+
+' RBAC Engine
+Container_Boundary(rbac_system, "RBAC System") {
+    Component(role_manager, "Role Manager", "Node.js", "Role definitions and hierarchies")
+    Component(permission_registry, "Permission Registry", "Node.js", "System permissions catalog")
+    Component(role_assignment, "Role Assignment", "Node.js", "User-role mappings")
+    Component(inheritance_resolver, "Inheritance Resolver", "Node.js", "Role hierarchy resolution")
+    Component(rbac_evaluator, "RBAC Evaluator", "Node.js", "Role-based access decisions")
+}
+
+' ABAC Engine
+Container_Boundary(abac_system, "ABAC System") {
+    Component(attribute_store, "Attribute Store", "Node.js", "User, resource, environment attributes")
+    Component(policy_engine, "Policy Engine", "XACML", "Attribute-based policy evaluation")
+    Component(condition_evaluator, "Condition Evaluator", "Node.js", "Complex condition processing")
+    Component(context_provider, "Context Provider", "Node.js", "Runtime context information")
+    Component(abac_evaluator, "ABAC Evaluator", "Node.js", "Attribute-based access decisions")
+}
+
+' Authentication Integration
+Container_Boundary(auth_integration, "Authentication Integration") {
+    Component(oauth2_handler, "OAuth2 Handler", "Node.js", "OAuth2 flow management")
+    Component(saml_processor, "SAML Processor", "Node.js", "SAML assertion processing")
+    Component(ldap_connector, "LDAP Connector", "Node.js", "LDAP directory integration")
+    Component(jwt_manager, "JWT Manager", "Node.js", "Token generation and validation")
+    Component(session_store, "Session Store", "Redis", "User session management")
+}
+
+' Authorization Enforcement
+Container_Boundary(enforcement_layer, "Enforcement Layer") {
+    Component(policy_decision_point, "Policy Decision Point", "Node.js", "Central authorization decisions")
+    Component(policy_enforcement_point, "Policy Enforcement Point", "Node.js", "Access control enforcement")
+    Component(permission_cache, "Permission Cache", "Redis", "High-performance permission caching")
+    Component(audit_logger, "Audit Logger", "Node.js", "Security event logging")
+    Component(real_time_monitor, "Real-time Monitor", "Node.js", "Live authorization monitoring")
+}
+
+' Visual Authorization Elements
+Container_Boundary(visual_auth_elements, "Visual Authorization Elements") {
+    Component(tenant_visualizer, "Tenant Visualizer", "React", "Tenant boundary visualization")
+    Component(permission_overlay, "Permission Overlay", "React", "Element-level permission indicators")
+    Component(role_badge_system, "Role Badge System", "React", "User role visual indicators")
+    Component(access_control_ui, "Access Control UI", "React", "Permission management interface")
+    Component(audit_dashboard, "Audit Dashboard", "React", "Security monitoring dashboard")
+}
+
+' Relationships - Tenant Management
+Rel(tenant_registry, tenant_isolator, "Configures")
+Rel(tenant_provisioner, tenant_registry, "Registers")
+Rel(billing_integrator, tenant_monitor, "Uses metrics from")
+
+' Relationships - RBAC
+Rel(role_manager, permission_registry, "Uses")
+Rel(role_assignment, role_manager, "References")
+Rel(inheritance_resolver, role_manager, "Processes")
+Rel(rbac_evaluator, inheritance_resolver, "Uses")
+
+' Relationships - ABAC
+Rel(policy_engine, attribute_store, "Queries")
+Rel(condition_evaluator, context_provider, "Uses")
+Rel(abac_evaluator, policy_engine, "Uses")
+
+' Relationships - Authentication
+Rel(oauth2_handler, jwt_manager, "Generates tokens via")
+Rel(saml_processor, session_store, "Creates sessions in")
+Rel(ldap_connector, session_store, "Authenticates to")
+
+' Relationships - Enforcement
+Rel(policy_decision_point, rbac_evaluator, "Consults")
+Rel(policy_decision_point, abac_evaluator, "Consults")
+Rel(policy_enforcement_point, permission_cache, "Checks")
+Rel(real_time_monitor, audit_logger, "Monitors")
+
+' Relationships - Visual Elements
+Rel(tenant_visualizer, tenant_registry, "Displays")
+Rel(permission_overlay, policy_enforcement_point, "Shows status from")
+Rel(role_badge_system, role_assignment, "Displays")
+Rel(access_control_ui, role_manager, "Manages")
+Rel(audit_dashboard, audit_logger, "Visualizes")
+
+@enduml 

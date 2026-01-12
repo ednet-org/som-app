@@ -1,0 +1,234 @@
+/// Event handler for {{eventName}}Event
+///
+/// This handler reacts to {{eventName}} events and executes
+/// corresponding side effects, updates, or integrations.
+class {{eventName}}EventHandler implements IEventHandler<{{eventName}}Event> {
+  {{#hasDependencies}}
+  {{#dependencies}}
+  final {{type}} {{name}};
+  {{/dependencies}}
+
+  {{eventName}}EventHandler({
+    {{#dependencies}}
+    required this.{{name}},
+    {{/dependencies}}
+  });
+  {{/hasDependencies}}
+  {{^hasDependencies}}
+  {{eventName}}EventHandler();
+  {{/hasDependencies}}
+
+  @override
+  String get handlerName => '{{eventName}}EventHandler';
+
+  @override
+  Future<void> handle({{eventName}}Event event) async {
+    {{#hasLogging}}
+    // Log event processing
+    {{#logger}}
+    {{logger}}.info('Processing {{eventName}}Event: ${event.id}');
+    {{/logger}}
+    {{/hasLogging}}
+
+    try {
+      {{#updatesReadModel}}
+      // Update read model
+      {{#readModelUpdates}}
+      await {{readModelName}}.update(
+        {{#updateParams}}
+        {{key}}: event.{{value}},
+        {{/updateParams}}
+      );
+      {{/readModelUpdates}}
+      {{/updatesReadModel}}
+
+      {{#triggersSideEffects}}
+      // Execute side effects
+      {{#sideEffects}}
+      {{#sendsNotification}}
+      await {{notificationService}}.send(
+        recipient: event.{{recipient}},
+        message: '{{messageTemplate}}',
+        {{#notificationParams}}
+        {{key}}: event.{{value}},
+        {{/notificationParams}}
+      );
+      {{/sendsNotification}}
+
+      {{#sendsEmail}}
+      await {{emailService}}.send(
+        to: event.{{emailRecipient}},
+        subject: '{{emailSubject}}',
+        body: '{{emailBody}}',
+        {{#emailParams}}
+        {{key}}: event.{{value}},
+        {{/emailParams}}
+      );
+      {{/sendsEmail}}
+
+      {{#callsExternalService}}
+      await {{externalService}}.{{methodName}}(
+        {{#serviceParams}}
+        {{key}}: event.{{value}},
+        {{/serviceParams}}
+      );
+      {{/callsExternalService}}
+
+      {{#customSideEffect}}
+      {{code}}
+      {{/customSideEffect}}
+      {{/sideEffects}}
+      {{/triggersSideEffects}}
+
+      {{#triggersCommands}}
+      // Trigger follow-up commands
+      {{#commands}}
+      final {{commandVar}} = {{commandType}}(
+        {{#commandParams}}
+        {{key}}: event.{{value}},
+        {{/commandParams}}
+      );
+      await {{commandBus}}.dispatch({{commandVar}});
+      {{/commands}}
+      {{/triggersCommands}}
+
+      {{#updatesProjection}}
+      // Update projection
+      {{#projections}}
+      await {{projectionName}}.apply(event);
+      {{/projections}}
+      {{/updatesProjection}}
+
+      {{#customLogic}}
+      // Custom event handling logic
+      {{#logicLines}}
+      {{line}}
+      {{/logicLines}}
+      {{/customLogic}}
+
+      {{#hasLogging}}
+      {{#logger}}
+      {{logger}}.info('Successfully processed {{eventName}}Event: ${event.id}');
+      {{/logger}}
+      {{/hasLogging}}
+    } catch (e, stackTrace) {
+      {{#hasErrorHandling}}
+      {{#logger}}
+      {{logger}}.error('Failed to process {{eventName}}Event: $e', error: e, stackTrace: stackTrace);
+      {{/logger}}
+
+      {{#hasCompensation}}
+      // Trigger compensation
+      {{#compensationActions}}
+      try {
+        {{#compensationCode}}
+        {{line}}
+        {{/compensationCode}}
+      } catch (compensationError) {
+        {{#logger}}
+        {{logger}}.error('Compensation failed: $compensationError');
+        {{/logger}}
+      }
+      {{/compensationActions}}
+      {{/hasCompensation}}
+
+      {{#rethrowsError}}
+      rethrow;
+      {{/rethrowsError}}
+      {{/hasErrorHandling}}
+      {{^hasErrorHandling}}
+      // Error occurred while processing event
+      rethrow;
+      {{/hasErrorHandling}}
+    }
+  }
+
+  @override
+  bool canHandle(IDomainEvent event) => event is {{eventName}}Event;
+}
+
+/// {{eventName}} domain event
+class {{eventName}}Event implements IDomainEvent {
+  @override
+  final String id;
+
+  @override
+  final DateTime occurredAt;
+
+  @override
+  final String aggregateId;
+
+  {{#eventFields}}
+  final {{type}} {{name}};
+  {{/eventFields}}
+
+  {{eventName}}Event({
+    String? id,
+    DateTime? occurredAt,
+    required this.aggregateId,
+    {{#eventFields}}
+    required this.{{name}},
+    {{/eventFields}}
+  }) : id = id ?? Uuid().v4(),
+       occurredAt = occurredAt ?? DateTime.now();
+
+  @override
+  String get eventType => '{{eventType}}';
+
+  {{#hasMetadata}}
+  @override
+  Map<String, dynamic> get metadata => {
+    {{#metadataFields}}
+    '{{key}}': {{value}},
+    {{/metadataFields}}
+  };
+  {{/hasMetadata}}
+  {{^hasMetadata}}
+  @override
+  Map<String, dynamic> get metadata => {};
+  {{/hasMetadata}}
+
+  {{#hasToJson}}
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'occurredAt': occurredAt.toIso8601String(),
+    'aggregateId': aggregateId,
+    'eventType': eventType,
+    {{#eventFields}}
+    '{{name}}': {{name}},
+    {{/eventFields}}
+    {{#hasMetadata}}
+    'metadata': metadata,
+    {{/hasMetadata}}
+  };
+  {{/hasToJson}}
+
+  {{#hasFromJson}}
+  factory {{eventName}}Event.fromJson(Map<String, dynamic> json) => {{eventName}}Event(
+    id: json['id'] as String,
+    occurredAt: DateTime.parse(json['occurredAt'] as String),
+    aggregateId: json['aggregateId'] as String,
+    {{#eventFields}}
+    {{name}}: json['{{name}}'] as {{type}},
+    {{/eventFields}}
+  );
+  {{/hasFromJson}}
+
+  {{#hasEquality}}
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is {{eventName}}Event &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          aggregateId == other.aggregateId;
+
+  @override
+  int get hashCode => id.hashCode ^ aggregateId.hashCode;
+  {{/hasEquality}}
+
+  {{#hasToString}}
+  @override
+  String toString() => '{{eventName}}Event(id: $id, aggregateId: $aggregateId, occurredAt: $occurredAt)';
+  {{/hasToString}}
+}

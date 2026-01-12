@@ -1,0 +1,35 @@
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+
+# NOTE: When running dart analyze, always use the library root (lib/ or lib/ednet_core.dart)
+# Do NOT analyze individual part files like lib/domain/patterns/competing_consumers/competing_consumers.dart
+# Part files will show "Undefined class" errors when analyzed in isolation
+# because they depend on classes defined in other parts of the library.
+
+analyzer:
+  exclude:
+    - archive/**
+    - tests_old/**
+    - examples/archive/**
+    - gen/archive/**
+    - test/aspirational_features.skip/**
+    - test_competing_consumers_isolation.dart
+    - tools/fix_event_data_getter.dart
+    # Exclude test, benchmark, and utility scripts from avoid_print
+    - test/**
+    - benchmark/**
+    - debug*.dart
+    - check_parts.dart
+    - cleanup_unused_code.dart
+    # Exclude incomplete random_data part files not included in main library
+    - lib/gen/random_data/**
+
+linter:
+  rules:
+    # Core rules for production code
+    - prefer_single_quotes
+    - avoid_print
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - unnecessary_const
+    - unnecessary_new

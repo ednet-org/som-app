@@ -1,0 +1,1 @@
+../../mcp/scripts/dart_analyzer_mcp.py

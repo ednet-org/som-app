@@ -1,0 +1,64 @@
+{
+  "width": 500,
+  "height": 500,
+  "concepts": [
+    {
+      "name": "Address",
+      "entry": false,
+      "x": 0,
+      "y": 0,
+      "width": 200,
+      "height": 400,
+      "attributes": [
+        {
+          "sequence": 2,
+          "category": "attribute",
+          "name": "city",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 3,
+          "category": "attribute",
+          "name": "street",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 4,
+          "category": "attribute",
+          "name": "number",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 5,
+          "category": "attribute",
+          "name": "zip",
+          "type": "String",
+          "essential": false,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "Address",
+      "to": "Country",
+      "fromToName": "country",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "addresses",
+      "toFromMin": "0",
+      "toFromMax": "N",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": false
+    }
+  ]
+}

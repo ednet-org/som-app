@@ -1,0 +1,21 @@
+name: ednet_expression_parser
+description: Boolean expression parser for EDNet policy evaluation system. Provides parsing, validation, and AST construction for expressions on Dart primitives.
+version: 1.0.0
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  collection: ^1.18.0
+  meta: ^1.11.0
+
+dev_dependencies:
+  test: ^1.25.8
+  lints: ^3.0.0
+
+topics:
+  - ednet
+  - domain-driven-design
+  - expression-parser
+  - boolean-logic
+  - policy-evaluation

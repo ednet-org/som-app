@@ -1,0 +1,62 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "Offer",
+      "to": "OfferProvider",
+      "fromToName": "provider",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "offers",
+      "toFromMin": "0",
+      "toFromMax": "N",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": true,
+      "toFromId": false
+    },
+    {
+      "from": "OfferProvider",
+      "to": "Registration",
+      "fromToName": "registration",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "provider",
+      "toFromMin": "0",
+      "toFromMax": "0",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": false
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "OfferProvider",
+      "entry": true,
+      "x": 335,
+      "y": 490,
+      "width": 157,
+      "height": 125,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "company",
+          "type": "Company",
+          "essential": false,
+          "sensitive": false
+        },
+        {
+          "sequence": 1,
+          "name": "user",
+          "type": "User",
+          "essential": true,
+          "category": "attribute",
+          "sensitive": false
+        }
+      ]
+    }
+  ]
+}

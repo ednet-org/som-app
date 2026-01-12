@@ -1,0 +1,40 @@
+{
+  "width": 990,
+  "relations": [
+    {
+      "from": "Consultant",
+      "to": "Platform",
+      "fromToName": "platform",
+      "fromToMin": "1",
+      "fromToMax": "1",
+      "toFromName": "consultants",
+      "toFromMin": "0",
+      "toFromMax": "N",
+      "category": "relationship",
+      "internal": false,
+      "fromToId": false,
+      "toFromId": false
+    }
+  ],
+  "height": 1105,
+  "concepts": [
+    {
+      "name": "Consultant",
+      "entry": true,
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "attributes": [
+        {
+          "sequence": 1,
+          "name": "user",
+          "type": "User",
+          "essential": true,
+          "sensitive": false,
+          "category": "attribute"
+        }
+      ]
+    }
+  ]
+}

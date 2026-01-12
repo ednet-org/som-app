@@ -1,0 +1,117 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Code Generator Components
+
+' YAML Processing
+Container_Boundary(yaml_processing, "YAML Processing") {
+    Component(yaml_parser, "YAML Parser", "Dart", "Domain model YAML parsing")
+    Component(schema_validator, "Schema Validator", "Dart", "YAML schema validation")
+    Component(model_loader, "Model Loader", "Dart", "Domain model instantiation")
+    Component(dependency_resolver, "Dependency Resolver", "Dart", "Model dependency analysis")
+    Component(semantic_analyzer, "Semantic Analyzer", "Dart", "Domain model semantic validation")
+}
+
+' Template Engine
+Container_Boundary(template_engine, "Template Engine") {
+    Component(template_loader, "Template Loader", "Dart", "Template file management")
+    Component(mustache_renderer, "Mustache Renderer", "Dart", "Template rendering engine")
+    Component(context_builder, "Context Builder", "Dart", "Template context preparation")
+    Component(partial_manager, "Partial Manager", "Dart", "Template partial management")
+    Component(helper_registry, "Helper Registry", "Dart", "Custom template helpers")
+}
+
+' Code Generation Engines
+Container_Boundary(generation_engines, "Code Generation Engines") {
+    Component(dart_generator, "Dart Generator", "Dart", "Dart domain code generation")
+    Component(flutter_generator, "Flutter Generator", "Dart", "Flutter UI code generation")
+    Component(test_generator, "Test Generator", "Dart", "Unit test scaffolding")
+    Component(documentation_generator, "Documentation Generator", "Dart", "API documentation generation")
+    Component(migration_generator, "Migration Generator", "Dart", "Database migration scripts")
+    Component(openapi_generator, "OpenAPI Generator", "Dart", "API specification generation")
+}
+
+' Output Management
+Container_Boundary(output_management, "Output Management") {
+    Component(file_writer, "File Writer", "Dart", "Generated file output")
+    Component(directory_manager, "Directory Manager", "Dart", "Project structure creation")
+    Component(merge_manager, "Merge Manager", "Dart", "Code merging and preservation")
+    Component(formatter, "Code Formatter", "Dart", "Generated code formatting")
+    Component(import_organizer, "Import Organizer", "Dart", "Import statement optimization")
+}
+
+' Generation Strategies
+Container_Boundary(generation_strategies, "Generation Strategies") {
+    Component(incremental_generator, "Incremental Generator", "Dart", "Partial regeneration")
+    Component(full_generator, "Full Generator", "Dart", "Complete project generation")
+    Component(custom_generator, "Custom Generator", "Dart", "User-defined generation")
+    Component(plugin_manager, "Plugin Manager", "Dart", "Generation plugin system")
+    Component(hook_executor, "Hook Executor", "Dart", "Pre/post generation hooks")
+}
+
+' Visual Generation Tools
+Container_Boundary(visual_generation, "Visual Generation Tools") {
+    Component(template_designer, "Template Designer", "React", "Visual template editor")
+    Component(generation_preview, "Generation Preview", "React", "Code preview before generation")
+    Component(diff_viewer, "Diff Viewer", "React", "Generated code comparison")
+    Component(template_debugger, "Template Debugger", "React", "Template debugging tools")
+    Component(generation_dashboard, "Generation Dashboard", "React", "Generation monitoring")
+}
+
+' CLI Interface
+Container_Boundary(cli_interface, "CLI Interface") {
+    Component(command_parser, "Command Parser", "Dart", "CLI argument parsing")
+    Component(project_initializer, "Project Initializer", "Dart", "New project scaffolding")
+    Component(model_validator, "Model Validator", "Dart", "Domain model validation")
+    Component(generation_orchestrator, "Generation Orchestrator", "Dart", "Generation workflow coordination")
+    Component(progress_reporter, "Progress Reporter", "Dart", "Generation progress tracking")
+}
+
+' YAML Processing Relationships
+Rel(yaml_parser, schema_validator, "Validates via")
+Rel(schema_validator, model_loader, "Loads via")
+Rel(model_loader, dependency_resolver, "Resolves via")
+Rel(dependency_resolver, semantic_analyzer, "Analyzes via")
+
+' Template Engine Relationships
+Rel(template_loader, mustache_renderer, "Provides templates to")
+Rel(context_builder, mustache_renderer, "Provides context to")
+Rel(partial_manager, template_loader, "Manages partials for")
+Rel(helper_registry, mustache_renderer, "Provides helpers to")
+
+' Generation Engine Relationships
+Rel(dart_generator, template_engine, "Uses")
+Rel(flutter_generator, template_engine, "Uses")
+Rel(test_generator, template_engine, "Uses")
+Rel(documentation_generator, template_engine, "Uses")
+Rel(migration_generator, template_engine, "Uses")
+Rel(openapi_generator, template_engine, "Uses")
+
+' Output Management Relationships
+Rel(file_writer, directory_manager, "Creates directories via")
+Rel(merge_manager, file_writer, "Writes merged code via")
+Rel(formatter, import_organizer, "Organizes imports after")
+Rel(import_organizer, file_writer, "Writes formatted code via")
+
+' Strategy Relationships
+Rel(incremental_generator, merge_manager, "Uses")
+Rel(full_generator, directory_manager, "Uses")
+Rel(plugin_manager, custom_generator, "Manages")
+Rel(hook_executor, generation_orchestrator, "Executes for")
+
+' Visual Tool Relationships
+Rel(template_designer, template_loader, "Designs templates for")
+Rel(generation_preview, dart_generator, "Previews output from")
+Rel(diff_viewer, merge_manager, "Shows differences from")
+Rel(template_debugger, mustache_renderer, "Debugs")
+Rel(generation_dashboard, progress_reporter, "Displays progress from")
+
+' CLI Relationships
+Rel(command_parser, project_initializer, "Triggers")
+Rel(model_validator, semantic_analyzer, "Uses")
+Rel(generation_orchestrator, generation_engines, "Coordinates")
+Rel(progress_reporter, generation_orchestrator, "Reports on")
+
+@enduml

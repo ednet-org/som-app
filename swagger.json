@@ -160,38 +160,6 @@
         }
       }
     },
-    "/Companies/register": {
-      "post": {
-        "tags": [
-          "Companies"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterCompanyDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterCompanyDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterCompanyDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/Companies/{companyId}/users": {
       "get": {
         "tags": [
@@ -456,6 +424,38 @@
                   "attributes": {
                     "$ref": "#/components/schemas/CompanyDto"
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Register buyer/provider company",
+        "operationId": "registerCompany",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterCompanyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered"
+          },
+          "400": {
+            "description": "Invalid registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -1006,6 +1006,136 @@
           }
         },
         "additionalProperties": false
+      },
+      "RegisterCompanyRequest": {
+        "type": "object",
+        "required": [
+          "company",
+          "users"
+        ],
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/CompanyRegistration"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRegistration"
+            }
+          }
+        }
+      },
+      "CreateAdRequest": {
+        "type": "object",
+        "required": [
+          "branchId",
+          "url",
+          "type",
+          "status"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "branchId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "imagePath": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "bannerDate": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateInquiryRequest": {
+        "type": "object",
+        "required": [
+          "branchId",
+          "categoryId",
+          "deadline",
+          "deliveryZips",
+          "numberOfProviders"
+        ],
+        "properties": {
+          "branchId": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "productTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deliveryZips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "numberOfProviders": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "providerZip": {
+            "type": "string"
+          },
+          "radiusKm": {
+            "type": "integer"
+          },
+          "providerType": {
+            "type": "string"
+          },
+          "providerCompanySize": {
+            "type": "string"
+          },
+          "salutation": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
       }
     }
   }

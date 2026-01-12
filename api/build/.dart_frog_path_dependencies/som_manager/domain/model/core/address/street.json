@@ -1,0 +1,27 @@
+{
+  "width": 500,
+  "height": 500,
+  "concepts": [
+    {
+      "name": "Street",
+      "entry": false,
+      "x": 250,
+      "y": 350,
+      "width": 150,
+      "height": 100,
+      "attributes": [
+        {
+          "sequence": 1,
+          "category": "attribute",
+          "name": "name",
+          "type": "String",
+          "essential": true,
+          "sensitive": false
+        }
+      ]
+    }
+  ],
+  "relations": [
+
+  ]
+}

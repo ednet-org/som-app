@@ -1,36 +1,38 @@
-// // This is a basic Flutter integration test.
-// //
-// // To perform an interaction with a widget in your test, use the WidgetTester
-// // utility that Flutter provides. For example, you can send tap and scroll
-// // gestures. You can also use WidgetTester to find child widgets in the widget
-// // tree, read text, and verify that the values of widget properties are correct.
-//
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:integration_test/integration_test.dart';
-//
-// import 'package:som/main.dart' as app;
-//
-// void main() => run(_testMain);
-//
-// void _testMain() {
-//   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//     // Build our app and trigger a frame.
-//     app.main();
-//
-//     // Trigger a frame.
-//     await tester.pumpAndSettle();
-//
-//     // Verify that our counter starts at 0.
-//     expect(find.text('0'), findsOneWidget);
-//     expect(find.text('1'), findsNothing);
-//
-//     // Tap the '+' icon and trigger a frame.
-//     await tester.tap(find.byIcon(Icons.add));
-//     await tester.pump();
-//
-//     // Verify that our counter has incremented.
-//     expect(find.text('0'), findsNothing);
-//     expect(find.text('1'), findsOneWidget);
-//   });
-// }
+import 'package:dio/dio.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:openapi/openapi.dart';
+
+const apiBaseUrl = String.fromEnvironment(
+  'API_BASE_URL',
+  defaultValue: 'http://localhost:8080',
+);
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('API integration via OpenAPI client', (tester) async {
+    final api = Openapi(
+      dio: Dio(BaseOptions(baseUrl: apiBaseUrl)),
+      serializers: standardSerializers,
+    );
+
+    final auth = api.getAuthApi();
+    final loginRequest = AuthLoginPostRequestBuilder()
+      ..email = const String.fromEnvironment(
+        'SYSTEM_ADMIN_EMAIL',
+        defaultValue: 'system-admin@som.local',
+      )
+      ..password = const String.fromEnvironment(
+        'SYSTEM_ADMIN_PASSWORD',
+        defaultValue: 'ChangeMe123!',
+      );
+    final result = await auth.authLoginPost(
+      authLoginPostRequest: loginRequest.build(),
+    );
+    expect(result.data?.token, isNotNull);
+
+    final subscriptions = await api.getSubscriptionsApi().subscriptionsGet();
+    expect(subscriptions.data?.subscriptions?.isNotEmpty, true);
+  });
+}

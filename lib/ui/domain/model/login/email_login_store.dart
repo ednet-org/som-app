@@ -9,7 +9,7 @@ part 'email_login_store.g.dart';
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
-  final AuthenticationApi authService;
+  final AuthApi authService;
   final Application appStore;
 
   _EmailLoginStoreBase(this.authService, this.appStore);
@@ -38,12 +38,11 @@ abstract class _EmailLoginStoreBase with Store {
     loggingInMessage = '';
     print(email);
     isLoading = true;
-    var authReq = AuthenticateDtoBuilder()
+    final authReq = AuthLoginPostRequestBuilder()
       ..password = password
       ..email = email;
-    authReq.password = password;
     authService
-        .authLoginPost(authenticateDto: authReq.build())
+        .authLoginPost(authLoginPostRequest: authReq.build())
         .then((response) async {
       isLoading = false;
 

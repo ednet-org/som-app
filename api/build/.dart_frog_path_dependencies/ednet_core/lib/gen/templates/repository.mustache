@@ -1,0 +1,106 @@
+import 'package:ednet_core/ednet_core.dart';
+import '../domain/{{&entityName}}.dart';
+
+{{#hasPersistenceContract}}
+/// Repository contract for {{entityName}} aggregate
+///
+/// Defines persistence operations for {{entityName}} entities following
+/// the Repository pattern. Implementations provide actual storage mechanisms.
+abstract class {{entityType}}Repository {
+  /// Find {{entityName}} by ID
+  Future<{{entityType}}?> findById(String id);
+
+  /// Find all {{entityName}} instances
+  Future<List<{{entityType}}>> findAll();
+
+  /// Save {{entityName}} instance
+  Future<void> save({{entityType}} entity);
+
+  /// Update existing {{entityName}}
+  Future<void> update({{entityType}} entity);
+
+  /// Delete {{entityName}} by ID
+  Future<void> delete(String id);
+
+  /// Check if {{entityName}} exists
+  Future<bool> exists(String id);
+
+  /// Count total {{entityName}} instances
+  Future<int> count();
+}
+{{/hasPersistenceContract}}
+
+{{#hasInMemoryImplementation}}
+/// In-memory implementation of {{entityType}}Repository
+///
+/// Provides a simple in-memory storage for {{entityName}} entities.
+/// Useful for testing and prototyping. Not suitable for production.
+class InMemory{{entityType}}Repository implements {{entityType}}Repository {
+  final Map<String, {{entityType}}> _storage = {};
+
+  @override
+  Future<{{entityType}}?> findById(String id) async {
+    return _storage[id];
+  }
+
+  @override
+  Future<List<{{entityType}}>> findAll() async {
+    return _storage.values.toList();
+  }
+
+  @override
+  Future<void> save({{entityType}} entity) async {
+    if (entity.id == null || entity.id!.isEmpty) {
+      throw ArgumentError('Entity must have a valid ID');
+    }
+
+    if (_storage.containsKey(entity.id)) {
+      throw StateError('{{entityType}} with ID ${entity.id} already exists');
+    }
+
+    _storage[entity.id!] = entity;
+  }
+
+  @override
+  Future<void> update({{entityType}} entity) async {
+    if (entity.id == null || entity.id!.isEmpty) {
+      throw ArgumentError('Entity must have a valid ID');
+    }
+
+    if (!_storage.containsKey(entity.id)) {
+      throw StateError('{{entityType}} with ID ${entity.id} not found');
+    }
+
+    _storage[entity.id!] = entity;
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    if (!_storage.containsKey(id)) {
+      throw StateError('{{entityType}} with ID $id not found');
+    }
+
+    _storage.remove(id);
+  }
+
+  @override
+  Future<bool> exists(String id) async {
+    return _storage.containsKey(id);
+  }
+
+  @override
+  Future<int> count() async {
+    return _storage.length;
+  }
+
+  /// Clear all stored entities (for testing)
+  void clear() {
+    _storage.clear();
+  }
+
+  /// Get all entity IDs (for testing)
+  List<String> getAllIds() {
+    return _storage.keys.toList();
+  }
+}
+{{/hasInMemoryImplementation}}

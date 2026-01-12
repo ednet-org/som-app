@@ -8,17 +8,19 @@ part of 'company_dto.dart';
 
 class _$CompanyDto extends CompanyDto {
   @override
+  final String? id;
+  @override
   final String? name;
   @override
-  final AddressDto? address;
+  final Address? address;
   @override
   final String? uidNr;
   @override
   final String? registrationNr;
   @override
-  final CompanySize? companySize;
+  final int? companySize;
   @override
-  final CompanyType? type;
+  final int? type;
   @override
   final String? websiteUrl;
 
@@ -26,7 +28,8 @@ class _$CompanyDto extends CompanyDto {
       (new CompanyDtoBuilder()..update(updates))._build();
 
   _$CompanyDto._(
-      {this.name,
+      {this.id,
+      this.name,
       this.address,
       this.uidNr,
       this.registrationNr,
@@ -46,6 +49,7 @@ class _$CompanyDto extends CompanyDto {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyDto &&
+        id == other.id &&
         name == other.name &&
         address == other.address &&
         uidNr == other.uidNr &&
@@ -57,21 +61,23 @@ class _$CompanyDto extends CompanyDto {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, name.hashCode), address.hashCode),
-                        uidNr.hashCode),
-                    registrationNr.hashCode),
-                companySize.hashCode),
-            type.hashCode),
-        websiteUrl.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
+    _$hash = $jc(_$hash, uidNr.hashCode);
+    _$hash = $jc(_$hash, registrationNr.hashCode);
+    _$hash = $jc(_$hash, companySize.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, websiteUrl.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'CompanyDto')
+          ..add('id', id)
           ..add('name', name)
           ..add('address', address)
           ..add('uidNr', uidNr)
@@ -86,13 +92,17 @@ class _$CompanyDto extends CompanyDto {
 class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   _$CompanyDto? _$v;
 
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
+
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  AddressDtoBuilder? _address;
-  AddressDtoBuilder get address => _$this._address ??= new AddressDtoBuilder();
-  set address(AddressDtoBuilder? address) => _$this._address = address;
+  AddressBuilder? _address;
+  AddressBuilder get address => _$this._address ??= new AddressBuilder();
+  set address(AddressBuilder? address) => _$this._address = address;
 
   String? _uidNr;
   String? get uidNr => _$this._uidNr;
@@ -103,14 +113,13 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   set registrationNr(String? registrationNr) =>
       _$this._registrationNr = registrationNr;
 
-  CompanySize? _companySize;
-  CompanySize? get companySize => _$this._companySize;
-  set companySize(CompanySize? companySize) =>
-      _$this._companySize = companySize;
+  int? _companySize;
+  int? get companySize => _$this._companySize;
+  set companySize(int? companySize) => _$this._companySize = companySize;
 
-  CompanyType? _type;
-  CompanyType? get type => _$this._type;
-  set type(CompanyType? type) => _$this._type = type;
+  int? _type;
+  int? get type => _$this._type;
+  set type(int? type) => _$this._type = type;
 
   String? _websiteUrl;
   String? get websiteUrl => _$this._websiteUrl;
@@ -123,6 +132,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   CompanyDtoBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _id = $v.id;
       _name = $v.name;
       _address = $v.address?.toBuilder();
       _uidNr = $v.uidNr;
@@ -154,13 +164,15 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
     try {
       _$result = _$v ??
           new _$CompanyDto._(
-              name: name,
-              address: _address?.build(),
-              uidNr: uidNr,
-              registrationNr: registrationNr,
-              companySize: companySize,
-              type: type,
-              websiteUrl: websiteUrl);
+            id: id,
+            name: name,
+            address: _address?.build(),
+            uidNr: uidNr,
+            registrationNr: registrationNr,
+            companySize: companySize,
+            type: type,
+            websiteUrl: websiteUrl,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -177,4 +189,4 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -1,0 +1,116 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title External System Integration Components
+
+' Protocol Adapters
+Container_Boundary(protocol_adapters, "Protocol Adapters") {
+    Component(rest_adapter, "REST Adapter", "Dart/HTTP", "RESTful API integration")
+    Component(graphql_adapter, "GraphQL Adapter", "Dart/GraphQL", "GraphQL query/mutation client")
+    Component(grpc_adapter, "gRPC Adapter", "Dart/gRPC", "High-performance RPC client")
+    Component(websocket_adapter, "WebSocket Adapter", "Dart/WebSocket", "Real-time bidirectional communication")
+    Component(soap_adapter, "SOAP Adapter", "Dart/XML", "Legacy SOAP service integration")
+    Component(message_queue_adapter, "Message Queue Adapter", "Dart/AMQP", "Async messaging integration")
+}
+
+' Anti-Corruption Layer
+Container_Boundary(acl_layer, "Anti-Corruption Layer") {
+    Component(domain_translator, "Domain Translator", "Dart", "External ↔ Internal domain mapping")
+    Component(data_transformer, "Data Transformer", "Dart", "Format and structure conversion")
+    Component(protocol_normalizer, "Protocol Normalizer", "Dart", "Protocol-agnostic interface")
+    Component(error_translator, "Error Translator", "Dart", "External error to domain exception mapping")
+    Component(semantic_mapper, "Semantic Mapper", "Dart", "Concept and terminology translation")
+}
+
+' Contract Management
+Container_Boundary(contract_management, "Contract Management") {
+    Component(schema_registry, "Schema Registry", "Dart", "API schema storage and versioning")
+    Component(contract_validator, "Contract Validator", "Dart", "Request/response validation")
+    Component(version_manager, "Version Manager", "Dart", "API version compatibility")
+    Component(breaking_change_detector, "Breaking Change Detector", "Dart", "Schema evolution analysis")
+    Component(mock_generator, "Mock Generator", "Dart", "Test double generation")
+}
+
+' Integration Monitoring
+Container_Boundary(integration_monitoring, "Integration Monitoring") {
+    Component(health_checker, "Health Checker", "Dart", "External system availability")
+    Component(performance_monitor, "Performance Monitor", "Dart", "Latency and throughput tracking")
+    Component(error_tracker, "Error Tracker", "Dart", "Integration failure analysis")
+    Component(circuit_breaker, "Circuit Breaker", "Dart", "Fault tolerance and resilience")
+    Component(retry_manager, "Retry Manager", "Dart", "Intelligent retry strategies")
+    Component(metrics_collector, "Metrics Collector", "Dart", "Integration analytics")
+}
+
+' Configuration Management
+Container_Boundary(config_management, "Configuration Management") {
+    Component(endpoint_registry, "Endpoint Registry", "Dart", "External system endpoint catalog")
+    Component(credential_manager, "Credential Manager", "Dart", "Secure credential storage")
+    Component(rate_limit_manager, "Rate Limit Manager", "Dart", "API rate limiting configuration")
+    Component(timeout_manager, "Timeout Manager", "Dart", "Request timeout configuration")
+    Component(environment_manager, "Environment Manager", "Dart", "Multi-environment configuration")
+}
+
+' Integration Patterns
+Container_Boundary(integration_patterns, "Integration Patterns") {
+    Component(request_response, "Request-Response", "Dart", "Synchronous communication pattern")
+    Component(publish_subscribe, "Publish-Subscribe", "Dart", "Event-driven communication")
+    Component(message_routing, "Message Routing", "Dart", "Intelligent message routing")
+    Component(data_synchronization, "Data Synchronization", "Dart", "Bi-directional data sync")
+    Component(batch_processor, "Batch Processor", "Dart", "Bulk data processing")
+    Component(streaming_processor, "Streaming Processor", "Dart", "Real-time data streaming")
+}
+
+' Visual Integration Elements
+Container_Boundary(visual_integration, "Visual Integration Elements") {
+    Component(integration_canvas, "Integration Canvas", "React", "Visual integration designer")
+    Component(flow_visualizer, "Flow Visualizer", "React", "Data flow visualization")
+    Component(endpoint_mapper, "Endpoint Mapper", "React", "Visual endpoint configuration")
+    Component(monitoring_dashboard, "Monitoring Dashboard", "React", "Integration health dashboard")
+    Component(contract_viewer, "Contract Viewer", "React", "API contract visualization")
+}
+
+' Relationships - Protocol Adapters
+Rel(rest_adapter, protocol_normalizer, "Normalizes via")
+Rel(graphql_adapter, protocol_normalizer, "Normalizes via")
+Rel(grpc_adapter, protocol_normalizer, "Normalizes via")
+Rel(websocket_adapter, protocol_normalizer, "Normalizes via")
+Rel(soap_adapter, protocol_normalizer, "Normalizes via")
+
+' Relationships - ACL
+Rel(protocol_normalizer, domain_translator, "Translates via")
+Rel(domain_translator, data_transformer, "Transforms via")
+Rel(data_transformer, semantic_mapper, "Maps via")
+Rel(error_translator, domain_translator, "Uses")
+
+' Relationships - Contract Management
+Rel(contract_validator, schema_registry, "Validates against")
+Rel(version_manager, schema_registry, "Manages")
+Rel(breaking_change_detector, version_manager, "Analyzes")
+Rel(mock_generator, schema_registry, "Generates from")
+
+' Relationships - Monitoring
+Rel(health_checker, performance_monitor, "Feeds")
+Rel(performance_monitor, metrics_collector, "Reports to")
+Rel(error_tracker, circuit_breaker, "Triggers")
+Rel(circuit_breaker, retry_manager, "Coordinates with")
+
+' Relationships - Configuration
+Rel(endpoint_registry, credential_manager, "Secures via")
+Rel(rate_limit_manager, timeout_manager, "Coordinates with")
+Rel(environment_manager, endpoint_registry, "Configures")
+
+' Relationships - Patterns
+Rel(request_response, message_routing, "Routes via")
+Rel(publish_subscribe, message_routing, "Routes via")
+Rel(data_synchronization, batch_processor, "Processes via")
+Rel(streaming_processor, data_synchronization, "Syncs via")
+
+' Relationships - Visual Elements
+Rel(integration_canvas, endpoint_mapper, "Configures")
+Rel(flow_visualizer, integration_canvas, "Visualizes")
+Rel(monitoring_dashboard, performance_monitor, "Displays")
+Rel(contract_viewer, schema_registry, "Shows")
+
+@enduml 

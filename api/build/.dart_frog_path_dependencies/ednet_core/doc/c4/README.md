@@ -1,0 +1,15 @@
+# c4
+
+This package is part of the EDNet ecosystem.
+
+## Documentation
+
+Package-specific documentation has been moved to the semantic knowledge system:
+- **Technical Details**: `.cursor/technical.learned.knowledge/packages/c4.package.md`
+- **TDD Memory**: `.cursor/project.memory/tdd/packages/c4.tdd.md`
+
+## Quick Start
+
+Refer to the main project documentation and semantic navigation system in `.cursor/`.
+
+For package-specific implementation details, see the semantic knowledge base.

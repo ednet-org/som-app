@@ -1,0 +1,124 @@
+import 'package:test/test.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
+
+/// Tests for {{entityName}} entity
+void main() {
+  group('{{entityName}}', () {
+    test('should create instance', () {
+      final entity = {{entityName}}();
+      expect(entity, isNotNull);
+    });
+
+    {{#hasAttributes}}
+    {{#attributes}}
+    test('should have {{name}} attribute', () {
+      final entity = {{entityName}}();
+      {{#hasDefault}}
+      expect(entity.{{name}}, equals({{&defaultValue}}));
+      {{/hasDefault}}
+      {{^hasDefault}}
+      expect(entity.{{name}}, isNull);
+      {{/hasDefault}}
+    });
+
+    {{#isRequired}}
+    test('should require {{name}} attribute', () {
+      final entity = {{entityName}}();
+      // Required field validation
+      expect(() => entity.{{name}}, returnsNormally);
+    });
+    {{/isRequired}}
+
+    {{#isUnique}}
+    test('should enforce unique constraint on {{name}}', () {
+      final entity1 = {{entityName}}();
+      final entity2 = {{entityName}}();
+
+      entity1.{{name}} = 'value1';
+      entity2.{{name}} = 'value2';
+
+      expect(entity1.{{name}}, isNot(equals(entity2.{{name}})));
+    });
+    {{/isUnique}}
+
+    {{#hasEnumValues}}
+    test('should validate {{name}} enum values', () {
+      final entity = {{entityName}}();
+      final validValues = <String>[{{#enumValues}}'{{.}}', {{/enumValues}}];
+
+      // All enum values should be valid
+      for (final value in validValues) {
+        expect(() => entity.{{name}} = value, returnsNormally);
+      }
+    });
+    {{/hasEnumValues}}
+
+    {{/attributes}}
+    {{/hasAttributes}}
+
+    {{#isAggregateRoot}}
+    group('Aggregate Root behavior', () {
+      test('should have aggregate root capabilities', () {
+        final aggregate = {{entityName}}();
+        expect(aggregate, isA<AggregateRoot>());
+      });
+
+      test('should track uncommitted events', () {
+        final aggregate = {{entityName}}();
+        expect(aggregate.uncommittedEvents, isEmpty);
+      });
+
+      test('should clear uncommitted events', () {
+        final aggregate = {{entityName}}();
+        aggregate.clearUncommittedEvents();
+        expect(aggregate.uncommittedEvents, isEmpty);
+      });
+
+      test('should apply events', () {
+        final aggregate = {{entityName}}();
+        // Event application tests would go here
+        expect(aggregate.version, equals(0));
+      });
+    });
+    {{/isAggregateRoot}}
+
+    test('should convert to JSON', () {
+      final entity = {{entityName}}();
+      {{#hasAttributes}}
+      {{#attributes}}
+      {{#hasDefault}}
+      entity.{{name}} = {{&defaultValue}};
+      {{/hasDefault}}
+      {{/attributes}}
+      {{/hasAttributes}}
+
+      final json = entity.toJson();
+      expect(json, isA<Map<String, dynamic>>());
+      {{#hasAttributes}}
+      {{#attributes}}
+      expect(json.containsKey('{{name}}'), isTrue);
+      {{/attributes}}
+      {{/hasAttributes}}
+    });
+
+    test('should create from JSON', () {
+      final json = <String, dynamic>{
+        {{#hasAttributes}}
+        {{#attributes}}
+        '{{name}}': {{#hasDefault}}{{&defaultValue}}{{/hasDefault}}{{^hasDefault}}null{{/hasDefault}},
+        {{/attributes}}
+        {{/hasAttributes}}
+      };
+
+      final entity = {{entityName}}.fromJson(json);
+      expect(entity, isNotNull);
+      {{#hasAttributes}}
+      {{#attributes}}
+      {{#hasDefault}}
+      expect(entity.{{name}}, equals({{&defaultValue}}));
+      {{/hasDefault}}
+      {{/attributes}}
+      {{/hasAttributes}}
+    });
+  });
+}

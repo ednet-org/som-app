@@ -7,7 +7,8 @@ import 'dart:async';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
-import 'package:openapi/src/model/subscriptions_response.dart';
+import 'package:openapi/src/model/subscriptions_get200_response.dart';
+import 'package:openapi/src/model/subscriptions_upgrade_post_request.dart';
 
 class SubscriptionsApi {
 
@@ -17,7 +18,7 @@ class SubscriptionsApi {
 
   const SubscriptionsApi(this._dio, this._serializers);
 
-  /// subscriptionsGet
+  /// List subscription plans
   /// 
   ///
   /// Parameters:
@@ -28,9 +29,9 @@ class SubscriptionsApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [SubscriptionsResponse] as data
+  /// Returns a [Future] containing a [Response] with a [SubscriptionsGet200Response] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<SubscriptionsResponse>> subscriptionsGet({ 
+  Future<Response<SubscriptionsGet200Response>> subscriptionsGet({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -59,14 +60,14 @@ class SubscriptionsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    SubscriptionsResponse _responseData;
+    SubscriptionsGet200Response _responseData;
 
     try {
-      const _responseType = FullType(SubscriptionsResponse);
+      const _responseType = FullType(SubscriptionsGet200Response);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
-      ) as SubscriptionsResponse;
+      ) as SubscriptionsGet200Response;
 
     } catch (error, stackTrace) {
       throw DioError(
@@ -77,7 +78,7 @@ class SubscriptionsApi {
       )..stackTrace = stackTrace;
     }
 
-    return Response<SubscriptionsResponse>(
+    return Response<SubscriptionsGet200Response>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -87,6 +88,78 @@ class SubscriptionsApi {
       statusMessage: _response.statusMessage,
       extra: _response.extra,
     );
+  }
+
+  /// Upgrade subscription plan
+  /// 
+  ///
+  /// Parameters:
+  /// * [subscriptionsUpgradePostRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioError] if API call or serialization fails
+  Future<Response<void>> subscriptionsUpgradePost({ 
+    required SubscriptionsUpgradePostRequest subscriptionsUpgradePostRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/Subscriptions/upgrade';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(SubscriptionsUpgradePostRequest);
+      _bodyData = _serializers.serialize(subscriptionsUpgradePostRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioError(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
   }
 
 }

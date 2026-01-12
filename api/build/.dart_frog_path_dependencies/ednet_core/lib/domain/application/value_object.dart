@@ -1,0 +1,302 @@
+part of ednet_core;
+
+/// Represents a value object in Domain-Driven Design.
+///
+/// The [ValueObject] class represents a descriptive aspect of the domain:
+/// - Is immutable
+/// - Has no identity
+/// - Is defined by its attributes
+/// - Is equality-comparable by value, not reference
+///
+/// This class extends the base [model.ValueObject] interface to ensure
+/// compatibility with the core domain model while adding enhanced functionality
+/// like equality comparison, validation, and copying.
+///
+/// Example usage:
+/// ```dart
+/// class Money extends ValueObject {
+///   final Decimal amount;
+///   final String currency;
+///
+///   Money({required this.amount, required this.currency}) {
+///     validate();
+///   }
+///
+///   @override
+///   void validate() {
+///     if (amount < Decimal.zero) {
+///       throw ValidationException("Amount cannot be negative");
+///     }
+///     if (currency.isEmpty) {
+///       throw ValidationException("Currency cannot be empty");
+///     }
+///   }
+///
+///   Money add(Money other) {
+///     if (currency != other.currency) {
+///       throw InvalidOperationException("Cannot add different currencies");
+///     }
+///     return Money(amount: amount + other.amount, currency: currency);
+///   }
+///
+///   @override
+///   List<Object> get props => [amount, currency];
+///
+///   @override
+///   Map<String, dynamic> toJson() {
+///     return {
+///       'amount': amount.toString(),
+///       'currency': currency,
+///     };
+///   }
+///
+///   @override
+///   Money copyWith() {
+///     return Money(amount: amount, currency: currency);
+///   }
+/// }
+/// ```
+abstract class ValueObject {
+  /// The list of properties that define this value object.
+  ///
+  /// This is used for equality comparison and hash code generation.
+  List<Object> get props;
+
+  /// Optional property names for JSON serialization.
+  ///
+  /// If provided, this list should correspond 1:1 with the [props] list.
+  /// If not overridden, generic property names will be used.
+  List<String> get propNames => List.generate(props.length, (i) => 'prop$i');
+
+  /// Validates this value object.
+  ///
+  /// This method should:
+  /// - Ensure all properties are valid
+  /// - Enforce business rules
+  /// - Throw exceptions for invalid states
+  void validate() {
+    // Default implementation, subclasses should override
+  }
+
+  /// Compares this value object with another value object.
+  ///
+  /// Parameters:
+  /// - [other]: The object to compare with
+  ///
+  /// Returns:
+  /// True if the objects are equal, false otherwise
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return _compareProps(other as ValueObject);
+  }
+
+  /// Compares the properties of this value object with another.
+  ///
+  /// Parameters:
+  /// - [other]: The value object to compare with
+  ///
+  /// Returns:
+  /// True if all properties are equal, false otherwise
+  bool _compareProps(ValueObject other) {
+    if (props.length != other.props.length) return false;
+    for (var i = 0; i < props.length; i++) {
+      if (props[i] != other.props[i]) return false;
+    }
+    return true;
+  }
+
+  /// Generates a hash code for this value object based on its properties.
+  ///
+  /// Returns:
+  /// A hash code derived from the object's properties
+  @override
+  int get hashCode => Object.hashAll(props);
+
+  /// Copies this value object with new property values.
+  ///
+  /// This method should be implemented by subclasses to provide
+  /// a way to create a new value object with modified properties.
+  ValueObject copyWith();
+
+  /// Returns a string representation of this value object.
+  ///
+  /// Returns:
+  /// A string representation including the class name and properties
+  @override
+  String toString() {
+    return '$runtimeType(${props.map((prop) => prop.toString()).join(', ')})';
+  }
+
+  /// Converts this value object to a JSON map representation.
+  ///
+  /// This Flutter-compatible implementation automatically serializes all properties
+  /// in the [props] list using the corresponding [propNames].
+  ///
+  /// For custom JSON serialization, override this method in subclasses.
+  /// For custom property names, override the [propNames] getter.
+  ///
+  /// Returns:
+  /// A Map<String, dynamic> containing the JSON representation
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+
+    // Ensure we have names for all properties
+    final names = propNames;
+    if (names.length != props.length) {
+      // Fallback to generic names if mismatch
+      final genericNames = List.generate(props.length, (i) => 'property$i');
+      for (var i = 0; i < props.length; i++) {
+        final name = i < names.length ? names[i] : genericNames[i];
+        json[name] = _serializeValue(props[i]);
+      }
+    } else {
+      // Use provided names
+      for (var i = 0; i < props.length; i++) {
+        json[names[i]] = _serializeValue(props[i]);
+      }
+    }
+
+    // Add type information
+    json['_type'] = runtimeType.toString();
+
+    return json;
+  }
+
+  /// Serializes a value for JSON representation.
+  ///
+  /// Handles common types and nested value objects without reflection.
+  dynamic _serializeValue(dynamic value) {
+    if (value == null) return null;
+
+    // Primitive types
+    if (value is String || value is num || value is bool) return value;
+
+    // DateTime
+    if (value is DateTime) return value.toIso8601String();
+
+    // Duration
+    if (value is Duration) return value.inMicroseconds;
+
+    // Lists
+    if (value is List) {
+      return value.map(_serializeValue).toList();
+    }
+
+    // Sets
+    if (value is Set) {
+      return value.map(_serializeValue).toList();
+    }
+
+    // Maps
+    if (value is Map) {
+      final result = <String, dynamic>{};
+      value.forEach((k, v) => result[k.toString()] = _serializeValue(v));
+      return result;
+    }
+
+    // Other ValueObjects
+    if (value is ValueObject) {
+      return value.toJson();
+    }
+
+    // Try to call toJson if available (duck typing approach)
+    try {
+      if (value.runtimeType.toString().contains('Entity') ||
+          value.runtimeType.toString().contains('Model')) {
+        // Assume it has a toJson method and try to call it
+        final json = (value as dynamic).toJson();
+        return json;
+      }
+    } catch (e) {
+      // Fall through to toString if toJson fails
+    }
+
+    // Fallback to string representation
+    return value.toString();
+  }
+
+  /// Creates a JSON string representation of this value object.
+  ///
+  /// Returns:
+  /// A JSON string representation of this value object
+  String toJsonString() {
+    // Using basic JSON encoding since dart:convert is available in Flutter
+    final jsonMap = toJson();
+    final buffer = StringBuffer();
+    _writeJsonValue(buffer, jsonMap);
+    return buffer.toString();
+  }
+
+  /// Simple JSON encoder that works without dart:convert dependency
+  void _writeJsonValue(StringBuffer buffer, dynamic value) {
+    if (value == null) {
+      buffer.write('null');
+    } else if (value is String) {
+      buffer.write('"${value.replaceAll('"', '\\"')}"');
+    } else if (value is num || value is bool) {
+      buffer.write(value.toString());
+    } else if (value is List) {
+      buffer.write('[');
+      for (var i = 0; i < value.length; i++) {
+        if (i > 0) buffer.write(',');
+        _writeJsonValue(buffer, value[i]);
+      }
+      buffer.write(']');
+    } else if (value is Map) {
+      buffer.write('{');
+      var first = true;
+      value.forEach((k, v) {
+        if (!first) buffer.write(',');
+        first = false;
+        _writeJsonValue(buffer, k.toString());
+        buffer.write(':');
+        _writeJsonValue(buffer, v);
+      });
+      buffer.write('}');
+    } else {
+      buffer.write('"${value.toString()}"');
+    }
+  }
+
+  // /// Converts the value object to a map of key-value pairs.
+  // ///
+  // /// This method is similar to toJson but can return non-serializable objects.
+  // /// Useful for internal transformations.
+  // ///
+  // /// Returns:
+  // /// A map representation of this value object's properties
+  // Map<String, dynamic> toMap() {
+  //   // Default implementation defers to toJson
+  //   return toJson();
+  // }
+  //
+  // /// Creates a [SimpleValueObject] representation of this value object.
+  // ///
+  // /// This is useful for compatibility with systems that expect
+  // /// the model layer's SimpleValueObject format.
+  // ///
+  // /// Returns:
+  // /// A [model.SimpleValueObject] representation of this value object
+  // model.SimpleValueObject toSimpleValueObject() {
+  //   final map = toMap();
+  //   final attributes = <model.ValueObjectAttribute>[];
+  //
+  //   map.forEach((key, value) {
+  //     attributes.add(
+  //       model.ValueObjectAttribute(
+  //         key: key,
+  //         value: value is model.ValueObject ? value.toJson() : value.toString(),
+  //       ),
+  //     );
+  //   });
+  //
+  //   return model.SimpleValueObject(
+  //     name: runtimeType.toString(),
+  //     description: toString(),
+  //     version: '1.0',
+  //     attributes: attributes,
+  //   );
+  // }
+}

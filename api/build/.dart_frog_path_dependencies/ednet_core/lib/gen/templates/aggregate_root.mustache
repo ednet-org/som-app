@@ -1,0 +1,123 @@
+abstract class {{entityName}}Gen extends {{#isEnhanced}}EnhancedAggregateRoot{{/isEnhanced}}{{^isEnhanced}}AggregateRoot{{/isEnhanced}}<{{entityName}}> {
+  {{entityName}}Gen(Concept concept) {
+    this.concept = concept;
+    {{#hasChildren}}
+    {{#children}}
+    {{#needsConcept}}
+    final {{childConceptVar}}Concept =
+        concept.model.concepts.singleWhereCode('{{childConceptName}}');
+    assert({{childConceptVar}}Concept != null, '{{childConceptName}} concept is not defined');
+    {{/needsConcept}}
+    setChild('{{childCode}}', {{childCollectionName}}({{childConceptVar}}Concept!));
+    {{/children}}
+    {{/hasChildren}}
+  }
+
+  {{#hasIdAttributes}}
+  {{entityName}}Gen.withId({{#idParams}}{{type}} {{name}}{{^isLast}}, {{/isLast}}{{/idParams}}) {
+    this.concept = concept;
+    {{#idParents}}
+    setParent('{{code}}', {{code}});
+    {{/idParents}}
+    {{#idAttributes}}
+    setAttribute('{{code}}', {{code}});
+    {{/idAttributes}}
+    {{#hasChildren}}
+    {{#children}}
+    {{#needsConcept}}
+    final {{childConceptVar}}Concept =
+        concept.model.concepts.singleWhereCode('{{childConceptName}}');
+    assert({{childConceptVar}}Concept != null, '{{childConceptName}} concept is not defined');
+    {{/needsConcept}}
+    setChild('{{childCode}}', {{childCollectionName}}({{childConceptVar}}Concept!));
+    {{/children}}
+    {{/hasChildren}}
+  }
+  {{/hasIdAttributes}}
+
+  {{#parents}}
+  Reference get {{accessorName}}Reference => getReference('{{code}}')!;
+
+  set {{accessorName}}Reference(Reference reference) =>
+      setReference('{{code}}', reference);
+
+  {{parentType}} get {{accessorName}} =>
+      getParent('{{code}}')! as {{parentType}};
+
+  set {{accessorName}}({{parentType}} p) => setParent('{{code}}', p);
+
+  {{/parents}}
+
+  {{#attributes}}
+  {{#isId}}
+  Id? get {{code}} => getAttribute('{{code}}') as Id?;
+
+  set {{code}}(Id? a) => setAttribute('{{code}}', a);
+  {{/isId}}
+  {{^isId}}
+  {{type}} get {{code}} => getAttribute('{{code}}') as {{type}};
+
+  set {{code}}({{type}} a) => setAttribute('{{code}}', a);
+  {{/isId}}
+
+  {{/attributes}}
+
+  {{#children}}
+  {{childCollectionName}} get {{childCode}} => getChild('{{childCode}}')! as {{childCollectionName}};
+
+  {{/children}}
+
+  @override
+  {{entityName}} newEntity() => {{entityName}}(concept);
+
+  @override
+  {{entityCollectionName}} newEntities() => {{entityCollectionName}}(concept);
+
+  {{#hasSingleIdAttribute}}
+  int {{compareMethod}}CompareTo({{entityName}} other) => {{compareExpression}};
+  {{/hasSingleIdAttribute}}
+
+  /// Apply an event to update the aggregate state
+  /// Override this method to handle your domain events
+  @override
+  void applyEvent(dynamic event) {
+    {{#hasEvents}}
+    if (event is Event) {
+      switch (event.name) {
+        {{#events}}
+        case '{{eventName}}':
+          _apply{{eventName}}(event);
+          break;
+        {{/events}}
+        default:
+          // Unknown event - could log or throw
+          break;
+      }
+    }
+    {{/hasEvents}}
+    {{^hasEvents}}
+    // Override this method to handle your domain events
+    // Example:
+    // if (event is Event) {
+    //   switch (event.name) {
+    //     case 'SomethingHappened':
+    //       _applySomethingHappened(event);
+    //       break;
+    //   }
+    // }
+    {{/hasEvents}}
+  }
+
+  {{#hasEvents}}
+  {{#events}}
+  /// Apply {{eventName}} event to update state
+  void _apply{{eventName}}(Event event) {
+    // NOTE: Update aggregate state based on {{eventName}} event
+    {{#stateChanges}}
+    // {{stateChange}}
+    {{/stateChanges}}
+  }
+
+  {{/events}}
+  {{/hasEvents}}
+}

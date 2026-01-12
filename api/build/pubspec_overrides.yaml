@@ -1,0 +1,8 @@
+resolution: null
+dependency_overrides:
+  ednet_core:
+    path: .dart_frog_path_dependencies/ednet_core
+  ednet_expression_parser:
+    path: .dart_frog_path_dependencies/ednet_expression_parser
+  som_manager:
+    path: .dart_frog_path_dependencies/som_manager

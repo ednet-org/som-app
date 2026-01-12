@@ -1,0 +1,1 @@
+../../mcp/scripts/model_switch.py

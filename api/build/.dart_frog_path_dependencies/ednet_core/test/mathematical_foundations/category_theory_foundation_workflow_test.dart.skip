@@ -1,0 +1,176 @@
+import 'package:ednet_core/ednet_core.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('CategoryTheoryFoundation - Workflow Execution', () {
+    late CategoryTheoryFoundation foundation;
+
+    setUp(() {
+      foundation = CategoryTheoryFoundation();
+    });
+
+    test('executes identity workflow correctly', () async {
+      // Arrange
+      final workflow = BusinessWorkflowImpl(
+        name: 'IdentityWorkflow',
+        input: {'data': 'string'},
+        output: {'data': 'string', 'executed': 'bool'},
+      );
+
+      final monadicWorkflow = MonadicWorkflowImpl(
+        name: 'TestMonadicWorkflow',
+        input: {'data': 'string'},
+        output: {'data': 'string', 'executed': 'bool'},
+        composedWorkflows: [workflow],
+      );
+
+      final inputData = {'data': 'test input'};
+
+      // Act
+      final result = await monadicWorkflow.execute(inputData);
+
+      // Assert
+      expect(result.isCompleted, isTrue);
+      expect(result.context['data'], equals('test input'));
+      expect(result.context['workflow_IdentityWorkflow_executed'], isTrue);
+      expect(result.context['execution_type'], equals('identity'));
+      expect(result.context['timestamp'], isNotNull);
+    });
+
+    test('executes validation workflow correctly', () async {
+      // Arrange
+      final workflow = BusinessWorkflowImpl(
+        name: 'ValidationWorkflow',
+        input: {
+          'name': 'string',
+          'validation_rules': [
+            {'field': 'name', 'condition': 'not_empty'},
+          ],
+        },
+        output: {'name': 'string', 'executed': 'bool', 'is_valid': 'bool'},
+      );
+
+      final monadicWorkflow = MonadicWorkflowImpl(
+        name: 'TestValidationWorkflow',
+        input: {
+          'name': 'string',
+          'validation_rules': [
+            {'field': 'name', 'condition': 'not_empty'},
+          ],
+        },
+        output: {'name': 'string', 'executed': 'bool', 'is_valid': 'bool'},
+        composedWorkflows: [workflow],
+      );
+
+      final inputData = {'name': 'John Doe'};
+
+      // Act
+      final result = await monadicWorkflow.execute(inputData);
+
+      // Assert
+      expect(result.isCompleted, isTrue);
+      expect(result.context['name'], equals('John Doe'));
+      expect(result.context['workflow_ValidationWorkflow_executed'], isTrue);
+      expect(result.context['execution_type'], equals('validation'));
+      expect(result.context['is_valid'], isTrue);
+      expect(result.context['validation_errors'], isEmpty);
+    });
+
+    test('executes transformation workflow correctly', () async {
+      // Arrange
+      final workflow = BusinessWorkflowImpl(
+        name: 'TransformationWorkflow',
+        input: {
+          'source': 'string',
+          'transformations': [
+            {
+              'type': 'uppercase',
+              'source_field': 'source',
+              'target_field': 'result',
+            },
+          ],
+        },
+        output: {'source': 'string', 'result': 'string', 'executed': 'bool'},
+      );
+
+      final monadicWorkflow = MonadicWorkflowImpl(
+        name: 'TestTransformationWorkflow',
+        input: {
+          'source': 'string',
+          'transformations': [
+            {
+              'type': 'uppercase',
+              'source_field': 'source',
+              'target_field': 'result',
+            },
+          ],
+        },
+        output: {'source': 'string', 'result': 'string', 'executed': 'bool'},
+        composedWorkflows: [workflow],
+      );
+
+      final inputData = {'source': 'hello world'};
+
+      // Act
+      final result = await monadicWorkflow.execute(inputData);
+
+      // Assert
+      expect(result.isCompleted, isTrue);
+      expect(result.context['source'], equals('hello world'));
+      expect(result.context['result'], equals('HELLO WORLD'));
+      expect(
+        result.context['workflow_TransformationWorkflow_executed'],
+        isTrue,
+      );
+      expect(result.context['execution_type'], equals('transformation'));
+    });
+
+    test('validates workflow input correctly', () async {
+      // Arrange
+      final workflow = BusinessWorkflowImpl(
+        name: 'TestWorkflow',
+        input: {'required_field': 'string'},
+        output: {'result': 'string'},
+      );
+
+      final monadicWorkflow = MonadicWorkflowImpl(
+        name: 'TestMonadicWorkflow',
+        input: {'required_field': 'string'},
+        output: {'result': 'string'},
+        composedWorkflows: [workflow],
+      );
+
+      final inputData = {}; // Missing required field
+
+      // Act & Assert
+      expect(
+        () => monadicWorkflow.execute(inputData),
+        throwsA(isA<MathematicalException>()),
+      );
+    });
+
+    test('validates workflow output correctly', () async {
+      // Arrange
+      final workflow = BusinessWorkflowImpl(
+        name: 'TestWorkflow',
+        input: {'input': 'string'},
+        output: {'required_output': 'string'}, // This should be in result
+      );
+
+      final monadicWorkflow = MonadicWorkflowImpl(
+        name: 'TestMonadicWorkflow',
+        input: {'input': 'string'},
+        output: {'required_output': 'string'}, // This should be in result
+        composedWorkflows: [workflow],
+      );
+
+      final inputData = {'input': 'test'};
+
+      // Act & Assert - This should fail because our generic workflow doesn't produce the required output
+      expect(
+        () => monadicWorkflow.execute(inputData),
+        throwsA(isA<MathematicalException>()),
+      );
+    });
+  });
+}

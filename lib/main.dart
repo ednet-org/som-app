@@ -23,9 +23,14 @@ import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-final api_instance = Openapi(
+const apiBaseUrl = String.fromEnvironment(
+  'API_BASE_URL',
+  defaultValue: 'http://localhost:8080',
+);
+
+final apiInstance = Openapi(
     dio: Dio(BaseOptions(
-        baseUrl: "https://som-userservice-dev-dm.azurewebsites.net"))
+        baseUrl: apiBaseUrl))
       // ..interceptors.add(PrettyDioLogger())
       ..interceptors.add(CorsInterceptor())
       ..interceptors.add(CurlLoggerDioInterceptor(
@@ -34,12 +39,9 @@ final api_instance = Openapi(
 
 //endregion
 
-var appStore;
+late final Application appStore;
 ThemeData? darkTheme;
 ThemeData? lightTheme;
-var subscriptionService;
-var loginService;
-var apiCompanyService;
 
 /// Environment
 const env = String.fromEnvironment('env', defaultValue: 'dev');
@@ -49,14 +51,16 @@ void main() async {
   // nb_utils - Must be initialize before using shared preference
   await initialize();
 
-  print("Environment: $env");
+  if (kDebugMode) {
+    debugPrint('Environment: $env');
+  }
 
   // final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
   // final sharedPrefs = await prefsFuture;
   appStore = Application();
 
   // dio perform awful if not spawn to own worker
-  (api_instance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
+  (apiInstance.dio.transformer as DefaultTransformer).jsonDecodeCallback =
       parseJson;
 
   await initTheming();
@@ -141,12 +145,12 @@ class MyApp extends StatelessWidget {
     return [
       Provider<AuthForgotPasswordPageState>(
           create: (_) =>
-              AuthForgotPasswordPageState(api_instance.getAuthenticationApi())),
+              AuthForgotPasswordPageState(apiInstance.getAuthApi())),
       Provider<BeamerProvidedKey>(create: (_) => beamerKey),
       Provider<Application>(create: (_) => appStore),
       Provider<ApiSubscriptionRepository>(
         create: (_) =>
-            ApiSubscriptionRepository(api_instance.getSubscriptionsApi()),
+            ApiSubscriptionRepository(apiInstance.getSubscriptionsApi()),
       ),
       ProxyProvider<ApiSubscriptionRepository, Som>(
           update: (_, apiSubscriptionRepository, __) =>
@@ -154,13 +158,13 @@ class MyApp extends StatelessWidget {
       // Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
       ProxyProvider<Som, RegistrationRequest>(
           update: (_, som, __) => RegistrationRequest(som,
-              api_instance.getCompaniesApi(), appStore, sharedPreferences)),
+              apiInstance.getCompaniesApi(), appStore, sharedPreferences)),
       Provider<EmailLoginStore>(
           create: (_) =>
-              EmailLoginStore(api_instance.getAuthenticationApi(), appStore)),
+              EmailLoginStore(apiInstance.getAuthApi(), appStore)),
       ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
           update: (_, emailLoginStore, __) => UserAccountConfirmation(
-              api_instance.getAuthenticationApi(), appStore, emailLoginStore)),
+              apiInstance.getAuthApi(), appStore, emailLoginStore)),
     ];
   }
 }

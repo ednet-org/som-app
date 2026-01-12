@@ -1,0 +1,308 @@
+/// Policy for {{policyName}}
+///
+/// {{policyDescription}}
+class {{policyName}}Policy implements IPolicy {
+  {{#hasDependencies}}
+  {{#dependencies}}
+  final {{type}} {{name}};
+  {{/dependencies}}
+
+  {{policyName}}Policy({
+    {{#dependencies}}
+    required this.{{name}},
+    {{/dependencies}}
+  });
+  {{/hasDependencies}}
+  {{^hasDependencies}}
+  {{policyName}}Policy();
+  {{/hasDependencies}}
+
+  @override
+  String get name => '{{policyName}}';
+
+  @override
+  String get description => '{{policyDescription}}';
+
+  {{#hasScope}}
+  @override
+  PolicyScope? get scope => PolicyScope.{{scopeValue}};
+  {{/hasScope}}
+  {{^hasScope}}
+  @override
+  PolicyScope? get scope => null;
+  {{/hasScope}}
+
+  @override
+  bool evaluate(Entity entity) {
+    {{#hasTypeCheck}}
+    if (entity is! {{entityType}}) {
+      return false;
+    }
+    {{/hasTypeCheck}}
+
+    {{#hasSimpleEvaluation}}
+    {{#rules}}
+    {{#isSimpleCondition}}
+    // Rule: {{ruleName}}
+    if ({{condition}}) {
+      return {{expectedResult}};
+    }
+    {{/isSimpleCondition}}
+    {{/rules}}
+
+    return {{defaultResult}};
+    {{/hasSimpleEvaluation}}
+    {{^hasSimpleEvaluation}}
+    final result = evaluateWithDetails(entity);
+    return result.isValid;
+    {{/hasSimpleEvaluation}}
+  }
+
+  @override
+  PolicyEvaluationResult evaluateWithDetails(Entity entity) {
+    {{#hasTypeCheck}}
+    if (entity is! {{entityType}}) {
+      return PolicyEvaluationResult.invalid(
+        policy: name,
+        reasons: ['Entity is not of type {{entityType}}'],
+      );
+    }
+
+    final typedEntity = entity as {{entityType}};
+    {{/hasTypeCheck}}
+    {{^hasTypeCheck}}
+    final typedEntity = entity;
+    {{/hasTypeCheck}}
+
+    final violations = <PolicyViolation>[];
+    final passedRules = <String>[];
+
+    {{#hasRules}}
+    {{#rules}}
+    // Rule: {{ruleName}}
+    {{#hasRuleDescription}}
+    // {{ruleDescription}}
+    {{/hasRuleDescription}}
+    {{#isAndCondition}}
+    final {{ruleVar}}Passed = {{#conditions}}{{condition}}{{#isNotLast}} && {{/isNotLast}}{{/conditions}};
+    {{/isAndCondition}}
+    {{#isOrCondition}}
+    final {{ruleVar}}Passed = {{#conditions}}{{condition}}{{#isNotLast}} || {{/isNotLast}}{{/conditions}};
+    {{/isOrCondition}}
+    {{#isCustomCondition}}
+    final {{ruleVar}}Passed = {{customCondition}};
+    {{/isCustomCondition}}
+
+    if (!{{ruleVar}}Passed) {
+      violations.add(PolicyViolation(
+        rule: '{{ruleName}}',
+        message: '{{violationMessage}}',
+        {{#hasSeverity}}
+        severity: PolicyViolationSeverity.{{severity}},
+        {{/hasSeverity}}
+        {{#hasContext}}
+        context: {
+          {{#contextFields}}
+          '{{key}}': {{value}},
+          {{/contextFields}}
+        },
+        {{/hasContext}}
+      ));
+    } else {
+      passedRules.add('{{ruleName}}');
+    }
+
+    {{/rules}}
+    {{/hasRules}}
+
+    {{#hasCompositeRules}}
+    // Composite rules evaluation
+    {{#compositeRules}}
+    {{#isAllOf}}
+    final {{compositeVar}}Valid = {{#ruleVars}}{{var}}Passed{{#isNotLast}} && {{/isNotLast}}{{/ruleVars}};
+    {{/isAllOf}}
+    {{#isAnyOf}}
+    final {{compositeVar}}Valid = {{#ruleVars}}{{var}}Passed{{#isNotLast}} || {{/isNotLast}}{{/ruleVars}};
+    {{/isAnyOf}}
+    {{#isNoneOf}}
+    final {{compositeVar}}Valid = !({{#ruleVars}}{{var}}Passed{{#isNotLast}} || {{/isNotLast}}{{/ruleVars}});
+    {{/isNoneOf}}
+
+    if (!{{compositeVar}}Valid) {
+      violations.add(PolicyViolation(
+        rule: '{{compositeName}}',
+        message: '{{compositeMessage}}',
+      ));
+    }
+    {{/compositeRules}}
+    {{/hasCompositeRules}}
+
+    {{#hasCustomEvaluation}}
+    // Custom evaluation logic
+    {{#customEvaluationLines}}
+    {{line}}
+    {{/customEvaluationLines}}
+    {{/hasCustomEvaluation}}
+
+    if (violations.isEmpty) {
+      return PolicyEvaluationResult.valid(
+        policy: name,
+        {{#hasValidMessage}}
+        message: '{{validMessage}}',
+        {{/hasValidMessage}}
+        {{#includesPassedRules}}
+        passedRules: passedRules,
+        {{/includesPassedRules}}
+      );
+    } else {
+      return PolicyEvaluationResult.invalid(
+        policy: name,
+        violations: violations,
+        {{#includesPassedRules}}
+        passedRules: passedRules,
+        {{/includesPassedRules}}
+      );
+    }
+  }
+
+  {{#hasValidateMethod}}
+  /// Validates the entity and throws if policy is violated
+  void validate(Entity entity) {
+    final result = evaluateWithDetails(entity);
+    if (!result.isValid) {
+      throw PolicyViolationException(
+        policy: name,
+        violations: result.violations,
+      );
+    }
+  }
+  {{/hasValidateMethod}}
+
+  {{#hasCanApplyMethod}}
+  /// Checks if this policy can be applied to the entity
+  bool canApply(Entity entity) {
+    {{#hasTypeCheck}}
+    return entity is {{entityType}};
+    {{/hasTypeCheck}}
+    {{^hasTypeCheck}}
+    return true;
+    {{/hasTypeCheck}}
+  }
+  {{/hasCanApplyMethod}}
+}
+
+{{#generatePolicyViolation}}
+/// Represents a violation of a policy rule
+class PolicyViolation {
+  final String rule;
+  final String message;
+  final PolicyViolationSeverity severity;
+  final Map<String, dynamic> context;
+
+  const PolicyViolation({
+    required this.rule,
+    required this.message,
+    this.severity = PolicyViolationSeverity.error,
+    this.context = const {},
+  });
+
+  @override
+  String toString() => 'PolicyViolation($rule): $message';
+}
+
+/// Severity levels for policy violations
+enum PolicyViolationSeverity {
+  warning,
+  error,
+  critical,
+}
+{{/generatePolicyViolation}}
+
+{{#generateEvaluationResult}}
+/// Result of policy evaluation
+class PolicyEvaluationResult {
+  final String policy;
+  final bool isValid;
+  final List<PolicyViolation> violations;
+  final List<String> passedRules;
+  final String? message;
+
+  const PolicyEvaluationResult({
+    required this.policy,
+    required this.isValid,
+    this.violations = const [],
+    this.passedRules = const [],
+    this.message,
+  });
+
+  factory PolicyEvaluationResult.valid({
+    required String policy,
+    String? message,
+    List<String> passedRules = const [],
+  }) => PolicyEvaluationResult(
+        policy: policy,
+        isValid: true,
+        message: message,
+        passedRules: passedRules,
+      );
+
+  factory PolicyEvaluationResult.invalid({
+    required String policy,
+    List<PolicyViolation> violations = const [],
+    List<String> passedRules = const [],
+    List<String>? reasons,
+  }) {
+    final violationList = reasons != null
+        ? reasons.map((r) => PolicyViolation(rule: 'general', message: r)).toList()
+        : violations;
+
+    return PolicyEvaluationResult(
+      policy: policy,
+      isValid: false,
+      violations: violationList,
+      passedRules: passedRules,
+    );
+  }
+
+  String get summary {
+    if (isValid) {
+      return 'Policy $policy: Valid${message != null ? ' - $message' : ''}';
+    } else {
+      final violationSummary = violations.map((v) => v.toString()).join(', ');
+      return 'Policy $policy: Invalid - $violationSummary';
+    }
+  }
+
+  @override
+  String toString() => summary;
+}
+{{/generateEvaluationResult}}
+
+{{#generateException}}
+/// Exception thrown when a policy is violated
+class PolicyViolationException implements Exception {
+  final String policy;
+  final List<PolicyViolation> violations;
+
+  const PolicyViolationException({
+    required this.policy,
+    required this.violations,
+  });
+
+  @override
+  String toString() {
+    final violationMessages = violations.map((v) => '  - ${v.message}').join('\n');
+    return 'PolicyViolationException($policy):\n$violationMessages';
+  }
+}
+{{/generateException}}
+
+{{#generatePolicyScope}}
+/// Scope at which a policy applies
+enum PolicyScope {
+  entity,
+  aggregate,
+  boundedContext,
+  system,
+}
+{{/generatePolicyScope}}

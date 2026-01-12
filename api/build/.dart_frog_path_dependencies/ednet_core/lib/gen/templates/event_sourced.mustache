@@ -1,0 +1,212 @@
+/// Event sourcing scaffolding for {{entityName}}
+///
+/// This file contains event definitions, command methods, and event handlers
+/// for the {{entityName}} aggregate root.
+
+{{#hasCommands}}
+// ============================================================================
+// Commands
+// ============================================================================
+
+{{#commands}}
+/// {{commandDescription}}
+CommandResult {{commandMethod}}({{#commandParams}}{{paramType}} {{paramName}}{{^isLast}}, {{/isLast}}{{/commandParams}}) {
+  {{#hasPreconditions}}
+  // Preconditions
+  {{#preconditions}}
+  if ({{condition}}) {
+    return CommandResult.failure('{{errorMessage}}');
+  }
+  {{/preconditions}}
+  {{/hasPreconditions}}
+
+  // Record the event
+  recordEvent{{#usesNewApi}}{{/usesNewApi}}{{^usesNewApi}}Legacy{{/usesNewApi}}(
+    '{{eventName}}',
+    '{{eventDescription}}',
+    [{{#eventHandlers}}'{{handlerName}}'{{^isLast}}, {{/isLast}}{{/eventHandlers}}],
+    {{#hasEventData}}
+    data: {
+      {{#eventData}}
+      '{{key}}': {{value}},
+      {{/eventData}}
+    },
+    {{/hasEventData}}
+  );
+
+  {{#hasPostconditions}}
+  // Postconditions
+  {{#postconditions}}
+  assert({{condition}}, '{{description}}');
+  {{/postconditions}}
+  {{/hasPostconditions}}
+
+  return CommandResult.success({{#hasResultData}}data: {
+    {{#resultData}}
+    '{{key}}': {{value}},
+    {{/resultData}}
+  }{{/hasResultData}});
+}
+
+{{/commands}}
+{{/hasCommands}}
+
+{{#hasEvents}}
+// ============================================================================
+// Event Definitions
+// ============================================================================
+
+{{#events}}
+/// {{eventDescription}}
+class {{eventClassName}} implements IDomainEvent {
+  {{#eventFields}}
+  final {{fieldType}} {{fieldName}};
+  {{/eventFields}}
+  final DateTime timestamp;
+  final String entityId;
+
+  {{eventClassName}}({
+    {{#eventFields}}
+    required this.{{fieldName}},
+    {{/eventFields}}
+    DateTime? timestamp,
+    required this.entityId,
+  }) : timestamp = timestamp ?? DateTime.now();
+
+  @override
+  String get name => '{{eventName}}';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    {{#eventFields}}
+    '{{fieldName}}': {{fieldName}},
+    {{/eventFields}}
+    'timestamp': timestamp.toIso8601String(),
+    'entityId': entityId,
+  };
+
+  {{#hasEventSubscribers}}
+  // Event subscribers/handlers
+  static const subscribers = [
+    {{#eventSubscribers}}
+    '{{subscriberName}}',
+    {{/eventSubscribers}}
+  ];
+  {{/hasEventSubscribers}}
+}
+
+{{/events}}
+{{/hasEvents}}
+
+{{#hasPolicies}}
+// ============================================================================
+// Policies
+// ============================================================================
+
+{{#policies}}
+/// {{policyDescription}}
+class {{policyClassName}} extends IPolicy {
+  @override
+  String get name => '{{policyName}}';
+
+  @override
+  String get description => '{{policyDescription}}';
+
+  @override
+  PolicyPriority get priority => PolicyPriority.{{policyPriority}};
+
+  @override
+  bool get isActive => {{policyIsActive}};
+
+  @override
+  bool evaluate(Map<String, dynamic> context) {
+    {{#policyConditions}}
+    if ({{condition}}) {
+      return {{conditionResult}};
+    }
+    {{/policyConditions}}
+    return {{defaultResult}};
+  }
+
+  @override
+  List<PolicyAction> getActions(Map<String, dynamic> context) {
+    final actions = <PolicyAction>[];
+
+    {{#policyActions}}
+    {{#hasActionCondition}}
+    if ({{actionCondition}}) {
+    {{/hasActionCondition}}
+      actions.add(PolicyAction(
+        command: '{{actionCommand}}',
+        target: context['{{actionTarget}}'],
+        {{#hasActionParameters}}
+        parameters: '{{actionParameters}}',
+        {{/hasActionParameters}}
+      ));
+    {{#hasActionCondition}}
+    }
+    {{/hasActionCondition}}
+    {{/policyActions}}
+
+    return actions;
+  }
+}
+
+{{/policies}}
+{{/hasPolicies}}
+
+// ============================================================================
+// Event Application (State Changes)
+// ============================================================================
+
+{{#hasStateTransitions}}
+{{#stateTransitions}}
+/// Apply {{eventName}} to update aggregate state
+///
+/// State changes:
+{{#changes}}
+/// - {{description}}
+{{/changes}}
+void _apply{{eventName}}(Event event) {
+  {{#changes}}
+  {{stateUpdate}}
+  {{/changes}}
+}
+
+{{/stateTransitions}}
+{{/hasStateTransitions}}
+
+// ============================================================================
+// Helper Classes
+// ============================================================================
+
+/// Command execution result
+class CommandResult {
+  final bool isSuccess;
+  final String? errorMessage;
+  final Map<String, dynamic>? data;
+
+  CommandResult.success({this.data})
+      : isSuccess = true,
+        errorMessage = null;
+
+  CommandResult.failure(this.errorMessage)
+      : isSuccess = false,
+        data = null;
+}
+
+/// Policy action definition
+class PolicyAction {
+  final String command;
+  final dynamic target;
+  final String? parameters;
+
+  PolicyAction({
+    required this.command,
+    required this.target,
+    this.parameters,
+  });
+}
+
+/// Policy priority enumeration
+enum PolicyPriority { low, normal, high, critical }

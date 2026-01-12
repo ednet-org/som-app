@@ -1,0 +1,67 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Visual Editor Components
+Container_Boundary(visual_editor, "Visual Editor") {
+    Component(canvas_manager, "Canvas Manager", "FabricJS", "Manages Event Storming canvas")
+    Component(element_factory, "Element Factory", "TypeScript", "Creates Event Storming elements")
+    Component(layer_manager, "Layer Manager", "TypeScript", "Manages Big Picture, Process, Design layers")
+    Component(sticky_notes, "Sticky Notes", "React Components", "Domain Events, Commands, Actors, etc.")
+    Component(semantic_validator, "Semantic Validator", "TypeScript", "Validates Event Storming sentences")
+    Component(export_engine, "Export Engine", "TypeScript", "Exports to YAML, PNG, PDF")
+}
+
+' Domain Model Components
+Container_Boundary(domain_model, "Domain Model") {
+    Component(entity, "Entity", "Dart", "Domain entity with identity")
+    Component(concept, "Concept", "Dart", "Meta-model concept definition")
+    Component(attribute, "Attribute", "Dart", "Entity properties and constraints")
+    Component(relationship, "Relationship", "Dart", "Entity associations")
+    Component(behavior, "Behavior", "Dart", "Domain-specific business logic")
+    Component(aggregate, "Aggregate", "Dart", "Consistency boundary")
+}
+
+' Authorization Components
+Container_Boundary(auth_service, "Authorization Service") {
+    Component(tenant_manager, "Tenant Manager", "Node.js", "Multi-tenant isolation")
+    Component(rbac_engine, "RBAC Engine", "Node.js", "Role-based access control")
+    Component(abac_engine, "ABAC Engine", "Node.js", "Attribute-based access control")
+    Component(permission_evaluator, "Permission Evaluator", "Node.js", "Real-time permission checks")
+    Component(audit_logger, "Audit Logger", "Node.js", "Security event logging")
+}
+
+' Integration Components
+Container_Boundary(protocol_adapters, "Protocol Adapters") {
+    Component(rest_adapter, "REST Adapter", "Dart", "HTTP/REST integration")
+    Component(graphql_adapter, "GraphQL Adapter", "Dart", "GraphQL query/mutation")
+    Component(grpc_adapter, "gRPC Adapter", "Dart", "High-performance RPC")
+    Component(websocket_adapter, "WebSocket Adapter", "Dart", "Real-time communication")
+    Component(soap_adapter, "SOAP Adapter", "Dart", "Legacy SOAP services")
+}
+
+' Visual Editor Relationships
+Rel(canvas_manager, element_factory, "Creates elements via")
+Rel(element_factory, sticky_notes, "Instantiates")
+Rel(layer_manager, canvas_manager, "Manages layers in")
+Rel(semantic_validator, sticky_notes, "Validates")
+Rel(export_engine, canvas_manager, "Exports from")
+
+' Domain Model Relationships
+Rel(entity, concept, "Defined by")
+Rel(concept, attribute, "Has")
+Rel(concept, relationship, "Has")
+Rel(entity, behavior, "Implements")
+Rel(aggregate, entity, "Contains")
+
+' Authorization Relationships
+Rel(rbac_engine, tenant_manager, "Scoped by")
+Rel(abac_engine, permission_evaluator, "Uses")
+Rel(permission_evaluator, audit_logger, "Logs to")
+
+' Integration Relationships
+Rel(rest_adapter, graphql_adapter, "Shares HTTP with")
+Rel(grpc_adapter, websocket_adapter, "Shares connection pool")
+
+@enduml

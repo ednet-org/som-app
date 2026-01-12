@@ -1,0 +1,43 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Stakeholders
+Person(domain_expert, "Domain Expert", "Business stakeholder who understands the domain")
+Person(developer, "Developer", "Software developer using EDNet ecosystem")
+Person(product_owner, "Product Owner", "Defines requirements and approves models")
+Person(architect, "Software Architect", "Designs system architecture using Event Storming")
+Person(business_analyst, "Business Analyst", "Facilitates Event Storming sessions")
+
+' Core EDNet Systems
+System(ednet_one, "EDNet.One", "Visual Event Storming platform for collaborative domain modeling")
+System(ednet_core, "EDNet Core", "Domain-driven design framework for Dart with meta-modeling")
+System(ednet_cms, "EDNet CMS", "Content management and visualization platform")
+System(ednet_infra, "EDNet Infra", "External system integration and Anti-Corruption Layer")
+
+' External Systems
+System_Ext(dbpedia, "DBpedia", "Semantic knowledge base for ontology assistance")
+System_Ext(external_apis, "External APIs", "REST, GraphQL, SOAP, gRPC services")
+System_Ext(databases, "Databases", "PostgreSQL, MongoDB, and other data stores")
+System_Ext(auth_providers, "Auth Providers", "OAuth2, SAML, LDAP identity providers")
+System_Ext(collaboration_tools, "Collaboration Tools", "Slack, Teams, Jira integration")
+
+' Primary Relationships
+Rel(domain_expert, ednet_one, "Creates visual domain models")
+Rel(business_analyst, ednet_one, "Facilitates Event Storming sessions")
+Rel(product_owner, ednet_one, "Reviews and approves models")
+Rel(architect, ednet_one, "Designs system architecture")
+Rel(developer, ednet_core, "Implements domain models")
+Rel(developer, ednet_cms, "Manages content and visualizations")
+
+' System Relationships
+Rel(ednet_one, ednet_core, "Generates YAML domain models")
+Rel(ednet_core, ednet_cms, "Provides domain model data")
+Rel(ednet_infra, external_apis, "Integrates with")
+Rel(ednet_one, dbpedia, "Gets semantic suggestions")
+Rel(ednet_core, databases, "Persists domain data")
+Rel(ednet_one, auth_providers, "Authenticates users")
+Rel(ednet_one, collaboration_tools, "Sends notifications")
+
+@enduml

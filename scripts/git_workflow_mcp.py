@@ -1,0 +1,1 @@
+../../mcp/scripts/git_workflow_mcp.py

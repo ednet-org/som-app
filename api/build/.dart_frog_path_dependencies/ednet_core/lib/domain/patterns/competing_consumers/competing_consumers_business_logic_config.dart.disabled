@@ -1,0 +1,157 @@
+part of ednet_core;
+
+/// Configuration class for Competing Consumers business logic arrays
+///
+/// This allows domain-specific customization of hardcoded business logic
+/// while maintaining backward compatibility with existing implementations.
+class CompetingConsumersBusinessLogicConfig {
+  /// Default recommendations for proposal reviews
+  final List<String> recommendations;
+
+  /// Default sentiment categories for deliberation analysis
+  final List<String> sentiments;
+
+  /// Default engagement levels for citizen participation
+  final List<String> engagementLevels;
+
+  /// Default delivery methods for notifications
+  final List<String> deliveryMethods;
+
+  /// Creates a new business logic configuration
+  const CompetingConsumersBusinessLogicConfig({
+    required this.recommendations,
+    required this.sentiments,
+    required this.engagementLevels,
+    required this.deliveryMethods,
+  });
+
+  /// Creates configuration from environment variables with fallback to defaults
+  factory CompetingConsumersBusinessLogicConfig.fromEnvironment() {
+    return CompetingConsumersBusinessLogicConfig(
+      recommendations: _parseListFromEnv(
+        'CC_RECOMMENDATIONS',
+        ['approve', 'revise', 'reject', 'needs_discussion'],
+      ),
+      sentiments: _parseListFromEnv(
+        'CC_SENTIMENTS',
+        ['positive', 'neutral', 'negative', 'constructive'],
+      ),
+      engagementLevels: _parseListFromEnv(
+        'CC_ENGAGEMENT_LEVELS',
+        ['low', 'medium', 'high', 'very_high'],
+      ),
+      deliveryMethods: _parseListFromEnv(
+        'CC_DELIVERY_METHODS',
+        ['email', 'sms', 'push', 'in_app'],
+      ),
+    );
+  }
+
+  /// Creates configuration with custom values, fallback to defaults
+  factory CompetingConsumersBusinessLogicConfig.custom({
+    List<String>? recommendations,
+    List<String>? sentiments,
+    List<String>? engagementLevels,
+    List<String>? deliveryMethods,
+  }) {
+    return CompetingConsumersBusinessLogicConfig(
+      recommendations: recommendations ?? ['approve', 'revise', 'reject', 'needs_discussion'],
+      sentiments: sentiments ?? ['positive', 'neutral', 'negative', 'constructive'],
+      engagementLevels: engagementLevels ?? ['low', 'medium', 'high', 'very_high'],
+      deliveryMethods: deliveryMethods ?? ['email', 'sms', 'push', 'in_app'],
+    );
+  }
+
+  /// Creates a copy of this configuration with updated values
+  CompetingConsumersBusinessLogicConfig copyWith({
+    List<String>? recommendations,
+    List<String>? sentiments,
+    List<String>? engagementLevels,
+    List<String>? deliveryMethods,
+  }) {
+    return CompetingConsumersBusinessLogicConfig(
+      recommendations: recommendations ?? this.recommendations,
+      sentiments: sentiments ?? this.sentiments,
+      engagementLevels: engagementLevels ?? this.engagementLevels,
+      deliveryMethods: deliveryMethods ?? this.deliveryMethods,
+    );
+  }
+
+  /// Validates that all lists are non-empty
+  bool get isValid =>
+      recommendations.isNotEmpty &&
+      sentiments.isNotEmpty &&
+      engagementLevels.isNotEmpty &&
+      deliveryMethods.isNotEmpty;
+
+  /// Gets a random recommendation based on input hash
+  String getRecommendation(String input) {
+    final hash = input.hashCode.abs();
+    return recommendations[hash % recommendations.length];
+  }
+
+  /// Gets a random sentiment based on input hash
+  String getSentiment(String input) {
+    final hash = input.hashCode.abs();
+    return sentiments[hash % sentiments.length];
+  }
+
+  /// Gets a random engagement level based on input hash
+  String getEngagementLevel(String input) {
+    final hash = input.hashCode.abs();
+    return engagementLevels[hash % engagementLevels.length];
+  }
+
+  /// Gets a delivery method, preferring user preference when available
+  String getDeliveryMethod(String input, {String? preference}) {
+    if (preference != null && deliveryMethods.contains(preference)) {
+      return preference;
+    }
+    final hash = input.hashCode.abs();
+    return deliveryMethods[hash % deliveryMethods.length];
+  }
+
+  @override
+  String toString() {
+    return 'CompetingConsumersBusinessLogicConfig('
+        'recommendations: $recommendations, '
+        'sentiments: $sentiments, '
+        'engagementLevels: $engagementLevels, '
+        'deliveryMethods: $deliveryMethods)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CompetingConsumersBusinessLogicConfig &&
+          _listEquals(recommendations, other.recommendations) &&
+          _listEquals(sentiments, other.sentiments) &&
+          _listEquals(engagementLevels, other.engagementLevels) &&
+          _listEquals(deliveryMethods, other.deliveryMethods);
+
+  @override
+  int get hashCode =>
+      recommendations.hashCode ^
+      sentiments.hashCode ^
+      engagementLevels.hashCode ^
+      deliveryMethods.hashCode;
+}
+
+/// Helper function to parse comma-separated list from environment variable
+List<String> _parseListFromEnv(String envVar, List<String> defaultValue) {
+  final envValue = const String.fromEnvironment(envVar, defaultValue: '');
+  if (envValue.isEmpty) {
+    return defaultValue;
+  }
+  return envValue.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+}
+
+/// Helper function to compare lists for equality
+bool _listEquals<T>(List<T> a, List<T> b) {
+  if (a.length != b.length) return false;
+  for (int i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}
+

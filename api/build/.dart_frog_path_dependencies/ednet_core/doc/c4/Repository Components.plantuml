@@ -1,0 +1,102 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Repository Components
+
+' Core Repository Layer
+Container_Boundary(repository_core, "Repository Core") {
+    Component(i_repository, "IRepository", "Dart Interface", "Generic repository contract")
+    Component(core_repository, "CoreRepository", "Dart", "Base repository implementation")
+    Component(memory_repository, "MemoryRepository", "Dart", "In-memory data storage")
+    Component(json_repository, "JsonRepository", "Dart", "JSON file-based persistence")
+    Component(entity_repository, "EntityRepository", "Dart", "Entity-specific operations")
+}
+
+' Persistence Adapters
+Container_Boundary(persistence_adapters, "Persistence Adapters") {
+    Component(drift_repository, "DriftRepository", "Dart/Drift", "SQLite/PostgreSQL adapter")
+    Component(firebase_repository, "FirebaseRepository", "Dart/Firebase", "Cloud Firestore adapter")
+    Component(mongodb_repository, "MongoRepository", "Dart/Mongo", "MongoDB adapter")
+    Component(rest_repository, "RestRepository", "Dart/HTTP", "RESTful API adapter")
+    Component(graphql_repository, "GraphQLRepository", "Dart/GraphQL", "GraphQL API adapter")
+}
+
+' Repository Patterns
+Container_Boundary(repository_patterns, "Repository Patterns") {
+    Component(unit_of_work, "Unit of Work", "Dart", "Transaction boundary management")
+    Component(specification, "Specification", "Dart", "Query criteria abstraction")
+    Component(query_builder, "Query Builder", "Dart", "Dynamic query construction")
+    Component(cache_manager, "Cache Manager", "Dart", "Repository-level caching")
+    Component(event_store, "Event Store", "Dart", "Event sourcing persistence")
+    Component(snapshot_store, "Snapshot Store", "Dart", "Aggregate snapshot storage")
+}
+
+' Data Access Layer
+Container_Boundary(data_access, "Data Access Layer") {
+    Component(connection_pool, "Connection Pool", "Dart", "Database connection management")
+    Component(transaction_manager, "Transaction Manager", "Dart", "ACID transaction handling")
+    Component(migration_manager, "Migration Manager", "Dart", "Schema evolution management")
+    Component(index_manager, "Index Manager", "Dart", "Database index optimization")
+    Component(backup_manager, "Backup Manager", "Dart", "Data backup and recovery")
+}
+
+' Repository Monitoring
+Container_Boundary(repository_monitoring, "Repository Monitoring") {
+    Component(performance_tracker, "Performance Tracker", "Dart", "Query performance monitoring")
+    Component(health_monitor, "Health Monitor", "Dart", "Repository health checks")
+    Component(metrics_collector, "Metrics Collector", "Dart", "Repository usage analytics")
+    Component(error_handler, "Error Handler", "Dart", "Repository error management")
+    Component(audit_trail, "Audit Trail", "Dart", "Data access logging")
+}
+
+' Visual Repository Elements
+Container_Boundary(visual_repository, "Visual Repository Elements") {
+    Component(data_flow_visualizer, "Data Flow Visualizer", "React", "Repository data flow visualization")
+    Component(schema_designer, "Schema Designer", "React", "Visual database schema design")
+    Component(query_builder_ui, "Query Builder UI", "React", "Visual query construction")
+    Component(performance_dashboard, "Performance Dashboard", "React", "Repository performance metrics")
+    Component(migration_planner, "Migration Planner", "React", "Schema migration planning")
+}
+
+' Core Relationships
+Rel(core_repository, i_repository, "Implements")
+Rel(memory_repository, core_repository, "Extends")
+Rel(json_repository, core_repository, "Extends")
+Rel(entity_repository, core_repository, "Extends")
+
+' Adapter Relationships
+Rel(drift_repository, i_repository, "Implements")
+Rel(firebase_repository, i_repository, "Implements")
+Rel(mongodb_repository, i_repository, "Implements")
+Rel(rest_repository, i_repository, "Implements")
+Rel(graphql_repository, i_repository, "Implements")
+
+' Pattern Relationships
+Rel(unit_of_work, core_repository, "Coordinates")
+Rel(specification, query_builder, "Uses")
+Rel(query_builder, core_repository, "Builds queries for")
+Rel(cache_manager, core_repository, "Caches")
+Rel(event_store, core_repository, "Stores events via")
+Rel(snapshot_store, event_store, "Optimizes")
+
+' Data Access Relationships
+Rel(connection_pool, transaction_manager, "Provides connections to")
+Rel(transaction_manager, migration_manager, "Coordinates with")
+Rel(migration_manager, index_manager, "Updates")
+Rel(backup_manager, connection_pool, "Uses")
+
+' Monitoring Relationships
+Rel(performance_tracker, metrics_collector, "Reports to")
+Rel(health_monitor, error_handler, "Triggers")
+Rel(audit_trail, performance_tracker, "Logs")
+
+' Visual Relationships
+Rel(data_flow_visualizer, core_repository, "Visualizes")
+Rel(schema_designer, migration_manager, "Plans with")
+Rel(query_builder_ui, query_builder, "Builds via")
+Rel(performance_dashboard, performance_tracker, "Displays")
+Rel(migration_planner, migration_manager, "Plans with")
+
+@enduml

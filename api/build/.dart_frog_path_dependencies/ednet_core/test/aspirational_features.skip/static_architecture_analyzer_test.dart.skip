@@ -1,0 +1,441 @@
+import 'package:test/test.dart';
+import 'package:ednet_core/ednet_core.dart';
+
+/// Static Architecture Analyzer Integration Tests
+/// Tests the integration of AST-level analysis with mathematical architecture validation
+/// and MCP facade for AI-driven architectural compliance
+
+void main() {
+  group('Static Architecture Analyzer Tests', () {
+    late StaticArchitectureAnalyzer analyzer;
+    late MCPFacade mcpFacade;
+    late ArchitecturalCompliance compliance;
+
+    setUp(() {
+      analyzer = StaticArchitectureAnalyzer();
+      mcpFacade = MCPFacade(analyzer);
+      compliance = ArchitecturalCompliance();
+    });
+
+    group('AST-Level Architectural Analysis', () {
+      test('should analyze codebase for category theory compliance', () {
+        // RED: This should fail - StaticArchitectureAnalyzer doesn't exist yet
+        var codebasePath = '/Users/slavisam/projects/cms/packages/core';
+        var analysisResult = analyzer.analyzeCategoryTheoryCompliance(codebasePath);
+
+        expect(analysisResult.isCompliant, isTrue);
+        expect(analysisResult.violations, isEmpty);
+        expect(analysisResult.compositionLawsFollowed, isTrue);
+        expect(analysisResult.identityMorphismsPresent, isTrue);
+        expect(analysisResult.associativityMaintained, isTrue);
+      });
+
+      test('should detect architectural pattern violations', () {
+        // RED: Should detect when code violates mathematical architecture
+        var violatingCode = '''
+          class BadDomainClass {
+            // Violates: hardcoded business logic in framework
+            String processCustomer() {
+              return "Processing John Doe"; // Hardcoded business data
+            }
+
+            // Violates: no mathematical foundation
+            void arbitraryMethod() {}
+          }
+        ''';
+
+        var violations = analyzer.detectViolations(violatingCode);
+
+        expect(violations, isNotEmpty);
+        expect(violations.any((v) => v.type == ViolationType.hardcodedBusinessData), isTrue);
+        expect(violations.any((v) => v.type == ViolationType.noMathematicalFoundation), isTrue);
+        expect(violations.any((v) => v.type == ViolationType.arbitraryArchitecture), isTrue);
+      });
+
+      test('should validate semantic query language for architecture queries', () {
+        // RED: Semantic query language should work with architectural concepts
+        var query = '''
+          FIND all classes WITH mathematical_foundation = true
+          WHERE implements CategoryMorphism
+          AND has_composition_laws = true
+        ''';
+
+        var queryResult = analyzer.executeSemanticQuery(query);
+
+        expect(queryResult.isValid, isTrue);
+        expect(queryResult.results, isNotEmpty);
+        expect(queryResult.matchesArchitecturalConcepts, isTrue);
+      });
+
+      test('should track cross-file architectural dependencies', () {
+        // RED: Should track how architectural concepts span across files
+        var dependencyAnalysis = analyzer.analyzeCrossFileDependencies('/Users/slavisam/projects/cms/packages/core');
+
+        expect(dependencyAnalysis.categoryTheoryDependencies, isNotEmpty);
+        expect(dependencyAnalysis.cepCycleDependencies, isNotEmpty);
+        expect(dependencyAnalysis.dslSchemaDependencies, isNotEmpty);
+
+        // Verify architectural patterns are properly connected
+        expect(dependencyAnalysis.hasProperArchitecturalFlow, isTrue);
+        expect(dependencyAnalysis.noCircularArchitecturalDependencies, isTrue);
+      });
+    });
+
+    group('Bounded Context Ecosystem Analysis', () {
+      test('should analyze Core Analysis Context', () {
+        // RED: Each bounded context should be analyzed separately
+        var coreAnalysisContext = analyzer.analyzeBoundedContext('CoreAnalysis');
+
+        expect(coreAnalysisContext.implementsGraphTheory, isTrue);
+        expect(coreAnalysisContext.hasComplexityAnalysis, isTrue);
+        expect(coreAnalysisContext.symbolIndexingWorking, isTrue);
+        expect(coreAnalysisContext.mathematicalFoundation, equals('Graph Theory'));
+      });
+
+      test('should analyze Transformation Context', () {
+        // RED: Transformation context should use category theory
+        var transformationContext = analyzer.analyzeBoundedContext('Transformation');
+
+        expect(transformationContext.usesCategoryTheory, isTrue);
+        expect(transformationContext.morphismsImplemented, isTrue);
+        expect(transformationContext.safeMigrations, isTrue);
+        expect(transformationContext.mathematicalFoundation, equals('Category Theory'));
+      });
+
+      test('should analyze Query Context', () {
+        // RED: Query context should support architectural queries
+        var queryContext = analyzer.analyzeBoundedContext('Query');
+
+        expect(queryContext.semanticQueryLanguage, isNotNull);
+        expect(queryContext.architecturalQueries, isNotEmpty);
+        expect(queryContext.sqlLikeSyntax, isTrue);
+        expect(queryContext.mathematicalFoundation, equals('Logic and Set Theory'));
+      });
+
+      test('should validate bounded context interactions', () {
+        // RED: Bounded contexts should interact properly
+        var interactions = analyzer.analyzeBoundedContextInteractions();
+
+        expect(interactions.properEncapsulation, isTrue);
+        expect(interactions.mathematicallyConsistent, isTrue);
+        expect(interactions.noLeakyAbstractions, isTrue);
+        expect(interactions.followsCategoryTheory, isTrue);
+      });
+    });
+
+    group('MCP Facade for AI Integration', () {
+      test('should expose architectural analysis through MCP', () {
+        // RED: MCP facade should expose analyzer capabilities to AI
+        var mcpCapabilities = mcpFacade.getCapabilities();
+
+        expect(mcpCapabilities.architecturalAnalysis, isTrue);
+        expect(mcpCapabilities.mathematicalValidation, isTrue);
+        expect(mcpCapabilities.complianceChecking, isTrue);
+        expect(mcpCapabilities.guidedRefactoring, isTrue);
+      });
+
+      test('should allow AI to query architectural patterns', () {
+        // RED: AI should be able to query architectural patterns
+        var aiQuery = AIArchitecturalQuery(
+          query: 'Find all domain concepts that violate category theory',
+          context: 'Mathematical architecture validation',
+          expectedFormat: 'structured_analysis'
+        );
+
+        var aiResponse = mcpFacade.processAIQuery(aiQuery);
+
+        expect(aiResponse.isSuccessful, isTrue);
+        expect(aiResponse.data, isNotNull);
+        expect(aiResponse.mathematicallyGrounded, isTrue);
+        expect(aiResponse.actionableInsights, isNotEmpty);
+      });
+
+      test('should provide AI with architectural guidance', () {
+        // RED: AI should receive architectural guidance
+        var guidanceRequest = ArchitecturalGuidanceRequest(
+          codeSnippet: 'class NewDomainConcept {}',
+          question: 'How should this follow mathematical architecture?',
+          context: 'Domain modeling'
+        );
+
+        var guidance = mcpFacade.provideGuidance(guidanceRequest);
+
+        expect(guidance.followsMathematicalPrinciples, isTrue);
+        expect(guidance.categoryTheoryCompliant, isTrue);
+        expect(guidance.cepCycleIntegrated, isTrue);
+        expect(guidance.concreteActions, isNotEmpty);
+      });
+
+      test('should enable AI-driven refactoring for architectural compliance', () {
+        // RED: AI should be able to suggest and guide refactoring
+        var refactoringRequest = ArchitecturalRefactoringRequest(
+          sourceCode: '''
+            class LegacyClass {
+              void processOrder(String customer) {
+                print("Processing order for " + customer);
+              }
+            }
+          ''',
+          targetArchitecture: 'Mathematical category theory compliant'
+        );
+
+        var refactoringPlan = mcpFacade.planRefactoring(refactoringRequest);
+
+        expect(refactoringPlan.isArchitecturallySound, isTrue);
+        expect(refactoringPlan.preservesFunctionality, isTrue);
+        expect(refactoringPlan.improvesMathematicalCompliance, isTrue);
+        expect(refactoringPlan.steps, isNotEmpty);
+      });
+    });
+
+    group('Continuous Architectural Validation', () {
+      test('should provide real-time architectural compliance monitoring', () {
+        // RED: Real-time monitoring of architectural compliance
+        var monitor = analyzer.createContinuousMonitor();
+
+        monitor.startMonitoring('/Users/slavisam/projects/cms/packages/core');
+
+        // Simulate a code change
+        var codeChange = CodeChange(
+          file: 'lib/domain/model/new_concept.dart',
+          content: 'class NewConcept extends Entity {}'
+        );
+
+        var complianceResult = monitor.validateChange(codeChange);
+
+        expect(complianceResult.mathematicallyCompliant, isTrue);
+        expect(complianceResult.architecturallyValid, isTrue);
+        expect(complianceResult.requiresReview, isFalse);
+      });
+
+      test('should integrate with version control for architectural gates', () {
+        // RED: Version control integration for architectural validation
+        var vcsIntegration = analyzer.createVCSIntegration();
+
+        var commitValidation = vcsIntegration.validateCommit(
+          changes: ['lib/domain/model/test.dart'],
+          message: 'Add new domain concept'
+        );
+
+        expect(commitValidation.architecturallyValid, isTrue);
+        expect(commitValidation.mathematicallyConsistent, isTrue);
+        expect(commitValidation.canCommit, isTrue);
+        expect(commitValidation.warnings, isEmpty);
+      });
+    });
+
+    group('Architectural Insight Generation', () {
+      test('should generate insights about architectural evolution', () {
+        // RED: Generate insights about how architecture is evolving
+        var insights = analyzer.generateArchitecturalInsights(
+          '/Users/slavisam/projects/cms/packages/core'
+        );
+
+        expect(insights.mathematicalConsistency.trend, equals(Trend.improving));
+        expect(insights.categoryTheoryAdherence.level, isAtLeast(0.8));
+        expect(insights.cepCycleCompleteness.percentage, isAtLeast(90));
+        expect(insights.recommendations, isNotEmpty);
+      });
+
+      test('should provide architectural health metrics', () {
+        // RED: Provide quantitative architectural health metrics
+        var healthMetrics = analyzer.calculateArchitecturalHealth(
+          '/Users/slavisam/projects/cms/packages/core'
+        );
+
+        expect(healthMetrics.overallScore, isAtLeast(0.85));
+        expect(healthMetrics.mathematicalFoundation, isAtLeast(0.9));
+        expect(healthMetrics.categoryTheoryCompliance, isAtLeast(0.85));
+        expect(healthMetrics.cepCycleIntegrity, isAtLeast(0.9));
+        expect(healthMetrics.boundedContextCohesion, isAtLeast(0.8));
+      });
+    });
+  });
+}
+
+// RED: These classes don't exist yet - they will be implemented in GREEN phase
+abstract class StaticArchitectureAnalyzer {
+  CategoryTheoryAnalysisResult analyzeCategoryTheoryCompliance(String codebasePath);
+  List<ArchitecturalViolation> detectViolations(String code);
+  SemanticQueryResult executeSemanticQuery(String query);
+  DependencyAnalysisResult analyzeCrossFileDependencies(String codebasePath);
+  BoundedContextAnalysis analyzeBoundedContext(String contextName);
+  BoundedContextInteractionAnalysis analyzeBoundedContextInteractions();
+  ContinuousMonitor createContinuousMonitor();
+  VCSIntegration createVCSIntegration();
+  ArchitecturalInsights generateArchitecturalInsights(String codebasePath);
+  ArchitecturalHealthMetrics calculateArchitecturalHealth(String codebasePath);
+}
+
+abstract class MCPFacade {
+  final StaticArchitectureAnalyzer analyzer;
+  MCPFacade(this.analyzer);
+
+  MCPCapabilities getCapabilities();
+  AIResponse processAIQuery(AIArchitecturalQuery query);
+  ArchitecturalGuidance provideGuidance(ArchitecturalGuidanceRequest request);
+  RefactoringPlan planRefactoring(ArchitecturalRefactoringRequest request);
+}
+
+abstract class CategoryTheoryAnalysisResult {
+  bool get isCompliant;
+  List<dynamic> get violations;
+  bool get compositionLawsFollowed;
+  bool get identityMorphismsPresent;
+  bool get associativityMaintained;
+}
+
+enum ViolationType {
+  hardcodedBusinessData,
+  noMathematicalFoundation,
+  arbitraryArchitecture,
+  categoryLawViolation
+}
+
+abstract class SemanticQueryResult {
+  bool get isValid;
+  List<dynamic> get results;
+  bool get matchesArchitecturalConcepts;
+}
+
+abstract class DependencyAnalysisResult {
+  List<dynamic> get categoryTheoryDependencies;
+  List<dynamic> get cepCycleDependencies;
+  List<dynamic> get dslSchemaDependencies;
+  bool get hasProperArchitecturalFlow;
+  bool get noCircularArchitecturalDependencies;
+}
+
+abstract class BoundedContextAnalysis {
+  bool get implementsGraphTheory;
+  bool get hasComplexityAnalysis;
+  bool get symbolIndexingWorking;
+  bool get usesCategoryTheory;
+  bool get morphismsImplemented;
+  bool get safeMigrations;
+  dynamic get semanticQueryLanguage;
+  List<dynamic> get architecturalQueries;
+  bool get sqlLikeSyntax;
+  String get mathematicalFoundation;
+}
+
+abstract class BoundedContextInteractionAnalysis {
+  bool get properEncapsulation;
+  bool get mathematicallyConsistent;
+  bool get noLeakyAbstractions;
+  bool get followsCategoryTheory;
+}
+
+abstract class MCPCapabilities {
+  bool get architecturalAnalysis;
+  bool get mathematicalValidation;
+  bool get complianceChecking;
+  bool get guidedRefactoring;
+}
+
+abstract class AIArchitecturalQuery {
+  final String query;
+  final String context;
+  final String expectedFormat;
+  AIArchitecturalQuery({required this.query, required this.context, required this.expectedFormat});
+}
+
+abstract class AIResponse {
+  bool get isSuccessful;
+  dynamic get data;
+  bool get mathematicallyGrounded;
+  List<dynamic> get actionableInsights;
+}
+
+abstract class ArchitecturalGuidanceRequest {
+  final String codeSnippet;
+  final String question;
+  final String context;
+  ArchitecturalGuidanceRequest({required this.codeSnippet, required this.question, required this.context});
+}
+
+abstract class ArchitecturalGuidance {
+  bool get followsMathematicalPrinciples;
+  bool get categoryTheoryCompliant;
+  bool get cepCycleIntegrated;
+  List<String> get concreteActions;
+}
+
+abstract class ArchitecturalRefactoringRequest {
+  final String sourceCode;
+  final String targetArchitecture;
+  ArchitecturalRefactoringRequest({required this.sourceCode, required this.targetArchitecture});
+}
+
+abstract class RefactoringPlan {
+  bool get isArchitecturallySound;
+  bool get preservesFunctionality;
+  bool get improvesMathematicalCompliance;
+  List<RefactoringStep> get steps;
+}
+
+abstract class RefactoringStep {
+  String get description;
+  String get code;
+}
+
+abstract class ContinuousMonitor {
+  void startMonitoring(String path);
+  ComplianceResult validateChange(CodeChange change);
+}
+
+abstract class CodeChange {
+  final String file;
+  final String content;
+  CodeChange({required this.file, required this.content});
+}
+
+abstract class ComplianceResult {
+  bool get mathematicallyCompliant;
+  bool get architecturallyValid;
+  bool get requiresReview;
+}
+
+abstract class VCSIntegration {
+  CommitValidationResult validateCommit({required List<String> changes, required String message});
+}
+
+abstract class CommitValidationResult {
+  bool get architecturallyValid;
+  bool get mathematicallyConsistent;
+  bool get canCommit;
+  List<String> get warnings;
+}
+
+abstract class ArchitecturalInsights {
+  TrendAnalysis get mathematicalConsistency;
+  ComplianceLevel get categoryTheoryAdherence;
+  CompletionMetric get cepCycleCompleteness;
+  List<String> get recommendations;
+}
+
+abstract class TrendAnalysis {
+  Trend get trend;
+}
+
+enum Trend { improving, stable, declining }
+
+abstract class ComplianceLevel {
+  double get level;
+}
+
+abstract class CompletionMetric {
+  int get percentage;
+}
+
+abstract class ArchitecturalHealthMetrics {
+  double get overallScore;
+  double get mathematicalFoundation;
+  double get categoryTheoryCompliance;
+  double get cepCycleIntegrity;
+  double get boundedContextCohesion;
+}
+
+abstract class ArchitecturalCompliance {
+  // Placeholder for compliance checking functionality
+}

@@ -1898,7 +1898,7 @@ class Paths {
             AuthResetPassword.fromJson(json["/auth/resetPassword"]),
         companies: Companies.fromJson(json["/Companies"]),
         companiesRegister:
-            CompaniesRegister.fromJson(json["/Companies/register"]),
+            CompaniesRegister.fromJson(json["/Companies"]),
         companiesCompanyId:
             CompaniesCompanyId.fromJson(json["/Companies/{companyId}"]),
         companiesCompanyIdRegisterUser: CompaniesCompanyIdRegisterUser.fromJson(
@@ -1921,7 +1921,7 @@ class Paths {
         "/auth/login": authLogin.toJson(),
         "/auth/resetPassword": authResetPassword.toJson(),
         "/Companies": companies.toJson(),
-        "/Companies/register": companiesRegister.toJson(),
+        "/Companies": companiesRegister.toJson(),
         "/Companies/{companyId}": companiesCompanyId.toJson(),
         "/Companies/{companyId}/registerUser":
             companiesCompanyIdRegisterUser.toJson(),

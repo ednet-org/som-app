@@ -1,0 +1,88 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title EDNet Ecosystem Application Architecture
+
+' Core Platform Applications
+System_Boundary(ednet_platform, "EDNet Platform") {
+    Container(ednet_one, "EDNet.One", "Flutter Web", "Visual Event Storming platform")
+    Container(ednet_cms, "EDNet CMS", "Flutter Web", "Content management system")
+    Container(ednet_flow, "EDNet Flow", "Flutter", "Workflow and process management")
+    Container(ednet_dev_tools, "EDNet Dev Tools", "Dart CLI", "Development toolchain")
+}
+
+' Domain-Specific Applications
+System_Boundary(domain_apps, "Domain Applications") {
+    Container(som_app, "SOM App", "Flutter", "School of Management application")
+    Container(austrian_tax_app, "Austrian Tax App", "Flutter", "Tax calculation and filing")
+    Container(biljkarijum_app, "Biljkarijum", "Flutter", "Plant management system")
+    Container(binfo_app, "BInfo", "Flutter", "Business information system")
+    Container(eat_the_button_app, "Eat The Button", "Flutter", "Interactive game application")
+}
+
+' Supporting Services
+System_Boundary(supporting_services, "Supporting Services") {
+    Container(github_cli, "GitHub CLI", "Dart", "Git repository management")
+    Container(openapi_service, "OpenAPI Service", "Dart", "API specification management")
+    Container(drift_service, "Drift Service", "Dart", "Database ORM service")
+    Container(p2p_service, "P2P Service", "Dart", "Peer-to-peer communication")
+}
+
+' External Integrations
+System_Ext(dbpedia, "DBpedia", "Semantic knowledge base")
+System_Ext(github, "GitHub", "Source code repository")
+System_Ext(databases, "Databases", "PostgreSQL, SQLite, MongoDB")
+System_Ext(auth_providers, "Auth Providers", "OAuth2, SAML, LDAP")
+System_Ext(cloud_services, "Cloud Services", "AWS, GCP, Azure")
+
+' Core Platform Relationships
+Rel(ednet_one, ednet_cms, "Publishes models to")
+Rel(ednet_cms, ednet_flow, "Manages workflows in")
+Rel(ednet_dev_tools, ednet_one, "Generates code for")
+Rel(ednet_dev_tools, ednet_cms, "Deploys to")
+
+' Domain App Relationships
+Rel(som_app, ednet_cms, "Uses content from")
+Rel(austrian_tax_app, ednet_flow, "Uses workflows from")
+Rel(biljkarijum_app, ednet_cms, "Manages content via")
+Rel(binfo_app, ednet_one, "Models business processes in")
+Rel(eat_the_button_app, ednet_flow, "Uses game flows from")
+
+' Supporting Service Relationships
+Rel(github_cli, github, "Manages repositories in")
+Rel(openapi_service, ednet_dev_tools, "Provides API specs to")
+Rel(drift_service, databases, "Connects to")
+Rel(p2p_service, ednet_flow, "Enables distributed workflows")
+
+' External Integration Relationships
+Rel(ednet_one, dbpedia, "Gets semantic suggestions from")
+Rel(ednet_dev_tools, github, "Pushes generated code to")
+Rel(ednet_cms, databases, "Persists content to")
+Rel(ednet_platform, auth_providers, "Authenticates via")
+Rel(ednet_platform, cloud_services, "Deploys to")
+
+' Cross-Domain Relationships
+Rel(som_app, austrian_tax_app, "Shares financial models with")
+Rel(biljkarijum_app, binfo_app, "Shares business data with")
+Rel(domain_apps, supporting_services, "Uses services from")
+
+' Development Flow - Traditional
+Rel(ednet_one, ednet_dev_tools, "Exports YAML to", "1. Model")
+Rel(ednet_dev_tools, domain_apps, "Generates code for", "2. Generate")
+Rel(domain_apps, ednet_cms, "Publishes content to", "3. Deploy")
+Rel(ednet_cms, ednet_one, "Provides feedback to", "4. Iterate")
+
+' Continuous Pipeline Flow - DMaaS
+Rel(ednet_one, github, "Creates PR to", "1. Collaborate")
+Rel(github, ednet_dev_tools, "Triggers pipeline in", "2. Detect Changes")
+Rel(ednet_dev_tools, github, "Generates code to", "3. Multi-Stack Gen")
+Rel(github, domain_apps, "Delivers code to", "4. Integrate")
+Rel(domain_apps, ednet_one, "Provides feedback to", "5. Evolve")
+
+' EDNet Native Flow - Zero Lag
+Rel(ednet_one, ednet_core, "Interprets directly", "Live Interpretation")
+Rel(ednet_core, domain_apps, "Updates in real-time", "In-Vivo Editing")
+
+@enduml 

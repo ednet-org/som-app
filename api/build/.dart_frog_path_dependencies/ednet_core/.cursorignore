@@ -1,0 +1,63 @@
+# =============================================================================
+# CORE PACKAGE CURSOR IGNORE - Focus on Domain Logic & Architecture
+# =============================================================================
+# This is the semantic heart of the system. Filter noise while preserving
+# domain models, architecture patterns, and business logic.
+
+# Archive & Legacy Code (historical, not current architecture)
+archive/
+tests_old/
+
+# Build & Package Artifacts
+.dart_tool/
+build/
+coverage/
+.packages
+pubspec.lock
+coverage_badge.svg
+
+# Generated Documentation
+doc/api/
+docs/api/
+
+# Generated Code Files (if any)
+lib/generated/
+generated/
+**/*.g.dart
+**/*.freezed.dart
+
+# Test Artifacts (keep test source)
+test_output/
+coverage/
+
+# Benchmark Artifacts (keep benchmark source)
+benchmark/reports/
+benchmark/results/
+
+# Scripts & Tooling Artifacts
+scripts/logs/
+scripts/temp/
+scripts/*.log
+
+# Temporary Files
+temp/
+tmp/
+.temp/
+.tmp/
+logs/
+*.log
+
+# Keep semantic-valuable core content:
+# - lib/ source code (domain models, entities, value objects)
+# - test/ source code (domain tests, unit tests)
+# - benchmark/ source code (performance tests)
+# - scripts/ source code (core tooling)
+# - README.md and architecture documentation
+# - Domain-driven design patterns
+# - Entity and aggregate patterns
+# - Value object implementations
+# - Domain service logic
+# - Repository patterns
+# - Event sourcing implementation
+# - Command and query patterns
+# - Policy and rule engines 

@@ -42,8 +42,8 @@ void main() {
       // TODO
     });
 
-    //Future companiesRegisterPost(RegisterCompanyDto registerCompanyDto) async
-    test('test companiesRegisterPost', () async {
+    //Future registerCompany(RegisterCompanyRequest registerCompanyRequest) async
+    test('test registerCompany', () async {
       // TODO
     });
 

@@ -8,9 +8,9 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/company_dto.dart';
-import 'package:openapi/src/model/register_company_dto.dart';
-import 'package:openapi/src/model/user_dto.dart';
+import 'package:openapi/src/model/register_company_request.dart';
 
 class CompaniesApi {
 
@@ -20,7 +20,54 @@ class CompaniesApi {
 
   const CompaniesApi(this._dio, this._serializers);
 
-  /// companiesCompanyIdGet
+  /// Deactivate company and users
+  /// 
+  ///
+  /// Parameters:
+  /// * [companyId] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioError] if API call or serialization fails
+  Future<Response<void>> companiesCompanyIdDelete({ 
+    required String companyId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/Companies/{companyId}'.replaceAll('{' r'companyId' '}', companyId.toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
+  /// Get company
   /// 
   ///
   /// Parameters:
@@ -94,12 +141,12 @@ class CompaniesApi {
     );
   }
 
-  /// companiesCompanyIdRegisterUserPost
+  /// Update company
   /// 
   ///
   /// Parameters:
   /// * [companyId] 
-  /// * [userDto] 
+  /// * [companyDto] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -109,9 +156,9 @@ class CompaniesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdRegisterUserPost({ 
+  Future<Response<void>> companiesCompanyIdPut({ 
     required String companyId,
-    UserDto? userDto,
+    required CompanyDto companyDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -119,276 +166,7 @@ class CompaniesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/Companies/{companyId}/registerUser'.replaceAll('{' r'companyId' '}', companyId.toString());
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      const _type = FullType(UserDto);
-      _bodyData = userDto == null ? null : _serializers.serialize(userDto, specifiedType: _type);
-
-    } catch(error, stackTrace) {
-      throw DioError(
-         requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioErrorType.other,
-        error: error,
-      )..stackTrace = stackTrace;
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    return _response;
-  }
-
-  /// companiesCompanyIdUsersGet
-  /// 
-  ///
-  /// Parameters:
-  /// * [companyId] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<UserDto>] as data
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<UserDto>>> companiesCompanyIdUsersGet({ 
-    required String companyId,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/Companies/{companyId}/users'.replaceAll('{' r'companyId' '}', companyId.toString());
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    BuiltList<UserDto> _responseData;
-
-    try {
-      const _responseType = FullType(BuiltList, [FullType(UserDto)]);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as BuiltList<UserDto>;
-
-    } catch (error, stackTrace) {
-      throw DioError(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioErrorType.other,
-        error: error,
-      )..stackTrace = stackTrace;
-    }
-
-    return Response<BuiltList<UserDto>>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// companiesCompanyIdUsersUserIdDelete
-  /// 
-  ///
-  /// Parameters:
-  /// * [userId] 
-  /// * [companyId] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future]
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesCompanyIdUsersUserIdDelete({ 
-    required String userId,
-    required String companyId,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/Companies/{companyId}/users/{userId}'.replaceAll('{' r'userId' '}', userId.toString()).replaceAll('{' r'companyId' '}', companyId.toString());
-    final _options = Options(
-      method: r'DELETE',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    return _response;
-  }
-
-  /// companiesCompanyIdUsersUserIdGet
-  /// 
-  ///
-  /// Parameters:
-  /// * [userId] 
-  /// * [companyId] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [UserDto] as data
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<UserDto>> companiesCompanyIdUsersUserIdGet({ 
-    required String userId,
-    required String companyId,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/Companies/{companyId}/users/{userId}'.replaceAll('{' r'userId' '}', userId.toString()).replaceAll('{' r'companyId' '}', companyId.toString());
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    UserDto _responseData;
-
-    try {
-      const _responseType = FullType(UserDto);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as UserDto;
-
-    } catch (error, stackTrace) {
-      throw DioError(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioErrorType.other,
-        error: error,
-      )..stackTrace = stackTrace;
-    }
-
-    return Response<UserDto>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// companiesCompanyIdUsersUserIdUpdatePut
-  /// 
-  ///
-  /// Parameters:
-  /// * [userId] 
-  /// * [companyId] 
-  /// * [userDto] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [UserDto] as data
-  /// Throws [DioError] if API call or serialization fails
-  Future<Response<UserDto>> companiesCompanyIdUsersUserIdUpdatePut({ 
-    required String userId,
-    required String companyId,
-    UserDto? userDto,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/Companies/{companyId}/users/{userId}/update'.replaceAll('{' r'userId' '}', userId.toString()).replaceAll('{' r'companyId' '}', companyId.toString());
+    final _path = r'/Companies/{companyId}'.replaceAll('{' r'companyId' '}', companyId.toString());
     final _options = Options(
       method: r'PUT',
       headers: <String, dynamic>{
@@ -405,8 +183,8 @@ class CompaniesApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(UserDto);
-      _bodyData = userDto == null ? null : _serializers.serialize(userDto, specifiedType: _type);
+      const _type = FullType(CompanyDto);
+      _bodyData = _serializers.serialize(companyDto, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(
@@ -428,40 +206,14 @@ class CompaniesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    UserDto _responseData;
-
-    try {
-      const _responseType = FullType(UserDto);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as UserDto;
-
-    } catch (error, stackTrace) {
-      throw DioError(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioErrorType.other,
-        error: error,
-      )..stackTrace = stackTrace;
-    }
-
-    return Response<UserDto>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
+    return _response;
   }
 
-  /// companiesGet
+  /// List companies
   /// 
   ///
   /// Parameters:
+  /// * [type] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -472,6 +224,7 @@ class CompaniesApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<CompanyDto>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<CompanyDto>>> companiesGet({ 
+    String? type,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -492,9 +245,14 @@ class CompaniesApi {
       validateStatus: validateStatus,
     );
 
+    final _queryParameters = <String, dynamic>{
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+    };
+
     final _response = await _dio.request<Object>(
       _path,
       options: _options,
+      queryParameters: _queryParameters,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
@@ -530,11 +288,11 @@ class CompaniesApi {
     );
   }
 
-  /// companiesRegisterPost
+  /// Register buyer/provider company
   /// 
   ///
   /// Parameters:
-  /// * [registerCompanyDto] 
+  /// * [registerCompanyRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -544,8 +302,8 @@ class CompaniesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> companiesRegisterPost({ 
-    required RegisterCompanyDto registerCompanyDto,
+  Future<Response<void>> registerCompany({ 
+    required RegisterCompanyRequest registerCompanyRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -553,7 +311,7 @@ class CompaniesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/Companies/register';
+    final _path = r'/Companies';
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -570,8 +328,8 @@ class CompaniesApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(RegisterCompanyDto);
-      _bodyData = _serializers.serialize(registerCompanyDto, specifiedType: _type);
+      const _type = FullType(RegisterCompanyRequest);
+      _bodyData = _serializers.serialize(registerCompanyRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioError(

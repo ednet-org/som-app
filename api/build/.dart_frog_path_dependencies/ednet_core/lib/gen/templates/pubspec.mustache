@@ -1,0 +1,19 @@
+name: {{packageName}}
+description: {{description}}
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  {{#usePathDependency}}
+  ednet_core:
+    path: {{&ednetCorePath}}
+  {{/usePathDependency}}
+  {{^usePathDependency}}
+  ednet_core: any
+  {{/usePathDependency}}
+
+dev_dependencies:
+  test: ^1.24.0
+  lints: ^3.0.0

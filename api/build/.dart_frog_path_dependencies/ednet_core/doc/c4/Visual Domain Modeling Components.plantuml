@@ -1,0 +1,82 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Visual Domain Modeling Components
+
+' Event Storming Canvas Components
+Container_Boundary(visual_editor, "Visual Editor") {
+    Component(canvas_engine, "Canvas Engine", "FabricJS", "2D canvas manipulation and rendering")
+    Component(element_library, "Element Library", "TypeScript", "Event Storming sticky note types")
+    Component(layer_controller, "Layer Controller", "TypeScript", "Big Picture → Process → Design layers")
+    Component(gesture_handler, "Gesture Handler", "TypeScript", "Mouse/touch interactions")
+    Component(selection_manager, "Selection Manager", "TypeScript", "Multi-select and grouping")
+    Component(zoom_pan_controller, "Zoom/Pan Controller", "TypeScript", "Canvas navigation")
+}
+
+' Event Storming Elements
+Container_Boundary(element_library_detail, "Event Storming Elements") {
+    Component(domain_events, "Domain Events", "React", "🟠 Orange sticky notes")
+    Component(commands, "Commands", "React", "🔵 Blue sticky notes")
+    Component(actors, "Actors", "React", "🟡 Yellow sticky notes")
+    Component(policies, "Policies", "React", "🟣 Purple sticky notes")
+    Component(read_models, "Read Models", "React", "🟢 Green sticky notes")
+    Component(aggregates, "Aggregates", "React", "🟤 Brown sticky notes")
+    Component(external_systems, "External Systems", "React", "🔴 Red sticky notes")
+    Component(hotspots, "Hotspots", "React", "🔥 Problem areas")
+}
+
+' Semantic Validation Engine
+Container_Boundary(semantic_engine, "Semantic Engine") {
+    Component(grammar_parser, "Grammar Parser", "ANTLR", "Event Storming sentence validation")
+    Component(ontology_matcher, "Ontology Matcher", "Python/spaCy", "DBpedia concept matching")
+    Component(consistency_checker, "Consistency Checker", "TypeScript", "Cross-layer validation")
+    Component(suggestion_engine, "Suggestion Engine", "Python/ML", "Smart completion and recommendations")
+    Component(validation_rules, "Validation Rules", "TypeScript", "Domain-specific constraints")
+}
+
+' Collaboration Features
+Container_Boundary(collaboration_engine, "Collaboration Engine") {
+    Component(session_manager, "Session Manager", "Node.js", "Multi-user session coordination")
+    Component(conflict_resolver, "Conflict Resolver", "Node.js", "Concurrent edit resolution")
+    Component(presence_tracker, "Presence Tracker", "Socket.IO", "Real-time user cursors")
+    Component(comment_system, "Comment System", "Node.js", "Contextual discussions")
+    Component(version_control, "Version Control", "Git-like", "Model versioning and branching")
+    Component(approval_workflow, "Approval Workflow", "Node.js", "Product owner review process")
+}
+
+' Export and Generation
+Container_Boundary(export_engine, "Export Engine") {
+    Component(yaml_serializer, "YAML Serializer", "TypeScript", "EDNet YAML generation")
+    Component(image_exporter, "Image Exporter", "Canvas2Image", "PNG/SVG export")
+    Component(pdf_generator, "PDF Generator", "jsPDF", "Documentation export")
+    Component(code_templates, "Code Templates", "Handlebars", "Dart code scaffolding")
+    Component(integration_specs, "Integration Specs", "OpenAPI", "API contract generation")
+}
+
+' Relationships
+Rel(canvas_engine, element_library, "Renders")
+Rel(layer_controller, canvas_engine, "Controls")
+Rel(gesture_handler, selection_manager, "Triggers")
+Rel(zoom_pan_controller, canvas_engine, "Navigates")
+
+Rel(element_library, domain_events, "Contains")
+Rel(element_library, commands, "Contains")
+Rel(element_library, actors, "Contains")
+Rel(element_library, policies, "Contains")
+
+Rel(grammar_parser, validation_rules, "Uses")
+Rel(ontology_matcher, suggestion_engine, "Feeds")
+Rel(consistency_checker, grammar_parser, "Uses")
+
+Rel(session_manager, conflict_resolver, "Coordinates")
+Rel(presence_tracker, session_manager, "Updates")
+Rel(comment_system, session_manager, "Syncs")
+Rel(approval_workflow, version_control, "Triggers")
+
+Rel(yaml_serializer, code_templates, "Generates for")
+Rel(image_exporter, canvas_engine, "Captures")
+Rel(pdf_generator, image_exporter, "Uses")
+
+@enduml 

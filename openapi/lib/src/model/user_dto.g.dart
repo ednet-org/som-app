@@ -8,6 +8,10 @@ part of 'user_dto.dart';
 
 class _$UserDto extends UserDto {
   @override
+  final String? id;
+  @override
+  final String? companyId;
+  @override
   final String? email;
   @override
   final String? firstName;
@@ -16,29 +20,25 @@ class _$UserDto extends UserDto {
   @override
   final String? salutation;
   @override
-  final BuiltList<Roles>? roles;
+  final String? title;
   @override
   final String? telephoneNr;
   @override
-  final String? title;
-  @override
-  final String? companyId;
-  @override
-  final String? id;
+  final BuiltList<int>? roles;
 
   factory _$UserDto([void Function(UserDtoBuilder)? updates]) =>
       (new UserDtoBuilder()..update(updates))._build();
 
   _$UserDto._(
-      {this.email,
+      {this.id,
+      this.companyId,
+      this.email,
       this.firstName,
       this.lastName,
       this.salutation,
-      this.roles,
-      this.telephoneNr,
       this.title,
-      this.companyId,
-      this.id})
+      this.telephoneNr,
+      this.roles})
       : super._();
 
   @override
@@ -52,53 +52,59 @@ class _$UserDto extends UserDto {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserDto &&
+        id == other.id &&
+        companyId == other.companyId &&
         email == other.email &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         salutation == other.salutation &&
-        roles == other.roles &&
-        telephoneNr == other.telephoneNr &&
         title == other.title &&
-        companyId == other.companyId &&
-        id == other.id;
+        telephoneNr == other.telephoneNr &&
+        roles == other.roles;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc($jc(0, email.hashCode), firstName.hashCode),
-                                lastName.hashCode),
-                            salutation.hashCode),
-                        roles.hashCode),
-                    telephoneNr.hashCode),
-                title.hashCode),
-            companyId.hashCode),
-        id.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, companyId.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, salutation.hashCode);
+    _$hash = $jc(_$hash, title.hashCode);
+    _$hash = $jc(_$hash, telephoneNr.hashCode);
+    _$hash = $jc(_$hash, roles.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'UserDto')
+          ..add('id', id)
+          ..add('companyId', companyId)
           ..add('email', email)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('salutation', salutation)
-          ..add('roles', roles)
-          ..add('telephoneNr', telephoneNr)
           ..add('title', title)
-          ..add('companyId', companyId)
-          ..add('id', id))
+          ..add('telephoneNr', telephoneNr)
+          ..add('roles', roles))
         .toString();
   }
 }
 
 class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
   _$UserDto? _$v;
+
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
+
+  String? _companyId;
+  String? get companyId => _$this._companyId;
+  set companyId(String? companyId) => _$this._companyId = companyId;
 
   String? _email;
   String? get email => _$this._email;
@@ -116,25 +122,17 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
   String? get salutation => _$this._salutation;
   set salutation(String? salutation) => _$this._salutation = salutation;
 
-  ListBuilder<Roles>? _roles;
-  ListBuilder<Roles> get roles => _$this._roles ??= new ListBuilder<Roles>();
-  set roles(ListBuilder<Roles>? roles) => _$this._roles = roles;
+  String? _title;
+  String? get title => _$this._title;
+  set title(String? title) => _$this._title = title;
 
   String? _telephoneNr;
   String? get telephoneNr => _$this._telephoneNr;
   set telephoneNr(String? telephoneNr) => _$this._telephoneNr = telephoneNr;
 
-  String? _title;
-  String? get title => _$this._title;
-  set title(String? title) => _$this._title = title;
-
-  String? _companyId;
-  String? get companyId => _$this._companyId;
-  set companyId(String? companyId) => _$this._companyId = companyId;
-
-  String? _id;
-  String? get id => _$this._id;
-  set id(String? id) => _$this._id = id;
+  ListBuilder<int>? _roles;
+  ListBuilder<int> get roles => _$this._roles ??= new ListBuilder<int>();
+  set roles(ListBuilder<int>? roles) => _$this._roles = roles;
 
   UserDtoBuilder() {
     UserDto._defaults(this);
@@ -143,15 +141,15 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
   UserDtoBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _id = $v.id;
+      _companyId = $v.companyId;
       _email = $v.email;
       _firstName = $v.firstName;
       _lastName = $v.lastName;
       _salutation = $v.salutation;
-      _roles = $v.roles?.toBuilder();
-      _telephoneNr = $v.telephoneNr;
       _title = $v.title;
-      _companyId = $v.companyId;
-      _id = $v.id;
+      _telephoneNr = $v.telephoneNr;
+      _roles = $v.roles?.toBuilder();
       _$v = null;
     }
     return this;
@@ -176,15 +174,16 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
     try {
       _$result = _$v ??
           new _$UserDto._(
-              email: email,
-              firstName: firstName,
-              lastName: lastName,
-              salutation: salutation,
-              roles: _roles?.build(),
-              telephoneNr: telephoneNr,
-              title: title,
-              companyId: companyId,
-              id: id);
+            id: id,
+            companyId: companyId,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            salutation: salutation,
+            title: title,
+            telephoneNr: telephoneNr,
+            roles: _roles?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -201,4 +200,4 @@ class UserDtoBuilder implements Builder<UserDto, UserDtoBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

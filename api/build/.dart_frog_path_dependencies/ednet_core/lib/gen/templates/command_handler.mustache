@@ -1,0 +1,136 @@
+/// Command handler for {{commandName}}Command
+///
+/// This handler processes {{commandName}} commands and executes
+/// the corresponding business logic on {{entityName}} aggregates.
+class {{commandName}}CommandHandler implements ICommandHandler<{{commandName}}Command> {
+  {{#hasDependencies}}
+  {{#dependencies}}
+  final {{type}} {{name}};
+  {{/dependencies}}
+
+  {{commandName}}CommandHandler({
+    {{#dependencies}}
+    required this.{{name}},
+    {{/dependencies}}
+  });
+  {{/hasDependencies}}
+  {{^hasDependencies}}
+  {{commandName}}CommandHandler();
+  {{/hasDependencies}}
+
+  @override
+  Future<CommandResult> handle({{commandName}}Command command) async {
+    {{#hasValidation}}
+    // Validation
+    {{#validations}}
+    {{#isRequired}}
+    if (command.{{field}} == null) {
+      return CommandResult.failure('{{errorMessage}}');
+    }
+    {{/isRequired}}
+    {{#hasCondition}}
+    if ({{condition}}) {
+      return CommandResult.failure('{{errorMessage}}');
+    }
+    {{/hasCondition}}
+    {{/validations}}
+    {{/hasValidation}}
+
+    try {
+      {{#usesRepository}}
+      // Load aggregate from repository
+      final {{aggregateVar}} = await {{repositoryName}}.findById(command.{{aggregateId}});
+      if ({{aggregateVar}} == null) {
+        return CommandResult.failure('{{entityName}} not found');
+      }
+
+      // Execute command on aggregate
+      final result = {{aggregateVar}}.{{commandMethod}}({{#commandParams}}command.{{param}}{{^isLast}}, {{/isLast}}{{/commandParams}});
+
+      {{#checksResult}}
+      if (!result.isSuccess) {
+        return result;
+      }
+      {{/checksResult}}
+
+      // Save aggregate
+      await {{repositoryName}}.save({{aggregateVar}});
+
+      {{#publishesEvents}}
+      // Publish domain events
+      {{#hasEventBus}}
+      for (final event in {{aggregateVar}}.uncommittedEvents) {
+        await eventBus.publish(event);
+      }
+      {{aggregateVar}}.markEventsAsCommitted();
+      {{/hasEventBus}}
+      {{/publishesEvents}}
+
+      return CommandResult.success({{#hasResultData}}data: {
+        {{#resultData}}
+        '{{key}}': {{value}},
+        {{/resultData}}
+      }{{/hasResultData}});
+      {{/usesRepository}}
+      {{^usesRepository}}
+      // Execute business logic
+      {{#businessLogic}}
+      {{line}}
+      {{/businessLogic}}
+
+      return CommandResult.success({{#hasResultData}}data: {
+        {{#resultData}}
+        '{{key}}': {{value}},
+        {{/resultData}}
+      }{{/hasResultData}});
+      {{/usesRepository}}
+    } catch (e) {
+      return CommandResult.failure('Failed to execute {{commandName}}: $e');
+    }
+  }
+
+  @override
+  bool canHandle(dynamic command) => command is {{commandName}}Command;
+}
+
+/// {{commandName}} command
+class {{commandName}}Command implements ICommandBusCommand {
+  @override
+  final String id;
+
+  @override
+  final DateTime timestamp;
+
+  {{#commandFields}}
+  final {{type}} {{name}};
+  {{/commandFields}}
+
+  {{commandName}}Command({
+    String? id,
+    DateTime? timestamp,
+    {{#commandFields}}
+    required this.{{name}},
+    {{/commandFields}}
+  }) : id = id ?? Uuid().v4(),
+       timestamp = timestamp ?? DateTime.now();
+
+  {{#hasToJson}}
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'timestamp': timestamp.toIso8601String(),
+    {{#commandFields}}
+    '{{name}}': {{name}},
+    {{/commandFields}}
+  };
+  {{/hasToJson}}
+
+  {{#hasFromJson}}
+  factory {{commandName}}Command.fromJson(Map<String, dynamic> json) => {{commandName}}Command(
+    id: json['id'] as String,
+    timestamp: DateTime.parse(json['timestamp'] as String),
+    {{#commandFields}}
+    {{name}}: json['{{name}}'] as {{type}},
+    {{/commandFields}}
+  );
+  {{/hasFromJson}}
+}

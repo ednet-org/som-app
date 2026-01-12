@@ -1,0 +1,100 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Stakeholders
+Person(domain_expert, "Domain Expert", "Business stakeholder")
+Person(developer, "Developer", "Software developer")
+Person(product_owner, "Product Owner", "Product manager")
+
+' EDNet.One Visual Platform
+System_Boundary(ednet_one, "EDNet.One Visual Platform") {
+    Container(visual_editor, "Visual Editor", "React/TypeScript", "Event Storming canvas with FabricJS")
+    Container(collaboration_engine, "Collaboration Engine", "Node.js/Socket.IO", "Real-time multi-user sessions")
+    Container(semantic_engine, "Semantic Engine", "Python/NLP", "DBpedia integration and validation")
+    Container(yaml_generator, "YAML Generator", "TypeScript", "Converts visual models to EDNet YAML")
+    Container(auth_service, "Authorization Service", "Node.js/JWT", "Multi-tenant RBAC/ABAC")
+    Container(notification_service, "Notification Service", "Node.js", "Slack/Teams integration")
+}
+
+' EDNet Core Framework
+System_Boundary(ednet_core, "EDNet Core Framework") {
+    Container(domain_model, "Domain Model", "Dart", "Entity, Concept, Attribute definitions")
+    Container(meta_model, "Meta Model", "Dart", "Meta-modeling and reflection capabilities")
+    Container(repository, "Repository", "Dart", "Data persistence abstraction")
+    Container(event_sourcing, "Event Sourcing", "Dart", "Event-based state management")
+    Container(code_generator, "Code Generator", "Dart", "Generates domain code from YAML")
+    Container(validation, "Validation", "Dart", "Domain-specific validation rules")
+}
+
+' EDNet CMS Platform
+System_Boundary(ednet_cms, "EDNet CMS Platform") {
+    Container(cms_ui, "CMS UI", "Flutter Web", "Content management interface")
+    Container(content_api, "Content API", "Dart/Shelf", "RESTful content services")
+    Container(visualization, "Visualization", "Flutter", "Domain model visualization")
+    Container(workflow_engine, "Workflow Engine", "Dart", "Content approval workflows")
+}
+
+' EDNet Infra Integration
+System_Boundary(ednet_infra, "EDNet Infra Integration") {
+    Container(protocol_adapters, "Protocol Adapters", "Dart", "REST, GraphQL, SOAP, gRPC adapters")
+    Container(acl_layer, "Anti-Corruption Layer", "Dart", "External system translation")
+    Container(contract_manager, "Contract Manager", "Dart", "API contract validation")
+    Container(integration_monitor, "Integration Monitor", "Dart", "Health checks and metrics")
+}
+
+' Continuous Pipeline Platform
+System_Boundary(continuous_pipeline, "Continuous Pipeline Platform") {
+    Container(pipeline_orchestrator, "Pipeline Orchestrator", "Node.js", "Workflow coordination and automation")
+    Container(github_integration, "GitHub Integration", "Node.js/Octokit", "Repository and PR automation")
+    Container(change_detector, "Change Detector", "Dart", "Breaking change analysis and migration")
+    Container(multi_stack_generator, "Multi-Stack Generator", "Dart", "Technology adapter framework")
+    Container(approval_workflow, "Approval Workflow", "Node.js", "Multi-stakeholder approval system")
+    Container(live_interpreter, "Live Interpreter", "Flutter", "Real-time domain model interpretation")
+}
+
+' External Systems
+System_Ext(dbpedia, "DBpedia", "Semantic knowledge base")
+System_Ext(external_apis, "External APIs", "Third-party services")
+System_Ext(databases, "Databases", "Data persistence")
+System_Ext(auth_providers, "Auth Providers", "Identity providers")
+
+' User Interactions
+Rel(domain_expert, visual_editor, "Creates Event Storming models")
+Rel(product_owner, collaboration_engine, "Reviews and approves models")
+Rel(developer, cms_ui, "Manages content")
+Rel(developer, code_generator, "Generates domain code")
+
+' Inter-Container Relationships
+Rel(visual_editor, collaboration_engine, "Real-time updates")
+Rel(visual_editor, semantic_engine, "Validates semantics")
+Rel(semantic_engine, dbpedia, "Gets ontology data")
+Rel(yaml_generator, domain_model, "Generates YAML for")
+Rel(auth_service, auth_providers, "Authenticates via")
+Rel(notification_service, collaboration_engine, "Sends session updates")
+
+Rel(domain_model, repository, "Persists via")
+Rel(event_sourcing, repository, "Stores events via")
+Rel(code_generator, meta_model, "Uses reflection from")
+Rel(repository, databases, "Persists to")
+
+Rel(cms_ui, content_api, "Manages content via")
+Rel(content_api, domain_model, "Uses domain data from")
+Rel(visualization, meta_model, "Visualizes models from")
+
+Rel(protocol_adapters, external_apis, "Integrates with")
+Rel(acl_layer, protocol_adapters, "Translates via")
+Rel(contract_manager, protocol_adapters, "Validates contracts for")
+
+' Continuous Pipeline Relationships
+Rel(yaml_generator, pipeline_orchestrator, "Triggers pipeline via")
+Rel(pipeline_orchestrator, change_detector, "Analyzes changes via")
+Rel(change_detector, multi_stack_generator, "Generates code via")
+Rel(multi_stack_generator, github_integration, "Creates PRs via")
+Rel(approval_workflow, github_integration, "Approves PRs via")
+Rel(collaboration_engine, approval_workflow, "Triggers approvals via")
+Rel(live_interpreter, domain_model, "Interprets directly")
+Rel(visual_editor, live_interpreter, "Updates models in")
+
+@enduml

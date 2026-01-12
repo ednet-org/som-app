@@ -1,0 +1,404 @@
+part of ednet_core;
+
+/// CEP Cycle Interpreter Implementation
+/// Integrates Command-Event-Policy cycles with mathematical foundations
+/// Works with existing EDNet event interpreter infrastructure
+
+class CEPCycleInterpreterImpl implements CEPCycleInterpreter {
+  final CategoryTheoryFoundationImpl _categoryFoundation;
+  final Map<String, CEPModel> _cepModels = {};
+
+  CEPCycleInterpreterImpl(this._categoryFoundation);
+
+  @override
+  CEPModel interpretCEPCycle(String cepDSL) {
+    try {
+      final yamlDoc = loadYaml(cepDSL);
+      final config = yamlDoc as Map<String, dynamic>;
+
+      final model = CEPCycleModelImpl();
+
+      // Interpret commands
+      final commands = config['commands'] as List<dynamic>? ?? [];
+      for (final commandData in commands) {
+        final commandMap = commandData as Map<String, dynamic>;
+        final command = _interpretCommand(commandMap);
+        model.addCommand(command);
+      }
+
+      // Interpret events
+      final events = config['events'] as List<dynamic>? ?? [];
+      for (final eventData in events) {
+        final eventMap = eventData as Map<String, dynamic>;
+        final event = _interpretEvent(eventMap);
+        model.addEvent(event);
+      }
+
+      // Interpret policies
+      final policies = config['policies'] as List<dynamic>? ?? [];
+      for (final policyData in policies) {
+        final policyMap = policyData as Map<String, dynamic>;
+        final policy = _interpretPolicy(policyMap);
+        model.addPolicy(policy);
+      }
+
+      // Store the model
+      final modelName = 'CEPModel_${DateTime.now().millisecondsSinceEpoch}';
+      _cepModels[modelName] = model;
+
+      return model;
+    } catch (e) {
+      throw CEPInterpretationException('Failed to interpret CEP cycle: ${e.toString()}');
+    }
+  }
+
+  @override
+  MathematicalCommand interpretCommand(Map<String, dynamic> commandData) {
+    return _interpretCommand(commandData);
+  }
+
+  @override
+  MathematicalEvent interpretEvent(Map<String, dynamic> eventData) {
+    return _interpretEvent(eventData);
+  }
+
+  @override
+  MathematicalPolicy interpretPolicy(Map<String, dynamic> policyData) {
+    return _interpretPolicy(policyData);
+  }
+
+  @override
+  EventModel interpretEvents(String eventDSL) {
+    try {
+      final yamlDoc = loadYaml(eventDSL);
+      final config = yamlDoc as Map<String, dynamic>;
+
+      final model = EventModelImpl();
+
+      final events = config['events'] as List<dynamic>? ?? [];
+      for (final eventData in events) {
+        final eventMap = eventData as Map<String, dynamic>;
+        final event = _interpretEvent(eventMap);
+        model.addEvent(event);
+      }
+
+      return model;
+    } catch (e) {
+      throw CEPInterpretationException('Failed to interpret events: ${e.toString()}');
+    }
+  }
+
+  @override
+  PolicyModel interpretPolicies(String policyDSL) {
+    try {
+      final yamlDoc = loadYaml(policyDSL);
+      final config = yamlDoc as Map<String, dynamic>;
+
+      final model = PolicyModelImpl();
+
+      final policies = config['policies'] as List<dynamic>? ?? [];
+      for (final policyData in policies) {
+        final policyMap = policyData as Map<String, dynamic>;
+        final policy = _interpretPolicy(policyMap);
+        model.addPolicy(policy);
+      }
+
+      return model;
+    } catch (e) {
+      throw CEPInterpretationException('Failed to interpret policies: ${e.toString()}');
+    }
+  }
+
+  /// Interpret a command from YAML configuration
+  MathematicalCommand _interpretCommand(Map<String, dynamic> commandData) {
+    final name = commandData['name'] as String;
+    final aggregate = commandData['aggregate'] as String? ?? 'DefaultAggregate';
+    final description = commandData['description'] as String? ?? '';
+    final actor = commandData['actor'] as String? ?? 'System';
+    final businessLogic = commandData['businessLogic'] as Map<String, dynamic>? ?? <String, dynamic>{};
+
+    // Create the business command first
+    final businessCommand = BusinessCommandImpl(
+      name: name,
+      description: description,
+      aggregate: aggregate,
+      actor: actor,
+      parameters: commandData['parameters'] as Map<String, dynamic>? ?? {},
+      businessLogic: businessLogic,
+    );
+
+    // Create the domain morphism for this command
+    final morphism = _categoryFoundation.commandToMorphism(businessCommand);
+
+    // Extract mathematical properties from business logic
+    final mathProps = _extractMathematicalProperties(businessLogic);
+
+    return MathematicalCommandImpl(
+      name: name,
+      businessCommand: businessCommand,
+      morphism: morphism,
+      mathematicalProperties: {
+        'hasComposition': mathProps.hasComposition,
+        'hasAssociativity': mathProps.hasAssociativity,
+        'hasIdentity': mathProps.hasIdentity,
+        'hasCategoryLaws': mathProps.hasCategoryLaws,
+      },
+    );
+  }
+
+  /// Interpret an event from YAML configuration
+  MathematicalEvent _interpretEvent(Map<String, dynamic> eventData) {
+    final name = eventData['name'] as String;
+    final aggregate = eventData['aggregate'] as String? ?? 'DefaultAggregate';
+    final payload = eventData['payload'] as List<dynamic>? ?? [];
+
+    final payloadFields = <String, EventPayloadField>{};
+    for (final fieldData in payload) {
+      final fieldMap = fieldData as Map<String, dynamic>;
+      final fieldName = fieldMap['name'] as String;
+      final fieldType = fieldMap['type'] as String;
+      final required = fieldMap['required'] as bool? ?? false;
+
+      payloadFields[fieldName] = EventPayloadField(
+        name: fieldName,
+        type: fieldType,
+        required: required,
+      );
+    }
+
+    // Create the domain event first
+    final domainEvent = MathematicalDomainEventImpl(
+      name: name,
+      description: eventData['description'] as String? ?? 'Event: $name',
+      timestamp: DateTime.now(),
+      payload: eventData,
+      sourceAggregate: aggregate,
+    );
+
+    // Create the domain morphism for this event
+    final morphism = _categoryFoundation.eventToMorphism(domainEvent);
+
+    return MathematicalEventImpl(
+      name: name,
+      domainEvent: domainEvent,
+      morphism: morphism,
+      mathematicalProperties: const {},
+    );
+  }
+
+  /// Interpret a policy from YAML configuration
+  MathematicalPolicy _interpretPolicy(Map<String, dynamic> policyData) {
+    final name = policyData['name'] as String;
+    final description = policyData['description'] as String? ?? '';
+    final criteria = policyData['criteria'] as String? ?? '';
+    final priority = policyData['priority'] as String? ?? 'Medium';
+    final active = policyData['active'] as bool? ?? true;
+
+    final actions = policyData['actions'] as List<dynamic>? ?? [];
+    final policyActions = <PolicyAction>[];
+
+    for (final actionData in actions) {
+      final actionMap = actionData as Map<String, dynamic>;
+      final command = actionMap['command'] as String;
+      final condition = actionMap['condition'] as String? ?? '';
+
+      policyActions.add(PolicyAction(
+        command: command,
+        condition: condition,
+      ));
+    }
+
+    // Create the business policy first
+    final businessPolicy = BusinessPolicyImpl(
+      name: name,
+      description: description,
+      triggerEvents: policyData['triggerEvents'] as List<String>? ?? [],
+      resultingCommands: policyActions.map((a) => a.command).toList(),
+    );
+
+    // Create the domain morphism for this policy
+    final morphism = _categoryFoundation.policyToMorphism(businessPolicy);
+
+    // Analyze criteria for mathematical proof properties
+    final proofProps = _analyzePolicyProof(criteria);
+
+    return MathematicalPolicyImpl(
+      name: name,
+      businessPolicy: businessPolicy,
+      morphism: morphism,
+      mathematicalProperties: proofProps,
+    );
+  }
+
+  /// Extract mathematical properties from business logic
+  MathematicalProperties _extractMathematicalProperties(String businessLogic) {
+    final hasComposition = businessLogic.contains('compose') ||
+                          businessLogic.contains('∘') ||
+                          businessLogic.contains('composition');
+
+    final hasAssociativity = businessLogic.contains('associativity') ||
+                            businessLogic.contains('(f ∘ g) ∘ h') ||
+                            businessLogic.contains('f ∘ (g ∘ h)');
+
+    final hasIdentity = businessLogic.contains('identity') ||
+                       businessLogic.contains('id') ||
+                       businessLogic.contains('neutral');
+
+    final hasCategoryLaws = businessLogic.contains('category') ||
+                           businessLogic.contains('morphism') ||
+                           businessLogic.contains('functor');
+
+    return MathematicalProperties(
+      hasComposition: hasComposition,
+      hasAssociativity: hasAssociativity,
+      hasIdentity: hasIdentity,
+      hasCategoryLaws: hasCategoryLaws,
+    );
+  }
+
+  /// Analyze policy criteria for mathematical proof properties
+  ProofProperties _analyzePolicyProof(String criteria) {
+    final isForall = criteria.contains('forall') || criteria.contains('∀');
+    final isExists = criteria.contains('exists') || criteria.contains('∃');
+    final hasImplication = criteria.contains('=>') || criteria.contains('→');
+    final hasEquivalence = criteria.contains('<=>') || criteria.contains('↔');
+    final hasConjunction = criteria.contains('&&') || criteria.contains('∧');
+    final hasDisjunction = criteria.contains('||') || criteria.contains('∨');
+
+    return ProofProperties(
+      isUniversal: isForall,
+      isExistential: isExists,
+      hasImplication: hasImplication,
+      hasEquivalence: hasEquivalence,
+      hasConjunction: hasConjunction,
+      hasDisjunction: hasDisjunction,
+    );
+  }
+}
+
+/// CEP Model implementation for cycle interpretation
+class CEPCycleModelImpl implements CEPModel {
+  final List<MathematicalCommand> _commands = [];
+  final List<MathematicalEvent> _events = [];
+  final List<MathematicalPolicy> _policies = [];
+
+  @override
+  String get name => 'CEPCycleModel';
+
+  @override
+  List<MathematicalCommand> get commands => List.unmodifiable(_commands);
+
+  @override
+  List<MathematicalEvent> get events => List.unmodifiable(_events);
+
+  @override
+  List<MathematicalPolicy> get policies => List.unmodifiable(_policies);
+
+  @override
+  bool get isMathematicallyComplete {
+    return commands.isNotEmpty && events.isNotEmpty && policies.isNotEmpty;
+  }
+
+  void addCommand(MathematicalCommand command) => _commands.add(command);
+  void addEvent(MathematicalEvent event) => _events.add(event);
+  void addPolicy(MathematicalPolicy policy) => _policies.add(policy);
+}
+
+/// Event Model implementation
+class EventModelImpl implements EventModel {
+  final List<MathematicalEvent> _events = [];
+
+  @override
+  List<MathematicalEvent> get events => List.unmodifiable(_events);
+
+  void addEvent(MathematicalEvent event) => _events.add(event);
+}
+
+/// Policy Model implementation
+class PolicyModelImpl implements PolicyModel {
+  final List<MathematicalPolicy> _policies = [];
+
+  @override
+  List<MathematicalPolicy> get policies => List.unmodifiable(_policies);
+
+  void addPolicy(MathematicalPolicy policy) => _policies.add(policy);
+}
+
+// Mathematical Command implementation is now in mathematical_types.dart
+
+// Mathematical Event and Policy implementations are now in mathematical_types.dart
+
+/// Supporting classes
+class MathematicalProperties {
+  final bool hasComposition;
+  final bool hasAssociativity;
+  final bool hasIdentity;
+  final bool hasCategoryLaws;
+
+  MathematicalProperties({
+    required this.hasComposition,
+    required this.hasAssociativity,
+    required this.hasIdentity,
+    required this.hasCategoryLaws,
+  });
+}
+
+class ProofProperties {
+  final bool isUniversal;
+  final bool isExistential;
+  final bool hasImplication;
+  final bool hasEquivalence;
+  final bool hasConjunction;
+  final bool hasDisjunction;
+
+  ProofProperties({
+    required this.isUniversal,
+    required this.isExistential,
+    required this.hasImplication,
+    required this.hasEquivalence,
+    required this.hasConjunction,
+    required this.hasDisjunction,
+  });
+}
+
+class EventPayloadField {
+  final String name;
+  final String type;
+  final bool required;
+
+  EventPayloadField({
+    required this.name,
+    required this.type,
+    required this.required,
+  });
+}
+
+class PolicyAction {
+  final String command;
+  final String condition;
+
+  PolicyAction({
+    required this.command,
+    required this.condition,
+  });
+}
+
+class CommandExecutionResult {
+  final bool isSuccess;
+  final Map<String, dynamic>? data;
+  final String? error;
+
+  CommandExecutionResult.success(this.data) : isSuccess = true, error = null;
+  CommandExecutionResult.failure(this.error) : isSuccess = false, data = null;
+}
+
+// PolicyEvaluationResult is already defined in policy_evaluator.dart
+
+/// CEP interpretation exception
+class CEPInterpretationException implements Exception {
+  final String message;
+  CEPInterpretationException(this.message);
+
+  @override
+  String toString() => 'CEPInterpretationException: $message';
+}
