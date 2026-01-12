@@ -1,12 +1,12 @@
 import 'package:test/test.dart';
 import 'package:openapi/openapi.dart';
 
-// tests for CompaniesRegisterCompanyPostRequest
+// tests for RegisterCompanyRequest
 void main() {
-  final instance = CompaniesRegisterCompanyPostRequestBuilder();
+  final instance = RegisterCompanyRequestBuilder();
   // TODO add properties to the builder and call build()
 
-  group(CompaniesRegisterCompanyPostRequest, () {
+  group(RegisterCompanyRequest, () {
     // CompanyRegistration company
     test('to test the property `company`', () async {
       // TODO
