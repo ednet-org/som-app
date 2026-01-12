@@ -1,4 +1,4 @@
-# openapi.model.CompaniesRegisterCompanyPostRequest
+# openapi.model.ConsultantsRegisterCompanyPostRequest
 
 ## Load the model package
 ```dart
