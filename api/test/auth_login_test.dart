@@ -4,22 +4,23 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
-import 'package:som_api/infrastructure/db.dart';
 import 'package:som_api/services/auth_service.dart';
 import '../routes/auth/login.dart' as route;
 import 'test_utils.dart';
 
 void main() {
   group('POST /auth/login', () {
-    late Database db;
+    late InMemoryCompanyRepository companies;
+    late InMemoryUserRepository users;
     late AuthService auth;
 
-    setUp(() {
-      db = createTestDb();
-      auth = createAuthService(db);
-      final company = seedCompany(db);
-      final passwordHash = auth.hashPassword('secret');
-      seedUser(db, company, email: 'user@example.com', passwordHash: passwordHash);
+    setUp(() async {
+      companies = InMemoryCompanyRepository();
+      users = InMemoryUserRepository();
+      auth = createAuthService(users);
+      final company = await seedCompany(companies);
+      await seedUser(users, company, email: 'user@example.com');
+      (auth as TestAuthService).setPassword('user@example.com', 'secret');
     });
 
     test('returns tokens for valid credentials', () async {
@@ -50,10 +51,9 @@ void main() {
     });
 
     test('returns 400 for unconfirmed email', () async {
-      final company = seedCompany(db);
-      final passwordHash = auth.hashPassword('secret2');
-      seedUser(db, company,
-          email: 'pending@example.com', passwordHash: passwordHash, confirmed: false);
+      final company = await seedCompany(companies);
+      await seedUser(users, company, email: 'pending@example.com', confirmed: false);
+      (auth as TestAuthService).setPassword('pending@example.com', 'secret2');
       final context = TestRequestContext(
         path: '/auth/login',
         method: HttpMethod.post,

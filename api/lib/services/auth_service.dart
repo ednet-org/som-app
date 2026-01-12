@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:bcrypt/bcrypt.dart';
 import 'package:crypto/crypto.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
 import '../infrastructure/clock.dart';
@@ -24,78 +23,55 @@ class AuthService {
     required this.tokens,
     required this.email,
     required this.clock,
-    String? jwtSecret,
-  }) : _jwtSecret = jwtSecret ?? 'som_dev_secret';
+    required SupabaseClient adminClient,
+    required SupabaseClient anonClient,
+  })  : _adminClient = adminClient,
+        _anonClient = anonClient;
 
   final UserRepository users;
   final TokenRepository tokens;
   final EmailService email;
   final Clock clock;
-  final String _jwtSecret;
-
-  String hashPassword(String password) => BCrypt.hashpw(password, BCrypt.gensalt());
-
-  bool verifyPassword(String password, String hash) => BCrypt.checkpw(password, hash);
+  final SupabaseClient _adminClient;
+  final SupabaseClient _anonClient;
 
   Future<AuthTokens> login({required String emailAddress, required String password}) async {
-    final user = users.findByEmail(emailAddress);
-    if (user == null || !user.isActive || user.passwordHash == null) {
+    final user = await users.findByEmail(emailAddress);
+    if (user == null || !user.isActive) {
       throw AuthException('Invalid password or E-Mail');
     }
     if (!user.emailConfirmed) {
       throw AuthException('Email not confirmed');
     }
-    if (!verifyPassword(password, user.passwordHash!)) {
+    late final dynamic response;
+    try {
+      response = await _anonClient.auth.signInWithPassword(
+        email: emailAddress,
+        password: password,
+      );
+    } catch (_) {
       throw AuthException('Invalid password or E-Mail');
     }
-    final role = user.lastLoginRole ?? user.roles.first;
-    users.updateLastLoginRole(user.id, role);
-    final accessToken = _createJwt(user, role: role);
-    final refreshToken = _createRefreshToken(user.id);
-    return AuthTokens(accessToken: accessToken, refreshToken: refreshToken);
-  }
-
-  String _createJwt(UserRecord user, {required String role}) {
-    final jwt = JWT(
-      {
-        'sub': user.id,
-        'companyId': user.companyId,
-        'email': user.email,
-        'roles': user.roles,
-        'activeRole': role,
-      },
-      issuer: 'som-api',
+    final session = response.session;
+    if (session == null) {
+      throw AuthException('Invalid password or E-Mail');
+    }
+    final role =
+        user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : 'buyer');
+    await users.updateLastLoginRole(user.id, role);
+    return AuthTokens(
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken ?? '',
     );
-    return jwt.sign(SecretKey(_jwtSecret), expiresIn: const Duration(hours: 2));
-  }
-
-  String issueAccessToken(UserRecord user, {required String role}) {
-    return _createJwt(user, role: role);
-  }
-
-  String _createRefreshToken(String userId) {
-    final raw = _randomToken();
-    final hashed = _hashToken(raw);
-    final now = clock.nowUtc();
-    tokens.createRefresh(
-      RefreshTokenRecord(
-        id: const Uuid().v4(),
-        userId: userId,
-        tokenHash: hashed,
-        expiresAt: now.add(const Duration(days: 30)),
-        createdAt: now,
-      ),
-    );
-    return raw;
   }
 
   Future<void> sendForgotPassword(String emailAddress) async {
-    final user = users.findByEmail(emailAddress);
+    final user = await users.findByEmail(emailAddress);
     if (user == null) {
       return;
     }
     final raw = _randomToken();
-    tokens.create(
+    await tokens.create(
       TokenRecord(
         id: const Uuid().v4(),
         userId: user.id,
@@ -121,34 +97,45 @@ class AuthService {
     if (password != confirmPassword) {
       throw AuthException('Passwords don\'t match');
     }
-    final user = users.findByEmail(emailAddress);
+    final user = await users.findByEmail(emailAddress);
     if (user == null) {
       throw AuthException('Invalid token');
     }
-    final record = tokens.findValidByHash('reset_password', _hashToken(token));
+    final record = await tokens.findValidByHash('reset_password', _hashToken(token));
     if (record == null || record.expiresAt.isBefore(clock.nowUtc())) {
       throw AuthException('Expired link, please contact the admin for new registration');
     }
-    tokens.markUsed(record.id, clock.nowUtc());
-    users.setPassword(user.id, hashPassword(password));
+    await tokens.markUsed(record.id, clock.nowUtc());
+    await _adminClient.auth.admin.updateUserById(
+      user.id,
+      attributes: AdminUserAttributes(
+        password: password,
+        emailConfirm: true,
+      ),
+    );
+    await users.confirmEmail(user.id);
   }
 
   Future<void> confirmEmail({required String emailAddress, required String token}) async {
-    final user = users.findByEmail(emailAddress);
+    final user = await users.findByEmail(emailAddress);
     if (user == null) {
       throw AuthException('Invalid token');
     }
-    final record = tokens.findValidByHash('confirm_email', _hashToken(token));
+    final record = await tokens.findValidByHash('confirm_email', _hashToken(token));
     if (record == null || record.expiresAt.isBefore(clock.nowUtc())) {
       throw AuthException('Expired link, please contact the admin for new registration');
     }
-    tokens.markUsed(record.id, clock.nowUtc());
-    users.confirmEmail(user.id);
+    await tokens.markUsed(record.id, clock.nowUtc());
+    await _adminClient.auth.admin.updateUserById(
+      user.id,
+      attributes: AdminUserAttributes(emailConfirm: true),
+    );
+    await users.confirmEmail(user.id);
   }
 
   Future<String> createRegistrationToken(UserRecord user) async {
     final raw = _randomToken();
-    tokens.create(
+    await tokens.create(
       TokenRecord(
         id: const Uuid().v4(),
         userId: user.id,
@@ -164,6 +151,48 @@ class AuthService {
       text: 'Activate your account: /auth/confirmEmail?token=$raw&email=${user.email}',
     );
     return raw;
+  }
+
+  Future<String> ensureAuthUser({
+    required String email,
+    String? password,
+    bool emailConfirmed = false,
+  }) async {
+    late final dynamic response;
+    try {
+      response = await _adminClient.auth.admin.createUser(
+        AdminUserAttributes(
+          email: email,
+          password: password,
+          emailConfirm: emailConfirmed,
+        ),
+      );
+    } catch (_) {
+      throw AuthException('E-mail already used.');
+    }
+    final userId = response.user?.id;
+    if (userId == null) {
+      throw AuthException('Failed to create auth user');
+    }
+    return userId;
+  }
+
+  Future<void> updateAuthPassword({
+    required String userId,
+    required String password,
+    bool emailConfirmed = false,
+  }) async {
+    await _adminClient.auth.admin.updateUserById(
+      userId,
+      attributes: AdminUserAttributes(
+        password: password,
+        emailConfirm: emailConfirmed,
+      ),
+    );
+  }
+
+  Future<void> deleteAuthUser(String userId) async {
+    await _adminClient.auth.admin.deleteUser(userId);
   }
 
   String _randomToken() {

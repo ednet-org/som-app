@@ -1,105 +1,98 @@
+import 'package:supabase/supabase.dart';
+
 import '../../models/models.dart';
-import '../db.dart';
 
 class SubscriptionRepository {
-  SubscriptionRepository(this._db);
+  SubscriptionRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void createPlan(SubscriptionPlanRecord plan) {
-    _db.execute(
-      '''
-      INSERT INTO subscription_plans (
-        id, name, sort_priority, is_active, price_in_subunit, rules_json, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        plan.id,
-        plan.name,
-        plan.sortPriority,
-        plan.isActive ? 1 : 0,
-        plan.priceInSubunit,
-        encodeJson(plan.rules),
-        plan.createdAt.toIso8601String(),
-      ],
-    );
+  Future<void> createPlan(SubscriptionPlanRecord plan) async {
+    await _client.from('subscription_plans').insert({
+      'id': plan.id,
+      'name': plan.name,
+      'sort_priority': plan.sortPriority,
+      'is_active': plan.isActive,
+      'price_in_subunit': plan.priceInSubunit,
+      'rules_json': plan.rules,
+      'created_at': plan.createdAt.toIso8601String(),
+    });
   }
 
-  List<SubscriptionPlanRecord> listPlans() {
-    final rows = _db.select(
-      'SELECT * FROM subscription_plans ORDER BY sort_priority',
-    );
-    return rows.map(_mapPlan).toList();
+  Future<List<SubscriptionPlanRecord>> listPlans() async {
+    final rows = await _client
+        .from('subscription_plans')
+        .select()
+        .order('sort_priority') as List<dynamic>;
+    return rows.map((row) => _mapPlan(row as Map<String, dynamic>)).toList();
   }
 
-  SubscriptionPlanRecord? findPlanById(String id) {
-    final rows = _db.select(
-      'SELECT * FROM subscription_plans WHERE id = ?',
-      [id],
-    );
+  Future<SubscriptionPlanRecord?> findPlanById(String id) async {
+    final rows =
+        await _client.from('subscription_plans').select().eq('id', id) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    return _mapPlan(rows.first);
+    return _mapPlan(rows.first as Map<String, dynamic>);
   }
 
-  bool hasPlans() {
-    final rows = _db.select('SELECT 1 FROM subscription_plans LIMIT 1');
+  Future<bool> hasPlans() async {
+    final rows = await _client
+        .from('subscription_plans')
+        .select('id')
+        .limit(1) as List<dynamic>;
     return rows.isNotEmpty;
   }
 
-  void createSubscription(SubscriptionRecord subscription) {
-    _db.execute(
-      '''
-      INSERT INTO subscriptions (
-        id, company_id, plan_id, status, payment_interval, start_date, end_date, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      ''',
-      [
-        subscription.id,
-        subscription.companyId,
-        subscription.planId,
-        subscription.status,
-        subscription.paymentInterval,
-        subscription.startDate.toIso8601String(),
-        subscription.endDate.toIso8601String(),
-        subscription.createdAt.toIso8601String(),
-      ],
-    );
+  Future<void> createSubscription(SubscriptionRecord subscription) async {
+    await _client.from('subscriptions').insert({
+      'id': subscription.id,
+      'company_id': subscription.companyId,
+      'plan_id': subscription.planId,
+      'status': subscription.status,
+      'payment_interval': subscription.paymentInterval,
+      'start_date': subscription.startDate.toIso8601String(),
+      'end_date': subscription.endDate.toIso8601String(),
+      'created_at': subscription.createdAt.toIso8601String(),
+    });
   }
 
-  SubscriptionRecord? findSubscriptionByCompany(String companyId) {
-    final rows = _db.select(
-      'SELECT * FROM subscriptions WHERE company_id = ? ORDER BY created_at DESC LIMIT 1',
-      [companyId],
-    );
+  Future<SubscriptionRecord?> findSubscriptionByCompany(
+    String companyId,
+  ) async {
+    final rows = await _client
+        .from('subscriptions')
+        .select()
+        .eq('company_id', companyId)
+        .order('created_at', ascending: false)
+        .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    final row = rows.first;
+    final row = rows.first as Map<String, dynamic>;
     return SubscriptionRecord(
       id: row['id'] as String,
       companyId: row['company_id'] as String,
       planId: row['plan_id'] as String,
       status: row['status'] as String,
       paymentInterval: row['payment_interval'] as String,
-      startDate: DateTime.parse(row['start_date'] as String),
-      endDate: DateTime.parse(row['end_date'] as String),
-      createdAt: DateTime.parse(row['created_at'] as String),
+      startDate: parseDate(row['start_date']),
+      endDate: parseDate(row['end_date']),
+      createdAt: parseDate(row['created_at']),
     );
   }
 
-  SubscriptionPlanRecord _mapPlan(Map<String, Object?> row) {
+  SubscriptionPlanRecord _mapPlan(Map<String, dynamic> row) {
     return SubscriptionPlanRecord(
       id: row['id'] as String,
       name: row['name'] as String,
       sortPriority: row['sort_priority'] as int,
-      isActive: (row['is_active'] as int) == 1,
+      isActive: row['is_active'] as bool? ?? false,
       priceInSubunit: row['price_in_subunit'] as int,
-      rules: (decodeJsonList(row['rules_json'] as String))
+      rules: decodeJsonList(row['rules_json'])
           .map((e) => e as Map<String, dynamic>)
           .toList(),
-      createdAt: DateTime.parse(row['created_at'] as String),
+      createdAt: parseDate(row['created_at']),
     );
   }
 }

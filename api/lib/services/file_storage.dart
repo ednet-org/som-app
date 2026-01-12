@@ -1,26 +1,29 @@
-import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:path/path.dart' as p;
+import 'package:mime/mime.dart';
+import 'package:supabase/supabase.dart';
 
 class FileStorage {
-  FileStorage({String? basePath}) : _basePath = basePath ?? _defaultBasePath();
+  FileStorage({required SupabaseClient client, required String bucket})
+      : _client = client,
+        _bucket = bucket;
 
-  final String _basePath;
+  final SupabaseClient _client;
+  final String _bucket;
 
-  static String _defaultBasePath() {
-    final base = Directory.current.path;
-    return p.join(base, 'storage', 'uploads');
-  }
-
-  Future<String> saveFile({required String category, required String fileName, required List<int> bytes}) async {
-    final dir = Directory(p.join(_basePath, category));
-    if (!dir.existsSync()) {
-      dir.createSync(recursive: true);
-    }
+  Future<String> saveFile({
+    required String category,
+    required String fileName,
+    required List<int> bytes,
+  }) async {
     final safeName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9_.-]'), '_');
-    final filePath = p.join(dir.path, safeName);
-    final file = File(filePath);
-    await file.writeAsBytes(bytes);
-    return filePath;
+    final path = '$category/${DateTime.now().toUtc().millisecondsSinceEpoch}_$safeName';
+    final contentType = lookupMimeType(fileName) ?? 'application/octet-stream';
+    await _client.storage.from(_bucket).uploadBinary(
+          path,
+          Uint8List.fromList(bytes),
+          fileOptions: FileOptions(contentType: contentType),
+        );
+    return _client.storage.from(_bucket).getPublicUrl(path);
   }
 }

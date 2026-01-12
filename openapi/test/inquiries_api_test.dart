@@ -1,39 +1,127 @@
-import 'package:test/test.dart';
+import 'package:dio/dio.dart';
 import 'package:openapi/openapi.dart';
+import 'package:test/test.dart';
 
+Openapi _openapiWithResponder(Response<dynamic> Function(RequestOptions) responder) {
+  final interceptor = InterceptorsWrapper(
+    onRequest: (options, handler) {
+      try {
+        handler.resolve(responder(options));
+      } catch (error) {
+        handler.reject(
+          DioError(
+            requestOptions: options,
+            error: error,
+            type: DioErrorType.other,
+          ),
+          true,
+        );
+      }
+    },
+  );
+
+  return Openapi(
+    dio: Dio(BaseOptions(baseUrl: 'http://localhost')),
+    interceptors: [interceptor],
+  );
+}
 
 /// tests for InquiriesApi
 void main() {
-  final instance = Openapi().getInquiriesApi();
-
   group(InquiriesApi, () {
-    // List inquiries
-    //
-    //Future<BuiltList<Inquiry>> inquiriesGet({ String status, String format }) async
-    test('test inquiriesGet', () async {
-      // TODO
+    test('createInquiry sends payload and parses response', () async {
+      final deadline = DateTime.utc(2025, 1, 15);
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'POST');
+        expect(options.path, '/inquiries');
+        final data = options.data as Map<String, dynamic>;
+        expect(data['branchId'], 'branch-1');
+        expect(data['categoryId'], 'category-1');
+        expect(data['numberOfProviders'], 3);
+        expect(data['deliveryZips'], ['1010', '1020']);
+        expect(data['deadline'], deadline.toIso8601String());
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: {
+            'id': 'inq-1',
+            'status': 'open',
+            'deadline': deadline.toIso8601String(),
+          },
+        );
+      }).getInquiriesApi();
+
+      final request = CreateInquiryRequest((b) => b
+        ..branchId = 'branch-1'
+        ..categoryId = 'category-1'
+        ..deadline = deadline
+        ..numberOfProviders = 3
+        ..deliveryZips.addAll(['1010', '1020'])
+        ..productTags.addAll(['paper', 'ink']));
+
+      final response = await api.createInquiry(createInquiryRequest: request);
+      expect(response.data?.id, 'inq-1');
+      expect(response.data?.deadline?.toUtc(), deadline);
     });
 
-    // Assign inquiry to providers
-    //
-    //Future inquiriesInquiryIdAssignPost(String inquiryId, InquiriesInquiryIdAssignPostRequest inquiriesInquiryIdAssignPostRequest) async
-    test('test inquiriesInquiryIdAssignPost', () async {
-      // TODO
+    test('inquiriesGet returns list', () async {
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'GET');
+        expect(options.path, '/inquiries');
+        expect(options.queryParameters['status'], 'open');
+        expect(options.queryParameters['format'], 'json');
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: [
+            {'id': 'inq-1', 'status': 'open'},
+            {'id': 'inq-2', 'status': 'closed'}
+          ],
+        );
+      }).getInquiriesApi();
+
+      final response = await api.inquiriesGet(status: 'open', format: 'json');
+      expect(response.data, isNotNull);
+      expect(response.data!.length, 2);
+      expect(response.data!.first.id, 'inq-1');
     });
 
-    // Get inquiry
-    //
-    //Future<Inquiry> inquiriesInquiryIdGet(String inquiryId) async
-    test('test inquiriesInquiryIdGet', () async {
-      // TODO
+    test('inquiriesInquiryIdAssignPost sends assignment payload', () async {
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'POST');
+        expect(options.path, '/inquiries/inq-1/assign');
+        final data = options.data as Map<String, dynamic>;
+        expect(data['providerCompanyIds'], ['provider-1', 'provider-2']);
+        return Response(
+          requestOptions: options,
+          statusCode: 204,
+          data: null,
+        );
+      }).getInquiriesApi();
+
+      final request = InquiriesInquiryIdAssignPostRequest((b) => b
+        ..providerCompanyIds.addAll(['provider-1', 'provider-2']));
+
+      await api.inquiriesInquiryIdAssignPost(
+        inquiryId: 'inq-1',
+        inquiriesInquiryIdAssignPostRequest: request,
+      );
     });
 
-    // Create inquiry
-    //
-    //Future<Inquiry> inquiriesPost(InquiriesGetRequest inquiriesGetRequest) async
-    test('test inquiriesPost', () async {
-      // TODO
-    });
+    test('inquiriesInquiryIdGet returns inquiry', () async {
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'GET');
+        expect(options.path, '/inquiries/inq-1');
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: {'id': 'inq-1', 'status': 'open'},
+        );
+      }).getInquiriesApi();
 
+      final response = await api.inquiriesInquiryIdGet(inquiryId: 'inq-1');
+      expect(response.data?.id, 'inq-1');
+      expect(response.data?.status, 'open');
+    });
   });
 }

@@ -10,7 +10,7 @@ import 'package:som_api/services/mappings.dart';
 Future<Response> onRequest(RequestContext context, String companyId) async {
   final repo = context.read<CompanyRepository>();
   if (context.request.method == HttpMethod.get) {
-    final company = repo.findById(companyId);
+    final company = await repo.findById(companyId);
     if (company == null) {
       return Response(statusCode: 404);
     }
@@ -28,7 +28,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   }
   if (context.request.method == HttpMethod.put) {
     final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
-    final existing = repo.findById(companyId);
+    final existing = await repo.findById(companyId);
     if (existing == null) {
       return Response(statusCode: 404);
     }
@@ -49,11 +49,11 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),
     );
-    repo.update(updated);
+    await repo.update(updated);
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.delete) {
-    final existing = repo.findById(companyId);
+    final existing = await repo.findById(companyId);
     if (existing == null) {
       return Response(statusCode: 404);
     }
@@ -70,11 +70,11 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),
     );
-    repo.update(updated);
+    await repo.update(updated);
     final usersRepo = context.read<UserRepository>();
-    final users = usersRepo.listByCompany(companyId);
+    final users = await usersRepo.listByCompany(companyId);
     for (final user in users) {
-      usersRepo.deactivate(user.id);
+      await usersRepo.deactivate(user.id);
     }
     return Response(statusCode: 200);
   }

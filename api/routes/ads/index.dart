@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/services/file_storage.dart';
@@ -14,7 +15,8 @@ import 'package:som_api/services/request_auth.dart';
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.get) {
     final branchId = context.request.uri.queryParameters['branchId'];
-    final ads = context.read<AdsRepository>().listActive(branchId: branchId);
+    final ads =
+        await context.read<AdsRepository>().listActive(branchId: branchId);
     return Response.json(
       body: ads
           .map((ad) => {
@@ -35,9 +37,11 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   if (context.request.method == HttpMethod.post) {
-    final auth = parseAuth(
+    final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret:
+          const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
@@ -69,9 +73,9 @@ Future<Response> onRequest(RequestContext context) async {
     if (type == 'banner' && bannerDate == null) {
       return Response.json(statusCode: 400, body: 'Banner date is required');
     }
-    final profile = providerRepo.findByCompany(auth.companyId);
+    final profile = await providerRepo.findByCompany(auth.companyId);
     if (profile != null) {
-      final plan = subscriptionRepo.findPlanById(profile.subscriptionPlanId);
+      final plan = await subscriptionRepo.findPlanById(profile.subscriptionPlanId);
       if (plan != null) {
         final maxNormalAds = _ruleUpperLimit(plan.rules, 1);
         final maxBannerAds = _ruleUpperLimit(plan.rules, 2);
@@ -79,7 +83,9 @@ Future<Response> onRequest(RequestContext context) async {
           return Response.json(statusCode: 403, body: 'Banner ads are not available for your plan');
         }
         if (type != 'banner' && status == 'active') {
-          final activeCount = context.read<AdsRepository>().countActiveByCompanyInMonth(auth.companyId, now);
+          final activeCount = await context
+              .read<AdsRepository>()
+              .countActiveByCompanyInMonth(auth.companyId, now);
           if (maxNormalAds > 0 && activeCount >= maxNormalAds) {
             return Response.json(statusCode: 400, body: 'Monthly ad limit reached');
           }
@@ -88,7 +94,8 @@ Future<Response> onRequest(RequestContext context) async {
     }
     if (type == 'banner' && bannerDate != null) {
       const maxBannerSlots = 10;
-      final bannerCount = context.read<AdsRepository>().countBannerForDate(bannerDate);
+      final bannerCount =
+          await context.read<AdsRepository>().countBannerForDate(bannerDate);
       if (bannerCount >= maxBannerSlots) {
         return Response.json(statusCode: 400, body: 'No banner slots available for selected day');
       }
@@ -119,7 +126,7 @@ Future<Response> onRequest(RequestContext context) async {
     } catch (error) {
       return Response.json(statusCode: 400, body: error.toString());
     }
-    context.read<AdsRepository>().create(ad);
+    await context.read<AdsRepository>().create(ad);
     return Response.json(body: {'id': ad.id});
   }
   return Response(statusCode: 405);

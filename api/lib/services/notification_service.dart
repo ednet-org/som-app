@@ -15,18 +15,18 @@ class NotificationService {
   final EmailService email;
 
   Future<void> notifyBuyersForOfferCountOrDeadline() async {
-    final openInquiries = inquiries.listAll(status: 'open');
+    final openInquiries = await inquiries.listAll(status: 'open');
     final now = DateTime.now().toUtc();
     for (final inquiry in openInquiries) {
       if (inquiry.notifiedAt != null) {
         continue;
       }
-      final inquiryOffers = offers.listByInquiry(inquiry.id);
+      final inquiryOffers = await offers.listByInquiry(inquiry.id);
       final reachedTarget = inquiryOffers.length >= inquiry.numberOfProviders;
       final deadlineReached = now.isAfter(inquiry.deadline);
       if (reachedTarget || deadlineReached) {
         await _sendBuyerNotification(inquiry, reachedTarget, deadlineReached);
-        inquiries.markNotified(inquiry.id, now);
+        await inquiries.markNotified(inquiry.id, now);
       }
     }
   }

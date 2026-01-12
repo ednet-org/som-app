@@ -1,6 +1,8 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
+import '../infrastructure/repositories/user_repository.dart';
+
 class RequestAuth {
   RequestAuth({required this.userId, required this.companyId, required this.roles, required this.activeRole});
   final String userId;
@@ -9,18 +11,35 @@ class RequestAuth {
   final String activeRole;
 }
 
-RequestAuth? parseAuth(RequestContext context, {required String secret}) {
+Future<RequestAuth?> parseAuth(
+  RequestContext context, {
+  required String secret,
+  required UserRepository users,
+}) async {
   final header = context.request.headers['authorization'];
   if (header == null || !header.startsWith('Bearer ')) {
     return null;
   }
   final token = header.substring(7);
-  final jwt = JWT.verify(token, SecretKey(secret));
-  final payload = jwt.payload as Map<String, dynamic>;
-  return RequestAuth(
-    userId: payload['sub'] as String,
-    companyId: payload['companyId'] as String,
-    roles: (payload['roles'] as List<dynamic>).map((e) => e.toString()).toList(),
-    activeRole: payload['activeRole'] as String,
-  );
+  try {
+    final jwt = JWT.verify(token, SecretKey(secret));
+    final payload = jwt.payload as Map<String, dynamic>;
+    final userId = payload['sub'] as String?;
+    if (userId == null) {
+      return null;
+    }
+    final user = await users.findById(userId);
+    if (user == null || !user.isActive) {
+      return null;
+    }
+    final activeRole = user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : '');
+    return RequestAuth(
+      userId: user.id,
+      companyId: user.companyId,
+      roles: user.roles,
+      activeRole: activeRole,
+    );
+  } on JWTException {
+    return null;
+  }
 }

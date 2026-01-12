@@ -1,4 +1,4 @@
-import '../db.dart';
+import 'package:supabase/supabase.dart';
 
 class BranchRecord {
   BranchRecord({required this.id, required this.name});
@@ -14,69 +14,72 @@ class CategoryRecord {
 }
 
 class BranchRepository {
-  BranchRepository(this._db);
+  BranchRepository(this._client);
 
-  final Database _db;
+  final SupabaseClient _client;
 
-  void createBranch(BranchRecord branch) {
-    _db.execute(
-      'INSERT INTO branches (id, name) VALUES (?, ?)',
-      [branch.id, branch.name],
-    );
+  Future<void> createBranch(BranchRecord branch) async {
+    await _client.from('branches').insert({
+      'id': branch.id,
+      'name': branch.name,
+    });
   }
 
-  void createCategory(CategoryRecord category) {
-    _db.execute(
-      'INSERT INTO categories (id, branch_id, name) VALUES (?, ?, ?)',
-      [category.id, category.branchId, category.name],
-    );
+  Future<void> createCategory(CategoryRecord category) async {
+    await _client.from('categories').insert({
+      'id': category.id,
+      'branch_id': category.branchId,
+      'name': category.name,
+    });
   }
 
-  List<BranchRecord> listBranches() {
-    final rows = _db.select('SELECT * FROM branches ORDER BY name');
+  Future<List<BranchRecord>> listBranches() async {
+    final rows =
+        await _client.from('branches').select().order('name') as List<dynamic>;
     return rows
         .map((row) => BranchRecord(
-              id: row['id'] as String,
+              id: (row as Map<String, dynamic>)['id'] as String,
               name: row['name'] as String,
             ))
         .toList();
   }
 
-  List<CategoryRecord> listCategories(String branchId) {
-    final rows = _db.select(
-      'SELECT * FROM categories WHERE branch_id = ? ORDER BY name',
-      [branchId],
-    );
+  Future<List<CategoryRecord>> listCategories(String branchId) async {
+    final rows = await _client
+        .from('categories')
+        .select()
+        .eq('branch_id', branchId)
+        .order('name') as List<dynamic>;
     return rows
         .map((row) => CategoryRecord(
-              id: row['id'] as String,
+              id: (row as Map<String, dynamic>)['id'] as String,
               branchId: row['branch_id'] as String,
               name: row['name'] as String,
             ))
         .toList();
   }
 
-  BranchRecord? findBranchByName(String name) {
-    final rows = _db.select(
-      'SELECT * FROM branches WHERE lower(name) = lower(?) LIMIT 1',
-      [name],
-    );
+  Future<BranchRecord?> findBranchByName(String name) async {
+    final rows =
+        await _client.from('branches').select().ilike('name', name).limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    final row = rows.first;
+    final row = rows.first as Map<String, dynamic>;
     return BranchRecord(id: row['id'] as String, name: row['name'] as String);
   }
 
-  CategoryRecord? findCategory(String branchId, String name) {
-    final rows = _db.select(
-      'SELECT * FROM categories WHERE branch_id = ? AND lower(name) = lower(?) LIMIT 1',
-      [branchId, name],
-    );
+  Future<CategoryRecord?> findCategory(String branchId, String name) async {
+    final rows = await _client
+        .from('categories')
+        .select()
+        .eq('branch_id', branchId)
+        .ilike('name', name)
+        .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
-    final row = rows.first;
+    final row = rows.first as Map<String, dynamic>;
     return CategoryRecord(
       id: row['id'] as String,
       branchId: row['branch_id'] as String,
@@ -84,12 +87,12 @@ class BranchRepository {
     );
   }
 
-  void deleteBranch(String branchId) {
-    _db.execute('DELETE FROM categories WHERE branch_id = ?', [branchId]);
-    _db.execute('DELETE FROM branches WHERE id = ?', [branchId]);
+  Future<void> deleteBranch(String branchId) async {
+    await _client.from('categories').delete().eq('branch_id', branchId);
+    await _client.from('branches').delete().eq('id', branchId);
   }
 
-  void deleteCategory(String categoryId) {
-    _db.execute('DELETE FROM categories WHERE id = ?', [categoryId]);
+  Future<void> deleteCategory(String categoryId) async {
+    await _client.from('categories').delete().eq('id', categoryId);
   }
 }

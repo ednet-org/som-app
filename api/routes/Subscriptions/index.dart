@@ -7,7 +7,7 @@ Future<Response> onRequest(RequestContext context) async {
     return Response(statusCode: 405);
   }
   final repository = context.read<SubscriptionRepository>();
-  final plans = repository.listPlans();
+  final plans = await repository.listPlans();
   final body = {
     'subscriptions': plans.map((plan) => plan.toDtoJson()).toList(),
   };

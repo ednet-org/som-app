@@ -15,7 +15,7 @@ Future<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _listCompanies(RequestContext context) async {
-  final companies = context.read<CompanyRepository>().listAll();
+  final companies = await context.read<CompanyRepository>().listAll();
   final filterType = context.request.uri.queryParameters['type'];
   final body = companies
       .where((company) => filterType == null || company.type == filterType)

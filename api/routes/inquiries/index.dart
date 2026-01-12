@@ -24,9 +24,10 @@ Future<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _handleList(RequestContext context) async {
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
@@ -35,18 +36,18 @@ Future<Response> _handleList(RequestContext context) async {
   final status = context.request.uri.queryParameters['status'];
   List<InquiryRecord> inquiries;
   if (auth.roles.contains('consultant')) {
-    inquiries = repo.listAll(status: status);
+    inquiries = await repo.listAll(status: status);
   } else if (auth.roles.contains('provider')) {
-    inquiries = repo.listAssignedToProvider(auth.companyId);
+    inquiries = await repo.listAssignedToProvider(auth.companyId);
   } else {
-    inquiries = repo.listByBuyerCompany(auth.companyId);
+    inquiries = await repo.listByBuyerCompany(auth.companyId);
   }
   if (context.request.uri.queryParameters['format'] == 'csv') {
     final offersRepository = context.read<OfferRepository>();
     final buffer = StringBuffer();
     buffer.writeln('id,status,creator,branch,deadline,createdAt,offers');
     for (final inquiry in inquiries) {
-      final offers = offersRepository.listByInquiry(inquiry.id);
+      final offers = await offersRepository.listByInquiry(inquiry.id);
       final offersSummary = offers
           .map((offer) =>
               '${offer.id}|${offer.providerCompanyId}|${offer.status}|${offer.forwardedAt?.toIso8601String() ?? ''}|${offer.resolvedAt?.toIso8601String() ?? ''}')
@@ -62,9 +63,10 @@ Future<Response> _handleList(RequestContext context) async {
 }
 
 Future<Response> _handleCreate(RequestContext context) async {
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null) {
     return Response(statusCode: 401);
@@ -97,8 +99,8 @@ Future<Response> _handleCreate(RequestContext context) async {
     return Response.json(statusCode: 400, body: 'Deadline must be at least 3 business days in the future');
   }
 
-  final company = companyRepo.findById(auth.companyId);
-  final user = userRepo.findById(auth.userId);
+  final company = await companyRepo.findById(auth.companyId);
+  final user = await userRepo.findById(auth.userId);
   if (company == null || user == null) {
     return Response(statusCode: 400);
   }
@@ -154,6 +156,6 @@ Future<Response> _handleCreate(RequestContext context) async {
     return Response.json(statusCode: 400, body: error.toString());
   }
 
-  inquiryRepo.create(inquiry);
+  await inquiryRepo.create(inquiry);
   return Response.json(body: inquiry.toJson());
 }

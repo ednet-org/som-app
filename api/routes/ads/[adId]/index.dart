@@ -3,32 +3,35 @@ import 'dart:convert';
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String adId) async {
   final repo = context.read<AdsRepository>();
   if (context.request.method == HttpMethod.delete) {
-    final auth = parseAuth(
+    final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
     }
-    repo.delete(adId);
+    await repo.delete(adId);
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.put) {
-    final auth = parseAuth(
+    final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
     }
     final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
-    final existing = repo.findById(adId);
+    final existing = await repo.findById(adId);
     if (existing == null) {
       return Response(statusCode: 404);
     }
@@ -54,11 +57,11 @@ Future<Response> onRequest(RequestContext context, String adId) async {
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),
     );
-    repo.update(updated);
+    await repo.update(updated);
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.get) {
-    final ad = repo.findById(adId);
+    final ad = await repo.findById(adId);
     if (ad == null) {
       return Response(statusCode: 404);
     }

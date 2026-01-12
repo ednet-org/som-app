@@ -7,7 +7,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method != HttpMethod.get) {
     return Response(statusCode: 405);
   }
-  final users = context.read<UserRepository>().listByCompany(companyId);
+  final users = await context.read<UserRepository>().listByCompany(companyId);
   final body = users
       .map((user) => {
             'email': user.email,

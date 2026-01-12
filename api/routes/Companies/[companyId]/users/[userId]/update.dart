@@ -11,7 +11,7 @@ Future<Response> onRequest(RequestContext context, String companyId, String user
     return Response(statusCode: 405);
   }
   final repo = context.read<UserRepository>();
-  final existing = repo.findById(userId);
+  final existing = await repo.findById(userId);
   if (existing == null || existing.companyId != companyId) {
     return Response(statusCode: 404);
   }
@@ -37,7 +37,7 @@ Future<Response> onRequest(RequestContext context, String companyId, String user
     passwordHash: existing.passwordHash,
   );
   if (existing.roles.contains('admin') && !updated.roles.contains('admin')) {
-    final admins = repo.listAdminsByCompany(companyId);
+    final admins = await repo.listAdminsByCompany(companyId);
     if (admins.length <= 1) {
       return Response.json(
         statusCode: 400,
@@ -45,6 +45,6 @@ Future<Response> onRequest(RequestContext context, String companyId, String user
       );
     }
   }
-  repo.update(updated);
+  await repo.update(updated);
   return Response.json(body: updated.toDtoJson());
 }

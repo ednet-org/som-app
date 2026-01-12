@@ -17,12 +17,12 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final userRepo = context.read<UserRepository>();
   final companyRepo = context.read<CompanyRepository>();
-  final user = userRepo.findById(userId);
+  final user = await userRepo.findById(userId);
   if (user == null) {
     return Response(statusCode: 404);
   }
   final resolvedCompanyId = companyId ?? user.companyId;
-  final company = companyRepo.findById(resolvedCompanyId);
+  final company = await companyRepo.findById(resolvedCompanyId);
   if (company == null) {
     return Response(statusCode: 404);
   }

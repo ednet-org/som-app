@@ -4,15 +4,17 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String branchId) async {
   if (context.request.method != HttpMethod.post) {
     return Response(statusCode: 405);
   }
-  final auth = parseAuth(
+  final auth = await parseAuth(
     context,
-    secret: const String.fromEnvironment('JWT_SECRET', defaultValue: 'som_dev_secret'),
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET', defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
   );
   if (auth == null || !auth.roles.contains('consultant')) {
     return Response(statusCode: 403);
@@ -23,9 +25,9 @@ Future<Response> onRequest(RequestContext context, String branchId) async {
   if (name.isEmpty) {
     return Response(statusCode: 400);
   }
-  if (repo.findCategory(branchId, name) != null) {
+  if (await repo.findCategory(branchId, name) != null) {
     return Response.json(statusCode: 400, body: 'Category already exists');
   }
-  repo.createCategory(CategoryRecord(id: const Uuid().v4(), branchId: branchId, name: name));
+  await repo.createCategory(CategoryRecord(id: const Uuid().v4(), branchId: branchId, name: name));
   return Response(statusCode: 200);
 }

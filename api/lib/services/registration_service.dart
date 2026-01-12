@@ -75,7 +75,7 @@ class RegistrationService {
       }
     }
 
-    companies.create(companyRecord);
+    await companies.create(companyRecord);
 
     if (companyType == 'provider') {
       final providerData = companyJson['providerData'] as Map<String, dynamic>?;
@@ -85,10 +85,11 @@ class RegistrationService {
           .map((e) => e.toString())
           .toList();
 
+      final existingBranches = await branches.listBranches();
       final pendingBranchIds = <String>[];
       final confirmedBranchIds = <String>[];
       for (final branchId in branchIds) {
-        final existing = branches.listBranches().any((b) => b.id == branchId);
+        final existing = existingBranches.any((b) => b.id == branchId);
         if (existing) {
           confirmedBranchIds.add(branchId);
         } else {
@@ -101,7 +102,7 @@ class RegistrationService {
       final paymentInterval =
           paymentIntervalFromWire(providerData?['paymentInterval'] as int? ?? 0);
 
-      providers.createProfile(
+      await providers.createProfile(
         ProviderProfileRecord(
           companyId: companyId,
           bankDetails: BankDetails.fromJson(bankDetailsJson),
@@ -119,7 +120,7 @@ class RegistrationService {
         final startDate = DateTime.utc(now.year, now.month + 1, 1);
         final endDate = DateTime.utc(startDate.year + 1, startDate.month, 1)
             .subtract(const Duration(days: 1));
-        subscriptions.createSubscription(
+        await subscriptions.createSubscription(
           SubscriptionRecord(
             id: const Uuid().v4(),
             companyId: companyId,
@@ -140,10 +141,18 @@ class RegistrationService {
       final roles = (userJson['roles'] as List<dynamic>? ?? [])
           .map((e) => roleFromWire(e as int? ?? 2))
           .toList();
+      final email = (userJson['email'] as String? ?? '').toLowerCase();
+      await _ensureUniqueEmail(email);
+      late final String authUserId;
+      try {
+        authUserId = await auth.ensureAuthUser(email: email);
+      } on AuthException catch (error) {
+        throw RegistrationException(error.message);
+      }
       final user = UserRecord(
-        id: const Uuid().v4(),
+        id: authUserId,
         companyId: companyId,
-        email: (userJson['email'] as String? ?? '').toLowerCase(),
+        email: email,
         firstName: userJson['firstName'] as String? ?? '',
         lastName: userJson['lastName'] as String? ?? '',
         salutation: userJson['salutation'] as String? ?? '',
@@ -169,8 +178,7 @@ class RegistrationService {
           throw RegistrationException(error.message);
         }
       }
-      _ensureUniqueEmail(user.email);
-      users.create(user);
+      await users.create(user);
       createdUsers.add(user);
     }
 
@@ -186,8 +194,11 @@ class RegistrationService {
     return companyRecord;
   }
 
-  void _ensureUniqueEmail(String email) {
-    final existing = users.findByEmail(email);
+  Future<void> _ensureUniqueEmail(String email) async {
+    if (email.isEmpty) {
+      throw RegistrationException('E-mail is required.');
+    }
+    final existing = await users.findByEmail(email);
     if (existing != null) {
       throw RegistrationException('E-mail already used.');
     }

@@ -414,7 +414,68 @@ class AdRecord {
 
 String encodeJson(Object value) => jsonEncode(value);
 
-Map<String, dynamic> decodeJsonMap(String value) =>
-    jsonDecode(value) as Map<String, dynamic>;
+Map<String, dynamic> decodeJsonMap(Object? value) {
+  if (value == null) {
+    return <String, dynamic>{};
+  }
+  if (value is Map<String, dynamic>) {
+    return value;
+  }
+  if (value is Map) {
+    return value.cast<String, dynamic>();
+  }
+  if (value is String && value.isNotEmpty) {
+    return jsonDecode(value) as Map<String, dynamic>;
+  }
+  return <String, dynamic>{};
+}
 
-List<dynamic> decodeJsonList(String value) => jsonDecode(value) as List<dynamic>;
+List<dynamic> decodeJsonList(Object? value) {
+  if (value == null) {
+    return <dynamic>[];
+  }
+  if (value is List) {
+    return value;
+  }
+  if (value is String && value.isNotEmpty) {
+    return jsonDecode(value) as List<dynamic>;
+  }
+  return <dynamic>[];
+}
+
+DateTime parseDate(Object? value) {
+  if (value is DateTime) {
+    return value.toUtc();
+  }
+  if (value is String && value.isNotEmpty) {
+    return DateTime.parse(value).toUtc();
+  }
+  throw StateError('Invalid date value $value');
+}
+
+DateTime? parseDateOrNull(Object? value) {
+  if (value == null) {
+    return null;
+  }
+  if (value is DateTime) {
+    return value.toUtc();
+  }
+  if (value is String && value.isNotEmpty) {
+    return DateTime.parse(value).toUtc();
+  }
+  return null;
+}
+
+List<String> decodeStringList(Object? value) {
+  if (value is List) {
+    return value.map((e) => e.toString()).toList();
+  }
+  if (value is String) {
+    return value
+        .split(',')
+        .map((entry) => entry.trim())
+        .where((entry) => entry.isNotEmpty)
+        .toList();
+  }
+  return <String>[];
+}
