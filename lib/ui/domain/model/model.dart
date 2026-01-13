@@ -15,7 +15,6 @@ export './customer_management/provider_registration_request.dart';
 export './customer_management/registration_request.dart';
 export './customer_management/registration_user.dart';
 export './customer_management/roles.dart';
-export './forms/branches.dart';
 export './forms/countries.dart';
 export './forms/som_drop_down.dart';
 export './forms/som_tags.dart';

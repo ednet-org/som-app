@@ -28,8 +28,12 @@ class EntityStatus<T extends Entity> extends StatelessWidget {
         backgroundColor = Colors.green;
         break;
     }
+    final statusValue = entity.status.value;
+    final label = statusValue == null
+        ? 'unknown'
+        : statusValue.toString().split('.').last;
     return Badge(
-      label: Text(entity.status.toString().split('.').last),
+      label: Text(label),
       textStyle: Theme.of(context).textTheme.labelSmall,
       textColor: Colors.white,
       backgroundColor: backgroundColor,

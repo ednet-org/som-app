@@ -85,8 +85,9 @@ int roleToWire(String value) {
     case 'provider':
       return 1;
     case 'buyer':
+      return 0;
     default:
-      return 2;
+      return 0;
   }
 }
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_frog/dart_frog.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,32 +36,23 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     if (auth == null || !auth.roles.contains('provider')) {
       return Response(statusCode: 403);
     }
+    if (!(context.request.headers['content-type']
+            ?.contains('multipart/form-data') ??
+        false)) {
+      return Response.json(
+          statusCode: 400, body: 'Multipart form-data is required');
+    }
     final storage = context.read<FileStorage>();
     String? pdfPath;
-    if (context.request.headers['content-type']
-            ?.contains('multipart/form-data') ??
-        false) {
-      final form = await context.request.formData();
-      final file = form.files['file'];
-      if (file != null) {
-        final bytes = await file.readAsBytes();
-        pdfPath = await storage.saveFile(
-          category: 'offers',
-          fileName: file.name,
-          bytes: bytes,
-        );
-      }
-    } else {
-      final body =
-          jsonDecode(await context.request.body()) as Map<String, dynamic>;
-      if (body['pdfBase64'] != null) {
-        final bytes = base64Decode(body['pdfBase64'] as String);
-        pdfPath = await storage.saveFile(
-          category: 'offers',
-          fileName: 'offer_${DateTime.now().millisecondsSinceEpoch}.pdf',
-          bytes: bytes,
-        );
-      }
+    final form = await context.request.formData();
+    final file = form.files['file'];
+    if (file != null) {
+      final bytes = await file.readAsBytes();
+      pdfPath = await storage.saveFile(
+        category: 'offers',
+        fileName: file.name,
+        bytes: bytes,
+      );
     }
     final offer = OfferRecord(
       id: const Uuid().v4(),

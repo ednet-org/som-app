@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
 import '../../application/application.dart';
+import '../../../utils/jwt.dart';
 
 
 part 'email_login_store.g.dart';
@@ -10,9 +11,10 @@ class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
   final AuthApi authService;
+  final UsersApi usersApi;
   final Application appStore;
 
-  _EmailLoginStoreBase(this.authService, this.appStore);
+  _EmailLoginStoreBase(this.authService, this.usersApi, this.appStore);
 
   @observable
   bool showWelcomeMessage = false;
@@ -52,10 +54,35 @@ abstract class _EmailLoginStoreBase with Store {
         isLoggedIn = true;
         password = "";
         await Future.delayed(Duration(seconds: 5));
+        final token = response.data!.token!;
+        final refreshToken = response.data!.refreshToken!;
+        final payload = decodeJwt(token);
+        final userId = payload?['sub'] as String?;
+        String? companyId;
+        String? companyName;
+        String? emailAddress;
+        if (userId != null) {
+          try {
+            final profileResponse = await usersApi.usersLoadUserWithCompanyGet(
+              userId: userId,
+              headers: {'Authorization': 'Bearer $token'},
+            );
+            companyId = profileResponse.data?.companyId;
+            companyName = profileResponse.data?.companyName;
+            emailAddress = profileResponse.data?.emailAddress;
+          } catch (_) {
+            // Best-effort profile load; keep login flow responsive.
+          }
+        }
 
         appStore.login(Authorization(
-            token: response.data!.token!,
-            refreshToken: response.data!.refreshToken!));
+          token: token,
+          refreshToken: refreshToken,
+          userId: userId,
+          companyId: companyId,
+          companyName: companyName,
+          emailAddress: emailAddress ?? email,
+        ));
       }
 
       if (response.statusCode != 200) {
@@ -64,7 +91,14 @@ abstract class _EmailLoginStoreBase with Store {
         print(response.statusMessage);
       }
     }).catchError((error) {
-      errorMessage = error.response?.data["message"] ?? 'Something went wrong';
+      final data = error.response?.data;
+      if (data is String) {
+        errorMessage = data;
+      } else if (data is Map && data['message'] != null) {
+        errorMessage = data['message'].toString();
+      } else {
+        errorMessage = 'Something went wrong';
+      }
       isInvalidCredentials = true;
       isLoading = false;
       appStore.logout();

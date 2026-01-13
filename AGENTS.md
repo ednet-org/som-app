@@ -1,25 +1,36 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
-The Flutter app code lives in `lib/` (notably `lib/domain`, `lib/data`, `lib/ui`, and `lib/generated`). Assets and localization are under `assets/`, `images/`, `fonts/`, and `lang/`. Tests are in `test/` (unit/widget) and `integration_test/` (end-to-end). Platform shells live in `android/`, `ios/`, `web/`, `linux/`, and `windows/`. API specs and tooling are in `openapi/`, `swagger.json`, and `scripts/`.
+## Scope
+This repository hosts the SOM Flutter web app and the Dart Frog API, backed by Supabase for auth, persistence, storage, and policies. It is greenfield work; keep app, API, and DB aligned to the latest schemas without backward compatibility.
 
-## Build, Test, and Development Commands
-- `flutter pub get` installs dependencies.
-- `flutter run` launches the app locally.
-- `flutter test` runs unit/widget tests.
-- `flutter test integration_test` runs integration tests.
-- `flutter analyze` runs the Dart analyzer (required before commits).
-- `dart format .` formats Dart code.
-- `dart run build_runner build --delete-conflicting-outputs` regenerates code (e.g., `lib/generated`).
+## Project Structure
+- `lib/`: Flutter app UI, state, and domain models.
+- `api/`: Dart Frog API, repositories, and services.
+- `supabase/`: local Supabase config and migrations.
+- `documentation/`: domain model and product docs.
+- `openapi/`: API specs and tests.
 
-## Coding Style & Naming Conventions
-Follow `flutter_lints` from `analysis_options.yaml`. Use 2-space indentation; the formatter is the source of truth. Use `lower_snake_case.dart` for files, `UpperCamelCase` for types, and `lowerCamelCase` for variables and methods. Keep business rules in `lib/domain` and use `ednet_core` for domain modeling and refactors.
+## Local Development
+- Start Supabase: `supabase start` (ports are fixed in `supabase/config.toml`).
+- Start API:
+  `PORT=8081 dart run -DDEV_FIXTURES=true -DDEV_FIXTURES_PASSWORD='DevPass123!' \
+  -DSUPABASE_URL=http://127.0.0.1:55511 \
+  -DSUPABASE_ANON_KEY=... -DSUPABASE_SERVICE_ROLE_KEY=... \
+  -DSUPABASE_JWT_SECRET=... build/bin/server.dart`
+- Start Flutter:
+  `flutter run -d chrome --web-port 8090 \
+  --dart-define=API_BASE_URL=http://127.0.0.1:8081 \
+  --dart-define=DEV_QUICK_LOGIN=true`
 
-## Testing Guidelines
-Primary frameworks are `flutter_test` and `integration_test`. Name tests with the `_test.dart` suffix (e.g., `test/widget_test.dart`). Use Red–Green–Refactor for new behavior. Keep mocks inside test suites and centralize shared test models.
+## Testing
+- `dart test`
+- `dart test api/test`
+- `flutter test`
+- `flutter test integration_test/ui_smoke_test.dart`
 
-## Commit & Pull Request Guidelines
-Commit subjects are short and present-tense; history shows plain subjects and optional prefixes like `feat(som):` or `impl:`. PRs should include a concise summary, linked issue/ticket, and screenshots for UI changes. Call out any code generation steps required to reproduce changes.
-
-## Agent-Specific Instructions (EDNet)
-Run the analyzer and resolve all issues before committing. Keep generated code separate from hand-written code and maintain YAML compatibility for generators. If you add repo-specific learnings, update `Learned.Knowledge`.
+## LLM Instructions
+- Follow TDD (red/green/refactor). Update or add tests before production code.
+- Use Supabase for all persistence, auth, storage, and RLS; avoid ad-hoc local stores.
+- Keep demo fixtures in `api/lib/services/system_bootstrap.dart` and ensure idempotent seeds.
+- Do not add mocks outside test suites; keep shared test models centralized.
+- Keep `documentation/USER_GUIDE.md` and `documentation/TECHNICAL_GUIDE.md` in sync with changes.

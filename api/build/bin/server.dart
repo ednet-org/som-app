@@ -18,6 +18,7 @@ import '../routes/inquiries/[inquiryId]/index.dart' as inquiries_$inquiry_id_ind
 import '../routes/inquiries/[inquiryId]/ignore.dart' as inquiries_$inquiry_id_ignore;
 import '../routes/inquiries/[inquiryId]/assign.dart' as inquiries_$inquiry_id_assign;
 import '../routes/inquiries/[inquiryId]/offers/index.dart' as inquiries_$inquiry_id_offers_index;
+import '../routes/dev/auth/token.dart' as dev_auth_token;
 import '../routes/consultants/registerCompany.dart' as consultants_register_company;
 import '../routes/consultants/index.dart' as consultants_index;
 import '../routes/categories/[categoryId]/index.dart' as categories_$category_id_index;
@@ -81,6 +82,7 @@ Handler buildRootHandler() {
     ..mount('/branches', (context) => buildBranchesHandler()(context))
     ..mount('/categories/<categoryId>', (context,categoryId,) => buildCategories$categoryIdHandler(categoryId,)(context))
     ..mount('/consultants', (context) => buildConsultantsHandler()(context))
+    ..mount('/dev/auth', (context) => buildDevAuthHandler()(context))
     ..mount('/inquiries/<inquiryId>/offers', (context,inquiryId,) => buildInquiries$inquiryIdOffersHandler(inquiryId,)(context))
     ..mount('/inquiries/<inquiryId>', (context,inquiryId,) => buildInquiries$inquiryIdHandler(inquiryId,)(context))
     ..mount('/inquiries', (context) => buildInquiriesHandler()(context))
@@ -206,6 +208,13 @@ Handler buildConsultantsHandler() {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/registerCompany', (context) => consultants_register_company.onRequest(context,))..all('/', (context) => consultants_index.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildDevAuthHandler() {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/token', (context) => dev_auth_token.onRequest(context,));
   return pipeline.addHandler(router);
 }
 

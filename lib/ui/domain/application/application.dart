@@ -76,12 +76,20 @@ class Authorization {
   UserRoles? userRole;
   String token;
   String refreshToken;
+  String? userId;
+  String? companyId;
+  String? companyName;
+  String? emailAddress;
   var user;
 
   Authorization({
     this.companyRole,
     this.userRole,
     this.user,
+    this.userId,
+    this.companyId,
+    this.companyName,
+    this.emailAddress,
     required this.token,
     required this.refreshToken,
   });

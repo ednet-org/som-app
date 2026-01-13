@@ -9,7 +9,6 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
-import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -74,28 +73,9 @@ Future<Response> onRequest(RequestContext context) async {
     if (auth == null) {
       return Response(statusCode: 401);
     }
-    final storage = context.read<FileStorage>();
     final providerRepo = context.read<ProviderRepository>();
     final subscriptionRepo = context.read<SubscriptionRepository>();
-    Map<String, dynamic> data = {};
-    String? imagePath;
-    if (context.request.headers['content-type']
-            ?.contains('multipart/form-data') ??
-        false) {
-      final form = await context.request.formData();
-      data = form.fields.map((key, value) => MapEntry(key, value));
-      final file = form.files['image'];
-      if (file != null) {
-        final bytes = await file.readAsBytes();
-        imagePath = await storage.saveFile(
-          category: 'ads',
-          fileName: file.name,
-          bytes: bytes,
-        );
-      }
-    } else {
-      data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
-    }
+    final data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
@@ -146,7 +126,7 @@ Future<Response> onRequest(RequestContext context) async {
       status: status,
       branchId: data['branchId'] as String? ?? '',
       url: data['url'] as String? ?? '',
-      imagePath: imagePath ?? (data['imagePath'] as String? ?? ''),
+      imagePath: data['imagePath'] as String? ?? '',
       headline: data['headline'] as String?,
       description: data['description'] as String?,
       startDate: data['startDate'] == null

@@ -74,6 +74,22 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
     });
   }
 
+  late final _$maxUsersAtom =
+      Atom(name: '_ProviderRegistrationRequest.maxUsers', context: context);
+
+  @override
+  int? get maxUsers {
+    _$maxUsersAtom.reportRead();
+    return super.maxUsers;
+  }
+
+  @override
+  set maxUsers(int? value) {
+    _$maxUsersAtom.reportWrite(value, super.maxUsers, () {
+      super.maxUsers = value;
+    });
+  }
+
   late final _$_ProviderRegistrationRequestActionController =
       ActionController(name: '_ProviderRegistrationRequest', context: context);
 
@@ -123,12 +139,24 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
   }
 
   @override
+  void setMaxUsers(int? value) {
+    final _$actionInfo = _$_ProviderRegistrationRequestActionController
+        .startAction(name: '_ProviderRegistrationRequest.setMaxUsers');
+    try {
+      return super.setMaxUsers(value);
+    } finally {
+      _$_ProviderRegistrationRequestActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 bankDetails: ${bankDetails},
 branches: ${branches},
 paymentInterval: ${paymentInterval},
-subscriptionPlanId: ${subscriptionPlanId}
+subscriptionPlanId: ${subscriptionPlanId},
+maxUsers: ${maxUsers}
     ''';
   }
 }

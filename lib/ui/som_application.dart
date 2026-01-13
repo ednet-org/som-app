@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
 import 'domain/application/application.dart';
@@ -14,12 +15,15 @@ class SomApplication extends StatelessWidget {
 
   const SomApplication({Key? key}) : super(key: key);
 
-  userMenuItem(context) {
+  userMenuItem(context, Application appStore) {
+    final label = appStore.authorization?.emailAddress ??
+        appStore.authorization?.companyName ??
+        'User';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(children: [
         Text(
-          'Fritzchen der Käufer',
+          label,
           style: Theme.of(context).textTheme.titleSmall,
         ).paddingRight(10),
         SizedBox(
@@ -127,9 +131,9 @@ class SomApplication extends StatelessWidget {
   PopupMenuButton<dynamic> buildPopupMenuButton(
       BuildContext context, Application appStore) {
     return PopupMenuButton(
-      child: userMenuItem(context),
+      child: userMenuItem(context, appStore),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-        PopupMenuItem(child: userMenuItem(context)),
+        PopupMenuItem(child: userMenuItem(context, appStore)),
         PopupMenuItem(
           child: ListTile(
             leading: const Icon(Icons.notifications),
@@ -146,6 +150,26 @@ class SomApplication extends StatelessWidget {
               'User account',
               style: Theme.of(context).textTheme.titleSmall,
             ),
+          ),
+        ),
+        PopupMenuItem(
+          child: ListTile(
+            leading: const Icon(Icons.swap_horiz),
+            title: Text(
+              'Switch to buyer portal',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            onTap: () => _switchRole(context, 'buyer'),
+          ),
+        ),
+        PopupMenuItem(
+          child: ListTile(
+            leading: const Icon(Icons.swap_horiz),
+            title: Text(
+              'Switch to provider portal',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            onTap: () => _switchRole(context, 'provider'),
           ),
         ),
         PopupMenuItem(
@@ -169,5 +193,23 @@ class SomApplication extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _switchRole(BuildContext context, String role) async {
+    final appStore = Provider.of<Application>(context, listen: false);
+    final api = Provider.of<Openapi>(context, listen: false);
+    if (appStore.authorization == null) {
+      return;
+    }
+    try {
+      final response = await api.getAuthApi().authSwitchRolePost(
+            authSwitchRolePostRequest:
+                AuthSwitchRolePostRequest((b) => b..role = role),
+          );
+      final token = response.data?.token;
+      if (token != null) {
+        appStore.authorization!.token = token;
+      }
+    } catch (_) {}
   }
 }

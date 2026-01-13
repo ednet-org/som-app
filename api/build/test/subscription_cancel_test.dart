@@ -10,7 +10,7 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/email_service.dart';
 import '../routes/Subscriptions/cancel.dart' as cancel_route;
-import '../routes/Subscriptions/cancellations.dart' as list_route;
+import '../routes/Subscriptions/cancellations/index.dart' as list_route;
 import '../routes/Subscriptions/cancellations/[cancellationId]/index.dart'
     as update_route;
 import 'test_utils.dart';

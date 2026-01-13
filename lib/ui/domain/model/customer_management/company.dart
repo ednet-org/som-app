@@ -73,16 +73,11 @@ abstract class _Company with Store {
       return 50;
     }
 
-    switch (providerData.subscriptionPlanId) {
-      case "1":
-        return 1;
-      case "2":
-        return 5;
-      case "3":
-        return 15;
-      default:
-        return 5;
+    if (providerData.maxUsers != null) {
+      return providerData.maxUsers;
     }
+
+    return 5;
   }
 
   @observable

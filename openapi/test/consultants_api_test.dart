@@ -10,10 +10,10 @@ Openapi _openapiWithResponder(Response<dynamic> Function(RequestOptions) respond
         handler.resolve(responder(options));
       } catch (error) {
         handler.reject(
-          DioError(
+          DioException(
             requestOptions: options,
             error: error,
-            type: DioErrorType.other,
+            type: DioExceptionType.unknown,
           ),
           true,
         );
@@ -109,6 +109,8 @@ void main() {
         ..registrationNr = 'FN12345'
         ..companySize = CompanyRegistrationCompanySizeEnum.number0
         ..type = CompanyRegistrationTypeEnum.number0
+        ..termsAccepted = true
+        ..privacyAccepted = true
         ..address.update((a) => a
           ..country = 'AT'
           ..city = 'Vienna'

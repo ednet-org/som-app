@@ -1,18 +1,18 @@
 import 'package:mobx/mobx.dart';
-import 'package:som/domain/infrastructure/repository/api/lib/models/subscription.dart';
+import 'package:openapi/openapi.dart';
 
 import '../../infrastructure/future_store.dart';
 import '../../infrastructure/i_repository.dart';
-import '../forms/branches.dart';
 
 part 'som.g.dart';
 
 class Som = _Som with _$Som;
 
 abstract class _Som with Store {
-  IRepository<Subscription> apiSubscriptionRepository;
+  IRepository<SubscriptionPlan> apiSubscriptionRepository;
+  BranchesApi branchesApi;
 
-  _Som(this.apiSubscriptionRepository);
+  _Som(this.apiSubscriptionRepository, this.branchesApi);
 
   @observable
   String nesto = 'Nesto';
@@ -21,7 +21,7 @@ abstract class _Som with Store {
   bool isLoadingData = true;
 
   @observable
-  List<TagModel> availableBranches = branchTags.toList();
+  List<TagModel> availableBranches = [];
 
   @observable
   bool areSubscriptionsLoaded = false;
@@ -40,7 +40,43 @@ abstract class _Som with Store {
   }
 
   @observable
-  FutureStore<List<Subscription>> availableSubscriptions = FutureStore();
+  FutureStore<List<SubscriptionPlan>> availableSubscriptions = FutureStore();
+
+  @observable
+  bool areBranchesLoaded = false;
+
+  @action
+  Future populateAvailableBranches() async {
+    if (areBranchesLoaded) {
+      return;
+    }
+
+    try {
+      final response = await branchesApi.branchesGet();
+      final branches = response.data?.toList() ?? const <Branch>[];
+      final tags = <TagModel>[];
+      for (final branch in branches) {
+        final branchName = branch.name ?? 'Branch';
+        final branchId = branch.id ?? branchName;
+        if (branch.categories != null && branch.categories!.isNotEmpty) {
+          for (final category in branch.categories!) {
+            final categoryName = category.name ?? 'Category';
+            final categoryId = category.id ?? '$branchId-$categoryName';
+            tags.add(TagModel(
+              id: categoryId,
+              title: '$branchName / $categoryName',
+            ));
+          }
+        } else {
+          tags.add(TagModel(id: branchId, title: branchName));
+        }
+      }
+      availableBranches = tags;
+      areBranchesLoaded = true;
+    } catch (e) {
+      areBranchesLoaded = false;
+    }
+  }
 
   @action
   Future populateAvailableSubscriptions() async {

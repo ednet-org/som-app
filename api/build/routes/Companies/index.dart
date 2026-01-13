@@ -17,8 +17,16 @@ Future<Response> onRequest(RequestContext context) async {
 Future<Response> _listCompanies(RequestContext context) async {
   final companies = await context.read<CompanyRepository>().listAll();
   final filterType = context.request.uri.queryParameters['type'];
+  String? normalizedType = filterType;
+  if (filterType != null) {
+    final parsed = int.tryParse(filterType);
+    if (parsed != null) {
+      normalizedType = companyTypeFromWire(parsed);
+    }
+  }
   final body = companies
-      .where((company) => filterType == null || company.type == filterType)
+      .where((company) =>
+          normalizedType == null || company.type == normalizedType)
       .map((company) => {
             'id': company.id,
             'name': company.name,

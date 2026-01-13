@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -97,6 +98,73 @@ class Login extends StatelessWidget {
                   ));
                 }),
               ),
+              if (kDebugMode &&
+                  const bool.fromEnvironment(
+                    'DEV_QUICK_LOGIN',
+                    defaultValue: false,
+                  )) ...[
+                const SizedBox(height: 30),
+                Text(
+                  'Dev quick login',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'System Admin',
+                      email: 'system-admin@som.local',
+                      password: 'ChangeMe123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Consultant',
+                      email: 'consultant@som.local',
+                      password: 'DevPass123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Consultant Admin',
+                      email: 'consultant-admin@som.local',
+                      password: 'DevPass123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Buyer Admin',
+                      email: 'buyer-admin@som.local',
+                      password: 'DevPass123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Buyer User',
+                      email: 'buyer-user@som.local',
+                      password: 'DevPass123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Provider Admin',
+                      email: 'provider-admin@som.local',
+                      password: 'DevPass123!',
+                    ),
+                    _devLoginButton(
+                      context,
+                      emailLoginStore,
+                      label: 'Provider User',
+                      email: 'provider-user@som.local',
+                      password: 'DevPass123!',
+                    ),
+                  ],
+                ),
+              ],
 
               // SizedBox(height: 50),
               // ActionButton(
@@ -112,6 +180,23 @@ class Login extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _devLoginButton(
+    BuildContext context,
+    EmailLoginStore emailLoginStore, {
+    required String label,
+    required String email,
+    required String password,
+  }) {
+    return OutlinedButton(
+      onPressed: () {
+        emailLoginStore.setEmail(email);
+        emailLoginStore.setPassword(password);
+        emailLoginStore.login();
+      },
+      child: Text(label),
     );
   }
 

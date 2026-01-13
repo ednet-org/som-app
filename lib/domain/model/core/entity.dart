@@ -5,5 +5,5 @@ abstract class Entity<Attribute> {
 
   Iterable<Attribute> getDocumentAttributes();
 
-  get status;
+  Attribute get status;
 }

@@ -11,13 +11,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
-import 'package:som/domain/infrastructure/repository/api/utils/interceptors/dio_cors_interceptor.dart';
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
 
 import 'ui/domain/application/application.dart';
 import 'ui/domain/application/som_localizations.dart';
+import 'ui/domain/infrastructure/api/auth_token_interceptor.dart';
 import 'ui/domain/model/model.dart';
 import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart';
 
@@ -32,7 +33,6 @@ final apiInstance = Openapi(
     dio: Dio(BaseOptions(
         baseUrl: apiBaseUrl))
       // ..interceptors.add(PrettyDioLogger())
-      ..interceptors.add(CorsInterceptor())
       ..interceptors.add(CurlLoggerDioInterceptor(
           printOnSuccess: true, convertFormData: false)),
     serializers: standardSerializers);
@@ -63,6 +63,7 @@ void main() async {
   // dio perform awful if not spawn to own worker
   apiInstance.dio.transformer = BackgroundTransformer()
     ..jsonDecodeCallback = parseJson;
+  apiInstance.dio.interceptors.add(AuthTokenInterceptor(appStore));
 
   await initTheming();
 
@@ -94,9 +95,9 @@ class MyApp extends StatelessWidget {
         CustomerRegisterPageLocation(),
         CustomerRegisterSuccessPageLocation(),
         SmartOfferManagementPageLocation(),
-      ]));
+      ]).call);
 
-  MyApp({Key? key}) : super(key: key);
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +142,9 @@ class MyApp extends StatelessWidget {
     });
   }
 
-  get getProviders {
+  List<SingleChildWidget> get getProviders {
     return [
+      Provider<Openapi>(create: (_) => apiInstance),
       Provider<AuthForgotPasswordPageState>(
           create: (_) =>
               AuthForgotPasswordPageState(apiInstance.getAuthApi())),
@@ -152,16 +154,16 @@ class MyApp extends StatelessWidget {
         create: (_) =>
             ApiSubscriptionRepository(apiInstance.getSubscriptionsApi()),
       ),
-      ProxyProvider<ApiSubscriptionRepository, Som>(
-          update: (_, apiSubscriptionRepository, __) =>
-              Som(apiSubscriptionRepository)),
+      ProxyProvider2<ApiSubscriptionRepository, Openapi, Som>(
+          update: (_, apiSubscriptionRepository, api, __) =>
+              Som(apiSubscriptionRepository, api.getBranchesApi())),
       // Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
       ProxyProvider<Som, RegistrationRequest>(
           update: (_, som, __) => RegistrationRequest(som,
               apiInstance.getCompaniesApi(), appStore, sharedPreferences)),
       Provider<EmailLoginStore>(
-          create: (_) =>
-              EmailLoginStore(apiInstance.getAuthApi(), appStore)),
+          create: (_) => EmailLoginStore(
+              apiInstance.getAuthApi(), apiInstance.getUsersApi(), appStore)),
       ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
           update: (_, emailLoginStore, __) => UserAccountConfirmation(
               apiInstance.getAuthApi(), appStore, emailLoginStore)),
@@ -172,11 +174,11 @@ class MyApp extends StatelessWidget {
 //region bootstrap
 
 // Must be top-level function
-_parseAndDecode(String response) {
+Object? _parseAndDecode(String response) {
   return jsonDecode(response);
 }
 
-parseJson(String text) {
+Future<Object?> parseJson(String text) {
   return compute(_parseAndDecode, text);
 }
 

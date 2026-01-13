@@ -11,7 +11,6 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/services/date_utils.dart';
-import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -156,7 +155,7 @@ Future<Response> _handleList(RequestContext context) async {
   final body = inquiries.map((inquiry) {
     final json = inquiry.toJson();
     if (providerStatusMap != null) {
-      json['providerStatus'] = providerStatusMap![inquiry.id];
+      json['providerStatus'] = providerStatusMap[inquiry.id];
     }
     return json;
   }).toList();
@@ -176,27 +175,8 @@ Future<Response> _handleCreate(RequestContext context) async {
   final companyRepo = context.read<CompanyRepository>();
   final userRepo = context.read<UserRepository>();
   final inquiryRepo = context.read<InquiryRepository>();
-  final storage = context.read<FileStorage>();
 
-  Map<String, dynamic> data;
-  String? pdfPath;
-  if (context.request.headers['content-type']
-          ?.contains('multipart/form-data') ??
-      false) {
-    final form = await context.request.formData();
-    data = form.fields.map((key, value) => MapEntry(key, value));
-    final file = form.files['file'];
-    if (file != null) {
-      final bytes = await file.readAsBytes();
-      pdfPath = await storage.saveFile(
-        category: 'inquiries',
-        fileName: file.name,
-        bytes: bytes,
-      );
-    }
-  } else {
-    data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
-  }
+  final data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
 
   final deadline = DateTime.parse(data['deadline'] as String);
   if (!isAtLeastBusinessDaysInFuture(deadline, 3)) {
@@ -243,7 +223,7 @@ Future<Response> _handleCreate(RequestContext context) async {
             .toList(),
     numberOfProviders: int.parse(data['numberOfProviders']?.toString() ?? '1'),
     description: data['description'] as String?,
-    pdfPath: pdfPath,
+    pdfPath: null,
     providerCriteria: ProviderCriteria(
       providerZip: data['providerZip'] as String?,
       radiusKm: data['radiusKm'] == null

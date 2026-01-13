@@ -24,6 +24,11 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final request = Provider.of<RegistrationRequest>(context, listen: false);
+      request.som.populateAvailableBranches();
+      request.som.populateAvailableSubscriptions();
+    });
   }
 
   @override
@@ -271,7 +276,12 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         title: stepTitle('Company branches'),
         isActive: currStep == 2,
         state: StepState.indexed,
-        content: SomTags(tags: request.som.availableBranches),
+        content: SomTags(
+          tags: request.som.availableBranches,
+          selectedTags: request.som.requestedBranches,
+          onAdd: request.som.requestBranch,
+          onRemove: request.som.removeRequestedBranch,
+        ),
       ),
       Step(
         title: stepTitle('Subscription model'),

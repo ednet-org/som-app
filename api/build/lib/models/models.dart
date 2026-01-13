@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../services/mappings.dart';
+
 class Address {
   Address({
     required this.country,
@@ -217,7 +219,7 @@ class UserRecord {
         'salutation': salutation,
         'title': title,
         'telephoneNr': telephoneNr,
-        'roles': roles,
+        'roles': roles.map(roleToWire).toList(),
       };
 }
 

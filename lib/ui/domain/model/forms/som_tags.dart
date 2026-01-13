@@ -6,8 +6,16 @@ import '../../../domain/model/shared/som.dart';
 // https://medium.com/nonstopio/flutter-tags-7410bd6a5835
 
 class SomTags extends StatefulWidget {
-  const SomTags({required this.tags}) : super();
+  const SomTags({
+    required this.tags,
+    this.selectedTags,
+    this.onAdd,
+    this.onRemove,
+  }) : super();
   final List<TagModel> tags;
+  final List<TagModel>? selectedTags;
+  final void Function(TagModel tag)? onAdd;
+  final void Function(TagModel tag)? onRemove;
 
   @override
   _SomTagsState createState() => _SomTagsState();
@@ -29,6 +37,20 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _searchTextEditingController.addListener(() => refreshState(() {}));
+    if (widget.selectedTags != null) {
+      _tags.addAll(widget.selectedTags!);
+    }
+    _suggestions.addAll(widget.tags);
+  }
+
+  @override
+  void didUpdateWidget(covariant SomTags oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tags != widget.tags) {
+      _suggestions
+        ..clear()
+        ..addAll(widget.tags);
+    }
   }
 
   @override
@@ -41,8 +63,8 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
     if (_searchText.isEmpty) return _suggestions;
 
     List<TagModel> _tempList = [];
-    for (int index = 0; index < widget.tags.length; index++) {
-      TagModel tagModel = widget.tags[index];
+    for (int index = 0; index < _suggestions.length; index++) {
+      TagModel tagModel = _suggestions[index];
       if (tagModel.title
           .toLowerCase()
           .trim()
@@ -59,6 +81,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       setState(() {
         _tags.add(tagModel);
       });
+      widget.onAdd?.call(tagModel as TagModel);
     }
   }
 
@@ -67,6 +90,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       setState(() {
         _tags.remove(tagModel);
       });
+      widget.onRemove?.call(tagModel as TagModel);
     }
   }
 

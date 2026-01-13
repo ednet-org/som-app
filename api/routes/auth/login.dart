@@ -10,7 +10,12 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final auth = context.read<AuthService>();
   final body = await context.request.body();
-  final jsonBody = jsonDecode(body) as Map<String, dynamic>;
+  Map<String, dynamic> jsonBody;
+  try {
+    jsonBody = jsonDecode(body) as Map<String, dynamic>;
+  } catch (_) {
+    return Response.json(statusCode: 400, body: 'Invalid request body');
+  }
   final email = (jsonBody['email'] as String? ?? '').trim();
   final password = jsonBody['password'] as String? ?? '';
   try {

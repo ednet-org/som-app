@@ -93,17 +93,42 @@ mixin _$Som on _Som, Store {
       Atom(name: '_Som.availableSubscriptions', context: context);
 
   @override
-  FutureStore<List<Subscription>> get availableSubscriptions {
+  FutureStore<List<SubscriptionPlan>> get availableSubscriptions {
     _$availableSubscriptionsAtom.reportRead();
     return super.availableSubscriptions;
   }
 
   @override
-  set availableSubscriptions(FutureStore<List<Subscription>> value) {
+  set availableSubscriptions(FutureStore<List<SubscriptionPlan>> value) {
     _$availableSubscriptionsAtom
         .reportWrite(value, super.availableSubscriptions, () {
       super.availableSubscriptions = value;
     });
+  }
+
+  late final _$areBranchesLoadedAtom =
+      Atom(name: '_Som.areBranchesLoaded', context: context);
+
+  @override
+  bool get areBranchesLoaded {
+    _$areBranchesLoadedAtom.reportRead();
+    return super.areBranchesLoaded;
+  }
+
+  @override
+  set areBranchesLoaded(bool value) {
+    _$areBranchesLoadedAtom.reportWrite(value, super.areBranchesLoaded, () {
+      super.areBranchesLoaded = value;
+    });
+  }
+
+  late final _$populateAvailableBranchesAsyncAction =
+      AsyncAction('_Som.populateAvailableBranches', context: context);
+
+  @override
+  Future<dynamic> populateAvailableBranches() {
+    return _$populateAvailableBranchesAsyncAction
+        .run(() => super.populateAvailableBranches());
   }
 
   late final _$populateAvailableSubscriptionsAsyncAction =
@@ -148,7 +173,8 @@ isLoadingData: ${isLoadingData},
 availableBranches: ${availableBranches},
 areSubscriptionsLoaded: ${areSubscriptionsLoaded},
 requestedBranches: ${requestedBranches},
-availableSubscriptions: ${availableSubscriptions}
+availableSubscriptions: ${availableSubscriptions},
+areBranchesLoaded: ${areBranchesLoaded}
     ''';
   }
 }

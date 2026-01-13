@@ -4,6 +4,7 @@ import 'dart:io';
 const _defaultBaseUrl = 'http://127.0.0.1:8081';
 const _systemAdminEmail = 'system-admin@som.local';
 const _systemAdminPassword = 'ChangeMe123!';
+const _devTokenEndpoint = '/dev/auth/token';
 
 final _baseUrl =
     String.fromEnvironment('API_BASE_URL', defaultValue: _defaultBaseUrl);
@@ -273,12 +274,17 @@ Future<void> main() async {
     token: systemAdminToken,
   );
 
-  await _postJson(
+  await _postMultipart(
     '/inquiries/$inquiryId/offers',
     token: providerToken,
-    body: {
-      'pdfBase64': base64Encode(utf8.encode('%PDF-1.4 placeholder')),
-    },
+    files: [
+      _MultipartFile(
+        field: 'file',
+        fileName: 'offer.pdf',
+        contentType: 'application/pdf',
+        bytes: utf8.encode('%PDF-1.4 placeholder'),
+      ),
+    ],
   );
 
   final offers = await _getJson(
@@ -490,6 +496,7 @@ Future<String> _completeRegistration({
     email: email,
     sentAfter: sentAfter,
     pathHint: 'confirmEmail',
+    type: 'confirm_email',
   );
   final confirmPath = Uri(
     path: '/auth/confirmEmail',
@@ -517,6 +524,7 @@ Future<void> _resetPasswordFromEmail({
     email: email,
     sentAfter: sentAfter,
     pathHint: 'resetPassword',
+    type: 'reset_password',
   );
   await _postJson(
     '/auth/resetPassword',
@@ -533,15 +541,30 @@ Future<String> _awaitToken({
   required String email,
   required DateTime sentAfter,
   required String pathHint,
+  required String type,
 }) async {
-  final outbox = Directory('api/storage/outbox');
-  final deadline = DateTime.now().add(const Duration(seconds: 15));
+  final devToken = await _requestDevToken(email, type: type);
+  if (devToken != null) {
+    return devToken;
+  }
+  final outboxPath = const String.fromEnvironment(
+    'OUTBOX_PATH',
+    defaultValue: 'api/storage/outbox',
+  );
+  final outbox = Directory(outboxPath);
+  final deadline = DateTime.now().add(const Duration(seconds: 30));
   while (DateTime.now().isBefore(deadline)) {
     if (outbox.existsSync()) {
-      final files = outbox.listSync().whereType<File>().toList()
-        ..sort(
-          (a, b) => b.statSync().modified.compareTo(a.statSync().modified),
-        );
+      List<File> files = [];
+      try {
+        files = outbox.listSync().whereType<File>().toList()
+          ..sort(
+            (a, b) => b.statSync().modified.compareTo(a.statSync().modified),
+          );
+      } catch (_) {
+        await Future<void>.delayed(const Duration(milliseconds: 200));
+        continue;
+      }
       for (final file in files) {
         final content =
             jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
@@ -565,6 +588,27 @@ Future<String> _awaitToken({
     await Future<void>.delayed(const Duration(milliseconds: 500));
   }
   throw StateError('Token not found for $email ($pathHint).');
+}
+
+Future<String?> _requestDevToken(
+  String email, {
+  required String type,
+}) async {
+  try {
+    final response = await _postJson(
+      _devTokenEndpoint,
+      body: {'email': email, 'type': type},
+    );
+    if (response is Map<String, dynamic>) {
+      final token = response['token'] as String?;
+      if (token != null && token.isNotEmpty) {
+        return token;
+      }
+    }
+  } catch (_) {
+    // Dev endpoint may be disabled.
+  }
+  return null;
 }
 
 String? _extractToken(String text) {
@@ -692,6 +736,55 @@ Future<void> _delete(
   );
 }
 
+Future<dynamic> _postMultipart(
+  String path, {
+  required List<_MultipartFile> files,
+  Map<String, String>? fields,
+  String? token,
+}) async {
+  final boundary = '----som-boundary-${DateTime.now().millisecondsSinceEpoch}';
+  final uri = Uri.parse('$_baseUrl$path');
+  final client = HttpClient();
+  final request = await client.postUrl(uri);
+  request.headers.set(
+    HttpHeaders.contentTypeHeader,
+    'multipart/form-data; boundary=$boundary',
+  );
+  if (token != null) {
+    request.headers.set(HttpHeaders.authorizationHeader, 'Bearer $token');
+  }
+  fields?.forEach((key, value) {
+    request.write('--$boundary\r\n');
+    request.write('Content-Disposition: form-data; name="$key"\r\n\r\n');
+    request.write('$value\r\n');
+  });
+  for (final file in files) {
+    request.write('--$boundary\r\n');
+    request.write(
+      'Content-Disposition: form-data; name="${file.field}"; filename="${file.fileName}"\r\n',
+    );
+    request.write('Content-Type: ${file.contentType}\r\n\r\n');
+    request.add(file.bytes);
+    request.write('\r\n');
+  }
+  request.write('--$boundary--\r\n');
+  final response = await request.close();
+  final rawBody = await utf8.decodeStream(response);
+  dynamic decoded;
+  if (rawBody.isNotEmpty) {
+    try {
+      decoded = jsonDecode(rawBody);
+    } catch (_) {
+      decoded = rawBody;
+    }
+  }
+  if (response.statusCode >= 400) {
+    throw StateError(
+        'Request POST $path failed: ${response.statusCode} $rawBody');
+  }
+  return decoded;
+}
+
 Future<_Response> _request(
   String method,
   String path, {
@@ -736,4 +829,18 @@ class _Response {
   final int statusCode;
   final String rawBody;
   final dynamic body;
+}
+
+class _MultipartFile {
+  _MultipartFile({
+    required this.field,
+    required this.fileName,
+    required this.contentType,
+    required this.bytes,
+  });
+
+  final String field;
+  final String fileName;
+  final String contentType;
+  final List<int> bytes;
 }

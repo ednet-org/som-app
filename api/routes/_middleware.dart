@@ -84,13 +84,27 @@ final _systemBootstrap = SystemBootstrap(
   companies: _companies,
   users: _users,
   auth: _auth,
+  branches: _branches,
+  providers: _providers,
+  subscriptions: _subscriptions,
+  inquiries: _inquiries,
+  offers: _offers,
+  ads: _ads,
 );
+final _bootstrapFuture = _bootstrap();
+
+Future<void> _bootstrap() async {
+  await _subscriptionSeeder.seedDefaults();
+  await _systemBootstrap.ensureSystemAdmin();
+  await _systemBootstrap.ensureDevFixtures();
+  _scheduler.start();
+}
 
 Handler middleware(Handler handler) {
-  unawaited(_subscriptionSeeder.seedDefaults());
-  unawaited(_systemBootstrap.ensureSystemAdmin());
-  _scheduler.start();
-  return handler
+  return ((context) async {
+    await _bootstrapFuture;
+    return handler(context);
+  })
       .use(corsHeaders())
       .use(provider<SupabaseService>((_) => _supabase))
       .use(provider<Clock>((_) => _clock))

@@ -66,10 +66,13 @@ class AuthService {
     );
   }
 
-  Future<void> sendForgotPassword(String emailAddress) async {
+  Future<String> createPasswordResetToken(
+    String emailAddress, {
+    bool sendEmail = false,
+  }) async {
     final user = await users.findByEmail(emailAddress);
     if (user == null) {
-      return;
+      return '';
     }
     final raw = _randomToken();
     await tokens.create(
@@ -82,12 +85,19 @@ class AuthService {
         createdAt: clock.nowUtc(),
       ),
     );
-    await email.send(
-      to: user.email,
-      subject: 'Reset your SOM password',
-      text:
-          'Use this link to reset your password: /auth/resetPassword?token=$raw&email=${user.email}',
-    );
+    if (sendEmail) {
+      await email.send(
+        to: user.email,
+        subject: 'Reset your SOM password',
+        text:
+            'Use this link to reset your password: /auth/resetPassword?token=$raw&email=${user.email}',
+      );
+    }
+    return raw;
+  }
+
+  Future<void> sendForgotPassword(String emailAddress) async {
+    await createPasswordResetToken(emailAddress, sendEmail: true);
   }
 
   Future<void> resetPassword({

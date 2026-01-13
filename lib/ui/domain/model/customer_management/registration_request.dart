@@ -6,6 +6,7 @@ import '../../application/application.dart';
 import '../shared/som.dart';
 import 'company.dart';
 import 'roles.dart';
+import 'payment-interval.dart';
 
 part 'registration_request.g.dart';
 
@@ -62,6 +63,13 @@ abstract class _RegistrationRequest with Store {
     ProviderRegistrationDataBuilder? providerData;
 
     if (company.isProvider) {
+      final selectedPlanId = company.providerData.subscriptionPlanId ??
+          (som.availableSubscriptions.data != null &&
+                  som.availableSubscriptions.data!.isNotEmpty
+              ? som.availableSubscriptions.data!.first.id
+              : null);
+      final selectedBranchIds =
+          som.requestedBranches.map((tag) => tag.id).toList();
       final bankDetails = BankDetailsBuilder()
         ..accountOwner = company.providerData.bankDetails!.accountOwner!
         ..bic = company.providerData.bankDetails!.bic!
@@ -69,13 +77,15 @@ abstract class _RegistrationRequest with Store {
 
       providerData = ProviderRegistrationDataBuilder()
         ..bankDetails = bankDetails
-        // hardcoded
-        ..paymentInterval = ProviderRegistrationDataPaymentIntervalEnum.number0
-        ..subscriptionPlanId = "68294d4c-dbed-11eb-82b1-028b3e4c7287"
-        ..branchIds =
-            ListBuilder<String>(["641d9ca8-380b-4ded-8e26-1c32065c703f"]);
+        ..paymentInterval = company.providerData.paymentInterval ==
+                PaymentInterval.Monthly
+            ? ProviderRegistrationDataPaymentIntervalEnum.number0
+            : ProviderRegistrationDataPaymentIntervalEnum.number1
+        ..subscriptionPlanId = selectedPlanId
+        ..branchIds = ListBuilder<String>(selectedBranchIds);
     }
 
+    final size = _mapCompanySize(company.companySize);
     final companyRequest = CompanyRegistrationBuilder()
       ..type = company.role == Roles.ProviderAndBuyer
           ? CompanyRegistrationTypeEnum.number2
@@ -83,8 +93,7 @@ abstract class _RegistrationRequest with Store {
               ? CompanyRegistrationTypeEnum.number1
               : CompanyRegistrationTypeEnum.number0
       ..address = addressRequest
-      // todo: hardcoded
-      ..companySize = CompanyRegistrationCompanySizeEnum.number4
+      ..companySize = size
       ..name = company.name
       ..providerData = providerData
       ..registrationNr = company.registrationNumber
@@ -147,5 +156,24 @@ abstract class _RegistrationRequest with Store {
       errorMessage = error.toString();
       print(error);
     }
+  }
+}
+
+CompanyRegistrationCompanySizeEnum _mapCompanySize(String? size) {
+  switch (size) {
+    case '0-10':
+      return CompanyRegistrationCompanySizeEnum.number0;
+    case '11-50':
+      return CompanyRegistrationCompanySizeEnum.number1;
+    case '51-100':
+      return CompanyRegistrationCompanySizeEnum.number2;
+    case '101-250':
+      return CompanyRegistrationCompanySizeEnum.number3;
+    case '251-500':
+      return CompanyRegistrationCompanySizeEnum.number4;
+    case '500+':
+      return CompanyRegistrationCompanySizeEnum.number5;
+    default:
+      return CompanyRegistrationCompanySizeEnum.number0;
   }
 }

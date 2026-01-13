@@ -41,7 +41,7 @@ Future<Response> onRequest(RequestContext context) async {
   }
   if (params['format'] == 'csv') {
     final buffer = StringBuffer();
-    buffer.writeln('${type},count');
+    buffer.writeln('$type,count');
     stats.forEach((key, value) {
       buffer.writeln('$key,$value');
     });

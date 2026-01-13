@@ -9,7 +9,7 @@ import 'offer.dart';
 import 'provider_criteria.dart';
 import 'user.dart';
 
-const uuid = Uuid();
+const Uuid uuid = Uuid();
 
 /// [Inquiry] is a [Buyer] business request to the [Provider]
 class Inquiry extends Entity<Arr> {
@@ -31,7 +31,7 @@ class Inquiry extends Entity<Arr> {
   final Arr<InquiryStatus> status;
 
   Inquiry({
-    id,
+    Arr<String>? id,
     required this.title,
     required this.description,
     required this.category,

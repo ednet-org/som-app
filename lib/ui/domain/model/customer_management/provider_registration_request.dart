@@ -33,4 +33,10 @@ abstract class _ProviderRegistrationRequest with Store {
 
   @action
   void setSubscriptionPlanId(String value) => subscriptionPlanId = value;
+
+  @observable
+  int? maxUsers;
+
+  @action
+  void setMaxUsers(int? value) => maxUsers = value;
 }

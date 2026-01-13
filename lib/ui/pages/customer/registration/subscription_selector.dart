@@ -5,6 +5,7 @@ import 'package:som/ui/pages/customer/registration/plan_modal.dart';
 
 import '../../../domain/infrastructure/future_store.dart';
 import '../../../domain/model/shared/som.dart';
+import '../../../domain/model/customer_management/registration_request.dart';
 
 class SubscriptionSelector extends StatefulWidget {
   const SubscriptionSelector({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class SubscriptionSelector extends StatefulWidget {
 }
 
 class _SubscriptionSelectorState extends State<SubscriptionSelector> {
-  List<PlanModal> periodModal = [];
   int selectIndex = 0;
 
   int containerIndex = 0;
@@ -26,58 +26,8 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   }
 
   void init() {
-    periodModal.add(
-      PlanModal(
-        title: 'SOM Standard',
-        subTitle: "€ 39,90 / Monat",
-        optionList: [
-          PlanModal(title: '1 Benutzer anlegen'),
-          PlanModal(title: 'keine Werbeanzeigen bei SOM Ads'),
-          PlanModal(
-              title:
-                  'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
-        ],
-        price: '€ 39,90 / Monat + Einrichtungspauschale € 49,-',
-      ),
-    );
-    periodModal.add(PlanModal(
-      title: 'SOM Premium',
-      subTitle: '€ 79,90 / Monat',
-      optionList: [
-        PlanModal(title: 'bis zu 5 Benutzer anlegen'),
-        PlanModal(
-            title:
-                '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
-        PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
-        PlanModal(
-            title:
-                'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
-        PlanModal(title: 'die ersten zwei Monate Gratis'),
-      ],
-      price: '€ 79,90 / Monat, Einrichtungspauschale entfällt',
-    ));
-    periodModal.add(
-      PlanModal(
-        title: 'SOM Enterprise',
-        subTitle: '€ 149,90 / Monat',
-        optionList: [
-          PlanModal(
-              title: 'bis zu 15 Benutzer anlegen',
-              subTitle: '(jeder weitere Benutzer kostet €10,-)'),
-          PlanModal(
-              title:
-                  '1 Werbeanzeige pro Monat bei SOM Ads für min zwei Wochen (Mo-So)'),
-          PlanModal(
-              title: '1 Banneranzeige pro Monatbei SOM Ads für einen Tag'),
-          PlanModal(title: 'Detaillierte Statistik mit Exportmöglichkeit'),
-          PlanModal(
-              title:
-                  'Zentrales Management Ihrer Firmen & User-Daten durch den Adminuser'),
-          PlanModal(title: 'die ersten zwei Monate Gratis'),
-        ],
-        price: '€ 149,90 / Monat, Einrichtungspauschale entfällt',
-      ),
-    );
+    final Som som = Provider.of<Som>(context, listen: false);
+    som.populateAvailableSubscriptions();
   }
 
   @override
@@ -93,14 +43,46 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   @override
   Widget build(BuildContext context) {
     final Som som = Provider.of<Som>(context);
+    final RegistrationRequest request =
+        Provider.of<RegistrationRequest>(context);
     if (som.availableSubscriptions.futureState == FutureState.loading) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // // show empty message
-    // if ((som.availableSubscriptions.data?.length ?? 0) == 0) {
-    //   return const Center(child: Text("No subscription plans found."));
-    // }
+    final plans = som.availableSubscriptions.data ?? [];
+    if (plans.isEmpty) {
+      return const Center(child: Text('No subscription plans found.'));
+    }
+
+    if (request.company.providerData.subscriptionPlanId == null) {
+      request.company.providerData.setSubscriptionPlanId(plans.first.id ?? '');
+      final maxUsers = plans.first.rules != null && plans.first.rules!.isNotEmpty
+          ? plans.first.rules!.first.upperLimit
+          : null;
+      request.company.providerData.setMaxUsers(maxUsers);
+    }
+
+    final periodModal = plans
+        .asMap()
+        .entries
+        .map((entry) {
+          final plan = entry.value;
+          final price = plan.priceInSubunit == null
+              ? 'N/A'
+              : '€ ${(plan.priceInSubunit! / 100).toStringAsFixed(2)} / Monat';
+          final rules = plan.rules
+                  ?.map((rule) =>
+                      'Restriction ${rule.restriction ?? '-'}: ${rule.upperLimit ?? '-'}')
+                  .toList() ??
+              const <String>[];
+          return PlanModal(
+            title: 'Plan ${plan.sortPriority ?? entry.key + 1}',
+            subTitle: price,
+            optionList: rules.map((item) => PlanModal(title: item)).toList(),
+            price: price,
+          );
+        })
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,6 +167,16 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                 )).onTap(
               () {
                 selectIndex = index;
+                final selectedPlan = plans[index];
+                if (selectedPlan.id != null) {
+                  request.company.providerData
+                      .setSubscriptionPlanId(selectedPlan.id!);
+                }
+                final maxUsers = selectedPlan.rules != null &&
+                        selectedPlan.rules!.isNotEmpty
+                    ? selectedPlan.rules!.first.upperLimit
+                    : null;
+                request.company.providerData.setMaxUsers(maxUsers);
 
                 setState(() {});
               },

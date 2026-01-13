@@ -29,7 +29,7 @@ class FileStorage {
             fileOptions: FileOptions(contentType: contentType),
           );
     } on StorageException catch (error) {
-      if (error.statusCode == 404) {
+      if (error.statusCode == '404') {
         await _client.storage
             .createBucket(_bucket, const BucketOptions(public: true));
         await _client.storage.from(_bucket).uploadBinary(
@@ -54,8 +54,8 @@ class FileStorage {
     } on StorageException catch (error) {
       final message = error.message.toLowerCase();
       final alreadyExists =
-          error.statusCode == 409 || message.contains('exists');
-      if (!alreadyExists && error.statusCode == 404) {
+          error.statusCode == '409' || message.contains('exists');
+      if (!alreadyExists && error.statusCode == '404') {
         await _client.from('storage.buckets').insert({
           'id': _bucket,
           'name': _bucket,

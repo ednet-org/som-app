@@ -123,6 +123,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  built_collection: ^5.1.1
   mobx_codegen: ^2.1.1
   build_runner: ^2.3.3
   chopper_generator: ^8.2.0

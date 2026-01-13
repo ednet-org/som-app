@@ -9,10 +9,10 @@ Openapi _openapiWithResponder(Response<dynamic> Function(RequestOptions) respond
         handler.resolve(responder(options));
       } catch (error) {
         handler.reject(
-          DioError(
+          DioException(
             requestOptions: options,
             error: error,
-            type: DioErrorType.other,
+            type: DioExceptionType.unknown,
           ),
           true,
         );
