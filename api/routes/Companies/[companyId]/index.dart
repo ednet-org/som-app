@@ -25,6 +25,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
         'companySize': companySizeToWire(company.companySize),
         'type': companyTypeToWire(company.type),
         'websiteUrl': company.websiteUrl,
+        'status': company.status,
       },
     );
   }
@@ -50,10 +51,23 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     if (existing == null) {
       return Response(statusCode: 404);
     }
+    String updatedType = existing.type;
+    if (body.containsKey('type')) {
+      final rawType = body['type'];
+      final parsed =
+          rawType is int ? rawType : int.tryParse(rawType?.toString() ?? '');
+      if (parsed == null || parsed < 0 || parsed > 2) {
+        return Response.json(
+          statusCode: 400,
+          body: 'Company type is required.',
+        );
+      }
+      updatedType = companyTypeFromWire(parsed);
+    }
     final updated = CompanyRecord(
       id: existing.id,
       name: body['name'] as String? ?? existing.name,
-      type: existing.type,
+      type: updatedType,
       address: body['address'] == null
           ? existing.address
           : Address.fromJson(body['address'] as Map<String, dynamic>),

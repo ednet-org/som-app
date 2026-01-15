@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:openapi/src/model/company_registration.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:openapi/src/model/user_registration.dart';
@@ -15,71 +16,110 @@ part 'register_company_request.g.dart';
 /// Properties:
 /// * [company] 
 /// * [users] 
+@BuiltValue()
 abstract class RegisterCompanyRequest implements Built<RegisterCompanyRequest, RegisterCompanyRequestBuilder> {
-    @BuiltValueField(wireName: r'company')
-    CompanyRegistration get company;
+  @BuiltValueField(wireName: r'company')
+  CompanyRegistration get company;
 
-    @BuiltValueField(wireName: r'users')
-    BuiltList<UserRegistration> get users;
+  @BuiltValueField(wireName: r'users')
+  BuiltList<UserRegistration> get users;
 
-    RegisterCompanyRequest._();
+  RegisterCompanyRequest._();
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(RegisterCompanyRequestBuilder b) => b;
+  factory RegisterCompanyRequest([void updates(RegisterCompanyRequestBuilder b)]) = _$RegisterCompanyRequest;
 
-    factory RegisterCompanyRequest([void updates(RegisterCompanyRequestBuilder b)]) = _$RegisterCompanyRequest;
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(RegisterCompanyRequestBuilder b) => b;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<RegisterCompanyRequest> get serializer => _$RegisterCompanyRequestSerializer();
+  @BuiltValueSerializer(custom: true)
+  static Serializer<RegisterCompanyRequest> get serializer => _$RegisterCompanyRequestSerializer();
 }
 
-class _$RegisterCompanyRequestSerializer implements StructuredSerializer<RegisterCompanyRequest> {
-    @override
-    final Iterable<Type> types = const [RegisterCompanyRequest, _$RegisterCompanyRequest];
+class _$RegisterCompanyRequestSerializer implements PrimitiveSerializer<RegisterCompanyRequest> {
+  @override
+  final Iterable<Type> types = const [RegisterCompanyRequest, _$RegisterCompanyRequest];
 
-    @override
-    final String wireName = r'RegisterCompanyRequest';
+  @override
+  final String wireName = r'RegisterCompanyRequest';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, RegisterCompanyRequest object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        result
-            ..add(r'company')
-            ..add(serializers.serialize(object.company,
-                specifiedType: const FullType(CompanyRegistration)));
-        result
-            ..add(r'users')
-            ..add(serializers.serialize(object.users,
-                specifiedType: const FullType(BuiltList, [FullType(UserRegistration)])));
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    RegisterCompanyRequest object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    yield r'company';
+    yield serializers.serialize(
+      object.company,
+      specifiedType: const FullType(CompanyRegistration),
+    );
+    yield r'users';
+    yield serializers.serialize(
+      object.users,
+      specifiedType: const FullType(BuiltList, [FullType(UserRegistration)]),
+    );
+  }
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    RegisterCompanyRequest object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
+
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required RegisterCompanyRequestBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'company':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(CompanyRegistration),
+          ) as CompanyRegistration;
+          result.company.replace(valueDes);
+          break;
+        case r'users':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(UserRegistration)]),
+          ) as BuiltList<UserRegistration>;
+          result.users.replace(valueDes);
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
     }
+  }
 
-    @override
-    RegisterCompanyRequest deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = RegisterCompanyRequestBuilder();
-
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'company':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(CompanyRegistration)) as CompanyRegistration;
-                    result.company.replace(valueDes);
-                    break;
-                case r'users':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(UserRegistration)])) as BuiltList<UserRegistration>;
-                    result.users.replace(valueDes);
-                    break;
-            }
-        }
-        return result.build();
-    }
+  @override
+  RegisterCompanyRequest deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = RegisterCompanyRequestBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 

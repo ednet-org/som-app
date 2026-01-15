@@ -44,6 +44,34 @@ class FileStorage {
     return _client.storage.from(_bucket).getPublicUrl(path);
   }
 
+  Future<void> deleteFile(String publicUrlOrPath) async {
+    await _ensureBucket();
+    final path = _resolvePath(publicUrlOrPath);
+    if (path.isEmpty) {
+      return;
+    }
+    await _client.storage.from(_bucket).remove([path]);
+  }
+
+  String _resolvePath(String publicUrlOrPath) {
+    if (publicUrlOrPath.isEmpty) {
+      return '';
+    }
+    if (!publicUrlOrPath.contains('://')) {
+      return publicUrlOrPath;
+    }
+    final uri = Uri.tryParse(publicUrlOrPath);
+    if (uri == null) {
+      return publicUrlOrPath;
+    }
+    final segments = uri.pathSegments;
+    final bucketIndex = segments.indexOf(_bucket);
+    if (bucketIndex == -1) {
+      return publicUrlOrPath;
+    }
+    return segments.sublist(bucketIndex + 1).join('/');
+  }
+
   Future<void> _ensureBucket() async {
     if (_bucketEnsured) {
       return;

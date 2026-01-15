@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -51,9 +52,13 @@ Future<Response> onRequest(RequestContext context) async {
       'lastName': user.lastName,
       'telephoneNr': user.telephoneNr,
       'emailAddress': user.email,
+      'roles': user.roles,
+      'activeRole':
+          user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : ''),
       'companyId': company.id,
       'companyName': company.name,
       'companyAddress': company.address.toJson(),
+      'companyType': companyTypeToWire(company.type),
     },
   );
 }

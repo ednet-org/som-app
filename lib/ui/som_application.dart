@@ -40,6 +40,11 @@ class SomApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
+    final auth = appStore.authorization;
+    final isBuyer = auth?.isBuyer ?? false;
+    final isProvider = auth?.isProvider ?? false;
+    final isConsultant = auth?.isConsultant ?? false;
+    final isAdmin = auth?.isAdmin ?? false;
     final beamer = Provider.of<BeamerProvidedKey>(context);
     final actionMaxWidth = MediaQuery.of(context).size.width - 200;
     final constrainedActionWidth =
@@ -59,41 +64,96 @@ class SomApplication extends StatelessWidget {
                   child: Row(
                     children: [
                       const SizedBox(width: 10),
-                      AppBarButton(
-                        key: const ValueKey('InquiriesManagementMenuItem'),
-                        title: 'Inquiries',
-                        child: AppBarIcons.inquiry.value,
-                        beamer: beamer,
-                        uri: '/inquiries',
-                      ),
-                      AppBarButton(
-                        key: const ValueKey('CompanyManagementMenuItem'),
-                        title: 'Company',
-                        child: AppBarIcons.company.value,
-                        beamer: beamer,
-                        uri: '/company',
-                      ),
-                      AppBarButton(
-                        key: const ValueKey('UserManagementMenuItem'),
-                        title: 'User',
-                        child: AppBarIcons.user.value,
-                        beamer: beamer,
-                        uri: '/user',
-                      ),
-                      AppBarButton(
-                        key: const ValueKey('AdsManagementMenuItem'),
-                        title: 'Ads',
-                        child: AppBarIcons.ads.value,
-                        beamer: beamer,
-                        uri: '/ads',
-                      ),
-                      AppBarButton(
-                        key: const ValueKey('StatisticsMenuItem'),
-                        title: 'Statistics',
-                        child: AppBarIcons.statistics.value,
-                        beamer: beamer,
-                        uri: '/statistics',
-                      ),
+                      if (isBuyer || isProvider || isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('InquiriesManagementMenuItem'),
+                          title: 'Inquiries',
+                          child: AppBarIcons.inquiry.value,
+                          beamer: beamer,
+                          uri: '/inquiries',
+                        ),
+                      if (isBuyer || isProvider || isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('StatisticsMenuItem'),
+                          title: 'Statistics',
+                          child: AppBarIcons.statistics.value,
+                          beamer: beamer,
+                          uri: '/statistics',
+                        ),
+                      if (isBuyer || isConsultant || (isProvider && isAdmin))
+                        AppBarButton(
+                          key: const ValueKey('AdsManagementMenuItem'),
+                          title: 'Ads',
+                          child: AppBarIcons.ads.value,
+                          beamer: beamer,
+                          uri: '/ads',
+                        ),
+                      if (isAdmin && (isBuyer || isProvider))
+                        AppBarButton(
+                          key: const ValueKey('UserManagementMenuItem'),
+                          title: 'User',
+                          child: AppBarIcons.user.value,
+                          beamer: beamer,
+                          uri: '/user',
+                        ),
+                      if (isAdmin && (isBuyer || isProvider))
+                        AppBarButton(
+                          key: const ValueKey('CompanyManagementMenuItem'),
+                          title: 'Company',
+                          child: AppBarIcons.company.value,
+                          beamer: beamer,
+                          uri: '/company',
+                        ),
+                      if (isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('BranchManagementMenuItem'),
+                          title: 'Branches',
+                          child: AppBarIcons.company.value,
+                          beamer: beamer,
+                          uri: '/branches',
+                        ),
+                      if (isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('ConsultantUsersMenuItem'),
+                          title: 'User Mgmt',
+                          child: AppBarIcons.user.value,
+                          beamer: beamer,
+                          uri: '/consultants',
+                        ),
+                      if (isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('RegisteredCompaniesMenuItem'),
+                          title: 'Companies',
+                          child: AppBarIcons.company.value,
+                          beamer: beamer,
+                          uri: '/companies',
+                        ),
+                      if (isConsultant && isAdmin)
+                        AppBarButton(
+                          key: const ValueKey('ProvidersManagementMenuItem'),
+                          title: 'Providers',
+                          child: AppBarIcons.company.value,
+                          beamer: beamer,
+                          uri: '/providers',
+                        ),
+                      if (isConsultant && isAdmin)
+                        AppBarButton(
+                          key: const ValueKey('SubscriptionManagementMenuItem'),
+                          title: 'Subscriptions',
+                          child: AppBarIcons.statistics.value,
+                          beamer: beamer,
+                          uri: '/subscriptions',
+                        ),
+                      if (isBuyer)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: ElevatedButton(
+                            key: const ValueKey('NewInquiryButton'),
+                            onPressed: () => beamer.currentState?.routerDelegate
+                                .beamToNamed('/inquiries?create=true'),
+                            child: const Text('New Inquiry'),
+                          ),
+                        ),
                       buildPopupMenuButton(context, appStore),
                     ],
                   ),
@@ -130,6 +190,7 @@ class SomApplication extends StatelessWidget {
 
   PopupMenuButton<dynamic> buildPopupMenuButton(
       BuildContext context, Application appStore) {
+    final auth = appStore.authorization;
     return PopupMenuButton(
       child: userMenuItem(context, appStore),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -152,26 +213,28 @@ class SomApplication extends StatelessWidget {
             ),
           ),
         ),
-        PopupMenuItem(
-          child: ListTile(
-            leading: const Icon(Icons.swap_horiz),
-            title: Text(
-              'Switch to buyer portal',
-              style: Theme.of(context).textTheme.titleSmall,
+        if (auth?.canSwitchRole == true && auth?.activeRole != 'buyer')
+          PopupMenuItem(
+            child: ListTile(
+              leading: const Icon(Icons.swap_horiz),
+              title: Text(
+                'Switch to buyer portal',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              onTap: () => _switchRole(context, 'buyer'),
             ),
-            onTap: () => _switchRole(context, 'buyer'),
           ),
-        ),
-        PopupMenuItem(
-          child: ListTile(
-            leading: const Icon(Icons.swap_horiz),
-            title: Text(
-              'Switch to provider portal',
-              style: Theme.of(context).textTheme.titleSmall,
+        if (auth?.canSwitchRole == true && auth?.activeRole != 'provider')
+          PopupMenuItem(
+            child: ListTile(
+              leading: const Icon(Icons.swap_horiz),
+              title: Text(
+                'Switch to provider portal',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              onTap: () => _switchRole(context, 'provider'),
             ),
-            onTap: () => _switchRole(context, 'provider'),
           ),
-        ),
         PopupMenuItem(
           child: ListTile(
             leading: const Icon(Icons.settings_applications),
@@ -186,13 +249,22 @@ class SomApplication extends StatelessWidget {
             title:
                 Text('Logout', style: Theme.of(context).textTheme.titleSmall),
             onTap: () {
-              appStore.logout();
-              context.beamTo(AuthLoginPageLocation());
+              _logout(context);
             },
           ),
         ),
       ],
     );
+  }
+
+  Future<void> _logout(BuildContext context) async {
+    final appStore = Provider.of<Application>(context, listen: false);
+    final api = Provider.of<Openapi>(context, listen: false);
+    try {
+      await api.dio.post('/auth/logout');
+    } catch (_) {}
+    appStore.logout();
+    context.beamTo(AuthLoginPageLocation());
   }
 
   Future<void> _switchRole(BuildContext context, String role) async {
@@ -209,6 +281,7 @@ class SomApplication extends StatelessWidget {
       final token = response.data?.token;
       if (token != null) {
         appStore.authorization!.token = token;
+        appStore.setActiveRole(role);
       }
     } catch (_) {}
   }

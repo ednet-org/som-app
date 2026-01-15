@@ -38,7 +38,10 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     pendingBranchIds: const [],
     subscriptionPlanId: profile.subscriptionPlanId,
     paymentInterval: profile.paymentInterval,
+    providerType: profile.providerType,
     status: 'active',
+    rejectionReason: null,
+    rejectedAt: null,
     createdAt: profile.createdAt,
     updatedAt: DateTime.now().toUtc(),
   );

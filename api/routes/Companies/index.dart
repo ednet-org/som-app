@@ -36,6 +36,7 @@ Future<Response> _listCompanies(RequestContext context) async {
             'companySize': companySizeToWire(company.companySize),
             'type': companyTypeToWire(company.type),
             'websiteUrl': company.websiteUrl,
+            'status': company.status,
           })
       .toList();
   return Response.json(body: body);

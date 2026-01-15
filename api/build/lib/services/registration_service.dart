@@ -40,7 +40,14 @@ class RegistrationService {
   }) async {
     final companyId = const Uuid().v4();
     final now = clock.nowUtc();
-    final companyType = companyTypeFromWire(companyJson['type'] as int? ?? 0);
+    final rawType = companyJson['type'];
+    final parsedType = rawType is int
+        ? rawType
+        : int.tryParse(rawType?.toString() ?? '');
+    if (parsedType == null || parsedType < 0 || parsedType > 2) {
+      throw RegistrationException('Company type is required.');
+    }
+    final companyType = companyTypeFromWire(parsedType);
     final termsAccepted = companyJson['termsAccepted'] == true;
     final privacyAccepted = companyJson['privacyAccepted'] == true;
 
@@ -96,6 +103,7 @@ class RegistrationService {
 
     await companies.create(companyRecord);
 
+    int? maxUsers;
     if (companyType == 'provider' || companyType == 'buyer_provider') {
       final providerData = companyJson['providerData'] as Map<String, dynamic>?;
       if (!allowIncomplete && providerData == null) {
@@ -106,6 +114,7 @@ class RegistrationService {
       final branchIds = (providerData?['branchIds'] as List<dynamic>? ?? [])
           .map((e) => e.toString())
           .toList();
+      final providerType = providerData?['providerType'] as String?;
 
       if (!allowIncomplete) {
         final iban = bankDetailsJson['iban'] as String? ?? '';
@@ -116,6 +125,9 @@ class RegistrationService {
         }
         if (branchIds.isEmpty) {
           throw RegistrationException('At least one branch is required.');
+        }
+        if (providerType == null || providerType.isEmpty) {
+          throw RegistrationException('Provider type is required.');
         }
       }
 
@@ -138,6 +150,15 @@ class RegistrationService {
       if (!allowIncomplete && subscriptionPlanId.isEmpty) {
         throw RegistrationException('Subscription plan is required.');
       }
+      if (subscriptionPlanId.isNotEmpty) {
+        final plan = await subscriptions.findPlanById(subscriptionPlanId);
+        if (plan == null && !allowIncomplete) {
+          throw RegistrationException('Subscription plan not found.');
+        }
+        if (plan != null) {
+          maxUsers = _maxUsersForPlan(plan);
+        }
+      }
 
       await providers.createProfile(
         ProviderProfileRecord(
@@ -147,7 +168,10 @@ class RegistrationService {
           pendingBranchIds: pendingBranchIds,
           subscriptionPlanId: subscriptionPlanId,
           paymentInterval: paymentInterval,
+          providerType: providerType,
           status: pendingBranchIds.isEmpty ? 'active' : 'pending',
+          rejectionReason: null,
+          rejectedAt: null,
           createdAt: now,
           updatedAt: now,
         ),
@@ -172,12 +196,20 @@ class RegistrationService {
       }
     }
 
+    if (maxUsers != null && maxUsers > 0 && usersJson.length > maxUsers) {
+      throw RegistrationException('User limit exceeded for subscription plan.');
+    }
+
     final createdUsers = <UserRecord>[];
     for (final entry in usersJson) {
       final userJson = entry as Map<String, dynamic>;
       final roles = (userJson['roles'] as List<dynamic>? ?? [])
           .map((e) => roleFromWire(e as int? ?? 2))
           .toList();
+      final normalizedRoles = _ensureBaseRoles(
+        roles: roles,
+        companyType: companyType,
+      );
       final email = (userJson['email'] as String? ?? '').toLowerCase();
       await _ensureUniqueEmail(email);
       late final String authUserId;
@@ -195,7 +227,7 @@ class RegistrationService {
         salutation: userJson['salutation'] as String? ?? '',
         title: userJson['title'] as String?,
         telephoneNr: userJson['telephoneNr'] as String?,
-        roles: roles.isEmpty ? ['buyer'] : roles,
+        roles: normalizedRoles.isEmpty ? ['buyer'] : normalizedRoles,
         isActive: true,
         emailConfirmed: false,
         lastLoginRole: null,
@@ -240,6 +272,50 @@ class RegistrationService {
     if (existing != null) {
       throw RegistrationException('E-mail already used.');
     }
+  }
+
+  List<String> _ensureBaseRoles({
+    required List<String> roles,
+    required String companyType,
+  }) {
+    final normalized = <String>{...roles};
+    if (normalized.contains('admin')) {
+      if (companyType == 'buyer' || companyType == 'buyer_provider') {
+        normalized.add('buyer');
+      }
+      if (companyType == 'provider' || companyType == 'buyer_provider') {
+        normalized.add('provider');
+      }
+    }
+    final ordered = <String>[];
+    if (normalized.contains('buyer')) {
+      ordered.add('buyer');
+    }
+    if (normalized.contains('provider')) {
+      ordered.add('provider');
+    }
+    if (normalized.contains('consultant')) {
+      ordered.add('consultant');
+    }
+    if (normalized.contains('admin')) {
+      ordered.add('admin');
+    }
+    for (final role in normalized) {
+      if (!ordered.contains(role)) {
+        ordered.add(role);
+      }
+    }
+    return ordered;
+  }
+
+  int? _maxUsersForPlan(SubscriptionPlanRecord plan) {
+    for (final rule in plan.rules) {
+      if ((rule['restriction'] as int? ?? -1) == 0) {
+        final limit = rule['upperLimit'] as int? ?? 0;
+        return limit > 0 ? limit : null;
+      }
+    }
+    return null;
   }
 }
 

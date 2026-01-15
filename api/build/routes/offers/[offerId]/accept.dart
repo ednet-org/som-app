@@ -19,7 +19,7 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   if (auth == null) {
     return Response(statusCode: 401);
   }
-  if (!auth.roles.contains('buyer')) {
+  if (auth.activeRole != 'buyer') {
     return Response(statusCode: 403);
   }
   final repo = context.read<OfferRepository>();
@@ -36,17 +36,25 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   final inquiry =
       await context.read<InquiryRepository>().findById(offer.inquiryId);
   if (inquiry != null) {
-    await context.read<InquiryRepository>().updateStatus(inquiry.id, 'closed');
+    await context
+        .read<InquiryRepository>()
+        .closeInquiry(inquiry.id, DateTime.now().toUtc());
   }
   final email = context.read<EmailService>();
   final userRepo = context.read<UserRepository>();
   final admins = await userRepo.listAdminsByCompany(offer.providerCompanyId);
   for (final admin in admins) {
+    final contact = inquiry?.contactInfo;
     await email.send(
       to: admin.email,
       subject: 'Offer accepted',
       text:
-          'Offer $offerId has been accepted. Contact: ${inquiry?.contactInfo.email ?? 'buyer'}',
+          'Offer $offerId has been accepted.\n'
+          'Buyer contact:\n'
+          'Company: ${contact?.companyName ?? '-'}\n'
+          'Name: ${contact?.salutation ?? ''} ${contact?.title ?? ''} ${contact?.firstName ?? ''} ${contact?.lastName ?? ''}\n'
+          'Phone: ${contact?.telephone ?? '-'}\n'
+          'Email: ${contact?.email ?? 'buyer'}',
     );
   }
   return Response(statusCode: 200);

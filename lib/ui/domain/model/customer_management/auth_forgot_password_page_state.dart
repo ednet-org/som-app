@@ -33,29 +33,23 @@ abstract class _AuthForgotPasswordPageState with Store {
   Future<void> sendResetLink() async {
     errorMessage = '';
     isSendingEmailLink = true;
-    await Future.delayed(Duration(seconds: 3));
     try {
       final forgotPasswordDto = AuthForgotPasswordPostRequestBuilder()
         ..email = email;
-      authApi
-          .authForgotPasswordPost(
-            authForgotPasswordPostRequest: forgotPasswordDto.build(),
-          )
-          .then((response) {
-        if (response.statusCode == 200) {
-          url = response.data as String;
-          isLinkSent = true;
-        } else {
-          errorMessage = 'Something went wrong';
+      final response = await authApi.authForgotPasswordPost(
+        authForgotPasswordPostRequest: forgotPasswordDto.build(),
+      );
+      if (response.statusCode == 200) {
+        final data = response.data;
+        if (data is String && data.contains('http')) {
+          url = data;
         }
-        isSendingEmailLink = false;
-      });
-
-      isSendingEmailLink = false;
-      isLinkSent = true;
+        isLinkSent = true;
+      } else {
+        errorMessage = 'Something went wrong';
+      }
     } catch (error) {
       errorMessage = error.toString();
-      isSendingEmailLink = false;
     } finally {
       isSendingEmailLink = false;
     }

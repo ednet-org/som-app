@@ -6,11 +6,58 @@ part of 'create_ad_request.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const CreateAdRequestStatusEnum _$createAdRequestStatusEnum_draft =
+    const CreateAdRequestStatusEnum._('draft');
+
+CreateAdRequestStatusEnum _$createAdRequestStatusEnumValueOf(String name) {
+  switch (name) {
+    case 'draft':
+      return _$createAdRequestStatusEnum_draft;
+    default:
+      throw ArgumentError(name);
+  }
+}
+
+final BuiltSet<CreateAdRequestStatusEnum> _$createAdRequestStatusEnumValues =
+    BuiltSet<CreateAdRequestStatusEnum>(const <CreateAdRequestStatusEnum>[
+  _$createAdRequestStatusEnum_draft,
+]);
+
+Serializer<CreateAdRequestStatusEnum> _$createAdRequestStatusEnumSerializer =
+    _$CreateAdRequestStatusEnumSerializer();
+
+class _$CreateAdRequestStatusEnumSerializer
+    implements PrimitiveSerializer<CreateAdRequestStatusEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'draft': 'draft',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'draft': 'draft',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[CreateAdRequestStatusEnum];
+  @override
+  final String wireName = 'CreateAdRequestStatusEnum';
+
+  @override
+  Object serialize(Serializers serializers, CreateAdRequestStatusEnum object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  CreateAdRequestStatusEnum deserialize(
+          Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      CreateAdRequestStatusEnum.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+}
+
 class _$CreateAdRequest extends CreateAdRequest {
   @override
   final String type;
   @override
-  final String status;
+  final CreateAdRequestStatusEnum status;
   @override
   final String branchId;
   @override
@@ -108,9 +155,9 @@ class CreateAdRequestBuilder
   String? get type => _$this._type;
   set type(String? type) => _$this._type = type;
 
-  String? _status;
-  String? get status => _$this._status;
-  set status(String? status) => _$this._status = status;
+  CreateAdRequestStatusEnum? _status;
+  CreateAdRequestStatusEnum? get status => _$this._status;
+  set status(CreateAdRequestStatusEnum? status) => _$this._status = status;
 
   String? _branchId;
   String? get branchId => _$this._branchId;

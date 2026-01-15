@@ -126,5 +126,59 @@ void main() {
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
     });
+
+    test('rejects registration without company type', () async {
+      final companies = InMemoryCompanyRepository();
+      final users = InMemoryUserRepository();
+      final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
+      final branches = InMemoryBranchRepository();
+      final auth = createAuthService(users);
+      final registration = RegistrationService(
+        companies: companies,
+        users: users,
+        providers: providers,
+        subscriptions: subscriptions,
+        branches: branches,
+        auth: auth,
+        clock: const Clock(),
+        domain: SomDomainModel(),
+      );
+
+      final context = TestRequestContext(
+        path: '/Companies',
+        method: HttpMethod.post,
+        headers: {'content-type': 'application/json'},
+        body: jsonEncode({
+          'company': {
+            'name': 'Acme',
+            'address': {
+              'country': 'AT',
+              'city': 'Vienna',
+              'street': 'Main',
+              'number': '1',
+              'zip': '1010'
+            },
+            'uidNr': 'UID1',
+            'registrationNr': 'REG1',
+            'companySize': 0,
+            'termsAccepted': true,
+            'privacyAccepted': true
+          },
+          'users': [
+            {
+              'email': 'admin@acme.test',
+              'firstName': 'Admin',
+              'lastName': 'User',
+              'salutation': 'Mr',
+              'roles': [4]
+            }
+          ]
+        }),
+      );
+      context.provide<RegistrationService>(registration);
+      final response = await route.onRequest(context.context);
+      expect(response.statusCode, 400);
+    });
   });
 }

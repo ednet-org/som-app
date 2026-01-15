@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -32,6 +33,11 @@ Future<Response> onRequest(RequestContext context) async {
         return Response(statusCode: 401);
       }
       if (scope == 'all' && !auth.roles.contains('consultant')) {
+        return Response(statusCode: 403);
+      }
+      if (scope == 'company' &&
+          auth.activeRole != 'provider' &&
+          !auth.roles.contains('consultant')) {
         return Response(statusCode: 403);
       }
       final companyId = companyIdParam ?? auth.companyId;
@@ -73,20 +79,55 @@ Future<Response> onRequest(RequestContext context) async {
     if (auth == null) {
       return Response(statusCode: 401);
     }
+    if (auth.activeRole != 'provider') {
+      return Response(statusCode: 403);
+    }
     final providerRepo = context.read<ProviderRepository>();
     final subscriptionRepo = context.read<SubscriptionRepository>();
     final data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
+    if (status != 'draft') {
+      return Response.json(
+          statusCode: 400,
+          body: 'Ads must be created as draft; activate via /ads/{id}/activate');
+    }
     final bannerDate = data['bannerDate'] == null
         ? null
         : DateTime.parse(data['bannerDate'] as String);
+    final startDate = data['startDate'] == null
+        ? null
+        : DateTime.parse(data['startDate'] as String);
+    final endDate = data['endDate'] == null
+        ? null
+        : DateTime.parse(data['endDate'] as String);
     if (type == 'banner' && bannerDate == null) {
       return Response.json(statusCode: 400, body: 'Banner date is required');
     }
+    if (type != 'banner') {
+      if (startDate == null || endDate == null) {
+        return Response.json(
+            statusCode: 400,
+            body: 'Start date and end date are required for ads');
+      }
+      if (!endDate.isAfter(startDate)) {
+        return Response.json(
+            statusCode: 400, body: 'End date must be after start date');
+      }
+      if (endDate.difference(startDate).inDays > 14) {
+        return Response.json(
+            statusCode: 400,
+            body: 'Ad period cannot exceed 14 days');
+      }
+    }
     final profile = await providerRepo.findByCompany(auth.companyId);
     if (profile != null) {
+      if (profile.status != 'active') {
+        return Response.json(
+            statusCode: 403,
+            body: 'Provider profile is pending and cannot create ads');
+      }
       final plan =
           await subscriptionRepo.findPlanById(profile.subscriptionPlanId);
       if (plan != null) {
@@ -97,10 +138,10 @@ Future<Response> onRequest(RequestContext context) async {
               statusCode: 403,
               body: 'Banner ads are not available for your plan');
         }
-        if (type != 'banner' && status == 'active') {
+        if (type != 'banner' && status == 'active' && startDate != null) {
           final activeCount = await context
               .read<AdsRepository>()
-              .countActiveByCompanyInMonth(auth.companyId, now);
+              .countActiveByCompanyInMonth(auth.companyId, startDate);
           if (maxNormalAds > 0 && activeCount >= maxNormalAds) {
             return Response.json(
                 statusCode: 400, body: 'Monthly ad limit reached');
@@ -117,6 +158,10 @@ Future<Response> onRequest(RequestContext context) async {
             statusCode: 400,
             body: 'No banner slots available for selected day');
       }
+      if (!bannerDate.isAfter(now)) {
+        return Response.json(
+            statusCode: 400, body: 'Banner date must be in the future');
+      }
     }
     final domain = context.read<SomDomainModel>();
     final ad = AdRecord(
@@ -129,12 +174,8 @@ Future<Response> onRequest(RequestContext context) async {
       imagePath: data['imagePath'] as String? ?? '',
       headline: data['headline'] as String?,
       description: data['description'] as String?,
-      startDate: data['startDate'] == null
-          ? null
-          : DateTime.parse(data['startDate'] as String),
-      endDate: data['endDate'] == null
-          ? null
-          : DateTime.parse(data['endDate'] as String),
+      startDate: startDate,
+      endDate: endDate,
       bannerDate: bannerDate,
       createdAt: now,
       updatedAt: now,
@@ -149,6 +190,8 @@ Future<Response> onRequest(RequestContext context) async {
       return Response.json(statusCode: 400, body: error.toString());
     }
     await context.read<AdsRepository>().create(ad);
+    final notifications = context.read<NotificationService>();
+    await notifications.notifyConsultantsOnAdCreated(ad);
     return Response.json(body: {'id': ad.id});
   }
   return Response(statusCode: 405);

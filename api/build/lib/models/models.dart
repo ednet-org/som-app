@@ -176,6 +176,8 @@ class CompanyRecord {
 }
 
 class UserRecord {
+  static const Object _unset = Object();
+
   UserRecord({
     required this.id,
     required this.companyId,
@@ -192,6 +194,10 @@ class UserRecord {
     required this.createdAt,
     required this.updatedAt,
     this.passwordHash,
+    this.failedLoginAttempts = 0,
+    this.lastFailedLoginAt,
+    this.lockedAt,
+    this.lockReason,
   });
 
   final String id;
@@ -209,6 +215,56 @@ class UserRecord {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? passwordHash;
+  final int failedLoginAttempts;
+  final DateTime? lastFailedLoginAt;
+  final DateTime? lockedAt;
+  final String? lockReason;
+
+  UserRecord copyWith({
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? salutation,
+    String? title,
+    String? telephoneNr,
+    List<String>? roles,
+    bool? isActive,
+    bool? emailConfirmed,
+    String? lastLoginRole,
+    DateTime? updatedAt,
+    int? failedLoginAttempts,
+    Object? lastFailedLoginAt = _unset,
+    Object? lockedAt = _unset,
+    Object? lockReason = _unset,
+  }) {
+    return UserRecord(
+      id: id,
+      companyId: companyId,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      salutation: salutation ?? this.salutation,
+      title: title ?? this.title,
+      telephoneNr: telephoneNr ?? this.telephoneNr,
+      roles: roles ?? this.roles,
+      isActive: isActive ?? this.isActive,
+      emailConfirmed: emailConfirmed ?? this.emailConfirmed,
+      lastLoginRole: lastLoginRole ?? this.lastLoginRole,
+      createdAt: createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      passwordHash: passwordHash,
+      failedLoginAttempts: failedLoginAttempts ?? this.failedLoginAttempts,
+      lastFailedLoginAt: identical(lastFailedLoginAt, _unset)
+          ? this.lastFailedLoginAt
+          : lastFailedLoginAt as DateTime?,
+      lockedAt: identical(lockedAt, _unset)
+          ? this.lockedAt
+          : lockedAt as DateTime?,
+      lockReason: identical(lockReason, _unset)
+          ? this.lockReason
+          : lockReason as String?,
+    );
+  }
 
   Map<String, dynamic> toDtoJson() => {
         'id': id,
@@ -244,6 +300,7 @@ class SubscriptionPlanRecord {
 
   Map<String, dynamic> toDtoJson() => {
         'id': id,
+        'title': name,
         'sortPriority': sortPriority,
         'isActive': isActive,
         'priceInSubunit': priceInSubunit,
@@ -351,9 +408,12 @@ class ProviderProfileRecord {
     required this.pendingBranchIds,
     required this.subscriptionPlanId,
     required this.paymentInterval,
+    required this.providerType,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    this.rejectionReason,
+    this.rejectedAt,
   });
 
   final String companyId;
@@ -362,7 +422,10 @@ class ProviderProfileRecord {
   final List<String> pendingBranchIds;
   final String subscriptionPlanId;
   final String paymentInterval;
+  final String? providerType;
   final String status;
+  final String? rejectionReason;
+  final DateTime? rejectedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
 }
@@ -384,6 +447,8 @@ class InquiryRecord {
     required this.providerCriteria,
     required this.contactInfo,
     required this.notifiedAt,
+    required this.assignedAt,
+    required this.closedAt,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -403,6 +468,8 @@ class InquiryRecord {
   final ProviderCriteria providerCriteria;
   final ContactInfo contactInfo;
   final DateTime? notifiedAt;
+  final DateTime? assignedAt;
+  final DateTime? closedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -422,6 +489,8 @@ class InquiryRecord {
         'providerCriteria': providerCriteria.toJson(),
         'contactInfo': contactInfo.toJson(),
         'notifiedAt': notifiedAt?.toIso8601String(),
+        'assignedAt': assignedAt?.toIso8601String(),
+        'closedAt': closedAt?.toIso8601String(),
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };

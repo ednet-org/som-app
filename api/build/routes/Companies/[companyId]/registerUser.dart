@@ -3,6 +3,9 @@
 import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/auth_service.dart';
@@ -28,6 +31,38 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   }
   final repo = context.read<UserRepository>();
   final auth = context.read<AuthService>();
+  final company =
+      await context.read<CompanyRepository>().findById(companyId);
+  if (company == null) {
+    return Response(statusCode: 404);
+  }
+  if (company.type == 'provider' || company.type == 'buyer_provider') {
+    final provider =
+        await context.read<ProviderRepository>().findByCompany(companyId);
+    if (provider == null) {
+      return Response.json(
+        statusCode: 400,
+        body: 'Provider profile is required.',
+      );
+    }
+    final plan = await context
+        .read<SubscriptionRepository>()
+        .findPlanById(provider.subscriptionPlanId);
+    if (plan != null) {
+      final maxUsers = _maxUsersForPlan(plan);
+      if (maxUsers != null && maxUsers > 0) {
+        final activeUsers = (await repo.listByCompany(companyId))
+            .where((user) => user.isActive)
+            .length;
+        if (activeUsers + 1 > maxUsers) {
+          return Response.json(
+            statusCode: 400,
+            body: 'User limit exceeded for subscription plan.',
+          );
+        }
+      }
+    }
+  }
   final body = await context.request.body();
   final jsonBody = jsonDecode(body) as Map<String, dynamic>;
   final email = (jsonBody['email'] as String? ?? '').toLowerCase();
@@ -41,6 +76,12 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     return Response.json(statusCode: 400, body: error.message);
   }
   final now = DateTime.now().toUtc();
+  final normalizedRoles = _ensureBaseRoles(
+    roles: (jsonBody['roles'] as List<dynamic>? ?? [2])
+        .map((e) => e is int ? roleFromWire(e) : e.toString())
+        .toList(),
+    companyType: company?.type ?? 'buyer',
+  );
   final user = UserRecord(
     id: authUserId,
     companyId: companyId,
@@ -50,9 +91,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     salutation: jsonBody['salutation'] as String? ?? '',
     title: jsonBody['title'] as String?,
     telephoneNr: jsonBody['telephoneNr'] as String?,
-    roles: (jsonBody['roles'] as List<dynamic>? ?? [2])
-        .map((e) => e is int ? roleFromWire(e) : e.toString())
-        .toList(),
+    roles: normalizedRoles,
     isActive: true,
     emailConfirmed: false,
     lastLoginRole: null,
@@ -62,4 +101,48 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   await repo.create(user);
   await auth.createRegistrationToken(user);
   return Response(statusCode: 200);
+}
+
+int? _maxUsersForPlan(SubscriptionPlanRecord plan) {
+  for (final rule in plan.rules) {
+    if ((rule['restriction'] as int? ?? -1) == 0) {
+      final limit = rule['upperLimit'] as int? ?? 0;
+      return limit > 0 ? limit : null;
+    }
+  }
+  return null;
+}
+
+List<String> _ensureBaseRoles({
+  required List<String> roles,
+  required String companyType,
+}) {
+  final normalized = <String>{...roles};
+  if (normalized.contains('admin')) {
+    if (companyType == 'buyer' || companyType == 'buyer_provider') {
+      normalized.add('buyer');
+    }
+    if (companyType == 'provider' || companyType == 'buyer_provider') {
+      normalized.add('provider');
+    }
+  }
+  final ordered = <String>[];
+  if (normalized.contains('buyer')) {
+    ordered.add('buyer');
+  }
+  if (normalized.contains('provider')) {
+    ordered.add('provider');
+  }
+  if (normalized.contains('consultant')) {
+    ordered.add('consultant');
+  }
+  if (normalized.contains('admin')) {
+    ordered.add('admin');
+  }
+  for (final role in normalized) {
+    if (!ordered.contains(role)) {
+      ordered.add(role);
+    }
+  }
+  return ordered;
 }

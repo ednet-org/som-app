@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -18,138 +19,192 @@ part 'user_registration.g.dart';
 /// * [title] 
 /// * [telephoneNr] 
 /// * [roles] - 0=buyer,1=provider,2=buyer(default),3=consultant,4=admin
+@BuiltValue()
 abstract class UserRegistration implements Built<UserRegistration, UserRegistrationBuilder> {
-    @BuiltValueField(wireName: r'email')
-    String get email;
+  @BuiltValueField(wireName: r'email')
+  String get email;
 
-    @BuiltValueField(wireName: r'firstName')
-    String get firstName;
+  @BuiltValueField(wireName: r'firstName')
+  String get firstName;
 
-    @BuiltValueField(wireName: r'lastName')
-    String get lastName;
+  @BuiltValueField(wireName: r'lastName')
+  String get lastName;
 
-    @BuiltValueField(wireName: r'salutation')
-    String get salutation;
+  @BuiltValueField(wireName: r'salutation')
+  String get salutation;
 
-    @BuiltValueField(wireName: r'title')
-    String? get title;
+  @BuiltValueField(wireName: r'title')
+  String? get title;
 
-    @BuiltValueField(wireName: r'telephoneNr')
-    String? get telephoneNr;
+  @BuiltValueField(wireName: r'telephoneNr')
+  String? get telephoneNr;
 
-    /// 0=buyer,1=provider,2=buyer(default),3=consultant,4=admin
-    @BuiltValueField(wireName: r'roles')
-    BuiltList<UserRegistrationRolesEnum> get roles;
-    // enum rolesEnum {  0,  1,  2,  3,  4,  };
+  /// 0=buyer,1=provider,2=buyer(default),3=consultant,4=admin
+  @BuiltValueField(wireName: r'roles')
+  BuiltList<UserRegistrationRolesEnum> get roles;
+  // enum rolesEnum {  0,  1,  2,  3,  4,  };
 
-    UserRegistration._();
+  UserRegistration._();
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(UserRegistrationBuilder b) => b;
+  factory UserRegistration([void updates(UserRegistrationBuilder b)]) = _$UserRegistration;
 
-    factory UserRegistration([void updates(UserRegistrationBuilder b)]) = _$UserRegistration;
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(UserRegistrationBuilder b) => b;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<UserRegistration> get serializer => _$UserRegistrationSerializer();
+  @BuiltValueSerializer(custom: true)
+  static Serializer<UserRegistration> get serializer => _$UserRegistrationSerializer();
 }
 
-class _$UserRegistrationSerializer implements StructuredSerializer<UserRegistration> {
-    @override
-    final Iterable<Type> types = const [UserRegistration, _$UserRegistration];
+class _$UserRegistrationSerializer implements PrimitiveSerializer<UserRegistration> {
+  @override
+  final Iterable<Type> types = const [UserRegistration, _$UserRegistration];
 
-    @override
-    final String wireName = r'UserRegistration';
+  @override
+  final String wireName = r'UserRegistration';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, UserRegistration object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        result
-            ..add(r'email')
-            ..add(serializers.serialize(object.email,
-                specifiedType: const FullType(String)));
-        result
-            ..add(r'firstName')
-            ..add(serializers.serialize(object.firstName,
-                specifiedType: const FullType(String)));
-        result
-            ..add(r'lastName')
-            ..add(serializers.serialize(object.lastName,
-                specifiedType: const FullType(String)));
-        result
-            ..add(r'salutation')
-            ..add(serializers.serialize(object.salutation,
-                specifiedType: const FullType(String)));
-        if (object.title != null) {
-            result
-                ..add(r'title')
-                ..add(serializers.serialize(object.title,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.telephoneNr != null) {
-            result
-                ..add(r'telephoneNr')
-                ..add(serializers.serialize(object.telephoneNr,
-                    specifiedType: const FullType(String)));
-        }
-        result
-            ..add(r'roles')
-            ..add(serializers.serialize(object.roles,
-                specifiedType: const FullType(BuiltList, [FullType(UserRegistrationRolesEnum)])));
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    UserRegistration object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    yield r'email';
+    yield serializers.serialize(
+      object.email,
+      specifiedType: const FullType(String),
+    );
+    yield r'firstName';
+    yield serializers.serialize(
+      object.firstName,
+      specifiedType: const FullType(String),
+    );
+    yield r'lastName';
+    yield serializers.serialize(
+      object.lastName,
+      specifiedType: const FullType(String),
+    );
+    yield r'salutation';
+    yield serializers.serialize(
+      object.salutation,
+      specifiedType: const FullType(String),
+    );
+    if (object.title != null) {
+      yield r'title';
+      yield serializers.serialize(
+        object.title,
+        specifiedType: const FullType(String),
+      );
     }
-
-    @override
-    UserRegistration deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = UserRegistrationBuilder();
-
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'email':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.email = valueDes;
-                    break;
-                case r'firstName':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.firstName = valueDes;
-                    break;
-                case r'lastName':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.lastName = valueDes;
-                    break;
-                case r'salutation':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.salutation = valueDes;
-                    break;
-                case r'title':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.title = valueDes;
-                    break;
-                case r'telephoneNr':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.telephoneNr = valueDes;
-                    break;
-                case r'roles':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(UserRegistrationRolesEnum)])) as BuiltList<UserRegistrationRolesEnum>;
-                    result.roles.replace(valueDes);
-                    break;
-            }
-        }
-        return result.build();
+    if (object.telephoneNr != null) {
+      yield r'telephoneNr';
+      yield serializers.serialize(
+        object.telephoneNr,
+        specifiedType: const FullType(String),
+      );
     }
+    yield r'roles';
+    yield serializers.serialize(
+      object.roles,
+      specifiedType: const FullType(BuiltList, [FullType(UserRegistrationRolesEnum)]),
+    );
+  }
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    UserRegistration object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
+
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required UserRegistrationBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'email':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.email = valueDes;
+          break;
+        case r'firstName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.firstName = valueDes;
+          break;
+        case r'lastName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.lastName = valueDes;
+          break;
+        case r'salutation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.salutation = valueDes;
+          break;
+        case r'title':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.title = valueDes;
+          break;
+        case r'telephoneNr':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.telephoneNr = valueDes;
+          break;
+        case r'roles':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(UserRegistrationRolesEnum)]),
+          ) as BuiltList<UserRegistrationRolesEnum>;
+          result.roles.replace(valueDes);
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
+    }
+  }
+
+  @override
+  UserRegistration deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = UserRegistrationBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 
 class UserRegistrationRolesEnum extends EnumClass {

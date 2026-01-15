@@ -20,19 +20,29 @@ Use these accounts if you prefer manual login:
 Buyer
 - Create inquiries with branch/category, deadlines, delivery ZIPs, and optional PDFs.
 - Review offers, accept/reject, and export inquiry lists.
+- Close inquiries and remove uploaded PDFs from the inquiry detail view.
 - Browse ads and view statistics.
+- Update profile details and change password from My Profile.
 
 Provider
 - View assigned inquiries, upload offers, and mark outcomes.
-- Manage ads (draft/active/expired) and view provider statistics.
+- Create ads in draft, activate/deactivate them from the ad detail view, and view provider statistics.
+- Ads auto‑expire after their scheduled end date/banner day; admins receive an expiry email.
+- Pending providers can log in but cannot access inquiries until approved.
 
 Consultant
 - Review all inquiries, filter, and forward to providers.
-- Manage branches/categories and ads across companies.
+- Assignment selection warns when you exceed the allowed provider count.
+- Manage branches/categories (including rename) and approve/decline pending provider branch requests (with optional rejection reason).
+- Manage ads across companies.
+- Consultants receive notifications when providers create or activate ads.
 - Access cross-company statistics and exports.
 
 Consultant Admin
-- Manage consultants and provider subscription data (demo data included).
+- Manage consultants, companies, and provider subscription data.
+- Create, update, or delete subscription plans; updates with active subscribers require confirmation.
+- Provider admins can downgrade plans within the 3‑month renewal window.
+- Activate or deactivate companies as needed.
 
 ## Seed Data
 The system boots with sample companies, users, branches, inquiries, offers, and ads. This allows end-to-end exploration without manual setup. Data is stored in the local Supabase instance, so changes persist across restarts unless you reset the local DB.

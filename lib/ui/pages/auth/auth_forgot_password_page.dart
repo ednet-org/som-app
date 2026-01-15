@@ -100,21 +100,19 @@ class AuthForgotPasswordPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          ActionButton(
-                            // onPrimary:
-                            //     Theme.of(context).colorScheme.errorContainer,
-                            // primary: Theme.of(context).colorScheme.error,
-                            textContent: 'Open link in browser',
-                            onPressed: () async {
-                              final uri =
-                                  Uri.parse(authForgotPasswordState.url);
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri);
-                              } else {
-                                throw 'Could not launch ${authForgotPasswordState.url}';
-                              }
-                            },
-                          ),
+                          if (authForgotPasswordState.url.isNotEmpty)
+                            ActionButton(
+                              textContent: 'Open link in browser',
+                              onPressed: () async {
+                                final uri =
+                                    Uri.parse(authForgotPasswordState.url);
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri);
+                                } else {
+                                  throw 'Could not launch ${authForgotPasswordState.url}';
+                                }
+                              },
+                            ),
                         ],
                       )
                     : Container(),

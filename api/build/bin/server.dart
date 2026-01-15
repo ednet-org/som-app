@@ -9,13 +9,16 @@ import 'package:dart_frog/dart_frog.dart';
 import '../routes/stats/provider.dart' as stats_provider;
 import '../routes/stats/consultant.dart' as stats_consultant;
 import '../routes/stats/buyer.dart' as stats_buyer;
+import '../routes/providers/index.dart' as providers_index;
 import '../routes/providers/[companyId]/decline.dart' as providers_$company_id_decline;
 import '../routes/providers/[companyId]/approve.dart' as providers_$company_id_approve;
 import '../routes/offers/[offerId]/reject.dart' as offers_$offer_id_reject;
 import '../routes/offers/[offerId]/accept.dart' as offers_$offer_id_accept;
 import '../routes/inquiries/index.dart' as inquiries_index;
+import '../routes/inquiries/[inquiryId]/pdf.dart' as inquiries_$inquiry_id_pdf;
 import '../routes/inquiries/[inquiryId]/index.dart' as inquiries_$inquiry_id_index;
 import '../routes/inquiries/[inquiryId]/ignore.dart' as inquiries_$inquiry_id_ignore;
+import '../routes/inquiries/[inquiryId]/close.dart' as inquiries_$inquiry_id_close;
 import '../routes/inquiries/[inquiryId]/assign.dart' as inquiries_$inquiry_id_assign;
 import '../routes/inquiries/[inquiryId]/offers/index.dart' as inquiries_$inquiry_id_offers_index;
 import '../routes/dev/auth/token.dart' as dev_auth_token;
@@ -29,20 +32,30 @@ import '../routes/billing/index.dart' as billing_index;
 import '../routes/billing/[billingId]/index.dart' as billing_$billing_id_index;
 import '../routes/auth/switchRole.dart' as auth_switch_role;
 import '../routes/auth/resetPassword.dart' as auth_reset_password;
+import '../routes/auth/logout.dart' as auth_logout;
 import '../routes/auth/login.dart' as auth_login;
 import '../routes/auth/forgotPassword.dart' as auth_forgot_password;
 import '../routes/auth/confirmEmail.dart' as auth_confirm_email;
+import '../routes/auth/changePassword.dart' as auth_change_password;
 import '../routes/ads/index.dart' as ads_index;
 import '../routes/ads/[adId]/index.dart' as ads_$ad_id_index;
+import '../routes/ads/[adId]/image.dart' as ads_$ad_id_image;
+import '../routes/ads/[adId]/deactivate.dart' as ads_$ad_id_deactivate;
+import '../routes/ads/[adId]/activate.dart' as ads_$ad_id_activate;
 import '../routes/Users/loadUserWithCompany.dart' as users_load_user_with_company;
+import '../routes/Users/[userId]/unlock.dart' as users_$user_id_unlock;
 import '../routes/Subscriptions/upgrade.dart' as subscriptions_upgrade;
 import '../routes/Subscriptions/index.dart' as subscriptions_index;
+import '../routes/Subscriptions/downgrade.dart' as subscriptions_downgrade;
+import '../routes/Subscriptions/current.dart' as subscriptions_current;
 import '../routes/Subscriptions/cancel.dart' as subscriptions_cancel;
+import '../routes/Subscriptions/plans/[planId]/index.dart' as subscriptions_plans_$plan_id_index;
 import '../routes/Subscriptions/cancellations/index.dart' as subscriptions_cancellations_index;
 import '../routes/Subscriptions/cancellations/[cancellationId]/index.dart' as subscriptions_cancellations_$cancellation_id_index;
 import '../routes/Companies/index.dart' as companies_index;
 import '../routes/Companies/[companyId]/registerUser.dart' as companies_$company_id_register_user;
 import '../routes/Companies/[companyId]/index.dart' as companies_$company_id_index;
+import '../routes/Companies/[companyId]/activate.dart' as companies_$company_id_activate;
 import '../routes/Companies/[companyId]/users/index.dart' as companies_$company_id_users_index;
 import '../routes/Companies/[companyId]/users/[userId]/update.dart' as companies_$company_id_users_$user_id_update;
 import '../routes/Companies/[companyId]/users/[userId]/index.dart' as companies_$company_id_users_$user_id_index;
@@ -71,7 +84,9 @@ Handler buildRootHandler() {
     ..mount('/Companies', (context) => buildCompaniesHandler()(context))
     ..mount('/Subscriptions/cancellations/<cancellationId>', (context,cancellationId,) => buildSubscriptionsCancellations$cancellationIdHandler(cancellationId,)(context))
     ..mount('/Subscriptions/cancellations', (context) => buildSubscriptionsCancellationsHandler()(context))
+    ..mount('/Subscriptions/plans/<planId>', (context,planId,) => buildSubscriptionsPlans$planIdHandler(planId,)(context))
     ..mount('/Subscriptions', (context) => buildSubscriptionsHandler()(context))
+    ..mount('/Users/<userId>', (context,userId,) => buildUsers$userIdHandler(userId,)(context))
     ..mount('/Users', (context) => buildUsersHandler()(context))
     ..mount('/ads/<adId>', (context,adId,) => buildAds$adIdHandler(adId,)(context))
     ..mount('/ads', (context) => buildAdsHandler()(context))
@@ -88,6 +103,7 @@ Handler buildRootHandler() {
     ..mount('/inquiries', (context) => buildInquiriesHandler()(context))
     ..mount('/offers/<offerId>', (context,offerId,) => buildOffers$offerIdHandler(offerId,)(context))
     ..mount('/providers/<companyId>', (context,companyId,) => buildProviders$companyIdHandler(companyId,)(context))
+    ..mount('/providers', (context) => buildProvidersHandler()(context))
     ..mount('/stats', (context) => buildStatsHandler()(context));
   return pipeline.addHandler(router);
 }
@@ -109,7 +125,7 @@ Handler buildCompanies$companyIdUsersHandler(String companyId,) {
 Handler buildCompanies$companyIdHandler(String companyId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/registerUser', (context) => companies_$company_id_register_user.onRequest(context,companyId,))..all('/', (context) => companies_$company_id_index.onRequest(context,companyId,));
+    ..all('/registerUser', (context) => companies_$company_id_register_user.onRequest(context,companyId,))..all('/', (context) => companies_$company_id_index.onRequest(context,companyId,))..all('/activate', (context) => companies_$company_id_activate.onRequest(context,companyId,));
   return pipeline.addHandler(router);
 }
 
@@ -134,10 +150,24 @@ Handler buildSubscriptionsCancellationsHandler() {
   return pipeline.addHandler(router);
 }
 
+Handler buildSubscriptionsPlans$planIdHandler(String planId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => subscriptions_plans_$plan_id_index.onRequest(context,planId,));
+  return pipeline.addHandler(router);
+}
+
 Handler buildSubscriptionsHandler() {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/upgrade', (context) => subscriptions_upgrade.onRequest(context,))..all('/', (context) => subscriptions_index.onRequest(context,))..all('/cancel', (context) => subscriptions_cancel.onRequest(context,));
+    ..all('/upgrade', (context) => subscriptions_upgrade.onRequest(context,))..all('/', (context) => subscriptions_index.onRequest(context,))..all('/downgrade', (context) => subscriptions_downgrade.onRequest(context,))..all('/current', (context) => subscriptions_current.onRequest(context,))..all('/cancel', (context) => subscriptions_cancel.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildUsers$userIdHandler(String userId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/unlock', (context) => users_$user_id_unlock.onRequest(context,userId,));
   return pipeline.addHandler(router);
 }
 
@@ -151,7 +181,7 @@ Handler buildUsersHandler() {
 Handler buildAds$adIdHandler(String adId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/', (context) => ads_$ad_id_index.onRequest(context,adId,));
+    ..all('/', (context) => ads_$ad_id_index.onRequest(context,adId,))..all('/image', (context) => ads_$ad_id_image.onRequest(context,adId,))..all('/deactivate', (context) => ads_$ad_id_deactivate.onRequest(context,adId,))..all('/activate', (context) => ads_$ad_id_activate.onRequest(context,adId,));
   return pipeline.addHandler(router);
 }
 
@@ -165,7 +195,7 @@ Handler buildAdsHandler() {
 Handler buildAuthHandler() {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/switchRole', (context) => auth_switch_role.onRequest(context,))..all('/resetPassword', (context) => auth_reset_password.onRequest(context,))..all('/login', (context) => auth_login.onRequest(context,))..all('/forgotPassword', (context) => auth_forgot_password.onRequest(context,))..all('/confirmEmail', (context) => auth_confirm_email.onRequest(context,));
+    ..all('/switchRole', (context) => auth_switch_role.onRequest(context,))..all('/resetPassword', (context) => auth_reset_password.onRequest(context,))..all('/logout', (context) => auth_logout.onRequest(context,))..all('/login', (context) => auth_login.onRequest(context,))..all('/forgotPassword', (context) => auth_forgot_password.onRequest(context,))..all('/confirmEmail', (context) => auth_confirm_email.onRequest(context,))..all('/changePassword', (context) => auth_change_password.onRequest(context,));
   return pipeline.addHandler(router);
 }
 
@@ -228,7 +258,7 @@ Handler buildInquiries$inquiryIdOffersHandler(String inquiryId,) {
 Handler buildInquiries$inquiryIdHandler(String inquiryId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/', (context) => inquiries_$inquiry_id_index.onRequest(context,inquiryId,))..all('/ignore', (context) => inquiries_$inquiry_id_ignore.onRequest(context,inquiryId,))..all('/assign', (context) => inquiries_$inquiry_id_assign.onRequest(context,inquiryId,));
+    ..all('/pdf', (context) => inquiries_$inquiry_id_pdf.onRequest(context,inquiryId,))..all('/', (context) => inquiries_$inquiry_id_index.onRequest(context,inquiryId,))..all('/ignore', (context) => inquiries_$inquiry_id_ignore.onRequest(context,inquiryId,))..all('/close', (context) => inquiries_$inquiry_id_close.onRequest(context,inquiryId,))..all('/assign', (context) => inquiries_$inquiry_id_assign.onRequest(context,inquiryId,));
   return pipeline.addHandler(router);
 }
 
@@ -250,6 +280,13 @@ Handler buildProviders$companyIdHandler(String companyId,) {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/decline', (context) => providers_$company_id_decline.onRequest(context,companyId,))..all('/approve', (context) => providers_$company_id_approve.onRequest(context,companyId,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildProvidersHandler() {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => providers_index.onRequest(context,));
   return pipeline.addHandler(router);
 }
 

@@ -58,6 +58,19 @@ class OfferRepository {
     }).eq('id', id);
   }
 
+  Future<int> countByProvider({
+    required String companyId,
+    String? status,
+  }) async {
+    var query =
+        _client.from('offers').select('id').eq('provider_company_id', companyId);
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
   OfferRecord _mapRow(Map<String, dynamic> row) {
     return OfferRecord(
       id: row['id'] as String,

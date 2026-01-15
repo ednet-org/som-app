@@ -44,6 +44,9 @@ final _cancellations = CancellationRepository(_supabase.adminClient);
 final _storage =
     FileStorage(client: _supabase.adminClient, bucket: _supabase.storageBucket);
 final _notifications = NotificationService(
+  ads: _ads,
+  users: _users,
+  companies: _companies,
   inquiries: _inquiries,
   offers: _offers,
   email: _email,
@@ -121,6 +124,7 @@ Handler middleware(Handler handler) {
       .use(provider<BillingRepository>((_) => _billing))
       .use(provider<CancellationRepository>((_) => _cancellations))
       .use(provider<FileStorage>((_) => _storage))
+      .use(provider<NotificationService>((_) => _notifications))
       .use(provider<AuthService>((_) => _auth))
       .use(provider<RegistrationService>((_) => _registration))
       .use(provider<SomDomainModel>((_) => _domain))

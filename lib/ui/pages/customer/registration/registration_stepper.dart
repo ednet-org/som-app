@@ -18,6 +18,44 @@ class RegistrationStepper extends StatefulWidget {
   _RegistrationStepperState createState() => _RegistrationStepperState();
 }
 
+const List<String> _companySizeOptions = [
+  '0-10',
+  '11-50',
+  '51-100',
+  '101-250',
+  '251-500',
+  '500+',
+];
+
+const List<String> _providerTypeOptions = [
+  'haendler',
+  'hersteller',
+  'dienstleister',
+  'grosshaendler',
+];
+
+List<CompanyRole> _allowedUserRoles(Company company) {
+  final roles = <CompanyRole>[CompanyRole.admin];
+  if (company.isBuyer) {
+    roles.add(CompanyRole.buyer);
+  }
+  if (company.isProvider) {
+    roles.add(CompanyRole.provider);
+  }
+  return roles;
+}
+
+String _roleLabel(CompanyRole role) {
+  switch (role) {
+    case CompanyRole.admin:
+      return 'Admin';
+    case CompanyRole.provider:
+      return 'Provider';
+    case CompanyRole.buyer:
+      return 'Buyer';
+  }
+}
+
 class _RegistrationStepperState extends State<RegistrationStepper> {
   int currStep = 0;
 
@@ -213,6 +251,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                 onChanged: request.company.setRegistrationNumber,
                 required: true,
               ),
+              SomDropDown(
+                value: request.company.companySize,
+                onChanged: request.company.setCompanySize,
+                hint: 'Select company size',
+                label: 'Number of employees',
+                items: _companySizeOptions,
+              ),
               const FormSectionHeader(label: 'Contact details'),
               SomTextInput(
                 label: 'Phone number',
@@ -276,11 +321,24 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         title: stepTitle('Company branches'),
         isActive: currStep == 2,
         state: StepState.indexed,
-        content: SomTags(
-          tags: request.som.availableBranches,
-          selectedTags: request.som.requestedBranches,
-          onAdd: request.som.requestBranch,
-          onRemove: request.som.removeRequestedBranch,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SomTags(
+              tags: request.som.availableBranches,
+              selectedTags: request.som.requestedBranches,
+              onAdd: request.som.requestBranch,
+              onRemove: request.som.removeRequestedBranch,
+            ),
+            const SizedBox(height: 20),
+            SomDropDown(
+              value: request.company.providerData.providerType,
+              onChanged: request.company.providerData.setProviderType,
+              hint: 'Select provider type',
+              label: 'Provider type',
+              items: _providerTypeOptions,
+            ),
+          ],
         ),
       ),
       Step(
@@ -412,6 +470,22 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                           : const SizedBox(height: 1),
                     ],
                   ),
+                  SizedBox(
+                    width: 350,
+                    child: DropdownButtonFormField<CompanyRole>(
+                      value: CompanyRole.admin,
+                      items: const [
+                        DropdownMenuItem(
+                          value: CompanyRole.admin,
+                          child: Text('Admin'),
+                        ),
+                      ],
+                      onChanged: (_) {},
+                      decoration: const InputDecoration(
+                        labelText: 'Role',
+                      ),
+                    ),
+                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     width: 350,
@@ -497,6 +571,26 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                                 )
                               : const SizedBox(height: 1),
                         ],
+                      ),
+                      SizedBox(
+                        width: 350,
+                        child: DropdownButtonFormField<CompanyRole>(
+                          value: request.company.users[index].role,
+                          items: _allowedUserRoles(request.company)
+                              .map((role) => DropdownMenuItem(
+                                    value: role,
+                                    child: Text(_roleLabel(role)),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              request.company.users[index].setRole(value);
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Role',
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: 350,

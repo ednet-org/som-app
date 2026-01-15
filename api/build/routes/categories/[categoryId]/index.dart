@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
@@ -5,9 +7,6 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String categoryId) async {
-  if (context.request.method != HttpMethod.delete) {
-    return Response(statusCode: 405);
-  }
   final auth = await parseAuth(
     context,
     secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
@@ -17,6 +16,28 @@ Future<Response> onRequest(RequestContext context, String categoryId) async {
   if (auth == null || !auth.roles.contains('consultant')) {
     return Response(statusCode: 403);
   }
-  await context.read<BranchRepository>().deleteCategory(categoryId);
-  return Response(statusCode: 200);
+  final repo = context.read<BranchRepository>();
+  if (context.request.method == HttpMethod.delete) {
+    await repo.deleteCategory(categoryId);
+    return Response(statusCode: 200);
+  }
+  if (context.request.method == HttpMethod.put) {
+    final payload =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final name = (payload['name'] as String? ?? '').trim();
+    if (name.isEmpty) {
+      return Response.json(statusCode: 400, body: 'Name is required');
+    }
+    final existing = await repo.findCategoryById(categoryId);
+    if (existing == null) {
+      return Response(statusCode: 404);
+    }
+    final duplicate = await repo.findCategory(existing.branchId, name);
+    if (duplicate != null && duplicate.id != categoryId) {
+      return Response.json(statusCode: 400, body: 'Category already exists');
+    }
+    await repo.updateCategoryName(categoryId, name);
+    return Response(statusCode: 200);
+  }
+  return Response(statusCode: 405);
 }

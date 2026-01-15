@@ -1,16 +1,33 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:uuid/uuid.dart';
 
+import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
+import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/file_storage.dart';
+import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (context.request.method == HttpMethod.get) {
-    final offers =
-        await context.read<OfferRepository>().listByInquiry(inquiryId);
+    final auth = await parseAuth(
+      context,
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
+    );
+    if (auth == null) {
+      return Response(statusCode: 401);
+    }
+    final repo = context.read<OfferRepository>();
+    var offers = await repo.listByInquiry(inquiryId);
+    if (auth.activeRole == 'provider') {
+      offers = offers
+          .where((offer) => offer.providerCompanyId == auth.companyId)
+          .toList();
+    }
     final body = offers
         .map((offer) => {
               'id': offer.id,
@@ -33,8 +50,39 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
           defaultValue: 'som_dev_secret'),
       users: context.read<UserRepository>(),
     );
-    if (auth == null || !auth.roles.contains('provider')) {
+    if (auth == null || auth.activeRole != 'provider') {
       return Response(statusCode: 403);
+    }
+    final provider = await context
+        .read<ProviderRepository>()
+        .findByCompany(auth.companyId);
+    if (provider == null || provider.status != 'active') {
+      return Response.json(
+        statusCode: 403,
+        body: 'Provider registration is pending.',
+      );
+    }
+    final inquiryRepo = context.read<InquiryRepository>();
+    final inquiry = await inquiryRepo.findById(inquiryId);
+    if (inquiry == null) {
+      return Response(statusCode: 404);
+    }
+    final now = DateTime.now().toUtc();
+    if (now.isAfter(inquiry.deadline)) {
+      return Response.json(
+        statusCode: 400,
+        body: 'Offer deadline has passed.',
+      );
+    }
+    final assigned = await inquiryRepo.isAssignedToProvider(
+      inquiryId,
+      auth.companyId,
+    );
+    if (!assigned) {
+      return Response.json(
+        statusCode: 403,
+        body: 'Inquiry not assigned to provider.',
+      );
     }
     if (!(context.request.headers['content-type']
             ?.contains('multipart/form-data') ??
@@ -68,6 +116,9 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       createdAt: DateTime.now().toUtc(),
     );
     await context.read<OfferRepository>().create(offer);
+    await context
+        .read<NotificationService>()
+        .notifyBuyerIfOfferTargetReached(inquiry);
     return Response.json(body: {
       'id': offer.id,
       'status': offer.status,

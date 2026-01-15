@@ -1,5 +1,10 @@
 export 'ads_beam_location.dart';
+export 'branches_beam_location.dart';
+export 'companies_beam_location.dart';
 export 'company_beam_location.dart';
+export 'consultants_beam_location.dart';
 export 'inquiry_beam_location.dart';
+export 'providers_beam_location.dart';
 export 'statistics_beam_location.dart';
+export 'subscriptions_beam_location.dart';
 export 'user_beam_location.dart';

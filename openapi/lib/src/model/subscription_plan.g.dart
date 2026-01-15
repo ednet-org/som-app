@@ -10,6 +10,8 @@ class _$SubscriptionPlan extends SubscriptionPlan {
   @override
   final String? id;
   @override
+  final String? title;
+  @override
   final int? sortPriority;
   @override
   final bool? isActive;
@@ -26,6 +28,7 @@ class _$SubscriptionPlan extends SubscriptionPlan {
 
   _$SubscriptionPlan._(
       {this.id,
+      this.title,
       this.sortPriority,
       this.isActive,
       this.priceInSubunit,
@@ -45,6 +48,7 @@ class _$SubscriptionPlan extends SubscriptionPlan {
     if (identical(other, this)) return true;
     return other is SubscriptionPlan &&
         id == other.id &&
+        title == other.title &&
         sortPriority == other.sortPriority &&
         isActive == other.isActive &&
         priceInSubunit == other.priceInSubunit &&
@@ -56,6 +60,7 @@ class _$SubscriptionPlan extends SubscriptionPlan {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, sortPriority.hashCode);
     _$hash = $jc(_$hash, isActive.hashCode);
     _$hash = $jc(_$hash, priceInSubunit.hashCode);
@@ -69,6 +74,7 @@ class _$SubscriptionPlan extends SubscriptionPlan {
   String toString() {
     return (newBuiltValueToStringHelper(r'SubscriptionPlan')
           ..add('id', id)
+          ..add('title', title)
           ..add('sortPriority', sortPriority)
           ..add('isActive', isActive)
           ..add('priceInSubunit', priceInSubunit)
@@ -85,6 +91,10 @@ class SubscriptionPlanBuilder
   String? _id;
   String? get id => _$this._id;
   set id(String? id) => _$this._id = id;
+
+  String? _title;
+  String? get title => _$this._title;
+  set title(String? title) => _$this._title = title;
 
   int? _sortPriority;
   int? get sortPriority => _$this._sortPriority;
@@ -117,6 +127,7 @@ class SubscriptionPlanBuilder
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _title = $v.title;
       _sortPriority = $v.sortPriority;
       _isActive = $v.isActive;
       _priceInSubunit = $v.priceInSubunit;
@@ -146,6 +157,7 @@ class SubscriptionPlanBuilder
       _$result = _$v ??
           _$SubscriptionPlan._(
             id: id,
+            title: title,
             sortPriority: sortPriority,
             isActive: isActive,
             priceInSubunit: priceInSubunit,

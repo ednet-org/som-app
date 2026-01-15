@@ -4,10 +4,15 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:built_collection/built_collection.dart';
+import 'package:openapi/src/api_util.dart';
+import 'package:openapi/src/model/provider_summary.dart';
 import 'package:openapi/src/model/providers_company_id_approve_post_request.dart';
+import 'package:openapi/src/model/subscriptions_cancel_post_request.dart';
 
 class ProvidersApi {
 
@@ -42,7 +47,7 @@ class ProvidersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/providers/{companyId}/approve'.replaceAll('{' r'companyId' '}', companyId.toString());
+    final _path = r'/providers/{companyId}/approve'.replaceAll('{' r'companyId' '}', encodeQueryParameter(_serializers, companyId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -97,6 +102,7 @@ class ProvidersApi {
   ///
   /// Parameters:
   /// * [companyId] 
+  /// * [subscriptionsCancelPostRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -108,6 +114,7 @@ class ProvidersApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> providersCompanyIdDeclinePost({ 
     required String companyId,
+    SubscriptionsCancelPostRequest? subscriptionsCancelPostRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -115,9 +122,94 @@ class ProvidersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/providers/{companyId}/decline'.replaceAll('{' r'companyId' '}', companyId.toString());
+    final _path = r'/providers/{companyId}/decline'.replaceAll('{' r'companyId' '}', encodeQueryParameter(_serializers, companyId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(SubscriptionsCancelPostRequest);
+      _bodyData = subscriptionsCancelPostRequest == null ? null : _serializers.serialize(subscriptionsCancelPostRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
+  /// List providers
+  /// 
+  ///
+  /// Parameters:
+  /// * [branchId] 
+  /// * [companySize] 
+  /// * [providerType] 
+  /// * [zipPrefix] 
+  /// * [status] 
+  /// * [claimed] 
+  /// * [format] - Use format=csv to export providers list.
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BuiltList<ProviderSummary>] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BuiltList<ProviderSummary>>> providersGet({ 
+    String? branchId,
+    String? companySize,
+    String? providerType,
+    String? zipPrefix,
+    String? status,
+    String? claimed,
+    String? format,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/providers';
+    final _options = Options(
+      method: r'GET',
       headers: <String, dynamic>{
         ...?headers,
       },
@@ -134,15 +226,54 @@ class ProvidersApi {
       validateStatus: validateStatus,
     );
 
+    final _queryParameters = <String, dynamic>{
+      if (branchId != null) r'branchId': encodeQueryParameter(_serializers, branchId, const FullType(String)),
+      if (companySize != null) r'companySize': encodeQueryParameter(_serializers, companySize, const FullType(String)),
+      if (providerType != null) r'providerType': encodeQueryParameter(_serializers, providerType, const FullType(String)),
+      if (zipPrefix != null) r'zipPrefix': encodeQueryParameter(_serializers, zipPrefix, const FullType(String)),
+      if (status != null) r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
+      if (claimed != null) r'claimed': encodeQueryParameter(_serializers, claimed, const FullType(String)),
+      if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
+    };
+
     final _response = await _dio.request<Object>(
       _path,
       options: _options,
+      queryParameters: _queryParameters,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    BuiltList<ProviderSummary>? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(ProviderSummary)]),
+      ) as BuiltList<ProviderSummary>;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BuiltList<ProviderSummary>>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
 }

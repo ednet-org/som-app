@@ -65,8 +65,8 @@ class AdsRepository {
         .select('id')
         .eq('company_id', companyId)
         .eq('status', 'active')
-        .gte('created_at', start.toIso8601String())
-        .lt('created_at', end.toIso8601String()) as List<dynamic>;
+        .gte('start_date', start.toIso8601String())
+        .lt('start_date', end.toIso8601String()) as List<dynamic>;
     return rows.length;
   }
 

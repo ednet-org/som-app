@@ -24,6 +24,8 @@ class InquiryRepository {
       'provider_criteria_json': inquiry.providerCriteria.toJson(),
       'contact_json': inquiry.contactInfo.toJson(),
       'notified_at': inquiry.notifiedAt?.toIso8601String(),
+      'assigned_at': inquiry.assignedAt?.toIso8601String(),
+      'closed_at': inquiry.closedAt?.toIso8601String(),
       'created_at': inquiry.createdAt.toIso8601String(),
       'updated_at': inquiry.updatedAt.toIso8601String(),
     });
@@ -75,9 +77,38 @@ class InquiryRepository {
     }).eq('id', id);
   }
 
+  Future<void> updatePdfPath(String id, String pdfPath) async {
+    await _client.from('inquiries').update({
+      'pdf_path': pdfPath,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
+  Future<void> clearPdfPath(String id) async {
+    await _client.from('inquiries').update({
+      'pdf_path': null,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
   Future<void> markNotified(String id, DateTime notifiedAt) async {
     await _client.from('inquiries').update({
       'notified_at': notifiedAt.toIso8601String(),
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
+  Future<void> markAssigned(String id, DateTime assignedAt) async {
+    await _client.from('inquiries').update({
+      'assigned_at': assignedAt.toIso8601String(),
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
+  Future<void> closeInquiry(String id, DateTime closedAt) async {
+    await _client.from('inquiries').update({
+      'status': 'closed',
+      'closed_at': closedAt.toIso8601String(),
       'updated_at': DateTime.now().toUtc().toIso8601String(),
     }).eq('id', id);
   }
@@ -97,6 +128,38 @@ class InquiryRepository {
         'assigned_by_user_id': assignedByUserId,
       });
     }
+    await _client.from('inquiries').update({
+      'assigned_at': now,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', inquiryId);
+  }
+
+  Future<int> countAssignmentsForProvider(String providerCompanyId) async {
+    final rows = await _client
+        .from('inquiry_assignments')
+        .select('id')
+        .eq('provider_company_id', providerCompanyId) as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<int> countAssignmentsForInquiry(String inquiryId) async {
+    final rows = await _client
+        .from('inquiry_assignments')
+        .select('id')
+        .eq('inquiry_id', inquiryId) as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<bool> isAssignedToProvider(
+    String inquiryId,
+    String providerCompanyId,
+  ) async {
+    final rows = await _client
+        .from('inquiry_assignments')
+        .select('id')
+        .eq('inquiry_id', inquiryId)
+        .eq('provider_company_id', providerCompanyId) as List<dynamic>;
+    return rows.isNotEmpty;
   }
 
   InquiryRecord _mapRow(Map<String, dynamic> row) {
@@ -122,6 +185,8 @@ class InquiryRepository {
         decodeJsonMap(row['contact_json']),
       ),
       notifiedAt: parseDateOrNull(row['notified_at']),
+      assignedAt: parseDateOrNull(row['assigned_at']),
+      closedAt: parseDateOrNull(row['closed_at']),
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
     );

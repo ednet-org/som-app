@@ -30,10 +30,13 @@ void main() {
 
         final consultantToken =
             await _login(api, 'consultant@som.local', 'DevPass123!');
+        final consultantAdminToken =
+            await _login(api, 'consultant-admin@som.local', 'DevPass123!');
         final buyerToken =
             await _login(api, 'buyer-admin@som.local', 'DevPass123!');
         final providerToken =
             await _login(api, 'provider-admin@som.local', 'DevPass123!');
+        final stamp = DateTime.now().millisecondsSinceEpoch;
 
         final subscriptions = await api.getSubscriptionsApi().subscriptionsGet();
         expect(subscriptions.statusCode, 200);
@@ -42,12 +45,54 @@ void main() {
         expect(subscriptionsList, isNotEmpty);
         final planId = subscriptionsList!.first.id!;
 
+        final createdPlan = await api.getSubscriptionsApi().subscriptionsPost(
+              headers: _authHeader(consultantAdminToken),
+              subscriptionPlanInput: SubscriptionPlanInput((b) => b
+                ..title = 'Test Plan $stamp'
+                ..sortPriority = 99
+                ..priceInSubunit = 12345
+                ..isActive = true
+                ..rules.add(SubscriptionPlanRulesInner((r) => r
+                  ..restriction = 0
+                  ..upperLimit = 1))),
+            );
+        expect(createdPlan.statusCode, 200);
+        final createdPlanId = createdPlan.data?.id;
+        expect(createdPlanId, isNotNull);
+
+        final updatePlanResponse = await api
+            .getSubscriptionsApi()
+            .subscriptionsPlansPlanIdPut(
+              planId: createdPlanId!,
+              headers: _authHeader(consultantAdminToken),
+              subscriptionPlanInput: SubscriptionPlanInput((b) => b
+                ..title = 'Test Plan $stamp Updated'
+                ..sortPriority = 100
+                ..priceInSubunit = 999
+                ..isActive = true),
+            );
+        expect(updatePlanResponse.statusCode, 200);
+
+        final currentSubscription = await api
+            .getSubscriptionsApi()
+            .subscriptionsCurrentGet(headers: _authHeader(providerToken));
+        expect(currentSubscription.statusCode, anyOf(200, 404));
+
+        final deletePlanResponse = await api
+            .getSubscriptionsApi()
+            .subscriptionsPlansPlanIdDelete(
+              planId: createdPlanId,
+              headers: _authHeader(consultantAdminToken),
+            );
+        expect(deletePlanResponse.statusCode, 200);
+
         var branchesResponse = await api.getBranchesApi().branchesGet();
         expect(branchesResponse.statusCode, 200);
         if (branchesResponse.data == null || branchesResponse.data!.isEmpty) {
           await api.getBranchesApi().branchesPost(
                 headers: _authHeader(consultantToken),
-                branchesGetRequest: BranchesGetRequest((b) => b..name = 'Seed'),
+                branchesPostRequest:
+                    BranchesPostRequest((b) => b..name = 'Seed'),
               );
           branchesResponse = await api.getBranchesApi().branchesGet();
         }
@@ -58,8 +103,8 @@ void main() {
           await api.getBranchesApi().branchesBranchIdCategoriesPost(
                 branchId: branchId,
                 headers: _authHeader(consultantToken),
-                branchesGetRequest:
-                    BranchesGetRequest((b) => b..name = 'Category'),
+                branchesPostRequest:
+                    BranchesPostRequest((b) => b..name = 'Category'),
               );
           branchesResponse = await api.getBranchesApi().branchesGet();
         }
@@ -67,10 +112,14 @@ void main() {
             .firstWhere((item) => item.id == branchId);
         categoryId = refreshedBranch.categories!.first.id!;
 
+        final providersList = await api.getProvidersApi().providersGet(
+              headers: _authHeader(consultantToken),
+            );
+        expect(providersList.statusCode, 200);
+
         final companies = await api.getCompaniesApi().companiesGet();
         expect(companies.statusCode, 200);
 
-        final stamp = DateTime.now().millisecondsSinceEpoch;
         final buyerEmail = 'buyer-admin-$stamp@som.local';
         final buyerRegistrationNr = 'REG-$stamp';
 
@@ -377,18 +426,31 @@ void main() {
                 );
         expect(rejectResponse.statusCode, 200);
 
+        final adStart = DateTime.now().toUtc().add(const Duration(days: 2));
+        final adEnd = adStart.add(const Duration(days: 7));
         final adResponse = await api.getAdsApi().createAd(
               headers: _authHeader(providerToken),
               createAdRequest: CreateAdRequest((b) => b
                 ..type = 'normal'
-                ..status = 'active'
+                ..status = CreateAdRequestStatusEnum.draft
                 ..branchId = branchId
                 ..url = 'https://example.com'
                 ..imagePath = '/tmp/ad.png'
-                ..headline = 'Demo Ad'),
+                ..headline = 'Demo Ad'
+                ..startDate = adStart.toIso8601String()
+                ..endDate = adEnd.toIso8601String()),
             );
         expect(adResponse.statusCode, 200);
         final adId = adResponse.data!.id!;
+
+        final adActivate = await api.getAdsApi().adsAdIdActivatePost(
+              adId: adId,
+              headers: _authHeader(providerToken),
+              adActivationRequest: AdActivationRequest((b) => b
+                ..startDate = adStart
+                ..endDate = adEnd),
+            );
+        expect(adActivate.statusCode, 200);
 
         final adsList = await api.getAdsApi().adsGet();
         expect(adsList.statusCode, 200);
@@ -407,12 +469,17 @@ void main() {
               headers: _authHeader(providerToken),
               ad: Ad((b) => b
                 ..id = adId
-                ..status = 'draft'
                 ..branchId = branchId
                 ..url = 'https://example.com'
                 ..imagePath = '/tmp/ad.png'),
             );
         expect(adUpdate.statusCode, 200);
+
+        final adDeactivate = await api.getAdsApi().adsAdIdDeactivatePost(
+              adId: adId,
+              headers: _authHeader(providerToken),
+            );
+        expect(adDeactivate.statusCode, 200);
 
         final adDelete = await api.getAdsApi().adsAdIdDelete(
               adId: adId,
@@ -490,7 +557,8 @@ void main() {
         final newBranchName = 'Dev Branch $stamp';
         await api.getBranchesApi().branchesPost(
               headers: _authHeader(consultantToken),
-              branchesGetRequest: BranchesGetRequest((b) => b..name = newBranchName),
+              branchesPostRequest:
+                  BranchesPostRequest((b) => b..name = newBranchName),
             );
         final branchesAfter = await api.getBranchesApi().branchesGet();
         final newBranch = branchesAfter.data!
@@ -498,7 +566,7 @@ void main() {
         await api.getBranchesApi().branchesBranchIdCategoriesPost(
               branchId: newBranch.id!,
               headers: _authHeader(consultantToken),
-              branchesGetRequest: BranchesGetRequest((b) => b..name = 'Dev Cat'),
+              branchesPostRequest: BranchesPostRequest((b) => b..name = 'Dev Cat'),
             );
         final refreshedBranches = await api.getBranchesApi().branchesGet();
         final refreshedNewBranch = refreshedBranches.data!
@@ -535,7 +603,8 @@ void main() {
                 ..accountOwner = 'Provider Admin'))
               ..branchIds = ListBuilder(['pending-branch-$stamp'])
               ..subscriptionPlanId = planId
-              ..paymentInterval = ProviderRegistrationDataPaymentIntervalEnum.number0))
+              ..paymentInterval = ProviderRegistrationDataPaymentIntervalEnum.number0
+              ..providerType = 'haendler'))
             ..termsAccepted = true
             ..privacyAccepted = true))
           ..users.add(UserRegistration((u) => u

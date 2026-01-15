@@ -4,10 +4,13 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:openapi/src/api_util.dart';
+import 'package:openapi/src/model/auth_change_password_post200_response.dart';
+import 'package:openapi/src/model/auth_change_password_post_request.dart';
 import 'package:openapi/src/model/auth_forgot_password_post_request.dart';
 import 'package:openapi/src/model/auth_login_post200_response.dart';
 import 'package:openapi/src/model/auth_login_post_request.dart';
@@ -22,6 +25,107 @@ class AuthApi {
   final Serializers _serializers;
 
   const AuthApi(this._dio, this._serializers);
+
+  /// Change password for authenticated user
+  /// 
+  ///
+  /// Parameters:
+  /// * [authChangePasswordPostRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AuthChangePasswordPost200Response] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AuthChangePasswordPost200Response>> authChangePasswordPost({ 
+    required AuthChangePasswordPostRequest authChangePasswordPostRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/auth/changePassword';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(AuthChangePasswordPostRequest);
+      _bodyData = _serializers.serialize(authChangePasswordPostRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AuthChangePasswordPost200Response? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(AuthChangePasswordPost200Response),
+      ) as AuthChangePasswordPost200Response;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AuthChangePasswordPost200Response>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
 
   /// Confirm email registration token
   /// 
@@ -142,10 +246,11 @@ class AuthApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    String _responseData;
+    String? _responseData;
 
     try {
-      _responseData = _response.data as String;
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : rawResponse as String;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -233,13 +338,13 @@ class AuthApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    AuthLoginPost200Response _responseData;
+    AuthLoginPost200Response? _responseData;
 
     try {
-      const _responseType = FullType(AuthLoginPost200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(AuthLoginPost200Response),
       ) as AuthLoginPost200Response;
 
     } catch (error, stackTrace) {
@@ -253,6 +358,85 @@ class AuthApi {
     }
 
     return Response<AuthLoginPost200Response>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Logout and revoke session
+  /// 
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AuthChangePasswordPost200Response] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AuthChangePasswordPost200Response>> authLogoutPost({ 
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/auth/logout';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AuthChangePasswordPost200Response? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(AuthChangePasswordPost200Response),
+      ) as AuthChangePasswordPost200Response;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AuthChangePasswordPost200Response>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -401,13 +585,13 @@ class AuthApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    AuthSwitchRolePost200Response _responseData;
+    AuthSwitchRolePost200Response? _responseData;
 
     try {
-      const _responseType = FullType(AuthSwitchRolePost200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(AuthSwitchRolePost200Response),
       ) as AuthSwitchRolePost200Response;
 
     } catch (error, stackTrace) {

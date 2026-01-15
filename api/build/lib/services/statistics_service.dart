@@ -38,12 +38,17 @@ class StatisticsService {
     DateTime? from,
     DateTime? to,
   }) async {
-    final openCount = await _countOffers(
+    final assignmentCount = await _countAssignments(
       companyId: companyId,
       from: from,
       to: to,
-      status: 'open',
     );
+    final totalOffers = await _countOffersTotal(
+      companyId: companyId,
+      from: from,
+      to: to,
+    );
+    final openCount = (assignmentCount - totalOffers).clamp(0, assignmentCount);
     final createdCount = await _countOffers(
       companyId: companyId,
       from: from,
@@ -62,12 +67,18 @@ class StatisticsService {
       to: to,
       status: 'accepted',
     );
+    final ignoredCount = await _countOffers(
+      companyId: companyId,
+      from: from,
+      to: to,
+      status: 'ignored',
+    );
     return {
       'open': openCount,
       'offer_created': createdCount,
       'lost': lostCount,
       'won': wonCount,
-      'ignored': 0,
+      'ignored': ignoredCount,
     };
   }
 
@@ -181,6 +192,42 @@ class StatisticsService {
     return rows.length;
   }
 
+  Future<int> _countOffersTotal({
+    required String companyId,
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    var query =
+        _client.from('offers').select('id').eq('provider_company_id', companyId);
+    if (from != null) {
+      query = query.gte('created_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('created_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
+  Future<int> _countAssignments({
+    required String companyId,
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    var query = _client
+        .from('inquiry_assignments')
+        .select('id')
+        .eq('provider_company_id', companyId);
+    if (from != null) {
+      query = query.gte('assigned_at', from.toIso8601String());
+    }
+    if (to != null) {
+      query = query.lte('assigned_at', to.toIso8601String());
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
+  }
+
   Future<int> _countOffersGlobal({
     DateTime? from,
     DateTime? to,
@@ -235,6 +282,8 @@ class StatisticsService {
         decodeJsonMap(row['contact_json']),
       ),
       notifiedAt: parseDateOrNull(row['notified_at']),
+      assignedAt: parseDateOrNull(row['assigned_at']),
+      closedAt: parseDateOrNull(row['closed_at']),
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
     );

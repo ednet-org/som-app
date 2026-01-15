@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -12,61 +13,97 @@ part 'providers_company_id_approve_post_request.g.dart';
 ///
 /// Properties:
 /// * [approvedBranchIds] 
+@BuiltValue()
 abstract class ProvidersCompanyIdApprovePostRequest implements Built<ProvidersCompanyIdApprovePostRequest, ProvidersCompanyIdApprovePostRequestBuilder> {
-    @BuiltValueField(wireName: r'approvedBranchIds')
-    BuiltList<String>? get approvedBranchIds;
+  @BuiltValueField(wireName: r'approvedBranchIds')
+  BuiltList<String>? get approvedBranchIds;
 
-    ProvidersCompanyIdApprovePostRequest._();
+  ProvidersCompanyIdApprovePostRequest._();
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(ProvidersCompanyIdApprovePostRequestBuilder b) => b;
+  factory ProvidersCompanyIdApprovePostRequest([void updates(ProvidersCompanyIdApprovePostRequestBuilder b)]) = _$ProvidersCompanyIdApprovePostRequest;
 
-    factory ProvidersCompanyIdApprovePostRequest([void updates(ProvidersCompanyIdApprovePostRequestBuilder b)]) = _$ProvidersCompanyIdApprovePostRequest;
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(ProvidersCompanyIdApprovePostRequestBuilder b) => b;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<ProvidersCompanyIdApprovePostRequest> get serializer => _$ProvidersCompanyIdApprovePostRequestSerializer();
+  @BuiltValueSerializer(custom: true)
+  static Serializer<ProvidersCompanyIdApprovePostRequest> get serializer => _$ProvidersCompanyIdApprovePostRequestSerializer();
 }
 
-class _$ProvidersCompanyIdApprovePostRequestSerializer implements StructuredSerializer<ProvidersCompanyIdApprovePostRequest> {
-    @override
-    final Iterable<Type> types = const [ProvidersCompanyIdApprovePostRequest, _$ProvidersCompanyIdApprovePostRequest];
+class _$ProvidersCompanyIdApprovePostRequestSerializer implements PrimitiveSerializer<ProvidersCompanyIdApprovePostRequest> {
+  @override
+  final Iterable<Type> types = const [ProvidersCompanyIdApprovePostRequest, _$ProvidersCompanyIdApprovePostRequest];
 
-    @override
-    final String wireName = r'ProvidersCompanyIdApprovePostRequest';
+  @override
+  final String wireName = r'ProvidersCompanyIdApprovePostRequest';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, ProvidersCompanyIdApprovePostRequest object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.approvedBranchIds != null) {
-            result
-                ..add(r'approvedBranchIds')
-                ..add(serializers.serialize(object.approvedBranchIds,
-                    specifiedType: const FullType(BuiltList, [FullType(String)])));
-        }
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    ProvidersCompanyIdApprovePostRequest object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    if (object.approvedBranchIds != null) {
+      yield r'approvedBranchIds';
+      yield serializers.serialize(
+        object.approvedBranchIds,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
     }
+  }
 
-    @override
-    ProvidersCompanyIdApprovePostRequest deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = ProvidersCompanyIdApprovePostRequestBuilder();
+  @override
+  Object serialize(
+    Serializers serializers,
+    ProvidersCompanyIdApprovePostRequest object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'approvedBranchIds':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(String)])) as BuiltList<String>;
-                    result.approvedBranchIds.replace(valueDes);
-                    break;
-            }
-        }
-        return result.build();
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required ProvidersCompanyIdApprovePostRequestBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'approvedBranchIds':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>;
+          result.approvedBranchIds.replace(valueDes);
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
     }
+  }
+
+  @override
+  ProvidersCompanyIdApprovePostRequest deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = ProvidersCompanyIdApprovePostRequestBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 

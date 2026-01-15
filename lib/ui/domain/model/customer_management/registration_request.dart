@@ -6,6 +6,7 @@ import '../../application/application.dart';
 import '../shared/som.dart';
 import 'company.dart';
 import 'roles.dart';
+import 'registration_user.dart';
 import 'payment-interval.dart';
 
 part 'registration_request.g.dart';
@@ -82,6 +83,7 @@ abstract class _RegistrationRequest with Store {
             ? ProviderRegistrationDataPaymentIntervalEnum.number0
             : ProviderRegistrationDataPaymentIntervalEnum.number1
         ..subscriptionPlanId = selectedPlanId
+        ..providerType = company.providerData.providerType
         ..branchIds = ListBuilder<String>(selectedBranchIds);
     }
 
@@ -103,14 +105,26 @@ abstract class _RegistrationRequest with Store {
       ..privacyAccepted = company.privacyAccepted
       ..build();
 
-    final List<UserRegistrationRolesEnum> defaultRoles = company.role == Roles.Provider
-        ? [UserRegistrationRolesEnum.number1]
-        : company.role == Roles.ProviderAndBuyer
-            ? [
-                UserRegistrationRolesEnum.number2,
-                UserRegistrationRolesEnum.number1
-              ]
-            : [UserRegistrationRolesEnum.number2];
+    List<UserRegistrationRolesEnum> resolveRoles(RegistrationUser user) {
+      switch (user.role) {
+        case CompanyRole.admin:
+          final roles = <UserRegistrationRolesEnum>[
+            UserRegistrationRolesEnum.number4,
+          ];
+          if (company.isBuyer) {
+            roles.add(UserRegistrationRolesEnum.number0);
+          }
+          if (company.isProvider) {
+            roles.add(UserRegistrationRolesEnum.number1);
+          }
+          return roles;
+        case CompanyRole.provider:
+          return [UserRegistrationRolesEnum.number1];
+        case CompanyRole.buyer:
+        default:
+          return [UserRegistrationRolesEnum.number0];
+      }
+    }
 
     ListBuilder<UserRegistration>? usersRequest = ListBuilder<UserRegistration>(
         company.users.map((element) => (UserRegistrationBuilder()
@@ -119,7 +133,8 @@ abstract class _RegistrationRequest with Store {
               ..lastName = element.lastName
               ..salutation = element.salutation
               ..telephoneNr = element.phone
-              ..roles = ListBuilder<UserRegistrationRolesEnum>(defaultRoles)
+              ..roles = ListBuilder<UserRegistrationRolesEnum>(
+                  resolveRoles(element))
               ..title = element.title)
             .build()))
           ..update((p0) => p0.add((UserRegistrationBuilder()
@@ -129,7 +144,7 @@ abstract class _RegistrationRequest with Store {
                 ..salutation = company.admin.salutation
                 ..telephoneNr = company.admin.phone
                 ..roles = ListBuilder<UserRegistrationRolesEnum>(
-                    [UserRegistrationRolesEnum.number4])
+                    resolveRoles(company.admin))
                 ..title = company.admin.title)
               .build()));
 

@@ -19,6 +19,15 @@ Future<Response> onRequest(RequestContext context, String adId) async {
     if (auth == null) {
       return Response(statusCode: 401);
     }
+    final existing = await repo.findById(adId);
+    if (existing == null) {
+      return Response(statusCode: 404);
+    }
+    final canManage = auth.roles.contains('consultant') ||
+        (auth.activeRole == 'provider' && existing.companyId == auth.companyId);
+    if (!canManage) {
+      return Response(statusCode: 403);
+    }
     await repo.delete(adId);
     return Response(statusCode: 200);
   }
@@ -38,25 +47,64 @@ Future<Response> onRequest(RequestContext context, String adId) async {
     if (existing == null) {
       return Response(statusCode: 404);
     }
+    final canManage = auth.roles.contains('consultant') ||
+        (auth.activeRole == 'provider' && existing.companyId == auth.companyId);
+    if (!canManage) {
+      return Response(statusCode: 403);
+    }
+    if (body.containsKey('status') &&
+        (body['status'] as String? ?? existing.status) != existing.status) {
+      return Response.json(
+          statusCode: 400,
+          body: 'Use activate/deactivate endpoints to change ad status');
+    }
+    final startDate = body['startDate'] == null
+        ? existing.startDate
+        : DateTime.parse(body['startDate'] as String);
+    final endDate = body['endDate'] == null
+        ? existing.endDate
+        : DateTime.parse(body['endDate'] as String);
+    final bannerDate = body['bannerDate'] == null
+        ? existing.bannerDate
+        : DateTime.parse(body['bannerDate'] as String);
+    if (existing.type != 'banner') {
+      if (startDate == null || endDate == null) {
+        return Response.json(
+            statusCode: 400,
+            body: 'Start date and end date are required for ads');
+      }
+      if (!endDate.isAfter(startDate)) {
+        return Response.json(
+            statusCode: 400, body: 'End date must be after start date');
+      }
+      if (endDate.difference(startDate).inDays > 14) {
+        return Response.json(
+            statusCode: 400,
+            body: 'Ad period cannot exceed 14 days');
+      }
+    }
+    if (existing.type == 'banner') {
+      if (bannerDate == null) {
+        return Response.json(statusCode: 400, body: 'Banner date is required');
+      }
+      if (!bannerDate.isAfter(DateTime.now().toUtc())) {
+        return Response.json(
+            statusCode: 400, body: 'Banner date must be in the future');
+      }
+    }
     final updated = AdRecord(
       id: existing.id,
       companyId: existing.companyId,
       type: existing.type,
-      status: body['status'] as String? ?? existing.status,
+      status: existing.status,
       branchId: body['branchId'] as String? ?? existing.branchId,
       url: body['url'] as String? ?? existing.url,
       imagePath: body['imagePath'] as String? ?? existing.imagePath,
       headline: body['headline'] as String? ?? existing.headline,
       description: body['description'] as String? ?? existing.description,
-      startDate: body['startDate'] == null
-          ? existing.startDate
-          : DateTime.parse(body['startDate'] as String),
-      endDate: body['endDate'] == null
-          ? existing.endDate
-          : DateTime.parse(body['endDate'] as String),
-      bannerDate: body['bannerDate'] == null
-          ? existing.bannerDate
-          : DateTime.parse(body['bannerDate'] as String),
+      startDate: startDate,
+      endDate: endDate,
+      bannerDate: bannerDate,
       createdAt: existing.createdAt,
       updatedAt: DateTime.now().toUtc(),
     );
@@ -67,6 +115,21 @@ Future<Response> onRequest(RequestContext context, String adId) async {
     final ad = await repo.findById(adId);
     if (ad == null) {
       return Response(statusCode: 404);
+    }
+    if (ad.status != 'active') {
+      final auth = await parseAuth(
+        context,
+        secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+            defaultValue: 'som_dev_secret'),
+        users: context.read<UserRepository>(),
+      );
+      final canView = auth != null &&
+          (auth.roles.contains('consultant') ||
+              (auth.activeRole == 'provider' &&
+                  ad.companyId == auth.companyId));
+      if (!canView) {
+        return Response(statusCode: 403);
+      }
     }
     return Response.json(
       body: {

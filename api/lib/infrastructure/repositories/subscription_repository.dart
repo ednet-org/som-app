@@ -19,6 +19,29 @@ class SubscriptionRepository {
     });
   }
 
+  Future<void> updatePlan(SubscriptionPlanRecord plan) async {
+    await _client.from('subscription_plans').update({
+      'name': plan.name,
+      'sort_priority': plan.sortPriority,
+      'is_active': plan.isActive,
+      'price_in_subunit': plan.priceInSubunit,
+      'rules_json': plan.rules,
+    }).eq('id', plan.id);
+  }
+
+  Future<void> deletePlan(String id) async {
+    await _client.from('subscription_plans').delete().eq('id', id);
+  }
+
+  Future<int> countActiveSubscriptionsByPlan(String planId) async {
+    final rows = await _client
+        .from('subscriptions')
+        .select('id')
+        .eq('plan_id', planId)
+        .eq('status', 'active') as List<dynamic>;
+    return rows.length;
+  }
+
   Future<List<SubscriptionPlanRecord>> listPlans() async {
     final rows = await _client
         .from('subscription_plans')

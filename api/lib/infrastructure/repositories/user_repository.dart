@@ -21,6 +21,10 @@ class UserRepository {
       'is_active': user.isActive,
       'email_confirmed': user.emailConfirmed,
       'last_login_role': user.lastLoginRole,
+      'failed_login_attempts': user.failedLoginAttempts,
+      'last_failed_login_at': user.lastFailedLoginAt?.toIso8601String(),
+      'locked_at': user.lockedAt?.toIso8601String(),
+      'lock_reason': user.lockReason,
       'created_at': user.createdAt.toIso8601String(),
       'updated_at': user.updatedAt.toIso8601String(),
     });
@@ -81,6 +85,10 @@ class UserRepository {
       'is_active': user.isActive,
       'email_confirmed': user.emailConfirmed,
       'last_login_role': user.lastLoginRole,
+      'failed_login_attempts': user.failedLoginAttempts,
+      'last_failed_login_at': user.lastFailedLoginAt?.toIso8601String(),
+      'locked_at': user.lockedAt?.toIso8601String(),
+      'lock_reason': user.lockReason,
       'updated_at': user.updatedAt.toIso8601String(),
     }).eq('id', user.id);
   }
@@ -131,6 +139,10 @@ class UserRepository {
       isActive: row['is_active'] as bool? ?? false,
       emailConfirmed: row['email_confirmed'] as bool? ?? false,
       lastLoginRole: row['last_login_role'] as String?,
+      failedLoginAttempts: row['failed_login_attempts'] as int? ?? 0,
+      lastFailedLoginAt: parseDateOrNull(row['last_failed_login_at']),
+      lockedAt: parseDateOrNull(row['locked_at']),
+      lockReason: row['lock_reason'] as String?,
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
       passwordHash: row['password_hash'] as String?,

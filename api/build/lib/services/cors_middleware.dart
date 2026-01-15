@@ -20,6 +20,5 @@ const _headers = <String, String>{
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
   'Access-Control-Allow-Headers':
       'Origin, Content-Type, Authorization, Accept, X-Requested-With, '
-      'Access-Control-Allow-Origin, Access-Control-Allow-Headers, '
-      'Access-Control-Allow-Methods, apikey, x-api-key',
+      'Access-Control-Allow-Origin, apikey, x-api-key',
 };

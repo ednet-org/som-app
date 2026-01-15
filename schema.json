@@ -1,0 +1,1847 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ednet.one/schema/ednet-dsl-.json",
+  "title": "EDNet DSL Schema",
+  "type": "object",
+  "description": "Meta-schema for a complete, lossless, domain-driven configuration of an enterprise system. This schema captures the entire lifecycle of a software system from domain modeling through deployment, including business logic, infrastructure, security, and operational concerns.",
+  "properties": {
+    "app": {
+      "type": "object",
+      "description": "High-level application metadata and configuration defining the overall system identity, deployment targets, and architectural choices. This section establishes the foundational decisions that will influence all other configuration choices.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The internal technical name of the application used for package naming, directory structures, and code generation. Should follow naming conventions (lowercase, no spaces, typically snake_case or kebab-case)."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The human-readable name of the application shown to end users in UI, app stores, and documentation. Can include spaces, capitalization, and special characters."
+        },
+        "description": {
+          "type": "string",
+          "description": "A comprehensive description of the application's purpose, target audience, and key value propositions. Used for documentation, app store listings, and internal communication about the system's goals."
+        },
+        "version": {
+          "type": "string",
+          "description": "The semantic version of the application following semver format (MAJOR.MINOR.PATCH+BUILD). Critical for deployment pipelines, API compatibility, and release management."
+        },
+        "packageName": {
+          "type": "string",
+          "description": "The reverse domain notation package identifier (e.g., com.company.app) used for mobile app stores, Java/Kotlin packages, and unique identification across platforms."
+        },
+        "organization": {
+          "type": "string",
+          "description": "The organization or company identifier owning this application, typically in reverse domain format. Used for namespacing, code signing certificates, and multi-tenant deployments."
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Target deployment platforms for the application (e.g., 'android', 'ios', 'web', 'macos', 'windows', 'linux'). Influences code generation, platform-specific features, and build configurations."
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "High-level feature flags enabling major application capabilities (e.g., 'auth', 'offline_sync', 'analytics', 'push_notifications', 'payments'). Each feature may trigger inclusion of specific packages, services, and infrastructure components."
+        },
+        "themeMode": {
+          "type": "string",
+          "description": "The theming strategy for the UI ('light', 'dark', 'adaptive'). 'Adaptive' allows the app to follow system preferences, providing better user experience across different contexts and accessibility needs."
+        },
+        "navigationType": {
+          "type": "string",
+          "description": "The navigation paradigm used in the application ('drawer', 'tabs', 'bottom_nav', 'adaptive'). Influences UI generation and affects user flow patterns throughout the application."
+        },
+        "backendType": {
+          "type": "string",
+          "description": "The primary backend infrastructure choice ('supabase', 'firebase', 'custom', 'aws_amplify'). Determines authentication patterns, database choices, and available backend services."
+        },
+        "stateManagement": {
+          "type": "string",
+          "description": "The state management solution for the frontend ('bloc', 'riverpod', 'provider', 'mobx'). Critical architectural decision affecting data flow, testing strategies, and code organization patterns."
+        },
+        "architecturePattern": {
+          "type": "string",
+          "description": "The overarching software architecture pattern ('clean_architecture', 'mvc', 'mvvm', 'hexagonal'). Defines layer separation, dependency rules, and code organization principles."
+        },
+        "testingStrategy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Testing approaches to be implemented ('unit', 'widget', 'integration', 'golden', 'e2e'). Influences test generation, CI/CD pipeline configuration, and quality gates."
+        },
+        "deploymentTargets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Environment stages for deployment ('development', 'staging', 'production', 'qa'). Each target may have different configurations, feature flags, and infrastructure scales."
+        },
+        "cicdProvider": {
+          "type": "string",
+          "description": "The continuous integration/deployment platform ('github_actions', 'gitlab_ci', 'jenkins', 'circleci'). Determines pipeline syntax, available runners, and integration patterns."
+        },
+        "appStoreConfig": {
+          "type": "boolean",
+          "description": "Whether to generate Apple App Store configuration including Info.plist entries, entitlements, and submission metadata. Enables iOS/macOS distribution."
+        },
+        "googlePlayConfig": {
+          "type": "boolean",
+          "description": "Whether to generate Google Play Store configuration including manifest entries, signing configs, and Play Console metadata. Enables Android distribution."
+        },
+        "localization": {
+          "type": "boolean",
+          "description": "Whether to enable internationalization (i18n) and localization (l10n) support. When true, generates translation infrastructure, locale detection, and RTL support."
+        },
+        "supportedLocales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ISO 639-1 language codes for supported locales (e.g., 'en', 'es', 'fr', 'de', 'ar', 'zh'). Determines which translation files to generate and maintain."
+        },
+        "analyticsProvider": {
+          "type": "string",
+          "description": "The analytics service for tracking user behavior and app performance ('firebase_analytics', 'mixpanel', 'amplitude', 'custom'). Influences event tracking code generation."
+        },
+        "crashReporting": {
+          "type": "string",
+          "description": "The crash reporting and error monitoring service ('firebase_crashlytics', 'sentry', 'bugsnag'). Critical for production monitoring and debugging."
+        },
+        "securityFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Security features to implement ('biometric_auth', 'certificate_pinning', 'jailbreak_detection', 'app_attestation'). Each feature adds specific security layers and checks."
+        },
+        "performanceMonitoring": {
+          "type": "boolean",
+          "description": "Whether to enable application performance monitoring (APM) for tracking response times, resource usage, and performance bottlenecks in production."
+        },
+        "useCodeGeneration": {
+          "type": "boolean",
+          "description": "Whether to use code generation for boilerplate reduction (serialization, routing, dependency injection). Enables build_runner and related tooling."
+        },
+        "useEdnetCore": {
+          "type": "boolean",
+          "description": "Whether to leverage EDNet Core framework for domain modeling, providing rich entity relationships, event sourcing, and domain-driven design patterns out of the box."
+        },
+        "legalJurisdiction": {
+          "type": "string",
+          "description": "Legal jurisdiction where the application is incorporated and operates (e.g., 'Austria', 'Germany', 'USA'). Determines applicable regulatory frameworks and compliance requirements."
+        },
+        "corporateForm": {
+          "type": "string",
+          "description": "Legal corporate structure of the organization (e.g., 'Genossenschaft', 'GmbH', 'LLC', 'Corporation'). Influences governance structure and revenue distribution models."
+        },
+        "foundingMember": {
+          "type": "string",
+          "description": "Name of the founding member or founder of the organization. Important for legal documentation and historical record."
+        },
+        "paymentProviders": {
+          "type": "object",
+          "description": "Payment provider configuration for the application enabling real payment processing integration.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether payment processing is enabled for this application."
+            },
+            "defaultProvider": {
+              "type": "string",
+              "enum": ["stripe", "paypal", "square", "braintree", "adyen"],
+              "description": "The default payment provider to use when none is specified for a transaction."
+            },
+            "providers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["stripe", "paypal", "square", "braintree", "adyen"],
+                    "description": "The payment provider identifier."
+                  },
+                  "environment": {
+                    "type": "string",
+                    "enum": ["sandbox", "production"],
+                    "description": "The environment configuration for this provider."
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Priority order for fallback processing (1 = highest priority)."
+                  },
+                  "supportedMethods": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["card", "bank_transfer", "wallet", "crypto", "bnpl"]
+                    },
+                    "description": "Payment methods supported by this provider in this app."
+                  },
+                  "supportedCurrencies": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "ISO 4217 currency codes supported (e.g., 'EUR', 'USD', 'GBP')."
+                  },
+                  "webhookEndpoint": {
+                    "type": "string",
+                    "description": "Webhook endpoint URL for receiving payment provider notifications."
+                  },
+                  "features": {
+                    "type": "object",
+                    "properties": {
+                      "subscriptions": {
+                        "type": "boolean",
+                        "description": "Whether subscription billing is enabled."
+                      },
+                      "refunds": {
+                        "type": "boolean",
+                        "description": "Whether refund processing is enabled."
+                      },
+                      "disputes": {
+                        "type": "boolean",
+                        "description": "Whether dispute management is enabled."
+                      },
+                      "marketplace": {
+                        "type": "boolean",
+                        "description": "Whether marketplace split payments are enabled."
+                      },
+                      "multiParty": {
+                        "type": "boolean",
+                        "description": "Whether multi-party transactions are supported."
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "List of configured payment providers with their specific settings."
+            },
+            "fallbackStrategy": {
+              "type": "string",
+              "enum": ["priority_order", "least_cost", "fastest_processing", "highest_success_rate"],
+              "description": "Strategy for choosing alternative providers when primary fails."
+            },
+            "complianceLevel": {
+              "type": "string",
+              "enum": ["basic", "pci_dss", "soc2", "iso27001"],
+              "description": "Required compliance level for payment processing security."
+            },
+            "fraudDetection": {
+              "type": "boolean",
+              "description": "Whether advanced fraud detection is enabled across providers."
+            },
+            "analytics": {
+              "type": "boolean",
+              "description": "Whether payment analytics and reporting are enabled."
+            }
+          }
+        },
+        "marketplaceCompliance": {
+          "type": "object",
+          "description": "Marketplace-specific regulatory compliance for EU DSA, USA regulations, and international trade.",
+          "properties": {
+            "euDigitalServicesAct": {
+              "type": "object",
+              "description": "EU Digital Services Act compliance for online platforms and marketplaces.",
+              "properties": {
+                "dsaDesignation": {
+                  "type": "string",
+                  "enum": ["None", "Platform", "VLOP", "VLOSE"],
+                  "description": "DSA platform designation based on user count and impact."
+                },
+                "contentModerationSystem": {
+                  "type": "boolean",
+                  "description": "Whether compliant content moderation system is implemented."
+                },
+                "transparencyReporting": {
+                  "type": "boolean",
+                  "description": "Whether transparency reports are published as required by DSA."
+                },
+                "illegalContentNotice": {
+                  "type": "boolean",
+                  "description": "Whether notice and takedown procedures for illegal content are implemented."
+                },
+                "traderVerificationKYBC": {
+                  "type": "boolean",
+                  "description": "Whether Know Your Business Customer verification is implemented for traders."
+                },
+                "systemicRiskAssessment": {
+                  "type": "boolean",
+                  "description": "Whether annual systemic risk assessments are conducted (required for VLOP/VLOSE)."
+                },
+                "trustedFlaggers": {
+                  "type": "boolean",
+                  "description": "Whether trusted flagger system is implemented for priority content review."
+                },
+                "advertisementRepository": {
+                  "type": "boolean",
+                  "description": "Whether public advertisement repository is maintained (required for VLOP/VLOSE)."
+                }
+              }
+            },
+            "usaMarketplace": {
+              "type": "object",
+              "description": "USA marketplace regulatory compliance including FTC and state laws.",
+              "properties": {
+                "ftcCompliance": {
+                  "type": "boolean",
+                  "description": "Whether FTC Act compliance is implemented."
+                },
+                "cpscCompliance": {
+                  "type": "boolean",
+                  "description": "Whether Consumer Product Safety Commission compliance is implemented."
+                },
+                "stateMarketplaceLaws": {
+                  "type": "boolean",
+                  "description": "Whether state-specific marketplace laws are complied with."
+                },
+                "dmcaCompliance": {
+                  "type": "boolean",
+                  "description": "Whether DMCA copyright policies are implemented."
+                },
+                "salesTaxNexus": {
+                  "type": "boolean",
+                  "description": "Whether sales tax nexus requirements are handled."
+                }
+              }
+            },
+            "crossBorderTrade": {
+              "type": "object",
+              "description": "Cross-border trade compliance and regulatory management.",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Whether cross-border trade compliance is active."
+                },
+                "customsIntegration": {
+                  "type": "boolean",
+                  "description": "Whether customs and import/export regulations are handled."
+                },
+                "territorialTaxation": {
+                  "type": "boolean",
+                  "description": "Whether territorial taxation compliance is implemented."
+                },
+                "tradeAgreements": {
+                  "type": "boolean",
+                  "description": "Whether international trade agreements are considered."
+                },
+                "geolocationEnforcement": {
+                  "type": "boolean",
+                  "description": "Whether geolocation-based compliance enforcement is active."
+                }
+              }
+            },
+            "anonymizedLogging": {
+              "type": "object",
+              "description": "Anonymous activity logging for compliance and transparency.",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Whether anonymized activity logging is active."
+                },
+                "businessActivities": {
+                  "type": "boolean",
+                  "description": "Whether business activities are logged anonymously."
+                },
+                "complianceReporting": {
+                  "type": "boolean",
+                  "description": "Whether compliance reports are generated from anonymized data."
+                },
+                "auditTrails": {
+                  "type": "boolean",
+                  "description": "Whether audit trails are maintained for regulatory purposes."
+                },
+                "dataRetentionPeriod": {
+                  "type": "string",
+                  "description": "Data retention period for anonymized logs (e.g., '7_years', '5_years')."
+                }
+              }
+            }
+          }
+        },
+        "revenueSharing": {
+          "type": "object",
+          "description": "Blockchain-based revenue sharing configuration implementing democratic distribution of platform profits.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether blockchain-based revenue sharing is active for transparent and automated profit distribution."
+            },
+            "platformShare": {
+              "type": "number",
+              "description": "Percentage of revenue retained by platform for operations and development (e.g., 0.3 for 30%).",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "memberShare": {
+              "type": "number",
+              "description": "Percentage of revenue distributed among cooperative members (e.g., 0.7 for 70%).",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "blockchainNetwork": {
+              "type": "string",
+              "description": "Blockchain network used for revenue distribution (e.g., 'Ethereum', 'Polygon', 'Arbitrum')."
+            },
+            "smartContractAddress": {
+              "type": "string",
+              "description": "Address of the deployed smart contract handling automated revenue distribution."
+            },
+            "distributionFrequency": {
+              "type": "string",
+              "description": "Frequency of revenue distribution ('monthly', 'quarterly', 'annually')."
+            }
+          }
+        },
+        "geolocationFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Geolocation-based features enabling jurisdiction-specific compliance and content moderation ('country_constraints', 'invitation_tracking', 'jurisdiction_compliance', 'regional_governance', 'cultural_adaptation')."
+        },
+        "digitalIdentityProviders": {
+          "type": "object",
+          "description": "Integration with national digital identity systems for user verification and compliance.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "roleBasedDashboards": {
+          "type": "object",
+          "description": "Role-specific dashboard configuration for governance and operational management.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether role-based dashboards are enabled for personalized user experiences."
+            },
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Available roles in the system (e.g., 'GenossenschaftMember', 'BoardMember', 'ComplianceOfficer')."
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Dashboard features available across roles ('schedule_management', 'obligation_tracking', 'voting_interface', 'document_management', 'financial_transparency')."
+            }
+          }
+        },
+        "membershipPaymentSystem": {
+          "type": "object",
+          "description": "Flexible membership payment system supporting various contribution models and hardship exemptions.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether flexible membership payment system is active."
+            },
+            "mandatoryMonthlyFee": {
+              "type": "number",
+              "description": "Base mandatory monthly fee in EUR.",
+              "minimum": 0.0
+            },
+            "annualPaymentOption": {
+              "type": "boolean",
+              "description": "Whether members can pay annually instead of monthly."
+            },
+            "exemptionPolicy": {
+              "type": "string",
+              "description": "Policy for payment exemptions ('hardship_declaration', 'board_review', 'automatic_waiver')."
+            },
+            "sponsorshipTiers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Available sponsorship tiers for members who want to contribute more ('basic', 'supporter', 'patron', 'benefactor')."
+            },
+            "customAmountSupport": {
+              "type": "boolean",
+              "description": "Whether members can set custom monthly contribution amounts."
+            }
+          }
+        },
+        "democraticFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Democratic governance features enabled in the platform ('voting', 'proposals', 'consensus', 'revenue_sharing', 'transparent_decision_making')."
+        }
+      }
+    },
+    "domain": {
+      "type": "object",
+      "description": "Domain definition establishing the business context and bounded context identity. This is the root of the ubiquitous language and defines the problem space the software addresses.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The domain name in business terms (e.g., 'Library', 'Banking', 'Healthcare'). Establishes the primary business context and influences all modeling decisions."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the business domain, its boundaries, core concepts, and the problems it solves. Serves as documentation for the bounded context."
+        },
+        "version": {
+          "type": "string",
+          "description": "Semantic version of the domain model. Important for domain evolution, backward compatibility, and coordinating changes across multiple systems sharing the domain."
+        },
+        "author": {
+          "type": "string",
+          "description": "The domain expert or team responsible for the domain model design. Useful for attribution, contact for clarifications, and domain knowledge ownership."
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "description": "The main model root defining the aggregate boundaries within the domain. In DDD terms, this represents a cohesive cluster of domain objects that change together.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The model name representing a major subdomain or aggregate cluster (e.g., 'Management', 'Catalog', 'Fulfillment'). Used as namespace in generated code."
+        },
+        "description": {
+          "type": "string",
+          "description": "Explanation of what this model encompasses, its responsibilities, and how it relates to other models in the system. Critical for maintaining conceptual integrity."
+        }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "description": "Domain entities, aggregates, and value objects that form the core domain model. These are the fundamental building blocks expressing business concepts in code.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The concept name in PascalCase (e.g., 'Book', 'Member', 'Order'). Becomes a class/type in generated code and should use ubiquitous language from the domain."
+          },
+          "entry": {
+            "type": "boolean",
+            "description": "Whether this concept serves as an entry point to the model - typically the main aggregate root through which the model is accessed and modified."
+          },
+          "aggregateRoot": {
+            "type": "boolean",
+            "description": "Marks this concept as an aggregate root in DDD terms - a cluster of objects treated as a unit for data changes with guaranteed consistency boundaries."
+          },
+          "description": {
+            "type": "string",
+            "description": "Business description of what this concept represents, its purpose, and key responsibilities. Essential for maintaining shared understanding across technical and business teams."
+          },
+          "attributes": {
+            "type": "array",
+            "description": "Properties and fields of the concept defining its state. Each attribute captures a specific aspect of the business concept with appropriate constraints.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The attribute identifier in camelCase (e.g., 'firstName', 'orderDate'). Becomes a field/property in generated code with appropriate accessors."
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The data type of the attribute ('String', 'int', 'double', 'bool', 'DateTime', 'List<T>', 'Map<K,V>', or custom types). Determines validation, serialization, and storage strategies."
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "Whether this attribute must have a non-null value. Influences validation rules, database constraints, and API contracts."
+                },
+                "unique": {
+                  "type": "boolean",
+                  "description": "Whether this attribute must be unique across all instances of this concept. Typically used for natural keys, emails, or business identifiers."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Business explanation of the attribute's purpose, valid values, and importance. Becomes documentation in generated code and API specs."
+                },
+                "pattern": {
+                  "type": "string",
+                  "description": "Regular expression pattern for validating string values (e.g., email, phone, postal code patterns). Applied in both client and server validation."
+                },
+                "enumValues": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Allowed values for enumerated types (e.g., ['Active', 'Inactive', 'Pending']). Generates enum types and validates against this closed set."
+                },
+                "maxLength": {
+                  "type": "integer",
+                  "description": "Maximum character length for string attributes. Enforced in validation, UI input fields, and database column definitions."
+                },
+                "min": {
+                  "type": [
+                    "number",
+                    "integer"
+                  ],
+                  "description": "Minimum allowed value for numeric attributes. Used for range validation in business logic and database constraints."
+                },
+                "max": {
+                  "type": [
+                    "number",
+                    "integer"
+                  ],
+                  "description": "Maximum allowed value for numeric attributes. Creates upper bound validation ensuring values stay within business-acceptable ranges."
+                },
+                "default": {
+                  "description": "Default value assigned to the attribute if not explicitly provided. Can be a literal value or an expression evaluated at runtime."
+                },
+                "relationship": {
+                  "type": "object",
+                  "description": "Inline relationship definition when this attribute represents a reference to another concept. Alternative to defining in the relations section.",
+                  "properties": {
+                    "target": {
+                      "type": "string",
+                      "description": "The name of the related concept this attribute references."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The relationship type ('one-to-one', 'one-to-many', 'many-to-many') determining cardinality and navigation."
+                    },
+                    "min": {
+                      "type": "string",
+                      "description": "Minimum cardinality ('0' for optional, '1' for required) of the relationship."
+                    },
+                    "max": {
+                      "type": "string",
+                      "description": "Maximum cardinality ('1' for single, 'N' or '*' for many) of the relationship."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "relations": {
+      "type": "array",
+      "description": "Explicit inter-entity relationships defining how concepts connect and interact. These relationships establish navigation paths, ownership boundaries, and consistency rules between aggregates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "The source concept name in the relationship. This is the concept that 'owns' or initiates the relationship in the domain model."
+          },
+          "to": {
+            "type": "string",
+            "description": "The target concept name in the relationship. This is the concept being referenced or associated with the source concept."
+          },
+          "fromToName": {
+            "type": "string",
+            "description": "The relationship name from the source's perspective (e.g., 'author' when Book relates to Person). Used for navigation properties and method names."
+          },
+          "fromToMin": {
+            "type": "string",
+            "description": "Minimum cardinality from source to target ('0' for optional, '1' for required). Enforces business rules about relationship requirements."
+          },
+          "fromToMax": {
+            "type": "string",
+            "description": "Maximum cardinality from source to target ('1' for single, 'N' or '*' for unbounded many). Determines collection vs single reference implementation."
+          },
+          "toFromName": {
+            "type": "string",
+            "description": "The inverse relationship name from target's perspective (e.g., 'books' when Person relates back to Book). Enables bidirectional navigation."
+          },
+          "toFromMin": {
+            "type": "string",
+            "description": "Minimum cardinality from target back to source. Defines whether the inverse relationship is required from the target's perspective."
+          },
+          "toFromMax": {
+            "type": "string",
+            "description": "Maximum cardinality from target back to source. Determines if multiple sources can reference the same target."
+          },
+          "category": {
+            "type": "string",
+            "description": "The relationship category ('association', 'aggregation', 'composition', 'inheritance'). 'Association' is loose coupling, 'aggregation' implies part-of with independent lifecycle, 'composition' means strong ownership with dependent lifecycle."
+          },
+          "description": {
+            "type": "string",
+            "description": "Business explanation of why this relationship exists, what it represents, and any special rules or constraints that apply to it."
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      }
+    },
+    "commands": {
+      "type": "array",
+      "description": "All business commands representing actions that change system state. Commands are the 'C' in CQRS, encapsulating intent, validation, and business logic for state mutations.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Command name in PascalCase representing the business action (e.g., 'RegisterMember', 'CheckOutBook'). Should be intention-revealing and use ubiquitous language."
+          },
+          "aggregate": {
+            "type": "string",
+            "description": "The aggregate root concept this command operates on. Commands can only modify state through aggregate roots to maintain consistency boundaries."
+          },
+          "description": {
+            "type": "string",
+            "description": "Clear explanation of what business action this command performs, when it's used, and what state changes it causes in the system."
+          },
+          "actor": {
+            "type": "string",
+            "description": "The role or actor type authorized to execute this command (e.g., 'Member', 'Librarian', 'System'). Used for authorization and access control."
+          },
+          "preconditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Business rules that must be true before the command can execute. Each string is a boolean expression checked before processing. Failure prevents command execution."
+          },
+          "postconditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Assertions about system state that must be true after successful command execution. Used for ensuring business invariants and correctness."
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Domain events raised as a result of successful command execution. These events notify other parts of the system about state changes."
+          },
+          "validationRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "The command parameter or aggregate field being validated."
+                },
+                "rule": {
+                  "type": "string",
+                  "description": "The validation rule type (e.g., 'required', 'unique', 'range', 'pattern'). Determines what validation logic to apply."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "User-friendly error message shown when validation fails. Should clearly explain what went wrong and how to fix it."
+                }
+              }
+            },
+            "description": "Field-level validation rules ensuring command parameters meet business requirements before processing. Applied before preconditions."
+          },
+          "businessLogic": {
+            "type": "string",
+            "description": "Pseudocode or domain-specific language describing complex business logic, calculations, or algorithms performed by the command. Used for code generation."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Domain events representing facts about state changes that have occurred. Events are immutable records enabling event sourcing, integration, and reactive processing.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Event name in PascalCase describing what happened (e.g., 'MemberRegistered', 'BookCheckedOut'). Should be past tense indicating completed action."
+          },
+          "aggregate": {
+            "type": "string",
+            "description": "The aggregate root that raised this event. Links the event to its source aggregate for event sourcing and replay scenarios."
+          },
+          "description": {
+            "type": "string",
+            "description": "Explanation of what this event represents, what triggered it, and what it means for the business domain. Critical for event storming sessions."
+          },
+          "payload": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the payload field"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The data type of the payload field ('string', 'int', 'double', 'bool', 'DateTime', 'List<T>', 'Map<K,V>', or custom types). Supports the same rich type system as concept attributes."
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "Whether this payload field is required"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of what this payload field represents"
+                }
+              },
+              "required": ["name", "type"],
+              "additionalProperties": false
+            },
+            "description": "Data carried by the event describing the state change. Each item is a field with name, type, and optional metadata. Supports rich types including primitives (string, int, double, bool), temporal (DateTime), collections (List<T>, Map<K,V>), and custom domain types."
+          },
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Services, processes, or components that subscribe to this event. Used for event-driven integration and choreography patterns."
+          },
+          "projections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Read models or views updated based on this event. In CQRS/Event Sourcing, projections maintain query-optimized representations of event streams."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "policies": {
+      "type": "array",
+      "description": "Business policies representing reactive rules that trigger actions based on events or conditions. Policies implement the 'when X then Y' pattern for complex business logic.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Policy name clearly indicating its purpose (e.g., 'OverdueLoanPolicy', 'LowStockReorderPolicy'). Should be self-documenting."
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed explanation of the business rule this policy implements, why it exists, and what business value it provides."
+          },
+          "criteria": {
+            "type": "string",
+            "description": "Boolean expression defining when this policy should activate. Uses EDNet Expression Syntax supporting primitives (string, number, bool), comparison operators (==, !=, >, <, >=, <=), logical operators (&&, ||, !), and property access (user.age, order.total).",
+            "pattern": "^.{1,1000}$",
+            "examples": [
+              "user.age >= 18",
+              "order.amount > 100 && user.verified == true",
+              "!(product.category == \"restricted\")",
+              "user.role == \"admin\" || user.permissions.includes(\"write\")"
+            ],
+            "$comment": "Expression Syntax Rules: 1) Primitives: string (quoted), number (unquoted), bool (true/false). 2) Operators: ==, !=, >, <, >=, <=, &&, ||, !. 3) Property Access: dot notation for nested values. 4) Grouping: parentheses for precedence. 5) Variables must be defined in domain model or provided at runtime."
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "command": {
+                  "type": "string",
+                  "description": "The command to execute when the policy triggers. Links to the commands section for available actions."
+                },
+                "condition": {
+                  "type": "string",
+                  "description": "Additional boolean expression condition that must be true for this specific action to execute. Uses EDNet Expression Syntax with same rules as policy criteria. Allows conditional branching within policies.",
+                  "pattern": "^.{1,500}$",
+                  "examples": [
+                    "context.retryCount < 3",
+                    "user.balance >= requiredAmount",
+                    "system.workingHours == true"
+                  ],
+                  "$comment": "Same expression syntax as policy criteria. Can reference context variables, user state, and system conditions."
+                }
+              }
+            },
+            "description": "Commands to execute when the policy criteria are met. Multiple actions can be defined with individual conditions for complex policy logic."
+          },
+          "priority": {
+            "type": "string",
+            "description": "Policy execution priority ('High', 'Medium', 'Low'). Determines execution order when multiple policies trigger on the same event."
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether this policy is currently active. Allows policies to be defined but disabled, useful for seasonal or conditional business rules."
+          },
+          "schedule": {
+            "type": "string",
+            "description": "Cron expression or time descriptor for scheduled policies (e.g., 'daily', '0 0 * * *'). Used for time-based policy execution."
+          },
+          "activationNote": {
+            "type": "string",
+            "description": "Human-readable note about when/why to activate this policy. Useful for policies that are conditionally enabled based on business context."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "actors": {
+      "type": "array",
+      "description": "System actors/roles defining who can perform actions in the system. Actors represent user types, external systems, or automated processes with specific permissions and responsibilities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Actor/role name (e.g., 'Member', 'Administrator', 'PaymentGateway'). Used in authorization checks and command access control."
+          },
+          "description": {
+            "type": "string",
+            "description": "Explanation of this actor's responsibilities, typical tasks, and position in the business hierarchy or system architecture."
+          },
+          "inherits": {
+            "type": "string",
+            "description": "Parent role this actor inherits permissions from. Enables role hierarchies where specialized roles extend base roles (e.g., 'HeadLibrarian' inherits from 'Librarian')."
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of commands, queries, or resources this actor is authorized to access. Each permission typically maps to a command name or resource identifier."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "workflows": {
+      "type": "array",
+      "description": "End-to-end business processes spanning multiple commands and actors. Workflows orchestrate complex multi-step operations ensuring proper sequencing and coordination.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Workflow name describing the business process (e.g., 'MemberOnboarding', 'OrderFulfillment'). Should reflect complete business capabilities."
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed explanation of the business process, its goals, triggers, and expected outcomes. Helps understand the workflow's business value."
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Step name describing what happens at this stage (e.g., 'VerifyIdentity', 'ProcessPayment'). Should be clear and action-oriented."
+                },
+                "actor": {
+                  "type": "string",
+                  "description": "The actor responsible for executing this step. Can be a human role or system component. Determines who/what performs the action."
+                },
+                "command": {
+                  "type": "string",
+                  "description": "The command executed in this step. Links to the commands section defining the actual business logic performed."
+                }
+              },
+              "required": [
+                "name",
+                "command"
+              ]
+            },
+            "description": "Sequential steps in the workflow. Each step represents a discrete action with clear ownership and can have dependencies on previous steps."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "description": "External system integrations defining how the application connects with third-party services, APIs, or legacy systems. Critical for enterprise interoperability.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Integration point name (e.g., 'PaymentGateway', 'EmailService', 'InventorySystem'). Identifies the external system being integrated."
+          },
+          "type": {
+            "type": "string",
+            "description": "Integration type ('external', 'internal', 'partner'). 'External' for third-party services, 'internal' for company systems, 'partner' for B2B integrations."
+          },
+          "description": {
+            "type": "string",
+            "description": "Purpose and functionality of this integration, including what data flows through it and why it's necessary for the business."
+          },
+          "commands": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Commands that trigger actions in the external system. These commands result in outbound calls or messages to the integrated service."
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Events consumed from or produced for the external system. Defines the asynchronous integration points and data synchronization triggers."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "businessRules": {
+      "type": "array",
+      "description": "Core business rules and constraints that must be enforced across the system. These are invariants that must always be true regardless of the operation being performed.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Rule name identifying the business constraint (e.g., 'MinimumOrderAmount', 'CreditLimitCheck'). Should be specific and searchable."
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed explanation of the business rule, why it exists, and its impact on operations. Should be understandable by non-technical stakeholders."
+          },
+          "rule": {
+            "type": "string",
+            "description": "The rule logic expressed as a boolean expression, formula, or business language statement. Can be pseudocode or domain-specific expressions."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "analytics": {
+      "type": "array",
+      "description": "Analytics and reporting configurations defining what metrics to track and how to measure business performance. Essential for data-driven decision making.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Analytics category or report name (e.g., 'UserEngagement', 'RevenueMetrics', 'OperationalEfficiency'). Groups related metrics together."
+          },
+          "description": {
+            "type": "string",
+            "description": "Purpose of these analytics, what business questions they answer, and how they support decision making. Links metrics to business value."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific metrics to track (e.g., 'dailyActiveUsers', 'conversionRate', 'averageOrderValue'). Each metric should have clear business meaning and calculation method."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "boundedContexts": {
+      "type": "array",
+      "description": "Bounded contexts in Domain-Driven Design representing distinct subdomains with their own ubiquitous language, models, and team ownership. Critical for managing complexity in large systems.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Context name representing a cohesive subdomain (e.g., 'CatalogContext', 'OrderingContext', 'ShippingContext'). Defines a linguistic and model boundary."
+          },
+          "publishes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Domain events this context publishes to other contexts. These are the facts this context is the source of truth for, making them available to the broader system."
+          },
+          "subscribes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Domain events this context subscribes to from other contexts. Defines external events this context reacts to, establishing event-driven integration points."
+          },
+          "integrations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "The other bounded context this context integrates with. References another context name from this bounded contexts list."
+                },
+                "pattern": {
+                  "type": "string",
+                  "description": "Integration pattern used ('CustomerSupplier', 'Conformist', 'AntiCorruptionLayer', 'SharedKernel', 'OpenHostService'). Defines the relationship type and coupling strategy."
+                },
+                "role": {
+                  "type": "string",
+                  "description": "This context's role in the relationship ('Customer', 'Supplier', 'Upstream', 'Downstream'). Indicates influence direction and dependency management."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Details about why this integration exists, what data/concepts are shared, and any translation or adaptation required between contexts."
+                }
+              },
+              "required": [
+                "target",
+                "pattern",
+                "role"
+              ]
+            },
+            "description": "Explicit integration relationships with other bounded contexts. These define the context map showing how different parts of the system connect and influence each other."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "observability": {
+      "type": "object",
+      "description": "Observability configuration covering the three pillars of modern monitoring: logging, distributed tracing, and metrics. Essential for understanding system behavior in production and diagnosing issues.",
+      "properties": {
+        "logging": {
+          "type": "object",
+          "description": "Application logging configuration for capturing events, errors, and diagnostic information. Logs provide detailed context for debugging and audit trails.",
+          "properties": {
+            "level": {
+              "type": "string",
+              "description": "Minimum log level to capture ('DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'). Lower levels include all higher levels. Production typically uses INFO or WARN."
+            },
+            "format": {
+              "type": "string",
+              "description": "Log output format ('plain', 'JSON', 'structured'). JSON/structured formats enable better parsing and querying in log aggregation systems."
+            }
+          }
+        },
+        "tracing": {
+          "type": "object",
+          "description": "Distributed tracing configuration for tracking requests across multiple services. Provides end-to-end visibility of request flows and performance bottlenecks.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether distributed tracing is active. When enabled, generates trace spans for requests, database calls, and external service interactions."
+            },
+            "provider": {
+              "type": "string",
+              "description": "Tracing backend or standard ('OpenTelemetry', 'Jaeger', 'Zipkin', 'AWS X-Ray'). OpenTelemetry is becoming the industry standard for vendor-neutral tracing."
+            },
+            "sampling": {
+              "type": "number",
+              "description": "Trace sampling rate between 0.0 and 1.0. Controls what percentage of requests generate full traces. Lower values reduce overhead but may miss rare issues."
+            }
+          }
+        },
+        "metrics": {
+          "type": "object",
+          "description": "Application metrics configuration for numerical measurements of system health and performance. Metrics enable alerting and capacity planning.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether metrics collection is active. When enabled, exposes counters, gauges, histograms for monitoring systems to scrape."
+            },
+            "provider": {
+              "type": "string",
+              "description": "Metrics system or format ('Prometheus', 'StatsD', 'CloudWatch', 'DataDog'). Determines metric format and collection method."
+            }
+          }
+        }
+      }
+    },
+    "backgroundJobs": {
+      "type": "object",
+      "description": "Background job processing configuration for asynchronous tasks, scheduled work, and long-running operations. Enables decoupling time-consuming work from user-facing requests.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether background job processing is active. When true, sets up job queues, workers, and scheduling infrastructure."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Job queue technology ('RabbitMQ', 'AWS SQS', 'Redis Queue', 'Kafka', 'Celery'). Determines message durability, scaling patterns, and feature set."
+        },
+        "maxWorkers": {
+          "type": "integer",
+          "description": "Maximum number of concurrent job workers. Controls parallelism and resource usage. Should be tuned based on job types and available resources."
+        },
+        "retryCount": {
+          "type": "integer",
+          "description": "Default number of retry attempts for failed jobs before moving to dead letter queue. Helps handle transient failures automatically."
+        }
+      }
+    },
+    "caching": {
+      "type": "object",
+      "description": "Caching configuration for improving performance by storing frequently accessed data in fast storage. Critical for scalability and reducing backend load.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Caching backend technology ('Redis', 'Memcached', 'Hazelcast', 'Caffeine'). Redis offers persistence and data structures, Memcached is simpler but faster."
+        },
+        "strategy": {
+          "type": "string",
+          "description": "Caching pattern ('Cache-Aside', 'Write-Through', 'Write-Behind', 'Refresh-Ahead'). Cache-Aside loads on miss, Write-Through updates cache with database."
+        },
+        "defaultTTL": {
+          "type": "integer",
+          "description": "Default time-to-live in seconds for cached entries. Prevents stale data by ensuring cache entries expire and refresh periodically."
+        }
+      }
+    },
+    "apiGateway": {
+      "type": "object",
+      "description": "API Gateway configuration serving as the single entry point for all client requests. Handles cross-cutting concerns like authentication, rate limiting, and request routing.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether an API Gateway fronts the microservices. When true, all external traffic flows through the gateway for centralized control."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Gateway solution ('Kong', 'AWS API Gateway', 'Apigee', 'Zuul', 'Envoy'). Each offers different features for traffic management and policies."
+        },
+        "basePath": {
+          "type": "string",
+          "description": "URL path prefix for all APIs (e.g., '/api', '/v1'). Helps with versioning and separating API traffic from static content."
+        },
+        "rateLimiting": {
+          "type": "object",
+          "description": "Rate limiting configuration to prevent abuse and ensure fair resource usage. Protects backend services from being overwhelmed.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether rate limiting is enforced. When true, tracks and limits request rates per client or globally."
+            },
+            "global": {
+              "type": "integer",
+              "description": "Maximum requests per minute across all clients. Prevents total system overload regardless of individual client behavior."
+            },
+            "perUser": {
+              "type": "integer",
+              "description": "Maximum requests per minute for each authenticated user or API key. Ensures fair access and prevents individual clients from monopolizing resources."
+            }
+          }
+        }
+      }
+    },
+    "healthChecks": {
+      "type": "object",
+      "description": "Health check endpoints for monitoring application status and readiness. Used by orchestrators, load balancers, and monitoring systems to manage application lifecycle.",
+      "properties": {
+        "liveness": {
+          "type": "string",
+          "description": "Liveness probe endpoint path (e.g., '/health/live'). Returns success if the application is running. Failure triggers restart in container orchestration."
+        },
+        "readiness": {
+          "type": "string",
+          "description": "Readiness probe endpoint path (e.g., '/health/ready'). Indicates if the app can serve requests. Failure removes instance from load balancer rotation."
+        },
+        "startup": {
+          "type": "string",
+          "description": "Startup probe endpoint path (e.g., '/health/startup'). Used during initialization for apps with long startup times. Prevents premature liveness checks."
+        }
+      }
+    },
+    "featureToggles": {
+      "type": "object",
+      "description": "Feature flag configuration for controlling feature availability at runtime. Enables progressive rollouts, A/B testing, and quick feature disabling without deployment.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Feature flag management system ('LaunchDarkly', 'Unleash', 'Split', 'ConfigCat', 'custom'). Cloud providers offer advanced targeting and analytics."
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Feature flag identifier (e.g., 'newCheckoutFlow', 'betaFeatureX'). Used in code to conditionally enable functionality."
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Default state of the feature flag. Can be overridden at runtime based on user segments, percentages, or other rules."
+              },
+              "description": {
+                "type": "string",
+                "description": "Explanation of what this feature controls, its purpose, and impact when enabled/disabled. Important for feature flag hygiene."
+              }
+            }
+          },
+          "description": "List of feature flags defined in the system. Each flag represents a toggleable capability that can be controlled without code changes."
+        }
+      }
+    },
+    "cdn": {
+      "type": "object",
+      "description": "Content Delivery Network configuration for serving static assets from edge locations. Improves performance by reducing latency and offloading traffic from origin servers.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "CDN service provider ('Cloudflare', 'AWS CloudFront', 'Akamai', 'Fastly'). Each offers different edge locations and feature sets."
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether CDN is active for the application. When true, static assets are served from CDN edge servers instead of application servers."
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "URL paths or patterns served via CDN (e.g., '/images/', '/static/', '*.css'). These assets are cached at edge locations for faster delivery."
+        }
+      }
+    },
+    "multiTenancy": {
+      "type": "object",
+      "description": "Multi-tenancy configuration defining how the application isolates and serves multiple customer organizations. Critical architectural decision affecting security, scalability, and operations.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "silo",
+            "pool",
+            "hybrid"
+          ],
+          "description": "Tenancy architecture pattern. 'silo': Complete isolation per tenant (highest security/cost). 'pool': Shared resources with logical separation (efficient but less isolated). 'hybrid': Mix of dedicated and shared components."
+        },
+        "tenantKey": {
+          "type": "string",
+          "description": "Identifier used to determine tenant context (e.g., 'subdomain', 'header:X-Tenant-ID', 'jwt.tenantId'). Critical for routing requests to correct tenant data."
+        },
+        "dataIsolation": {
+          "type": "string",
+          "description": "Data isolation strategy ('database-per-tenant', 'schema-per-tenant', 'row-level-security'). Determines how tenant data is separated and secured."
+        }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "description": "Application configuration management defining how settings are stored, distributed, and updated. Supports 12-factor app principles and dynamic configuration.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Configuration backend ('AWS AppConfig', 'HashiCorp Consul', 'etcd', 'Kubernetes ConfigMaps', 'env'). Determines how configs are stored and distributed."
+        },
+        "format": {
+          "type": "string",
+          "description": "Configuration data format ('YAML', 'JSON', 'TOML', 'HCL', 'properties'). Affects readability and tooling compatibility."
+        },
+        "centralized": {
+          "type": "boolean",
+          "description": "Whether configuration is centrally managed (true) or distributed with each service (false). Central management enables dynamic updates but adds dependency."
+        }
+      }
+    },
+    "secrets": {
+      "type": "object",
+      "description": "Secrets management configuration for handling sensitive data like passwords, API keys, and certificates. Critical for security and compliance.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Secrets management service ('AWS Secrets Manager', 'HashiCorp Vault', 'Azure Key Vault', 'Kubernetes Secrets'). Should provide encryption, access control, and audit trails."
+        },
+        "encryption": {
+          "type": "string",
+          "description": "Encryption method for secrets at rest ('KMS', 'AES-256', 'HSM'). KMS provides key management service integration, HSM uses hardware security modules."
+        },
+        "rotationIntervalDays": {
+          "type": "integer",
+          "description": "Automatic secret rotation period in days. Regular rotation limits exposure window if secrets are compromised. Common values: 30, 60, 90 days."
+        }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "description": "Compliance and regulatory configuration ensuring the system meets legal and industry requirements. Affects data handling, security controls, and audit capabilities.",
+      "properties": {
+        "gdpr": {
+          "type": "boolean",
+          "description": "Whether GDPR (General Data Protection Regulation) compliance features are enabled. Includes right to erasure, data portability, and consent management for EU users."
+        },
+        "ccpa": {
+          "type": "boolean",
+          "description": "Whether CCPA (California Consumer Privacy Act) compliance is enabled. Includes 'Do Not Sell' options and data disclosure requirements for California residents."
+        },
+        "soc2": {
+          "type": "string",
+          "description": "SOC 2 compliance level ('Type I', 'Type II'). Type I validates security controls at a point in time, Type II demonstrates controls operating effectively over time."
+        },
+        "dataResidency": {
+          "type": "object",
+          "description": "Geographic constraints on data storage and processing. Critical for sovereignty laws and data protection regulations.",
+          "properties": {
+            "regions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Allowed or required data storage regions (e.g., ['EU', 'US', 'APAC']). Determines where data can be stored and processed geographically."
+            },
+            "defaultRegion": {
+              "type": "string",
+              "description": "Primary region for data storage when not specified by other rules. Often based on user location or regulatory requirements."
+            },
+            "strictIsolation": {
+              "type": "boolean",
+              "description": "Whether data must remain within specified regions without cross-border transfer. When true, prevents data replication across regional boundaries."
+            }
+          }
+        },
+        "dataRetention": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Retention policies for different data categories. Keys are data types (e.g., 'userData', 'logs', 'analytics'), values are retention periods (e.g., '7 years', '90 days')."
+        },
+        "consentManagement": {
+          "type": "object",
+          "description": "User consent tracking and management for privacy compliance. Required for GDPR and similar regulations.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether consent management is active. When true, tracks user consent for data processing, marketing, and third-party sharing."
+            },
+            "tool": {
+              "type": "string",
+              "description": "Consent management platform ('OneTrust', 'TrustArc', 'Cookiebot', 'custom'). Handles consent collection, storage, and preference centers."
+            },
+            "approach": {
+              "type": "string",
+              "description": "Consent model ('opt-in', 'opt-out'). 'opt-in' requires explicit consent before data processing (GDPR standard), 'opt-out' allows processing until user refuses."
+            }
+          }
+        },
+        "marketplaceCompliance": {
+          "type": "object",
+          "description": "Marketplace-specific regulatory compliance for EU DSA, USA regulations, and international trade.",
+          "properties": {
+            "euDigitalServicesAct": {
+              "type": "object",
+              "description": "EU Digital Services Act compliance for online platforms and marketplaces.",
+              "properties": {
+                "dsaDesignation": {
+                  "type": "string",
+                  "enum": ["None", "Platform", "VLOP", "VLOSE"],
+                  "description": "DSA platform designation based on user count and impact."
+                },
+                "contentModerationSystem": {
+                  "type": "boolean",
+                  "description": "Whether compliant content moderation system is implemented."
+                },
+                "transparencyReporting": {
+                  "type": "boolean",
+                  "description": "Whether transparency reports are published as required by DSA."
+                },
+                "illegalContentNotice": {
+                  "type": "boolean",
+                  "description": "Whether notice and takedown procedures for illegal content are implemented."
+                },
+                "traderVerificationKYBC": {
+                  "type": "boolean",
+                  "description": "Whether Know Your Business Customer verification is implemented for traders."
+                },
+                "systemicRiskAssessment": {
+                  "type": "boolean",
+                  "description": "Whether annual systemic risk assessments are conducted (required for VLOP/VLOSE)."
+                },
+                "trustedFlaggers": {
+                  "type": "boolean",
+                  "description": "Whether trusted flagger system is implemented for priority content review."
+                },
+                "advertisementRepository": {
+                  "type": "boolean",
+                  "description": "Whether public advertisement repository is maintained (required for VLOP/VLOSE)."
+                }
+              }
+            },
+            "usaMarketplace": {
+              "type": "object",
+              "description": "USA marketplace regulatory compliance including FTC and state laws.",
+              "properties": {
+                "ftcCompliance": {
+                  "type": "boolean",
+                  "description": "Whether FTC Act compliance is implemented."
+                },
+                "cpscCompliance": {
+                  "type": "boolean",
+                  "description": "Whether Consumer Product Safety Commission compliance is implemented."
+                },
+                "stateMarketplaceLaws": {
+                  "type": "boolean",
+                  "description": "Whether state-specific marketplace laws are complied with."
+                },
+                "dmcaCompliance": {
+                  "type": "boolean",
+                  "description": "Whether DMCA copyright policies are implemented."
+                },
+                "salesTaxNexus": {
+                  "type": "boolean",
+                  "description": "Whether sales tax nexus requirements are handled."
+                }
+              }
+            },
+            "crossBorderTrade": {
+              "type": "object",
+              "description": "Cross-border trade compliance and regulatory management.",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Whether cross-border trade compliance is active."
+                },
+                "customsIntegration": {
+                  "type": "boolean",
+                  "description": "Whether customs and import/export regulations are handled."
+                },
+                "territorialTaxation": {
+                  "type": "boolean",
+                  "description": "Whether territorial taxation compliance is implemented."
+                },
+                "tradeAgreements": {
+                  "type": "boolean",
+                  "description": "Whether international trade agreements are considered."
+                },
+                "geolocationEnforcement": {
+                  "type": "boolean",
+                  "description": "Whether geolocation-based compliance enforcement is active."
+                }
+              }
+            },
+            "anonymizedLogging": {
+              "type": "object",
+              "description": "Anonymous activity logging for compliance and transparency.",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Whether anonymized activity logging is active."
+                },
+                "businessActivities": {
+                  "type": "boolean",
+                  "description": "Whether business activities are logged anonymously."
+                },
+                "complianceReporting": {
+                  "type": "boolean",
+                  "description": "Whether compliance reports are generated from anonymized data."
+                },
+                "auditTrails": {
+                  "type": "boolean",
+                  "description": "Whether audit trails are maintained for regulatory purposes."
+                },
+                "dataRetentionPeriod": {
+                  "type": "string",
+                  "description": "Data retention period for anonymized logs (e.g., '7_years', '5_years')."
+                }
+              }
+            }
+          }
+        },
+        "blockchainIntegration": {
+          "type": "object",
+          "description": "Blockchain integration for transparency, smart contracts, and revenue distribution.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether blockchain integration is active."
+            },
+            "network": {
+              "type": "string",
+              "description": "Blockchain network used ('Ethereum', 'Polygon', 'Arbitrum', 'Avalanche')."
+            },
+            "smartContracts": {
+              "type": "object",
+              "description": "Smart contract deployment and management.",
+              "properties": {
+                "legallyBinding": {
+                  "type": "boolean",
+                  "description": "Whether smart contracts are legally binding in applicable jurisdictions."
+                },
+                "revenueDistribution": {
+                  "type": "boolean",
+                  "description": "Whether revenue distribution is handled via smart contracts."
+                },
+                "governanceVoting": {
+                  "type": "boolean",
+                  "description": "Whether governance voting is conducted on-chain."
+                },
+                "auditTrails": {
+                  "type": "boolean",
+                  "description": "Whether blockchain provides immutable audit trails."
+                }
+              }
+            },
+            "transparency": {
+              "type": "object",
+              "description": "Blockchain-based transparency features.",
+              "properties": {
+                "publicLedger": {
+                  "type": "boolean",
+                  "description": "Whether transactions are publicly visible on blockchain."
+                },
+                "revenueSharing": {
+                  "type": "boolean",
+                  "description": "Whether revenue distribution is transparent on blockchain."
+                },
+                "votingResults": {
+                  "type": "boolean",
+                  "description": "Whether voting results are recorded on blockchain."
+                }
+              }
+            }
+          }
+        },
+        "geolocationCompliance": {
+          "type": "object",
+          "description": "Geolocation-based compliance and jurisdiction management.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether geolocation-based compliance is active."
+            },
+            "automaticDetection": {
+              "type": "boolean",
+              "description": "Whether user geolocation is automatically detected via IP address."
+            },
+            "jurisdictionEnforcement": {
+              "type": "boolean",
+              "description": "Whether jurisdiction-specific rules are automatically enforced."
+            },
+            "dataLocalization": {
+              "type": "boolean",
+              "description": "Whether data localization requirements are enforced."
+            },
+            "contentModeration": {
+              "type": "boolean",
+              "description": "Whether content moderation rules vary by geographic region."
+            },
+            "crossBorderRestrictions": {
+              "type": "boolean",
+              "description": "Whether cross-border trade restrictions are enforced."
+            },
+            "culturalAdaptation": {
+              "type": "boolean",
+              "description": "Whether platform adapts to local cultural and legal requirements."
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "description": "Security configuration defining encryption standards and protection mechanisms. These settings ensure data confidentiality and integrity throughout the system.",
+      "properties": {
+        "encryption": {
+          "type": "object",
+          "description": "Encryption configuration for protecting data both at rest and in transit. Critical for meeting security standards and compliance requirements.",
+          "properties": {
+            "atRest": {
+              "type": "string",
+              "description": "Encryption standard for stored data ('AES-256', 'AES-128', 'RSA-2048'). AES-256 is the industry standard providing strong protection for databases, files, and backups."
+            },
+            "inTransit": {
+              "type": "string",
+              "description": "Encryption protocol for data transmission ('TLS 1.3', 'TLS 1.2', 'mTLS'). TLS 1.3 offers the latest security improvements, mTLS adds mutual authentication."
+            }
+          }
+        }
+      }
+    },
+    "runtimePatterns": {
+      "type": "object",
+      "description": "Advanced runtime patterns beyond traditional request-response. These patterns enable specialized communication modes and resilience strategies for modern distributed systems.",
+      "properties": {
+        "peerToPeer": {
+          "type": "object",
+          "description": "Peer-to-peer networking configuration enabling direct client-to-client communication. Reduces server load and enables offline collaboration scenarios.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether P2P communication is active. When true, clients can establish direct connections for data sharing, reducing central server dependency."
+            },
+            "protocol": {
+              "type": "string",
+              "description": "P2P communication protocol ('WebRTC', 'WebSocket', 'custom'). WebRTC enables browser-based P2P with NAT traversal and encrypted channels."
+            },
+            "description": {
+              "type": "string",
+              "description": "Explanation of the P2P use case, such as 'Real-time collaboration', 'File sharing', or 'Distributed compute'. Helps understand architectural decisions."
+            }
+          }
+        },
+        "eventDriven": {
+          "type": "object",
+          "description": "Event-driven architecture configuration for asynchronous, loosely-coupled communication. Enables reactive systems that scale better and handle failures gracefully.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether event-driven patterns are used. When true, services communicate via events rather than direct calls, enabling better decoupling."
+            },
+            "messageBus": {
+              "type": "string",
+              "description": "Event streaming/messaging platform ('Kafka', 'RabbitMQ', 'AWS EventBridge', 'Redis Streams'). Kafka offers high throughput, RabbitMQ provides flexible routing."
+            },
+            "eventFormat": {
+              "type": "string",
+              "description": "Event payload standard ('CloudEvents 1.0', 'Avro', 'JSON Schema', 'Protobuf'). CloudEvents provides vendor-neutral event format for interoperability."
+            }
+          }
+        },
+        "offlineFirst": {
+          "type": "object",
+          "description": "Offline-first architecture enabling applications to function without network connectivity. Critical for mobile apps and unreliable network environments.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether offline capabilities are implemented. When true, app stores data locally and syncs when connected, providing seamless user experience."
+            },
+            "strategy": {
+              "type": "string",
+              "description": "Offline data handling approach (e.g., 'Local SQLite with sync queue', 'IndexedDB with conflict resolution'). Defines how data is stored and synchronized."
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "app",
+    "domain",
+    "model",
+    "concepts"
+  ],
+  "$defs": {
+    "expressionSyntax": {
+      "title": "EDNet Expression Syntax Specification",
+      "description": "Formal specification for boolean expressions used in policy criteria and action conditions. This syntax is the deterministic foundation for runtime expression evaluation in the EDNet Command-Event-Policy cycle.",
+      "type": "object",
+      "properties": {
+        "primitives": {
+          "description": "Supported primitive data types in expressions",
+          "type": "object",
+          "properties": {
+            "string": {
+              "description": "String literals enclosed in double quotes",
+              "examples": ["\"user@example.com\"", "\"active\"", "\"2024-01-01\""]
+            },
+            "number": {
+              "description": "Numeric literals (integer or decimal)",
+              "examples": [42, 3.14, -10, 0]
+            },
+            "boolean": {
+              "description": "Boolean literals",
+              "examples": [true, false]
+            }
+          }
+        },
+        "operators": {
+          "description": "Supported operators with precedence (highest to lowest)",
+          "type": "object",
+          "properties": {
+            "parentheses": {
+              "description": "Grouping and precedence control",
+              "syntax": "( expression )",
+              "examples": ["(user.age >= 18)", "(a && b) || c"]
+            },
+            "unary": {
+              "description": "Unary logical negation",
+              "syntax": "! expression",
+              "examples": ["!user.disabled", "!(status == \"inactive\")"]
+            },
+            "comparison": {
+              "description": "Comparison operators",
+              "operators": ["==", "!=", ">", "<", ">=", "<="],
+              "examples": ["age >= 18", "status == \"active\"", "count != 0"]
+            },
+            "logical": {
+              "description": "Logical operators (left-associative)",
+              "operators": ["&&", "||"],
+              "examples": ["a && b", "x || y", "a && b || c && d"]
+            }
+          }
+        },
+        "propertyAccess": {
+          "description": "Dot notation for accessing nested object properties",
+          "syntax": "object.property[.subproperty]",
+          "examples": [
+            "user.age",
+            "order.items.length",
+            "config.database.host",
+            "system.timestamp"
+          ]
+        },
+        "contextVariables": {
+          "description": "Standard context variables available in expressions",
+          "type": "object",
+          "properties": {
+            "user": {
+              "description": "Current user context",
+              "properties": ["role", "permissions", "authenticated", "profile"]
+            },
+            "system": {
+              "description": "System-level context",
+              "properties": ["timestamp", "environment", "workingHours"]
+            },
+            "context": {
+              "description": "Command/event-specific context",
+              "properties": ["retryCount", "source", "metadata"]
+            }
+          }
+        },
+        "validation": {
+          "description": "Expression validation rules enforced by the EDNet expression parser",
+          "rules": [
+            "All variables must be defined in domain model or runtime context",
+            "String literals must be quoted with double quotes",
+            "Property access must use valid identifiers (alphanumeric + underscore)",
+            "Maximum expression length: 1000 characters",
+            "Parentheses must be balanced",
+            "Operators must have valid operands"
+          ]
+        },
+        "examples": {
+          "description": "Complete expression examples by use case",
+          "policyActivation": [
+            "user.age >= 18",
+            "order.amount > 100 && user.verified == true",
+            "user.role == \"admin\" || user.role == \"manager\"",
+            "!(user.status == \"suspended\")"
+          ],
+          "actionConditions": [
+            "context.retryCount < 3",
+            "system.workingHours == true",
+            "user.balance >= order.total"
+          ],
+          "complexLogic": [
+            "(user.age >= 18 && user.verified) || user.role == \"premium\"",
+            "order.items.length > 0 && (user.discount > 0 || order.total >= 50)",
+            "system.environment == \"production\" && user.permissions.includes(\"write\")"
+          ]
+        }
+      }
+    }
+  }
+}

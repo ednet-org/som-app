@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:openapi/src/model/address.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -19,160 +20,235 @@ part 'company_dto.g.dart';
 /// * [companySize] 
 /// * [type] 
 /// * [websiteUrl] 
+/// * [status] 
+@BuiltValue()
 abstract class CompanyDto implements Built<CompanyDto, CompanyDtoBuilder> {
-    @BuiltValueField(wireName: r'id')
-    String? get id;
+  @BuiltValueField(wireName: r'id')
+  String? get id;
 
-    @BuiltValueField(wireName: r'name')
-    String? get name;
+  @BuiltValueField(wireName: r'name')
+  String? get name;
 
-    @BuiltValueField(wireName: r'address')
-    Address? get address;
+  @BuiltValueField(wireName: r'address')
+  Address? get address;
 
-    @BuiltValueField(wireName: r'uidNr')
-    String? get uidNr;
+  @BuiltValueField(wireName: r'uidNr')
+  String? get uidNr;
 
-    @BuiltValueField(wireName: r'registrationNr')
-    String? get registrationNr;
+  @BuiltValueField(wireName: r'registrationNr')
+  String? get registrationNr;
 
-    @BuiltValueField(wireName: r'companySize')
-    int? get companySize;
+  @BuiltValueField(wireName: r'companySize')
+  int? get companySize;
 
-    @BuiltValueField(wireName: r'type')
-    int? get type;
+  @BuiltValueField(wireName: r'type')
+  int? get type;
 
-    @BuiltValueField(wireName: r'websiteUrl')
-    String? get websiteUrl;
+  @BuiltValueField(wireName: r'websiteUrl')
+  String? get websiteUrl;
 
-    CompanyDto._();
+  @BuiltValueField(wireName: r'status')
+  String? get status;
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(CompanyDtoBuilder b) => b;
+  CompanyDto._();
 
-    factory CompanyDto([void updates(CompanyDtoBuilder b)]) = _$CompanyDto;
+  factory CompanyDto([void updates(CompanyDtoBuilder b)]) = _$CompanyDto;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<CompanyDto> get serializer => _$CompanyDtoSerializer();
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(CompanyDtoBuilder b) => b;
+
+  @BuiltValueSerializer(custom: true)
+  static Serializer<CompanyDto> get serializer => _$CompanyDtoSerializer();
 }
 
-class _$CompanyDtoSerializer implements StructuredSerializer<CompanyDto> {
-    @override
-    final Iterable<Type> types = const [CompanyDto, _$CompanyDto];
+class _$CompanyDtoSerializer implements PrimitiveSerializer<CompanyDto> {
+  @override
+  final Iterable<Type> types = const [CompanyDto, _$CompanyDto];
 
-    @override
-    final String wireName = r'CompanyDto';
+  @override
+  final String wireName = r'CompanyDto';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, CompanyDto object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.id != null) {
-            result
-                ..add(r'id')
-                ..add(serializers.serialize(object.id,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.name != null) {
-            result
-                ..add(r'name')
-                ..add(serializers.serialize(object.name,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.address != null) {
-            result
-                ..add(r'address')
-                ..add(serializers.serialize(object.address,
-                    specifiedType: const FullType(Address)));
-        }
-        if (object.uidNr != null) {
-            result
-                ..add(r'uidNr')
-                ..add(serializers.serialize(object.uidNr,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.registrationNr != null) {
-            result
-                ..add(r'registrationNr')
-                ..add(serializers.serialize(object.registrationNr,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.companySize != null) {
-            result
-                ..add(r'companySize')
-                ..add(serializers.serialize(object.companySize,
-                    specifiedType: const FullType(int)));
-        }
-        if (object.type != null) {
-            result
-                ..add(r'type')
-                ..add(serializers.serialize(object.type,
-                    specifiedType: const FullType(int)));
-        }
-        if (object.websiteUrl != null) {
-            result
-                ..add(r'websiteUrl')
-                ..add(serializers.serialize(object.websiteUrl,
-                    specifiedType: const FullType.nullable(String)));
-        }
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    CompanyDto object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    if (object.id != null) {
+      yield r'id';
+      yield serializers.serialize(
+        object.id,
+        specifiedType: const FullType(String),
+      );
     }
-
-    @override
-    CompanyDto deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = CompanyDtoBuilder();
-
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'id':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.id = valueDes;
-                    break;
-                case r'name':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.name = valueDes;
-                    break;
-                case r'address':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(Address)) as Address;
-                    result.address.replace(valueDes);
-                    break;
-                case r'uidNr':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.uidNr = valueDes;
-                    break;
-                case r'registrationNr':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.registrationNr = valueDes;
-                    break;
-                case r'companySize':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(int)) as int;
-                    result.companySize = valueDes;
-                    break;
-                case r'type':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(int)) as int;
-                    result.type = valueDes;
-                    break;
-                case r'websiteUrl':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType.nullable(String)) as String?;
-                    if (valueDes == null) continue;
-                    result.websiteUrl = valueDes;
-                    break;
-            }
-        }
-        return result.build();
+    if (object.name != null) {
+      yield r'name';
+      yield serializers.serialize(
+        object.name,
+        specifiedType: const FullType(String),
+      );
     }
+    if (object.address != null) {
+      yield r'address';
+      yield serializers.serialize(
+        object.address,
+        specifiedType: const FullType(Address),
+      );
+    }
+    if (object.uidNr != null) {
+      yield r'uidNr';
+      yield serializers.serialize(
+        object.uidNr,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.registrationNr != null) {
+      yield r'registrationNr';
+      yield serializers.serialize(
+        object.registrationNr,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.companySize != null) {
+      yield r'companySize';
+      yield serializers.serialize(
+        object.companySize,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.type != null) {
+      yield r'type';
+      yield serializers.serialize(
+        object.type,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.websiteUrl != null) {
+      yield r'websiteUrl';
+      yield serializers.serialize(
+        object.websiteUrl,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.status != null) {
+      yield r'status';
+      yield serializers.serialize(
+        object.status,
+        specifiedType: const FullType(String),
+      );
+    }
+  }
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    CompanyDto object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
+
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required CompanyDtoBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'id':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.id = valueDes;
+          break;
+        case r'name':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.name = valueDes;
+          break;
+        case r'address':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Address),
+          ) as Address;
+          result.address.replace(valueDes);
+          break;
+        case r'uidNr':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.uidNr = valueDes;
+          break;
+        case r'registrationNr':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.registrationNr = valueDes;
+          break;
+        case r'companySize':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.companySize = valueDes;
+          break;
+        case r'type':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.type = valueDes;
+          break;
+        case r'websiteUrl':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.websiteUrl = valueDes;
+          break;
+        case r'status':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.status = valueDes;
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
+    }
+  }
+
+  @override
+  CompanyDto deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = CompanyDtoBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 

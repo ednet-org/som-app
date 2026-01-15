@@ -56,6 +56,14 @@ abstract class _Application with Store {
     authorization = aAuthorization;
   }
 
+  @action
+  void setActiveRole(String role) {
+    if (authorization == null) {
+      return;
+    }
+    authorization = authorization!.copyWith(activeRole: role);
+  }
+
   @observable
   Authorization? authorization;
 
@@ -76,6 +84,9 @@ class Authorization {
   UserRoles? userRole;
   String token;
   String refreshToken;
+  List<String> roles;
+  String? activeRole;
+  int? companyType;
   String? userId;
   String? companyId;
   String? companyName;
@@ -90,9 +101,54 @@ class Authorization {
     this.companyId,
     this.companyName,
     this.emailAddress,
+    this.roles = const [],
+    this.activeRole,
+    this.companyType,
     required this.token,
     required this.refreshToken,
   });
+
+  Authorization copyWith({
+    Roles? companyRole,
+    UserRoles? userRole,
+    String? token,
+    String? refreshToken,
+    List<String>? roles,
+    String? activeRole,
+    int? companyType,
+    String? userId,
+    String? companyId,
+    String? companyName,
+    String? emailAddress,
+    dynamic user,
+  }) {
+    return Authorization(
+      companyRole: companyRole ?? this.companyRole,
+      userRole: userRole ?? this.userRole,
+      user: user ?? this.user,
+      userId: userId ?? this.userId,
+      companyId: companyId ?? this.companyId,
+      companyName: companyName ?? this.companyName,
+      emailAddress: emailAddress ?? this.emailAddress,
+      roles: roles ?? this.roles,
+      activeRole: activeRole ?? this.activeRole,
+      companyType: companyType ?? this.companyType,
+      token: token ?? this.token,
+      refreshToken: refreshToken ?? this.refreshToken,
+    );
+  }
+
+  bool hasRole(String role) => roles.contains(role);
+
+  bool get isBuyer => activeRole == 'buyer';
+
+  bool get isProvider => activeRole == 'provider';
+
+  bool get isConsultant => roles.contains('consultant');
+
+  bool get isAdmin => roles.contains('admin');
+
+  bool get canSwitchRole => roles.contains('buyer') && roles.contains('provider');
 }
 
 enum UserRoles {

@@ -98,7 +98,10 @@ abstract class _UserAccountConfirmationBase with Store {
           isPasswordSet = true;
           isSettingPassword = false;
           authService.authLoginPost(
-              authLoginPostRequest: authenticateDtoBuilder.build());
+            authLoginPostRequest: authenticateDtoBuilder.build(),
+            validateStatus: (status) =>
+                status != null && status >= 200 && status < 300,
+          );
           emailLoginStore.setPassword(password);
           emailLoginStore.setEmail(email);
           isLoggingIn = true;

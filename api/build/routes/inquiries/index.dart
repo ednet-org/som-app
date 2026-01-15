@@ -7,6 +7,7 @@ import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
+import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
@@ -46,10 +47,21 @@ Future<Response> _handleList(RequestContext context) async {
   final deadlineTo = _parseDate(params['deadlineTo']);
   final editorIds = _parseCsv(params['editorIds'] ?? params['editor']);
 
+  final isConsultant = auth.roles.contains('consultant');
+  final activeRole = auth.activeRole;
   List<InquiryRecord> inquiries;
-  if (auth.roles.contains('consultant')) {
+  if (isConsultant) {
     inquiries = await repo.listAll();
-  } else if (auth.roles.contains('provider')) {
+  } else if (activeRole == 'provider') {
+    final provider = await context
+        .read<ProviderRepository>()
+        .findByCompany(auth.companyId);
+    if (provider == null || provider.status != 'active') {
+      return Response.json(
+        statusCode: 403,
+        body: 'Provider registration is pending.',
+      );
+    }
     inquiries = await repo.listAssignedToProvider(auth.companyId);
   } else {
     inquiries = await repo.listByBuyerCompany(auth.companyId);
@@ -112,7 +124,7 @@ Future<Response> _handleList(RequestContext context) async {
 
   final offersRepository = context.read<OfferRepository>();
   Map<String, String>? providerStatusMap;
-  if (auth.roles.contains('provider')) {
+  if (activeRole == 'provider') {
     providerStatusMap = {};
     for (final inquiry in inquiries) {
       final offers = await offersRepository.listByInquiry(inquiry.id);
@@ -171,6 +183,9 @@ Future<Response> _handleCreate(RequestContext context) async {
   );
   if (auth == null) {
     return Response(statusCode: 401);
+  }
+  if (auth.activeRole != 'buyer') {
+    return Response(statusCode: 403);
   }
   final companyRepo = context.read<CompanyRepository>();
   final userRepo = context.read<UserRepository>();
@@ -234,6 +249,8 @@ Future<Response> _handleCreate(RequestContext context) async {
     ),
     contactInfo: contact,
     notifiedAt: null,
+    assignedAt: null,
+    closedAt: null,
     createdAt: DateTime.now().toUtc(),
     updatedAt: DateTime.now().toUtc(),
   );

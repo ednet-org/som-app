@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 
+import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/mappings.dart';
@@ -36,6 +37,17 @@ Future<Response> onRequest(
   final body = await context.request.body();
   final jsonBody = jsonDecode(body) as Map<String, dynamic>;
   final canEditRoles = isAdmin;
+  final updatedRoles = canEditRoles
+      ? (jsonBody['roles'] as List<dynamic>? ?? existing.roles)
+          .map((e) => e is int ? roleFromWire(e) : e.toString())
+          .toList()
+      : existing.roles;
+  final normalizedRoles = _ensureBaseRoles(
+    roles: updatedRoles,
+    companyType: (await context.read<CompanyRepository>().findById(companyId))
+            ?.type ??
+        'buyer',
+  );
   final updated = UserRecord(
     id: existing.id,
     companyId: existing.companyId,
@@ -47,11 +59,7 @@ Future<Response> onRequest(
     salutation: jsonBody['salutation'] as String? ?? existing.salutation,
     title: jsonBody['title'] as String? ?? existing.title,
     telephoneNr: jsonBody['telephoneNr'] as String? ?? existing.telephoneNr,
-    roles: canEditRoles
-        ? (jsonBody['roles'] as List<dynamic>? ?? existing.roles)
-            .map((e) => e is int ? roleFromWire(e) : e.toString())
-            .toList()
-        : existing.roles,
+    roles: normalizedRoles,
     isActive: existing.isActive,
     emailConfirmed: existing.emailConfirmed,
     lastLoginRole: existing.lastLoginRole,
@@ -70,4 +78,38 @@ Future<Response> onRequest(
   }
   await repo.update(updated);
   return Response.json(body: updated.toDtoJson());
+}
+
+List<String> _ensureBaseRoles({
+  required List<String> roles,
+  required String companyType,
+}) {
+  final normalized = <String>{...roles};
+  if (normalized.contains('admin')) {
+    if (companyType == 'buyer' || companyType == 'buyer_provider') {
+      normalized.add('buyer');
+    }
+    if (companyType == 'provider' || companyType == 'buyer_provider') {
+      normalized.add('provider');
+    }
+  }
+  final ordered = <String>[];
+  if (normalized.contains('buyer')) {
+    ordered.add('buyer');
+  }
+  if (normalized.contains('provider')) {
+    ordered.add('provider');
+  }
+  if (normalized.contains('consultant')) {
+    ordered.add('consultant');
+  }
+  if (normalized.contains('admin')) {
+    ordered.add('admin');
+  }
+  for (final role in normalized) {
+    if (!ordered.contains(role)) {
+      ordered.add(role);
+    }
+  }
+  return ordered;
 }

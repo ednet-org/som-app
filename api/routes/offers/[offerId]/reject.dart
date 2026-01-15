@@ -18,7 +18,7 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   if (auth == null) {
     return Response(statusCode: 401);
   }
-  if (!auth.roles.contains('buyer')) {
+  if (auth.activeRole != 'buyer') {
     return Response(statusCode: 403);
   }
   final repo = context.read<OfferRepository>();

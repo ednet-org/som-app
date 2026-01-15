@@ -4,12 +4,13 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:openapi/src/api_util.dart';
-import 'package:openapi/src/model/inquiries_inquiry_id_offers_get200_response.dart';
+import 'package:openapi/src/model/inquiries_inquiry_id_offers_post200_response.dart';
 import 'package:openapi/src/model/offer.dart';
 
 class OffersApi {
@@ -43,7 +44,7 @@ class OffersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/inquiries/{inquiryId}/offers'.replaceAll('{' r'inquiryId' '}', inquiryId.toString());
+    final _path = r'/inquiries/{inquiryId}/offers'.replaceAll('{' r'inquiryId' '}', encodeQueryParameter(_serializers, inquiryId, const FullType(String)).toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -70,13 +71,13 @@ class OffersApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<Offer> _responseData;
+    BuiltList<Offer>? _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(Offer)]);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(Offer)]),
       ) as BuiltList<Offer>;
 
     } catch (error, stackTrace) {
@@ -114,9 +115,9 @@ class OffersApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [InquiriesInquiryIdOffersGet200Response] as data
+  /// Returns a [Future] containing a [Response] with a [InquiriesInquiryIdOffersPost200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<InquiriesInquiryIdOffersGet200Response>> inquiriesInquiryIdOffersPost({ 
+  Future<Response<InquiriesInquiryIdOffersPost200Response>> inquiriesInquiryIdOffersPost({ 
     required String inquiryId,
     MultipartFile? file,
     CancelToken? cancelToken,
@@ -126,7 +127,7 @@ class OffersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/inquiries/{inquiryId}/offers'.replaceAll('{' r'inquiryId' '}', inquiryId.toString());
+    final _path = r'/inquiries/{inquiryId}/offers'.replaceAll('{' r'inquiryId' '}', encodeQueryParameter(_serializers, inquiryId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -174,14 +175,14 @@ class OffersApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    InquiriesInquiryIdOffersGet200Response _responseData;
+    InquiriesInquiryIdOffersPost200Response? _responseData;
 
     try {
-      const _responseType = FullType(InquiriesInquiryIdOffersGet200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as InquiriesInquiryIdOffersGet200Response;
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(InquiriesInquiryIdOffersPost200Response),
+      ) as InquiriesInquiryIdOffersPost200Response;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -193,7 +194,7 @@ class OffersApi {
       );
     }
 
-    return Response<InquiriesInquiryIdOffersGet200Response>(
+    return Response<InquiriesInquiryIdOffersPost200Response>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -228,7 +229,7 @@ class OffersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/offers/{offerId}/accept'.replaceAll('{' r'offerId' '}', offerId.toString());
+    final _path = r'/offers/{offerId}/accept'.replaceAll('{' r'offerId' '}', encodeQueryParameter(_serializers, offerId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -281,7 +282,7 @@ class OffersApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/offers/{offerId}/reject'.replaceAll('{' r'offerId' '}', offerId.toString());
+    final _path = r'/offers/{offerId}/reject'.replaceAll('{' r'offerId' '}', encodeQueryParameter(_serializers, offerId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{

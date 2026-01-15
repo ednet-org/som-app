@@ -78,6 +78,8 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
   final String? subscriptionPlanId;
   @override
   final ProviderRegistrationDataPaymentIntervalEnum? paymentInterval;
+  @override
+  final String? providerType;
 
   factory _$ProviderRegistrationData(
           [void Function(ProviderRegistrationDataBuilder)? updates]) =>
@@ -87,7 +89,8 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
       {this.bankDetails,
       this.branchIds,
       this.subscriptionPlanId,
-      this.paymentInterval})
+      this.paymentInterval,
+      this.providerType})
       : super._();
   @override
   ProviderRegistrationData rebuild(
@@ -105,7 +108,8 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
         bankDetails == other.bankDetails &&
         branchIds == other.branchIds &&
         subscriptionPlanId == other.subscriptionPlanId &&
-        paymentInterval == other.paymentInterval;
+        paymentInterval == other.paymentInterval &&
+        providerType == other.providerType;
   }
 
   @override
@@ -115,6 +119,7 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
     _$hash = $jc(_$hash, branchIds.hashCode);
     _$hash = $jc(_$hash, subscriptionPlanId.hashCode);
     _$hash = $jc(_$hash, paymentInterval.hashCode);
+    _$hash = $jc(_$hash, providerType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -125,7 +130,8 @@ class _$ProviderRegistrationData extends ProviderRegistrationData {
           ..add('bankDetails', bankDetails)
           ..add('branchIds', branchIds)
           ..add('subscriptionPlanId', subscriptionPlanId)
-          ..add('paymentInterval', paymentInterval))
+          ..add('paymentInterval', paymentInterval)
+          ..add('providerType', providerType))
         .toString();
   }
 }
@@ -159,6 +165,10 @@ class ProviderRegistrationDataBuilder
           ProviderRegistrationDataPaymentIntervalEnum? paymentInterval) =>
       _$this._paymentInterval = paymentInterval;
 
+  String? _providerType;
+  String? get providerType => _$this._providerType;
+  set providerType(String? providerType) => _$this._providerType = providerType;
+
   ProviderRegistrationDataBuilder() {
     ProviderRegistrationData._defaults(this);
   }
@@ -170,6 +180,7 @@ class ProviderRegistrationDataBuilder
       _branchIds = $v.branchIds?.toBuilder();
       _subscriptionPlanId = $v.subscriptionPlanId;
       _paymentInterval = $v.paymentInterval;
+      _providerType = $v.providerType;
       _$v = null;
     }
     return this;
@@ -197,6 +208,7 @@ class ProviderRegistrationDataBuilder
             branchIds: _branchIds?.build(),
             subscriptionPlanId: subscriptionPlanId,
             paymentInterval: paymentInterval,
+            providerType: providerType,
           );
     } catch (_) {
       late String _$failedField;

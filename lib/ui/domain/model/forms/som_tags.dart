@@ -140,6 +140,19 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                 ))
             .toList(),
       ),
+      if (_searchText.isNotEmpty &&
+          !_suggestions.any((tag) =>
+              tag.title.toLowerCase() == _searchText.toLowerCase()))
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: OutlinedButton.icon(
+            onPressed: () => _addTags(
+              TagModel(id: _searchText, title: _searchText),
+            ),
+            icon: const Icon(Icons.add),
+            label: Text('Add "$_searchText"'),
+          ),
+        ),
     ]);
   }
 

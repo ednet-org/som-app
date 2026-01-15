@@ -69,7 +69,7 @@ void main() {
         expect(data['roles'], [3]);
         return Response(
           requestOptions: options,
-          statusCode: 204,
+          statusCode: 200,
           data: null,
         );
       }).getConsultantsApi();
@@ -98,7 +98,7 @@ void main() {
         expect(users.length, 1);
         return Response(
           requestOptions: options,
-          statusCode: 204,
+          statusCode: 200,
           data: null,
         );
       }).getConsultantsApi();

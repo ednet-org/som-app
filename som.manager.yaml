@@ -1,0 +1,1064 @@
+context:
+  name: "SOM"
+  description: "Service Order Management Platform"
+
+domain:
+  name: "som"
+  description: "Domain for matching buyers and providers through inquiries and offers"
+
+model:
+  name: "manager"
+  description: "A marketplace model connecting buyers with service providers"
+
+concepts:
+  # User management bounded context
+  - name: "User"
+    description: "A person with an account on the platform"
+    entry: true
+    aggregateRoot: true
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "email"
+        category: "identifier"
+        type: "String"
+        essential: true
+      - name: "password"
+        type: "String"
+        essential: true
+        sensitive: true
+      - name: "firstName"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "lastName"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "title"
+        type: "String"
+      - name: "salutation"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "telephone"
+        type: "String"
+      - name: "active"
+        type: "Boolean"
+        essential: true
+        init: "true"
+      - name: "lastLoginRole"
+        type: "String"
+    commands:
+      - name: "RegisterUser"
+        description: "Register a new user account"
+        successEvent: "UserRegistered"
+        failureEvent: "UserRegistrationFailed"
+        roles: ["Guest"]
+      - name: "ActivateAccount"
+        description: "Activate a user account"
+        successEvent: "UserActivated"
+        failureEvent: "UserActivationFailed"
+        roles: ["Guest"]
+      - name: "Login"
+        description: "Log in to the platform"
+        successEvent: "UserLoggedIn"
+        failureEvent: "UserLoginFailed"
+        roles: ["Guest", "User"]
+      - name: "ResetPassword"
+        description: "Request password reset"
+        successEvent: "PasswordResetRequested"
+        failureEvent: "PasswordResetRequestFailed"
+        roles: ["Guest"]
+      - name: "ChangePassword"
+        description: "Change user password"
+        successEvent: "PasswordChanged"
+        failureEvent: "PasswordChangeFailed"
+        roles: ["User"]
+      - name: "Logout"
+        description: "Log out from the platform"
+        successEvent: "UserLoggedOut"
+        failureEvent: "UserLogoutFailed"
+        roles: ["User"]
+      - name: "UpdateUserProfile"
+        description: "Update user profile details"
+        successEvent: "UserProfileUpdated"
+        failureEvent: "UserProfileUpdateFailed"
+        roles: ["User"]
+    events:
+      - name: "UserRegistered"
+        description: "User has been registered"
+        triggers:
+          - "SendActivationEmail"
+      - name: "UserRegistrationFailed"
+        description: "User registration has failed"
+      - name: "UserActivated"
+        description: "User account has been activated"
+        triggers:
+          - "SendWelcomeEmail"
+      - name: "UserActivationFailed"
+        description: "User activation has failed"
+      - name: "UserLoggedIn"
+        description: "User has logged in"
+      - name: "UserLoginFailed"
+        description: "User login has failed"
+        triggers:
+          - "IncrementFailedLoginAttempts"
+      - name: "PasswordResetRequested"
+        description: "Password reset has been requested"
+        triggers:
+          - "SendPasswordResetEmail"
+      - name: "PasswordResetRequestFailed"
+        description: "Password reset request has failed"
+      - name: "PasswordChanged"
+        description: "Password has been changed"
+        triggers:
+          - "SendPasswordChangedNotification"
+      - name: "PasswordChangeFailed"
+        description: "Password change has failed"
+      - name: "UserLoggedOut"
+        description: "User has logged out"
+      - name: "UserLogoutFailed"
+        description: "User logout has failed"
+      - name: "UserProfileUpdated"
+        description: "User profile has been updated"
+      - name: "UserProfileUpdateFailed"
+        description: "User profile update has failed"
+    policies:
+      - name: "AccountLockPolicy"
+        description: "Lock account after multiple failed login attempts"
+        expression: "failedLoginAttempts >= 5"
+        events:
+          - "UserLoginFailed"
+        actions:
+          - command: "LockUserAccount"
+            target: "User"
+
+  - name: "Role"
+    description: "A role that a user can have in the system"
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "name"
+        category: "identifier"
+        type: "String"
+        essential: true
+      - name: "description"
+        type: "String"
+    commands:
+      - name: "CreateRole"
+        description: "Create a new role"
+        successEvent: "RoleCreated"
+        failureEvent: "RoleCreationFailed"
+        roles: ["Admin", "Consultant"]
+      - name: "UpdateRole"
+        description: "Update a role"
+        successEvent: "RoleUpdated"
+        failureEvent: "RoleUpdateFailed"
+        roles: ["Admin", "Consultant"]
+      - name: "DeleteRole"
+        description: "Delete a role"
+        successEvent: "RoleDeleted"
+        failureEvent: "RoleDeletionFailed"
+        roles: ["Admin", "Consultant"]
+    events:
+      - name: "RoleCreated"
+        description: "Role has been created"
+      - name: "RoleCreationFailed"
+        description: "Role creation has failed"
+      - name: "RoleUpdated"
+        description: "Role has been updated"
+      - name: "RoleUpdateFailed"
+        description: "Role update has failed"
+      - name: "RoleDeleted"
+        description: "Role has been deleted"
+      - name: "RoleDeletionFailed"
+        description: "Role deletion has failed"
+
+  # Company management bounded context
+  - name: "Company"
+    description: "An organization registered on the platform"
+    entry: true
+    aggregateRoot: true
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "name"
+        category: "identifier"
+        type: "String"
+        essential: true
+      - name: "street"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "zip"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "city"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "uidNumber"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "registrationNumber"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "employeeCount"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "website"
+        type: "String"
+      - name: "active"
+        type: "Boolean"
+        essential: true
+        init: "true"
+      - name: "buyerRole"
+        type: "Boolean"
+        init: "false"
+      - name: "providerRole"
+        type: "Boolean"
+        init: "false"
+    commands:
+      - name: "RegisterCompany"
+        description: "Register a new company"
+        successEvent: "CompanyRegistered"
+        failureEvent: "CompanyRegistrationFailed"
+        roles: ["Guest", "Admin", "Consultant"]
+      - name: "UpdateCompany"
+        description: "Update company details"
+        successEvent: "CompanyUpdated"
+        failureEvent: "CompanyUpdateFailed"
+        roles: ["Admin", "Consultant"]
+      - name: "ActivateCompany"
+        description: "Activate a company"
+        successEvent: "CompanyActivated"
+        failureEvent: "CompanyActivationFailed"
+        roles: ["Consultant"]
+      - name: "DeactivateCompany"
+        description: "Deactivate a company"
+        successEvent: "CompanyDeactivated"
+        failureEvent: "CompanyDeactivationFailed"
+        roles: ["Admin", "Consultant"]
+      - name: "AddUserToCompany"
+        description: "Add a user to a company"
+        successEvent: "UserAddedToCompany"
+        failureEvent: "UserAdditionToCompanyFailed"
+        roles: ["Admin"]
+      - name: "RemoveUserFromCompany"
+        description: "Remove a user from a company"
+        successEvent: "UserRemovedFromCompany"
+        failureEvent: "UserRemovalFromCompanyFailed"
+        roles: ["Admin"]
+    events:
+      - name: "CompanyRegistered"
+        description: "Company has been registered"
+        triggers:
+          - "NotifyConsultantAboutNewCompany"
+      - name: "CompanyRegistrationFailed"
+        description: "Company registration has failed"
+      - name: "CompanyUpdated"
+        description: "Company details have been updated"
+      - name: "CompanyUpdateFailed"
+        description: "Company update has failed"
+      - name: "CompanyActivated"
+        description: "Company has been activated"
+        triggers:
+          - "SendCompanyActivationNotification"
+      - name: "CompanyActivationFailed"
+        description: "Company activation has failed"
+      - name: "CompanyDeactivated"
+        description: "Company has been deactivated"
+        triggers:
+          - "SendCompanyDeactivationNotification"
+      - name: "CompanyDeactivationFailed"
+        description: "Company deactivation has failed"
+      - name: "UserAddedToCompany"
+        description: "User has been added to a company"
+        triggers:
+          - "SendUserAddedToCompanyNotification"
+      - name: "UserAdditionToCompanyFailed"
+        description: "User addition to company has failed"
+      - name: "UserRemovedFromCompany"
+        description: "User has been removed from a company"
+        triggers:
+          - "SendUserRemovedFromCompanyNotification"
+      - name: "UserRemovalFromCompanyFailed"
+        description: "User removal from company has failed"
+    policies:
+      - name: "CompanyUserLimitPolicy"
+        description: "Enforce user limits based on subscription"
+        expression: "users.count <= subscription.maxUsers"
+        events:
+          - "UserAddedToCompany"
+        actions:
+          - command: "RejectUserAddition"
+            target: "Company"
+      - name: "CompanyTypePolicyEnforcement"
+        description: "Enforce company type constraints"
+        expression: "buyerRole || providerRole"
+        events:
+          - "CompanyRegistered"
+          - "CompanyUpdated"
+        actions:
+          - command: "EnforceCompanyTypeSelection"
+            target: "Company"
+
+  - name: "ProviderCompany"
+    description: "A company that offers services on the platform"
+    is: "Company"
+    attributes:
+      - name: "branch"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "category"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "products"
+        type: "String"
+      - name: "iban"
+        category: "required"
+        type: "String"
+        essential: true
+        sensitive: true
+      - name: "bic"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "accountOwner"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "paymentInterval"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "subscriptionType"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "subscriptionStatus"
+        type: "String"
+        init: "Pending"
+      - name: "registrationStatus"
+        type: "String"
+        init: "Pending"
+    commands:
+      - name: "UpgradeSubscription"
+        description: "Upgrade the subscription package"
+        successEvent: "SubscriptionUpgraded"
+        failureEvent: "SubscriptionUpgradeFailed"
+        roles: ["Admin"]
+      - name: "DowngradeSubscription"
+        description: "Downgrade the subscription package"
+        successEvent: "SubscriptionDowngraded"
+        failureEvent: "SubscriptionDowngradeFailed"
+        roles: ["Admin"]
+      - name: "ApproveRegistration"
+        description: "Approve provider registration"
+        successEvent: "RegistrationApproved"
+        failureEvent: "RegistrationApprovalFailed"
+        roles: ["Consultant"]
+      - name: "RejectRegistration"
+        description: "Reject provider registration"
+        successEvent: "RegistrationRejected"
+        failureEvent: "RegistrationRejectionFailed"
+        roles: ["Consultant"]
+      - name: "UpdatePaymentDetails"
+        description: "Update payment details"
+        successEvent: "PaymentDetailsUpdated"
+        failureEvent: "PaymentDetailsUpdateFailed"
+        roles: ["Admin"]
+    events:
+      - name: "SubscriptionUpgraded"
+        description: "Subscription has been upgraded"
+        triggers:
+          - "NotifyConsultantAboutSubscriptionChange"
+          - "UpdateCompanyPermissions"
+      - name: "SubscriptionUpgradeFailed"
+        description: "Subscription upgrade has failed"
+      - name: "SubscriptionDowngraded"
+        description: "Subscription has been downgraded"
+        triggers:
+          - "NotifyConsultantAboutSubscriptionChange"
+          - "UpdateCompanyPermissions"
+      - name: "SubscriptionDowngradeFailed"
+        description: "Subscription downgrade has failed"
+      - name: "RegistrationApproved"
+        description: "Registration has been approved"
+        triggers:
+          - "NotifyProviderAboutApproval"
+          - "EnableInquiryAssignment"
+      - name: "RegistrationApprovalFailed"
+        description: "Registration approval has failed"
+      - name: "RegistrationRejected"
+        description: "Registration has been rejected"
+        triggers:
+          - "NotifyProviderAboutRejection"
+      - name: "RegistrationRejectionFailed"
+        description: "Registration rejection has failed"
+      - name: "PaymentDetailsUpdated"
+        description: "Payment details have been updated"
+      - name: "PaymentDetailsUpdateFailed"
+        description: "Payment details update has failed"
+    policies:
+      - name: "SubscriptionDowngradePolicy"
+        description: "Allow subscription downgrade only before 3 months to renewal"
+        expression: "monthsToRenewal <= 3"
+        events:
+          - "SubscriptionDowngraded"
+        actions:
+          - command: "RejectSubscriptionDowngrade"
+            target: "ProviderCompany"
+      - name: "AdLimitPolicy"
+        description: "Enforce advertisement limit based on subscription"
+        expression: "activeAds.count <= subscription.normalAdsPerMonth && activeBannerAds.count <= subscription.bannerAdsPerMonth"
+        events:
+          - "AdvertisementCreated"
+        actions:
+          - command: "RejectAdvertisementCreation"
+            target: "Advertisement"
+
+  # Inquiry management bounded context
+  - name: "Inquiry"
+    description: "A request for offers from a buyer"
+    entry: true
+    aggregateRoot: true
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "branch"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "category"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "products"
+        type: "String"
+      - name: "deadline"
+        category: "required"
+        type: "Date"
+        essential: true
+      - name: "deliveryZipCodes"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "numberOfProviders"
+        category: "required"
+        type: "Integer"
+        essential: true
+      - name: "description"
+        type: "String"
+      - name: "attachmentPath"
+        type: "String"
+      - name: "providerZipCode"
+        type: "String"
+      - name: "maxRadius"
+        type: "String"
+      - name: "providerType"
+        type: "String"
+      - name: "companySize"
+        type: "String"
+      - name: "status"
+        type: "String"
+        init: "Open"
+      - name: "creationDate"
+        type: "Date"
+        init: "now"
+      - name: "assignmentDate"
+        type: "Date"
+    commands:
+      - name: "CreateInquiry"
+        description: "Create a new inquiry"
+        successEvent: "InquiryCreated"
+        failureEvent: "InquiryCreationFailed"
+        roles: ["Buyer", "Admin"]
+      - name: "AssignToProviders"
+        description: "Assign inquiry to providers"
+        successEvent: "InquiryAssigned"
+        failureEvent: "InquiryAssignmentFailed"
+        roles: ["Consultant"]
+      - name: "CloseInquiry"
+        description: "Close an inquiry"
+        successEvent: "InquiryClosed"
+        failureEvent: "InquiryClosingFailed"
+        roles: ["Buyer", "Admin", "Consultant"]
+      - name: "AddAttachment"
+        description: "Add attachment to inquiry"
+        successEvent: "InquiryAttachmentAdded"
+        failureEvent: "InquiryAttachmentAdditionFailed"
+        roles: ["Buyer", "Admin"]
+      - name: "RemoveAttachment"
+        description: "Remove attachment from inquiry"
+        successEvent: "InquiryAttachmentRemoved"
+        failureEvent: "InquiryAttachmentRemovalFailed"
+        roles: ["Buyer", "Admin"]
+    events:
+      - name: "InquiryCreated"
+        description: "Inquiry has been created"
+        triggers:
+          - "NotifyConsultantAboutNewInquiry"
+      - name: "InquiryCreationFailed"
+        description: "Inquiry creation has failed"
+      - name: "InquiryAssigned"
+        description: "Inquiry has been assigned to providers"
+        triggers:
+          - "NotifyProvidersAboutInquiry"
+          - "ScheduleDeadlineReminder"
+      - name: "InquiryAssignmentFailed"
+        description: "Inquiry assignment has failed"
+      - name: "InquiryClosed"
+        description: "Inquiry has been closed"
+        triggers:
+          - "NotifyAssignedProvidersAboutClosure"
+      - name: "InquiryClosingFailed"
+        description: "Inquiry closing has failed"
+      - name: "InquiryAttachmentAdded"
+        description: "Attachment has been added to inquiry"
+      - name: "InquiryAttachmentAdditionFailed"
+        description: "Attachment addition to inquiry has failed"
+      - name: "InquiryAttachmentRemoved"
+        description: "Attachment has been removed from inquiry"
+      - name: "InquiryAttachmentRemovalFailed"
+        description: "Attachment removal from inquiry has failed"
+      - name: "InquiryDeadlineReached"
+        description: "Inquiry deadline has been reached"
+        triggers:
+          - "NotifyBuyerAboutInquiryDeadline"
+    policies:
+      - name: "InquiryDeadlinePolicy"
+        description: "Enforce minimum deadline period (3 working days)"
+        expression: "deadline >= today + 3.workDays"
+        events:
+          - "InquiryCreated"
+        actions:
+          - command: "RejectInvalidDeadline"
+            target: "Inquiry"
+      - name: "ProviderAssignmentPolicy"
+        description: "Enforce maximum number of providers"
+        expression: "assignedProviders.count <= numberOfProviders"
+        events:
+          - "InquiryAssigned"
+        actions:
+          - command: "RejectProviderAssignment"
+            target: "Inquiry"
+
+  # Offer management bounded context
+  - name: "Offer"
+    description: "An offer from a provider in response to an inquiry"
+    entry: true
+    aggregateRoot: true
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "attachmentPath"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "status"
+        type: "String"
+        init: "Open"
+      - name: "creationDate"
+        type: "Date"
+        init: "now"
+      - name: "resolutionDate"
+        type: "Date"
+    commands:
+      - name: "CreateOffer"
+        description: "Create a new offer"
+        successEvent: "OfferCreated"
+        failureEvent: "OfferCreationFailed"
+        roles: ["Provider", "Admin"]
+      - name: "AcceptOffer"
+        description: "Accept an offer"
+        successEvent: "OfferAccepted"
+        failureEvent: "OfferAcceptanceFailed"
+        roles: ["Buyer", "Admin"]
+      - name: "RejectOffer"
+        description: "Reject an offer"
+        successEvent: "OfferRejected"
+        failureEvent: "OfferRejectionFailed"
+        roles: ["Buyer", "Admin"]
+      - name: "IgnoreInquiry"
+        description: "Ignore an inquiry without offering"
+        successEvent: "InquiryIgnored"
+        failureEvent: "InquiryIgnoringFailed"
+        roles: ["Provider", "Admin"]
+    events:
+      - name: "OfferCreated"
+        description: "Offer has been created"
+        triggers:
+          - "CheckOfferQuotaForProvider"
+          - "CheckAllOffersReceived"
+      - name: "OfferCreationFailed"
+        description: "Offer creation has failed"
+      - name: "OfferAccepted"
+        description: "Offer has been accepted"
+        triggers:
+          - "NotifyProviderAboutAcceptance"
+          - "ShareBuyerContactWithProvider"
+      - name: "OfferAcceptanceFailed"
+        description: "Offer acceptance has failed"
+      - name: "OfferRejected"
+        description: "Offer has been rejected"
+        triggers:
+          - "NotifyProviderAboutRejection"
+      - name: "OfferRejectionFailed"
+        description: "Offer rejection has failed"
+      - name: "InquiryIgnored"
+        description: "Inquiry has been ignored"
+        triggers:
+          - "UpdateProviderStats"
+      - name: "InquiryIgnoringFailed"
+        description: "Inquiry ignoring has failed"
+      - name: "AllOffersReceived"
+        description: "All expected offers have been received"
+        triggers:
+          - "NotifyBuyerAboutAllOffersReceived"
+    policies:
+      - name: "OfferDeadlinePolicy"
+        description: "Prevent offer creation after deadline"
+        expression: "now <= inquiry.deadline"
+        events:
+          - "OfferCreated"
+        actions:
+          - command: "RejectLateOffer"
+            target: "Offer"
+
+  # Advertisement management bounded context
+  - name: "Advertisement"
+    description: "An advertisement displayed on the platform"
+    entry: true
+    aggregateRoot: true
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "type"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "branch"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "url"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "imagePath"
+        category: "required"
+        type: "String"
+        essential: true
+      - name: "headline"
+        type: "String"
+      - name: "description"
+        type: "String"
+      - name: "status"
+        type: "String"
+        init: "Draft"
+      - name: "startDate"
+        type: "Date"
+      - name: "endDate"
+        type: "Date"
+      - name: "displayDay"
+        type: "Date"
+    commands:
+      - name: "CreateAdvertisement"
+        description: "Create a new advertisement"
+        successEvent: "AdvertisementCreated"
+        failureEvent: "AdvertisementCreationFailed"
+        roles: ["Provider", "Admin"]
+      - name: "ActivateAdvertisement"
+        description: "Activate an advertisement"
+        successEvent: "AdvertisementActivated"
+        failureEvent: "AdvertisementActivationFailed"
+        roles: ["Provider", "Admin", "Consultant"]
+      - name: "DeactivateAdvertisement"
+        description: "Deactivate an advertisement"
+        successEvent: "AdvertisementDeactivated"
+        failureEvent: "AdvertisementDeactivationFailed"
+        roles: ["Provider", "Admin", "Consultant"]
+      - name: "DeleteAdvertisement"
+        description: "Delete an advertisement"
+        successEvent: "AdvertisementDeleted"
+        failureEvent: "AdvertisementDeletionFailed"
+        roles: ["Provider", "Admin", "Consultant"]
+      - name: "UpdateAdvertisement"
+        description: "Update an advertisement"
+        successEvent: "AdvertisementUpdated"
+        failureEvent: "AdvertisementUpdateFailed"
+        roles: ["Provider", "Admin", "Consultant"]
+    events:
+      - name: "AdvertisementCreated"
+        description: "Advertisement has been created"
+        triggers:
+          - "NotifyConsultantAboutNewAdvertisement"
+          - "CheckAdvertisementSlotAvailability"
+      - name: "AdvertisementCreationFailed"
+        description: "Advertisement creation has failed"
+      - name: "AdvertisementActivated"
+        description: "Advertisement has been activated"
+        triggers:
+          - "NotifyProviderAboutAdvertisementActivation"
+      - name: "AdvertisementActivationFailed"
+        description: "Advertisement activation has failed"
+      - name: "AdvertisementDeactivated"
+        description: "Advertisement has been deactivated"
+        triggers:
+          - "NotifyProviderAboutAdvertisementDeactivation"
+      - name: "AdvertisementDeactivationFailed"
+        description: "Advertisement deactivation has failed"
+      - name: "AdvertisementDeleted"
+        description: "Advertisement has been deleted"
+      - name: "AdvertisementDeletionFailed"
+        description: "Advertisement deletion has failed"
+      - name: "AdvertisementUpdated"
+        description: "Advertisement has been updated"
+      - name: "AdvertisementUpdateFailed"
+        description: "Advertisement update has failed"
+      - name: "AdvertisementExpired"
+        description: "Advertisement has expired"
+        triggers:
+          - "NotifyProviderAboutAdvertisementExpiration"
+    policies:
+      - name: "BannerSlotPolicy"
+        description: "Enforce banner slot availability"
+        expression: "type == 'Banner' ? CheckBannerSlotAvailable(displayDay) : true"
+        events:
+          - "AdvertisementCreated"
+          - "AdvertisementActivated"
+        actions:
+          - command: "RejectBannerSlotOverlap"
+            target: "Advertisement"
+      - name: "AdTimeframePolicy"
+        description: "Enforce ad timeframe limitations"
+        expression: "type == 'Normal' ? (endDate - startDate) <= 14.days : displayDay != null"
+        events:
+          - "AdvertisementCreated"
+          - "AdvertisementUpdated"
+        actions:
+          - command: "RejectInvalidTimeframe"
+            target: "Advertisement"
+
+  - name: "Branch"
+    description: "A business branch classification"
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "name"
+        category: "identifier"
+        type: "String"
+        essential: true
+    commands:
+      - name: "CreateBranch"
+        description: "Create a new branch"
+        successEvent: "BranchCreated"
+        failureEvent: "BranchCreationFailed"
+        roles: ["Consultant"]
+      - name: "DeleteBranch"
+        description: "Delete a branch"
+        successEvent: "BranchDeleted"
+        failureEvent: "BranchDeletionFailed"
+        roles: ["Consultant"]
+      - name: "UpdateBranch"
+        description: "Update a branch"
+        successEvent: "BranchUpdated"
+        failureEvent: "BranchUpdateFailed"
+        roles: ["Consultant"]
+    events:
+      - name: "BranchCreated"
+        description: "Branch has been created"
+      - name: "BranchCreationFailed"
+        description: "Branch creation has failed"
+      - name: "BranchDeleted"
+        description: "Branch has been deleted"
+        triggers:
+          - "NotifyProvidersAboutBranchDeletion"
+      - name: "BranchDeletionFailed"
+        description: "Branch deletion has failed"
+      - name: "BranchUpdated"
+        description: "Branch has been updated"
+      - name: "BranchUpdateFailed"
+        description: "Branch update has failed"
+
+  - name: "Category"
+    description: "A category within a business branch"
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "name"
+        category: "identifier"
+        type: "String"
+        essential: true
+      - name: "branchId"
+        category: "required"
+        type: "String"
+        essential: true
+    commands:
+      - name: "CreateCategory"
+        description: "Create a new category"
+        successEvent: "CategoryCreated"
+        failureEvent: "CategoryCreationFailed"
+        roles: ["Consultant"]
+      - name: "DeleteCategory"
+        description: "Delete a category"
+        successEvent: "CategoryDeleted"
+        failureEvent: "CategoryDeletionFailed"
+        roles: ["Consultant"]
+      - name: "UpdateCategory"
+        description: "Update a category"
+        successEvent: "CategoryUpdated"
+        failureEvent: "CategoryUpdateFailed"
+        roles: ["Consultant"]
+    events:
+      - name: "CategoryCreated"
+        description: "Category has been created"
+      - name: "CategoryCreationFailed"
+        description: "Category creation has failed"
+      - name: "CategoryDeleted"
+        description: "Category has been deleted"
+      - name: "CategoryDeletionFailed"
+        description: "Category deletion has failed"
+      - name: "CategoryUpdated"
+        description: "Category has been updated"
+      - name: "CategoryUpdateFailed"
+        description: "Category update has failed"
+
+  # Subscription bounded context
+  - name: "Subscription"
+    description: "A subscription package for provider companies"
+    attributes:
+      - name: "id"
+        category: "guid"
+        type: "String"
+        essential: true
+      - name: "name"
+        category: "identifier"
+        type: "String"
+        essential: true
+      - name: "price"
+        category: "required"
+        type: "Decimal"
+        essential: true
+      - name: "maxUsers"
+        category: "required"
+        type: "Integer"
+        essential: true
+      - name: "setupFee"
+        type: "Decimal"
+      - name: "bannerAdsPerMonth"
+        type: "Integer"
+      - name: "normalAdsPerMonth"
+        type: "Integer"
+      - name: "freeMonths"
+        type: "Integer"
+      - name: "commitmentPeriod"
+        type: "Integer"
+        init: "12"
+    commands:
+      - name: "CreateSubscription"
+        description: "Create a new subscription package"
+        successEvent: "SubscriptionCreated"
+        failureEvent: "SubscriptionCreationFailed"
+        roles: ["Consultant", "ConsultantAdmin"]
+      - name: "UpdateSubscription"
+        description: "Update a subscription package"
+        successEvent: "SubscriptionUpdated"
+        failureEvent: "SubscriptionUpdateFailed"
+        roles: ["Consultant", "ConsultantAdmin"]
+      - name: "DeleteSubscription"
+        description: "Delete a subscription package"
+        successEvent: "SubscriptionDeleted"
+        failureEvent: "SubscriptionDeletionFailed"
+        roles: ["ConsultantAdmin"]
+    events:
+      - name: "SubscriptionCreated"
+        description: "Subscription has been created"
+      - name: "SubscriptionCreationFailed"
+        description: "Subscription creation has failed"
+      - name: "SubscriptionUpdated"
+        description: "Subscription has been updated"
+        triggers:
+          - "NotifyAffectedProviders"
+      - name: "SubscriptionUpdateFailed"
+        description: "Subscription update has failed"
+      - name: "SubscriptionDeleted"
+        description: "Subscription has been deleted"
+      - name: "SubscriptionDeletionFailed"
+        description: "Subscription deletion has failed"
+    policies:
+      - name: "SubscriptionUpdatePolicy"
+        description: "Prevent changing subscription terms for existing subscribers"
+        expression: "affectedCompanies.count == 0 || confirmationReceived"
+        events:
+          - "SubscriptionUpdated"
+        actions:
+          - command: "RequireSubscriptionUpdateConfirmation"
+            target: "Subscription"
+
+# Domain relationships
+relations:
+  - from: "User"
+    to: "Company"
+    fromToName: "company"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "users"
+    toFromMin: "1"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "User"
+    to: "Role"
+    fromToName: "role"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "users"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "ProviderCompany"
+    to: "Subscription"
+    fromToName: "subscription"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "companies"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Inquiry"
+    to: "User"
+    fromToName: "creator"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "inquiries"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Inquiry"
+    to: "ProviderCompany"
+    fromToName: "assignedProviders"
+    fromToMin: "0"
+    fromToMax: "N"
+    toFromName: "assignedInquiries"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Offer"
+    to: "ProviderCompany"
+    fromToName: "provider"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "offers"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Offer"
+    to: "Inquiry"
+    fromToName: "inquiry"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "offers"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Offer"
+    to: "User"
+    fromToName: "creator"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "createdOffers"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Advertisement"
+    to: "ProviderCompany"
+    fromToName: "company"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "advertisements"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "Category"
+    to: "Branch"
+    fromToName: "branch"
+    fromToMin: "1"
+    fromToMax: "1"
+    toFromName: "categories"
+    toFromMin: "0"
+    toFromMax: "N"
+    category: "association"
+
+  - from: "ProviderCompany"
+    to: "Company"
+    category: "inheritance"
+
+# Schema extensions for advanced command-event-policy flows
+schemaExtensions:
+  commandAuth:
+    - name: "roles"
+      description: "Roles that are authorized to execute this command"
+      type: "array"
+      items: "string"
+
+  eventTriggers:
+    - name: "triggers"
+      description: "Actions or processes triggered by this event"
+      type: "array"
+      items: "string"
+
+  policyActions:
+    - name: "actions"
+      description: "Commands triggered when policy condition is met"
+      type: "array"
+      items:
+        - name: "command"
+          description: "Name of the command to invoke"
+          type: "string"
+        - name: "target"
+          description: "Target entity to receive the command"
+          type: "string"
+
+  policyTriggers:
+    - name: "events"
+      description: "Events that trigger policy evaluation"
+      type: "array"
+      items: "string"
+
+  aggregateMarkers:
+    - name: "aggregateRoot"
+      description: "Indicates that this concept is an aggregate root"
+      type: "boolean"

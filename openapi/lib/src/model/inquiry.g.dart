@@ -38,6 +38,10 @@ class _$Inquiry extends Inquiry {
   @override
   final DateTime? notifiedAt;
   @override
+  final DateTime? assignedAt;
+  @override
+  final DateTime? closedAt;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
@@ -61,6 +65,8 @@ class _$Inquiry extends Inquiry {
       this.providerCriteria,
       this.contactInfo,
       this.notifiedAt,
+      this.assignedAt,
+      this.closedAt,
       this.createdAt,
       this.updatedAt})
       : super._();
@@ -90,6 +96,8 @@ class _$Inquiry extends Inquiry {
         providerCriteria == other.providerCriteria &&
         contactInfo == other.contactInfo &&
         notifiedAt == other.notifiedAt &&
+        assignedAt == other.assignedAt &&
+        closedAt == other.closedAt &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt;
   }
@@ -112,6 +120,8 @@ class _$Inquiry extends Inquiry {
     _$hash = $jc(_$hash, providerCriteria.hashCode);
     _$hash = $jc(_$hash, contactInfo.hashCode);
     _$hash = $jc(_$hash, notifiedAt.hashCode);
+    _$hash = $jc(_$hash, assignedAt.hashCode);
+    _$hash = $jc(_$hash, closedAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jf(_$hash);
@@ -136,6 +146,8 @@ class _$Inquiry extends Inquiry {
           ..add('providerCriteria', providerCriteria)
           ..add('contactInfo', contactInfo)
           ..add('notifiedAt', notifiedAt)
+          ..add('assignedAt', assignedAt)
+          ..add('closedAt', closedAt)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt))
         .toString();
@@ -216,6 +228,14 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
   DateTime? get notifiedAt => _$this._notifiedAt;
   set notifiedAt(DateTime? notifiedAt) => _$this._notifiedAt = notifiedAt;
 
+  DateTime? _assignedAt;
+  DateTime? get assignedAt => _$this._assignedAt;
+  set assignedAt(DateTime? assignedAt) => _$this._assignedAt = assignedAt;
+
+  DateTime? _closedAt;
+  DateTime? get closedAt => _$this._closedAt;
+  set closedAt(DateTime? closedAt) => _$this._closedAt = closedAt;
+
   DateTime? _createdAt;
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
@@ -246,6 +266,8 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
       _providerCriteria = $v.providerCriteria?.toBuilder();
       _contactInfo = $v.contactInfo?.toBuilder();
       _notifiedAt = $v.notifiedAt;
+      _assignedAt = $v.assignedAt;
+      _closedAt = $v.closedAt;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
       _$v = null;
@@ -286,6 +308,8 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
             providerCriteria: _providerCriteria?.build(),
             contactInfo: _contactInfo?.build(),
             notifiedAt: notifiedAt,
+            assignedAt: assignedAt,
+            closedAt: closedAt,
             createdAt: createdAt,
             updatedAt: updatedAt,
           );

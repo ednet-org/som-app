@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
@@ -68,13 +69,13 @@ class ConsultantsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<UserDto> _responseData;
+    BuiltList<UserDto>? _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(UserDto)]);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(UserDto)]),
       ) as BuiltList<UserDto>;
 
     } catch (error, stackTrace) {

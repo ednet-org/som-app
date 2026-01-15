@@ -209,7 +209,10 @@ class SystemBootstrap {
             pendingBranchIds: const [],
             subscriptionPlanId: planId,
             paymentInterval: 'monthly',
+            providerType: 'haendler',
             status: 'active',
+            rejectionReason: null,
+            rejectedAt: null,
             createdAt: now,
             updatedAt: now,
           ),
@@ -259,6 +262,8 @@ class SystemBootstrap {
       ),
       contactInfo: contactInfo,
       notifiedAt: null,
+      assignedAt: null,
+      closedAt: null,
       createdAt: now,
       updatedAt: now,
     );
@@ -291,6 +296,8 @@ class SystemBootstrap {
       ),
       contactInfo: contactInfo,
       notifiedAt: null,
+      assignedAt: null,
+      closedAt: null,
       createdAt: now,
       updatedAt: now,
     );
@@ -323,6 +330,8 @@ class SystemBootstrap {
       ),
       contactInfo: contactInfo,
       notifiedAt: now.subtract(const Duration(days: 7)),
+      assignedAt: now.subtract(const Duration(days: 12)),
+      closedAt: now.subtract(const Duration(days: 2)),
       createdAt: now.subtract(const Duration(days: 20)),
       updatedAt: now.subtract(const Duration(days: 2)),
     );
@@ -355,6 +364,8 @@ class SystemBootstrap {
       ),
       contactInfo: contactInfo,
       notifiedAt: null,
+      assignedAt: null,
+      closedAt: null,
       createdAt: now,
       updatedAt: now,
     );
@@ -387,6 +398,8 @@ class SystemBootstrap {
       ),
       contactInfo: contactInfo,
       notifiedAt: null,
+      assignedAt: null,
+      closedAt: null,
       createdAt: now,
       updatedAt: now,
     );

@@ -14,7 +14,7 @@ Future<Response> onRequest(RequestContext context) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('buyer')) {
+  if (auth == null || auth.activeRole != 'buyer') {
     return Response(statusCode: 403);
   }
   final params = context.request.uri.queryParameters;
@@ -28,9 +28,14 @@ Future<Response> onRequest(RequestContext context) async {
         to: to,
       );
   if (params['format'] == 'csv') {
+    String? email;
+    if (userId != null) {
+      final user = await context.read<UserRepository>().findById(userId);
+      email = user?.email ?? userId;
+    }
     final buffer = StringBuffer();
     buffer.writeln('email,open,closed');
-    buffer.writeln('${userId ?? 'all'},${stats['open']},${stats['closed']}');
+    buffer.writeln('${email ?? ''},${stats['open']},${stats['closed']}');
     return Response(
       headers: {'content-type': 'text/csv'},
       body: buffer.toString(),

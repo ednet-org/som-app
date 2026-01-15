@@ -94,8 +94,11 @@ void main() {
         expect(data['providerCompanyIds'], ['provider-1', 'provider-2']);
         return Response(
           requestOptions: options,
-          statusCode: 204,
-          data: null,
+          statusCode: 200,
+          data: {
+            'assignedProviders': ['provider-1', 'provider-2'],
+            'skippedProviders': [],
+          },
         );
       }).getInquiriesApi();
 

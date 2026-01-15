@@ -1,6 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
+import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -21,6 +22,27 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   final inquiry = await repo.findById(inquiryId);
   if (inquiry == null) {
     return Response(statusCode: 404);
+  }
+  if (auth.activeRole == 'provider') {
+    final provider = await context
+        .read<ProviderRepository>()
+        .findByCompany(auth.companyId);
+    if (provider == null || provider.status != 'active') {
+      return Response.json(
+        statusCode: 403,
+        body: 'Provider registration is pending.',
+      );
+    }
+    final assigned = await repo.isAssignedToProvider(
+      inquiryId,
+      auth.companyId,
+    );
+    if (!assigned) {
+      return Response.json(
+        statusCode: 403,
+        body: 'Inquiry not assigned to provider.',
+      );
+    }
   }
   return Response.json(body: inquiry.toJson());
 }

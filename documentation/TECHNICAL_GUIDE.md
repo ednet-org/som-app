@@ -56,6 +56,9 @@ flutter test
 ```
 flutter test integration_test/ui_smoke_test.dart
 ```
+```
+flutter test integration_test/api_contract_test.dart
+```
 
 ## Code Generation
 ```

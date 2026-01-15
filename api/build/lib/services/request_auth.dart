@@ -33,7 +33,7 @@ Future<RequestAuth?> parseAuth(
       return null;
     }
     final user = await users.findById(userId);
-    if (user == null || !user.isActive) {
+    if (user == null || !user.isActive || user.lockedAt != null) {
       return null;
     }
     final activeRole =

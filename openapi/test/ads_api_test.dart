@@ -111,21 +111,54 @@ void main() {
         expect(options.path, '/ads/ad-1');
         final data = options.data as Map<String, dynamic>;
         expect(data['id'], 'ad-1');
-        expect(data['status'], 'draft');
         return Response(
           requestOptions: options,
-          statusCode: 204,
+          statusCode: 200,
           data: null,
         );
       }).getAdsApi();
 
       final ad = Ad((b) => b
         ..id = 'ad-1'
-        ..status = 'draft'
         ..branchId = 'branch-1'
         ..startDate = DateTime.utc(2025, 1, 2));
 
       await api.adsAdIdPut(adId: 'ad-1', ad: ad);
+    });
+
+    test('adsAdIdActivatePost sends activation payload', () async {
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'POST');
+        expect(options.path, '/ads/ad-1/activate');
+        final data = options.data as Map<String, dynamic>;
+        expect(data['startDate'], isNotNull);
+        expect(data['endDate'], isNotNull);
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: null,
+        );
+      }).getAdsApi();
+
+      final activation = AdActivationRequest((b) => b
+        ..startDate = DateTime.utc(2025, 1, 2)
+        ..endDate = DateTime.utc(2025, 1, 9));
+
+      await api.adsAdIdActivatePost(adId: 'ad-1', adActivationRequest: activation);
+    });
+
+    test('adsAdIdDeactivatePost hits deactivate endpoint', () async {
+      final api = _openapiWithResponder((options) {
+        expect(options.method, 'POST');
+        expect(options.path, '/ads/ad-1/deactivate');
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: null,
+        );
+      }).getAdsApi();
+
+      await api.adsAdIdDeactivatePost(adId: 'ad-1');
     });
 
     test('adsAdIdDelete hits delete endpoint', () async {
@@ -134,7 +167,7 @@ void main() {
         expect(options.path, '/ads/ad-1');
         return Response(
           requestOptions: options,
-          statusCode: 204,
+          statusCode: 200,
           data: null,
         );
       }).getAdsApi();

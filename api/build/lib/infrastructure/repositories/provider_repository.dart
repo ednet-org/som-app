@@ -15,7 +15,10 @@ class ProviderRepository {
       'pending_branches_json': profile.pendingBranchIds,
       'subscription_plan_id': profile.subscriptionPlanId,
       'payment_interval': profile.paymentInterval,
+      'provider_type': profile.providerType,
       'status': profile.status,
+      'rejection_reason': profile.rejectionReason,
+      'rejected_at': profile.rejectedAt?.toIso8601String(),
       'created_at': profile.createdAt.toIso8601String(),
       'updated_at': profile.updatedAt.toIso8601String(),
     });
@@ -39,7 +42,10 @@ class ProviderRepository {
       'pending_branches_json': profile.pendingBranchIds,
       'subscription_plan_id': profile.subscriptionPlanId,
       'payment_interval': profile.paymentInterval,
+      'provider_type': profile.providerType,
       'status': profile.status,
+      'rejection_reason': profile.rejectionReason,
+      'rejected_at': profile.rejectedAt?.toIso8601String(),
       'updated_at': profile.updatedAt.toIso8601String(),
     }).eq('company_id', profile.companyId);
   }
@@ -58,7 +64,10 @@ class ProviderRepository {
           .toList(),
       subscriptionPlanId: row['subscription_plan_id'] as String,
       paymentInterval: row['payment_interval'] as String,
+      providerType: row['provider_type'] as String?,
       status: row['status'] as String,
+      rejectionReason: row['rejection_reason'] as String?,
+      rejectedAt: parseDateOrNull(row['rejected_at']),
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
     );

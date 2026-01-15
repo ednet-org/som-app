@@ -32,6 +32,9 @@ void main() {
       final body = jsonDecode(await response.body()) as Map<String, dynamic>;
       expect(body['emailAddress'], user.email);
       expect(body['companyName'], company.name);
+      expect(body['roles'], containsAll(user.roles));
+      expect(body['companyType'], isNotNull);
+      expect(body['activeRole'], user.lastLoginRole);
     });
   });
 }

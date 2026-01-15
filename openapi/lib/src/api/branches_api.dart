@@ -4,12 +4,14 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/branch.dart';
-import 'package:openapi/src/model/branches_get_request.dart';
+import 'package:openapi/src/model/branches_post_request.dart';
 
 class BranchesApi {
 
@@ -24,7 +26,7 @@ class BranchesApi {
   ///
   /// Parameters:
   /// * [branchId] 
-  /// * [branchesGetRequest] 
+  /// * [branchesPostRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -36,7 +38,7 @@ class BranchesApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> branchesBranchIdCategoriesPost({ 
     required String branchId,
-    required BranchesGetRequest branchesGetRequest,
+    required BranchesPostRequest branchesPostRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -44,7 +46,7 @@ class BranchesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/branches/{branchId}/categories'.replaceAll('{' r'branchId' '}', branchId.toString());
+    final _path = r'/branches/{branchId}/categories'.replaceAll('{' r'branchId' '}', encodeQueryParameter(_serializers, branchId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -67,8 +69,8 @@ class BranchesApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(BranchesGetRequest);
-      _bodyData = _serializers.serialize(branchesGetRequest, specifiedType: _type);
+      const _type = FullType(BranchesPostRequest);
+      _bodyData = _serializers.serialize(branchesPostRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioException(
@@ -117,7 +119,7 @@ class BranchesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/branches/{branchId}'.replaceAll('{' r'branchId' '}', branchId.toString());
+    final _path = r'/branches/{branchId}'.replaceAll('{' r'branchId' '}', encodeQueryParameter(_serializers, branchId, const FullType(String)).toString());
     final _options = Options(
       method: r'DELETE',
       headers: <String, dynamic>{
@@ -138,6 +140,81 @@ class BranchesApi {
 
     final _response = await _dio.request<Object>(
       _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
+  /// Update branch
+  /// 
+  ///
+  /// Parameters:
+  /// * [branchId] 
+  /// * [branchesPostRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<void>> branchesBranchIdPut({ 
+    required String branchId,
+    required BranchesPostRequest branchesPostRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/branches/{branchId}'.replaceAll('{' r'branchId' '}', encodeQueryParameter(_serializers, branchId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(BranchesPostRequest);
+      _bodyData = _serializers.serialize(branchesPostRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
@@ -189,13 +266,13 @@ class BranchesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<Branch> _responseData;
+    BuiltList<Branch>? _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(Branch)]);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(Branch)]),
       ) as BuiltList<Branch>;
 
     } catch (error, stackTrace) {
@@ -224,7 +301,7 @@ class BranchesApi {
   /// 
   ///
   /// Parameters:
-  /// * [branchesGetRequest] 
+  /// * [branchesPostRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -235,7 +312,7 @@ class BranchesApi {
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
   Future<Response<void>> branchesPost({ 
-    required BranchesGetRequest branchesGetRequest,
+    required BranchesPostRequest branchesPostRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -266,8 +343,8 @@ class BranchesApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(BranchesGetRequest);
-      _bodyData = _serializers.serialize(branchesGetRequest, specifiedType: _type);
+      const _type = FullType(BranchesPostRequest);
+      _bodyData = _serializers.serialize(branchesPostRequest, specifiedType: _type);
 
     } catch(error, stackTrace) {
       throw DioException(
@@ -316,7 +393,7 @@ class BranchesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/categories/{categoryId}'.replaceAll('{' r'categoryId' '}', categoryId.toString());
+    final _path = r'/categories/{categoryId}'.replaceAll('{' r'categoryId' '}', encodeQueryParameter(_serializers, categoryId, const FullType(String)).toString());
     final _options = Options(
       method: r'DELETE',
       headers: <String, dynamic>{
@@ -337,6 +414,81 @@ class BranchesApi {
 
     final _response = await _dio.request<Object>(
       _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
+  /// Update category
+  /// 
+  ///
+  /// Parameters:
+  /// * [categoryId] 
+  /// * [branchesPostRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<void>> categoriesCategoryIdPut({ 
+    required String categoryId,
+    required BranchesPostRequest branchesPostRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/categories/{categoryId}'.replaceAll('{' r'categoryId' '}', encodeQueryParameter(_serializers, categoryId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(BranchesPostRequest);
+      _bodyData = _serializers.serialize(branchesPostRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,

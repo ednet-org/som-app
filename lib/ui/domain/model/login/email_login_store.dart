@@ -44,7 +44,10 @@ abstract class _EmailLoginStoreBase with Store {
       ..password = password
       ..email = email;
     authService
-        .authLoginPost(authLoginPostRequest: authReq.build())
+        .authLoginPost(
+          authLoginPostRequest: authReq.build(),
+          validateStatus: (status) => status != null && status >= 200 && status < 300,
+        )
         .then((response) async {
       isLoading = false;
 
@@ -61,6 +64,9 @@ abstract class _EmailLoginStoreBase with Store {
         String? companyId;
         String? companyName;
         String? emailAddress;
+        List<String> roles = const [];
+        String? activeRole;
+        int? companyType;
         if (userId != null) {
           try {
             final profileResponse = await usersApi.usersLoadUserWithCompanyGet(
@@ -70,6 +76,9 @@ abstract class _EmailLoginStoreBase with Store {
             companyId = profileResponse.data?.companyId;
             companyName = profileResponse.data?.companyName;
             emailAddress = profileResponse.data?.emailAddress;
+            roles = profileResponse.data?.roles?.toList() ?? const [];
+            activeRole = profileResponse.data?.activeRole;
+            companyType = _companyTypeFromApi(profileResponse.data?.companyType);
           } catch (_) {
             // Best-effort profile load; keep login flow responsive.
           }
@@ -82,6 +91,9 @@ abstract class _EmailLoginStoreBase with Store {
           companyId: companyId,
           companyName: companyName,
           emailAddress: emailAddress ?? email,
+          roles: roles,
+          activeRole: activeRole,
+          companyType: companyType,
         ));
       }
 
@@ -135,5 +147,20 @@ abstract class _EmailLoginStoreBase with Store {
     isLoading = false;
     email = '';
     password = '';
+  }
+
+  int? _companyTypeFromApi(
+    UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? value,
+  ) {
+    switch (value) {
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number0:
+        return 0;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number1:
+        return 1;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number2:
+        return 2;
+      case null:
+        return null;
+    }
   }
 }

@@ -66,5 +66,35 @@ void main() {
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
     });
+
+    test('locks account after repeated failures', () async {
+      Future<Response> attempt(String password) {
+        final context = TestRequestContext(
+          path: '/auth/login',
+          method: HttpMethod.post,
+          body: jsonEncode({'email': 'user@example.com', 'password': password}),
+          headers: {'content-type': 'application/json'},
+        );
+        context.provide<AuthService>(auth);
+        return route.onRequest(context.context);
+      }
+
+      for (var i = 0; i < 4; i++) {
+        final response = await attempt('wrong');
+        expect(response.statusCode, 400);
+        final message = jsonDecode(await response.body()) as String;
+        expect(message, isNot(contains('Account locked')));
+      }
+
+      final lockedResponse = await attempt('wrong');
+      expect(lockedResponse.statusCode, 400);
+      final lockedMessage = jsonDecode(await lockedResponse.body()) as String;
+      expect(lockedMessage, contains('Account locked'));
+
+      final blockedResponse = await attempt('secret');
+      expect(blockedResponse.statusCode, 400);
+      final blockedMessage = jsonDecode(await blockedResponse.body()) as String;
+      expect(blockedMessage, contains('Account locked'));
+    });
   });
 }

@@ -6,6 +6,80 @@ part of 'users_load_user_with_company_get200_response.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number0 =
+    const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum._('number0');
+const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number1 =
+    const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum._('number1');
+const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number2 =
+    const UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum._('number2');
+
+UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnumValueOf(
+        String name) {
+  switch (name) {
+    case 'number0':
+      return _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number0;
+    case 'number1':
+      return _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number1;
+    case 'number2':
+      return _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number2;
+    default:
+      throw ArgumentError(name);
+  }
+}
+
+final BuiltSet<UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum>
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnumValues = BuiltSet<
+        UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum>(const <UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum>[
+  _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number0,
+  _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number1,
+  _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnum_number2,
+]);
+
+Serializer<UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum>
+    _$usersLoadUserWithCompanyGet200ResponseCompanyTypeEnumSerializer =
+    _$UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnumSerializer();
+
+class _$UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnumSerializer
+    implements
+        PrimitiveSerializer<
+            UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'number0': 0,
+    'number1': 1,
+    'number2': 2,
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    0: 'number0',
+    1: 'number1',
+    2: 'number2',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[
+    UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum
+  ];
+  @override
+  final String wireName =
+      'UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum';
+
+  @override
+  Object serialize(Serializers serializers,
+          UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum deserialize(
+          Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+}
+
 class _$UsersLoadUserWithCompanyGet200Response
     extends UsersLoadUserWithCompanyGet200Response {
   @override
@@ -23,11 +97,17 @@ class _$UsersLoadUserWithCompanyGet200Response
   @override
   final String? emailAddress;
   @override
+  final BuiltList<String>? roles;
+  @override
+  final String? activeRole;
+  @override
   final String? companyId;
   @override
   final String? companyName;
   @override
   final Address? companyAddress;
+  @override
+  final UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? companyType;
 
   factory _$UsersLoadUserWithCompanyGet200Response(
           [void Function(UsersLoadUserWithCompanyGet200ResponseBuilder)?
@@ -43,9 +123,12 @@ class _$UsersLoadUserWithCompanyGet200Response
       this.lastName,
       this.telephoneNr,
       this.emailAddress,
+      this.roles,
+      this.activeRole,
       this.companyId,
       this.companyName,
-      this.companyAddress})
+      this.companyAddress,
+      this.companyType})
       : super._();
   @override
   UsersLoadUserWithCompanyGet200Response rebuild(
@@ -68,9 +151,12 @@ class _$UsersLoadUserWithCompanyGet200Response
         lastName == other.lastName &&
         telephoneNr == other.telephoneNr &&
         emailAddress == other.emailAddress &&
+        roles == other.roles &&
+        activeRole == other.activeRole &&
         companyId == other.companyId &&
         companyName == other.companyName &&
-        companyAddress == other.companyAddress;
+        companyAddress == other.companyAddress &&
+        companyType == other.companyType;
   }
 
   @override
@@ -83,9 +169,12 @@ class _$UsersLoadUserWithCompanyGet200Response
     _$hash = $jc(_$hash, lastName.hashCode);
     _$hash = $jc(_$hash, telephoneNr.hashCode);
     _$hash = $jc(_$hash, emailAddress.hashCode);
+    _$hash = $jc(_$hash, roles.hashCode);
+    _$hash = $jc(_$hash, activeRole.hashCode);
     _$hash = $jc(_$hash, companyId.hashCode);
     _$hash = $jc(_$hash, companyName.hashCode);
     _$hash = $jc(_$hash, companyAddress.hashCode);
+    _$hash = $jc(_$hash, companyType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -101,9 +190,12 @@ class _$UsersLoadUserWithCompanyGet200Response
           ..add('lastName', lastName)
           ..add('telephoneNr', telephoneNr)
           ..add('emailAddress', emailAddress)
+          ..add('roles', roles)
+          ..add('activeRole', activeRole)
           ..add('companyId', companyId)
           ..add('companyName', companyName)
-          ..add('companyAddress', companyAddress))
+          ..add('companyAddress', companyAddress)
+          ..add('companyType', companyType))
         .toString();
   }
 }
@@ -142,6 +234,14 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
   String? get emailAddress => _$this._emailAddress;
   set emailAddress(String? emailAddress) => _$this._emailAddress = emailAddress;
 
+  ListBuilder<String>? _roles;
+  ListBuilder<String> get roles => _$this._roles ??= ListBuilder<String>();
+  set roles(ListBuilder<String>? roles) => _$this._roles = roles;
+
+  String? _activeRole;
+  String? get activeRole => _$this._activeRole;
+  set activeRole(String? activeRole) => _$this._activeRole = activeRole;
+
   String? _companyId;
   String? get companyId => _$this._companyId;
   set companyId(String? companyId) => _$this._companyId = companyId;
@@ -155,6 +255,13 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
       _$this._companyAddress ??= AddressBuilder();
   set companyAddress(AddressBuilder? companyAddress) =>
       _$this._companyAddress = companyAddress;
+
+  UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? _companyType;
+  UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? get companyType =>
+      _$this._companyType;
+  set companyType(
+          UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? companyType) =>
+      _$this._companyType = companyType;
 
   UsersLoadUserWithCompanyGet200ResponseBuilder() {
     UsersLoadUserWithCompanyGet200Response._defaults(this);
@@ -170,9 +277,12 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
       _lastName = $v.lastName;
       _telephoneNr = $v.telephoneNr;
       _emailAddress = $v.emailAddress;
+      _roles = $v.roles?.toBuilder();
+      _activeRole = $v.activeRole;
       _companyId = $v.companyId;
       _companyName = $v.companyName;
       _companyAddress = $v.companyAddress?.toBuilder();
+      _companyType = $v.companyType;
       _$v = null;
     }
     return this;
@@ -204,13 +314,19 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
             lastName: lastName,
             telephoneNr: telephoneNr,
             emailAddress: emailAddress,
+            roles: _roles?.build(),
+            activeRole: activeRole,
             companyId: companyId,
             companyName: companyName,
             companyAddress: _companyAddress?.build(),
+            companyType: companyType,
           );
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'roles';
+        _roles?.build();
+
         _$failedField = 'companyAddress';
         _companyAddress?.build();
       } catch (e) {

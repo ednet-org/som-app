@@ -29,6 +29,10 @@ create table if not exists users (
   is_active boolean not null default true,
   email_confirmed boolean not null default false,
   last_login_role text,
+  failed_login_attempts integer not null default 0,
+  last_failed_login_at timestamptz,
+  locked_at timestamptz,
+  lock_reason text,
   created_at timestamptz not null,
   updated_at timestamptz not null
 );
@@ -103,7 +107,10 @@ create table if not exists provider_profiles (
   pending_branches_json jsonb not null,
   subscription_plan_id uuid not null,
   payment_interval text not null,
+  provider_type text,
   status text not null,
+  rejection_reason text,
+  rejected_at timestamptz,
   created_at timestamptz not null,
   updated_at timestamptz not null
 );
@@ -141,6 +148,8 @@ create table if not exists inquiries (
   provider_criteria_json jsonb not null,
   contact_json jsonb not null,
   notified_at timestamptz,
+  assigned_at timestamptz,
+  closed_at timestamptz,
   created_at timestamptz not null,
   updated_at timestamptz not null
 );

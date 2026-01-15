@@ -37,6 +37,12 @@ abstract class _ProviderRegistrationRequest with Store {
   @observable
   int? maxUsers;
 
+  @observable
+  String? providerType = 'haendler';
+
   @action
   void setMaxUsers(int? value) => maxUsers = value;
+
+  @action
+  void setProviderType(String value) => providerType = value;
 }

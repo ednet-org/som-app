@@ -69,6 +69,8 @@ components:
           type: integer
           enum: [0, 1]
           description: 0 = monthly, 1 = yearly
+        providerType:
+          type: string
     CompanyRegistration:
       type: object
       required: [name, address, uidNr, registrationNr, companySize, type, termsAccepted, privacyAccepted]
@@ -139,6 +141,8 @@ components:
           type: string
         status:
           type: string
+          enum: [draft]
+          description: Must be draft; activate via /ads/{id}/activate
         branchId:
           type: string
         url:
@@ -219,6 +223,8 @@ components:
         websiteUrl:
           type: string
           nullable: true
+        status:
+          type: string
     UserDto:
       type: object
       properties:
@@ -321,6 +327,14 @@ components:
           type: string
           format: date-time
           nullable: true
+        assignedAt:
+          type: string
+          format: date-time
+          nullable: true
+        closedAt:
+          type: string
+          format: date-time
+          nullable: true
         createdAt:
           type: string
           format: date-time
@@ -391,6 +405,27 @@ components:
           type: string
           format: date-time
           nullable: true
+    AdActivationRequest:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        bannerDate:
+          type: string
+          format: date-time
+          nullable: true
+    BranchesPostRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
     Branch:
       type: object
       properties:
@@ -414,6 +449,8 @@ components:
       properties:
         id:
           type: string
+        title:
+          type: string
         sortPriority:
           type: integer
         isActive:
@@ -430,6 +467,106 @@ components:
               upperLimit:
                 type: integer
         createdAt:
+          type: string
+          format: date-time
+    SubscriptionPlanInput:
+      type: object
+      required: [title, sortPriority, priceInSubunit]
+      properties:
+        title:
+          type: string
+        sortPriority:
+          type: integer
+        isActive:
+          type: boolean
+        priceInSubunit:
+          type: integer
+        confirm:
+          type: boolean
+          description: Require explicit confirmation when updating plans with active subscribers.
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              restriction:
+                type: integer
+              upperLimit:
+                type: integer
+    SubscriptionCurrent:
+      type: object
+      properties:
+        subscription:
+          type: object
+          properties:
+            companyId:
+              type: string
+            planId:
+              type: string
+            status:
+              type: string
+            paymentInterval:
+              type: string
+            startDate:
+              type: string
+              format: date-time
+            endDate:
+              type: string
+              format: date-time
+            createdAt:
+              type: string
+              format: date-time
+        plan:
+          $ref: '#/components/schemas/SubscriptionPlan'
+    ProviderSummary:
+      type: object
+      properties:
+        companyId:
+          type: string
+        companyName:
+          type: string
+        companySize:
+          type: string
+        providerType:
+          type: string
+        postcode:
+          type: string
+        branchIds:
+          type: array
+          items:
+            type: string
+        pendingBranchIds:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+        rejectionReason:
+          type: string
+          nullable: true
+        rejectedAt:
+          type: string
+          format: date-time
+          nullable: true
+        claimed:
+          type: boolean
+        receivedInquiries:
+          type: integer
+        sentOffers:
+          type: integer
+        acceptedOffers:
+          type: integer
+        subscriptionPlanId:
+          type: string
+        paymentInterval:
+          type: string
+        iban:
+          type: string
+        bic:
+          type: string
+        accountOwner:
+          type: string
+        registrationDate:
           type: string
           format: date-time
     BillingRecord:
@@ -516,6 +653,70 @@ paths:
                     type: string
         '400':
           description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /auth/changePassword:
+    post:
+      tags: [Auth]
+      summary: Change password for authenticated user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currentPassword, newPassword, confirmPassword]
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmPassword:
+                  type: string
+      responses:
+        '200':
+          description: Changed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout and revoke session
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '401':
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -702,6 +903,12 @@ paths:
       responses:
         '200':
           description: Updated
+        '400':
+          description: Invalid company type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
         '404':
           description: Not found
     delete:
@@ -718,6 +925,46 @@ paths:
           description: Deactivated
         '404':
           description: Not found
+  /Companies/{companyId}/activate:
+    post:
+      tags: [Companies]
+      summary: Activate or reactivate company
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Activated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
   /Companies/{companyId}/registerUser:
     post:
       tags: [Users]
@@ -884,14 +1131,64 @@ paths:
                     type: string
                   emailAddress:
                     type: string
+                  roles:
+                    type: array
+                    items:
+                      type: string
+                  activeRole:
+                    type: string
                   companyId:
                     type: string
                   companyName:
                     type: string
                   companyAddress:
                     $ref: '#/components/schemas/Address'
+                  companyType:
+                    type: integer
+                    enum: [0, 1, 2]
+                    description: 0=buyer, 1=provider, 2=buyer+provider
         '404':
           description: Not found
+  /Users/{userId}/unlock:
+    post:
+      tags: [Users]
+      summary: Unlock a user account
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Unlocked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
   /Subscriptions:
     get:
       tags: [Subscriptions]
@@ -908,6 +1205,104 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SubscriptionPlan'
+    post:
+      tags: [Subscriptions]
+      summary: Create subscription plan
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionPlanInput'
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionPlan'
+        '400':
+          description: Invalid
+        '403':
+          description: Forbidden
+  /Subscriptions/plans/{planId}:
+    get:
+      tags: [Subscriptions]
+      summary: Get subscription plan
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionPlan'
+        '404':
+          description: Not found
+    put:
+      tags: [Subscriptions]
+      summary: Update subscription plan
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionPlanInput'
+      responses:
+        '200':
+          description: Updated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    delete:
+      tags: [Subscriptions]
+      summary: Delete subscription plan
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /Subscriptions/current:
+    get:
+      tags: [Subscriptions]
+      summary: Get current subscription
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Current subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionCurrent'
+        '404':
+          description: Not found
   /Subscriptions/upgrade:
     post:
       tags: [Subscriptions]
@@ -927,6 +1322,29 @@ paths:
       responses:
         '200':
           description: Updated
+        '403':
+          description: Forbidden
+  /Subscriptions/downgrade:
+    post:
+      tags: [Subscriptions]
+      summary: Downgrade subscription plan
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [planId]
+              properties:
+                planId:
+                  type: string
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid
         '403':
           description: Forbidden
   /Subscriptions/cancel:
@@ -1180,6 +1598,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Inquiry'
+        '404':
+          description: Not found
+  /inquiries/{inquiryId}/pdf:
+    post:
+      tags: [Inquiries]
+      summary: Upload inquiry PDF
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: inquiryId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pdfPath:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    delete:
+      tags: [Inquiries]
+      summary: Remove inquiry PDF
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: inquiryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Removed
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /inquiries/{inquiryId}/close:
+    post:
+      tags: [Inquiries]
+      summary: Close inquiry
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: inquiryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Closed
+        '403':
+          description: Forbidden
         '404':
           description: Not found
   /inquiries/{inquiryId}/assign:
@@ -1457,6 +1955,101 @@ paths:
       responses:
         '200':
           description: Deleted
+  /ads/{adId}/activate:
+    post:
+      tags: [Ads]
+      summary: Activate ad
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: adId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdActivationRequest'
+      responses:
+        '200':
+          description: Activated
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /ads/{adId}/deactivate:
+    post:
+      tags: [Ads]
+      summary: Deactivate ad
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: adId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deactivated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /ads/{adId}/image:
+    post:
+      tags: [Ads]
+      summary: Upload ad image
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: adId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Updated image
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imagePath:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
   /branches:
     get:
       tags: [Branches]
@@ -1480,11 +2073,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required: [name]
-              properties:
-                name:
-                  type: string
+              $ref: '#/components/schemas/BranchesPostRequest'
       responses:
         '200':
           description: Created
@@ -1497,6 +2086,36 @@ paths:
         '403':
           description: Forbidden
   /branches/{branchId}:
+    put:
+      tags: [Branches]
+      summary: Update branch
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: branchId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BranchesPostRequest'
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
     delete:
       tags: [Branches]
       summary: Delete branch
@@ -1530,11 +2149,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required: [name]
-              properties:
-                name:
-                  type: string
+              $ref: '#/components/schemas/BranchesPostRequest'
       responses:
         '200':
           description: Created
@@ -1547,6 +2162,36 @@ paths:
         '403':
           description: Forbidden
   /categories/{categoryId}:
+    put:
+      tags: [Branches]
+      summary: Update category
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: categoryId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BranchesPostRequest'
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
     delete:
       tags: [Branches]
       summary: Delete category
@@ -1661,6 +2306,53 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /providers:
+    get:
+      tags: [Providers]
+      summary: List providers
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: branchId
+          schema:
+            type: string
+        - in: query
+          name: companySize
+          schema:
+            type: string
+        - in: query
+          name: providerType
+          schema:
+            type: string
+        - in: query
+          name: zipPrefix
+          schema:
+            type: string
+        - in: query
+          name: status
+          schema:
+            type: string
+        - in: query
+          name: claimed
+          schema:
+            type: string
+        - in: query
+          name: format
+          schema:
+            type: string
+          description: Use format=csv to export providers list.
+      responses:
+        '200':
+          description: Provider list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProviderSummary'
+        '403':
+          description: Forbidden
   /providers/{companyId}/decline:
     post:
       tags: [Providers]
@@ -1673,6 +2365,15 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
       responses:
         '200':
           description: Declined
@@ -1791,6 +2492,11 @@ paths:
             type: string
             format: date-time
         - in: query
+          name: type
+          schema:
+            type: string
+            enum: [status, period, providerType, providerSize]
+        - in: query
           name: format
           schema:
             type: string
@@ -1802,11 +2508,8 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  open:
-                    type: integer
-                  closed:
-                    type: integer
+                additionalProperties:
+                  type: integer
             text/csv:
               schema:
                 type: string

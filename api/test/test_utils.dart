@@ -130,6 +130,10 @@ class InMemoryUserRepository implements UserRepository {
         lastLoginRole: existing.lastLoginRole,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
+        failedLoginAttempts: existing.failedLoginAttempts,
+        lastFailedLoginAt: existing.lastFailedLoginAt,
+        lockedAt: existing.lockedAt,
+        lockReason: existing.lockReason,
       );
     }
   }
@@ -153,6 +157,10 @@ class InMemoryUserRepository implements UserRepository {
         lastLoginRole: existing.lastLoginRole,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
+        failedLoginAttempts: existing.failedLoginAttempts,
+        lastFailedLoginAt: existing.lastFailedLoginAt,
+        lockedAt: existing.lockedAt,
+        lockReason: existing.lockReason,
       );
     }
   }
@@ -176,6 +184,10 @@ class InMemoryUserRepository implements UserRepository {
         lastLoginRole: existing.lastLoginRole,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
+        failedLoginAttempts: existing.failedLoginAttempts,
+        lastFailedLoginAt: existing.lastFailedLoginAt,
+        lockedAt: existing.lockedAt,
+        lockReason: existing.lockReason,
       );
     }
   }
@@ -199,6 +211,10 @@ class InMemoryUserRepository implements UserRepository {
         lastLoginRole: role,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
+        failedLoginAttempts: existing.failedLoginAttempts,
+        lastFailedLoginAt: existing.lastFailedLoginAt,
+        lockedAt: existing.lockedAt,
+        lockReason: existing.lockReason,
       );
     }
   }
@@ -237,6 +253,16 @@ class InMemorySubscriptionRepository implements SubscriptionRepository {
   }
 
   @override
+  Future<void> updatePlan(SubscriptionPlanRecord plan) async {
+    _plans[plan.id] = plan;
+  }
+
+  @override
+  Future<void> deletePlan(String id) async {
+    _plans.remove(id);
+  }
+
+  @override
   Future<List<SubscriptionPlanRecord>> listPlans() async {
     final list = _plans.values.toList();
     list.sort((a, b) => a.sortPriority.compareTo(b.sortPriority));
@@ -255,6 +281,13 @@ class InMemorySubscriptionRepository implements SubscriptionRepository {
   }
 
   @override
+  Future<int> countActiveSubscriptionsByPlan(String planId) async {
+    return _subscriptions
+        .where((s) => s.planId == planId && s.status == 'active')
+        .length;
+  }
+
+  @override
   Future<SubscriptionRecord?> findSubscriptionByCompany(
       String companyId) async {
     final items =
@@ -270,13 +303,45 @@ class InMemoryBranchRepository implements BranchRepository {
   final Map<String, CategoryRecord> _categories = {};
 
   @override
+  Future<BranchRecord?> findBranchById(String branchId) async {
+    return _branches[branchId];
+  }
+
+  @override
   Future<void> createBranch(BranchRecord branch) async {
     _branches[branch.id] = branch;
   }
 
   @override
+  Future<void> updateBranchName(String branchId, String name) async {
+    final existing = _branches[branchId];
+    if (existing == null) {
+      return;
+    }
+    _branches[branchId] = BranchRecord(id: existing.id, name: name);
+  }
+
+  @override
   Future<void> createCategory(CategoryRecord category) async {
     _categories[category.id] = category;
+  }
+
+  @override
+  Future<CategoryRecord?> findCategoryById(String categoryId) async {
+    return _categories[categoryId];
+  }
+
+  @override
+  Future<void> updateCategoryName(String categoryId, String name) async {
+    final existing = _categories[categoryId];
+    if (existing == null) {
+      return;
+    }
+    _categories[categoryId] = CategoryRecord(
+      id: existing.id,
+      branchId: existing.branchId,
+      name: name,
+    );
   }
 
   @override
@@ -381,6 +446,64 @@ class InMemoryInquiryRepository implements InquiryRepository {
         providerCriteria: existing.providerCriteria,
         contactInfo: existing.contactInfo,
         notifiedAt: existing.notifiedAt,
+        assignedAt: existing.assignedAt,
+        closedAt: existing.closedAt,
+        createdAt: existing.createdAt,
+        updatedAt: DateTime.now().toUtc(),
+      );
+    }
+  }
+
+  @override
+  Future<void> updatePdfPath(String id, String pdfPath) async {
+    final existing = _inquiries[id];
+    if (existing != null) {
+      _inquiries[id] = InquiryRecord(
+        id: existing.id,
+        buyerCompanyId: existing.buyerCompanyId,
+        createdByUserId: existing.createdByUserId,
+        status: existing.status,
+        branchId: existing.branchId,
+        categoryId: existing.categoryId,
+        productTags: existing.productTags,
+        deadline: existing.deadline,
+        deliveryZips: existing.deliveryZips,
+        numberOfProviders: existing.numberOfProviders,
+        description: existing.description,
+        pdfPath: pdfPath,
+        providerCriteria: existing.providerCriteria,
+        contactInfo: existing.contactInfo,
+        notifiedAt: existing.notifiedAt,
+        assignedAt: existing.assignedAt,
+        closedAt: existing.closedAt,
+        createdAt: existing.createdAt,
+        updatedAt: DateTime.now().toUtc(),
+      );
+    }
+  }
+
+  @override
+  Future<void> clearPdfPath(String id) async {
+    final existing = _inquiries[id];
+    if (existing != null) {
+      _inquiries[id] = InquiryRecord(
+        id: existing.id,
+        buyerCompanyId: existing.buyerCompanyId,
+        createdByUserId: existing.createdByUserId,
+        status: existing.status,
+        branchId: existing.branchId,
+        categoryId: existing.categoryId,
+        productTags: existing.productTags,
+        deadline: existing.deadline,
+        deliveryZips: existing.deliveryZips,
+        numberOfProviders: existing.numberOfProviders,
+        description: existing.description,
+        pdfPath: null,
+        providerCriteria: existing.providerCriteria,
+        contactInfo: existing.contactInfo,
+        notifiedAt: existing.notifiedAt,
+        assignedAt: existing.assignedAt,
+        closedAt: existing.closedAt,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
       );
@@ -407,6 +530,64 @@ class InMemoryInquiryRepository implements InquiryRepository {
         providerCriteria: existing.providerCriteria,
         contactInfo: existing.contactInfo,
         notifiedAt: notifiedAt,
+        assignedAt: existing.assignedAt,
+        closedAt: existing.closedAt,
+        createdAt: existing.createdAt,
+        updatedAt: DateTime.now().toUtc(),
+      );
+    }
+  }
+
+  @override
+  Future<void> markAssigned(String id, DateTime assignedAt) async {
+    final existing = _inquiries[id];
+    if (existing != null) {
+      _inquiries[id] = InquiryRecord(
+        id: existing.id,
+        buyerCompanyId: existing.buyerCompanyId,
+        createdByUserId: existing.createdByUserId,
+        status: existing.status,
+        branchId: existing.branchId,
+        categoryId: existing.categoryId,
+        productTags: existing.productTags,
+        deadline: existing.deadline,
+        deliveryZips: existing.deliveryZips,
+        numberOfProviders: existing.numberOfProviders,
+        description: existing.description,
+        pdfPath: existing.pdfPath,
+        providerCriteria: existing.providerCriteria,
+        contactInfo: existing.contactInfo,
+        notifiedAt: existing.notifiedAt,
+        assignedAt: assignedAt,
+        closedAt: existing.closedAt,
+        createdAt: existing.createdAt,
+        updatedAt: DateTime.now().toUtc(),
+      );
+    }
+  }
+
+  @override
+  Future<void> closeInquiry(String id, DateTime closedAt) async {
+    final existing = _inquiries[id];
+    if (existing != null) {
+      _inquiries[id] = InquiryRecord(
+        id: existing.id,
+        buyerCompanyId: existing.buyerCompanyId,
+        createdByUserId: existing.createdByUserId,
+        status: 'closed',
+        branchId: existing.branchId,
+        categoryId: existing.categoryId,
+        productTags: existing.productTags,
+        deadline: existing.deadline,
+        deliveryZips: existing.deliveryZips,
+        numberOfProviders: existing.numberOfProviders,
+        description: existing.description,
+        pdfPath: existing.pdfPath,
+        providerCriteria: existing.providerCriteria,
+        contactInfo: existing.contactInfo,
+        notifiedAt: existing.notifiedAt,
+        assignedAt: existing.assignedAt,
+        closedAt: closedAt,
         createdAt: existing.createdAt,
         updatedAt: DateTime.now().toUtc(),
       );
@@ -424,6 +605,31 @@ class InMemoryInquiryRepository implements InquiryRepository {
           .putIfAbsent(providerCompanyId, () => <String>{})
           .add(inquiryId);
     }
+    await markAssigned(inquiryId, DateTime.now().toUtc());
+  }
+
+  @override
+  Future<int> countAssignmentsForProvider(String providerCompanyId) async {
+    return _assignments[providerCompanyId]?.length ?? 0;
+  }
+
+  @override
+  Future<int> countAssignmentsForInquiry(String inquiryId) async {
+    var count = 0;
+    for (final entries in _assignments.values) {
+      if (entries.contains(inquiryId)) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  @override
+  Future<bool> isAssignedToProvider(
+    String inquiryId,
+    String providerCompanyId,
+  ) async {
+    return _assignments[providerCompanyId]?.contains(inquiryId) ?? false;
   }
 }
 
@@ -468,6 +674,19 @@ class InMemoryOfferRepository implements OfferRepository {
         createdAt: existing.createdAt,
       );
     }
+  }
+
+  @override
+  Future<int> countByProvider({
+    required String companyId,
+    String? status,
+  }) async {
+    final filtered = _offers.values.where(
+      (offer) =>
+          offer.providerCompanyId == companyId &&
+          (status == null || offer.status == status),
+    );
+    return filtered.length;
   }
 }
 
@@ -704,17 +923,10 @@ class TestAuthService extends AuthService {
   }
 
   @override
-  Future<AuthTokens> login({
-    required String emailAddress,
-    required String password,
-  }) async {
-    final user = await users.findByEmail(emailAddress);
-    if (user == null || !user.isActive) {
-      throw AuthException('Invalid password or E-Mail');
-    }
-    if (!user.emailConfirmed) {
-      throw AuthException('Email not confirmed');
-    }
+  Future<AuthTokens> performLogin(
+    String emailAddress,
+    String password,
+  ) async {
     final expected = _passwords[emailAddress.toLowerCase()];
     if (expected == null || expected != password) {
       throw AuthException('Invalid password or E-Mail');
@@ -738,9 +950,26 @@ class TestAuthService extends AuthService {
 
   @override
   Future<void> deleteAuthUser(String userId) async {}
+
+  @override
+  Future<void> updateAuthPassword({
+    required String userId,
+    required String password,
+    bool emailConfirmed = false,
+  }) async {
+    final user = await users.findById(userId);
+    if (user != null) {
+      _passwords[user.email.toLowerCase()] = password;
+    }
+  }
+
+  @override
+  Future<void> signOut(String accessToken) async {}
 }
 
 class TestFileStorage implements FileStorage {
+  final List<String> deletedPaths = [];
+
   @override
   Future<String> saveFile({
     required String category,
@@ -748,6 +977,35 @@ class TestFileStorage implements FileStorage {
     required List<int> bytes,
   }) async {
     return '$category/$fileName';
+  }
+
+  @override
+  Future<void> deleteFile(String publicUrlOrPath) async {
+    deletedPaths.add(publicUrlOrPath);
+  }
+}
+
+class TestEmailService extends EmailService {
+  TestEmailService() : super(outboxPath: 'storage/test_outbox');
+
+  final List<EmailMessage> sent = [];
+
+  @override
+  Future<void> send({
+    required String to,
+    required String subject,
+    required String text,
+    String? html,
+  }) async {
+    sent.add(
+      EmailMessage(
+        to: to,
+        subject: subject,
+        text: text,
+        html: html,
+        sentAt: DateTime.now().toUtc(),
+      ),
+    );
   }
 }
 

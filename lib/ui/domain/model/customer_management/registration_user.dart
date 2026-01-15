@@ -6,7 +6,7 @@ part 'registration_user.g.dart';
 /// it can have state - be invited and prepopulated
 class RegistrationUser = _RegistrationUser with _$RegistrationUser;
 
-enum CompanyRole { admin, employee }
+enum CompanyRole { buyer, provider, admin }
 
 abstract class _RegistrationUser with Store {
   _RegistrationUser({this.email});
@@ -44,7 +44,7 @@ abstract class _RegistrationUser with Store {
   void setTerms(String value) => terms = value;
 
   @observable
-  CompanyRole role = CompanyRole.employee;
+  CompanyRole role = CompanyRole.buyer;
 
   @action
   void setFirstName(String value) => firstName = value;
@@ -60,6 +60,9 @@ abstract class _RegistrationUser with Store {
 
   @action
   void setTitle(String value) => title = value;
+
+  @action
+  void setRole(CompanyRole value) => role = value;
 
   @computed
   get hasAcceptedTermsAndPolicies => terms != null && policies != null;

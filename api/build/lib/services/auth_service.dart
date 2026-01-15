@@ -34,6 +34,7 @@ class AuthService {
   final Clock clock;
   final SupabaseClient _adminClient;
   final SupabaseClient _anonClient;
+  static const int maxFailedLoginAttempts = 5;
 
   Future<AuthTokens> login(
       {required String emailAddress, required String password}) async {
@@ -41,9 +42,27 @@ class AuthService {
     if (user == null || !user.isActive) {
       throw AuthException('Invalid password or E-Mail');
     }
+    if (user.lockedAt != null) {
+      final reason = user.lockReason ?? 'Too many failed attempts';
+      throw AuthException('Account locked: $reason');
+    }
     if (!user.emailConfirmed) {
       throw AuthException('Email not confirmed');
     }
+    try {
+      final tokens = await performLogin(emailAddress, password);
+      await _resetLoginFailures(user);
+      final role = user.lastLoginRole ??
+          (user.roles.isNotEmpty ? user.roles.first : 'buyer');
+      await users.updateLastLoginRole(user.id, role);
+      return tokens;
+    } catch (_) {
+      final message = await _recordFailedLogin(user);
+      throw AuthException(message);
+    }
+  }
+
+  Future<AuthTokens> performLogin(String emailAddress, String password) async {
     late final dynamic response;
     try {
       response = await _anonClient.auth.signInWithPassword(
@@ -57,13 +76,49 @@ class AuthService {
     if (session == null) {
       throw AuthException('Invalid password or E-Mail');
     }
-    final role = user.lastLoginRole ??
-        (user.roles.isNotEmpty ? user.roles.first : 'buyer');
-    await users.updateLastLoginRole(user.id, role);
     return AuthTokens(
       accessToken: session.accessToken,
       refreshToken: session.refreshToken ?? '',
     );
+  }
+
+  Future<void> _resetLoginFailures(UserRecord user) async {
+    if (user.failedLoginAttempts == 0 &&
+        user.lastFailedLoginAt == null &&
+        user.lockedAt == null &&
+        user.lockReason == null) {
+      return;
+    }
+    final now = clock.nowUtc();
+    await users.update(
+      user.copyWith(
+        failedLoginAttempts: 0,
+        lastFailedLoginAt: null,
+        lockedAt: null,
+        lockReason: null,
+        updatedAt: now,
+      ),
+    );
+  }
+
+  Future<String> _recordFailedLogin(UserRecord user) async {
+    final now = clock.nowUtc();
+    final attempts = user.failedLoginAttempts + 1;
+    final isLocked = attempts >= maxFailedLoginAttempts;
+    final reason = isLocked ? 'Too many failed attempts' : user.lockReason;
+    await users.update(
+      user.copyWith(
+        failedLoginAttempts: attempts,
+        lastFailedLoginAt: now,
+        lockedAt: isLocked ? now : user.lockedAt,
+        lockReason: isLocked ? reason : user.lockReason,
+        updatedAt: now,
+      ),
+    );
+    if (isLocked) {
+      return 'Account locked: $reason';
+    }
+    return 'Invalid password or E-Mail';
   }
 
   Future<String> createPasswordResetToken(
@@ -143,6 +198,32 @@ class AuthService {
       throw AuthException(
           'Expired link, please contact the admin for new registration');
     }
+  }
+
+  Future<void> changePassword({
+    required String userId,
+    required String emailAddress,
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    if (newPassword != confirmPassword) {
+      throw AuthException('Passwords don\'t match');
+    }
+    try {
+      await performLogin(emailAddress, currentPassword);
+    } catch (_) {
+      throw AuthException('Invalid password or E-Mail');
+    }
+    await updateAuthPassword(
+      userId: userId,
+      password: newPassword,
+      emailConfirmed: true,
+    );
+  }
+
+  Future<void> signOut(String accessToken) async {
+    await _adminClient.auth.admin.signOut(accessToken);
   }
 
   Future<String> createRegistrationToken(UserRecord user) async {

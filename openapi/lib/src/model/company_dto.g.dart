@@ -23,6 +23,8 @@ class _$CompanyDto extends CompanyDto {
   final int? type;
   @override
   final String? websiteUrl;
+  @override
+  final String? status;
 
   factory _$CompanyDto([void Function(CompanyDtoBuilder)? updates]) =>
       (CompanyDtoBuilder()..update(updates))._build();
@@ -35,7 +37,8 @@ class _$CompanyDto extends CompanyDto {
       this.registrationNr,
       this.companySize,
       this.type,
-      this.websiteUrl})
+      this.websiteUrl,
+      this.status})
       : super._();
   @override
   CompanyDto rebuild(void Function(CompanyDtoBuilder) updates) =>
@@ -55,7 +58,8 @@ class _$CompanyDto extends CompanyDto {
         registrationNr == other.registrationNr &&
         companySize == other.companySize &&
         type == other.type &&
-        websiteUrl == other.websiteUrl;
+        websiteUrl == other.websiteUrl &&
+        status == other.status;
   }
 
   @override
@@ -69,6 +73,7 @@ class _$CompanyDto extends CompanyDto {
     _$hash = $jc(_$hash, companySize.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, websiteUrl.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -83,7 +88,8 @@ class _$CompanyDto extends CompanyDto {
           ..add('registrationNr', registrationNr)
           ..add('companySize', companySize)
           ..add('type', type)
-          ..add('websiteUrl', websiteUrl))
+          ..add('websiteUrl', websiteUrl)
+          ..add('status', status))
         .toString();
   }
 }
@@ -124,6 +130,10 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
   String? get websiteUrl => _$this._websiteUrl;
   set websiteUrl(String? websiteUrl) => _$this._websiteUrl = websiteUrl;
 
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
   CompanyDtoBuilder() {
     CompanyDto._defaults(this);
   }
@@ -139,6 +149,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
       _companySize = $v.companySize;
       _type = $v.type;
       _websiteUrl = $v.websiteUrl;
+      _status = $v.status;
       _$v = null;
     }
     return this;
@@ -170,6 +181,7 @@ class CompanyDtoBuilder implements Builder<CompanyDto, CompanyDtoBuilder> {
             companySize: companySize,
             type: type,
             websiteUrl: websiteUrl,
+            status: status,
           );
     } catch (_) {
       late String _$failedField;

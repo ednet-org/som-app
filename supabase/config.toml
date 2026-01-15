@@ -9,3 +9,22 @@ port = 55513
 
 [inbucket]
 port = 55514
+
+[auth]
+site_url = "http://localhost:8090"
+additional_redirect_urls = ["http://localhost:8090/*"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = false
+enable_confirmations = true
+
+[auth.email.smtp]
+host = "inbucket"
+port = 2500
+user = "inbucket"
+pass = "inbucket"
+admin_email = "admin@som.local"
+sender_name = "SOM"

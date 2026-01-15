@@ -4,9 +4,11 @@
 
 import 'dart:async';
 
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/stats_buyer_get200_response.dart';
 import 'package:openapi/src/model/stats_provider_get200_response.dart';
@@ -83,13 +85,13 @@ class StatsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    StatsBuyerGet200Response _responseData;
+    StatsBuyerGet200Response? _responseData;
 
     try {
-      const _responseType = FullType(StatsBuyerGet200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(StatsBuyerGet200Response),
       ) as StatsBuyerGet200Response;
 
     } catch (error, stackTrace) {
@@ -120,6 +122,7 @@ class StatsApi {
   /// Parameters:
   /// * [from] 
   /// * [to] 
+  /// * [type] 
   /// * [format] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -128,11 +131,12 @@ class StatsApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [StatsBuyerGet200Response] as data
+  /// Returns a [Future] containing a [Response] with a [BuiltMap<String, int>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<StatsBuyerGet200Response>> statsConsultantGet({ 
+  Future<Response<BuiltMap<String, int>>> statsConsultantGet({ 
     DateTime? from,
     DateTime? to,
+    String? type,
     String? format,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -163,6 +167,7 @@ class StatsApi {
     final _queryParameters = <String, dynamic>{
       if (from != null) r'from': encodeQueryParameter(_serializers, from, const FullType(DateTime)),
       if (to != null) r'to': encodeQueryParameter(_serializers, to, const FullType(DateTime)),
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
       if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
     };
 
@@ -175,14 +180,14 @@ class StatsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    StatsBuyerGet200Response _responseData;
+    BuiltMap<String, int>? _responseData;
 
     try {
-      const _responseType = FullType(StatsBuyerGet200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as StatsBuyerGet200Response;
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltMap, [FullType(String), FullType(int)]),
+      ) as BuiltMap<String, int>;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -194,7 +199,7 @@ class StatsApi {
       );
     }
 
-    return Response<StatsBuyerGet200Response>(
+    return Response<BuiltMap<String, int>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -212,6 +217,7 @@ class StatsApi {
   /// Parameters:
   /// * [from] 
   /// * [to] 
+  /// * [type] 
   /// * [format] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -225,6 +231,7 @@ class StatsApi {
   Future<Response<StatsProviderGet200Response>> statsProviderGet({ 
     DateTime? from,
     DateTime? to,
+    String? type,
     String? format,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -255,6 +262,7 @@ class StatsApi {
     final _queryParameters = <String, dynamic>{
       if (from != null) r'from': encodeQueryParameter(_serializers, from, const FullType(DateTime)),
       if (to != null) r'to': encodeQueryParameter(_serializers, to, const FullType(DateTime)),
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
       if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
     };
 
@@ -267,13 +275,13 @@ class StatsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    StatsProviderGet200Response _responseData;
+    StatsProviderGet200Response? _responseData;
 
     try {
-      const _responseType = FullType(StatsProviderGet200Response);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(StatsProviderGet200Response),
       ) as StatsProviderGet200Response;
 
     } catch (error, stackTrace) {

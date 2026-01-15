@@ -1,7 +1,9 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:uuid/uuid.dart';
 
+import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
+import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/request_auth.dart';
@@ -16,8 +18,26 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('provider')) {
+  if (auth == null || auth.activeRole != 'provider') {
     return Response(statusCode: 403);
+  }
+  final provider = await context
+      .read<ProviderRepository>()
+      .findByCompany(auth.companyId);
+  if (provider == null || provider.status != 'active') {
+    return Response.json(
+      statusCode: 403,
+      body: 'Provider registration is pending.',
+    );
+  }
+  final inquiryRepo = context.read<InquiryRepository>();
+  final assigned =
+      await inquiryRepo.isAssignedToProvider(inquiryId, auth.companyId);
+  if (!assigned) {
+    return Response.json(
+      statusCode: 403,
+      body: 'Inquiry not assigned to provider.',
+    );
   }
   final offer = OfferRecord(
     id: const Uuid().v4(),

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/models/models.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -23,6 +26,30 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (profile == null) {
     return Response(statusCode: 404);
   }
+  final body = context.request.body();
+  String? reason;
+  try {
+    final payload = jsonDecode(await body) as Map<String, dynamic>;
+    reason = payload['reason'] as String?;
+  } catch (_) {
+    reason = null;
+  }
+  await repo.update(
+    ProviderProfileRecord(
+      companyId: profile.companyId,
+      bankDetails: profile.bankDetails,
+      branchIds: profile.branchIds,
+      pendingBranchIds: profile.pendingBranchIds,
+      subscriptionPlanId: profile.subscriptionPlanId,
+      paymentInterval: profile.paymentInterval,
+      providerType: profile.providerType,
+      status: 'pending',
+      rejectionReason: reason?.trim().isEmpty == true ? null : reason?.trim(),
+      rejectedAt: DateTime.now().toUtc(),
+      createdAt: profile.createdAt,
+      updatedAt: DateTime.now().toUtc(),
+    ),
+  );
   final admins =
       await context.read<UserRepository>().listAdminsByCompany(companyId);
   final email = context.read<EmailService>();
@@ -30,8 +57,9 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     await email.send(
       to: admin.email,
       subject: 'Registration pending',
-      text:
-          'Your registration remains pending because the requested category was declined.',
+      text: reason == null || reason.trim().isEmpty
+          ? 'Your registration remains pending because the requested category was declined.'
+          : 'Your registration remains pending because the requested category was declined.\nReason: ${reason.trim()}',
     );
   }
   return Response(statusCode: 200);

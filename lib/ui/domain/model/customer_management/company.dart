@@ -23,7 +23,7 @@ abstract class _Company with Store {
   String? registrationNumber;
 
   @observable
-  String? companySize;
+  String? companySize = '0-10';
 
   @observable
   String? name;
@@ -50,7 +50,7 @@ abstract class _Company with Store {
   ObservableList<RegistrationUser> users = ObservableList<RegistrationUser>();
 
   @observable
-  RegistrationUser admin = RegistrationUser();
+  RegistrationUser admin = RegistrationUser()..role = CompanyRole.admin;
 
   @observable
   bool termsAccepted = false;
@@ -86,7 +86,13 @@ abstract class _Company with Store {
   @action
   void increaseNumberOfUsers() {
     numberOfUsers++;
-    users.add(RegistrationUser());
+    final newUser = RegistrationUser();
+    if (isProvider && !isBuyer) {
+      newUser.role = CompanyRole.provider;
+    } else {
+      newUser.role = CompanyRole.buyer;
+    }
+    users.add(newUser);
 
     //todo: clean after done registration
     // appStore.emailSeed++;

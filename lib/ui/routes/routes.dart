@@ -11,11 +11,16 @@ export 'locations/auth/auth_forgot_password_page_location.dart';
 
 export 'locations/authenticated/ads_beam_location.dart';
 export 'locations/authenticated/authenticated.dart';
+export 'locations/authenticated/branches_beam_location.dart';
+export 'locations/authenticated/companies_beam_location.dart';
 export 'locations/authenticated/company_beam_location.dart';
+export 'locations/authenticated/consultants_beam_location.dart';
 export 'locations/authenticated/inquiry_beam_location.dart';
+export 'locations/authenticated/providers_beam_location.dart';
 export 'locations/authenticated/smart_offer_management_page_location.dart';
 export 'locations/authenticated/user_beam_location.dart';
 export 'locations/authenticated/statistics_beam_location.dart';
+export 'locations/authenticated/subscriptions_beam_location.dart';
 
 export 'locations/guest/customer_register_page_location.dart';
 export 'locations/guest/customer_register_success_page_location.dart';

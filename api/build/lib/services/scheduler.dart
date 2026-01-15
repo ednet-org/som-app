@@ -34,6 +34,7 @@ class Scheduler {
     await _sendExpiryReminders();
     await _deleteExpiredInactiveUsers();
     await notifications.notifyBuyersForOfferCountOrDeadline();
+    await notifications.notifyProvidersForExpiredAds();
   }
 
   Future<void> _sendExpiryReminders() async {
