@@ -5,6 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -77,6 +78,19 @@ Future<Response> onRequest(
     }
   }
   await repo.update(updated);
+  if (existing.roles.toSet().difference(updated.roles.toSet()).isNotEmpty ||
+      updated.roles.toSet().difference(existing.roles.toSet()).isNotEmpty) {
+    await context.read<AuditService>().log(
+          action: 'user.roles.updated',
+          entityType: 'user',
+          entityId: updated.id,
+          actorId: authResult.userId,
+          metadata: {
+            'before': existing.roles,
+            'after': updated.roles,
+          },
+        );
+  }
   return Response.json(body: updated.toDtoJson());
 }
 

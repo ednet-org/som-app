@@ -14,12 +14,14 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   dynamic get hasAcceptedTermsAndPolicies =>
       (_$hasAcceptedTermsAndPoliciesComputed ??= Computed<dynamic>(
-              () => super.hasAcceptedTermsAndPolicies,
-              name: '_RegistrationUser.hasAcceptedTermsAndPolicies'))
-          .value;
+        () => super.hasAcceptedTermsAndPolicies,
+        name: '_RegistrationUser.hasAcceptedTermsAndPolicies',
+      )).value;
 
-  late final _$firstNameAtom =
-      Atom(name: '_RegistrationUser.firstName', context: context);
+  late final _$firstNameAtom = Atom(
+    name: '_RegistrationUser.firstName',
+    context: context,
+  );
 
   @override
   String? get firstName {
@@ -34,8 +36,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$lastNameAtom =
-      Atom(name: '_RegistrationUser.lastName', context: context);
+  late final _$lastNameAtom = Atom(
+    name: '_RegistrationUser.lastName',
+    context: context,
+  );
 
   @override
   String? get lastName {
@@ -50,8 +54,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$emailAtom =
-      Atom(name: '_RegistrationUser.email', context: context);
+  late final _$emailAtom = Atom(
+    name: '_RegistrationUser.email',
+    context: context,
+  );
 
   @override
   String? get email {
@@ -66,8 +72,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$titleAtom =
-      Atom(name: '_RegistrationUser.title', context: context);
+  late final _$titleAtom = Atom(
+    name: '_RegistrationUser.title',
+    context: context,
+  );
 
   @override
   String? get title {
@@ -82,8 +90,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$phoneAtom =
-      Atom(name: '_RegistrationUser.phone', context: context);
+  late final _$phoneAtom = Atom(
+    name: '_RegistrationUser.phone',
+    context: context,
+  );
 
   @override
   String? get phone {
@@ -98,8 +108,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$salutationAtom =
-      Atom(name: '_RegistrationUser.salutation', context: context);
+  late final _$salutationAtom = Atom(
+    name: '_RegistrationUser.salutation',
+    context: context,
+  );
 
   @override
   String? get salutation {
@@ -114,8 +126,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$termsAtom =
-      Atom(name: '_RegistrationUser.terms', context: context);
+  late final _$termsAtom = Atom(
+    name: '_RegistrationUser.terms',
+    context: context,
+  );
 
   @override
   String? get terms {
@@ -130,8 +144,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$policiesAtom =
-      Atom(name: '_RegistrationUser.policies', context: context);
+  late final _$policiesAtom = Atom(
+    name: '_RegistrationUser.policies',
+    context: context,
+  );
 
   @override
   String? get policies {
@@ -146,8 +162,10 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$roleAtom =
-      Atom(name: '_RegistrationUser.role', context: context);
+  late final _$roleAtom = Atom(
+    name: '_RegistrationUser.role',
+    context: context,
+  );
 
   @override
   CompanyRole get role {
@@ -162,13 +180,16 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
     });
   }
 
-  late final _$_RegistrationUserActionController =
-      ActionController(name: '_RegistrationUser', context: context);
+  late final _$_RegistrationUserActionController = ActionController(
+    name: '_RegistrationUser',
+    context: context,
+  );
 
   @override
   void setSalutation(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setSalutation');
+      name: '_RegistrationUser.setSalutation',
+    );
     try {
       return super.setSalutation(value);
     } finally {
@@ -179,7 +200,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setPolicies(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setPolicies');
+      name: '_RegistrationUser.setPolicies',
+    );
     try {
       return super.setPolicies(value);
     } finally {
@@ -190,7 +212,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setTerms(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setTerms');
+      name: '_RegistrationUser.setTerms',
+    );
     try {
       return super.setTerms(value);
     } finally {
@@ -201,7 +224,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setFirstName(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setFirstName');
+      name: '_RegistrationUser.setFirstName',
+    );
     try {
       return super.setFirstName(value);
     } finally {
@@ -212,7 +236,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setLastName(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setLastName');
+      name: '_RegistrationUser.setLastName',
+    );
     try {
       return super.setLastName(value);
     } finally {
@@ -223,7 +248,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setEmail(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setEmail');
+      name: '_RegistrationUser.setEmail',
+    );
     try {
       return super.setEmail(value);
     } finally {
@@ -234,7 +260,8 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setPhone(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setPhone');
+      name: '_RegistrationUser.setPhone',
+    );
     try {
       return super.setPhone(value);
     } finally {
@@ -245,9 +272,22 @@ mixin _$RegistrationUser on _RegistrationUser, Store {
   @override
   void setTitle(String value) {
     final _$actionInfo = _$_RegistrationUserActionController.startAction(
-        name: '_RegistrationUser.setTitle');
+      name: '_RegistrationUser.setTitle',
+    );
     try {
       return super.setTitle(value);
+    } finally {
+      _$_RegistrationUserActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setRole(CompanyRole value) {
+    final _$actionInfo = _$_RegistrationUserActionController.startAction(
+      name: '_RegistrationUser.setRole',
+    );
+    try {
+      return super.setRole(value);
     } finally {
       _$_RegistrationUserActionController.endAction(_$actionInfo);
     }

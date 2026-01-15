@@ -4,17 +4,20 @@
 1. Start the full stack (see `documentation/TECHNICAL_GUIDE.md`).
 2. Open `http://localhost:8090` in a browser.
 3. In dev builds, use the quick login buttons (only visible when `DEV_QUICK_LOGIN=true`).
+   If you override `DEV_FIXTURES_PASSWORD` or `SYSTEM_ADMIN_PASSWORD`, pass the
+   same values to Flutter so the quick login buttons stay in sync.
 
 ## Demo Credentials
-Use these accounts if you prefer manual login:
+Use these accounts if you prefer manual login. Passwords come from your local
+environment (`DEV_FIXTURES_PASSWORD` and `SYSTEM_ADMIN_PASSWORD`):
 
-- System Admin: `system-admin@som.local` / `ChangeMe123!`
-- Consultant Admin: `consultant-admin@som.local` / `DevPass123!`
-- Consultant: `consultant@som.local` / `DevPass123!`
-- Buyer Admin: `buyer-admin@som.local` / `DevPass123!`
-- Buyer User: `buyer-user@som.local` / `DevPass123!`
-- Provider Admin: `provider-admin@som.local` / `DevPass123!`
-- Provider User: `provider-user@som.local` / `DevPass123!`
+- System Admin: `system-admin@som.local` / `SYSTEM_ADMIN_PASSWORD` (default `ChangeMe123!`)
+- Consultant Admin: `consultant-admin@som.local` / `DEV_FIXTURES_PASSWORD` (default `DevPass123!`)
+- Consultant: `consultant@som.local` / `DEV_FIXTURES_PASSWORD`
+- Buyer Admin: `buyer-admin@som.local` / `DEV_FIXTURES_PASSWORD`
+- Buyer User: `buyer-user@som.local` / `DEV_FIXTURES_PASSWORD`
+- Provider Admin: `provider-admin@som.local` / `DEV_FIXTURES_PASSWORD`
+- Provider User: `provider-user@som.local` / `DEV_FIXTURES_PASSWORD`
 
 ## What You Can Demo
 Buyer
@@ -43,6 +46,10 @@ Consultant Admin
 - Create, update, or delete subscription plans; updates with active subscribers require confirmation.
 - Provider admins can downgrade plans within the 3‑month renewal window.
 - Activate or deactivate companies as needed.
+
+Email Notifications (Local)
+- Registration, welcome, password reset, and password change emails are written to `api/storage/outbox`.
+- Email audit events are stored in the `email_events` table in the local Supabase DB.
 
 ## Seed Data
 The system boots with sample companies, users, branches, inquiries, offers, and ads. This allows end-to-end exploration without manual setup. Data is stored in the local Supabase instance, so changes persist across restarts unless you reset the local DB.

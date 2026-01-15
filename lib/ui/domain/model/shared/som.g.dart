@@ -24,8 +24,10 @@ mixin _$Som on _Som, Store {
     });
   }
 
-  late final _$isLoadingDataAtom =
-      Atom(name: '_Som.isLoadingData', context: context);
+  late final _$isLoadingDataAtom = Atom(
+    name: '_Som.isLoadingData',
+    context: context,
+  );
 
   @override
   bool get isLoadingData {
@@ -40,8 +42,10 @@ mixin _$Som on _Som, Store {
     });
   }
 
-  late final _$availableBranchesAtom =
-      Atom(name: '_Som.availableBranches', context: context);
+  late final _$availableBranchesAtom = Atom(
+    name: '_Som.availableBranches',
+    context: context,
+  );
 
   @override
   List<TagModel> get availableBranches {
@@ -56,8 +60,10 @@ mixin _$Som on _Som, Store {
     });
   }
 
-  late final _$areSubscriptionsLoadedAtom =
-      Atom(name: '_Som.areSubscriptionsLoaded', context: context);
+  late final _$areSubscriptionsLoadedAtom = Atom(
+    name: '_Som.areSubscriptionsLoaded',
+    context: context,
+  );
 
   @override
   bool get areSubscriptionsLoaded {
@@ -67,14 +73,19 @@ mixin _$Som on _Som, Store {
 
   @override
   set areSubscriptionsLoaded(bool value) {
-    _$areSubscriptionsLoadedAtom
-        .reportWrite(value, super.areSubscriptionsLoaded, () {
-      super.areSubscriptionsLoaded = value;
-    });
+    _$areSubscriptionsLoadedAtom.reportWrite(
+      value,
+      super.areSubscriptionsLoaded,
+      () {
+        super.areSubscriptionsLoaded = value;
+      },
+    );
   }
 
-  late final _$requestedBranchesAtom =
-      Atom(name: '_Som.requestedBranches', context: context);
+  late final _$requestedBranchesAtom = Atom(
+    name: '_Som.requestedBranches',
+    context: context,
+  );
 
   @override
   List<TagModel> get requestedBranches {
@@ -89,8 +100,10 @@ mixin _$Som on _Som, Store {
     });
   }
 
-  late final _$availableSubscriptionsAtom =
-      Atom(name: '_Som.availableSubscriptions', context: context);
+  late final _$availableSubscriptionsAtom = Atom(
+    name: '_Som.availableSubscriptions',
+    context: context,
+  );
 
   @override
   FutureStore<List<SubscriptionPlan>> get availableSubscriptions {
@@ -100,14 +113,19 @@ mixin _$Som on _Som, Store {
 
   @override
   set availableSubscriptions(FutureStore<List<SubscriptionPlan>> value) {
-    _$availableSubscriptionsAtom
-        .reportWrite(value, super.availableSubscriptions, () {
-      super.availableSubscriptions = value;
-    });
+    _$availableSubscriptionsAtom.reportWrite(
+      value,
+      super.availableSubscriptions,
+      () {
+        super.availableSubscriptions = value;
+      },
+    );
   }
 
-  late final _$areBranchesLoadedAtom =
-      Atom(name: '_Som.areBranchesLoaded', context: context);
+  late final _$areBranchesLoadedAtom = Atom(
+    name: '_Som.areBranchesLoaded',
+    context: context,
+  );
 
   @override
   bool get areBranchesLoaded {
@@ -122,31 +140,40 @@ mixin _$Som on _Som, Store {
     });
   }
 
-  late final _$populateAvailableBranchesAsyncAction =
-      AsyncAction('_Som.populateAvailableBranches', context: context);
+  late final _$populateAvailableBranchesAsyncAction = AsyncAction(
+    '_Som.populateAvailableBranches',
+    context: context,
+  );
 
   @override
   Future<dynamic> populateAvailableBranches() {
-    return _$populateAvailableBranchesAsyncAction
-        .run(() => super.populateAvailableBranches());
+    return _$populateAvailableBranchesAsyncAction.run(
+      () => super.populateAvailableBranches(),
+    );
   }
 
-  late final _$populateAvailableSubscriptionsAsyncAction =
-      AsyncAction('_Som.populateAvailableSubscriptions', context: context);
+  late final _$populateAvailableSubscriptionsAsyncAction = AsyncAction(
+    '_Som.populateAvailableSubscriptions',
+    context: context,
+  );
 
   @override
   Future<dynamic> populateAvailableSubscriptions() {
-    return _$populateAvailableSubscriptionsAsyncAction
-        .run(() => super.populateAvailableSubscriptions());
+    return _$populateAvailableSubscriptionsAsyncAction.run(
+      () => super.populateAvailableSubscriptions(),
+    );
   }
 
-  late final _$_SomActionController =
-      ActionController(name: '_Som', context: context);
+  late final _$_SomActionController = ActionController(
+    name: '_Som',
+    context: context,
+  );
 
   @override
   void requestBranch(dynamic branch) {
-    final _$actionInfo =
-        _$_SomActionController.startAction(name: '_Som.requestBranch');
+    final _$actionInfo = _$_SomActionController.startAction(
+      name: '_Som.requestBranch',
+    );
     try {
       return super.requestBranch(branch);
     } finally {
@@ -156,8 +183,9 @@ mixin _$Som on _Som, Store {
 
   @override
   void removeRequestedBranch(dynamic branch) {
-    final _$actionInfo =
-        _$_SomActionController.startAction(name: '_Som.removeRequestedBranch');
+    final _$actionInfo = _$_SomActionController.startAction(
+      name: '_Som.removeRequestedBranch',
+    );
     try {
       return super.removeRequestedBranch(branch);
     } finally {

@@ -5,6 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String planId) async {
@@ -50,6 +51,16 @@ Future<Response> onRequest(RequestContext context, String planId) async {
     final isActive = body['isActive'] as bool? ?? existing.isActive;
     final priceInSubunit =
         body['priceInSubunit'] as int? ?? existing.priceInSubunit;
+    final maxUsers = body['maxUsers'] as int? ?? existing.maxUsers;
+    final setupFeeInSubunit =
+        body['setupFeeInSubunit'] as int? ?? existing.setupFeeInSubunit;
+    final bannerAdsPerMonth =
+        body['bannerAdsPerMonth'] as int? ?? existing.bannerAdsPerMonth;
+    final normalAdsPerMonth =
+        body['normalAdsPerMonth'] as int? ?? existing.normalAdsPerMonth;
+    final freeMonths = body['freeMonths'] as int? ?? existing.freeMonths;
+    final commitmentPeriodMonths = body['commitmentPeriodMonths'] as int? ??
+        existing.commitmentPeriodMonths;
     final rules = body['rules'] == null
         ? existing.rules
         : (body['rules'] as List<dynamic>)
@@ -62,10 +73,26 @@ Future<Response> onRequest(RequestContext context, String planId) async {
       sortPriority: sortPriority,
       isActive: isActive,
       priceInSubunit: priceInSubunit,
+      maxUsers: maxUsers,
+      setupFeeInSubunit: setupFeeInSubunit,
+      bannerAdsPerMonth: bannerAdsPerMonth,
+      normalAdsPerMonth: normalAdsPerMonth,
+      freeMonths: freeMonths,
+      commitmentPeriodMonths: commitmentPeriodMonths,
       rules: rules,
       createdAt: existing.createdAt,
     );
     await repository.updatePlan(updated);
+    await context.read<AuditService>().log(
+          action: 'subscription.plan.updated',
+          entityType: 'subscription_plan',
+          entityId: updated.id,
+          actorId: auth.userId,
+          metadata: {
+            'confirm': confirm,
+            'activeSubscribers': activeCount,
+          },
+        );
     return Response(statusCode: 200);
   }
 
@@ -75,6 +102,12 @@ Future<Response> onRequest(RequestContext context, String planId) async {
       return Response(statusCode: 404);
     }
     await repository.deletePlan(planId);
+    await context.read<AuditService>().log(
+          action: 'subscription.plan.deleted',
+          entityType: 'subscription_plan',
+          entityId: existing.id,
+          actorId: auth.userId,
+        );
     return Response(statusCode: 200);
   }
 

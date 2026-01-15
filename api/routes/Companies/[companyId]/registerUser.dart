@@ -80,7 +80,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     roles: (jsonBody['roles'] as List<dynamic>? ?? [2])
         .map((e) => e is int ? roleFromWire(e) : e.toString())
         .toList(),
-    companyType: company?.type ?? 'buyer',
+    companyType: company.type,
   );
   final user = UserRecord(
     id: authUserId,
@@ -104,6 +104,9 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
 }
 
 int? _maxUsersForPlan(SubscriptionPlanRecord plan) {
+  if (plan.maxUsers != null && plan.maxUsers! > 0) {
+    return plan.maxUsers;
+  }
   for (final rule in plan.rules) {
     if ((rule['restriction'] as int? ?? -1) == 0) {
       final limit = rule['upperLimit'] as int? ?? 0;

@@ -11,22 +11,15 @@ This repository hosts the SOM Flutter web app and the Dart Frog API, backed by S
 - `openapi/`: API specs and tests.
 
 ## Local Development
-- Start Supabase: `supabase start` (ports are fixed in `supabase/config.toml`).
-- Start API:
-  `PORT=8081 dart run -DDEV_FIXTURES=true -DDEV_FIXTURES_PASSWORD='DevPass123!' \
-  -DSUPABASE_URL=http://127.0.0.1:55511 \
-  -DSUPABASE_ANON_KEY=... -DSUPABASE_SERVICE_ROLE_KEY=... \
-  -DSUPABASE_JWT_SECRET=... build/bin/server.dart`
-- Start Flutter:
-  `flutter run -d chrome --web-port 8090 \
-  --dart-define=API_BASE_URL=http://127.0.0.1:8081 \
-  --dart-define=DEV_QUICK_LOGIN=true`
+- Start Supabase: `scripts/start_supabase.sh` (ports are fixed in `supabase/config.toml`).
+- Start API: `scripts/start_api.sh` (pulls Supabase keys via `supabase status`).
+- Start Flutter: `scripts/start_flutter.sh`.
 
 ## Testing
 - `dart test`
 - `dart test api/test`
 - `flutter test`
-- `flutter test integration_test/ui_smoke_test.dart`
+- `scripts/run_integration_tests.sh`
 
 ## LLM Instructions
 - Follow TDD (red/green/refactor). Update or add tests before production code.

@@ -84,13 +84,16 @@ mixin _$Address on _Address, Store {
     });
   }
 
-  late final _$_AddressActionController =
-      ActionController(name: '_Address', context: context);
+  late final _$_AddressActionController = ActionController(
+    name: '_Address',
+    context: context,
+  );
 
   @override
   void setCountry(String? value) {
-    final _$actionInfo =
-        _$_AddressActionController.startAction(name: '_Address.setCountry');
+    final _$actionInfo = _$_AddressActionController.startAction(
+      name: '_Address.setCountry',
+    );
     try {
       return super.setCountry(value);
     } finally {
@@ -100,8 +103,9 @@ mixin _$Address on _Address, Store {
 
   @override
   void setCity(String value) {
-    final _$actionInfo =
-        _$_AddressActionController.startAction(name: '_Address.setCity');
+    final _$actionInfo = _$_AddressActionController.startAction(
+      name: '_Address.setCity',
+    );
     try {
       return super.setCity(value);
     } finally {
@@ -111,8 +115,9 @@ mixin _$Address on _Address, Store {
 
   @override
   void setStreet(String value) {
-    final _$actionInfo =
-        _$_AddressActionController.startAction(name: '_Address.setStreet');
+    final _$actionInfo = _$_AddressActionController.startAction(
+      name: '_Address.setStreet',
+    );
     try {
       return super.setStreet(value);
     } finally {
@@ -122,8 +127,9 @@ mixin _$Address on _Address, Store {
 
   @override
   void setNumber(String value) {
-    final _$actionInfo =
-        _$_AddressActionController.startAction(name: '_Address.setNumber');
+    final _$actionInfo = _$_AddressActionController.startAction(
+      name: '_Address.setNumber',
+    );
     try {
       return super.setNumber(value);
     } finally {
@@ -133,8 +139,9 @@ mixin _$Address on _Address, Store {
 
   @override
   void setZip(String value) {
-    final _$actionInfo =
-        _$_AddressActionController.startAction(name: '_Address.setZip');
+    final _$actionInfo = _$_AddressActionController.startAction(
+      name: '_Address.setZip',
+    );
     try {
       return super.setZip(value);
     } finally {

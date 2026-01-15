@@ -17,6 +17,12 @@ part 'subscription_plan_input.g.dart';
 /// * [sortPriority] 
 /// * [isActive] 
 /// * [priceInSubunit] 
+/// * [maxUsers] 
+/// * [setupFeeInSubunit] 
+/// * [bannerAdsPerMonth] 
+/// * [normalAdsPerMonth] 
+/// * [freeMonths] 
+/// * [commitmentPeriodMonths] 
 /// * [confirm] - Require explicit confirmation when updating plans with active subscribers.
 /// * [rules] 
 @BuiltValue()
@@ -32,6 +38,24 @@ abstract class SubscriptionPlanInput implements Built<SubscriptionPlanInput, Sub
 
   @BuiltValueField(wireName: r'priceInSubunit')
   int get priceInSubunit;
+
+  @BuiltValueField(wireName: r'maxUsers')
+  int? get maxUsers;
+
+  @BuiltValueField(wireName: r'setupFeeInSubunit')
+  int? get setupFeeInSubunit;
+
+  @BuiltValueField(wireName: r'bannerAdsPerMonth')
+  int? get bannerAdsPerMonth;
+
+  @BuiltValueField(wireName: r'normalAdsPerMonth')
+  int? get normalAdsPerMonth;
+
+  @BuiltValueField(wireName: r'freeMonths')
+  int? get freeMonths;
+
+  @BuiltValueField(wireName: r'commitmentPeriodMonths')
+  int? get commitmentPeriodMonths;
 
   /// Require explicit confirmation when updating plans with active subscribers.
   @BuiltValueField(wireName: r'confirm')
@@ -85,6 +109,48 @@ class _$SubscriptionPlanInputSerializer implements PrimitiveSerializer<Subscript
       object.priceInSubunit,
       specifiedType: const FullType(int),
     );
+    if (object.maxUsers != null) {
+      yield r'maxUsers';
+      yield serializers.serialize(
+        object.maxUsers,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
+    if (object.setupFeeInSubunit != null) {
+      yield r'setupFeeInSubunit';
+      yield serializers.serialize(
+        object.setupFeeInSubunit,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
+    if (object.bannerAdsPerMonth != null) {
+      yield r'bannerAdsPerMonth';
+      yield serializers.serialize(
+        object.bannerAdsPerMonth,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
+    if (object.normalAdsPerMonth != null) {
+      yield r'normalAdsPerMonth';
+      yield serializers.serialize(
+        object.normalAdsPerMonth,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
+    if (object.freeMonths != null) {
+      yield r'freeMonths';
+      yield serializers.serialize(
+        object.freeMonths,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
+    if (object.commitmentPeriodMonths != null) {
+      yield r'commitmentPeriodMonths';
+      yield serializers.serialize(
+        object.commitmentPeriodMonths,
+        specifiedType: const FullType.nullable(int),
+      );
+    }
     if (object.confirm != null) {
       yield r'confirm';
       yield serializers.serialize(
@@ -149,6 +215,54 @@ class _$SubscriptionPlanInputSerializer implements PrimitiveSerializer<Subscript
             specifiedType: const FullType(int),
           ) as int;
           result.priceInSubunit = valueDes;
+          break;
+        case r'maxUsers':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.maxUsers = valueDes;
+          break;
+        case r'setupFeeInSubunit':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.setupFeeInSubunit = valueDes;
+          break;
+        case r'bannerAdsPerMonth':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.bannerAdsPerMonth = valueDes;
+          break;
+        case r'normalAdsPerMonth':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.normalAdsPerMonth = valueDes;
+          break;
+        case r'freeMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.freeMonths = valueDes;
+          break;
+        case r'commitmentPeriodMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.commitmentPeriodMonths = valueDes;
           break;
         case r'confirm':
           final valueDes = serializers.deserialize(

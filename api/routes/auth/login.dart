@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -27,6 +29,19 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
   } on AuthException catch (error) {
+    final users = context.read<UserRepository>();
+    final audit = context.read<AuditService>();
+    final user = await users.findByEmail(email.toLowerCase());
+    await audit.log(
+      action: 'auth.login_failed',
+      entityType: 'user',
+      entityId: user?.id ?? email,
+      actorId: user?.id,
+      metadata: {
+        'email': email,
+        'reason': error.message,
+      },
+    );
     return Response.json(statusCode: 400, body: error.message);
   }
 }

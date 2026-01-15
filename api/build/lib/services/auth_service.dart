@@ -6,6 +6,7 @@ import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
 import '../infrastructure/clock.dart';
+import '../infrastructure/repositories/email_event_repository.dart';
 import '../infrastructure/repositories/token_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
 import '../models/models.dart';
@@ -22,6 +23,7 @@ class AuthService {
     required this.users,
     required this.tokens,
     required this.email,
+    required this.emailEvents,
     required this.clock,
     required SupabaseClient adminClient,
     required SupabaseClient anonClient,
@@ -31,6 +33,7 @@ class AuthService {
   final UserRepository users;
   final TokenRepository tokens;
   final EmailService email;
+  final EmailEventRepository emailEvents;
   final Clock clock;
   final SupabaseClient _adminClient;
   final SupabaseClient _anonClient;
@@ -169,21 +172,26 @@ class AuthService {
       throw AuthException('Invalid token');
     }
     final hash = _hashToken(token);
-    final record = await tokens.findValidByHash('reset_password', hash) ??
-        await tokens.findValidByHash('confirm_email', hash);
+    final resetRecord = await tokens.findValidByHash('reset_password', hash);
+    final confirmRecord =
+        resetRecord ?? await tokens.findValidByHash('confirm_email', hash);
+    final record = resetRecord ?? confirmRecord;
     if (record == null || record.expiresAt.isBefore(clock.nowUtc())) {
       throw AuthException(
           'Expired link, please contact the admin for new registration');
     }
     await tokens.markUsed(record.id, clock.nowUtc());
-    await _adminClient.auth.admin.updateUserById(
-      user.id,
-      attributes: AdminUserAttributes(
-        password: password,
-        emailConfirm: true,
-      ),
+    await updateAuthPassword(
+      userId: user.id,
+      password: password,
+      emailConfirmed: true,
     );
     await users.confirmEmail(user.id);
+    if (resetRecord != null) {
+      await _sendPasswordChangedEmail(user);
+    } else {
+      await _sendWelcomeEmail(user);
+    }
   }
 
   Future<void> confirmEmail(
@@ -220,6 +228,10 @@ class AuthService {
       password: newPassword,
       emailConfirmed: true,
     );
+    final user = await users.findById(userId);
+    if (user != null) {
+      await _sendPasswordChangedEmail(user);
+    }
   }
 
   Future<void> signOut(String accessToken) async {
@@ -298,6 +310,43 @@ class AuthService {
   String _hashToken(String token) {
     final bytes = utf8.encode(token);
     return sha256.convert(bytes).toString();
+  }
+
+  Future<void> _sendWelcomeEmail(UserRecord user) async {
+    final baseUrl = const String.fromEnvironment(
+      'APP_BASE_URL',
+      defaultValue: 'http://localhost:8090',
+    );
+    await email.send(
+      to: user.email,
+      subject: 'Welcome to SOM',
+      text: 'Your account is now active. Sign in: $baseUrl',
+    );
+    await emailEvents.create(
+      EmailEventRecord(
+        id: const Uuid().v4(),
+        userId: user.id,
+        type: 'welcome',
+        createdAt: clock.nowUtc(),
+      ),
+    );
+  }
+
+  Future<void> _sendPasswordChangedEmail(UserRecord user) async {
+    await email.send(
+      to: user.email,
+      subject: 'Your SOM password was changed',
+      text:
+          'Your password was changed. If this was not you, contact support immediately.',
+    );
+    await emailEvents.create(
+      EmailEventRecord(
+        id: const Uuid().v4(),
+        userId: user.id,
+        type: 'password_changed',
+        createdAt: clock.nowUtc(),
+      ),
+    );
   }
 }
 

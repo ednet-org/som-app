@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
@@ -31,6 +32,7 @@ final _supabase = SupabaseService.fromEnvironment();
 final _clock = Clock();
 final _email = EmailService();
 final _users = UserRepository(_supabase.adminClient);
+final _emailEvents = EmailEventRepository(_supabase.adminClient);
 final _tokens = TokenRepository(_supabase.adminClient);
 final _companies = CompanyRepository(_supabase.adminClient);
 final _branches = BranchRepository(_supabase.adminClient);
@@ -55,6 +57,7 @@ final _auth = AuthService(
   users: _users,
   tokens: _tokens,
   email: _email,
+  emailEvents: _emailEvents,
   clock: _clock,
   adminClient: _supabase.adminClient,
   anonClient: _supabase.anonClient,
@@ -113,6 +116,7 @@ Handler middleware(Handler handler) {
       .use(provider<Clock>((_) => _clock))
       .use(provider<EmailService>((_) => _email))
       .use(provider<UserRepository>((_) => _users))
+      .use(provider<EmailEventRepository>((_) => _emailEvents))
       .use(provider<TokenRepository>((_) => _tokens))
       .use(provider<CompanyRepository>((_) => _companies))
       .use(provider<BranchRepository>((_) => _branches))

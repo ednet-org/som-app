@@ -279,6 +279,20 @@ class UserRecord {
       };
 }
 
+class EmailEventRecord {
+  EmailEventRecord({
+    required this.id,
+    required this.userId,
+    required this.type,
+    required this.createdAt,
+  });
+
+  final String id;
+  final String userId;
+  final String type;
+  final DateTime createdAt;
+}
+
 class SubscriptionPlanRecord {
   SubscriptionPlanRecord({
     required this.id,

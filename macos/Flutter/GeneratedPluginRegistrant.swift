@@ -12,7 +12,6 @@ import geolocator_apple
 import google_sign_in_ios
 import local_auth_darwin
 import nb_utils
-import package_info
 import package_info_plus
 import path_provider_foundation
 import shared_preferences_foundation
@@ -29,7 +28,6 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTGoogleSignInPlugin.register(with: registry.registrar(forPlugin: "FLTGoogleSignInPlugin"))
   LocalAuthPlugin.register(with: registry.registrar(forPlugin: "LocalAuthPlugin"))
   NbUtilsPlugin.register(with: registry.registrar(forPlugin: "NbUtilsPlugin"))
-  FLTPackageInfoPlugin.register(with: registry.registrar(forPlugin: "FLTPackageInfoPlugin"))
   FPPPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FPPPackageInfoPlusPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))

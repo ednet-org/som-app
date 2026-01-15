@@ -9,8 +9,10 @@ part of 'auth_forgot_password_page_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
-  late final _$emailAtom =
-      Atom(name: '_AuthForgotPasswordPageState.email', context: context);
+  late final _$emailAtom = Atom(
+    name: '_AuthForgotPasswordPageState.email',
+    context: context,
+  );
 
   @override
   String get email {
@@ -25,8 +27,10 @@ mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
     });
   }
 
-  late final _$urlAtom =
-      Atom(name: '_AuthForgotPasswordPageState.url', context: context);
+  late final _$urlAtom = Atom(
+    name: '_AuthForgotPasswordPageState.url',
+    context: context,
+  );
 
   @override
   String get url {
@@ -41,8 +45,10 @@ mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
     });
   }
 
-  late final _$errorMessageAtom =
-      Atom(name: '_AuthForgotPasswordPageState.errorMessage', context: context);
+  late final _$errorMessageAtom = Atom(
+    name: '_AuthForgotPasswordPageState.errorMessage',
+    context: context,
+  );
 
   @override
   String get errorMessage {
@@ -58,8 +64,9 @@ mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
   }
 
   late final _$isSendingEmailLinkAtom = Atom(
-      name: '_AuthForgotPasswordPageState.isSendingEmailLink',
-      context: context);
+    name: '_AuthForgotPasswordPageState.isSendingEmailLink',
+    context: context,
+  );
 
   @override
   bool get isSendingEmailLink {
@@ -74,8 +81,10 @@ mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
     });
   }
 
-  late final _$isLinkSentAtom =
-      Atom(name: '_AuthForgotPasswordPageState.isLinkSent', context: context);
+  late final _$isLinkSentAtom = Atom(
+    name: '_AuthForgotPasswordPageState.isLinkSent',
+    context: context,
+  );
 
   @override
   bool get isLinkSent {
@@ -91,16 +100,19 @@ mixin _$AuthForgotPasswordPageState on _AuthForgotPasswordPageState, Store {
   }
 
   late final _$sendResetLinkAsyncAction = AsyncAction(
-      '_AuthForgotPasswordPageState.sendResetLink',
-      context: context);
+    '_AuthForgotPasswordPageState.sendResetLink',
+    context: context,
+  );
 
   @override
   Future<void> sendResetLink() {
     return _$sendResetLinkAsyncAction.run(() => super.sendResetLink());
   }
 
-  late final _$_AuthForgotPasswordPageStateActionController =
-      ActionController(name: '_AuthForgotPasswordPageState', context: context);
+  late final _$_AuthForgotPasswordPageStateActionController = ActionController(
+    name: '_AuthForgotPasswordPageState',
+    context: context,
+  );
 
   @override
   void setEmail(String email) {

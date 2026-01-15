@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -36,6 +37,12 @@ Future<Response> onRequest(RequestContext context) async {
     final sortPriority = body['sortPriority'] as int? ?? 0;
     final isActive = body['isActive'] as bool? ?? false;
     final priceInSubunit = body['priceInSubunit'] as int? ?? 0;
+    final maxUsers = body['maxUsers'] as int?;
+    final setupFeeInSubunit = body['setupFeeInSubunit'] as int?;
+    final bannerAdsPerMonth = body['bannerAdsPerMonth'] as int?;
+    final normalAdsPerMonth = body['normalAdsPerMonth'] as int?;
+    final freeMonths = body['freeMonths'] as int?;
+    final commitmentPeriodMonths = body['commitmentPeriodMonths'] as int?;
     final rules = (body['rules'] as List<dynamic>? ?? [])
         .map((e) => (e as Map).map((key, value) => MapEntry(key.toString(), value)))
         .toList();
@@ -49,11 +56,23 @@ Future<Response> onRequest(RequestContext context) async {
       sortPriority: sortPriority,
       isActive: isActive,
       priceInSubunit: priceInSubunit,
+      maxUsers: maxUsers,
+      setupFeeInSubunit: setupFeeInSubunit,
+      bannerAdsPerMonth: bannerAdsPerMonth,
+      normalAdsPerMonth: normalAdsPerMonth,
+      freeMonths: freeMonths,
+      commitmentPeriodMonths: commitmentPeriodMonths,
       rules: rules,
       createdAt: now,
     );
     final repository = context.read<SubscriptionRepository>();
     await repository.createPlan(plan);
+    await context.read<AuditService>().log(
+          action: 'subscription.plan.created',
+          entityType: 'subscription_plan',
+          entityId: plan.id,
+          actorId: auth.userId,
+        );
     return Response.json(body: plan.toDtoJson());
   }
   return Response(statusCode: 405);

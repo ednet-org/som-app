@@ -12,6 +12,12 @@ Name | Type | Description | Notes
 **sortPriority** | **int** |  | 
 **isActive** | **bool** |  | [optional] 
 **priceInSubunit** | **int** |  | 
+**maxUsers** | **int** |  | [optional] 
+**setupFeeInSubunit** | **int** |  | [optional] 
+**bannerAdsPerMonth** | **int** |  | [optional] 
+**normalAdsPerMonth** | **int** |  | [optional] 
+**freeMonths** | **int** |  | [optional] 
+**commitmentPeriodMonths** | **int** |  | [optional] 
 **confirm** | **bool** | Require explicit confirmation when updating plans with active subscribers. | [optional] 
 **rules** | [**BuiltList&lt;SubscriptionPlanRulesInner&gt;**](SubscriptionPlanRulesInner.md) |  | [optional] 
 

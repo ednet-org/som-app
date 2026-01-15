@@ -25,6 +25,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   final _titleController = TextEditingController();
   final _sortController = TextEditingController(text: '0');
   final _priceController = TextEditingController(text: '0');
+  final _maxUsersController = TextEditingController();
+  final _setupFeeController = TextEditingController();
+  final _bannerAdsController = TextEditingController();
+  final _normalAdsController = TextEditingController();
+  final _freeMonthsController = TextEditingController();
+  final _commitmentController = TextEditingController();
   final _rulesController = TextEditingController(text: '[]');
   bool _isActive = true;
 
@@ -40,6 +46,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     _titleController.dispose();
     _sortController.dispose();
     _priceController.dispose();
+    _maxUsersController.dispose();
+    _setupFeeController.dispose();
+    _bannerAdsController.dispose();
+    _normalAdsController.dispose();
+    _freeMonthsController.dispose();
+    _commitmentController.dispose();
     _rulesController.dispose();
     super.dispose();
   }
@@ -78,6 +90,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       _titleController.text = plan.title ?? '';
       _sortController.text = (plan.sortPriority ?? 0).toString();
       _priceController.text = (plan.priceInSubunit ?? 0).toString();
+      _maxUsersController.text = _formatOptional(plan.maxUsers);
+      _setupFeeController.text = _formatOptional(plan.setupFeeInSubunit);
+      _bannerAdsController.text = _formatOptional(plan.bannerAdsPerMonth);
+      _normalAdsController.text = _formatOptional(plan.normalAdsPerMonth);
+      _freeMonthsController.text = _formatOptional(plan.freeMonths);
+      _commitmentController.text = _formatOptional(plan.commitmentPeriodMonths);
       _isActive = plan.isActive ?? false;
       final rules = plan.rules?.map((rule) {
         return {
@@ -118,6 +136,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       ..title = _titleController.text.trim()
       ..sortPriority = int.tryParse(_sortController.text.trim()) ?? 0
       ..priceInSubunit = int.tryParse(_priceController.text.trim()) ?? 0
+      ..maxUsers = _parseOptionalInt(_maxUsersController)
+      ..setupFeeInSubunit = _parseOptionalInt(_setupFeeController)
+      ..bannerAdsPerMonth = _parseOptionalInt(_bannerAdsController)
+      ..normalAdsPerMonth = _parseOptionalInt(_normalAdsController)
+      ..freeMonths = _parseOptionalInt(_freeMonthsController)
+      ..commitmentPeriodMonths = _parseOptionalInt(_commitmentController)
       ..isActive = _isActive
       ..rules.replace(_parseRules()));
     await api.getSubscriptionsApi().subscriptionsPost(
@@ -133,6 +157,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       'title': _titleController.text.trim(),
       'sortPriority': int.tryParse(_sortController.text.trim()) ?? 0,
       'priceInSubunit': int.tryParse(_priceController.text.trim()) ?? 0,
+      'maxUsers': _parseOptionalInt(_maxUsersController),
+      'setupFeeInSubunit': _parseOptionalInt(_setupFeeController),
+      'bannerAdsPerMonth': _parseOptionalInt(_bannerAdsController),
+      'normalAdsPerMonth': _parseOptionalInt(_normalAdsController),
+      'freeMonths': _parseOptionalInt(_freeMonthsController),
+      'commitmentPeriodMonths': _parseOptionalInt(_commitmentController),
       'isActive': _isActive,
       'rules': _parseRules().map((rule) {
         return {
@@ -142,7 +172,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       }).toList(),
     };
     try {
-      await api.dio.put('/Subscriptions/${_selected!.id!}', data: payload);
+      await api.dio.put('/Subscriptions/plans/${_selected!.id!}', data: payload);
       await _refresh();
     } on DioException catch (error) {
       final message = error.response?.data?.toString() ?? '';
@@ -314,6 +344,48 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
                         keyboardType: TextInputType.number,
                       ),
                       const SizedBox(height: 12),
+                      TextField(
+                        controller: _maxUsersController,
+                        decoration:
+                            const InputDecoration(labelText: 'Max users'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _setupFeeController,
+                        decoration:
+                            const InputDecoration(labelText: 'Setup fee (subunit)'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _bannerAdsController,
+                        decoration:
+                            const InputDecoration(labelText: 'Banner ads per month'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _normalAdsController,
+                        decoration:
+                            const InputDecoration(labelText: 'Normal ads per month'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _freeMonthsController,
+                        decoration:
+                            const InputDecoration(labelText: 'Free months'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: _commitmentController,
+                        decoration:
+                            const InputDecoration(labelText: 'Commitment (months)'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
                       SwitchListTile(
                         value: _isActive,
                         onChanged: (value) => setState(() => _isActive = value),
@@ -348,4 +420,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       SnackBar(content: Text(message)),
     );
   }
+
+  int? _parseOptionalInt(TextEditingController controller) {
+    final value = controller.text.trim();
+    if (value.isEmpty) return null;
+    return int.tryParse(value);
+  }
+
+  String _formatOptional(int? value) => value == null ? '' : value.toString();
 }

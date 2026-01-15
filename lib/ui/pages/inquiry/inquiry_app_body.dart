@@ -700,10 +700,12 @@ class _InquiryAppBodyState extends State<InquiryAppBody> {
         }
         final inquiries = snapshot.data ?? const [];
         return AppBody(
-          contextMenu: Row(
+          contextMenu: Wrap(
+            spacing: 12,
+            runSpacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text('Inquiries', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
               TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
               if (appStore.authorization?.isBuyer == true)

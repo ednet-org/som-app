@@ -12,13 +12,15 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
   Computed<bool>? _$isFormValidComputed;
 
   @override
-  bool get isFormValid =>
-      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
-              name: '_EmailLoginStoreBase.isFormValid'))
-          .value;
+  bool get isFormValid => (_$isFormValidComputed ??= Computed<bool>(
+    () => super.isFormValid,
+    name: '_EmailLoginStoreBase.isFormValid',
+  )).value;
 
-  late final _$showWelcomeMessageAtom =
-      Atom(name: '_EmailLoginStoreBase.showWelcomeMessage', context: context);
+  late final _$showWelcomeMessageAtom = Atom(
+    name: '_EmailLoginStoreBase.showWelcomeMessage',
+    context: context,
+  );
 
   @override
   bool get showWelcomeMessage {
@@ -33,8 +35,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$isInvalidCredentialsAtom =
-      Atom(name: '_EmailLoginStoreBase.isInvalidCredentials', context: context);
+  late final _$isInvalidCredentialsAtom = Atom(
+    name: '_EmailLoginStoreBase.isInvalidCredentials',
+    context: context,
+  );
 
   @override
   bool get isInvalidCredentials {
@@ -44,14 +48,19 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
 
   @override
   set isInvalidCredentials(bool value) {
-    _$isInvalidCredentialsAtom.reportWrite(value, super.isInvalidCredentials,
-        () {
-      super.isInvalidCredentials = value;
-    });
+    _$isInvalidCredentialsAtom.reportWrite(
+      value,
+      super.isInvalidCredentials,
+      () {
+        super.isInvalidCredentials = value;
+      },
+    );
   }
 
-  late final _$errorMessageAtom =
-      Atom(name: '_EmailLoginStoreBase.errorMessage', context: context);
+  late final _$errorMessageAtom = Atom(
+    name: '_EmailLoginStoreBase.errorMessage',
+    context: context,
+  );
 
   @override
   String get errorMessage {
@@ -66,8 +75,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$welcomeMessageAtom =
-      Atom(name: '_EmailLoginStoreBase.welcomeMessage', context: context);
+  late final _$welcomeMessageAtom = Atom(
+    name: '_EmailLoginStoreBase.welcomeMessage',
+    context: context,
+  );
 
   @override
   String get welcomeMessage {
@@ -82,8 +93,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: '_EmailLoginStoreBase.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(
+    name: '_EmailLoginStoreBase.isLoading',
+    context: context,
+  );
 
   @override
   bool get isLoading {
@@ -98,8 +111,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$loggingInMessageAtom =
-      Atom(name: '_EmailLoginStoreBase.loggingInMessage', context: context);
+  late final _$loggingInMessageAtom = Atom(
+    name: '_EmailLoginStoreBase.loggingInMessage',
+    context: context,
+  );
 
   @override
   String get loggingInMessage {
@@ -114,8 +129,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$emailAtom =
-      Atom(name: '_EmailLoginStoreBase.email', context: context);
+  late final _$emailAtom = Atom(
+    name: '_EmailLoginStoreBase.email',
+    context: context,
+  );
 
   @override
   String get email {
@@ -130,8 +147,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$passwordAtom =
-      Atom(name: '_EmailLoginStoreBase.password', context: context);
+  late final _$passwordAtom = Atom(
+    name: '_EmailLoginStoreBase.password',
+    context: context,
+  );
 
   @override
   String get password {
@@ -146,8 +165,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$showPasswordAtom =
-      Atom(name: '_EmailLoginStoreBase.showPassword', context: context);
+  late final _$showPasswordAtom = Atom(
+    name: '_EmailLoginStoreBase.showPassword',
+    context: context,
+  );
 
   @override
   bool get showPassword {
@@ -162,8 +183,10 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$isLoggedInAtom =
-      Atom(name: '_EmailLoginStoreBase.isLoggedIn', context: context);
+  late final _$isLoggedInAtom = Atom(
+    name: '_EmailLoginStoreBase.isLoggedIn',
+    context: context,
+  );
 
   @override
   bool get isLoggedIn {
@@ -178,21 +201,26 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
     });
   }
 
-  late final _$loginAsyncAction =
-      AsyncAction('_EmailLoginStoreBase.login', context: context);
+  late final _$loginAsyncAction = AsyncAction(
+    '_EmailLoginStoreBase.login',
+    context: context,
+  );
 
   @override
   Future<dynamic> login() {
     return _$loginAsyncAction.run(() => super.login());
   }
 
-  late final _$_EmailLoginStoreBaseActionController =
-      ActionController(name: '_EmailLoginStoreBase', context: context);
+  late final _$_EmailLoginStoreBaseActionController = ActionController(
+    name: '_EmailLoginStoreBase',
+    context: context,
+  );
 
   @override
   void setEmail(String value) {
     final _$actionInfo = _$_EmailLoginStoreBaseActionController.startAction(
-        name: '_EmailLoginStoreBase.setEmail');
+      name: '_EmailLoginStoreBase.setEmail',
+    );
     try {
       return super.setEmail(value);
     } finally {
@@ -203,7 +231,8 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
   @override
   void setPassword(String value) {
     final _$actionInfo = _$_EmailLoginStoreBaseActionController.startAction(
-        name: '_EmailLoginStoreBase.setPassword');
+      name: '_EmailLoginStoreBase.setPassword',
+    );
     try {
       return super.setPassword(value);
     } finally {
@@ -214,7 +243,8 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
   @override
   void toggleShowPassword() {
     final _$actionInfo = _$_EmailLoginStoreBaseActionController.startAction(
-        name: '_EmailLoginStoreBase.toggleShowPassword');
+      name: '_EmailLoginStoreBase.toggleShowPassword',
+    );
     try {
       return super.toggleShowPassword();
     } finally {
@@ -225,7 +255,8 @@ mixin _$EmailLoginStore on _EmailLoginStoreBase, Store {
   @override
   void loggout() {
     final _$actionInfo = _$_EmailLoginStoreBaseActionController.startAction(
-        name: '_EmailLoginStoreBase.loggout');
+      name: '_EmailLoginStoreBase.loggout',
+    );
     try {
       return super.loggout();
     } finally {

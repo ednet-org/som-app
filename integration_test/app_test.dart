@@ -5,7 +5,7 @@ import 'package:openapi/openapi.dart';
 
 const apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
-  defaultValue: 'http://localhost:8080',
+  defaultValue: 'http://localhost:8081',
 );
 
 void main() {

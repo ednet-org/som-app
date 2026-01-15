@@ -69,13 +69,16 @@ mixin _$Branch on _Branch, Store {
     });
   }
 
-  late final _$_BranchActionController =
-      ActionController(name: '_Branch', context: context);
+  late final _$_BranchActionController = ActionController(
+    name: '_Branch',
+    context: context,
+  );
 
   @override
   void setUuid(String value) {
-    final _$actionInfo =
-        _$_BranchActionController.startAction(name: '_Branch.setUuid');
+    final _$actionInfo = _$_BranchActionController.startAction(
+      name: '_Branch.setUuid',
+    );
     try {
       return super.setUuid(value);
     } finally {
@@ -85,8 +88,9 @@ mixin _$Branch on _Branch, Store {
 
   @override
   void setTitle(String value) {
-    final _$actionInfo =
-        _$_BranchActionController.startAction(name: '_Branch.setTitle');
+    final _$actionInfo = _$_BranchActionController.startAction(
+      name: '_Branch.setTitle',
+    );
     try {
       return super.setTitle(value);
     } finally {
@@ -96,8 +100,9 @@ mixin _$Branch on _Branch, Store {
 
   @override
   void setCategory(Branch value) {
-    final _$actionInfo =
-        _$_BranchActionController.startAction(name: '_Branch.setCategory');
+    final _$actionInfo = _$_BranchActionController.startAction(
+      name: '_Branch.setCategory',
+    );
     try {
       return super.setCategory(value);
     } finally {
@@ -107,8 +112,9 @@ mixin _$Branch on _Branch, Store {
 
   @override
   void setProduct(Branch value) {
-    final _$actionInfo =
-        _$_BranchActionController.startAction(name: '_Branch.setProduct');
+    final _$actionInfo = _$_BranchActionController.startAction(
+      name: '_Branch.setProduct',
+    );
     try {
       return super.setProduct(value);
     } finally {

@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:8081*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**companiesCompanyIdUsersGet**](UsersApi.md#companiescompanyidusersget) | **GET** /Companies/{companyId}/users | List company users
 [**companiesCompanyIdUsersUserIdDelete**](UsersApi.md#companiescompanyidusersuseriddelete) | **DELETE** /Companies/{companyId}/users/{userId} | Deactivate user
 [**companiesCompanyIdUsersUserIdGet**](UsersApi.md#companiescompanyidusersuseridget) | **GET** /Companies/{companyId}/users/{userId} | Get user
+[**companiesCompanyIdUsersUserIdRemovePost**](UsersApi.md#companiescompanyidusersuseridremovepost) | **POST** /Companies/{companyId}/users/{userId}/remove | Remove user from company
 [**companiesCompanyIdUsersUserIdUpdatePut**](UsersApi.md#companiescompanyidusersuseridupdateput) | **PUT** /Companies/{companyId}/users/{userId}/update | Update user
 [**usersLoadUserWithCompanyGet**](UsersApi.md#usersloaduserwithcompanyget) | **GET** /Users/loadUserWithCompany | Load user and company details
 [**usersUserIdUnlockPost**](UsersApi.md#usersuseridunlockpost) | **POST** /Users/{userId}/unlock | Unlock a user account
@@ -174,6 +175,48 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UserDto**](UserDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companiesCompanyIdUsersUserIdRemovePost**
+> companiesCompanyIdUsersUserIdRemovePost(companyId, userId)
+
+Remove user from company
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getUsersApi();
+final String companyId = companyId_example; // String | 
+final String userId = userId_example; // String | 
+
+try {
+    api.companiesCompanyIdUsersUserIdRemovePost(companyId, userId);
+} catch on DioException (e) {
+    print('Exception when calling UsersApi->companiesCompanyIdUsersUserIdRemovePost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **companyId** | **String**|  | 
+ **userId** | **String**|  | 
+
+### Return type
+
+void (empty response body)
 
 ### Authorization
 

@@ -12,30 +12,33 @@ mixin _$Company on _Company, Store {
   Computed<dynamic>? _$isProviderComputed;
 
   @override
-  dynamic get isProvider =>
-      (_$isProviderComputed ??= Computed<dynamic>(() => super.isProvider,
-              name: '_Company.isProvider'))
-          .value;
+  dynamic get isProvider => (_$isProviderComputed ??= Computed<dynamic>(
+    () => super.isProvider,
+    name: '_Company.isProvider',
+  )).value;
   Computed<dynamic>? _$isBuyerComputed;
 
   @override
-  dynamic get isBuyer => (_$isBuyerComputed ??=
-          Computed<dynamic>(() => super.isBuyer, name: '_Company.isBuyer'))
-      .value;
+  dynamic get isBuyer => (_$isBuyerComputed ??= Computed<dynamic>(
+    () => super.isBuyer,
+    name: '_Company.isBuyer',
+  )).value;
   Computed<dynamic>? _$numberOfAllowedUsersComputed;
 
   @override
-  dynamic get numberOfAllowedUsers => (_$numberOfAllowedUsersComputed ??=
-          Computed<dynamic>(() => super.numberOfAllowedUsers,
-              name: '_Company.numberOfAllowedUsers'))
-      .value;
+  dynamic get numberOfAllowedUsers =>
+      (_$numberOfAllowedUsersComputed ??= Computed<dynamic>(
+        () => super.numberOfAllowedUsers,
+        name: '_Company.numberOfAllowedUsers',
+      )).value;
   Computed<dynamic>? _$canCreateMoreUsersComputed;
 
   @override
-  dynamic get canCreateMoreUsers => (_$canCreateMoreUsersComputed ??=
-          Computed<dynamic>(() => super.canCreateMoreUsers,
-              name: '_Company.canCreateMoreUsers'))
-      .value;
+  dynamic get canCreateMoreUsers =>
+      (_$canCreateMoreUsersComputed ??= Computed<dynamic>(
+        () => super.canCreateMoreUsers,
+        name: '_Company.canCreateMoreUsers',
+      )).value;
 
   late final _$uidNrAtom = Atom(name: '_Company.uidNr', context: context);
 
@@ -52,8 +55,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$registrationNumberAtom =
-      Atom(name: '_Company.registrationNumber', context: context);
+  late final _$registrationNumberAtom = Atom(
+    name: '_Company.registrationNumber',
+    context: context,
+  );
 
   @override
   String? get registrationNumber {
@@ -68,8 +73,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$companySizeAtom =
-      Atom(name: '_Company.companySize', context: context);
+  late final _$companySizeAtom = Atom(
+    name: '_Company.companySize',
+    context: context,
+  );
 
   @override
   String? get companySize {
@@ -99,8 +106,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$phoneNumberAtom =
-      Atom(name: '_Company.phoneNumber', context: context);
+  late final _$phoneNumberAtom = Atom(
+    name: '_Company.phoneNumber',
+    context: context,
+  );
 
   @override
   String? get phoneNumber {
@@ -175,8 +184,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$providerDataAtom =
-      Atom(name: '_Company.providerData', context: context);
+  late final _$providerDataAtom = Atom(
+    name: '_Company.providerData',
+    context: context,
+  );
 
   @override
   ProviderRegistrationRequest get providerData {
@@ -221,8 +232,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$termsAcceptedAtom =
-      Atom(name: '_Company.termsAccepted', context: context);
+  late final _$termsAcceptedAtom = Atom(
+    name: '_Company.termsAccepted',
+    context: context,
+  );
 
   @override
   bool get termsAccepted {
@@ -237,8 +250,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$privacyAcceptedAtom =
-      Atom(name: '_Company.privacyAccepted', context: context);
+  late final _$privacyAcceptedAtom = Atom(
+    name: '_Company.privacyAccepted',
+    context: context,
+  );
 
   @override
   bool get privacyAccepted {
@@ -253,8 +268,10 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$numberOfUsersAtom =
-      Atom(name: '_Company.numberOfUsers', context: context);
+  late final _$numberOfUsersAtom = Atom(
+    name: '_Company.numberOfUsers',
+    context: context,
+  );
 
   @override
   int get numberOfUsers {
@@ -269,13 +286,16 @@ mixin _$Company on _Company, Store {
     });
   }
 
-  late final _$_CompanyActionController =
-      ActionController(name: '_Company', context: context);
+  late final _$_CompanyActionController = ActionController(
+    name: '_Company',
+    context: context,
+  );
 
   @override
   void setAdmin(dynamic value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setAdmin');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setAdmin',
+    );
     try {
       return super.setAdmin(value);
     } finally {
@@ -286,7 +306,8 @@ mixin _$Company on _Company, Store {
   @override
   void increaseNumberOfUsers() {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.increaseNumberOfUsers');
+      name: '_Company.increaseNumberOfUsers',
+    );
     try {
       return super.increaseNumberOfUsers();
     } finally {
@@ -296,8 +317,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void removeUser(dynamic position) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.removeUser');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.removeUser',
+    );
     try {
       return super.removeUser(position);
     } finally {
@@ -308,7 +330,8 @@ mixin _$Company on _Company, Store {
   @override
   void setRegistrationNumber(String value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.setRegistrationNumber');
+      name: '_Company.setRegistrationNumber',
+    );
     try {
       return super.setRegistrationNumber(value);
     } finally {
@@ -318,8 +341,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setCompanySize(String value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setCompanySize');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setCompanySize',
+    );
     try {
       return super.setCompanySize(value);
     } finally {
@@ -329,8 +353,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setUidNr(String value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setUidNr');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setUidNr',
+    );
     try {
       return super.setUidNr(value);
     } finally {
@@ -340,8 +365,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setName(String value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setName');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setName',
+    );
     try {
       return super.setName(value);
     } finally {
@@ -351,8 +377,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setPhoneNumber(dynamic value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setPhoneNumber');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setPhoneNumber',
+    );
     try {
       return super.setPhoneNumber(value);
     } finally {
@@ -362,8 +389,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setEmail(dynamic value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setEmail');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setEmail',
+    );
     try {
       return super.setEmail(value);
     } finally {
@@ -373,8 +401,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setUrl(dynamic value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setUrl');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setUrl',
+    );
     try {
       return super.setUrl(value);
     } finally {
@@ -384,8 +413,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setAddress(Address value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setAddress');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setAddress',
+    );
     try {
       return super.setAddress(value);
     } finally {
@@ -395,8 +425,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void setRole(dynamic selectedRole) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.setRole');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.setRole',
+    );
     try {
       return super.setRole(selectedRole);
     } finally {
@@ -407,7 +438,8 @@ mixin _$Company on _Company, Store {
   @override
   void setProviderData(ProviderRegistrationRequest value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.setProviderData');
+      name: '_Company.setProviderData',
+    );
     try {
       return super.setProviderData(value);
     } finally {
@@ -417,8 +449,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void activateBuyer(dynamic selectBuyer) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.activateBuyer');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.activateBuyer',
+    );
     try {
       return super.activateBuyer(selectBuyer);
     } finally {
@@ -429,7 +462,8 @@ mixin _$Company on _Company, Store {
   @override
   void activateProvider(dynamic selectProvider) {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.activateProvider');
+      name: '_Company.activateProvider',
+    );
     try {
       return super.activateProvider(selectProvider);
     } finally {
@@ -439,8 +473,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void switchRole(dynamic selectedRole) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.switchRole');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.switchRole',
+    );
     try {
       return super.switchRole(selectedRole);
     } finally {
@@ -450,8 +485,9 @@ mixin _$Company on _Company, Store {
 
   @override
   void addUser(RegistrationUser value) {
-    final _$actionInfo =
-        _$_CompanyActionController.startAction(name: '_Company.addUser');
+    final _$actionInfo = _$_CompanyActionController.startAction(
+      name: '_Company.addUser',
+    );
     try {
       return super.addUser(value);
     } finally {
@@ -462,7 +498,8 @@ mixin _$Company on _Company, Store {
   @override
   void setTermsAccepted(bool value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.setTermsAccepted');
+      name: '_Company.setTermsAccepted',
+    );
     try {
       return super.setTermsAccepted(value);
     } finally {
@@ -473,7 +510,8 @@ mixin _$Company on _Company, Store {
   @override
   void setPrivacyAccepted(bool value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
-        name: '_Company.setPrivacyAccepted');
+      name: '_Company.setPrivacyAccepted',
+    );
     try {
       return super.setPrivacyAccepted(value);
     } finally {

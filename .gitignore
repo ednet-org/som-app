@@ -31,6 +31,13 @@
 .pub/
 /build/
 
+# API local artifacts
+api/storage/outbox/
+api/storage/test_outbox/
+api/storage/logs/
+api/build/storage/outbox/
+api/build/storage/test_outbox/
+
 # Web related
 lib/generated_plugin_registrant.dart
 

@@ -10,8 +10,10 @@ import '../infrastructure/repositories/offer_repository.dart';
 import '../infrastructure/repositories/provider_repository.dart';
 import '../infrastructure/repositories/subscription_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
+import '../infrastructure/clock.dart';
 import '../models/models.dart';
 import 'auth_service.dart';
+import 'subscription_seed.dart';
 
 class SystemBootstrap {
   SystemBootstrap({
@@ -412,7 +414,7 @@ class SystemBootstrap {
 
     await offers.create(
       OfferRecord(
-        id: 'dev-offer-1',
+        id: '00000000-0000-0000-0000-00000000f001',
         inquiryId: inquiryOne.id,
         providerCompanyId: providerCompany.id,
         providerUserId: providerAdmin.id,
@@ -427,7 +429,7 @@ class SystemBootstrap {
     );
     await offers.create(
       OfferRecord(
-        id: 'dev-offer-2',
+        id: '00000000-0000-0000-0000-00000000f002',
         inquiryId: inquiryTwo.id,
         providerCompanyId: providerCompany.id,
         providerUserId: providerAdmin.id,
@@ -442,7 +444,7 @@ class SystemBootstrap {
     );
     await offers.create(
       OfferRecord(
-        id: 'dev-offer-3',
+        id: '00000000-0000-0000-0000-00000000f003',
         inquiryId: inquiryThree.id,
         providerCompanyId: providerCompany.id,
         providerUserId: providerAdmin.id,
@@ -458,7 +460,7 @@ class SystemBootstrap {
 
     await ads.create(
       AdRecord(
-        id: 'dev-ad-1',
+        id: '00000000-0000-0000-0000-00000000a001',
         companyId: providerCompany.id,
         type: 'normal',
         status: 'active',
@@ -476,7 +478,7 @@ class SystemBootstrap {
     );
     await ads.create(
       AdRecord(
-        id: 'dev-ad-2',
+        id: '00000000-0000-0000-0000-00000000a002',
         companyId: providerCompany.id,
         type: 'banner',
         status: 'active',
@@ -583,6 +585,11 @@ class SystemBootstrap {
   }
 
   Future<String?> _ensurePlanId() async {
+    final seeder = SubscriptionSeeder(
+      repository: subscriptions,
+      clock: const Clock(),
+    );
+    await seeder.seedDefaults();
     final plans = await subscriptions.listPlans();
     if (plans.isEmpty) {
       return null;

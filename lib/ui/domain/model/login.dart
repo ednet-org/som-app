@@ -10,6 +10,19 @@ import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 import '../../routes/locations/auth/auth_forgot_password_page_location.dart';
 import 'model.dart';
 
+const _devFixturesPassword = String.fromEnvironment(
+  'DEV_FIXTURES_PASSWORD',
+  defaultValue: 'DevPass123!',
+);
+const _systemAdminPassword = String.fromEnvironment(
+  'SYSTEM_ADMIN_PASSWORD',
+  defaultValue: 'ChangeMe123!',
+);
+const _systemAdminEmail = String.fromEnvironment(
+  'SYSTEM_ADMIN_EMAIL',
+  defaultValue: 'system-admin@som.local',
+);
+
 class Login extends StatelessWidget {
   static String tag = '/Login';
 
@@ -117,50 +130,50 @@ class Login extends StatelessWidget {
                       context,
                       emailLoginStore,
                       label: 'System Admin',
-                      email: 'system-admin@som.local',
-                      password: 'ChangeMe123!',
+                      email: _systemAdminEmail,
+                      password: _systemAdminPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Consultant',
                       email: 'consultant@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Consultant Admin',
                       email: 'consultant-admin@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Buyer Admin',
                       email: 'buyer-admin@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Buyer User',
                       email: 'buyer-user@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Provider Admin',
                       email: 'provider-admin@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                     _devLoginButton(
                       context,
                       emailLoginStore,
                       label: 'Provider User',
                       email: 'provider-user@som.local',
-                      password: 'DevPass123!',
+                      password: _devFixturesPassword,
                     ),
                   ],
                 ),

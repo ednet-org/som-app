@@ -13,12 +13,15 @@ mixin _$FutureStore<T> on FutureBase<T>, Store {
 
   @override
   FutureState? get futureState =>
-      (_$futureStateComputed ??= Computed<FutureState?>(() => super.futureState,
-              name: 'FutureBase.futureState'))
-          .value;
+      (_$futureStateComputed ??= Computed<FutureState?>(
+        () => super.futureState,
+        name: 'FutureBase.futureState',
+      )).value;
 
-  late final _$errorMessageAtom =
-      Atom(name: 'FutureBase.errorMessage', context: context);
+  late final _$errorMessageAtom = Atom(
+    name: 'FutureBase.errorMessage',
+    context: context,
+  );
 
   @override
   String? get errorMessage {

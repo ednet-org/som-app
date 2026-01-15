@@ -33,6 +33,8 @@ create table if not exists users (
   last_failed_login_at timestamptz,
   locked_at timestamptz,
   lock_reason text,
+  removed_at timestamptz,
+  removed_by_user_id uuid,
   created_at timestamptz not null,
   updated_at timestamptz not null
 );
@@ -56,12 +58,33 @@ create table if not exists refresh_tokens (
   revoked_at timestamptz
 );
 
+create table if not exists email_events (
+  id uuid primary key,
+  user_id uuid not null references users(id) on delete cascade,
+  type text not null,
+  created_at timestamptz not null
+);
+
+create table if not exists roles (
+  id uuid primary key,
+  name text not null unique,
+  description text,
+  created_at timestamptz not null,
+  updated_at timestamptz not null
+);
+
 create table if not exists subscription_plans (
   id uuid primary key,
   name text not null,
   sort_priority integer not null,
   is_active boolean not null,
   price_in_subunit integer not null,
+  max_users integer,
+  setup_fee_in_subunit integer,
+  banner_ads_per_month integer,
+  normal_ads_per_month integer,
+  free_months integer,
+  commitment_period_months integer,
   rules_json jsonb not null,
   created_at timestamptz not null
 );
@@ -129,7 +152,8 @@ create table if not exists categories (
 create table if not exists products (
   id uuid primary key,
   company_id uuid not null references companies(id) on delete cascade,
-  name text not null
+  name text not null,
+  created_at timestamptz not null
 );
 
 create table if not exists inquiries (
@@ -159,7 +183,35 @@ create table if not exists inquiry_assignments (
   inquiry_id uuid not null references inquiries(id) on delete cascade,
   provider_company_id uuid not null references companies(id) on delete cascade,
   assigned_at timestamptz not null,
-  assigned_by_user_id uuid not null references users(id) on delete cascade
+  assigned_by_user_id uuid not null references users(id) on delete cascade,
+  deadline_reminder_sent_at timestamptz
+);
+
+create table if not exists domain_events (
+  id uuid primary key,
+  type text not null,
+  status text not null,
+  entity_type text not null,
+  entity_id text not null,
+  actor_id uuid,
+  payload jsonb,
+  created_at timestamptz not null
+);
+
+create table if not exists audit_log (
+  id uuid primary key,
+  actor_id uuid,
+  action text not null,
+  entity_type text not null,
+  entity_id text not null,
+  metadata jsonb,
+  created_at timestamptz not null
+);
+
+create table if not exists schema_version (
+  id int primary key,
+  version int not null,
+  applied_at timestamptz not null default now()
 );
 
 create table if not exists offers (

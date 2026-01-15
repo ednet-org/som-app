@@ -39,8 +39,10 @@ mixin _$BankDetails on _BankDetails, Store {
     });
   }
 
-  late final _$accountOwnerAtom =
-      Atom(name: '_BankDetails.accountOwner', context: context);
+  late final _$accountOwnerAtom = Atom(
+    name: '_BankDetails.accountOwner',
+    context: context,
+  );
 
   @override
   String? get accountOwner {
@@ -55,13 +57,16 @@ mixin _$BankDetails on _BankDetails, Store {
     });
   }
 
-  late final _$_BankDetailsActionController =
-      ActionController(name: '_BankDetails', context: context);
+  late final _$_BankDetailsActionController = ActionController(
+    name: '_BankDetails',
+    context: context,
+  );
 
   @override
   void setIban(String value) {
     final _$actionInfo = _$_BankDetailsActionController.startAction(
-        name: '_BankDetails.setIban');
+      name: '_BankDetails.setIban',
+    );
     try {
       return super.setIban(value);
     } finally {
@@ -71,8 +76,9 @@ mixin _$BankDetails on _BankDetails, Store {
 
   @override
   void setBic(String value) {
-    final _$actionInfo =
-        _$_BankDetailsActionController.startAction(name: '_BankDetails.setBic');
+    final _$actionInfo = _$_BankDetailsActionController.startAction(
+      name: '_BankDetails.setBic',
+    );
     try {
       return super.setBic(value);
     } finally {
@@ -83,7 +89,8 @@ mixin _$BankDetails on _BankDetails, Store {
   @override
   void setAccountOwner(String value) {
     final _$actionInfo = _$_BankDetailsActionController.startAction(
-        name: '_BankDetails.setAccountOwner');
+      name: '_BankDetails.setAccountOwner',
+    );
     try {
       return super.setAccountOwner(value);
     } finally {

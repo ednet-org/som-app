@@ -76,7 +76,7 @@ void main() {
       final token = buildTestJwt(userId: consultant.id);
 
       final context = TestRequestContext(
-        path: '/Subscriptions/plan-1',
+        path: '/Subscriptions/plans/plan-1',
         method: HttpMethod.put,
         headers: {
           'content-type': 'application/json',
@@ -91,7 +91,7 @@ void main() {
       expect(response.statusCode, 400);
 
       final confirmContext = TestRequestContext(
-        path: '/Subscriptions/plan-1',
+        path: '/Subscriptions/plans/plan-1',
         method: HttpMethod.put,
         headers: {
           'content-type': 'application/json',

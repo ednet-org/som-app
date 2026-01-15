@@ -11,6 +11,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(AdActivationRequest.serializer)
       ..add(Address.serializer)
       ..add(AdsAdIdImagePost200Response.serializer)
+      ..add(AuditLogEntry.serializer)
       ..add(AuthChangePasswordPost200Response.serializer)
       ..add(AuthChangePasswordPostRequest.serializer)
       ..add(AuthForgotPasswordPostRequest.serializer)
@@ -41,12 +42,18 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(InquiriesInquiryIdPdfPost200Response.serializer)
       ..add(Inquiry.serializer)
       ..add(Offer.serializer)
+      ..add(Product.serializer)
+      ..add(ProductInput.serializer)
       ..add(ProviderCriteria.serializer)
+      ..add(ProviderProfile.serializer)
       ..add(ProviderRegistrationData.serializer)
       ..add(ProviderRegistrationDataPaymentIntervalEnum.serializer)
       ..add(ProviderSummary.serializer)
       ..add(ProvidersCompanyIdApprovePostRequest.serializer)
+      ..add(ProvidersCompanyIdPaymentDetailsPut200Response.serializer)
       ..add(RegisterCompanyRequest.serializer)
+      ..add(Role.serializer)
+      ..add(RoleInput.serializer)
       ..add(StatsBuyerGet200Response.serializer)
       ..add(StatsProviderGet200Response.serializer)
       ..add(SubscriptionCancellation.serializer)
@@ -66,6 +73,12 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Category)]),
           () => ListBuilder<Category>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>())

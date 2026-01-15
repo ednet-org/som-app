@@ -7,8 +7,11 @@ import 'package:test/test.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
@@ -21,6 +24,7 @@ void main() {
     test('assignment cap blocks excess providers', () async {
       final inquiries = InMemoryInquiryRepository();
       final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
       final users = InMemoryUserRepository();
       final companyA = await seedCompany(
         InMemoryCompanyRepository(),
@@ -36,11 +40,36 @@ void main() {
       await providers.createProfile(
         _providerProfile(companyB.id, status: 'active'),
       );
+      final now = DateTime.now().toUtc();
+      await subscriptions.createSubscription(
+        SubscriptionRecord(
+          id: 'sub-a',
+          companyId: companyA.id,
+          planId: 'plan-1',
+          status: 'active',
+          paymentInterval: 'monthly',
+          startDate: now.subtract(const Duration(days: 1)),
+          endDate: now.add(const Duration(days: 30)),
+          createdAt: now,
+        ),
+      );
+      await subscriptions.createSubscription(
+        SubscriptionRecord(
+          id: 'sub-b',
+          companyId: companyB.id,
+          planId: 'plan-1',
+          status: 'active',
+          paymentInterval: 'monthly',
+          startDate: now.subtract(const Duration(days: 1)),
+          endDate: now.add(const Duration(days: 30)),
+          createdAt: now,
+        ),
+      );
       await inquiries.create(
         _inquiry(
           id: 'inq-1',
           numberOfProviders: 1,
-          deadline: DateTime.now().toUtc().add(const Duration(days: 5)),
+          deadline: now.add(const Duration(days: 5)),
         ),
       );
       final consultantCompany = await seedCompany(InMemoryCompanyRepository());
@@ -65,8 +94,28 @@ void main() {
       );
       context.provide<InquiryRepository>(inquiries);
       context.provide<ProviderRepository>(providers);
+      context.provide<SubscriptionRepository>(subscriptions);
       context.provide<UserRepository>(users);
-      context.provide<EmailService>(TestEmailService());
+      final email = TestEmailService();
+      final notifications = NotificationService(
+        ads: InMemoryAdsRepository(),
+        users: users,
+        companies: InMemoryCompanyRepository(),
+        providers: providers,
+        inquiries: inquiries,
+        offers: InMemoryOfferRepository(),
+        email: email,
+      );
+      context.provide<EmailService>(email);
+      context.provide<NotificationService>(notifications);
+      context.provide<DomainEventService>(
+        DomainEventService(
+          repository: InMemoryDomainEventRepository(),
+          notifications: notifications,
+          companies: InMemoryCompanyRepository(),
+          inquiries: inquiries,
+        ),
+      );
 
       final response =
           await assign_route.onRequest(context.context, 'inq-1');
@@ -77,6 +126,7 @@ void main() {
       final inquiries = InMemoryInquiryRepository();
       final offers = InMemoryOfferRepository();
       final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
       final users = InMemoryUserRepository();
       final company = await seedCompany(
         InMemoryCompanyRepository(),
@@ -90,6 +140,18 @@ void main() {
       );
       await providers.createProfile(
         _providerProfile(company.id, status: 'active'),
+      );
+      await subscriptions.createSubscription(
+        SubscriptionRecord(
+          id: 'sub-1',
+          companyId: company.id,
+          planId: 'plan-1',
+          status: 'active',
+          paymentInterval: 'monthly',
+          startDate: DateTime.now().toUtc(),
+          endDate: DateTime.now().toUtc().add(const Duration(days: 30)),
+          createdAt: DateTime.now().toUtc(),
+        ),
       );
       await inquiries.create(
         _inquiry(
@@ -108,6 +170,7 @@ void main() {
         ads: InMemoryAdsRepository(),
         users: users,
         companies: InMemoryCompanyRepository(),
+        providers: providers,
         inquiries: inquiries,
         offers: offers,
         email: email,
@@ -118,9 +181,11 @@ void main() {
       context.provide<OfferRepository>(offers);
       context.provide<ProviderRepository>(providers);
       context.provide<InquiryRepository>(inquiries);
+      context.provide<SubscriptionRepository>(subscriptions);
       context.provide<EmailService>(email);
       context.provide<FileStorage>(TestFileStorage());
       context.provide<NotificationService>(notification);
+      context.provide<SomDomainModel>(SomDomainModel());
 
       final response =
           await offers_route.onRequest(context.context, 'inq-2');
@@ -131,6 +196,7 @@ void main() {
       final inquiries = InMemoryInquiryRepository();
       final offers = InMemoryOfferRepository();
       final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
       final users = InMemoryUserRepository();
       final company = await seedCompany(
         InMemoryCompanyRepository(),
@@ -144,6 +210,18 @@ void main() {
       );
       await providers.createProfile(
         _providerProfile(company.id, status: 'active'),
+      );
+      await subscriptions.createSubscription(
+        SubscriptionRecord(
+          id: 'sub-1',
+          companyId: company.id,
+          planId: 'plan-1',
+          status: 'active',
+          paymentInterval: 'monthly',
+          startDate: DateTime.now().toUtc(),
+          endDate: DateTime.now().toUtc().add(const Duration(days: 30)),
+          createdAt: DateTime.now().toUtc(),
+        ),
       );
       await inquiries.create(
         _inquiry(
@@ -157,6 +235,7 @@ void main() {
         ads: InMemoryAdsRepository(),
         users: users,
         companies: InMemoryCompanyRepository(),
+        providers: providers,
         inquiries: inquiries,
         offers: offers,
         email: email,
@@ -167,9 +246,11 @@ void main() {
       context.provide<OfferRepository>(offers);
       context.provide<ProviderRepository>(providers);
       context.provide<InquiryRepository>(inquiries);
+      context.provide<SubscriptionRepository>(subscriptions);
       context.provide<EmailService>(email);
       context.provide<FileStorage>(TestFileStorage());
       context.provide<NotificationService>(notification);
+      context.provide<SomDomainModel>(SomDomainModel());
 
       final response =
           await offers_route.onRequest(context.context, 'inq-3');
@@ -180,6 +261,7 @@ void main() {
       final inquiries = InMemoryInquiryRepository();
       final offers = InMemoryOfferRepository();
       final providers = InMemoryProviderRepository();
+      final subscriptions = InMemorySubscriptionRepository();
       final users = InMemoryUserRepository();
       final company = await seedCompany(
         InMemoryCompanyRepository(),
@@ -193,6 +275,18 @@ void main() {
       );
       await providers.createProfile(
         _providerProfile(company.id, status: 'active'),
+      );
+      await subscriptions.createSubscription(
+        SubscriptionRecord(
+          id: 'sub-1',
+          companyId: company.id,
+          planId: 'plan-1',
+          status: 'active',
+          paymentInterval: 'monthly',
+          startDate: DateTime.now().toUtc(),
+          endDate: DateTime.now().toUtc().add(const Duration(days: 30)),
+          createdAt: DateTime.now().toUtc(),
+        ),
       );
       await inquiries.create(
         _inquiry(
@@ -211,6 +305,7 @@ void main() {
         ads: InMemoryAdsRepository(),
         users: users,
         companies: InMemoryCompanyRepository(),
+        providers: providers,
         inquiries: inquiries,
         offers: offers,
         email: email,
@@ -221,9 +316,11 @@ void main() {
       context.provide<OfferRepository>(offers);
       context.provide<ProviderRepository>(providers);
       context.provide<InquiryRepository>(inquiries);
+      context.provide<SubscriptionRepository>(subscriptions);
       context.provide<EmailService>(email);
       context.provide<FileStorage>(TestFileStorage());
       context.provide<NotificationService>(notification);
+      context.provide<SomDomainModel>(SomDomainModel());
 
       final response =
           await offers_route.onRequest(context.context, 'inq-4');

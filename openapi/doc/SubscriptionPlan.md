@@ -13,6 +13,12 @@ Name | Type | Description | Notes
 **sortPriority** | **int** |  | [optional] 
 **isActive** | **bool** |  | [optional] 
 **priceInSubunit** | **int** |  | [optional] 
+**maxUsers** | **int** |  | [optional] 
+**setupFeeInSubunit** | **int** |  | [optional] 
+**bannerAdsPerMonth** | **int** |  | [optional] 
+**normalAdsPerMonth** | **int** |  | [optional] 
+**freeMonths** | **int** |  | [optional] 
+**commitmentPeriodMonths** | **int** |  | [optional] 
 **rules** | [**BuiltList&lt;SubscriptionPlanRulesInner&gt;**](SubscriptionPlanRulesInner.md) |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
 

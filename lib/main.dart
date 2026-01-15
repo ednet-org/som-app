@@ -26,7 +26,7 @@ import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart
 
 const apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
-  defaultValue: 'http://localhost:8080',
+  defaultValue: 'http://localhost:8081',
 );
 
 final apiInstance = Openapi(
@@ -155,17 +155,17 @@ class MyApp extends StatelessWidget {
             ApiSubscriptionRepository(apiInstance.getSubscriptionsApi()),
       ),
       ProxyProvider2<ApiSubscriptionRepository, Openapi, Som>(
-          update: (_, apiSubscriptionRepository, api, __) =>
+          update: (_, apiSubscriptionRepository, api, _) =>
               Som(apiSubscriptionRepository, api.getBranchesApi())),
       // Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
       ProxyProvider<Som, RegistrationRequest>(
-          update: (_, som, __) => RegistrationRequest(som,
+          update: (_, som, _) => RegistrationRequest(som,
               apiInstance.getCompaniesApi(), appStore, sharedPreferences)),
       Provider<EmailLoginStore>(
           create: (_) => EmailLoginStore(
               apiInstance.getAuthApi(), apiInstance.getUsersApi(), appStore)),
       ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
-          update: (_, emailLoginStore, __) => UserAccountConfirmation(
+          update: (_, emailLoginStore, _) => UserAccountConfirmation(
               apiInstance.getAuthApi(), appStore, emailLoginStore)),
     ];
   }

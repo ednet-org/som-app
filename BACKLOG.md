@@ -16,15 +16,15 @@
 - [x] Tests: integration tests for change password, logout, and session invalidation.
 
 ### Epic: Role Management & Governance
-- [ ] DB: add roles table if dynamic roles are required (or document fixed roles policy).
-- [ ] API: add role CRUD for consultant admin if dynamic roles are required.
-- [ ] UI: add role management page for consultant admin if roles are dynamic.
-- [ ] Tests: role CRUD + authorization tests (consultant/admin only).
+- [x] DB: add roles table if dynamic roles are required (or document fixed roles policy).
+- [x] API: add role CRUD for consultant admin if dynamic roles are required.
+- [x] UI: add role management page for consultant admin if roles are dynamic.
+- [x] Tests: role CRUD + authorization tests (consultant/admin only).
 
 ### Epic: User Notifications
-- [ ] API: send welcome email on activation and password-changed notification on change.
-- [ ] DB: store email event audit entries (user_id, type, created_at).
-- [ ] Tests: email event creation + content templates.
+- [x] API: send welcome email on activation and password-changed notification on change.
+- [x] DB: store email event audit entries (user_id, type, created_at).
+- [x] Tests: email event creation + content templates.
 
 ## Company Management
 ### Epic: Company Status Lifecycle
@@ -39,20 +39,20 @@
 - [x] Tests: registration/update validation for type selection.
 
 ### Epic: User Association Management
-- [ ] API: add explicit remove-user command with notification (distinct from deactivate).
-- [ ] UI: add remove user action for company admin with confirmation.
-- [ ] Tests: remove user notification and permission enforcement.
+- [x] API: add explicit remove-user command with notification (distinct from deactivate).
+- [x] UI: add remove user action for company admin with confirmation.
+- [x] Tests: remove user notification and permission enforcement.
 
 ### Epic: Company Notifications
-- [ ] API: notify consultants/admins on company registration/update/activation/deactivation.
-- [ ] Tests: verify notification triggers for each company lifecycle event.
+- [x] API: notify consultants/admins on company registration/update/activation/deactivation.
+- [x] Tests: verify notification triggers for each company lifecycle event.
 
 ## Provider Company & Provider Profile
 ### Epic: Provider Product Catalog
-- [ ] DB: add provider_products table or provider_products_json on provider_profiles.
-- [ ] API: CRUD provider products (branch/category/product tags).
-- [ ] UI: provider product editor in Company Management.
-- [ ] Tests: product CRUD and visibility scoped to provider company.
+- [x] DB: add provider_products table or provider_products_json on provider_profiles.
+- [x] API: CRUD provider products (branch/category/product tags).
+- [x] UI: provider product editor in Company Management.
+- [x] Tests: product CRUD and visibility scoped to provider company.
 
 ### Epic: Provider Registration Status Enforcement
 - [x] API: block inquiry assignment to provider companies with status != active.
@@ -67,16 +67,16 @@
 - [x] Tests: decline flow persists reason and notifies provider admin.
 
 ### Epic: Payment Details Management
-- [ ] API: add update payment details endpoint (IBAN/BIC/owner) with validation.
-- [ ] UI: provider admin payment details form in Company Management.
-- [ ] Tests: payment update with audit log and permission checks.
+- [x] API: add update payment details endpoint (IBAN/BIC/owner) with validation.
+- [x] UI: provider admin payment details form in Company Management.
+- [x] Tests: payment update with audit log and permission checks.
 
 ## Subscription Catalog & Policies
 ### Epic: Subscription Catalog Completeness
-- [ ] DB: add subscription fields (maxUsers, setupFee, bannerAdsPerMonth, normalAdsPerMonth, freeMonths, commitmentPeriod).
-- [ ] API: extend subscription plan DTOs to include new fields.
-- [ ] UI: update Subscriptions page to edit new fields.
-- [ ] Tests: subscription CRUD covers all new fields.
+- [x] DB: add subscription fields (maxUsers, setupFee, bannerAdsPerMonth, normalAdsPerMonth, freeMonths, commitmentPeriod).
+- [x] API: extend subscription plan DTOs to include new fields.
+- [x] UI: update Subscriptions page to edit new fields.
+- [x] Tests: subscription CRUD covers all new fields.
 
 ### Epic: Subscription Enforcement Policies
 - [x] API: enforce company user limit when adding/registering users.
@@ -111,9 +111,9 @@
 - [x] Tests: assignment limit enforcement.
 
 ### Epic: Deadline Notifications
-- [ ] API: ensure assignment triggers provider notifications and deadline reminders.
-- [ ] Scheduler: add deadline reminder job and buyer notification at deadline.
-- [ ] Tests: notification scheduling and delivery checks.
+- [x] API: ensure assignment triggers provider notifications and deadline reminders.
+- [x] Scheduler: add deadline reminder job and buyer notification at deadline.
+- [x] Tests: notification scheduling and delivery checks.
 
 ## Offer Management
 ### Epic: Offer Creation Policy
@@ -122,9 +122,9 @@
 - [x] Tests: deadline and assignment constraints.
 
 ### Epic: Offer Status Normalization
-- [ ] API: align provider lifecycle statuses (open/offer_created/lost/won/ignored) with buyer decisions.
-- [ ] UI: map statuses consistently in provider and buyer offer views.
-- [ ] Tests: status mapping and transitions.
+- [x] API: align provider lifecycle statuses (open/offer_created/lost/won/ignored) with buyer decisions.
+- [x] UI: map statuses consistently in provider and buyer offer views.
+- [x] Tests: status mapping and transitions.
 
 ### Epic: All-Offers-Received Signal
 - [x] API: emit event when offer count reaches numberOfProviders.
@@ -149,24 +149,24 @@
 - [x] Tests: update operations with consultant permissions.
 
 ### Epic: Provider Impact Notifications
-- [ ] API: notify affected providers on branch/category deletion or rename.
-- [ ] Tests: notification delivery when branch/category changes.
+- [x] API: notify affected providers on branch/category deletion or rename.
+- [x] Tests: notification delivery when branch/category changes.
 
 ## Cross-Cutting Policies & Events
 ### Epic: Domain Events
-- [ ] API: introduce domain event emission for command success/failure (per DSL triggers).
-- [ ] Service: add event handlers for notifications and policy enforcement.
-- [ ] Tests: event emission and handler execution.
+- [x] API: introduce domain event emission for command success/failure (per DSL triggers).
+- [x] Service: add event handlers for notifications and policy enforcement.
+- [x] Tests: event emission and handler execution.
 
 ### Epic: Audit & Compliance
-- [ ] DB: add audit_log table (actor, action, entity, metadata, timestamp).
-- [ ] API: log security-sensitive actions (login failure, role change, subscription change).
-- [ ] UI: add consultant admin audit viewer.
-- [ ] Tests: audit log created for security actions.
+- [x] DB: add audit_log table (actor, action, entity, metadata, timestamp).
+- [x] API: log security-sensitive actions (login failure, role change, subscription change).
+- [x] UI: add consultant admin audit viewer.
+- [x] Tests: audit log created for security actions.
 
 ## Data Model & EDNet Alignment
 ### Epic: Aggregate Alignment
-- [ ] Align EDNet aggregates with DSL entities and required attributes.
-- [ ] Enforce relation invariants (offer↔inquiry↔provider, inquiry↔creator, provider↔subscription).
-- [ ] Add schema version checks on startup to ensure DB matches DSL attributes.
-- [ ] Tests: invariant enforcement and schema version validation.
+- [x] Align EDNet aggregates with DSL entities and required attributes.
+- [x] Enforce relation invariants (offer↔inquiry↔provider, inquiry↔creator, provider↔subscription).
+- [x] Add schema version checks on startup to ensure DB matches DSL attributes.
+- [x] Tests: invariant enforcement and schema version validation.

@@ -53,19 +53,19 @@ class StatisticsService {
       companyId: companyId,
       from: from,
       to: to,
-      status: 'offer_uploaded',
+      status: 'offer_created',
     );
     final lostCount = await _countOffers(
       companyId: companyId,
       from: from,
       to: to,
-      status: 'rejected',
+      status: 'lost',
     );
     final wonCount = await _countOffers(
       companyId: companyId,
       from: from,
       to: to,
-      status: 'accepted',
+      status: 'won',
     );
     final ignoredCount = await _countOffers(
       companyId: companyId,
@@ -92,12 +92,12 @@ class StatisticsService {
     final wonCount = await _countOffersGlobal(
       from: from,
       to: to,
-      status: 'accepted',
+      status: 'won',
     );
     final lostCount = await _countOffersGlobal(
       from: from,
       to: to,
-      status: 'rejected',
+      status: 'lost',
     );
     return {
       'open': openCount,

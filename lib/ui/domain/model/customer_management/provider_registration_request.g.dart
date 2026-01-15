@@ -9,8 +9,10 @@ part of 'provider_registration_request.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
-  late final _$bankDetailsAtom =
-      Atom(name: '_ProviderRegistrationRequest.bankDetails', context: context);
+  late final _$bankDetailsAtom = Atom(
+    name: '_ProviderRegistrationRequest.bankDetails',
+    context: context,
+  );
 
   @override
   BankDetails? get bankDetails {
@@ -25,8 +27,10 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
     });
   }
 
-  late final _$branchesAtom =
-      Atom(name: '_ProviderRegistrationRequest.branches', context: context);
+  late final _$branchesAtom = Atom(
+    name: '_ProviderRegistrationRequest.branches',
+    context: context,
+  );
 
   @override
   ObservableList<Branch> get branches {
@@ -42,7 +46,9 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
   }
 
   late final _$paymentIntervalAtom = Atom(
-      name: '_ProviderRegistrationRequest.paymentInterval', context: context);
+    name: '_ProviderRegistrationRequest.paymentInterval',
+    context: context,
+  );
 
   @override
   PaymentInterval? get paymentInterval {
@@ -58,8 +64,9 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
   }
 
   late final _$subscriptionPlanIdAtom = Atom(
-      name: '_ProviderRegistrationRequest.subscriptionPlanId',
-      context: context);
+    name: '_ProviderRegistrationRequest.subscriptionPlanId',
+    context: context,
+  );
 
   @override
   String? get subscriptionPlanId {
@@ -74,8 +81,10 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
     });
   }
 
-  late final _$maxUsersAtom =
-      Atom(name: '_ProviderRegistrationRequest.maxUsers', context: context);
+  late final _$maxUsersAtom = Atom(
+    name: '_ProviderRegistrationRequest.maxUsers',
+    context: context,
+  );
 
   @override
   int? get maxUsers {
@@ -90,8 +99,28 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
     });
   }
 
-  late final _$_ProviderRegistrationRequestActionController =
-      ActionController(name: '_ProviderRegistrationRequest', context: context);
+  late final _$providerTypeAtom = Atom(
+    name: '_ProviderRegistrationRequest.providerType',
+    context: context,
+  );
+
+  @override
+  String? get providerType {
+    _$providerTypeAtom.reportRead();
+    return super.providerType;
+  }
+
+  @override
+  set providerType(String? value) {
+    _$providerTypeAtom.reportWrite(value, super.providerType, () {
+      super.providerType = value;
+    });
+  }
+
+  late final _$_ProviderRegistrationRequestActionController = ActionController(
+    name: '_ProviderRegistrationRequest',
+    context: context,
+  );
 
   @override
   void setBankDetails(BankDetails value) {
@@ -128,9 +157,10 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
 
   @override
   void setSubscriptionPlanId(String value) {
-    final _$actionInfo =
-        _$_ProviderRegistrationRequestActionController.startAction(
-            name: '_ProviderRegistrationRequest.setSubscriptionPlanId');
+    final _$actionInfo = _$_ProviderRegistrationRequestActionController
+        .startAction(
+          name: '_ProviderRegistrationRequest.setSubscriptionPlanId',
+        );
     try {
       return super.setSubscriptionPlanId(value);
     } finally {
@@ -150,13 +180,25 @@ mixin _$ProviderRegistrationRequest on _ProviderRegistrationRequest, Store {
   }
 
   @override
+  void setProviderType(String value) {
+    final _$actionInfo = _$_ProviderRegistrationRequestActionController
+        .startAction(name: '_ProviderRegistrationRequest.setProviderType');
+    try {
+      return super.setProviderType(value);
+    } finally {
+      _$_ProviderRegistrationRequestActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 bankDetails: ${bankDetails},
 branches: ${branches},
 paymentInterval: ${paymentInterval},
 subscriptionPlanId: ${subscriptionPlanId},
-maxUsers: ${maxUsers}
+maxUsers: ${maxUsers},
+providerType: ${providerType}
     ''';
   }
 }

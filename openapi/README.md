@@ -61,7 +61,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:8081*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -73,6 +73,7 @@ Class | Method | HTTP request | Description
 [*AdsApi*](doc/AdsApi.md) | [**adsAdIdPut**](doc/AdsApi.md#adsadidput) | **PUT** /ads/{adId} | Update ad
 [*AdsApi*](doc/AdsApi.md) | [**adsGet**](doc/AdsApi.md#adsget) | **GET** /ads | List ads
 [*AdsApi*](doc/AdsApi.md) | [**createAd**](doc/AdsApi.md#createad) | **POST** /ads | Create ad
+[*AuditApi*](doc/AuditApi.md) | [**auditGet**](doc/AuditApi.md#auditget) | **GET** /audit | List audit log entries
 [*AuthApi*](doc/AuthApi.md) | [**authChangePasswordPost**](doc/AuthApi.md#authchangepasswordpost) | **POST** /auth/changePassword | Change password for authenticated user
 [*AuthApi*](doc/AuthApi.md) | [**authConfirmEmailGet**](doc/AuthApi.md#authconfirmemailget) | **GET** /auth/confirmEmail | Confirm email registration token
 [*AuthApi*](doc/AuthApi.md) | [**authForgotPasswordPost**](doc/AuthApi.md#authforgotpasswordpost) | **POST** /auth/forgotPassword | Send password reset email
@@ -113,7 +114,17 @@ Class | Method | HTTP request | Description
 [*OffersApi*](doc/OffersApi.md) | [**offersOfferIdRejectPost**](doc/OffersApi.md#offersofferidrejectpost) | **POST** /offers/{offerId}/reject | Reject offer
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdApprovePost**](doc/ProvidersApi.md#providerscompanyidapprovepost) | **POST** /providers/{companyId}/approve | Approve provider branches
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdDeclinePost**](doc/ProvidersApi.md#providerscompanyiddeclinepost) | **POST** /providers/{companyId}/decline | Decline provider branch request
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdGet**](doc/ProvidersApi.md#providerscompanyidget) | **GET** /providers/{companyId} | Get provider profile
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdPaymentDetailsPut**](doc/ProvidersApi.md#providerscompanyidpaymentdetailsput) | **PUT** /providers/{companyId}/paymentDetails | Update provider payment details
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsGet**](doc/ProvidersApi.md#providerscompanyidproductsget) | **GET** /providers/{companyId}/products | List provider products
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsPost**](doc/ProvidersApi.md#providerscompanyidproductspost) | **POST** /providers/{companyId}/products | Create provider product
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdDelete**](doc/ProvidersApi.md#providerscompanyidproductsproductiddelete) | **DELETE** /providers/{companyId}/products/{productId} | Delete provider product
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdPut**](doc/ProvidersApi.md#providerscompanyidproductsproductidput) | **PUT** /providers/{companyId}/products/{productId} | Update provider product
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersGet**](doc/ProvidersApi.md#providersget) | **GET** /providers | List providers
+[*RolesApi*](doc/RolesApi.md) | [**rolesGet**](doc/RolesApi.md#rolesget) | **GET** /roles | List roles
+[*RolesApi*](doc/RolesApi.md) | [**rolesPost**](doc/RolesApi.md#rolespost) | **POST** /roles | Create role
+[*RolesApi*](doc/RolesApi.md) | [**rolesRoleIdDelete**](doc/RolesApi.md#rolesroleiddelete) | **DELETE** /roles/{roleId} | Delete role
+[*RolesApi*](doc/RolesApi.md) | [**rolesRoleIdPut**](doc/RolesApi.md#rolesroleidput) | **PUT** /roles/{roleId} | Update role
 [*StatsApi*](doc/StatsApi.md) | [**statsBuyerGet**](doc/StatsApi.md#statsbuyerget) | **GET** /stats/buyer | Buyer statistics
 [*StatsApi*](doc/StatsApi.md) | [**statsConsultantGet**](doc/StatsApi.md#statsconsultantget) | **GET** /stats/consultant | Consultant statistics
 [*StatsApi*](doc/StatsApi.md) | [**statsProviderGet**](doc/StatsApi.md#statsproviderget) | **GET** /stats/provider | Provider statistics
@@ -132,6 +143,7 @@ Class | Method | HTTP request | Description
 [*UsersApi*](doc/UsersApi.md) | [**companiesCompanyIdUsersGet**](doc/UsersApi.md#companiescompanyidusersget) | **GET** /Companies/{companyId}/users | List company users
 [*UsersApi*](doc/UsersApi.md) | [**companiesCompanyIdUsersUserIdDelete**](doc/UsersApi.md#companiescompanyidusersuseriddelete) | **DELETE** /Companies/{companyId}/users/{userId} | Deactivate user
 [*UsersApi*](doc/UsersApi.md) | [**companiesCompanyIdUsersUserIdGet**](doc/UsersApi.md#companiescompanyidusersuseridget) | **GET** /Companies/{companyId}/users/{userId} | Get user
+[*UsersApi*](doc/UsersApi.md) | [**companiesCompanyIdUsersUserIdRemovePost**](doc/UsersApi.md#companiescompanyidusersuseridremovepost) | **POST** /Companies/{companyId}/users/{userId}/remove | Remove user from company
 [*UsersApi*](doc/UsersApi.md) | [**companiesCompanyIdUsersUserIdUpdatePut**](doc/UsersApi.md#companiescompanyidusersuseridupdateput) | **PUT** /Companies/{companyId}/users/{userId}/update | Update user
 [*UsersApi*](doc/UsersApi.md) | [**usersLoadUserWithCompanyGet**](doc/UsersApi.md#usersloaduserwithcompanyget) | **GET** /Users/loadUserWithCompany | Load user and company details
 [*UsersApi*](doc/UsersApi.md) | [**usersUserIdUnlockPost**](doc/UsersApi.md#usersuseridunlockpost) | **POST** /Users/{userId}/unlock | Unlock a user account
@@ -143,6 +155,7 @@ Class | Method | HTTP request | Description
  - [AdActivationRequest](doc/AdActivationRequest.md)
  - [Address](doc/Address.md)
  - [AdsAdIdImagePost200Response](doc/AdsAdIdImagePost200Response.md)
+ - [AuditLogEntry](doc/AuditLogEntry.md)
  - [AuthChangePasswordPost200Response](doc/AuthChangePasswordPost200Response.md)
  - [AuthChangePasswordPostRequest](doc/AuthChangePasswordPostRequest.md)
  - [AuthForgotPasswordPostRequest](doc/AuthForgotPasswordPostRequest.md)
@@ -170,11 +183,17 @@ Class | Method | HTTP request | Description
  - [InquiriesInquiryIdPdfPost200Response](doc/InquiriesInquiryIdPdfPost200Response.md)
  - [Inquiry](doc/Inquiry.md)
  - [Offer](doc/Offer.md)
+ - [Product](doc/Product.md)
+ - [ProductInput](doc/ProductInput.md)
  - [ProviderCriteria](doc/ProviderCriteria.md)
+ - [ProviderProfile](doc/ProviderProfile.md)
  - [ProviderRegistrationData](doc/ProviderRegistrationData.md)
  - [ProviderSummary](doc/ProviderSummary.md)
  - [ProvidersCompanyIdApprovePostRequest](doc/ProvidersCompanyIdApprovePostRequest.md)
+ - [ProvidersCompanyIdPaymentDetailsPut200Response](doc/ProvidersCompanyIdPaymentDetailsPut200Response.md)
  - [RegisterCompanyRequest](doc/RegisterCompanyRequest.md)
+ - [Role](doc/Role.md)
+ - [RoleInput](doc/RoleInput.md)
  - [StatsBuyerGet200Response](doc/StatsBuyerGet200Response.md)
  - [StatsProviderGet200Response](doc/StatsProviderGet200Response.md)
  - [SubscriptionCancellation](doc/SubscriptionCancellation.md)

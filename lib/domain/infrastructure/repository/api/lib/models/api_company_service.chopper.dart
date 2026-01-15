@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'api_company_service.dart';
 
@@ -21,11 +21,7 @@ final class _$ApiCompanyService extends ApiCompanyService {
   @override
   Future<Response<List<Company>>> getCompanies() {
     final Uri $url = Uri.parse('companies');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<List<Company>, Company>($request);
   }
 }

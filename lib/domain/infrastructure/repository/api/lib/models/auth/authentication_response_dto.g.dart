@@ -7,15 +7,15 @@ part of 'authentication_response_dto.dart';
 // **************************************************************************
 
 AuthenticationResponseDto _$AuthenticationResponseDtoFromJson(
-        Map<String, dynamic> json) =>
-    AuthenticationResponseDto(
-      token: json['token'] as String,
-      refreshToken: json['refreshToken'] as String,
-    );
+  Map<String, dynamic> json,
+) => AuthenticationResponseDto(
+  token: json['token'] as String,
+  refreshToken: json['refreshToken'] as String,
+);
 
 Map<String, dynamic> _$AuthenticationResponseDtoToJson(
-        AuthenticationResponseDto instance) =>
-    <String, dynamic>{
-      'token': instance.token,
-      'refreshToken': instance.refreshToken,
-    };
+  AuthenticationResponseDto instance,
+) => <String, dynamic>{
+  'token': instance.token,
+  'refreshToken': instance.refreshToken,
+};

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:som_api/infrastructure/clock.dart';
+import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/token_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/infrastructure/supabase_service.dart';
@@ -24,10 +25,12 @@ Future<void> main(List<String> args) async {
   final supabase = SupabaseService.fromEnvironment();
   final users = UserRepository(supabase.adminClient);
   final tokens = TokenRepository(supabase.adminClient);
+  final emailEvents = EmailEventRepository(supabase.adminClient);
   final auth = AuthService(
     users: users,
     tokens: tokens,
     email: EmailService(),
+    emailEvents: emailEvents,
     clock: Clock(),
     adminClient: supabase.adminClient,
     anonClient: supabase.anonClient,

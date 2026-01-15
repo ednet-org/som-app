@@ -12,20 +12,24 @@ mixin _$Application on _Application, Store {
   Computed<dynamic>? _$isAuthenticatedComputed;
 
   @override
-  dynamic get isAuthenticated => (_$isAuthenticatedComputed ??=
-          Computed<dynamic>(() => super.isAuthenticated,
-              name: '_Application.isAuthenticated'))
-      .value;
+  dynamic get isAuthenticated =>
+      (_$isAuthenticatedComputed ??= Computed<dynamic>(
+        () => super.isAuthenticated,
+        name: '_Application.isAuthenticated',
+      )).value;
   Computed<CurrentLayoutAndUIConstraints>? _$layoutComputed;
 
   @override
-  CurrentLayoutAndUIConstraints get layout => (_$layoutComputed ??=
-          Computed<CurrentLayoutAndUIConstraints>(() => super.layout,
-              name: '_Application.layout'))
-      .value;
+  CurrentLayoutAndUIConstraints get layout =>
+      (_$layoutComputed ??= Computed<CurrentLayoutAndUIConstraints>(
+        () => super.layout,
+        name: '_Application.layout',
+      )).value;
 
-  late final _$applicationWidthAtom =
-      Atom(name: '_Application.applicationWidth', context: context);
+  late final _$applicationWidthAtom = Atom(
+    name: '_Application.applicationWidth',
+    context: context,
+  );
 
   @override
   double get applicationWidth {
@@ -40,8 +44,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$buttonWidthAtom =
-      Atom(name: '_Application.buttonWidth', context: context);
+  late final _$buttonWidthAtom = Atom(
+    name: '_Application.buttonWidth',
+    context: context,
+  );
 
   @override
   double get buttonWidth {
@@ -56,8 +62,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$textScaleFactorAtom =
-      Atom(name: '_Application.textScaleFactor', context: context);
+  late final _$textScaleFactorAtom = Atom(
+    name: '_Application.textScaleFactor',
+    context: context,
+  );
 
   @override
   double get textScaleFactor {
@@ -72,8 +80,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$isDarkModeOnAtom =
-      Atom(name: '_Application.isDarkModeOn', context: context);
+  late final _$isDarkModeOnAtom = Atom(
+    name: '_Application.isDarkModeOn',
+    context: context,
+  );
 
   @override
   bool get isDarkModeOn {
@@ -88,8 +98,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$selectedLanguageAtom =
-      Atom(name: '_Application.selectedLanguage', context: context);
+  late final _$selectedLanguageAtom = Atom(
+    name: '_Application.selectedLanguage',
+    context: context,
+  );
 
   @override
   String get selectedLanguage {
@@ -104,8 +116,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$selectedDrawerItemAtom =
-      Atom(name: '_Application.selectedDrawerItem', context: context);
+  late final _$selectedDrawerItemAtom = Atom(
+    name: '_Application.selectedDrawerItem',
+    context: context,
+  );
 
   @override
   int get selectedDrawerItem {
@@ -120,8 +134,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$authorizationAtom =
-      Atom(name: '_Application.authorization', context: context);
+  late final _$authorizationAtom = Atom(
+    name: '_Application.authorization',
+    context: context,
+  );
 
   @override
   Authorization? get authorization {
@@ -136,8 +152,10 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$boxConstraintsAtom =
-      Atom(name: '_Application.boxConstraints', context: context);
+  late final _$boxConstraintsAtom = Atom(
+    name: '_Application.boxConstraints',
+    context: context,
+  );
 
   @override
   BoxConstraints? get boxConstraints {
@@ -152,21 +170,26 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$loginAsyncAction =
-      AsyncAction('_Application.login', context: context);
+  late final _$loginAsyncAction = AsyncAction(
+    '_Application.login',
+    context: context,
+  );
 
   @override
   Future login(Authorization aAuthorization) {
     return _$loginAsyncAction.run(() => super.login(aAuthorization));
   }
 
-  late final _$_ApplicationActionController =
-      ActionController(name: '_Application', context: context);
+  late final _$_ApplicationActionController = ActionController(
+    name: '_Application',
+    context: context,
+  );
 
   @override
   void setTextScaleFactor(double value) {
     final _$actionInfo = _$_ApplicationActionController.startAction(
-        name: '_Application.setTextScaleFactor');
+      name: '_Application.setTextScaleFactor',
+    );
     try {
       return super.setTextScaleFactor(value);
     } finally {
@@ -177,7 +200,8 @@ mixin _$Application on _Application, Store {
   @override
   void toggleDarkMode() {
     final _$actionInfo = _$_ApplicationActionController.startAction(
-        name: '_Application.toggleDarkMode');
+      name: '_Application.toggleDarkMode',
+    );
     try {
       return super.toggleDarkMode();
     } finally {
@@ -188,7 +212,8 @@ mixin _$Application on _Application, Store {
   @override
   void setLanguage(String aLanguage) {
     final _$actionInfo = _$_ApplicationActionController.startAction(
-        name: '_Application.setLanguage');
+      name: '_Application.setLanguage',
+    );
     try {
       return super.setLanguage(aLanguage);
     } finally {
@@ -199,7 +224,8 @@ mixin _$Application on _Application, Store {
   @override
   void setDrawerItemIndex(int aIndex) {
     final _$actionInfo = _$_ApplicationActionController.startAction(
-        name: '_Application.setDrawerItemIndex');
+      name: '_Application.setDrawerItemIndex',
+    );
     try {
       return super.setDrawerItemIndex(aIndex);
     } finally {
@@ -209,10 +235,23 @@ mixin _$Application on _Application, Store {
 
   @override
   dynamic logout() {
-    final _$actionInfo =
-        _$_ApplicationActionController.startAction(name: '_Application.logout');
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.logout',
+    );
     try {
       return super.logout();
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setActiveRole(String role) {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.setActiveRole',
+    );
+    try {
+      return super.setActiveRole(role);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }

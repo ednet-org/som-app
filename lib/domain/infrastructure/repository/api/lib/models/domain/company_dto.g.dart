@@ -7,19 +7,19 @@ part of 'company_dto.dart';
 // **************************************************************************
 
 Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
-      json['id'] as String,
-      name: json['name'] as String?,
-      registrationNr: json['registrationNr'] as String?,
-      companySize: (json['companySize'] as num?)?.toInt(),
-      type: (json['type'] as num?)?.toInt(),
-      websiteUrl: json['websiteUrl'] as String?,
-    );
+  json['id'] as String,
+  name: json['name'] as String?,
+  registrationNr: json['registrationNr'] as String?,
+  companySize: (json['companySize'] as num?)?.toInt(),
+  type: (json['type'] as num?)?.toInt(),
+  websiteUrl: json['websiteUrl'] as String?,
+);
 
 Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'registrationNr': instance.registrationNr,
-      'companySize': instance.companySize,
-      'type': instance.type,
-      'websiteUrl': instance.websiteUrl,
-    };
+  'id': instance.id,
+  'name': instance.name,
+  'registrationNr': instance.registrationNr,
+  'companySize': instance.companySize,
+  'type': instance.type,
+  'websiteUrl': instance.websiteUrl,
+};

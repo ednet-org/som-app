@@ -144,6 +144,22 @@ class SomApplication extends StatelessWidget {
                           beamer: beamer,
                           uri: '/subscriptions',
                         ),
+                      if (isConsultant && isAdmin)
+                        AppBarButton(
+                          key: const ValueKey('RoleManagementMenuItem'),
+                          title: 'Roles',
+                          child: AppBarIcons.user.value,
+                          beamer: beamer,
+                          uri: '/roles',
+                        ),
+                      if (isConsultant && isAdmin)
+                        AppBarButton(
+                          key: const ValueKey('AuditMenuItem'),
+                          title: 'Audit',
+                          child: AppBarIcons.statistics.value,
+                          beamer: beamer,
+                          uri: '/audit',
+                        ),
                       if (isBuyer)
                         Padding(
                           padding: const EdgeInsets.only(left: 12),

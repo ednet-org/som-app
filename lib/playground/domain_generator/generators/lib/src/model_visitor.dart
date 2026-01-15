@@ -1,14 +1,15 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/dart/element/visitor2.dart';
 
-class ModelVisitor extends SimpleElementVisitor<dynamic> {
+class ModelVisitor extends SimpleElementVisitor2<void> {
   String? className;
 
   Map<String, dynamic> fields = <String, dynamic>{};
 
   @override
-  dynamic visitConstructorElement(ConstructorElement element) {
-    final elementReturnType = element.type.returnType.toString();
+  void visitConstructorElement(ConstructorElement element) {
+    final elementReturnType =
+        element.type.returnType.getDisplayString(withNullability: true);
 
     // DartType ends with '*', which needs to be eliminated
     // for the generated code to be accurate.
@@ -16,11 +17,16 @@ class ModelVisitor extends SimpleElementVisitor<dynamic> {
   }
 
   @override
-  dynamic visitFieldElement(FieldElement element) {
-    final elementType = element.type.toString();
+  void visitFieldElement(FieldElement element) {
+    final elementType =
+        element.type.getDisplayString(withNullability: true);
+    final name = element.name;
+    if (name == null) {
+      return;
+    }
 
     // DartType ends with '*', which needs to be eliminated
     // for the generated code to be accurate.
-    fields[element.name] = elementType.replaceFirst('*', '');
+    fields[name] = elementType.replaceFirst('*', '');
   }
 }

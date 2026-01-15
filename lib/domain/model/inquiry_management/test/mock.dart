@@ -510,11 +510,11 @@ final mockJsonPhoneNumbers = [
 ];
 
 final mockJsonOfferStatus = [
-  "published",
-  "rejected",
-  "draft",
-  "accepted",
-  "static",
+  "open",
+  "offer_created",
+  "lost",
+  "won",
+  "ignored",
 ];
 
 final mockJsonEmails = [

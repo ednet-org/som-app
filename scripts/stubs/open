@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Stubbed open command for CI/headless integration tests.
+exit 0

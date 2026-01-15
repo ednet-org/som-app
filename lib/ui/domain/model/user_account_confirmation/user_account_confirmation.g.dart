@@ -9,8 +9,10 @@ part of 'user_account_confirmation.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
-  late final _$tokenAtom =
-      Atom(name: '_UserAccountConfirmationBase.token', context: context);
+  late final _$tokenAtom = Atom(
+    name: '_UserAccountConfirmationBase.token',
+    context: context,
+  );
 
   @override
   String get token {
@@ -26,8 +28,9 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   }
 
   late final _$resetPasswordTokenAtom = Atom(
-      name: '_UserAccountConfirmationBase.resetPasswordToken',
-      context: context);
+    name: '_UserAccountConfirmationBase.resetPasswordToken',
+    context: context,
+  );
 
   @override
   String get resetPasswordToken {
@@ -42,8 +45,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$emailAtom =
-      Atom(name: '_UserAccountConfirmationBase.email', context: context);
+  late final _$emailAtom = Atom(
+    name: '_UserAccountConfirmationBase.email',
+    context: context,
+  );
 
   @override
   String get email {
@@ -58,8 +63,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$isConfirmingAtom =
-      Atom(name: '_UserAccountConfirmationBase.isConfirming', context: context);
+  late final _$isConfirmingAtom = Atom(
+    name: '_UserAccountConfirmationBase.isConfirming',
+    context: context,
+  );
 
   @override
   bool get isConfirming {
@@ -74,8 +81,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$isLoggingInAtom =
-      Atom(name: '_UserAccountConfirmationBase.isLoggingIn', context: context);
+  late final _$isLoggingInAtom = Atom(
+    name: '_UserAccountConfirmationBase.isLoggingIn',
+    context: context,
+  );
 
   @override
   bool get isLoggingIn {
@@ -90,8 +99,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$isConfirmedAtom =
-      Atom(name: '_UserAccountConfirmationBase.isConfirmed', context: context);
+  late final _$isConfirmedAtom = Atom(
+    name: '_UserAccountConfirmationBase.isConfirmed',
+    context: context,
+  );
 
   @override
   bool get isConfirmed {
@@ -107,7 +118,9 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   }
 
   late final _$isSettingPasswordAtom = Atom(
-      name: '_UserAccountConfirmationBase.isSettingPassword', context: context);
+    name: '_UserAccountConfirmationBase.isSettingPassword',
+    context: context,
+  );
 
   @override
   bool get isSettingPassword {
@@ -123,7 +136,9 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   }
 
   late final _$isPasswordSetAtom = Atom(
-      name: '_UserAccountConfirmationBase.isPasswordSet', context: context);
+    name: '_UserAccountConfirmationBase.isPasswordSet',
+    context: context,
+  );
 
   @override
   bool get isPasswordSet {
@@ -138,8 +153,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$passwordAtom =
-      Atom(name: '_UserAccountConfirmationBase.password', context: context);
+  late final _$passwordAtom = Atom(
+    name: '_UserAccountConfirmationBase.password',
+    context: context,
+  );
 
   @override
   String get password {
@@ -154,8 +171,10 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
     });
   }
 
-  late final _$errorMessageAtom =
-      Atom(name: '_UserAccountConfirmationBase.errorMessage', context: context);
+  late final _$errorMessageAtom = Atom(
+    name: '_UserAccountConfirmationBase.errorMessage',
+    context: context,
+  );
 
   @override
   String get errorMessage {
@@ -171,7 +190,9 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   }
 
   late final _$repeatedPasswordAtom = Atom(
-      name: '_UserAccountConfirmationBase.repeatedPassword', context: context);
+    name: '_UserAccountConfirmationBase.repeatedPassword',
+    context: context,
+  );
 
   @override
   String get repeatedPassword {
@@ -187,26 +208,31 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   }
 
   late final _$setUserPasswordAsyncAction = AsyncAction(
-      '_UserAccountConfirmationBase.setUserPassword',
-      context: context);
+    '_UserAccountConfirmationBase.setUserPassword',
+    context: context,
+  );
 
   @override
   Future<dynamic> setUserPassword(dynamic contextCallback) {
-    return _$setUserPasswordAsyncAction
-        .run(() => super.setUserPassword(contextCallback));
+    return _$setUserPasswordAsyncAction.run(
+      () => super.setUserPassword(contextCallback),
+    );
   }
 
   late final _$confirmEmailAsyncAction = AsyncAction(
-      '_UserAccountConfirmationBase.confirmEmail',
-      context: context);
+    '_UserAccountConfirmationBase.confirmEmail',
+    context: context,
+  );
 
   @override
   Future<dynamic> confirmEmail() {
     return _$confirmEmailAsyncAction.run(() => super.confirmEmail());
   }
 
-  late final _$_UserAccountConfirmationBaseActionController =
-      ActionController(name: '_UserAccountConfirmationBase', context: context);
+  late final _$_UserAccountConfirmationBaseActionController = ActionController(
+    name: '_UserAccountConfirmationBase',
+    context: context,
+  );
 
   @override
   void setPassword(String value) {

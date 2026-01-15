@@ -348,10 +348,13 @@ void main() {
                 );
         expect(inquiryDetail.statusCode, 200);
 
-        final providerCompanies =
-            await api.getCompaniesApi().companiesGet(type: '1');
+        final providerSummaries = await api.getProvidersApi().providersGet(
+              headers: _authHeader(consultantToken),
+              status: 'active',
+            );
+        expect(providerSummaries.statusCode, 200);
         final providerCompanyId =
-            providerCompanies.data!.firstWhere((c) => c.type == 1).id!;
+            providerSummaries.data!.first.companyId!;
 
         final assignResponse = await api.getInquiriesApi().inquiriesInquiryIdAssignPost(
               inquiryId: inquiryId,
@@ -426,7 +429,11 @@ void main() {
                 );
         expect(rejectResponse.statusCode, 200);
 
-        final adStart = DateTime.now().toUtc().add(const Duration(days: 2));
+        final nowUtc = DateTime.now().toUtc();
+        final nextMonth = nowUtc.month == 12
+            ? DateTime.utc(nowUtc.year + 1, 1, 2)
+            : DateTime.utc(nowUtc.year, nowUtc.month + 1, 2);
+        final adStart = nextMonth;
         final adEnd = adStart.add(const Duration(days: 7));
         final adResponse = await api.getAdsApi().createAd(
               headers: _authHeader(providerToken),

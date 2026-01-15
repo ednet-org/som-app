@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String categoryId) async {
@@ -18,7 +19,20 @@ Future<Response> onRequest(RequestContext context, String categoryId) async {
   }
   final repo = context.read<BranchRepository>();
   if (context.request.method == HttpMethod.delete) {
+    final existing = await repo.findCategoryById(categoryId);
     await repo.deleteCategory(categoryId);
+    if (existing != null) {
+      await context.read<DomainEventService>().emit(
+            type: 'category.deleted',
+            entityType: 'category',
+            entityId: categoryId,
+            actorId: auth.userId,
+            payload: {
+              'name': existing.name,
+              'branchId': existing.branchId,
+            },
+          );
+    }
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.put) {
@@ -37,6 +51,17 @@ Future<Response> onRequest(RequestContext context, String categoryId) async {
       return Response.json(statusCode: 400, body: 'Category already exists');
     }
     await repo.updateCategoryName(categoryId, name);
+    await context.read<DomainEventService>().emit(
+          type: 'category.updated',
+          entityType: 'category',
+          entityId: categoryId,
+          actorId: auth.userId,
+          payload: {
+            'branchId': existing.branchId,
+            'oldName': existing.name,
+            'newName': name,
+          },
+        );
     return Response(statusCode: 200);
   }
   return Response(statusCode: 405);

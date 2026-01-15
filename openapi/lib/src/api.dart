@@ -10,6 +10,7 @@ import 'package:openapi/src/auth/basic_auth.dart';
 import 'package:openapi/src/auth/bearer_auth.dart';
 import 'package:openapi/src/auth/oauth.dart';
 import 'package:openapi/src/api/ads_api.dart';
+import 'package:openapi/src/api/audit_api.dart';
 import 'package:openapi/src/api/auth_api.dart';
 import 'package:openapi/src/api/billing_api.dart';
 import 'package:openapi/src/api/branches_api.dart';
@@ -18,12 +19,13 @@ import 'package:openapi/src/api/consultants_api.dart';
 import 'package:openapi/src/api/inquiries_api.dart';
 import 'package:openapi/src/api/offers_api.dart';
 import 'package:openapi/src/api/providers_api.dart';
+import 'package:openapi/src/api/roles_api.dart';
 import 'package:openapi/src/api/stats_api.dart';
 import 'package:openapi/src/api/subscriptions_api.dart';
 import 'package:openapi/src/api/users_api.dart';
 
 class Openapi {
-  static const String basePath = r'http://localhost:8080';
+  static const String basePath = r'http://localhost:8081';
 
   final Dio dio;
   final Serializers serializers;
@@ -82,6 +84,12 @@ class Openapi {
     return AdsApi(dio, serializers);
   }
 
+  /// Get AuditApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AuditApi getAuditApi() {
+    return AuditApi(dio, serializers);
+  }
+
   /// Get AuthApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AuthApi getAuthApi() {
@@ -128,6 +136,12 @@ class Openapi {
   /// by doing that all interceptors will not be executed
   ProvidersApi getProvidersApi() {
     return ProvidersApi(dio, serializers);
+  }
+
+  /// Get RolesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  RolesApi getRolesApi() {
+    return RolesApi(dio, serializers);
   }
 
   /// Get StatsApi instance, base route and serializer can be overridden by a given but be careful,

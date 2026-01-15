@@ -11,11 +11,13 @@ final authenticatedPagesDelegate = BeamerDelegate(
     beamLocations: [
       InquiryBeamLocation(),
       AdsBeamLocation(),
+      AuditBeamLocation(),
       CompanyBeamLocation(),
       CompaniesBeamLocation(),
       BranchesBeamLocation(),
       ConsultantsBeamLocation(),
       ProvidersBeamLocation(),
+      RolesBeamLocation(),
       SubscriptionsBeamLocation(),
       StatisticsBeamLocation(),
       UserBeamLocation(),

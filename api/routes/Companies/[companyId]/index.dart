@@ -6,6 +6,7 @@ import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/mappings.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
@@ -85,6 +86,12 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       updatedAt: DateTime.now().toUtc(),
     );
     await repo.update(updated);
+    await context.read<DomainEventService>().emit(
+          type: 'company.updated',
+          entityType: 'company',
+          entityId: updated.id,
+          actorId: authResult.userId,
+        );
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.delete) {
@@ -128,6 +135,12 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     for (final user in users) {
       await usersRepo.deactivate(user.id);
     }
+    await context.read<DomainEventService>().emit(
+          type: 'company.deactivated',
+          entityType: 'company',
+          entityId: updated.id,
+          actorId: authResult.userId,
+        );
     return Response(statusCode: 200);
   }
   return Response(statusCode: 405);

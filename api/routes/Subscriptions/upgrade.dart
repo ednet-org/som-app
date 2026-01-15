@@ -7,6 +7,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -69,5 +70,12 @@ Future<Response> onRequest(RequestContext context) async {
       ),
     );
   }
+  await context.read<AuditService>().log(
+        action: 'subscription.upgraded',
+        entityType: 'subscription',
+        entityId: auth.companyId,
+        actorId: auth.userId,
+        metadata: {'planId': planId},
+      );
   return Response(statusCode: 200);
 }

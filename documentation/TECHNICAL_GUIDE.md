@@ -15,7 +15,13 @@
 
 ## Start Supabase
 ```
-supabase start
+scripts/start_supabase.sh
+```
+This wrapper excludes the `vector` container (avoids Docker name conflicts).
+
+If the schema changes, reset the local DB:
+```
+supabase db reset --yes
 ```
 To obtain local keys and JWT secret:
 ```
@@ -24,23 +30,28 @@ supabase status
 
 ## Start API (Dart Frog)
 ```
-PORT=8081 dart run \
-  -DDEV_FIXTURES=true \
-  -DDEV_FIXTURES_PASSWORD='DevPass123!' \
-  -DSUPABASE_URL=http://127.0.0.1:55511 \
-  -DSUPABASE_ANON_KEY=... \
-  -DSUPABASE_SERVICE_ROLE_KEY=... \
-  -DSUPABASE_JWT_SECRET=... \
-  -DSUPABASE_STORAGE_BUCKET='som-assets' \
-  build/bin/server.dart
+scripts/start_api.sh
 ```
 The dev fixtures seed data for demo flows and are idempotent.
+API logs are written to `api/storage/logs/api.log` when using `scripts/start_full_stack.sh`.
 
 ## Start Flutter Web
 ```
-flutter run -d chrome --web-port 8090 \
-  --dart-define=API_BASE_URL=http://127.0.0.1:8081 \
-  --dart-define=DEV_QUICK_LOGIN=true
+scripts/start_flutter.sh
+```
+Optional overrides:
+- `DEV_FIXTURES_PASSWORD` (default `DevPass123!`)
+- `SYSTEM_ADMIN_EMAIL` (default `system-admin@som.local`)
+- `SYSTEM_ADMIN_PASSWORD` (default `ChangeMe123!`)
+- `FLUTTER_WEB_MODE=release` to build a production-like web bundle and serve `build/web` via `python3 -m http.server`.
+
+## Full Stack (Supabase + API + Flutter)
+```
+scripts/start_full_stack.sh
+```
+Disable Flutter launch:
+```
+START_FLUTTER=false scripts/start_full_stack.sh
 ```
 
 ## Tests
@@ -53,12 +64,14 @@ dart test api/test
 ```
 flutter test
 ```
+Start Supabase + API before integration tests. Run integration tests one-by-one on macOS:
 ```
-flutter test integration_test/ui_smoke_test.dart
+scripts/run_integration_tests.sh
 ```
-```
-flutter test integration_test/api_contract_test.dart
-```
+Running each test individually avoids macOS runner connection issues.
+The integration script stubs `open` to avoid macOS foreground warnings during headless runs.
+The integration script also starts Supabase and the API automatically and writes
+logs to `api/storage/logs/api-test.log`.
 
 ## Code Generation
 ```

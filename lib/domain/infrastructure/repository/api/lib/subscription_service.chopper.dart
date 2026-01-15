@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'subscription_service.dart';
 
@@ -21,11 +21,7 @@ final class _$SubscriptionService extends SubscriptionService {
   @override
   Future<Response<List<Subscription>>> getSubscriptions() {
     final Uri $url = Uri.parse('/Subscriptions');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<List<Subscription>, Subscription>($request);
   }
 }

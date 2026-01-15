@@ -18,6 +18,7 @@ import 'package:openapi/src/model/ad.dart';
 import 'package:openapi/src/model/ad_activation_request.dart';
 import 'package:openapi/src/model/address.dart';
 import 'package:openapi/src/model/ads_ad_id_image_post200_response.dart';
+import 'package:openapi/src/model/audit_log_entry.dart';
 import 'package:openapi/src/model/auth_change_password_post200_response.dart';
 import 'package:openapi/src/model/auth_change_password_post_request.dart';
 import 'package:openapi/src/model/auth_forgot_password_post_request.dart';
@@ -45,11 +46,17 @@ import 'package:openapi/src/model/inquiries_inquiry_id_offers_post_request1.dart
 import 'package:openapi/src/model/inquiries_inquiry_id_pdf_post200_response.dart';
 import 'package:openapi/src/model/inquiry.dart';
 import 'package:openapi/src/model/offer.dart';
+import 'package:openapi/src/model/product.dart';
+import 'package:openapi/src/model/product_input.dart';
 import 'package:openapi/src/model/provider_criteria.dart';
+import 'package:openapi/src/model/provider_profile.dart';
 import 'package:openapi/src/model/provider_registration_data.dart';
 import 'package:openapi/src/model/provider_summary.dart';
 import 'package:openapi/src/model/providers_company_id_approve_post_request.dart';
+import 'package:openapi/src/model/providers_company_id_payment_details_put200_response.dart';
 import 'package:openapi/src/model/register_company_request.dart';
+import 'package:openapi/src/model/role.dart';
+import 'package:openapi/src/model/role_input.dart';
 import 'package:openapi/src/model/stats_buyer_get200_response.dart';
 import 'package:openapi/src/model/stats_provider_get200_response.dart';
 import 'package:openapi/src/model/subscription_cancellation.dart';
@@ -72,6 +79,7 @@ part 'serializers.g.dart';
   AdActivationRequest,
   Address,
   AdsAdIdImagePost200Response,
+  AuditLogEntry,
   AuthChangePasswordPost200Response,
   AuthChangePasswordPostRequest,
   AuthForgotPasswordPostRequest,
@@ -99,11 +107,17 @@ part 'serializers.g.dart';
   InquiriesInquiryIdPdfPost200Response,
   Inquiry,
   Offer,
+  Product,
+  ProductInput,
   ProviderCriteria,
+  ProviderProfile,
   ProviderRegistrationData,
   ProviderSummary,
   ProvidersCompanyIdApprovePostRequest,
+  ProvidersCompanyIdPaymentDetailsPut200Response,
   RegisterCompanyRequest,
+  Role,
+  RoleInput,
   StatsBuyerGet200Response,
   StatsProviderGet200Response,
   SubscriptionCancellation,
@@ -125,10 +139,6 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<Ad>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(Offer)]),
-        () => ListBuilder<Offer>(),
-      )
-      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Inquiry)]),
         () => ListBuilder<Inquiry>(),
       )
@@ -137,12 +147,32 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<ProviderSummary>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Branch)]),
+        () => ListBuilder<Branch>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Product)]),
+        () => ListBuilder<Product>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Role)]),
+        () => ListBuilder<Role>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(SubscriptionCancellation)]),
+        () => ListBuilder<SubscriptionCancellation>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Offer)]),
+        () => ListBuilder<Offer>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltMap, [FullType(String), FullType(int)]),
         () => MapBuilder<String, int>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(Branch)]),
-        () => ListBuilder<Branch>(),
+        const FullType(BuiltList, [FullType(AuditLogEntry)]),
+        () => ListBuilder<AuditLogEntry>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(CompanyDto)]),
@@ -155,10 +185,6 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(UserDto)]),
         () => ListBuilder<UserDto>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(SubscriptionCancellation)]),
-        () => ListBuilder<SubscriptionCancellation>(),
       )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())

@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
 import '../../application/application.dart';
 import '../../../utils/jwt.dart';
+import 'login_error_parser.dart';
 
 
 part 'email_login_store.g.dart';
@@ -103,14 +105,8 @@ abstract class _EmailLoginStoreBase with Store {
         print(response.statusMessage);
       }
     }).catchError((error) {
-      final data = error.response?.data;
-      if (data is String) {
-        errorMessage = data;
-      } else if (data is Map && data['message'] != null) {
-        errorMessage = data['message'].toString();
-      } else {
-        errorMessage = 'Something went wrong';
-      }
+      final data = error is DioException ? error.response?.data : null;
+      errorMessage = parseLoginErrorMessage(data ?? error);
       isInvalidCredentials = true;
       isLoading = false;
       appStore.logout();

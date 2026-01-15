@@ -357,6 +357,37 @@ class _UserAppBodyState extends State<UserAppBody> {
     await _refresh();
   }
 
+  Future<void> _removeUser() async {
+    final appStore = Provider.of<Application>(context, listen: false);
+    final companyId = appStore.authorization?.companyId;
+    if (companyId == null || _selectedUser?.id == null) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remove user'),
+        content: const Text(
+            'This will remove the user from the company and notify them. Continue?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Remove'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    final api = Provider.of<Openapi>(context, listen: false);
+    await api.dio.post(
+      '/Companies/$companyId/users/${_selectedUser!.id}/remove',
+    );
+    setState(() => _selectedUser = null);
+    await _refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
@@ -470,7 +501,17 @@ class _UserAppBodyState extends State<UserAppBody> {
               ),
               const SizedBox(width: 12),
               if (appStore.authorization?.isAdmin == true)
-                TextButton(onPressed: _deleteUser, child: const Text('Deactivate')),
+                ...[
+                  TextButton(
+                    onPressed: _deleteUser,
+                    child: const Text('Deactivate'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    onPressed: _removeUser,
+                    child: const Text('Remove'),
+                  ),
+                ],
               if (appStore.authorization?.userId == user.id)
                 TextButton(
                   onPressed: _showChangePasswordDialog,

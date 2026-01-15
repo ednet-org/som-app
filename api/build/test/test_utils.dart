@@ -8,6 +8,7 @@ import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
@@ -817,6 +818,20 @@ class InMemoryCancellationRepository implements CancellationRepository {
   }
 }
 
+class InMemoryEmailEventRepository implements EmailEventRepository {
+  final List<EmailEventRecord> _events = [];
+
+  @override
+  Future<void> create(EmailEventRecord event) async {
+    _events.add(event);
+  }
+
+  @override
+  Future<List<EmailEventRecord>> listByUser(String userId) async {
+    return _events.where((event) => event.userId == userId).toList();
+  }
+}
+
 class InMemoryTokenRepository implements TokenRepository {
   final Map<String, TokenRecord> _tokens = {};
   final Map<String, RefreshTokenRecord> _refreshTokens = {};
@@ -910,6 +925,7 @@ class TestAuthService extends AuthService {
     required super.users,
     required super.tokens,
     required super.email,
+    required super.emailEvents,
     required super.clock,
   }) : super(
           adminClient: SupabaseClient('http://localhost', 'service'),
@@ -941,11 +957,6 @@ class TestAuthService extends AuthService {
     bool emailConfirmed = false,
   }) async {
     return const Uuid().v4();
-  }
-
-  @override
-  Future<String> createRegistrationToken(UserRecord user) async {
-    return 'test-token';
   }
 
   @override
@@ -1068,9 +1079,14 @@ Future<UserRecord> seedUser(
 TestAuthService createAuthService(UserRepository users) {
   final tokens = InMemoryTokenRepository();
   final clock = Clock();
-  final email = EmailService(outboxPath: 'storage/test_outbox');
+  final email = TestEmailService();
+  final emailEvents = InMemoryEmailEventRepository();
   return TestAuthService(
-      users: users, tokens: tokens, email: email, clock: clock);
+      users: users,
+      tokens: tokens,
+      email: email,
+      emailEvents: emailEvents,
+      clock: clock);
 }
 
 Future<void> seedSubscriptions(SubscriptionRepository repository) async {

@@ -16,6 +16,18 @@ class _$SubscriptionPlanInput extends SubscriptionPlanInput {
   @override
   final int priceInSubunit;
   @override
+  final int? maxUsers;
+  @override
+  final int? setupFeeInSubunit;
+  @override
+  final int? bannerAdsPerMonth;
+  @override
+  final int? normalAdsPerMonth;
+  @override
+  final int? freeMonths;
+  @override
+  final int? commitmentPeriodMonths;
+  @override
   final bool? confirm;
   @override
   final BuiltList<SubscriptionPlanRulesInner>? rules;
@@ -29,6 +41,12 @@ class _$SubscriptionPlanInput extends SubscriptionPlanInput {
       required this.sortPriority,
       this.isActive,
       required this.priceInSubunit,
+      this.maxUsers,
+      this.setupFeeInSubunit,
+      this.bannerAdsPerMonth,
+      this.normalAdsPerMonth,
+      this.freeMonths,
+      this.commitmentPeriodMonths,
       this.confirm,
       this.rules})
       : super._();
@@ -49,6 +67,12 @@ class _$SubscriptionPlanInput extends SubscriptionPlanInput {
         sortPriority == other.sortPriority &&
         isActive == other.isActive &&
         priceInSubunit == other.priceInSubunit &&
+        maxUsers == other.maxUsers &&
+        setupFeeInSubunit == other.setupFeeInSubunit &&
+        bannerAdsPerMonth == other.bannerAdsPerMonth &&
+        normalAdsPerMonth == other.normalAdsPerMonth &&
+        freeMonths == other.freeMonths &&
+        commitmentPeriodMonths == other.commitmentPeriodMonths &&
         confirm == other.confirm &&
         rules == other.rules;
   }
@@ -60,6 +84,12 @@ class _$SubscriptionPlanInput extends SubscriptionPlanInput {
     _$hash = $jc(_$hash, sortPriority.hashCode);
     _$hash = $jc(_$hash, isActive.hashCode);
     _$hash = $jc(_$hash, priceInSubunit.hashCode);
+    _$hash = $jc(_$hash, maxUsers.hashCode);
+    _$hash = $jc(_$hash, setupFeeInSubunit.hashCode);
+    _$hash = $jc(_$hash, bannerAdsPerMonth.hashCode);
+    _$hash = $jc(_$hash, normalAdsPerMonth.hashCode);
+    _$hash = $jc(_$hash, freeMonths.hashCode);
+    _$hash = $jc(_$hash, commitmentPeriodMonths.hashCode);
     _$hash = $jc(_$hash, confirm.hashCode);
     _$hash = $jc(_$hash, rules.hashCode);
     _$hash = $jf(_$hash);
@@ -73,6 +103,12 @@ class _$SubscriptionPlanInput extends SubscriptionPlanInput {
           ..add('sortPriority', sortPriority)
           ..add('isActive', isActive)
           ..add('priceInSubunit', priceInSubunit)
+          ..add('maxUsers', maxUsers)
+          ..add('setupFeeInSubunit', setupFeeInSubunit)
+          ..add('bannerAdsPerMonth', bannerAdsPerMonth)
+          ..add('normalAdsPerMonth', normalAdsPerMonth)
+          ..add('freeMonths', freeMonths)
+          ..add('commitmentPeriodMonths', commitmentPeriodMonths)
           ..add('confirm', confirm)
           ..add('rules', rules))
         .toString();
@@ -100,6 +136,34 @@ class SubscriptionPlanInputBuilder
   set priceInSubunit(int? priceInSubunit) =>
       _$this._priceInSubunit = priceInSubunit;
 
+  int? _maxUsers;
+  int? get maxUsers => _$this._maxUsers;
+  set maxUsers(int? maxUsers) => _$this._maxUsers = maxUsers;
+
+  int? _setupFeeInSubunit;
+  int? get setupFeeInSubunit => _$this._setupFeeInSubunit;
+  set setupFeeInSubunit(int? setupFeeInSubunit) =>
+      _$this._setupFeeInSubunit = setupFeeInSubunit;
+
+  int? _bannerAdsPerMonth;
+  int? get bannerAdsPerMonth => _$this._bannerAdsPerMonth;
+  set bannerAdsPerMonth(int? bannerAdsPerMonth) =>
+      _$this._bannerAdsPerMonth = bannerAdsPerMonth;
+
+  int? _normalAdsPerMonth;
+  int? get normalAdsPerMonth => _$this._normalAdsPerMonth;
+  set normalAdsPerMonth(int? normalAdsPerMonth) =>
+      _$this._normalAdsPerMonth = normalAdsPerMonth;
+
+  int? _freeMonths;
+  int? get freeMonths => _$this._freeMonths;
+  set freeMonths(int? freeMonths) => _$this._freeMonths = freeMonths;
+
+  int? _commitmentPeriodMonths;
+  int? get commitmentPeriodMonths => _$this._commitmentPeriodMonths;
+  set commitmentPeriodMonths(int? commitmentPeriodMonths) =>
+      _$this._commitmentPeriodMonths = commitmentPeriodMonths;
+
   bool? _confirm;
   bool? get confirm => _$this._confirm;
   set confirm(bool? confirm) => _$this._confirm = confirm;
@@ -121,6 +185,12 @@ class SubscriptionPlanInputBuilder
       _sortPriority = $v.sortPriority;
       _isActive = $v.isActive;
       _priceInSubunit = $v.priceInSubunit;
+      _maxUsers = $v.maxUsers;
+      _setupFeeInSubunit = $v.setupFeeInSubunit;
+      _bannerAdsPerMonth = $v.bannerAdsPerMonth;
+      _normalAdsPerMonth = $v.normalAdsPerMonth;
+      _freeMonths = $v.freeMonths;
+      _commitmentPeriodMonths = $v.commitmentPeriodMonths;
       _confirm = $v.confirm;
       _rules = $v.rules?.toBuilder();
       _$v = null;
@@ -153,6 +223,12 @@ class SubscriptionPlanInputBuilder
             isActive: isActive,
             priceInSubunit: BuiltValueNullFieldError.checkNotNull(
                 priceInSubunit, r'SubscriptionPlanInput', 'priceInSubunit'),
+            maxUsers: maxUsers,
+            setupFeeInSubunit: setupFeeInSubunit,
+            bannerAdsPerMonth: bannerAdsPerMonth,
+            normalAdsPerMonth: normalAdsPerMonth,
+            freeMonths: freeMonths,
+            commitmentPeriodMonths: commitmentPeriodMonths,
             confirm: confirm,
             rules: _rules?.build(),
           );

@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'login_service.dart';
 
@@ -20,16 +20,13 @@ final class _$LoginService extends LoginService {
 
   @override
   Future<Response<AuthenticationResponseDto>> login(
-      AuthenticateRequestDto body) {
+    AuthenticateRequestDto body,
+  ) {
     final Uri $url = Uri.parse('auth/login');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<AuthenticationResponseDto, AuthenticationResponseDto>(
+      $request,
     );
-    return client
-        .send<AuthenticationResponseDto, AuthenticationResponseDto>($request);
   }
 }

@@ -126,12 +126,34 @@ class InquiryRepository {
         'provider_company_id': providerCompanyId,
         'assigned_at': now,
         'assigned_by_user_id': assignedByUserId,
+        'deadline_reminder_sent_at': null,
       });
     }
     await _client.from('inquiries').update({
       'assigned_at': now,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
     }).eq('id', inquiryId);
+  }
+
+  Future<List<InquiryAssignmentRecord>> listAssignmentsByInquiry(
+    String inquiryId,
+  ) async {
+    final rows = await _client
+        .from('inquiry_assignments')
+        .select()
+        .eq('inquiry_id', inquiryId) as List<dynamic>;
+    return rows
+        .map((row) => _mapAssignment(row as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<void> markAssignmentReminderSent(
+    String assignmentId,
+    DateTime sentAt,
+  ) async {
+    await _client.from('inquiry_assignments').update({
+      'deadline_reminder_sent_at': sentAt.toIso8601String(),
+    }).eq('id', assignmentId);
   }
 
   Future<int> countAssignmentsForProvider(String providerCompanyId) async {
@@ -189,6 +211,17 @@ class InquiryRepository {
       closedAt: parseDateOrNull(row['closed_at']),
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
+    );
+  }
+
+  InquiryAssignmentRecord _mapAssignment(Map<String, dynamic> row) {
+    return InquiryAssignmentRecord(
+      id: row['id'] as String,
+      inquiryId: row['inquiry_id'] as String,
+      providerCompanyId: row['provider_company_id'] as String,
+      assignedAt: parseDate(row['assigned_at']),
+      assignedByUserId: row['assigned_by_user_id'] as String,
+      deadlineReminderSentAt: parseDateOrNull(row['deadline_reminder_sent_at']),
     );
   }
 }
