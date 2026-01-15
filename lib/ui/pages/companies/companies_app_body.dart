@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../utils/ui_logger.dart';
 
 class CompaniesAppBody extends StatefulWidget {
   const CompaniesAppBody({Key? key}) : super(key: key);
@@ -46,11 +47,15 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     try {
       final branchesResponse = await api.getBranchesApi().branchesGet();
       _branches = branchesResponse.data?.toList() ?? const [];
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('CompaniesAppBody._bootstrap.branches', error, stackTrace);
+    }
     try {
       final plansResponse = await api.getSubscriptionsApi().subscriptionsGet();
       _plans = plansResponse.data?.subscriptions?.toList() ?? const [];
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('CompaniesAppBody._bootstrap.plans', error, stackTrace);
+    }
   }
 
   Future<List<CompanyDto>> _loadCompanies() async {
@@ -65,7 +70,9 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
           if (item is Map<String, dynamic> && item['id'] != null)
             item['id'].toString(): (item['status'] as String? ?? 'active'),
       };
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('CompaniesAppBody._loadCompanies.status', error, stackTrace);
+    }
     return _companies;
   }
 

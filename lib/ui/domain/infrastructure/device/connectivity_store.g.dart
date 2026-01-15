@@ -15,13 +15,13 @@ mixin _$ConnectivityStore on _ConnectivityStore, Store {
   );
 
   @override
-  ObservableStream<ConnectivityResult> get connectivityStream {
+  ObservableStream<List<ConnectivityResult>> get connectivityStream {
     _$connectivityStreamAtom.reportRead();
     return super.connectivityStream;
   }
 
   @override
-  set connectivityStream(ObservableStream<ConnectivityResult> value) {
+  set connectivityStream(ObservableStream<List<ConnectivityResult>> value) {
     _$connectivityStreamAtom.reportWrite(value, super.connectivityStream, () {
       super.connectivityStream = value;
     });

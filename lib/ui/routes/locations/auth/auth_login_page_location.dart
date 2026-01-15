@@ -17,8 +17,5 @@ class AuthLoginPageLocation extends BeamLocation<BeamState> {
   }
 
   @override
-  // TODO: implement pathPatterns
-  List<Pattern> get pathPatterns => [
-        '/auth/login',
-      ];
+  List<Pattern> get pathPatterns => ['/auth/login'];
 }

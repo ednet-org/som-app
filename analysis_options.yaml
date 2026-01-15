@@ -17,7 +17,7 @@ analyzer:
     - lib/domain/model/**/ednet_core/**
     - lib/generated/**
     - lib/playground/**
-    - lib/ui/**
+    # UI layer now analyzed - removed lib/ui/** exclusion
 
 linter:
   # The lint rules applied to this project can be customized in the

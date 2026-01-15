@@ -15,8 +15,5 @@ class AuthForgotPasswordPageLocation extends BeamLocation<BeamState> {
   }
 
   @override
-  // TODO: implement pathPatterns
-  List<Pattern> get pathPatterns => [
-        '/auth/forgot-password',
-      ];
+  List<Pattern> get pathPatterns => ['/auth/forgot-password'];
 }

@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../utils/ui_logger.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -46,7 +47,9 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
       setState(() {
         _companyUsers = response.data?.toList() ?? const [];
       });
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('StatisticsAppBody._loadCompanyUsers', error, stackTrace);
+    }
   }
 
   Future<_StatsResult> _loadStats() async {

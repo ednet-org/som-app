@@ -9,6 +9,7 @@ import 'domain/model/model.dart';
 import 'routes/authenticated_pages_delegate.dart';
 import 'routes/beamer_provided_key.dart';
 import 'routes/locations/auth/auth_login_page_location.dart';
+import 'utils/ui_logger.dart';
 
 class SomApplication extends StatelessWidget {
   static String tag = '/SmartOfferManagement';
@@ -71,6 +72,14 @@ class SomApplication extends StatelessWidget {
                           child: AppBarIcons.inquiry.value,
                           beamer: beamer,
                           uri: '/inquiries',
+                        ),
+                      if (isBuyer || isProvider || isConsultant)
+                        AppBarButton(
+                          key: const ValueKey('OffersManagementMenuItem'),
+                          title: 'Offers',
+                          child: AppBarIcons.inquiry.value,
+                          beamer: beamer,
+                          uri: '/offers',
                         ),
                       if (isBuyer || isProvider || isConsultant)
                         AppBarButton(
@@ -278,7 +287,9 @@ class SomApplication extends StatelessWidget {
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       await api.dio.post('/auth/logout');
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('SomApplication._logout', error, stackTrace);
+    }
     appStore.logout();
     context.beamTo(AuthLoginPageLocation());
   }
@@ -299,6 +310,8 @@ class SomApplication extends StatelessWidget {
         appStore.authorization!.token = token;
         appStore.setActiveRole(role);
       }
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('SomApplication._switchRole', error, stackTrace);
+    }
   }
 }

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../utils/ui_logger.dart';
 
 class SubscriptionsAppBody extends StatefulWidget {
   const SubscriptionsAppBody({Key? key}) : super(key: key);
@@ -74,7 +75,9 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       setState(() {
         _current = response.data;
       });
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('SubscriptionsAppBody._loadCurrent', error, stackTrace);
+    }
   }
 
   Future<void> _refresh() async {

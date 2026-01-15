@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../utils/ui_logger.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -48,7 +50,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       setState(() {
         _branches = response.data?.toList() ?? const [];
       });
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('ProvidersAppBody._loadBranches', error, stackTrace);
+    }
   }
 
   Future<List<ProviderSummary>> _loadProviders() async {
@@ -83,7 +87,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       }
       _rejectionReasons = reasons;
       _rejectedAt = rejectedAt;
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('ProvidersAppBody._loadProviders.rejectionData', error, stackTrace);
+    }
     return _providers;
   }
 
@@ -108,6 +114,105 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       },
     );
     await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  Future<void> _approveProvider(ProviderSummary provider) async {
+    if (provider.companyId == null) return;
+    final api = Provider.of<Openapi>(context, listen: false);
+    try {
+      final branchIdsToApprove = provider.pendingBranchIds?.toList() ?? [];
+      await api.getProvidersApi().providersCompanyIdApprovePost(
+        companyId: provider.companyId!,
+        providersCompanyIdApprovePostRequest: ProvidersCompanyIdApprovePostRequest((b) {
+          b.approvedBranchIds.clear();
+          b.approvedBranchIds.addAll(branchIdsToApprove);
+        }),
+      );
+      _showSnackbar('Provider approved successfully.');
+      await _refresh();
+    } on DioException catch (error) {
+      _showSnackbar('Failed to approve: ${_extractError(error)}');
+    }
+  }
+
+  Future<void> _showDeclineDialog(ProviderSummary provider) async {
+    if (provider.companyId == null) return;
+    final reasonController = TextEditingController();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Decline Provider'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Company: ${provider.companyName ?? provider.companyId}'),
+            const SizedBox(height: 16),
+            TextField(
+              controller: reasonController,
+              decoration: const InputDecoration(
+                labelText: 'Reason for declining',
+                hintText: 'Enter the reason...',
+              ),
+              maxLines: 3,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Decline'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    final api = Provider.of<Openapi>(context, listen: false);
+    try {
+      await api.getProvidersApi().providersCompanyIdDeclinePost(
+        companyId: provider.companyId!,
+        subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest((b) => b
+          ..reason = reasonController.text.trim(),
+        ),
+      );
+      _showSnackbar('Provider declined.');
+      await _refresh();
+    } on DioException catch (error) {
+      _showSnackbar('Failed to decline: ${_extractError(error)}');
+    }
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  String _extractError(DioException error) {
+    final data = error.response?.data;
+    if (data is String) return data;
+    if (data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    return error.message ?? 'Request failed.';
+  }
+
+  void _filterPendingOnly() {
+    setState(() {
+      _status = 'pending';
+      _providersFuture = _loadProviders();
+    });
   }
 
   @override
@@ -149,6 +254,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               Text('Providers', style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(width: 12),
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
+              TextButton(onPressed: _filterPendingOnly, child: const Text('Pending Approval')),
               TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
             ],
           ),
@@ -214,6 +320,37 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                       Text('BIC: ${_selected!.bic ?? '-'}'),
                       Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
                       Text('Registration date: ${_selected!.registrationDate ?? '-'}'),
+                      if (_selected!.status == 'pending' ||
+                          (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
+                        const Divider(height: 24),
+                        Text(
+                          'Approval Actions',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () => _approveProvider(_selected!),
+                              icon: const Icon(Icons.check),
+                              label: const Text('Approve'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            OutlinedButton.icon(
+                              onPressed: () => _showDeclineDialog(_selected!),
+                              icon: const Icon(Icons.close),
+                              label: const Text('Decline'),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),

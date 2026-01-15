@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../domain/model/model.dart';
+import '../form_section_header.dart';
+
+/// Step widget for payment details in registration flow.
+class PaymentDetailsStep extends StatelessWidget {
+  const PaymentDetailsStep({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final request = Provider.of<RegistrationRequest>(context);
+    return Column(
+      children: [
+        const FormSectionHeader(label: 'Bank details'),
+        20.height,
+        SomTextInput(
+          label: 'IBAN',
+          icon: Icons.account_balance,
+          hint: 'Enter IBAN',
+          value: request.company.providerData.bankDetails?.iban,
+          onChanged: request.company.providerData.bankDetails?.setIban,
+          required: true,
+        ),
+        SomTextInput(
+          label: 'BIC',
+          icon: Icons.add_link,
+          hint: 'Enter BIC',
+          value: request.company.providerData.bankDetails?.bic,
+          onChanged: request.company.providerData.bankDetails?.setBic,
+          required: true,
+        ),
+        SomTextInput(
+          label: 'Account owner',
+          icon: Icons.person,
+          hint: 'Enter account owner',
+          value: request.company.providerData.bankDetails?.accountOwner,
+          onChanged: request.company.providerData.bankDetails?.setAccountOwner,
+          required: true,
+        ),
+        30.height,
+        const FormSectionHeader(label: 'Payment interval'),
+        20.height,
+        _PaymentIntervalSelector(request: request),
+        50.height,
+      ],
+    );
+  }
+}
+
+class _PaymentIntervalSelector extends StatelessWidget {
+  const _PaymentIntervalSelector({required this.request});
+
+  final RegistrationRequest request;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.start,
+      direction: Axis.horizontal,
+      children: [
+        Radio(
+          value: PaymentInterval.Monthly,
+          groupValue: request.company.providerData.paymentInterval,
+          onChanged: (dynamic value) {
+            toast('$value Selected');
+            request.company.providerData.setPaymentInterval(PaymentInterval.Monthly);
+          },
+        ),
+        GestureDetector(
+          onTap: () {
+            request.company.providerData.setPaymentInterval(PaymentInterval.Monthly);
+          },
+          child: Text(PaymentInterval.Monthly.name),
+        ),
+        Radio(
+          value: PaymentInterval.Yearly,
+          groupValue: request.company.providerData.paymentInterval,
+          onChanged: (dynamic value) {
+            toast('$value Selected');
+            request.company.providerData.setPaymentInterval(PaymentInterval.Yearly);
+          },
+        ),
+        GestureDetector(
+          onTap: () {
+            request.company.providerData.setPaymentInterval(PaymentInterval.Yearly);
+          },
+          child: Text(PaymentInterval.Yearly.name),
+        ),
+      ],
+    );
+  }
+}

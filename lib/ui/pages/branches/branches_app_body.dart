@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../utils/ui_logger.dart';
 
 class BranchesAppBody extends StatefulWidget {
   const BranchesAppBody({Key? key}) : super(key: key);
@@ -58,7 +59,9 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             .where((p) => (p.pendingBranchIds?.isNotEmpty ?? false))
             .toList();
       });
-    } catch (_) {}
+    } catch (error, stackTrace) {
+      UILogger.silentError('BranchesAppBody._loadPendingProviders', error, stackTrace);
+    }
   }
 
   Future<void> _approvePending(ProviderSummary provider) async {

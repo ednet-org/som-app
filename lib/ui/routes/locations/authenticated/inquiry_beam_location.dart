@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/pages/inquiry/inquiry_app_body.dart';
+import 'package:som/ui/pages/inquiry/inquiry_page.dart';
 
 class InquiryBeamLocation extends BeamLocation<BeamState> {
   @override
@@ -9,7 +9,7 @@ class InquiryBeamLocation extends BeamLocation<BeamState> {
       const BeamPage(
         key: ValueKey('Inquiry page'),
         title: 'Inquiry',
-        child: InquiryAppBody(),
+        child: InquiryPage(),
       ),
     ];
   }

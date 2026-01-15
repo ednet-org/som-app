@@ -213,41 +213,33 @@ class SmallDeviceLayout extends ResponsiveLayout {
     );
   }
 
-  @override
-  Widget billboard(BuildContext context) {
-    // TODO: implement billboard
-    throw UnimplementedError();
+  Widget _buildScaffold(BuildContext context) {
+    return Scaffold(
+      appBar: appHeader.appBar,
+      body: appContainer.build(context),
+      floatingActionButton: appContainer.mainMenuButton,
+      floatingActionButtonLocation: appContainer.mainMenuButtonPosition,
+      bottomNavigationBar: appFooter.build(context),
+    );
   }
 
   @override
-  Widget desktop(BuildContext context) {
-    // TODO: implement desktop
-    throw UnimplementedError();
-  }
+  Widget mobile(BuildContext context) => _buildScaffold(context);
 
   @override
-  Widget laptop(BuildContext context) {
-    // TODO: implement laptop
-    throw UnimplementedError();
-  }
+  Widget tablet(BuildContext context) => _buildScaffold(context);
 
   @override
-  Widget mobile(BuildContext context) {
-    // TODO: implement mobile
-    throw UnimplementedError();
-  }
+  Widget laptop(BuildContext context) => _buildScaffold(context);
 
   @override
-  Widget projector(BuildContext context) {
-    // TODO: implement projector
-    throw UnimplementedError();
-  }
+  Widget desktop(BuildContext context) => _buildScaffold(context);
 
   @override
-  Widget tablet(BuildContext context) {
-    // TODO: implement tablet
-    throw UnimplementedError();
-  }
+  Widget projector(BuildContext context) => _buildScaffold(context);
+
+  @override
+  Widget billboard(BuildContext context) => _buildScaffold(context);
 }
 
 enum LayoutType {

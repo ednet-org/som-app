@@ -5,6 +5,7 @@ export 'companies_beam_location.dart';
 export 'company_beam_location.dart';
 export 'consultants_beam_location.dart';
 export 'inquiry_beam_location.dart';
+export 'offers_beam_location.dart';
 export 'providers_beam_location.dart';
 export 'roles_beam_location.dart';
 export 'statistics_beam_location.dart';

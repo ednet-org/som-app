@@ -10,6 +10,7 @@ final authenticatedPagesDelegate = BeamerDelegate(
   locationBuilder: BeamerLocationBuilder(
     beamLocations: [
       InquiryBeamLocation(),
+      OffersBeamLocation(),
       AdsBeamLocation(),
       AuditBeamLocation(),
       CompanyBeamLocation(),
