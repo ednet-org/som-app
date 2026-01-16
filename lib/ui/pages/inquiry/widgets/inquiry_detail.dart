@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../utils/pdf_download.dart';
 
 import '../../../theme/semantic_colors.dart';
 import '../../../theme/tokens.dart';
@@ -190,7 +190,12 @@ class InquiryDetail extends StatelessWidget {
             ),
           ),
           TextButton.icon(
-            onPressed: () => launchUrl(Uri.parse(inquiry.pdfPath!)),
+            onPressed: inquiry.id == null
+                ? null
+                : () => openSignedPdf(
+                      context,
+                      endpoint: '/inquiries/${inquiry.id}/pdf',
+                    ),
             icon: const Icon(Icons.download, size: SomIconSize.sm),
             label: const Text('Download'),
           ),

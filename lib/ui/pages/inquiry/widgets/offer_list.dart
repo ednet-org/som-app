@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../utils/pdf_download.dart';
 
 /// Widget for displaying a list of offers for an inquiry.
 ///
@@ -93,7 +93,12 @@ class OfferCard extends StatelessWidget {
           children: [
             if (offer.pdfPath != null)
               TextButton(
-                onPressed: () => launchUrl(Uri.parse(offer.pdfPath!)),
+                onPressed: offer.id == null
+                    ? null
+                    : () => openSignedPdf(
+                          context,
+                          endpoint: '/offers/${offer.id}/pdf',
+                        ),
                 child: const Text('PDF'),
               ),
             if (isBuyer && offer.status?.toLowerCase() == 'pending') ...[

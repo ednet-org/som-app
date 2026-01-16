@@ -1224,6 +1224,14 @@ class TestFileStorage implements FileStorage {
   Future<void> deleteFile(String publicUrlOrPath) async {
     deletedPaths.add(publicUrlOrPath);
   }
+
+  @override
+  Future<String> createSignedUrl(
+    String publicUrlOrPath, {
+    int expiresInSeconds = 300,
+  }) async {
+    return 'https://signed.test/${publicUrlOrPath.replaceFirst(RegExp(r'^/+'), '')}';
+  }
 }
 
 class TestEmailService extends EmailService {

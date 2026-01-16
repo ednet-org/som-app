@@ -2,16 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
-
-const _apiBaseUrl = String.fromEnvironment(
-  'API_BASE_URL',
-  defaultValue: 'http://127.0.0.1:8081',
-);
+import '../../utils/pdf_download.dart';
 
 class OffersAppBody extends StatefulWidget {
   const OffersAppBody({Key? key}) : super(key: key);
@@ -241,7 +236,9 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           if (offer.pdfPath != null) ...[
             const SizedBox(height: 12),
             TextButton.icon(
-              onPressed: () => _openPdf(offer.pdfPath!),
+              onPressed: offer.id == null
+                  ? null
+                  : () => _openOfferPdf(offer.id!),
               icon: const Icon(Icons.download),
               label: const Text('Download PDF'),
             ),
@@ -330,13 +327,11 @@ class _OffersAppBodyState extends State<OffersAppBody> {
     return '${date.day}.${date.month}.${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
   }
 
-  Future<void> _openPdf(String pdfPath) async {
-    final url = pdfPath.startsWith('http') ? pdfPath : '$_apiBaseUrl$pdfPath';
-    try {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } catch (error) {
-      _showSnackbar('Failed to open PDF.');
-    }
+  Future<void> _openOfferPdf(String offerId) async {
+    await openSignedPdf(
+      context,
+      endpoint: '/offers/$offerId/pdf',
+    );
   }
 }
 

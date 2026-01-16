@@ -19,6 +19,7 @@ import '../routes/providers/[companyId]/approve.dart' as providers_$company_id_a
 import '../routes/providers/[companyId]/products/index.dart' as providers_$company_id_products_index;
 import '../routes/providers/[companyId]/products/[productId]/index.dart' as providers_$company_id_products_$product_id_index;
 import '../routes/offers/[offerId]/reject.dart' as offers_$offer_id_reject;
+import '../routes/offers/[offerId]/pdf.dart' as offers_$offer_id_pdf;
 import '../routes/offers/[offerId]/accept.dart' as offers_$offer_id_accept;
 import '../routes/inquiries/index.dart' as inquiries_index;
 import '../routes/inquiries/[inquiryId]/pdf.dart' as inquiries_$inquiry_id_pdf;
@@ -292,7 +293,7 @@ Handler buildInquiriesHandler() {
 Handler buildOffers$offerIdHandler(String offerId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/reject', (context) => offers_$offer_id_reject.onRequest(context,offerId,))..all('/accept', (context) => offers_$offer_id_accept.onRequest(context,offerId,));
+    ..all('/reject', (context) => offers_$offer_id_reject.onRequest(context,offerId,))..all('/pdf', (context) => offers_$offer_id_pdf.onRequest(context,offerId,))..all('/accept', (context) => offers_$offer_id_accept.onRequest(context,offerId,));
   return pipeline.addHandler(router);
 }
 

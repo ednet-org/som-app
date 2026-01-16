@@ -31,7 +31,7 @@ class FileStorage {
     } on StorageException catch (error) {
       if (error.statusCode == '404') {
         await _client.storage
-            .createBucket(_bucket, const BucketOptions(public: true));
+            .createBucket(_bucket, const BucketOptions(public: false));
         await _client.storage.from(_bucket).uploadBinary(
               path,
               Uint8List.fromList(bytes),
@@ -41,7 +41,7 @@ class FileStorage {
         rethrow;
       }
     }
-    return _client.storage.from(_bucket).getPublicUrl(path);
+    return path;
   }
 
   Future<void> deleteFile(String publicUrlOrPath) async {
@@ -51,6 +51,21 @@ class FileStorage {
       return;
     }
     await _client.storage.from(_bucket).remove([path]);
+  }
+
+  Future<String> createSignedUrl(
+    String publicUrlOrPath, {
+    int expiresInSeconds = 300,
+  }) async {
+    await _ensureBucket();
+    final path = _resolvePath(publicUrlOrPath);
+    if (path.isEmpty) {
+      return '';
+    }
+    return _client.storage.from(_bucket).createSignedUrl(
+          path,
+          expiresInSeconds,
+        );
   }
 
   String _resolvePath(String publicUrlOrPath) {
@@ -78,12 +93,11 @@ class FileStorage {
     }
     try {
       final bucket = await _client.storage.getBucket(_bucket);
-      if (!bucket.public) {
+      if (bucket.public) {
         await _client.storage.updateBucket(
           _bucket,
           BucketOptions(
-            public: true,
-            fileSizeLimit: bucket.fileSizeLimit,
+            public: false,
             allowedMimeTypes: bucket.allowedMimeTypes,
           ),
         );
@@ -96,7 +110,7 @@ class FileStorage {
       if (isNotFound) {
         try {
           await _client.storage
-              .createBucket(_bucket, const BucketOptions(public: true));
+              .createBucket(_bucket, const BucketOptions(public: false));
         } on StorageException catch (createError) {
           final createMessage = createError.message.toLowerCase();
           final createAlreadyExists = createError.statusCode == '409' ||
@@ -105,7 +119,7 @@ class FileStorage {
             await _client.from('storage.buckets').insert({
               'id': _bucket,
               'name': _bucket,
-              'public': true,
+              'public': false,
             });
           } else if (!createAlreadyExists) {
             rethrow;
