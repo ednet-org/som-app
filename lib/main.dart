@@ -74,7 +74,8 @@ void main() async {
   //endregion
 }
 
-const seedColor = Color(0x0044546a);
+// Fixed: Alpha was 0x00 (transparent), now 0xFF (opaque)
+const seedColor = Color(0xFF44546A);
 
 class MyApp extends StatelessWidget {
   final beamerKey = BeamerProvidedKey();

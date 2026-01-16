@@ -14,6 +14,12 @@ class SubscriptionRepository {
       'sort_priority': plan.sortPriority,
       'is_active': plan.isActive,
       'price_in_subunit': plan.priceInSubunit,
+      'max_users': plan.maxUsers,
+      'setup_fee_in_subunit': plan.setupFeeInSubunit,
+      'banner_ads_per_month': plan.bannerAdsPerMonth,
+      'normal_ads_per_month': plan.normalAdsPerMonth,
+      'free_months': plan.freeMonths,
+      'commitment_period_months': plan.commitmentPeriodMonths,
       'rules_json': plan.rules,
       'created_at': plan.createdAt.toIso8601String(),
     });
@@ -25,6 +31,12 @@ class SubscriptionRepository {
       'sort_priority': plan.sortPriority,
       'is_active': plan.isActive,
       'price_in_subunit': plan.priceInSubunit,
+      'max_users': plan.maxUsers,
+      'setup_fee_in_subunit': plan.setupFeeInSubunit,
+      'banner_ads_per_month': plan.bannerAdsPerMonth,
+      'normal_ads_per_month': plan.normalAdsPerMonth,
+      'free_months': plan.freeMonths,
+      'commitment_period_months': plan.commitmentPeriodMonths,
       'rules_json': plan.rules,
     }).eq('id', plan.id);
   }
@@ -110,6 +122,12 @@ class SubscriptionRepository {
       sortPriority: row['sort_priority'] as int,
       isActive: row['is_active'] as bool? ?? false,
       priceInSubunit: row['price_in_subunit'] as int,
+      maxUsers: row['max_users'] as int?,
+      setupFeeInSubunit: row['setup_fee_in_subunit'] as int?,
+      bannerAdsPerMonth: row['banner_ads_per_month'] as int?,
+      normalAdsPerMonth: row['normal_ads_per_month'] as int?,
+      freeMonths: row['free_months'] as int?,
+      commitmentPeriodMonths: row['commitment_period_months'] as int?,
       rules: decodeJsonList(row['rules_json'])
           .map((e) => e as Map<String, dynamic>)
           .toList(),

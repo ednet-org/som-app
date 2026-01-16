@@ -4,7 +4,9 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import '../routes/auth/login.dart' as route;
 import 'test_utils.dart';
 
@@ -13,11 +15,15 @@ void main() {
     late InMemoryCompanyRepository companies;
     late InMemoryUserRepository users;
     late AuthService auth;
+    late AuditService audit;
+    late InMemoryAuditLogRepository auditRepo;
 
     setUp(() async {
       companies = InMemoryCompanyRepository();
       users = InMemoryUserRepository();
       auth = createAuthService(users);
+      auditRepo = InMemoryAuditLogRepository();
+      audit = AuditService(repository: auditRepo);
       final company = await seedCompany(companies);
       await seedUser(users, company, email: 'user@example.com');
       (auth as TestAuthService).setPassword('user@example.com', 'secret');
@@ -31,6 +37,8 @@ void main() {
         headers: {'content-type': 'application/json'},
       );
       context.provide<AuthService>(auth);
+      context.provide<UserRepository>(users);
+      context.provide<AuditService>(audit);
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 200);
       final body = jsonDecode(await response.body()) as Map<String, dynamic>;
@@ -46,8 +54,12 @@ void main() {
         headers: {'content-type': 'application/json'},
       );
       context.provide<AuthService>(auth);
+      context.provide<UserRepository>(users);
+      context.provide<AuditService>(audit);
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
+      final entries = await auditRepo.listRecent();
+      expect(entries.first.action, 'auth.login_failed');
     });
 
     test('returns 400 for unconfirmed email', () async {
@@ -63,6 +75,8 @@ void main() {
         headers: {'content-type': 'application/json'},
       );
       context.provide<AuthService>(auth);
+      context.provide<UserRepository>(users);
+      context.provide<AuditService>(audit);
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
     });
@@ -76,6 +90,8 @@ void main() {
           headers: {'content-type': 'application/json'},
         );
         context.provide<AuthService>(auth);
+        context.provide<UserRepository>(users);
+        context.provide<AuditService>(audit);
         return route.onRequest(context.context);
       }
 

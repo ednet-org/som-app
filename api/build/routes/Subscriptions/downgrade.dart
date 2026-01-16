@@ -7,6 +7,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -97,10 +98,20 @@ Future<Response> onRequest(RequestContext context) async {
       rejectedAt: profile.rejectedAt,
     ),
   );
+  await context.read<AuditService>().log(
+        action: 'subscription.downgraded',
+        entityType: 'subscription',
+        entityId: auth.companyId,
+        actorId: auth.userId,
+        metadata: {'planId': planId},
+      );
   return Response(statusCode: 200);
 }
 
 int? _maxUsersForPlan(SubscriptionPlanRecord plan) {
+  if (plan.maxUsers != null && plan.maxUsers! > 0) {
+    return plan.maxUsers;
+  }
   for (final rule in plan.rules) {
     if ((rule['restriction'] as int? ?? -1) == 0) {
       final limit = rule['upperLimit'] as int? ?? 0;

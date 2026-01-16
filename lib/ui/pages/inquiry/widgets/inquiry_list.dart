@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../../../theme/semantic_colors.dart';
+import '../../../theme/tokens.dart';
+import '../../../utils/formatters.dart';
+import '../../../widgets/status_badge.dart';
+
 /// Widget for displaying a list of inquiries.
 ///
-/// Shows inquiry ID, status, and branch with selection support.
+/// Shows inquiry description, status badge, and creation date with selection support.
 class InquiryList extends StatelessWidget {
   const InquiryList({
-    Key? key,
+    super.key,
     required this.inquiries,
     required this.selectedInquiryId,
     required this.onInquirySelected,
-  }) : super(key: key);
+  });
 
   final List<Inquiry> inquiries;
   final String? selectedInquiryId;
@@ -19,13 +24,12 @@ class InquiryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (inquiries.isEmpty) {
-      return const Center(
-        child: Text('No inquiries found.'),
-      );
+      return _buildEmptyState(context);
     }
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: inquiries.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final inquiry = inquiries[index];
         return InquiryListTile(
@@ -36,29 +40,114 @@ class InquiryList extends StatelessWidget {
       },
     );
   }
+
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.inbox_outlined,
+            size: SomIconSize.xxl,
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          const SizedBox(height: SomSpacing.md),
+          Text(
+            'No inquiries found',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+          const SizedBox(height: SomSpacing.xs),
+          Text(
+            'Create a new inquiry to get started',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// Single list tile for an inquiry.
 class InquiryListTile extends StatelessWidget {
   const InquiryListTile({
-    Key? key,
+    super.key,
     required this.inquiry,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final Inquiry inquiry;
   final bool isSelected;
   final VoidCallback onTap;
 
+  String get _title {
+    // Prefer description, fall back to truncated ID
+    final desc = inquiry.description;
+    if (desc != null && desc.isNotEmpty) {
+      return SomFormatters.truncate(desc, 50);
+    }
+    return 'Inquiry ${SomFormatters.shortId(inquiry.id)}';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final statusColor = SomSemanticColors.forInquiryStatus(inquiry.status);
+
     return ListTile(
-      title: Text(inquiry.id ?? 'Inquiry'),
-      subtitle: Text(
-        'Status: ${inquiry.status ?? '-'} | Branch: ${inquiry.branchId ?? '-'}',
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: SomSpacing.md,
+        vertical: SomSpacing.xs,
       ),
       selected: isSelected,
+      selectedTileColor: colorScheme.primaryContainer.withOpacity(0.3),
+      leading: CircleAvatar(
+        backgroundColor: statusColor.withOpacity(0.15),
+        foregroundColor: statusColor,
+        child: Text(
+          SomFormatters.shortId(inquiry.id).substring(1, 3).toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+        ),
+      ),
+      title: Text(
+        _title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+            ),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: SomSpacing.xs),
+        child: Row(
+          children: [
+            StatusBadge.inquiry(
+              status: inquiry.status ?? 'unknown',
+              showIcon: false,
+            ),
+            const SizedBox(width: SomSpacing.sm),
+            Icon(
+              Icons.schedule,
+              size: SomIconSize.sm,
+              color: colorScheme.outline,
+            ),
+            const SizedBox(width: SomSpacing.xs),
+            Text(
+              SomFormatters.relative(inquiry.createdAt),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: colorScheme.outline,
+                  ),
+            ),
+          ],
+        ),
+      ),
+      trailing: isSelected
+          ? Icon(Icons.chevron_right, color: colorScheme.primary)
+          : null,
       onTap: onTap,
     );
   }

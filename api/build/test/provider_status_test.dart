@@ -5,12 +5,12 @@ import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
-import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
@@ -205,11 +205,13 @@ void main() {
           ads: InMemoryAdsRepository(),
           users: users,
           companies: InMemoryCompanyRepository(),
+          providers: providers,
           inquiries: inquiries,
           offers: offers,
           email: TestEmailService(),
         ),
       );
+      context.provide<SomDomainModel>(SomDomainModel());
 
       final response =
           await offers_route.onRequest(context.context, 'inq-1');

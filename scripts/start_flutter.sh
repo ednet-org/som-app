@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# Idempotent: Kill existing Flutter process for this project before starting
+pkill -f "flutter.*som-app.*run" 2>/dev/null || true
+
 API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:8081}"
 DEV_QUICK_LOGIN="${DEV_QUICK_LOGIN:-true}"
 DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"

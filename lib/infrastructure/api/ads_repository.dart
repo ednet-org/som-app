@@ -52,11 +52,11 @@ class ApiAdsRepository implements IAdsRepository {
   }
 
   @override
-  Future<void> updateAd(String adId, AdsAdIdPutRequest request) async {
+  Future<void> updateAd(String adId, Ad ad) async {
     try {
       await _api.getAdsApi().adsAdIdPut(
         adId: adId,
-        adsAdIdPutRequest: request,
+        ad: ad,
       );
     } catch (error, stackTrace) {
       UILogger.apiError('PUT /ads/$adId', error, stackTrace);

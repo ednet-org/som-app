@@ -50,6 +50,17 @@ class ProviderRepository {
     }).eq('company_id', profile.companyId);
   }
 
+  Future<List<ProviderProfileRecord>> listByBranch(String branchId) async {
+    final rows = await _client.from('provider_profiles').select()
+        as List<dynamic>;
+    return rows
+        .map((row) => _mapRow(row as Map<String, dynamic>))
+        .where((profile) =>
+            profile.branchIds.contains(branchId) ||
+            profile.pendingBranchIds.contains(branchId))
+        .toList();
+  }
+
   ProviderProfileRecord _mapRow(Map<String, dynamic> row) {
     return ProviderProfileRecord(
       companyId: row['company_id'] as String,

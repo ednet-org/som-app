@@ -9,9 +9,15 @@ import 'package:dart_frog/dart_frog.dart';
 import '../routes/stats/provider.dart' as stats_provider;
 import '../routes/stats/consultant.dart' as stats_consultant;
 import '../routes/stats/buyer.dart' as stats_buyer;
+import '../routes/roles/index.dart' as roles_index;
+import '../routes/roles/[roleId]/index.dart' as roles_$role_id_index;
 import '../routes/providers/index.dart' as providers_index;
+import '../routes/providers/[companyId]/paymentDetails.dart' as providers_$company_id_payment_details;
+import '../routes/providers/[companyId]/index.dart' as providers_$company_id_index;
 import '../routes/providers/[companyId]/decline.dart' as providers_$company_id_decline;
 import '../routes/providers/[companyId]/approve.dart' as providers_$company_id_approve;
+import '../routes/providers/[companyId]/products/index.dart' as providers_$company_id_products_index;
+import '../routes/providers/[companyId]/products/[productId]/index.dart' as providers_$company_id_products_$product_id_index;
 import '../routes/offers/[offerId]/reject.dart' as offers_$offer_id_reject;
 import '../routes/offers/[offerId]/accept.dart' as offers_$offer_id_accept;
 import '../routes/inquiries/index.dart' as inquiries_index;
@@ -37,6 +43,7 @@ import '../routes/auth/login.dart' as auth_login;
 import '../routes/auth/forgotPassword.dart' as auth_forgot_password;
 import '../routes/auth/confirmEmail.dart' as auth_confirm_email;
 import '../routes/auth/changePassword.dart' as auth_change_password;
+import '../routes/audit/index.dart' as audit_index;
 import '../routes/ads/index.dart' as ads_index;
 import '../routes/ads/[adId]/index.dart' as ads_$ad_id_index;
 import '../routes/ads/[adId]/image.dart' as ads_$ad_id_image;
@@ -58,6 +65,7 @@ import '../routes/Companies/[companyId]/index.dart' as companies_$company_id_ind
 import '../routes/Companies/[companyId]/activate.dart' as companies_$company_id_activate;
 import '../routes/Companies/[companyId]/users/index.dart' as companies_$company_id_users_index;
 import '../routes/Companies/[companyId]/users/[userId]/update.dart' as companies_$company_id_users_$user_id_update;
+import '../routes/Companies/[companyId]/users/[userId]/remove.dart' as companies_$company_id_users_$user_id_remove;
 import '../routes/Companies/[companyId]/users/[userId]/index.dart' as companies_$company_id_users_$user_id_index;
 
 import '../routes/_middleware.dart' as middleware;
@@ -90,6 +98,7 @@ Handler buildRootHandler() {
     ..mount('/Users', (context) => buildUsersHandler()(context))
     ..mount('/ads/<adId>', (context,adId,) => buildAds$adIdHandler(adId,)(context))
     ..mount('/ads', (context) => buildAdsHandler()(context))
+    ..mount('/audit', (context) => buildAuditHandler()(context))
     ..mount('/auth', (context) => buildAuthHandler()(context))
     ..mount('/billing/<billingId>', (context,billingId,) => buildBilling$billingIdHandler(billingId,)(context))
     ..mount('/billing', (context) => buildBillingHandler()(context))
@@ -102,8 +111,12 @@ Handler buildRootHandler() {
     ..mount('/inquiries/<inquiryId>', (context,inquiryId,) => buildInquiries$inquiryIdHandler(inquiryId,)(context))
     ..mount('/inquiries', (context) => buildInquiriesHandler()(context))
     ..mount('/offers/<offerId>', (context,offerId,) => buildOffers$offerIdHandler(offerId,)(context))
+    ..mount('/providers/<companyId>/products/<productId>', (context,companyId,productId,) => buildProviders$companyIdProducts$productIdHandler(companyId,productId,)(context))
+    ..mount('/providers/<companyId>/products', (context,companyId,) => buildProviders$companyIdProductsHandler(companyId,)(context))
     ..mount('/providers/<companyId>', (context,companyId,) => buildProviders$companyIdHandler(companyId,)(context))
     ..mount('/providers', (context) => buildProvidersHandler()(context))
+    ..mount('/roles/<roleId>', (context,roleId,) => buildRoles$roleIdHandler(roleId,)(context))
+    ..mount('/roles', (context) => buildRolesHandler()(context))
     ..mount('/stats', (context) => buildStatsHandler()(context));
   return pipeline.addHandler(router);
 }
@@ -111,7 +124,7 @@ Handler buildRootHandler() {
 Handler buildCompanies$companyIdUsers$userIdHandler(String companyId,String userId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/update', (context) => companies_$company_id_users_$user_id_update.onRequest(context,companyId,userId,))..all('/', (context) => companies_$company_id_users_$user_id_index.onRequest(context,companyId,userId,));
+    ..all('/update', (context) => companies_$company_id_users_$user_id_update.onRequest(context,companyId,userId,))..all('/remove', (context) => companies_$company_id_users_$user_id_remove.onRequest(context,companyId,userId,))..all('/', (context) => companies_$company_id_users_$user_id_index.onRequest(context,companyId,userId,));
   return pipeline.addHandler(router);
 }
 
@@ -189,6 +202,13 @@ Handler buildAdsHandler() {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/', (context) => ads_index.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildAuditHandler() {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => audit_index.onRequest(context,));
   return pipeline.addHandler(router);
 }
 
@@ -276,10 +296,24 @@ Handler buildOffers$offerIdHandler(String offerId,) {
   return pipeline.addHandler(router);
 }
 
+Handler buildProviders$companyIdProducts$productIdHandler(String companyId,String productId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => providers_$company_id_products_$product_id_index.onRequest(context,companyId,productId,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildProviders$companyIdProductsHandler(String companyId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => providers_$company_id_products_index.onRequest(context,companyId,));
+  return pipeline.addHandler(router);
+}
+
 Handler buildProviders$companyIdHandler(String companyId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/decline', (context) => providers_$company_id_decline.onRequest(context,companyId,))..all('/approve', (context) => providers_$company_id_approve.onRequest(context,companyId,));
+    ..all('/paymentDetails', (context) => providers_$company_id_payment_details.onRequest(context,companyId,))..all('/', (context) => providers_$company_id_index.onRequest(context,companyId,))..all('/decline', (context) => providers_$company_id_decline.onRequest(context,companyId,))..all('/approve', (context) => providers_$company_id_approve.onRequest(context,companyId,));
   return pipeline.addHandler(router);
 }
 
@@ -287,6 +321,20 @@ Handler buildProvidersHandler() {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/', (context) => providers_index.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildRoles$roleIdHandler(String roleId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => roles_$role_id_index.onRequest(context,roleId,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildRolesHandler() {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/', (context) => roles_index.onRequest(context,));
   return pipeline.addHandler(router);
 }
 

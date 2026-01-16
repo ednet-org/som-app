@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/services/mappings.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/registration_service.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -49,10 +50,15 @@ Future<Response> _registerCompany(RequestContext context) async {
   final companyJson = jsonBody['company'] as Map<String, dynamic>? ?? {};
   final usersJson = jsonBody['users'] as List<dynamic>? ?? [];
   try {
-    await registration.registerCompany(
+    final company = await registration.registerCompany(
       companyJson: companyJson,
       usersJson: usersJson,
     );
+      await context.read<DomainEventService>().emit(
+            type: 'company.registered',
+            entityType: 'company',
+            entityId: company.id,
+          );
     return Response(statusCode: 200);
   } on RegistrationException catch (error) {
     return Response.json(statusCode: 400, body: error.message);

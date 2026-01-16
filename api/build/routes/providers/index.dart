@@ -76,7 +76,7 @@ Future<Response> onRequest(RequestContext context) async {
     final sentOffers = await offerRepo.countByProvider(companyId: company.id);
     final acceptedOffers = await offerRepo.countByProvider(
       companyId: company.id,
-      status: 'accepted',
+      status: 'won',
     );
     results.add({
       'companyId': company.id,

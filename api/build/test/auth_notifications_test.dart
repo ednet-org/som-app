@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
-import 'package:som_api/services/auth_service.dart';
 import 'test_utils.dart';
 
 void main() {

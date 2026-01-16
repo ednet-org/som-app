@@ -198,6 +198,8 @@ class UserRecord {
     this.lastFailedLoginAt,
     this.lockedAt,
     this.lockReason,
+    this.removedAt,
+    this.removedByUserId,
   });
 
   final String id;
@@ -219,6 +221,8 @@ class UserRecord {
   final DateTime? lastFailedLoginAt;
   final DateTime? lockedAt;
   final String? lockReason;
+  final DateTime? removedAt;
+  final String? removedByUserId;
 
   UserRecord copyWith({
     String? email,
@@ -236,6 +240,8 @@ class UserRecord {
     Object? lastFailedLoginAt = _unset,
     Object? lockedAt = _unset,
     Object? lockReason = _unset,
+    Object? removedAt = _unset,
+    Object? removedByUserId = _unset,
   }) {
     return UserRecord(
       id: id,
@@ -263,6 +269,12 @@ class UserRecord {
       lockReason: identical(lockReason, _unset)
           ? this.lockReason
           : lockReason as String?,
+      removedAt: identical(removedAt, _unset)
+          ? this.removedAt
+          : removedAt as DateTime?,
+      removedByUserId: identical(removedByUserId, _unset)
+          ? this.removedByUserId
+          : removedByUserId as String?,
     );
   }
 
@@ -293,6 +305,36 @@ class EmailEventRecord {
   final DateTime createdAt;
 }
 
+class RoleRecord {
+  RoleRecord({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  final String id;
+  final String name;
+  final String? description;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+}
+
+class ProductRecord {
+  ProductRecord({
+    required this.id,
+    required this.companyId,
+    required this.name,
+    required this.createdAt,
+  });
+
+  final String id;
+  final String companyId;
+  final String name;
+  final DateTime createdAt;
+}
+
 class SubscriptionPlanRecord {
   SubscriptionPlanRecord({
     required this.id,
@@ -300,6 +342,12 @@ class SubscriptionPlanRecord {
     required this.sortPriority,
     required this.isActive,
     required this.priceInSubunit,
+    required this.maxUsers,
+    required this.setupFeeInSubunit,
+    required this.bannerAdsPerMonth,
+    required this.normalAdsPerMonth,
+    required this.freeMonths,
+    required this.commitmentPeriodMonths,
     required this.rules,
     required this.createdAt,
   });
@@ -309,6 +357,12 @@ class SubscriptionPlanRecord {
   final int sortPriority;
   final bool isActive;
   final int priceInSubunit;
+  final int? maxUsers;
+  final int? setupFeeInSubunit;
+  final int? bannerAdsPerMonth;
+  final int? normalAdsPerMonth;
+  final int? freeMonths;
+  final int? commitmentPeriodMonths;
   final List<Map<String, dynamic>> rules;
   final DateTime createdAt;
 
@@ -318,6 +372,12 @@ class SubscriptionPlanRecord {
         'sortPriority': sortPriority,
         'isActive': isActive,
         'priceInSubunit': priceInSubunit,
+        'maxUsers': maxUsers,
+        'setupFeeInSubunit': setupFeeInSubunit,
+        'bannerAdsPerMonth': bannerAdsPerMonth,
+        'normalAdsPerMonth': normalAdsPerMonth,
+        'freeMonths': freeMonths,
+        'commitmentPeriodMonths': commitmentPeriodMonths,
         'rules': rules,
         'createdAt': createdAt.toIso8601String(),
       };
@@ -510,6 +570,24 @@ class InquiryRecord {
       };
 }
 
+class InquiryAssignmentRecord {
+  InquiryAssignmentRecord({
+    required this.id,
+    required this.inquiryId,
+    required this.providerCompanyId,
+    required this.assignedAt,
+    required this.assignedByUserId,
+    required this.deadlineReminderSentAt,
+  });
+
+  final String id;
+  final String inquiryId;
+  final String providerCompanyId;
+  final DateTime assignedAt;
+  final String assignedByUserId;
+  final DateTime? deadlineReminderSentAt;
+}
+
 class OfferRecord {
   OfferRecord({
     required this.id,
@@ -535,6 +613,48 @@ class OfferRecord {
   final DateTime? resolvedAt;
   final String? buyerDecision;
   final String? providerDecision;
+  final DateTime createdAt;
+}
+
+class DomainEventRecord {
+  DomainEventRecord({
+    required this.id,
+    required this.type,
+    required this.status,
+    required this.entityType,
+    required this.entityId,
+    required this.actorId,
+    required this.payload,
+    required this.createdAt,
+  });
+
+  final String id;
+  final String type;
+  final String status;
+  final String entityType;
+  final String entityId;
+  final String? actorId;
+  final Map<String, dynamic>? payload;
+  final DateTime createdAt;
+}
+
+class AuditLogRecord {
+  AuditLogRecord({
+    required this.id,
+    required this.actorId,
+    required this.action,
+    required this.entityType,
+    required this.entityId,
+    required this.metadata,
+    required this.createdAt,
+  });
+
+  final String id;
+  final String? actorId;
+  final String action;
+  final String entityType;
+  final String entityId;
+  final Map<String, dynamic>? metadata;
   final DateTime createdAt;
 }
 

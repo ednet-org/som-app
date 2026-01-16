@@ -64,6 +64,7 @@ void main() {
           ads: ads,
           users: users,
           companies: companies,
+          providers: providers,
           inquiries: InMemoryInquiryRepository(),
           offers: InMemoryOfferRepository(),
           email: TestEmailService(),

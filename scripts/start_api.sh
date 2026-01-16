@@ -4,6 +4,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+export PORT="${PORT:-8081}"
+
+# Idempotent: Check if API is already running
+if curl -s "http://127.0.0.1:$PORT" >/dev/null 2>&1; then
+  echo "API already running on port $PORT"
+  exit 0
+fi
+
 SUPA_JSON="$(supabase status --output json)"
 export DEV_FIXTURES="${DEV_FIXTURES:-true}"
 export DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"
@@ -35,8 +43,6 @@ defines = [
 print(" ".join(defines))
 PY
 )"
-
-export PORT="${PORT:-8081}"
 
 cd "$ROOT/api"
 if [[ ! -f build/bin/server.dart ]]; then

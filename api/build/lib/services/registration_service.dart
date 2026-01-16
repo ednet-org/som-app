@@ -309,6 +309,9 @@ class RegistrationService {
   }
 
   int? _maxUsersForPlan(SubscriptionPlanRecord plan) {
+    if (plan.maxUsers != null && plan.maxUsers! > 0) {
+      return plan.maxUsers;
+    }
     for (final rule in plan.rules) {
       if ((rule['restriction'] as int? ?? -1) == 0) {
         final limit = rule['upperLimit'] as int? ?? 0;

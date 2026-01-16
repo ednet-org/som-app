@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import '../routes/Users/[userId]/unlock.dart' as route;
 import 'test_utils.dart';
 
@@ -18,6 +19,9 @@ void main() {
         method: HttpMethod.post,
       );
       context.provide<UserRepository>(users);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
       final response = await route.onRequest(context.context, 'user-id');
       expect(response.statusCode, 401);
     });
@@ -40,6 +44,9 @@ void main() {
         headers: {'authorization': 'Bearer $token'},
       );
       context.provide<UserRepository>(users);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await route.onRequest(context.context, buyerAdmin.id);
       expect(response.statusCode, 403);
@@ -81,6 +88,9 @@ void main() {
       );
       context.provide<UserRepository>(users);
       context.provide<Clock>(Clock());
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await route.onRequest(context.context, lockedUser.id);
       expect(response.statusCode, 200);

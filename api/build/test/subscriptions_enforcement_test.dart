@@ -12,6 +12,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
 import 'package:som_api/services/registration_service.dart';
 import '../routes/Companies/[companyId]/registerUser.dart' as register_user_route;
@@ -33,6 +34,12 @@ void main() {
           sortPriority: 1,
           isActive: true,
           priceInSubunit: 1000,
+          maxUsers: 1,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 1},
           ],
@@ -58,6 +65,12 @@ void main() {
           sortPriority: 2,
           isActive: true,
           priceInSubunit: 500,
+          maxUsers: 5,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 5},
           ],
@@ -86,6 +99,9 @@ void main() {
       );
       context.provide<SubscriptionRepository>(subscriptions);
       context.provide<UserRepository>(users);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await plan_route.onRequest(context.context, 'plan-1');
       expect(response.statusCode, 400);
@@ -101,6 +117,9 @@ void main() {
       );
       confirmContext.provide<SubscriptionRepository>(subscriptions);
       confirmContext.provide<UserRepository>(users);
+      confirmContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final confirmResponse =
           await plan_route.onRequest(confirmContext.context, 'plan-1');
@@ -140,6 +159,12 @@ void main() {
           sortPriority: 2,
           isActive: true,
           priceInSubunit: 500,
+          maxUsers: 5,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 5},
           ],
@@ -171,6 +196,12 @@ void main() {
           sortPriority: 2,
           isActive: true,
           priceInSubunit: 500,
+          maxUsers: 5,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 5},
           ],
@@ -191,6 +222,9 @@ void main() {
       context.provide<SubscriptionRepository>(subscriptions);
       context.provide<ProviderRepository>(providers);
       context.provide<UserRepository>(users);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await downgrade_route.onRequest(context.context);
       expect(response.statusCode, 400);
@@ -247,6 +281,12 @@ void main() {
           sortPriority: 2,
           isActive: true,
           priceInSubunit: 500,
+          maxUsers: 5,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 5},
           ],
@@ -267,6 +307,9 @@ void main() {
       context.provide<SubscriptionRepository>(subscriptions);
       context.provide<ProviderRepository>(providers);
       context.provide<UserRepository>(users);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await downgrade_route.onRequest(context.context);
       final body = await response.body();
@@ -294,6 +337,12 @@ void main() {
           sortPriority: 1,
           isActive: true,
           priceInSubunit: 1000,
+          maxUsers: 1,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 1},
           ],
@@ -406,6 +455,12 @@ void main() {
           sortPriority: 1,
           isActive: true,
           priceInSubunit: 1000,
+          maxUsers: 1,
+          setupFeeInSubunit: 0,
+          bannerAdsPerMonth: 0,
+          normalAdsPerMonth: 0,
+          freeMonths: 0,
+          commitmentPeriodMonths: 12,
           rules: const [
             {'id': 'rule-1', 'restriction': 0, 'upperLimit': 1},
           ],

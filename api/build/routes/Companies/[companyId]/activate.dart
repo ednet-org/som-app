@@ -3,6 +3,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
@@ -53,5 +54,11 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       );
     }
   }
+  await context.read<DomainEventService>().emit(
+        type: 'company.activated',
+        entityType: 'company',
+        entityId: updated.id,
+        actorId: authResult.userId,
+      );
   return Response.json(body: {'status': 'active'});
 }

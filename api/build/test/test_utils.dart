@@ -8,10 +8,15 @@ import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/domain_event_repository.dart';
+import 'package:som_api/infrastructure/repositories/audit_log_repository.dart';
 import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/role_repository.dart';
+import 'package:som_api/infrastructure/repositories/product_repository.dart';
+import 'package:som_api/infrastructure/repositories/schema_version_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/token_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
@@ -135,6 +140,8 @@ class InMemoryUserRepository implements UserRepository {
         lastFailedLoginAt: existing.lastFailedLoginAt,
         lockedAt: existing.lockedAt,
         lockReason: existing.lockReason,
+        removedAt: existing.removedAt,
+        removedByUserId: existing.removedByUserId,
       );
     }
   }
@@ -162,6 +169,8 @@ class InMemoryUserRepository implements UserRepository {
         lastFailedLoginAt: existing.lastFailedLoginAt,
         lockedAt: existing.lockedAt,
         lockReason: existing.lockReason,
+        removedAt: existing.removedAt,
+        removedByUserId: existing.removedByUserId,
       );
     }
   }
@@ -189,6 +198,40 @@ class InMemoryUserRepository implements UserRepository {
         lastFailedLoginAt: existing.lastFailedLoginAt,
         lockedAt: existing.lockedAt,
         lockReason: existing.lockReason,
+        removedAt: existing.removedAt,
+        removedByUserId: existing.removedByUserId,
+      );
+    }
+  }
+
+  @override
+  Future<void> markRemoved({
+    required String userId,
+    required String removedByUserId,
+  }) async {
+    final existing = _users[userId];
+    if (existing != null) {
+      _users[userId] = UserRecord(
+        id: existing.id,
+        companyId: existing.companyId,
+        email: existing.email,
+        firstName: existing.firstName,
+        lastName: existing.lastName,
+        salutation: existing.salutation,
+        title: existing.title,
+        telephoneNr: existing.telephoneNr,
+        roles: existing.roles,
+        isActive: false,
+        emailConfirmed: existing.emailConfirmed,
+        lastLoginRole: existing.lastLoginRole,
+        createdAt: existing.createdAt,
+        updatedAt: DateTime.now().toUtc(),
+        failedLoginAttempts: existing.failedLoginAttempts,
+        lastFailedLoginAt: existing.lastFailedLoginAt,
+        lockedAt: existing.lockedAt,
+        lockReason: existing.lockReason,
+        removedAt: DateTime.now().toUtc(),
+        removedByUserId: removedByUserId,
       );
     }
   }
@@ -216,6 +259,8 @@ class InMemoryUserRepository implements UserRepository {
         lastFailedLoginAt: existing.lastFailedLoginAt,
         lockedAt: existing.lockedAt,
         lockReason: existing.lockReason,
+        removedAt: existing.removedAt,
+        removedByUserId: existing.removedByUserId,
       );
     }
   }
@@ -241,6 +286,14 @@ class InMemoryProviderRepository implements ProviderRepository {
   @override
   Future<void> update(ProviderProfileRecord profile) async {
     _profiles[profile.companyId] = profile;
+  }
+
+  @override
+  Future<List<ProviderProfileRecord>> listByBranch(String branchId) async {
+    return _profiles.values.where((profile) {
+      return profile.branchIds.contains(branchId) ||
+          profile.pendingBranchIds.contains(branchId);
+    }).toList();
   }
 }
 
@@ -396,6 +449,7 @@ class InMemoryBranchRepository implements BranchRepository {
 class InMemoryInquiryRepository implements InquiryRepository {
   final Map<String, InquiryRecord> _inquiries = {};
   final Map<String, Set<String>> _assignments = {};
+  final Map<String, InquiryAssignmentRecord> _assignmentRecords = {};
 
   @override
   Future<void> create(InquiryRecord inquiry) async {
@@ -605,6 +659,15 @@ class InMemoryInquiryRepository implements InquiryRepository {
       _assignments
           .putIfAbsent(providerCompanyId, () => <String>{})
           .add(inquiryId);
+      final assignmentId = '${inquiryId}_$providerCompanyId';
+      _assignmentRecords[assignmentId] = InquiryAssignmentRecord(
+        id: assignmentId,
+        inquiryId: inquiryId,
+        providerCompanyId: providerCompanyId,
+        assignedAt: DateTime.now().toUtc(),
+        assignedByUserId: assignedByUserId,
+        deadlineReminderSentAt: null,
+      );
     }
     await markAssigned(inquiryId, DateTime.now().toUtc());
   }
@@ -631,6 +694,33 @@ class InMemoryInquiryRepository implements InquiryRepository {
     String providerCompanyId,
   ) async {
     return _assignments[providerCompanyId]?.contains(inquiryId) ?? false;
+  }
+
+  @override
+  Future<List<InquiryAssignmentRecord>> listAssignmentsByInquiry(
+    String inquiryId,
+  ) async {
+    return _assignmentRecords.values
+        .where((assignment) => assignment.inquiryId == inquiryId)
+        .toList();
+  }
+
+  @override
+  Future<void> markAssignmentReminderSent(
+    String assignmentId,
+    DateTime sentAt,
+  ) async {
+    final existing = _assignmentRecords[assignmentId];
+    if (existing != null) {
+      _assignmentRecords[assignmentId] = InquiryAssignmentRecord(
+        id: existing.id,
+        inquiryId: existing.inquiryId,
+        providerCompanyId: existing.providerCompanyId,
+        assignedAt: existing.assignedAt,
+        assignedByUserId: existing.assignedByUserId,
+        deadlineReminderSentAt: sentAt,
+      );
+    }
   }
 }
 
@@ -689,6 +779,45 @@ class InMemoryOfferRepository implements OfferRepository {
     );
     return filtered.length;
   }
+}
+
+class InMemoryDomainEventRepository implements DomainEventRepository {
+  final List<DomainEventRecord> _events = [];
+
+  @override
+  Future<void> create(DomainEventRecord event) async {
+    _events.add(event);
+  }
+
+  @override
+  Future<List<DomainEventRecord>> listRecent({int limit = 50}) async {
+    final reversed = _events.toList().reversed.toList();
+    return reversed.take(limit).toList();
+  }
+}
+
+class InMemoryAuditLogRepository implements AuditLogRepository {
+  final List<AuditLogRecord> _entries = [];
+
+  @override
+  Future<void> create(AuditLogRecord entry) async {
+    _entries.add(entry);
+  }
+
+  @override
+  Future<List<AuditLogRecord>> listRecent({int limit = 100}) async {
+    final reversed = _entries.toList().reversed.toList();
+    return reversed.take(limit).toList();
+  }
+}
+
+class InMemorySchemaVersionRepository implements SchemaVersionRepository {
+  InMemorySchemaVersionRepository({this.version});
+
+  int? version;
+
+  @override
+  Future<int?> getVersion() async => version;
 }
 
 class InMemoryAdsRepository implements AdsRepository {
@@ -829,6 +958,107 @@ class InMemoryEmailEventRepository implements EmailEventRepository {
   @override
   Future<List<EmailEventRecord>> listByUser(String userId) async {
     return _events.where((event) => event.userId == userId).toList();
+  }
+}
+
+class InMemoryRoleRepository implements RoleRepository {
+  final Map<String, RoleRecord> _roles = {};
+
+  @override
+  Future<void> create(RoleRecord role) async {
+    _roles[role.id] = role;
+  }
+
+  @override
+  Future<List<RoleRecord>> listAll() async {
+    final list = _roles.values.toList();
+    list.sort((a, b) => a.name.compareTo(b.name));
+    return list;
+  }
+
+  @override
+  Future<RoleRecord?> findById(String id) async => _roles[id];
+
+  @override
+  Future<RoleRecord?> findByName(String name) async {
+    for (final role in _roles.values) {
+      if (role.name == name.toLowerCase()) {
+        return role;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<void> update(RoleRecord role) async {
+    _roles[role.id] = role;
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    _roles.remove(id);
+  }
+
+  Future<void> seedDefaults() async {
+    final now = DateTime.now().toUtc();
+    await create(RoleRecord(
+      id: const Uuid().v4(),
+      name: 'buyer',
+      description: 'Buyer user',
+      createdAt: now,
+      updatedAt: now,
+    ));
+    await create(RoleRecord(
+      id: const Uuid().v4(),
+      name: 'provider',
+      description: 'Provider user',
+      createdAt: now,
+      updatedAt: now,
+    ));
+    await create(RoleRecord(
+      id: const Uuid().v4(),
+      name: 'consultant',
+      description: 'Consultant user',
+      createdAt: now,
+      updatedAt: now,
+    ));
+    await create(RoleRecord(
+      id: const Uuid().v4(),
+      name: 'admin',
+      description: 'Admin user',
+      createdAt: now,
+      updatedAt: now,
+    ));
+  }
+}
+
+class InMemoryProductRepository implements ProductRepository {
+  final Map<String, ProductRecord> _products = {};
+
+  @override
+  Future<void> create(ProductRecord product) async {
+    _products[product.id] = product;
+  }
+
+  @override
+  Future<List<ProductRecord>> listByCompany(String companyId) async {
+    return _products.values
+        .where((product) => product.companyId == companyId)
+        .toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
+  }
+
+  @override
+  Future<ProductRecord?> findById(String id) async => _products[id];
+
+  @override
+  Future<void> update(ProductRecord product) async {
+    _products[product.id] = product;
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    _products.remove(id);
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String branchId) async {
@@ -18,7 +19,17 @@ Future<Response> onRequest(RequestContext context, String branchId) async {
   }
   final repo = context.read<BranchRepository>();
   if (context.request.method == HttpMethod.delete) {
+    final existing = await repo.findBranchById(branchId);
     await repo.deleteBranch(branchId);
+    if (existing != null) {
+      await context.read<DomainEventService>().emit(
+            type: 'branch.deleted',
+            entityType: 'branch',
+            entityId: branchId,
+            actorId: auth.userId,
+            payload: {'name': existing.name},
+          );
+    }
     return Response(statusCode: 200);
   }
   if (context.request.method == HttpMethod.put) {
@@ -37,6 +48,13 @@ Future<Response> onRequest(RequestContext context, String branchId) async {
       return Response.json(statusCode: 400, body: 'Branch already exists');
     }
     await repo.updateBranchName(branchId, name);
+    await context.read<DomainEventService>().emit(
+          type: 'branch.updated',
+          entityType: 'branch',
+          entityId: branchId,
+          actorId: auth.userId,
+          payload: {'oldName': existing.name, 'newName': name},
+        );
     return Response(statusCode: 200);
   }
   return Response(statusCode: 405);

@@ -25,6 +25,8 @@ class UserRepository {
       'last_failed_login_at': user.lastFailedLoginAt?.toIso8601String(),
       'locked_at': user.lockedAt?.toIso8601String(),
       'lock_reason': user.lockReason,
+      'removed_at': user.removedAt?.toIso8601String(),
+      'removed_by_user_id': user.removedByUserId,
       'created_at': user.createdAt.toIso8601String(),
       'updated_at': user.updatedAt.toIso8601String(),
     });
@@ -89,6 +91,8 @@ class UserRepository {
       'last_failed_login_at': user.lastFailedLoginAt?.toIso8601String(),
       'locked_at': user.lockedAt?.toIso8601String(),
       'lock_reason': user.lockReason,
+      'removed_at': user.removedAt?.toIso8601String(),
+      'removed_by_user_id': user.removedByUserId,
       'updated_at': user.updatedAt.toIso8601String(),
     }).eq('id', user.id);
   }
@@ -109,6 +113,18 @@ class UserRepository {
   Future<void> deactivate(String userId) async {
     await _client.from('users').update({
       'is_active': false,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', userId);
+  }
+
+  Future<void> markRemoved({
+    required String userId,
+    required String removedByUserId,
+  }) async {
+    await _client.from('users').update({
+      'is_active': false,
+      'removed_at': DateTime.now().toUtc().toIso8601String(),
+      'removed_by_user_id': removedByUserId,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
     }).eq('id', userId);
   }
@@ -143,6 +159,8 @@ class UserRepository {
       lastFailedLoginAt: parseDateOrNull(row['last_failed_login_at']),
       lockedAt: parseDateOrNull(row['locked_at']),
       lockReason: row['lock_reason'] as String?,
+      removedAt: parseDateOrNull(row['removed_at']),
+      removedByUserId: row['removed_by_user_id'] as String?,
       createdAt: parseDate(row['created_at']),
       updatedAt: parseDate(row['updated_at']),
       passwordHash: row['password_hash'] as String?,

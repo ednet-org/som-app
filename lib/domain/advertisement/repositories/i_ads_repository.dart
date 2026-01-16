@@ -32,7 +32,7 @@ abstract class IAdsRepository {
   Future<String?> createAd(CreateAdRequest request);
 
   /// Updates an existing ad.
-  Future<void> updateAd(String adId, AdsAdIdPutRequest request);
+  Future<void> updateAd(String adId, Ad ad);
 
   /// Deletes an ad.
   Future<void> deleteAd(String adId);

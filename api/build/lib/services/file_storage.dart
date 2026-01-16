@@ -77,18 +77,40 @@ class FileStorage {
       return;
     }
     try {
-      await _client.storage
-          .createBucket(_bucket, const BucketOptions(public: true));
+      final bucket = await _client.storage.getBucket(_bucket);
+      if (!bucket.public) {
+        await _client.storage.updateBucket(
+          _bucket,
+          BucketOptions(
+            public: true,
+            fileSizeLimit: bucket.fileSizeLimit,
+            allowedMimeTypes: bucket.allowedMimeTypes,
+          ),
+        );
+      }
     } on StorageException catch (error) {
       final message = error.message.toLowerCase();
+      final isNotFound = error.statusCode == '404';
       final alreadyExists =
           error.statusCode == '409' || message.contains('exists');
-      if (!alreadyExists && error.statusCode == '404') {
-        await _client.from('storage.buckets').insert({
-          'id': _bucket,
-          'name': _bucket,
-          'public': true,
-        });
+      if (isNotFound) {
+        try {
+          await _client.storage
+              .createBucket(_bucket, const BucketOptions(public: true));
+        } on StorageException catch (createError) {
+          final createMessage = createError.message.toLowerCase();
+          final createAlreadyExists = createError.statusCode == '409' ||
+              createMessage.contains('exists');
+          if (createError.statusCode == '404') {
+            await _client.from('storage.buckets').insert({
+              'id': _bucket,
+              'name': _bucket,
+              'public': true,
+            });
+          } else if (!createAlreadyExists) {
+            rethrow;
+          }
+        }
       } else if (!alreadyExists) {
         rethrow;
       }

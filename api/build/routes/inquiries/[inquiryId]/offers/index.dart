@@ -4,8 +4,10 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/domain/som_domain.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
@@ -62,6 +64,17 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
         body: 'Provider registration is pending.',
       );
     }
+    final subscription = await context
+        .read<SubscriptionRepository>()
+        .findSubscriptionByCompany(auth.companyId);
+    if (subscription == null ||
+        subscription.status != 'active' ||
+        subscription.endDate.isBefore(DateTime.now().toUtc())) {
+      return Response.json(
+        statusCode: 403,
+        body: 'Provider subscription is inactive.',
+      );
+    }
     final inquiryRepo = context.read<InquiryRepository>();
     final inquiry = await inquiryRepo.findById(inquiryId);
     if (inquiry == null) {
@@ -107,7 +120,7 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       inquiryId: inquiryId,
       providerCompanyId: auth.companyId,
       providerUserId: auth.userId,
-      status: 'offer_uploaded',
+      status: 'offer_created',
       pdfPath: pdfPath,
       forwardedAt: DateTime.now().toUtc(),
       resolvedAt: null,
@@ -115,6 +128,15 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       providerDecision: 'offer_created',
       createdAt: DateTime.now().toUtc(),
     );
+    final domain = context.read<SomDomainModel>();
+    final offerEntity = domain.newOffer()
+      ..setAttribute('inquiryId', offer.inquiryId)
+      ..setAttribute('providerCompanyId', offer.providerCompanyId);
+    try {
+      offerEntity.validateRequired();
+    } catch (error) {
+      return Response.json(statusCode: 400, body: error.toString());
+    }
     await context.read<OfferRepository>().create(offer);
     await context
         .read<NotificationService>()

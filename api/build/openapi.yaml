@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: REST API for the SOM platform (buyers, providers, consultants).
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8081
     description: Local development
 
 tags:
@@ -20,6 +20,7 @@ tags:
   - name: Providers
   - name: Stats
   - name: Billing
+  - name: Roles
 
 components:
   securitySchemes:
@@ -30,6 +31,84 @@ components:
   schemas:
     ApiError:
       type: string
+    Role:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    RoleInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    Product:
+      type: object
+      required: [id, companyId, name]
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    ProductInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+    ProviderProfile:
+      type: object
+      required: [companyId, bankDetails, branchIds, pendingBranchIds, subscriptionPlanId, paymentInterval, status]
+      properties:
+        companyId:
+          type: string
+        bankDetails:
+          $ref: '#/components/schemas/BankDetails'
+        branchIds:
+          type: array
+          items:
+            type: string
+        pendingBranchIds:
+          type: array
+          items:
+            type: string
+        subscriptionPlanId:
+          type: string
+        paymentInterval:
+          type: string
+        providerType:
+          type: string
+        status:
+          type: string
+        rejectionReason:
+          type: string
+        rejectedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     Address:
       type: object
       required: [country, city, street, number, zip]
@@ -457,6 +536,24 @@ components:
           type: boolean
         priceInSubunit:
           type: integer
+        maxUsers:
+          type: integer
+          nullable: true
+        setupFeeInSubunit:
+          type: integer
+          nullable: true
+        bannerAdsPerMonth:
+          type: integer
+          nullable: true
+        normalAdsPerMonth:
+          type: integer
+          nullable: true
+        freeMonths:
+          type: integer
+          nullable: true
+        commitmentPeriodMonths:
+          type: integer
+          nullable: true
         rules:
           type: array
           items:
@@ -481,6 +578,24 @@ components:
           type: boolean
         priceInSubunit:
           type: integer
+        maxUsers:
+          type: integer
+          nullable: true
+        setupFeeInSubunit:
+          type: integer
+          nullable: true
+        bannerAdsPerMonth:
+          type: integer
+          nullable: true
+        normalAdsPerMonth:
+          type: integer
+          nullable: true
+        freeMonths:
+          type: integer
+          nullable: true
+        commitmentPeriodMonths:
+          type: integer
+          nullable: true
         confirm:
           type: boolean
           description: Require explicit confirmation when updating plans with active subscribers.
@@ -493,6 +608,26 @@ components:
                 type: integer
               upperLimit:
                 type: integer
+    AuditLogEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        actorId:
+          type: string
+          nullable: true
+        action:
+          type: string
+        entityType:
+          type: string
+        entityId:
+          type: string
+        metadata:
+          type: object
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
     SubscriptionCurrent:
       type: object
       properties:
@@ -1058,6 +1193,34 @@ paths:
                 $ref: '#/components/schemas/ApiError'
         '404':
           description: Not found
+  /Companies/{companyId}/users/{userId}/remove:
+    post:
+      tags: [Users]
+      summary: Remove user from company
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Removed
+        '400':
+          description: Admin constraint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
   /Companies/{companyId}/users/{userId}/update:
     put:
       tags: [Users]
@@ -1284,6 +1447,27 @@ paths:
       responses:
         '200':
           description: Deleted
+  /audit:
+    get:
+      tags: [Audit]
+      summary: List audit log entries
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Audit log entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLogEntry'
         '403':
           description: Forbidden
         '404':
@@ -2515,3 +2699,262 @@ paths:
                 type: string
         '403':
           description: Forbidden
+
+  /roles:
+    get:
+      tags: [Roles]
+      summary: List roles
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+    post:
+      tags: [Roles]
+      summary: Create role
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+      responses:
+        '200':
+          description: Created role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /roles/{roleId}:
+    put:
+      tags: [Roles]
+      summary: Update role
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: roleId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+      responses:
+        '200':
+          description: Updated role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    delete:
+      tags: [Roles]
+      summary: Delete role
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: roleId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /providers/{companyId}:
+    get:
+      tags: [Providers]
+      summary: Get provider profile
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Provider profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderProfile'
+        '404':
+          description: Not found
+
+  /providers/{companyId}/paymentDetails:
+    put:
+      tags: [Providers]
+      summary: Update provider payment details
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankDetails'
+      responses:
+        '200':
+          description: Updated payment details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companyId:
+                    type: string
+                  bankDetails:
+                    $ref: '#/components/schemas/BankDetails'
+        '400':
+          description: Validation error
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+
+  /providers/{companyId}/products:
+    get:
+      tags: [Providers]
+      summary: List provider products
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags: [Providers]
+      summary: Create provider product
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /providers/{companyId}/products/{productId}:
+    put:
+      tags: [Providers]
+      summary: Update provider product
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '200':
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      tags: [Providers]
+      summary: Delete provider product
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted

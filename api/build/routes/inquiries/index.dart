@@ -8,6 +8,7 @@ import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
@@ -60,6 +61,17 @@ Future<Response> _handleList(RequestContext context) async {
       return Response.json(
         statusCode: 403,
         body: 'Provider registration is pending.',
+      );
+    }
+    final subscription = await context
+        .read<SubscriptionRepository>()
+        .findSubscriptionByCompany(auth.companyId);
+    if (subscription == null ||
+        subscription.status != 'active' ||
+        subscription.endDate.isBefore(DateTime.now().toUtc())) {
+      return Response.json(
+        statusCode: 403,
+        body: 'Provider subscription is inactive.',
       );
     }
     inquiries = await repo.listAssignedToProvider(auth.companyId);
@@ -302,6 +314,12 @@ String _providerStatus(OfferRecord? offer) {
       return 'ignored';
     case 'offer_uploaded':
       return 'offer_created';
+    case 'offer_created':
+      return 'offer_created';
+    case 'won':
+      return 'won';
+    case 'lost':
+      return 'lost';
     default:
       return offer.status;
   }

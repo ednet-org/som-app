@@ -165,24 +165,27 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   }
 
   Widget _buildContextMenu() {
-    return Row(
-      children: [
-        const Text('Offers'),
-        const SizedBox(width: 12),
-        TextButton(onPressed: _refresh, child: const Text('Refresh')),
-        const SizedBox(width: 12),
-        DropdownButton<String?>(
-          value: _statusFilter,
-          hint: const Text('All Status'),
-          items: const [
-            DropdownMenuItem(value: null, child: Text('All Status')),
-            DropdownMenuItem(value: 'pending', child: Text('Pending')),
-            DropdownMenuItem(value: 'accepted', child: Text('Accepted')),
-            DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
-          ],
-          onChanged: _applyFilter,
-        ),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const Text('Offers'),
+          const SizedBox(width: 12),
+          TextButton(onPressed: _refresh, child: const Text('Refresh')),
+          const SizedBox(width: 12),
+          DropdownButton<String?>(
+            value: _statusFilter,
+            hint: const Text('All Status'),
+            items: const [
+              DropdownMenuItem(value: null, child: Text('All Status')),
+              DropdownMenuItem(value: 'pending', child: Text('Pending')),
+              DropdownMenuItem(value: 'accepted', child: Text('Accepted')),
+              DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
+            ],
+            onChanged: _applyFilter,
+          ),
+        ],
+      ),
     );
   }
 

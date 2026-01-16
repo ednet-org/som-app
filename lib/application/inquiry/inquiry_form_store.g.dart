@@ -23,22 +23,6 @@ mixin _$InquiryFormStore on _InquiryFormStore, Store {
     () => super.hasPdf,
     name: '_InquiryFormStore.hasPdf',
   )).value;
-  Computed<ContactInfo>? _$contactInfoComputed;
-
-  @override
-  ContactInfo get contactInfo =>
-      (_$contactInfoComputed ??= Computed<ContactInfo>(
-        () => super.contactInfo,
-        name: '_InquiryFormStore.contactInfo',
-      )).value;
-  Computed<ProviderCriteria?>? _$providerCriteriaComputed;
-
-  @override
-  ProviderCriteria? get providerCriteria =>
-      (_$providerCriteriaComputed ??= Computed<ProviderCriteria?>(
-        () => super.providerCriteria,
-        name: '_InquiryFormStore.providerCriteria',
-      )).value;
 
   late final _$branchIdAtom = Atom(
     name: '_InquiryFormStore.branchId',
@@ -703,9 +687,7 @@ pdfFileName: ${pdfFileName},
 isSubmitting: ${isSubmitting},
 error: ${error},
 isValid: ${isValid},
-hasPdf: ${hasPdf},
-contactInfo: ${contactInfo},
-providerCriteria: ${providerCriteria}
+hasPdf: ${hasPdf}
     ''';
   }
 }

@@ -2,6 +2,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String userId) async {
@@ -37,5 +38,11 @@ Future<Response> onRequest(RequestContext context, String userId) async {
       updatedAt: now,
     ),
   );
+  await context.read<AuditService>().log(
+        action: 'user.unlocked',
+        entityType: 'user',
+        entityId: user.id,
+        actorId: authResult.userId,
+      );
   return Response.json(body: {'status': 'unlocked'});
 }

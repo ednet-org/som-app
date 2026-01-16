@@ -3,6 +3,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -27,35 +28,53 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   if (offer == null) {
     return Response(statusCode: 404);
   }
-  await repo.updateStatus(
-    id: offerId,
-    status: 'accepted',
-    buyerDecision: 'accepted',
-    resolvedAt: DateTime.now().toUtc(),
-  );
   final inquiry =
       await context.read<InquiryRepository>().findById(offer.inquiryId);
-  if (inquiry != null) {
-    await context
-        .read<InquiryRepository>()
-        .closeInquiry(inquiry.id, DateTime.now().toUtc());
+  if (inquiry == null || inquiry.buyerCompanyId != auth.companyId) {
+    return Response(statusCode: 403);
   }
+  await repo.updateStatus(
+    id: offerId,
+    status: 'won',
+    buyerDecision: 'accepted',
+    providerDecision: 'won',
+    resolvedAt: DateTime.now().toUtc(),
+  );
+  await context
+      .read<InquiryRepository>()
+      .closeInquiry(inquiry.id, DateTime.now().toUtc());
   final email = context.read<EmailService>();
   final userRepo = context.read<UserRepository>();
   final admins = await userRepo.listAdminsByCompany(offer.providerCompanyId);
   for (final admin in admins) {
-    final contact = inquiry?.contactInfo;
+    final contact = inquiry.contactInfo;
+    final contactName = [
+      contact.salutation,
+      contact.title,
+      contact.firstName,
+      contact.lastName,
+    ].where((value) => value.trim().isNotEmpty).join(' ');
     await email.send(
       to: admin.email,
       subject: 'Offer accepted',
       text:
           'Offer $offerId has been accepted.\n'
           'Buyer contact:\n'
-          'Company: ${contact?.companyName ?? '-'}\n'
-          'Name: ${contact?.salutation ?? ''} ${contact?.title ?? ''} ${contact?.firstName ?? ''} ${contact?.lastName ?? ''}\n'
-          'Phone: ${contact?.telephone ?? '-'}\n'
-          'Email: ${contact?.email ?? 'buyer'}',
+          'Company: ${contact.companyName.isNotEmpty ? contact.companyName : '-'}\n'
+          'Name: ${contactName.isNotEmpty ? contactName : '-'}\n'
+          'Phone: ${contact.telephone.isNotEmpty ? contact.telephone : '-'}\n'
+          'Email: ${contact.email.isNotEmpty ? contact.email : 'buyer'}',
     );
   }
+  await context.read<DomainEventService>().emit(
+        type: 'offer.accepted',
+        entityType: 'offer',
+        entityId: offerId,
+        actorId: auth.userId,
+        payload: {
+          'inquiryId': offer.inquiryId,
+          'providerCompanyId': offer.providerCompanyId,
+        },
+      );
   return Response(statusCode: 200);
 }

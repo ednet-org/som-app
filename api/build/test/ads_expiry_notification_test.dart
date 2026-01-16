@@ -1,10 +1,5 @@
 import 'package:test/test.dart';
 
-import 'package:som_api/infrastructure/repositories/ads_repository.dart';
-import 'package:som_api/infrastructure/repositories/company_repository.dart';
-import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
-import 'package:som_api/infrastructure/repositories/offer_repository.dart';
-import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'test_utils.dart';
@@ -83,6 +78,7 @@ void main() {
       ads: ads,
       users: users,
       companies: companies,
+      providers: InMemoryProviderRepository(),
       inquiries: inquiries,
       offers: offers,
       email: email,

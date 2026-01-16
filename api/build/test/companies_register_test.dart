@@ -6,6 +6,8 @@ import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/domain_event_service.dart';
+import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/registration_service.dart';
 import '../routes/Companies/index.dart' as route;
 import 'test_utils.dart';
@@ -64,6 +66,24 @@ void main() {
         }),
       );
       context.provide<RegistrationService>(registration);
+      final notifications = NotificationService(
+        ads: InMemoryAdsRepository(),
+        users: users,
+        companies: companies,
+        providers: providers,
+        inquiries: InMemoryInquiryRepository(),
+        offers: InMemoryOfferRepository(),
+        email: TestEmailService(),
+      );
+      context.provide<NotificationService>(notifications);
+      context.provide<DomainEventService>(
+        DomainEventService(
+          repository: InMemoryDomainEventRepository(),
+          notifications: notifications,
+          companies: companies,
+          inquiries: InMemoryInquiryRepository(),
+        ),
+      );
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 200);
       final companyList = await companies.listAll();
@@ -123,6 +143,24 @@ void main() {
         }),
       );
       context.provide<RegistrationService>(registration);
+      final notifications = NotificationService(
+        ads: InMemoryAdsRepository(),
+        users: users,
+        companies: companies,
+        providers: providers,
+        inquiries: InMemoryInquiryRepository(),
+        offers: InMemoryOfferRepository(),
+        email: TestEmailService(),
+      );
+      context.provide<NotificationService>(notifications);
+      context.provide<DomainEventService>(
+        DomainEventService(
+          repository: InMemoryDomainEventRepository(),
+          notifications: notifications,
+          companies: companies,
+          inquiries: InMemoryInquiryRepository(),
+        ),
+      );
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
     });
@@ -177,6 +215,24 @@ void main() {
         }),
       );
       context.provide<RegistrationService>(registration);
+      final notifications = NotificationService(
+        ads: InMemoryAdsRepository(),
+        users: users,
+        companies: companies,
+        providers: providers,
+        inquiries: InMemoryInquiryRepository(),
+        offers: InMemoryOfferRepository(),
+        email: TestEmailService(),
+      );
+      context.provide<NotificationService>(notifications);
+      context.provide<DomainEventService>(
+        DomainEventService(
+          repository: InMemoryDomainEventRepository(),
+          notifications: notifications,
+          companies: companies,
+          inquiries: InMemoryInquiryRepository(),
+        ),
+      );
       final response = await route.onRequest(context.context);
       expect(response.statusCode, 400);
     });
