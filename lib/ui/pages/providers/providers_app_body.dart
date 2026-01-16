@@ -24,8 +24,6 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
   Future<List<ProviderSummary>>? _providersFuture;
   List<ProviderSummary> _providers = const [];
   ProviderSummary? _selected;
-  Map<String, String?> _rejectionReasons = {};
-  Map<String, String?> _rejectedAt = {};
 
   String? _branchId;
   String? _companySize;
@@ -57,14 +55,6 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
 
   Future<List<ProviderSummary>> _loadProviders() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final query = <String, dynamic>{
-      if (_branchId != null) 'branchId': _branchId,
-      if (_companySize != null) 'companySize': _companySize,
-      if (_providerType != null) 'providerType': _providerType,
-      if (_zipPrefix != null && _zipPrefix!.isNotEmpty) 'zipPrefix': _zipPrefix,
-      if (_status != null) 'status': _status,
-      if (_claimed != null) 'claimed': _claimed,
-    };
     final response = await api.getProvidersApi().providersGet(
           branchId: _branchId,
           companySize: _companySize,
@@ -74,22 +64,6 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           claimed: _claimed,
         );
     _providers = response.data?.toList() ?? const [];
-    try {
-      final raw = await api.dio.get('/providers', queryParameters: query);
-      final rows = raw.data as List<dynamic>;
-      final reasons = <String, String?>{};
-      final rejectedAt = <String, String?>{};
-      for (final row in rows) {
-        final id = row['companyId']?.toString();
-        if (id == null || id.isEmpty) continue;
-        reasons[id] = row['rejectionReason'] as String?;
-        rejectedAt[id] = row['rejectedAt'] as String?;
-      }
-      _rejectionReasons = reasons;
-      _rejectedAt = rejectedAt;
-    } catch (error, stackTrace) {
-      UILogger.silentError('ProvidersAppBody._loadProviders.rejectionData', error, stackTrace);
-    }
     return _providers;
   }
 
@@ -302,15 +276,15 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                         '${_selected!.pendingBranchIds?.join(', ') ?? '-'}',
                       ),
                       Text('Status: ${_selected!.status ?? '-'}'),
-                      if (_rejectionReasons[_selected!.companyId ?? ''] != null)
+                      if (_selected!.rejectionReason != null)
                         Text(
                           'Rejection reason: '
-                          '${_rejectionReasons[_selected!.companyId ?? ''] ?? '-'}',
+                          '${_selected!.rejectionReason ?? '-'}',
                         ),
-                      if (_rejectedAt[_selected!.companyId ?? ''] != null)
+                      if (_selected!.rejectedAt != null)
                         Text(
                           'Rejected at: '
-                          '${_rejectedAt[_selected!.companyId ?? ''] ?? '-'}',
+                          '${_selected!.rejectedAt?.toLocal().toString() ?? '-'}',
                         ),
                       const Divider(height: 24),
                       Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),

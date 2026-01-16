@@ -135,18 +135,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
 
   Future<void> _createPlan() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final input = SubscriptionPlanInput((b) => b
-      ..title = _titleController.text.trim()
-      ..sortPriority = int.tryParse(_sortController.text.trim()) ?? 0
-      ..priceInSubunit = int.tryParse(_priceController.text.trim()) ?? 0
-      ..maxUsers = _parseOptionalInt(_maxUsersController)
-      ..setupFeeInSubunit = _parseOptionalInt(_setupFeeController)
-      ..bannerAdsPerMonth = _parseOptionalInt(_bannerAdsController)
-      ..normalAdsPerMonth = _parseOptionalInt(_normalAdsController)
-      ..freeMonths = _parseOptionalInt(_freeMonthsController)
-      ..commitmentPeriodMonths = _parseOptionalInt(_commitmentController)
-      ..isActive = _isActive
-      ..rules.replace(_parseRules()));
+    final input = _buildPlanInput();
     await api.getSubscriptionsApi().subscriptionsPost(
           subscriptionPlanInput: input,
         );
@@ -156,26 +145,11 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   Future<void> _updatePlan() async {
     if (_selected?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    final payload = {
-      'title': _titleController.text.trim(),
-      'sortPriority': int.tryParse(_sortController.text.trim()) ?? 0,
-      'priceInSubunit': int.tryParse(_priceController.text.trim()) ?? 0,
-      'maxUsers': _parseOptionalInt(_maxUsersController),
-      'setupFeeInSubunit': _parseOptionalInt(_setupFeeController),
-      'bannerAdsPerMonth': _parseOptionalInt(_bannerAdsController),
-      'normalAdsPerMonth': _parseOptionalInt(_normalAdsController),
-      'freeMonths': _parseOptionalInt(_freeMonthsController),
-      'commitmentPeriodMonths': _parseOptionalInt(_commitmentController),
-      'isActive': _isActive,
-      'rules': _parseRules().map((rule) {
-        return {
-          'restriction': rule.restriction,
-          'upperLimit': rule.upperLimit,
-        };
-      }).toList(),
-    };
     try {
-      await api.dio.put('/Subscriptions/plans/${_selected!.id!}', data: payload);
+      await api.getSubscriptionsApi().subscriptionsPlansPlanIdPut(
+            planId: _selected!.id!,
+            subscriptionPlanInput: _buildPlanInput(),
+          );
       await _refresh();
     } on DioException catch (error) {
       final message = error.response?.data?.toString() ?? '';
@@ -199,10 +173,10 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
           ),
         );
         if (confirmed == true) {
-          await api.dio.put(
-            '/Subscriptions/plans/${_selected!.id!}',
-            data: {...payload, 'confirm': true},
-          );
+          await api.getSubscriptionsApi().subscriptionsPlansPlanIdPut(
+                planId: _selected!.id!,
+                subscriptionPlanInput: _buildPlanInput(confirm: true),
+              );
           await _refresh();
         }
       } else {
@@ -235,9 +209,10 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     if (_selected?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.post('/Subscriptions/downgrade', data: {
-        'planId': _selected!.id!,
-      });
+      await api.getSubscriptionsApi().subscriptionsDowngradePost(
+            subscriptionsUpgradePostRequest:
+                SubscriptionsUpgradePostRequest((b) => b..planId = _selected!.id!),
+          );
       await _loadCurrent();
       _showSnack('Downgrade scheduled.');
     } on DioException catch (error) {
@@ -431,4 +406,20 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   }
 
   String _formatOptional(int? value) => value == null ? '' : value.toString();
+
+  SubscriptionPlanInput _buildPlanInput({bool? confirm}) {
+    return SubscriptionPlanInput((b) => b
+      ..title = _titleController.text.trim()
+      ..sortPriority = int.tryParse(_sortController.text.trim()) ?? 0
+      ..priceInSubunit = int.tryParse(_priceController.text.trim()) ?? 0
+      ..maxUsers = _parseOptionalInt(_maxUsersController)
+      ..setupFeeInSubunit = _parseOptionalInt(_setupFeeController)
+      ..bannerAdsPerMonth = _parseOptionalInt(_bannerAdsController)
+      ..normalAdsPerMonth = _parseOptionalInt(_normalAdsController)
+      ..freeMonths = _parseOptionalInt(_freeMonthsController)
+      ..commitmentPeriodMonths = _parseOptionalInt(_commitmentController)
+      ..isActive = _isActive
+      ..confirm = confirm
+      ..rules.replace(_parseRules()));
+  }
 }

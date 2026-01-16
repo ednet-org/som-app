@@ -303,14 +303,12 @@ class _UserAppBodyState extends State<UserAppBody> {
     String message = 'Password updated';
     bool success = true;
     try {
-      await api.dio.post(
-        '/auth/changePassword',
-        data: {
-          'currentPassword': currentController.text,
-          'newPassword': newController.text,
-          'confirmPassword': confirmController.text,
-        },
-      );
+      await api.getAuthApi().authChangePasswordPost(
+            authChangePasswordPostRequest: AuthChangePasswordPostRequest((b) => b
+              ..currentPassword = currentController.text
+              ..newPassword = newController.text
+              ..confirmPassword = confirmController.text),
+          );
     } on DioException catch (error) {
       success = false;
       final data = error.response?.data;
@@ -381,9 +379,10 @@ class _UserAppBodyState extends State<UserAppBody> {
     );
     if (confirmed != true) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    await api.dio.post(
-      '/Companies/$companyId/users/${_selectedUser!.id}/remove',
-    );
+    await api.getUsersApi().companiesCompanyIdUsersUserIdRemovePost(
+          companyId: companyId,
+          userId: _selectedUser!.id!,
+        );
     setState(() => _selectedUser = null);
     await _refresh();
   }

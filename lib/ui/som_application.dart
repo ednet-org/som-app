@@ -286,7 +286,7 @@ class SomApplication extends StatelessWidget {
     final appStore = Provider.of<Application>(context, listen: false);
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.post('/auth/logout');
+      await api.getAuthApi().authLogoutPost();
     } catch (error, stackTrace) {
       UILogger.silentError('SomApplication._logout', error, stackTrace);
     }

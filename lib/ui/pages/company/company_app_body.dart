@@ -22,8 +22,8 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
   final _ownerController = TextEditingController();
   final _productController = TextEditingController();
 
-  Map<String, dynamic>? _providerProfile;
-  List<Map<String, dynamic>> _products = const [];
+  ProviderProfile? _providerProfile;
+  List<Product> _products = const [];
   String? _providerError;
 
   @override
@@ -54,7 +54,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company != null) {
       _nameController.text = company.name ?? '';
       _websiteController.text = company.websiteUrl ?? '';
-      if (company.type == 'provider' || company.type == 'buyer_provider') {
+      if (_isProviderType(company)) {
         await _loadProviderExtras(api, companyId);
       }
     }
@@ -64,25 +64,19 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
 
   Future<void> _loadProviderExtras(Openapi api, String companyId) async {
     try {
-      final profileResponse = await api.dio.get('/providers/$companyId');
-      if (profileResponse.data is Map) {
-        _providerProfile =
-            Map<String, dynamic>.from(profileResponse.data as Map);
-        final bankDetails =
-            _providerProfile?['bankDetails'] as Map<String, dynamic>? ?? {};
-        _ibanController.text = bankDetails['iban']?.toString() ?? '';
-        _bicController.text = bankDetails['bic']?.toString() ?? '';
-        _ownerController.text = bankDetails['accountOwner']?.toString() ?? '';
+      final profileResponse =
+          await api.getProvidersApi().providersCompanyIdGet(companyId: companyId);
+      _providerProfile = profileResponse.data;
+      final bankDetails = _providerProfile?.bankDetails;
+      if (bankDetails != null) {
+        _ibanController.text = bankDetails.iban;
+        _bicController.text = bankDetails.bic;
+        _ownerController.text = bankDetails.accountOwner;
       }
-      final productsResponse =
-          await api.dio.get('/providers/$companyId/products');
-      final data = productsResponse.data is List
-          ? productsResponse.data as List
-          : const [];
-      _products = data
-          .whereType<Map>()
-          .map((entry) => Map<String, dynamic>.from(entry))
-          .toList();
+      final productsResponse = await api
+          .getProvidersApi()
+          .providersCompanyIdProductsGet(companyId: companyId);
+      _products = productsResponse.data?.toList() ?? const [];
     } catch (error) {
       _providerError = error.toString();
     }
@@ -99,11 +93,13 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.put('/providers/${company!.id}/paymentDetails', data: {
-        'iban': _ibanController.text.trim(),
-        'bic': _bicController.text.trim(),
-        'accountOwner': _ownerController.text.trim(),
-      });
+      await api.getProvidersApi().providersCompanyIdPaymentDetailsPut(
+            companyId: company!.id!,
+            bankDetails: BankDetails((b) => b
+              ..iban = _ibanController.text.trim()
+              ..bic = _bicController.text.trim()
+              ..accountOwner = _ownerController.text.trim()),
+          );
       await _refresh();
     } catch (error) {
       setState(() => _providerError = error.toString());
@@ -115,9 +111,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.post('/providers/${company!.id}/products', data: {
-        'name': _productController.text.trim(),
-      });
+      await api.getProvidersApi().providersCompanyIdProductsPost(
+            companyId: company!.id!,
+            productInput: ProductInput((b) => b
+              ..name = _productController.text.trim()),
+          );
       _productController.clear();
       await _refresh();
     } catch (error) {
@@ -130,9 +128,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.put('/providers/${company!.id}/products/$productId', data: {
-        'name': name,
-      });
+      await api.getProvidersApi().providersCompanyIdProductsProductIdPut(
+            companyId: company!.id!,
+            productId: productId,
+            productInput: ProductInput((b) => b..name = name),
+          );
       await _refresh();
     } catch (error) {
       setState(() => _providerError = error.toString());
@@ -144,7 +144,10 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.delete('/providers/${company!.id}/products/$productId');
+      await api.getProvidersApi().providersCompanyIdProductsProductIdDelete(
+            companyId: company!.id!,
+            productId: productId,
+          );
       await _refresh();
     } catch (error) {
       setState(() => _providerError = error.toString());
@@ -261,8 +264,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                 ),
                 const SizedBox(height: 12),
                 Text('Company ID: ${company.id ?? '-'}'),
-                if (company.type == 'provider' ||
-                    company.type == 'buyer_provider') ...[
+                if (_isProviderType(company)) ...[
                   const Divider(height: 32),
                   Text(
                     'Payment details',
@@ -316,7 +318,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                   const SizedBox(height: 12),
                   ..._products.map(
                     (product) => ListTile(
-                      title: Text(product['name']?.toString() ?? ''),
+                      title: Text(product.name),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -324,7 +326,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                             icon: const Icon(Icons.edit),
                             onPressed: () async {
                               final controller = TextEditingController(
-                                text: product['name']?.toString() ?? '',
+                                text: product.name,
                               );
                               final updated = await showDialog<bool>(
                                 context: context,
@@ -346,9 +348,9 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                                 ),
                               );
                               if (updated == true &&
-                                  product['id'] != null) {
+                                  product.id.isNotEmpty) {
                                 await _updateProduct(
-                                  product['id'].toString(),
+                                  product.id,
                                   controller.text.trim(),
                                 );
                               }
@@ -356,11 +358,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete_outline),
-                            onPressed: product['id'] == null
-                                ? null
-                                : () => _deleteProduct(
-                                      product['id'].toString(),
-                                    ),
+                            onPressed: () => _deleteProduct(product.id),
                           ),
                         ],
                       ),
@@ -373,5 +371,9 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
         );
       },
     );
+  }
+
+  bool _isProviderType(CompanyDto company) {
+    return company.type == 1 || company.type == 2;
   }
 }

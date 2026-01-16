@@ -4,17 +4,43 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<void> openSignedPdf(
+Future<void> openInquiryPdf(
   BuildContext context, {
-  required String endpoint,
+  required String inquiryId,
 }) async {
   final api = Provider.of<Openapi>(context, listen: false);
   try {
-    final response = await api.dio.get(endpoint);
-    final data = response.data;
-    final signedUrl = data is Map<String, dynamic>
-        ? data['signedUrl']?.toString()
-        : null;
+    final response = await api
+        .getInquiriesApi()
+        .inquiriesInquiryIdPdfGet(inquiryId: inquiryId);
+    final signedUrl = response.data?.signedUrl;
+    if (signedUrl == null || signedUrl.isEmpty) {
+      throw StateError('Missing signed URL');
+    }
+    await launchUrl(
+      Uri.parse(signedUrl),
+      mode: LaunchMode.externalApplication,
+    );
+  } on DioException {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Failed to download PDF.')),
+    );
+  } catch (_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Failed to download PDF.')),
+    );
+  }
+}
+
+Future<void> openOfferPdf(
+  BuildContext context, {
+  required String offerId,
+}) async {
+  final api = Provider.of<Openapi>(context, listen: false);
+  try {
+    final response =
+        await api.getOffersApi().offersOfferIdPdfGet(offerId: offerId);
+    final signedUrl = response.data?.signedUrl;
     if (signedUrl == null || signedUrl.isEmpty) {
       throw StateError('Missing signed URL');
     }

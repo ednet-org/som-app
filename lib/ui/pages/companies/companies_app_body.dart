@@ -18,7 +18,6 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
   Future<List<CompanyDto>>? _companiesFuture;
   List<CompanyDto> _companies = const [];
   CompanyDto? _selected;
-  Map<String, String> _companyStatus = {};
 
   String _search = '';
   String? _typeFilter;
@@ -62,17 +61,6 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     final api = Provider.of<Openapi>(context, listen: false);
     final response = await api.getCompaniesApi().companiesGet();
     _companies = response.data?.toList() ?? const [];
-    try {
-      final raw = await api.dio.get('/Companies');
-      final list = raw.data as List<dynamic>;
-      _companyStatus = {
-        for (final item in list)
-          if (item is Map<String, dynamic> && item['id'] != null)
-            item['id'].toString(): (item['status'] as String? ?? 'active'),
-      };
-    } catch (error, stackTrace) {
-      UILogger.silentError('CompaniesAppBody._loadCompanies.status', error, stackTrace);
-    }
     return _companies;
   }
 
@@ -132,7 +120,9 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
   Future<void> _activateCompany() async {
     if (_selected?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    await api.dio.post('/Companies/${_selected!.id!}/activate');
+    await api
+        .getCompaniesApi()
+        .companiesCompanyIdActivatePost(companyId: _selected!.id!);
     await _refresh();
   }
 
@@ -389,8 +379,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                   itemCount: companies.length,
                   itemBuilder: (context, index) {
                     final company = companies[index];
-                    final status =
-                        company.id == null ? 'unknown' : _companyStatus[company.id!] ?? 'unknown';
+                    final status = company.status ?? 'unknown';
                     return ListTile(
                       title: Text(company.name ?? 'Company'),
                       subtitle: Text('Type: ${company.type ?? '-'} • $status'),
@@ -411,7 +400,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                       Text(_selected!.name ?? 'Company',
                           style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 12),
-                      Text('Status: ${_selected?.id == null ? 'unknown' : _companyStatus[_selected!.id!] ?? 'unknown'}'),
+                      Text('Status: ${_selected?.status ?? 'unknown'}'),
                       const SizedBox(height: 12),
                       TextField(
                         controller: _nameController,
@@ -462,7 +451,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                           ),
                           const SizedBox(width: 12),
                           if ((_selected?.id != null &&
-                                  (_companyStatus[_selected!.id!] ?? 'active') ==
+                                  (_selected?.status ?? 'active') ==
                                       'inactive'))
                             TextButton(
                               onPressed: _activateCompany,

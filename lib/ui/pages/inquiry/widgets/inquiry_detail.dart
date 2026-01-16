@@ -192,9 +192,9 @@ class InquiryDetail extends StatelessWidget {
           TextButton.icon(
             onPressed: inquiry.id == null
                 ? null
-                : () => openSignedPdf(
+                : () => openInquiryPdf(
                       context,
-                      endpoint: '/inquiries/${inquiry.id}/pdf',
+                      inquiryId: inquiry.id!,
                     ),
             icon: const Icon(Icons.download, size: SomIconSize.sm),
             label: const Text('Download'),

@@ -108,10 +108,11 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     );
     if (confirmed != true) return;
     try {
-      await api.dio.post(
-        '/providers/${provider.companyId}/decline',
-        data: {'reason': controller.text.trim()},
-      );
+      await api.getProvidersApi().providersCompanyIdDeclinePost(
+            companyId: provider.companyId!,
+            subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest((b) => b
+              ..reason = controller.text.trim()),
+          );
     } catch (error) {
       _showSnack('Failed to decline provider: $error');
     }

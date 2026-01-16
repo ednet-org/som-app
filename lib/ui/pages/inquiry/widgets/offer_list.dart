@@ -95,9 +95,9 @@ class OfferCard extends StatelessWidget {
               TextButton(
                 onPressed: offer.id == null
                     ? null
-                    : () => openSignedPdf(
+                    : () => openOfferPdf(
                           context,
-                          endpoint: '/offers/${offer.id}/pdf',
+                          offerId: offer.id!,
                         ),
                 child: const Text('PDF'),
               ),

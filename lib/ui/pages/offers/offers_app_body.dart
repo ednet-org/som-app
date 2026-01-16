@@ -328,9 +328,9 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   }
 
   Future<void> _openOfferPdf(String offerId) async {
-    await openSignedPdf(
+    await openOfferPdf(
       context,
-      endpoint: '/offers/$offerId/pdf',
+      offerId: offerId,
     );
   }
 }

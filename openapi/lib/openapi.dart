@@ -54,6 +54,7 @@ export 'package:openapi/src/model/create_inquiry_request.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_assign_post_request.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_offers_post200_response.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_offers_post_request1.dart';
+export 'package:openapi/src/model/inquiries_inquiry_id_pdf_get200_response.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_pdf_post200_response.dart';
 export 'package:openapi/src/model/inquiry.dart';
 export 'package:openapi/src/model/offer.dart';

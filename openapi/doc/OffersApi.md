@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**inquiriesInquiryIdOffersGet**](OffersApi.md#inquiriesinquiryidoffersget) | **GET** /inquiries/{inquiryId}/offers | List offers for inquiry
 [**inquiriesInquiryIdOffersPost**](OffersApi.md#inquiriesinquiryidofferspost) | **POST** /inquiries/{inquiryId}/offers | Create offer for inquiry
 [**offersOfferIdAcceptPost**](OffersApi.md#offersofferidacceptpost) | **POST** /offers/{offerId}/accept | Accept offer
+[**offersOfferIdPdfGet**](OffersApi.md#offersofferidpdfget) | **GET** /offers/{offerId}/pdf | Download offer PDF (signed URL)
 [**offersOfferIdRejectPost**](OffersApi.md#offersofferidrejectpost) | **POST** /offers/{offerId}/reject | Reject offer
 
 
@@ -136,6 +137,47 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **offersOfferIdPdfGet**
+> InquiriesInquiryIdPdfGet200Response offersOfferIdPdfGet(offerId)
+
+Download offer PDF (signed URL)
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getOffersApi();
+final String offerId = offerId_example; // String | 
+
+try {
+    final response = api.offersOfferIdPdfGet(offerId);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling OffersApi->offersOfferIdPdfGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **offerId** | **String**|  | 
+
+### Return type
+
+[**InquiriesInquiryIdPdfGet200Response**](InquiriesInquiryIdPdfGet200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

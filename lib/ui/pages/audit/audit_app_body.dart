@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,7 @@ class AuditAppBody extends StatefulWidget {
 }
 
 class _AuditAppBodyState extends State<AuditAppBody> {
-  Future<List<Map<String, dynamic>>>? _future;
+  Future<List<AuditLogEntry>>? _future;
 
   @override
   void didChangeDependencies() {
@@ -21,19 +20,15 @@ class _AuditAppBodyState extends State<AuditAppBody> {
     _future ??= _loadLogs();
   }
 
-  Future<List<Map<String, dynamic>>> _loadLogs() async {
+  Future<List<AuditLogEntry>> _loadLogs() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final response = await api.dio.get('/audit', queryParameters: {'limit': 200});
-    final data = response.data as List<dynamic>;
-    return data
-        .whereType<Map<String, dynamic>>()
-        .map((entry) => Map<String, dynamic>.from(entry))
-        .toList();
+    final response = await api.getAuditApi().auditGet(limit: 200);
+    return response.data?.toList() ?? const [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<List<AuditLogEntry>>(
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -52,7 +47,7 @@ class _AuditAppBodyState extends State<AuditAppBody> {
             rightSplit: const SizedBox.shrink(),
           );
         }
-        final items = snapshot.data ?? [];
+        final items = snapshot.data ?? const [];
         return AppBody(
           contextMenu: Row(
             children: [
@@ -69,11 +64,11 @@ class _AuditAppBodyState extends State<AuditAppBody> {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (context, index) {
               final entry = items[index];
-              final action = entry['action']?.toString() ?? 'unknown';
-              final entity = entry['entityType']?.toString() ?? '-';
-              final entityId = entry['entityId']?.toString() ?? '-';
-              final actor = entry['actorId']?.toString() ?? 'system';
-              final createdAt = entry['createdAt']?.toString() ?? '';
+              final action = entry.action ?? 'unknown';
+              final entity = entry.entityType ?? '-';
+              final entityId = entry.entityId ?? '-';
+              final actor = entry.actorId ?? 'system';
+              final createdAt = entry.createdAt?.toLocal().toString() ?? '';
               return ListTile(
                 title: Text(action),
                 subtitle: Text('$entity • $entityId\n$createdAt'),

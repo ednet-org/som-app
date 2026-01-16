@@ -35,7 +35,7 @@ void main() {
         expect(options.path, '/ads');
         final data = options.data as Map<String, dynamic>;
         expect(data['type'], 'normal');
-        expect(data['status'], 'active');
+        expect(data['status'], 'draft');
         expect(data['branchId'], 'branch-1');
         expect(data['url'], 'https://example.com');
         return Response(
@@ -47,7 +47,7 @@ void main() {
 
       final request = CreateAdRequest((b) => b
         ..type = 'normal'
-        ..status = 'active'
+        ..status = CreateAdRequestStatusEnum.draft
         ..branchId = 'branch-1'
         ..url = 'https://example.com');
 

@@ -13,9 +13,9 @@ class RolesAppBody extends StatefulWidget {
 }
 
 class _RolesAppBodyState extends State<RolesAppBody> {
-  Future<List<Map<String, dynamic>>>? _rolesFuture;
-  List<Map<String, dynamic>> _roles = const [];
-  Map<String, dynamic>? _selected;
+  Future<List<Role>>? _rolesFuture;
+  List<Role> _roles = const [];
+  Role? _selected;
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   String? _error;
@@ -33,14 +33,10 @@ class _RolesAppBodyState extends State<RolesAppBody> {
     super.dispose();
   }
 
-  Future<List<Map<String, dynamic>>> _loadRoles() async {
+  Future<List<Role>> _loadRoles() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final response = await api.dio.get('/roles');
-    final data = response.data is List ? response.data as List : const [];
-    _roles = data
-        .whereType<Map>()
-        .map((entry) => Map<String, dynamic>.from(entry))
-        .toList();
+    final response = await api.getRolesApi().rolesGet();
+    _roles = response.data?.toList() ?? const [];
     return _roles;
   }
 
@@ -50,11 +46,11 @@ class _RolesAppBodyState extends State<RolesAppBody> {
     });
   }
 
-  void _selectRole(Map<String, dynamic> role) {
+  void _selectRole(Role role) {
     setState(() {
       _selected = role;
-      _nameController.text = role['name']?.toString() ?? '';
-      _descriptionController.text = role['description']?.toString() ?? '';
+      _nameController.text = role.name;
+      _descriptionController.text = role.description ?? '';
     });
   }
 
@@ -66,10 +62,13 @@ class _RolesAppBodyState extends State<RolesAppBody> {
     }
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.post('/roles', data: {
-        'name': name,
-        'description': _descriptionController.text.trim(),
-      });
+      await api.getRolesApi().rolesPost(
+            roleInput: RoleInput((b) => b
+              ..name = name
+              ..description = _descriptionController.text.trim().isEmpty
+                  ? null
+                  : _descriptionController.text.trim()),
+          );
       _clearForm();
       await _refresh();
     } on DioException catch (error) {
@@ -82,10 +81,14 @@ class _RolesAppBodyState extends State<RolesAppBody> {
     if (role == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.put('/roles/${role['id']}', data: {
-        'name': _nameController.text.trim(),
-        'description': _descriptionController.text.trim(),
-      });
+      await api.getRolesApi().rolesRoleIdPut(
+            roleId: role.id,
+            roleInput: RoleInput((b) => b
+              ..name = _nameController.text.trim()
+              ..description = _descriptionController.text.trim().isEmpty
+                  ? null
+                  : _descriptionController.text.trim()),
+          );
       await _refresh();
     } on DioException catch (error) {
       setState(() => _error = _extractError(error));
@@ -97,7 +100,7 @@ class _RolesAppBodyState extends State<RolesAppBody> {
     if (role == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      await api.dio.delete('/roles/${role['id']}');
+      await api.getRolesApi().rolesRoleIdDelete(roleId: role.id);
       _clearForm();
       await _refresh();
     } on DioException catch (error) {
@@ -124,7 +127,7 @@ class _RolesAppBodyState extends State<RolesAppBody> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<List<Role>>(
       future: _rolesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -158,9 +161,9 @@ class _RolesAppBodyState extends State<RolesAppBody> {
             children: roles
                 .map(
                   (role) => ListTile(
-                    title: Text(role['name']?.toString() ?? '-'),
-                    subtitle: Text(role['description']?.toString() ?? ''),
-                    selected: _selected?['id'] == role['id'],
+                    title: Text(role.name),
+                    subtitle: Text(role.description ?? ''),
+                    selected: _selected?.id == role.id,
                     onTap: () => _selectRole(role),
                   ),
                 )

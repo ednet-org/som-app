@@ -43,6 +43,7 @@ import 'package:openapi/src/model/create_inquiry_request.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_assign_post_request.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_offers_post200_response.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_offers_post_request1.dart';
+import 'package:openapi/src/model/inquiries_inquiry_id_pdf_get200_response.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_pdf_post200_response.dart';
 import 'package:openapi/src/model/inquiry.dart';
 import 'package:openapi/src/model/offer.dart';
@@ -104,6 +105,7 @@ part 'serializers.g.dart';
   InquiriesInquiryIdAssignPostRequest,
   InquiriesInquiryIdOffersPost200Response,
   InquiriesInquiryIdOffersPostRequest1,
+  InquiriesInquiryIdPdfGet200Response,
   InquiriesInquiryIdPdfPost200Response,
   Inquiry,
   Offer,
