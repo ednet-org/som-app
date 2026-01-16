@@ -5,7 +5,11 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
+import '../../widgets/status_badge.dart';
 
 class CompaniesAppBody extends StatefulWidget {
   const CompaniesAppBody({Key? key}) : super(key: key);
@@ -285,6 +289,15 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     await _refresh();
   }
 
+  String _companyTypeLabel(CompanyDto company) {
+    return switch (company.type) {
+      0 => 'buyer',
+      1 => 'provider',
+      2 => 'buyer+provider',
+      _ => 'unknown',
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
@@ -330,13 +343,35 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
               return matchesType && matchesSearch;
             })
             .toList();
+        if (companies.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Companies'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                FilledButton.tonal(
+                  onPressed: _registerCompany,
+                  child: const Text('Register'),
+                ),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.apartment_outlined,
+              title: 'No companies found',
+              message: 'Register a company to get started',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Companies', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Companies'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(onPressed: _registerCompany, child: const Text('Register')),
+              FilledButton.tonal(
+                onPressed: _registerCompany,
+                child: const Text('Register'),
+              ),
             ],
           ),
           leftSplit: Column(
@@ -381,10 +416,19 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                     final company = companies[index];
                     final status = company.status ?? 'unknown';
                     return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: SomSpacing.md,
+                        vertical: SomSpacing.xs,
+                      ),
                       title: Text(company.name ?? 'Company'),
-                      subtitle: Text('Type: ${company.type ?? '-'} • $status'),
+                      subtitle: Text('Type: ${_companyTypeLabel(company)} • $status'),
                       selected: _selected?.id == company.id,
                       onTap: () => _selectCompany(company),
+                      trailing: StatusBadge.provider(
+                        status: status,
+                        compact: false,
+                        showIcon: false,
+                      ),
                     );
                   },
                 ),
@@ -392,7 +436,11 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
             ],
           ),
           rightSplit: _selected == null
-              ? const Center(child: Text('Select a company.'))
+              ? const EmptyState(
+                  icon: Icons.touch_app_outlined,
+                  title: 'Select a company',
+                  message: 'Choose a company from the list to view details',
+                )
               : Padding(
                   padding: const EdgeInsets.all(16),
                   child: ListView(
@@ -400,7 +448,17 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                       Text(_selected!.name ?? 'Company',
                           style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 12),
-                      Text('Status: ${_selected?.status ?? 'unknown'}'),
+                      Row(
+                        children: [
+                          Text('Status: ${_selected?.status ?? 'unknown'}'),
+                          const SizedBox(width: SomSpacing.sm),
+                          StatusBadge.provider(
+                            status: _selected?.status ?? 'unknown',
+                            compact: false,
+                            showIcon: false,
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 12),
                       TextField(
                         controller: _nameController,

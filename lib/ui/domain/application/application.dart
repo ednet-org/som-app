@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
@@ -22,7 +23,13 @@ abstract class _Application with Store {
   void setTextScaleFactor(double value) => textScaleFactor = value;
 
   @observable
-  bool isDarkModeOn = true;
+  ThemeMode themeMode = ThemeMode.system;
+
+  @observable
+  UiDensity density = UiDensity.standard;
+
+  @computed
+  bool get isDarkModeOn => themeMode == ThemeMode.dark;
 
   @observable
   String selectedLanguage = 'de';
@@ -30,9 +37,35 @@ abstract class _Application with Store {
   @observable
   var selectedDrawerItem = -1;
 
+  @computed
+  VisualDensity get visualDensity => density.visualDensity;
+
+  @action
+  void setThemeMode(ThemeMode mode) {
+    themeMode = mode;
+  }
+
+  @action
+  void setDensity(UiDensity value) {
+    density = value;
+  }
+
   @action
   void toggleDarkMode() {
-    isDarkModeOn = !isDarkModeOn;
+    if (themeMode == ThemeMode.dark) {
+      themeMode = ThemeMode.light;
+    } else {
+      themeMode = ThemeMode.dark;
+    }
+  }
+
+  @action
+  void cycleThemeMode() {
+    themeMode = switch (themeMode) {
+      ThemeMode.system => ThemeMode.light,
+      ThemeMode.light => ThemeMode.dark,
+      ThemeMode.dark => ThemeMode.system,
+    };
   }
 
   @action
@@ -154,6 +187,20 @@ class Authorization {
 enum UserRoles {
   employee,
   admin,
+}
+
+enum UiDensity {
+  compact,
+  standard,
+  comfortable,
+}
+
+extension UiDensityVisualDensity on UiDensity {
+  VisualDensity get visualDensity => switch (this) {
+        UiDensity.compact => VisualDensity.compact,
+        UiDensity.standard => VisualDensity.standard,
+        UiDensity.comfortable => VisualDensity.comfortable,
+      };
 }
 
 enum UIDensityFromBoxConstraints {

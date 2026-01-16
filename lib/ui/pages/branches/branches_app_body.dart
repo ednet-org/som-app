@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class BranchesAppBody extends StatefulWidget {
   const BranchesAppBody({Key? key}) : super(key: key);
@@ -311,13 +313,35 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
           );
         }
         final branches = snapshot.data ?? const [];
+        if (branches.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Branches'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                FilledButton.tonal(
+                  onPressed: _createBranch,
+                  child: const Text('Add branch'),
+                ),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.account_tree_outlined,
+              title: 'No branches yet',
+              message: 'Create a branch to categorize inquiries',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Branches', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Branches'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(onPressed: _createBranch, child: const Text('Add branch')),
+              FilledButton.tonal(
+                onPressed: _createBranch,
+                child: const Text('Add branch'),
+              ),
               TextButton(onPressed: _renameBranch, child: const Text('Rename branch')),
               TextButton(onPressed: _createCategory, child: const Text('Add category')),
               TextButton(onPressed: _renameCategory, child: const Text('Rename category')),

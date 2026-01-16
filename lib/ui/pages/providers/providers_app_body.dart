@@ -6,7 +6,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
+import '../../widgets/status_badge.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -222,13 +227,36 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           );
         }
         final providers = snapshot.data ?? const [];
+        if (providers.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Providers'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                TextButton(
+                  onPressed: _filterPendingOnly,
+                  child: const Text('Pending Approval'),
+                ),
+                TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.apartment_outlined,
+              title: 'No providers found',
+              message: 'Try adjusting filters or importing providers',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Providers', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Providers'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(onPressed: _filterPendingOnly, child: const Text('Pending Approval')),
+              TextButton(
+                onPressed: _filterPendingOnly,
+                child: const Text('Pending Approval'),
+              ),
               TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
             ],
           ),
@@ -242,6 +270,10 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                   itemBuilder: (context, index) {
                     final provider = providers[index];
                     return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: SomSpacing.md,
+                        vertical: SomSpacing.xs,
+                      ),
                       title: Text(
                         provider.companyName ?? provider.companyId ?? 'Provider',
                       ),
@@ -251,6 +283,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                       ),
                       selected: _selected?.companyId == provider.companyId,
                       onTap: () => setState(() => _selected = provider),
+                      trailing: StatusBadge.provider(
+                        status: provider.status ?? 'pending',
+                        compact: false,
+                        showIcon: false,
+                      ),
                     );
                   },
                 ),
@@ -258,22 +295,28 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
             ],
           ),
           rightSplit: _selected == null
-              ? const Center(child: Text('Select a provider.'))
+              ? const EmptyState(
+                  icon: Icons.touch_app_outlined,
+                  title: 'Select a provider',
+                  message: 'Choose a provider from the list to view details',
+                )
               : Padding(
                   padding: const EdgeInsets.all(16),
                   child: ListView(
                     children: [
                       Text(_selected!.companyName ?? 'Provider',
                           style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(height: SomSpacing.xs),
+                      StatusBadge.provider(status: _selected!.status ?? 'pending'),
                       const SizedBox(height: 8),
-                      Text('Company ID: ${_selected!.companyId ?? '-'}'),
+                      Text('Company ID: ${SomFormatters.shortId(_selected!.companyId)}'),
                       Text('Size: ${_selected!.companySize ?? '-'}'),
-                      Text('Type: ${_selected!.providerType ?? '-'}'),
+                      Text('Type: ${SomFormatters.capitalize(_selected!.providerType)}'),
                       Text('Postcode: ${_selected!.postcode ?? '-'}'),
-                      Text('Branches: ${_selected!.branchIds?.join(', ') ?? '-'}'),
+                      Text('Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}'),
                       Text(
                         'Pending branches: '
-                        '${_selected!.pendingBranchIds?.join(', ') ?? '-'}',
+                        '${SomFormatters.list(_selected!.pendingBranchIds?.toList())}',
                       ),
                       Text('Status: ${_selected!.status ?? '-'}'),
                       if (_selected!.rejectionReason != null)
@@ -284,7 +327,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                       if (_selected!.rejectedAt != null)
                         Text(
                           'Rejected at: '
-                          '${_selected!.rejectedAt?.toLocal().toString() ?? '-'}',
+                          '${SomFormatters.dateTime(_selected!.rejectedAt)}',
                         ),
                       const Divider(height: 24),
                       Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),
@@ -293,7 +336,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                       Text('IBAN: ${_selected!.iban ?? '-'}'),
                       Text('BIC: ${_selected!.bic ?? '-'}'),
                       Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
-                      Text('Registration date: ${_selected!.registrationDate ?? '-'}'),
+                      Text('Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}'),
                       if (_selected!.status == 'pending' ||
                           (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
                         const Divider(height: 24),

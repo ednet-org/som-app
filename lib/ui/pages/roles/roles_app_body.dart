@@ -4,6 +4,8 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/layout/app_body.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class RolesAppBody extends StatefulWidget {
   const RolesAppBody({Key? key}) : super(key: key);
@@ -148,27 +150,34 @@ class _RolesAppBodyState extends State<RolesAppBody> {
         }
         final roles = snapshot.data ?? const [];
         return AppBody(
-          contextMenu: Row(
-            children: [
-              const Text('Roles'),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Roles'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              const SizedBox(width: 12),
-              TextButton(onPressed: _clearForm, child: const Text('New')),
+              FilledButton.tonal(
+                onPressed: _clearForm,
+                child: const Text('New'),
+              ),
             ],
           ),
-          leftSplit: ListView(
-            children: roles
-                .map(
-                  (role) => ListTile(
-                    title: Text(role.name),
-                    subtitle: Text(role.description ?? ''),
-                    selected: _selected?.id == role.id,
-                    onTap: () => _selectRole(role),
-                  ),
+          leftSplit: roles.isEmpty
+              ? const EmptyState(
+                  icon: Icons.security_outlined,
+                  title: 'No roles yet',
+                  message: 'Create a role to get started',
                 )
-                .toList(),
-          ),
+              : ListView(
+                  children: roles
+                      .map(
+                        (role) => ListTile(
+                          title: Text(role.name),
+                          subtitle: Text(role.description ?? ''),
+                          selected: _selected?.id == role.id,
+                          onTap: () => _selectRole(role),
+                        ),
+                      )
+                      .toList(),
+                ),
           rightSplit: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

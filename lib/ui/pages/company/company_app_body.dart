@@ -3,7 +3,8 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/domain/application/application.dart';
 
-import '../../domain/model/model.dart';
+import '../../domain/model/model.dart' hide BankDetails;
+import '../../widgets/app_toolbar.dart';
 
 class CompanyAppBody extends StatefulWidget {
   const CompanyAppBody({Key? key}) : super(key: key);
@@ -216,15 +217,18 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
           );
         }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Company', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Company'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(onPressed: _updateCompany, child: const Text('Save')),
+              FilledButton.tonal(
+                onPressed: _updateCompany,
+                child: const Text('Save'),
+              ),
               TextButton(
-                  onPressed: _deactivateCompany,
-                  child: const Text('Deactivate')),
+                onPressed: _deactivateCompany,
+                child: const Text('Deactivate'),
+              ),
             ],
           ),
           leftSplit: Padding(

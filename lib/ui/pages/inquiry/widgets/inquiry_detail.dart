@@ -5,6 +5,8 @@ import '../../../utils/pdf_download.dart';
 import '../../../theme/semantic_colors.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
+import '../../../widgets/detail_section.dart';
+import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
 import 'offer_list.dart';
 
@@ -124,36 +126,41 @@ class InquiryDetail extends StatelessWidget {
   }
 
   Widget _buildDetailsSection(BuildContext context) {
-    return _SectionCard(
+    return DetailSection(
       title: 'Details',
       icon: Icons.info_outline,
       child: Column(
         children: [
-          _DetailRow(
+          DetailRow(
             label: 'Branch',
             value: inquiry.branchId != null
                 ? SomFormatters.shortId(inquiry.branchId)
                 : null,
+            labelWidth: 80,
           ),
-          _DetailRow(
+          DetailRow(
             label: 'Category',
             value: inquiry.categoryId != null
                 ? SomFormatters.shortId(inquiry.categoryId)
                 : null,
+            labelWidth: 80,
           ),
-          _DetailRow(
+          DetailRow(
             label: 'Created',
             value: SomFormatters.dateTime(inquiry.createdAt),
+            labelWidth: 80,
           ),
           if (inquiry.assignedAt != null)
-            _DetailRow(
+            DetailRow(
               label: 'Assigned',
               value: SomFormatters.dateTime(inquiry.assignedAt),
+              labelWidth: 80,
             ),
           if (inquiry.closedAt != null)
-            _DetailRow(
+            DetailRow(
               label: 'Closed',
               value: SomFormatters.dateTime(inquiry.closedAt),
+              labelWidth: 80,
             ),
         ],
       ),
@@ -161,7 +168,7 @@ class InquiryDetail extends StatelessWidget {
   }
 
   Widget _buildDescriptionSection(BuildContext context) {
-    return _SectionCard(
+    return DetailSection(
       title: 'Description',
       icon: Icons.description_outlined,
       child: Text(
@@ -172,7 +179,7 @@ class InquiryDetail extends StatelessWidget {
   }
 
   Widget _buildAttachmentSection(BuildContext context) {
-    return _SectionCard(
+    return DetailSection(
       title: 'Attachment',
       icon: Icons.attach_file,
       child: Row(
@@ -313,131 +320,16 @@ class InquiryDetail extends StatelessWidget {
   }
 }
 
-/// A card container for detail sections
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.title,
-    required this.icon,
-    required this.child,
-  });
-
-  final String title;
-  final IconData icon;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.all(SomSpacing.md),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(SomRadius.md),
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.5),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: SomIconSize.sm,
-                color: theme.colorScheme.outline,
-              ),
-              const SizedBox(width: SomSpacing.xs),
-              Text(
-                title,
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: theme.colorScheme.outline,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: SomSpacing.sm),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-/// A single detail row with label and value
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({
-    required this.label,
-    required this.value,
-  });
-
-  final String label;
-  final String? value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: SomSpacing.xs),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 80,
-            child: Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value ?? '-',
-              style: theme.textTheme.bodyMedium,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 /// Placeholder widget when no inquiry is selected.
 class NoInquirySelected extends StatelessWidget {
   const NoInquirySelected({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.touch_app_outlined,
-            size: SomIconSize.xxl,
-            color: theme.colorScheme.outline,
-          ),
-          const SizedBox(height: SomSpacing.md),
-          Text(
-            'Select an inquiry',
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: SomSpacing.xs),
-          Text(
-            'Choose an inquiry from the list to view details',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.outline,
-            ),
-          ),
-        ],
-      ),
+    return const EmptyState(
+      icon: Icons.touch_app_outlined,
+      title: 'Select an inquiry',
+      message: 'Choose an inquiry from the list to view details',
     );
   }
 }

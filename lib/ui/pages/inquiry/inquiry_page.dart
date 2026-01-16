@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
 import 'widgets/inquiry_create_form.dart';
 import 'widgets/inquiry_detail.dart';
 import 'widgets/inquiry_filters.dart';
@@ -561,16 +562,13 @@ class _InquiryPageState extends State<InquiryPage> {
   }
 
   Widget _buildContextMenu(Application appStore) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 8,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text('Inquiries', style: Theme.of(context).textTheme.bodySmall),
+    return AppToolbar(
+      title: const Text('Inquiries'),
+      actions: [
         TextButton(onPressed: _refresh, child: const Text('Refresh')),
         TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
         if (appStore.authorization?.isBuyer == true)
-          TextButton(
+          FilledButton.tonal(
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),
             child: Text(_showCreateForm ? 'Close form' : 'New inquiry'),
           ),

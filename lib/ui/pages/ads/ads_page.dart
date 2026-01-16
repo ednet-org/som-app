@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
 import 'widgets/ads_buyer_view.dart';
 import 'widgets/ads_create_form.dart';
 import 'widgets/ads_edit_form.dart';
@@ -275,13 +276,12 @@ class _AdsPageState extends State<AdsPage> {
   }
 
   Widget _buildContextMenu(Application appStore) {
-    return Row(
-      children: [
-        Text('SOM Ads', style: Theme.of(context).textTheme.bodySmall),
-        const SizedBox(width: 12),
+    return AppToolbar(
+      title: const Text('SOM Ads'),
+      actions: [
         TextButton(onPressed: _refresh, child: const Text('Refresh')),
         if (appStore.authorization?.isBuyer != true)
-          TextButton(
+          FilledButton.tonal(
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),
             child: Text(_showCreateForm ? 'Close form' : 'Create ad'),
           ),

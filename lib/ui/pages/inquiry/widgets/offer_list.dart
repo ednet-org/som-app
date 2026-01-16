@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import '../../../utils/pdf_download.dart';
+import '../../../theme/tokens.dart';
+import '../../../utils/formatters.dart';
+import '../../../widgets/empty_state.dart';
+import '../../../widgets/status_badge.dart';
 
 /// Widget for displaying a list of offers for an inquiry.
 ///
@@ -28,14 +32,21 @@ class OfferList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Offers', style: Theme.of(context).textTheme.titleSmall),
         if (isLoading) const LinearProgressIndicator(),
         if (error != null)
-          Text(
-            'Failed to load offers: $error',
-            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: SomSpacing.sm),
+            child: Text(
+              'Failed to load offers: $error',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
           ),
-        if (offers.isEmpty && !isLoading) const Text('No offers yet.'),
+        if (offers.isEmpty && !isLoading)
+          const EmptyState(
+            icon: Icons.inventory_2_outlined,
+            title: 'No offers yet',
+            message: 'Offers will appear here once providers respond',
+          ),
         ...offers.map((offer) => OfferCard(
               offer: offer,
               isBuyer: isBuyer,
@@ -62,31 +73,25 @@ class OfferCard extends StatelessWidget {
   final VoidCallback onAccept;
   final VoidCallback onReject;
 
-  Color _statusColor(String? status) {
-    switch (status?.toLowerCase()) {
-      case 'accepted':
-        return Colors.green;
-      case 'rejected':
-        return Colors.red;
-      case 'pending':
-        return Colors.orange;
-      default:
-        return Colors.grey;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: SomSpacing.sm),
       child: ListTile(
-        title: Text('Offer ${offer.id ?? ''}'),
-        subtitle: Text(
-          'Provider: ${offer.providerCompanyId ?? '-'} | '
-          'Status: ${offer.status ?? '-'}',
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: SomSpacing.md,
+          vertical: SomSpacing.xs,
         ),
-        leading: CircleAvatar(
-          backgroundColor: _statusColor(offer.status),
-          radius: 8,
+        title: Text(
+          'Offer ${SomFormatters.shortId(offer.id)}',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        subtitle: Text(
+          'Provider ${SomFormatters.shortId(offer.providerCompanyId)}',
+        ),
+        leading: StatusBadge.offer(
+          status: offer.status ?? 'pending',
+          compact: true,
         ),
         trailing: Wrap(
           spacing: 8,

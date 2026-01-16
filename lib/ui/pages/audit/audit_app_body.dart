@@ -3,6 +3,8 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/layout/app_body.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class AuditAppBody extends StatefulWidget {
   const AuditAppBody({Key? key}) : super(key: key);
@@ -49,34 +51,39 @@ class _AuditAppBodyState extends State<AuditAppBody> {
         }
         final items = snapshot.data ?? const [];
         return AppBody(
-          contextMenu: Row(
-            children: [
-              const Text('Audit Log'),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Audit Log'),
+            actions: [
               TextButton(
                 onPressed: () => setState(() => _future = _loadLogs()),
                 child: const Text('Refresh'),
               ),
             ],
           ),
-          leftSplit: ListView.separated(
-            itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (context, index) {
-              final entry = items[index];
-              final action = entry.action ?? 'unknown';
-              final entity = entry.entityType ?? '-';
-              final entityId = entry.entityId ?? '-';
-              final actor = entry.actorId ?? 'system';
-              final createdAt = entry.createdAt?.toLocal().toString() ?? '';
-              return ListTile(
-                title: Text(action),
-                subtitle: Text('$entity • $entityId\n$createdAt'),
-                trailing: Text(actor),
-                isThreeLine: true,
-              );
-            },
-          ),
+          leftSplit: items.isEmpty
+              ? const EmptyState(
+                  icon: Icons.receipt_long_outlined,
+                  title: 'No audit entries',
+                  message: 'Activity will appear here as changes occur',
+                )
+              : ListView.separated(
+                  itemCount: items.length,
+                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  itemBuilder: (context, index) {
+                    final entry = items[index];
+                    final action = entry.action ?? 'unknown';
+                    final entity = entry.entityType ?? '-';
+                    final entityId = entry.entityId ?? '-';
+                    final actor = entry.actorId ?? 'system';
+                    final createdAt = entry.createdAt?.toLocal().toString() ?? '';
+                    return ListTile(
+                      title: Text(action),
+                      subtitle: Text('$entity • $entityId\n$createdAt'),
+                      trailing: Text(actor),
+                      isThreeLine: true,
+                    );
+                  },
+                ),
           rightSplit: const SizedBox.shrink(),
         );
       },

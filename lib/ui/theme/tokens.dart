@@ -71,8 +71,8 @@ class SomIconSize {
 class SomSize {
   SomSize._();
 
-  /// Minimum touch target (44x44 for accessibility)
-  static const double minTouchTarget = 44.0;
+  /// Minimum touch target (48x48 for accessibility)
+  static const double minTouchTarget = 48.0;
 
   /// Default avatar size
   static const double avatar = 40.0;

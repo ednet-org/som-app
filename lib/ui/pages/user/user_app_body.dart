@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class UserAppBody extends StatefulWidget {
   const UserAppBody({Key? key}) : super(key: key);
@@ -418,14 +420,37 @@ class _UserAppBodyState extends State<UserAppBody> {
           );
         }
         final users = snapshot.data ?? const [];
+        if (users.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Users'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                if (appStore.authorization?.isAdmin == true)
+                  FilledButton.tonal(
+                    onPressed: _createUser,
+                    child: const Text('Add user'),
+                  ),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.person_outline,
+              title: 'No users found',
+              message: 'Invite a user to get started',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Users', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Users'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
               if (appStore.authorization?.isAdmin == true)
-                TextButton(onPressed: _createUser, child: const Text('Add user')),
+                FilledButton.tonal(
+                  onPressed: _createUser,
+                  child: const Text('Add user'),
+                ),
             ],
           ),
           leftSplit: ListView.builder(

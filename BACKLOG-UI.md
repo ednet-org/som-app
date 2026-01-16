@@ -1,6 +1,6 @@
 # UI/UX Optimization Backlog
 
-Based on HCI principles, Nielsen's heuristics, and modern design best practices.
+Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 
 ## Priority Legend
 - **P0**: Critical (blocks usability)
@@ -12,94 +12,87 @@ Based on HCI principles, Nielsen's heuristics, and modern design best practices.
 
 ## P0: Critical Fixes
 
-### UUID Display Issue
-- [ ] Replace raw UUIDs with meaningful identifiers in list views
-- [ ] Files: `inquiry_list.dart`, `ads_list.dart`, `offers_app_body.dart`
-- [ ] Use `SomFormatters.shortId()` utility for truncated display
+### Layout Overflow + Action Bars (Screenshots #1, #3, #6, #7)
+- [ ] Replace the current `contextMenu` layout with a top toolbar (no left column).
+- [ ] Add a shared `AppToolbar` that uses `Wrap`/`OverflowBar` for actions.
+- [ ] Remove the hard-coded “Filters” label from `ExpandedBodyContainer`.
+- [ ] Ensure toolbar actions never overflow on narrow widths.
 
-### Date Formatting
-- [ ] Replace ISO timestamps with human-readable dates
-- [ ] Files: `inquiry_detail.dart` (lines 86-100), `ads_detail.dart`, `offers_app_body.dart`
-- [ ] Use `SomFormatters.date()`, `dateTime()`, `relative()` utilities
+### UUID + Date Formatting
+- [x] Replace raw UUIDs with readable short IDs where displayed.
+- [x] Replace ISO timestamps with readable dates/relative times.
+- [ ] Audit remaining screens for raw IDs and raw timestamps.
 
 ### Theme Alpha Bug
-- [ ] Fix seed color: `0x0044546a` (transparent!) to `0xFF44546A`
-- [ ] File: `lib/main.dart`
+- [x] Fix seed color alpha bug (`0x0044546a` -> `0xFF44546A`).
 
 ---
 
 ## P1: High Priority
 
+### Material 3 Structure + Consistency
+- [ ] Create shared layout widgets:
+  - `AppToolbar` (title + actions + optional subtitle)
+  - `SectionCard` / `DetailRow` for key-value blocks
+  - `EmptyState` for empty lists
+- [ ] Use M3 buttons consistently (Filled / Tonal / Outlined / Text).
+- [ ] Standardize list tile density, padding, and hover/selection states.
+
 ### Status Visualization
-- [ ] Create `StatusBadge` widget with color coding
-- [ ] Apply to: inquiry list, offer list, ads list
-- [ ] Define semantic colors for each status type
-- [ ] Files: Create `lib/ui/widgets/status_badge.dart`, `lib/ui/theme/semantic_colors.dart`
+- [x] Status badges and semantic colors.
+- [ ] Apply status badges consistently in offers, ads, providers, companies.
+- [ ] Add status legend hints where needed.
 
-### Visual Hierarchy in Detail Views
-- [ ] Bold labels, regular values (two-column layout)
-- [ ] Group related fields with section headers
-- [ ] Add proper spacing between field groups
-- [ ] Files: `inquiry_detail.dart`, `ads_detail.dart`
+### State of System (HCI)
+- [ ] Replace plain text loading with M3 indicators/skeletons.
+- [ ] Use `SnackBar` for action feedback with success/error tones.
+- [ ] Add inline error states in detail panels (not only toast).
 
-### Empty States
-- [ ] Add empty state messages for all lists
-- [ ] Include helpful CTAs ("Create your first inquiry")
-- [ ] Files: All list widgets
-
-### Loading States
-- [ ] Add loading indicators for async operations
-- [ ] Consider skeleton loaders for lists
-- [ ] Files: All page widgets
+### Accessibility
+- [ ] Ensure minimum touch target (48dp) for icon actions.
+- [ ] Add `Tooltip`/`Semantics` for icon-only actions.
+- [ ] Verify contrast ratios for status colors in dark theme.
 
 ---
 
 ## P2: Medium Priority
 
-### Design Tokens
-- [ ] Create `lib/ui/theme/tokens.dart` (spacing: 4, 8, 16, 24, 32; radius: 4, 8, 12)
-- [ ] Create `lib/ui/theme/semantic_colors.dart` (success, warning, error, info)
-- [ ] Create `lib/ui/theme/som_theme.dart` (unified ThemeData)
+### Design Tokens + Theme
+- [x] Introduce spacing, radius, icon size tokens.
+- [ ] Expand tokens for typography scales and component density.
+- [ ] Create `som_theme.dart` to unify `ThemeData` (inputs, cards, dividers, buttons).
 
-### Component Standardization
-- [ ] Unify card styling across app (elevation, border radius, padding)
-- [ ] Standardize button hierarchy (primary/secondary/text)
-- [ ] Create consistent form field styling
+### Information Hierarchy
+- [ ] Add section headers and visual grouping in detail views.
+- [ ] Use two-column key/value layout for wider screens.
+- [ ] Add “meta” styling for IDs and timestamps.
 
-### Information Density
-- [ ] Add collapsible sections in detail views
-- [ ] Implement progressive disclosure for complex forms
-- [ ] Reduce cognitive load with better grouping
-
-### List Item Improvements
-- [ ] Add leading avatars/icons for visual scanning
-- [ ] Show relative timestamps ("2 days ago")
-- [ ] Add subtle status indicators (colored dots/borders)
+### Navigation + Responsiveness
+- [ ] Evaluate `NavigationRail` on wide screens vs top bar.
+- [ ] Ensure filters are collapsible on smaller widths.
+- [ ] Add responsive breakpoints for list/detail split widths.
 
 ---
 
 ## P3: Nice-to-Have
 
-### Animations
-- [ ] Add subtle transitions between views
-- [ ] Animate list item additions/removals
-- [ ] Loading shimmer effects
+### Motion
+- [ ] Staggered list animations for initial load.
+- [ ] Subtle transition between list selection states.
 
-### Accessibility
-- [ ] Add semantic labels for screen readers
-- [ ] Ensure sufficient color contrast (WCAG AA)
-- [ ] Support dynamic type sizing
-- [ ] Test with VoiceOver/TalkBack
+### UX Enhancements
+- [ ] Inline search filtering with debounced input.
+- [ ] Keyboard shortcuts for list navigation (desktop).
+- [ ] Multi-select bulk actions (delete/approve/decline).
 
-### Dark Mode Polish
-- [ ] Verify all semantic colors work in dark mode
-- [ ] Test status colors for accessibility
-- [ ] Ensure proper contrast ratios
+---
 
-### Micro-interactions
-- [ ] Button press feedback
-- [ ] Pull-to-refresh animations
-- [ ] Success/error state transitions
+## Dependency + Platform Hygiene (P1)
+
+### Flutter SDK + Packages
+- [ ] Verify Flutter SDK is current stable; upgrade if behind.
+- [ ] Upgrade key UI dependencies (provider, url_launcher, cached_network_image, shared_preferences).
+- [ ] Re-run `flutter pub get` + full test suite.
 
 ---
 
@@ -108,11 +101,11 @@ Based on HCI principles, Nielsen's heuristics, and modern design best practices.
 | Heuristic | Status | Notes |
 |-----------|--------|-------|
 | H1: Visibility of system status | Needs work | Missing loading/empty states |
-| H2: Match between system and real world | Needs work | UUIDs, ISO dates visible |
+| H2: Match between system and real world | Improving | Short IDs + dates applied |
 | H3: User control and freedom | OK | Navigation works |
-| H4: Consistency and standards | Needs work | Mixed button styles |
+| H4: Consistency and standards | Needs work | Mixed button styles/layouts |
 | H5: Error prevention | OK | Forms have validation |
-| H6: Recognition over recall | Needs work | No status badges/icons |
+| H6: Recognition over recall | Needs work | No consistent status badges |
 | H7: Flexibility and efficiency | OK | Filters available |
 | H8: Aesthetic and minimalist design | Needs work | Dense, no hierarchy |
 | H9: Help users recognize errors | OK | Error messages shown |
@@ -120,43 +113,19 @@ Based on HCI principles, Nielsen's heuristics, and modern design best practices.
 
 ---
 
-## Files Reference
-
-### To Create
-| File | Priority | Purpose |
-|------|----------|---------|
-| `lib/ui/utils/formatters.dart` | P0 | Date/ID formatting utilities |
-| `lib/ui/theme/tokens.dart` | P2 | Design tokens (spacing, radius) |
-| `lib/ui/theme/semantic_colors.dart` | P1 | Status colors mapping |
-| `lib/ui/widgets/status_badge.dart` | P1 | Reusable status chip |
-| `lib/ui/widgets/empty_state.dart` | P1 | Empty list placeholder |
-
-### To Modify
-| File | Priority | Changes |
-|------|----------|---------|
-| `lib/main.dart` | P0 | Fix alpha bug |
-| `lib/ui/pages/inquiry/widgets/inquiry_list.dart` | P0 | Better list items |
-| `lib/ui/pages/inquiry/widgets/inquiry_detail.dart` | P0 | Better detail layout |
-| `lib/ui/pages/ads/widgets/ads_list.dart` | P1 | Better list items |
-| `lib/ui/pages/offers/offers_app_body.dart` | P1 | Better list items |
-
----
-
 ## Progress Tracking
 
-### Sprint 1: Critical Fixes (P0)
-- [ ] Formatters utility
-- [ ] Fix UUIDs in inquiry list
-- [ ] Fix dates in inquiry detail
-- [ ] Fix theme alpha bug
+### Sprint 1: Layout + Overflow (P0)
+- [ ] Toolbar layout refactor
+- [ ] AppBody/ExpandedBodyContainer update
+- [ ] Fix all toolbar overflow errors
 
-### Sprint 2: Visual Polish (P1)
-- [ ] StatusBadge widget
-- [ ] Semantic colors
-- [ ] Apply to all lists
-- [ ] Empty states
+### Sprint 2: Core Visual System (P1)
+- [ ] Shared toolbar + empty state
+- [ ] Status badges everywhere
+- [ ] Detail cards + key/value layout
 
-### Sprint 3: Design System (P2)
-- [ ] Design tokens
-- [ ] Unified theme
-- [ ] Component standardization
+### Sprint 3: Accessibility + Theme (P2)
+- [ ] Accessibility annotations + touch targets
+- [ ] Unified Material 3 theme
+

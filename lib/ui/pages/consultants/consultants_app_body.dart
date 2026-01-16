@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class ConsultantsAppBody extends StatefulWidget {
   const ConsultantsAppBody({Key? key}) : super(key: key);
@@ -137,14 +139,35 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
           );
         }
         final consultants = snapshot.data ?? const [];
+        if (consultants.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Consultants'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                FilledButton.tonal(
+                  onPressed: _createConsultant,
+                  child: const Text('Add consultant'),
+                ),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.support_agent_outlined,
+              title: 'No consultants found',
+              message: 'Invite a consultant to get started',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Consultants', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Consultants'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(
-                  onPressed: _createConsultant, child: const Text('Add consultant')),
+              FilledButton.tonal(
+                onPressed: _createConsultant,
+                child: const Text('Add consultant'),
+              ),
             ],
           ),
           leftSplit: ListView.builder(

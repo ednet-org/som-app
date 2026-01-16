@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 
 class SubscriptionsAppBody extends StatefulWidget {
   const SubscriptionsAppBody({Key? key}) : super(key: key);
@@ -259,20 +261,46 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
           );
         }
         final plans = snapshot.data ?? const [];
+        if (plans.isEmpty) {
+          return AppBody(
+            contextMenu: AppToolbar(
+              title: const Text('Subscriptions'),
+              actions: [
+                TextButton(onPressed: _refresh, child: const Text('Refresh')),
+                if (isConsultantAdmin)
+                  FilledButton.tonal(
+                    onPressed: _createPlan,
+                    child: const Text('Create'),
+                  ),
+              ],
+            ),
+            leftSplit: const EmptyState(
+              icon: Icons.card_membership_outlined,
+              title: 'No subscription plans',
+              message: 'Create a plan to manage subscriptions',
+            ),
+            rightSplit: const SizedBox.shrink(),
+          );
+        }
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Subscriptions', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Subscriptions'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
               if (isConsultantAdmin)
-                TextButton(onPressed: _createPlan, child: const Text('Create')),
+                FilledButton.tonal(
+                  onPressed: _createPlan,
+                  child: const Text('Create'),
+                ),
               if (isConsultantAdmin)
                 TextButton(onPressed: _updatePlan, child: const Text('Save')),
               if (isConsultantAdmin)
                 TextButton(onPressed: _deletePlan, child: const Text('Delete')),
               if (isProviderAdmin)
-                TextButton(onPressed: _upgradePlan, child: const Text('Upgrade')),
+                FilledButton.tonal(
+                  onPressed: _upgradePlan,
+                  child: const Text('Upgrade'),
+                ),
               if (isProviderAdmin)
                 TextButton(
                   onPressed: _downgradePlan,

@@ -1,95 +1,70 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/tokens.dart';
+
 class ExpandedBodyContainer extends StatelessWidget {
-  final expandedBodyMenu;
-
-  final expandedBodyContentSplitLeft;
-
-  final expandedBodyContentSplitRight;
+  final Widget? toolbar;
+  final Widget? left;
+  final Widget? right;
+  final Widget? body;
 
   const ExpandedBodyContainer({
-    Key? key,
-    this.expandedBodyMenu,
-    this.expandedBodyContentSplitLeft,
-    this.expandedBodyContentSplitRight,
-  }) : super(key: key);
-
-  Expanded expandedVerticalDivider(context) =>
-      const Expanded(flex: 0, child: VerticalDivider());
-
-  Expanded expandedHorizontalDivider(context) =>
-      const Expanded(flex: 0, child: Divider());
+    super.key,
+    this.toolbar,
+    this.left,
+    this.right,
+    this.body,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (buildContext, constraints) {
-      final isMobile = constraints.maxWidth < 600;
+    return LayoutBuilder(builder: (context, constraints) {
+      final isNarrow = constraints.maxWidth < 900;
 
-      /// Row or Column
-      final responsiveContainer = isMobile
-
-          /// MOBILE LAYOUT
-          ? SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  /// For existing Menu show also a divider
-                  if (expandedBodyMenu != null) ...[
-                    expandedBodyMenu,
-                    expandedHorizontalDivider(context),
-                  ],
-
-                  /// ALWAYS rendered
-                  expandedBodyContentSplitLeft,
-
-                  /// For existing right split show also a divider
-                  if (expandedBodyContentSplitRight != null) ...[
-                    expandedHorizontalDivider(context),
-                    expandedBodyContentSplitRight,
-                  ]
-                ],
-              ),
-            )
-
-          /// DESKTOP LAYOUT
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /// For existing Menu show also a divider
-                if (expandedBodyMenu != null)
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text('Filters'),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: expandedBodyMenu,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (expandedBodyMenu != null) expandedVerticalDivider(context),
-
-                /// ALWAYS rendered
-                expandedBodyContentSplitLeft,
-
-                /// For existing right split show also a divider
-                if (expandedBodyContentSplitRight != null) ...[
-                  expandedBodyContentSplitRight,
-                  expandedHorizontalDivider(context),
-                ]
-              ],
-            );
-
-      return responsiveContainer;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (toolbar != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: SomSpacing.sm),
+              child: toolbar!,
+            ),
+          if (toolbar != null) const SizedBox(height: SomSpacing.sm),
+          Expanded(
+            child: body ?? _buildSplitLayout(context, isNarrow),
+          ),
+        ],
+      );
     });
+  }
+
+  Widget _buildSplitLayout(BuildContext context, bool isNarrow) {
+    final leftPanel = left ?? const SizedBox.shrink();
+    final rightPanel = right;
+
+    if (isNarrow) {
+      return Column(
+        children: [
+          Expanded(child: _panelPadding(leftPanel)),
+          if (rightPanel != null) const Divider(height: 1),
+          if (rightPanel != null) Expanded(child: _panelPadding(rightPanel)),
+        ],
+      );
+    }
+
+    return Row(
+      children: [
+        Expanded(child: _panelPadding(leftPanel)),
+        if (rightPanel != null) const VerticalDivider(width: 1),
+        if (rightPanel != null) Expanded(child: _panelPadding(rightPanel)),
+      ],
+    );
+  }
+
+  Widget _panelPadding(Widget child) {
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.sm),
+      child: child,
+    );
   }
 }

@@ -5,8 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
-import '../../utils/ui_logger.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/pdf_download.dart';
+import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
+import '../../widgets/empty_state.dart';
+import '../../widgets/status_badge.dart';
 
 class OffersAppBody extends StatefulWidget {
   const OffersAppBody({Key? key}) : super(key: key);
@@ -49,7 +55,9 @@ class _OffersAppBodyState extends State<OffersAppBody> {
             if (_statusFilter == null || offer.status == _statusFilter) {
               allOffers.add(_OfferWithInquiry(
                 offer: offer,
-                inquiryTitle: inquiry.description?.substring(0, inquiry.description!.length > 50 ? 50 : inquiry.description!.length) ?? 'Inquiry ${inquiry.id}',
+                inquiryTitle: inquiry.description?.isNotEmpty == true
+                    ? SomFormatters.truncate(inquiry.description, 50)
+                    : 'Inquiry ${SomFormatters.shortId(inquiry.id)}',
                 inquiryId: inquiry.id!,
               ));
             }
@@ -160,44 +168,55 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   }
 
   Widget _buildContextMenu() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          const Text('Offers'),
-          const SizedBox(width: 12),
-          TextButton(onPressed: _refresh, child: const Text('Refresh')),
-          const SizedBox(width: 12),
-          DropdownButton<String?>(
-            value: _statusFilter,
-            hint: const Text('All Status'),
-            items: const [
-              DropdownMenuItem(value: null, child: Text('All Status')),
-              DropdownMenuItem(value: 'pending', child: Text('Pending')),
-              DropdownMenuItem(value: 'accepted', child: Text('Accepted')),
-              DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
-            ],
-            onChanged: _applyFilter,
-          ),
-        ],
-      ),
+    return AppToolbar(
+      title: const Text('Offers'),
+      actions: [
+        TextButton(onPressed: _refresh, child: const Text('Refresh')),
+        DropdownButton<String?>(
+          value: _statusFilter,
+          hint: const Text('All Status'),
+          items: const [
+            DropdownMenuItem(value: null, child: Text('All Status')),
+            DropdownMenuItem(value: 'pending', child: Text('Pending')),
+            DropdownMenuItem(value: 'accepted', child: Text('Accepted')),
+            DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
+          ],
+          onChanged: _applyFilter,
+        ),
+      ],
     );
   }
 
   Widget _buildOffersList(List<_OfferWithInquiry> offers) {
     if (offers.isEmpty) {
-      return const Center(child: Text('No offers found.'));
+      return const EmptyState(
+        icon: Icons.request_quote_outlined,
+        title: 'No offers found',
+        message: 'Offers will appear here once they are submitted',
+      );
     }
     return ListView.builder(
       itemCount: offers.length,
       itemBuilder: (context, index) {
         final item = offers[index];
         return ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: SomSpacing.md,
+            vertical: SomSpacing.xs,
+          ),
           title: Text(item.inquiryTitle),
-          subtitle: Text('Status: ${item.offer.status ?? 'pending'}'),
+          subtitle: Text(
+            item.offer.resolvedAt != null
+                ? 'Resolved ${SomFormatters.relative(item.offer.resolvedAt)}'
+                : 'Forwarded ${SomFormatters.relative(item.offer.forwardedAt)}',
+          ),
           selected: _selected?.offer.id == item.offer.id,
           onTap: () => _selectOffer(item),
-          trailing: _statusBadge(item.offer.status),
+          trailing: StatusBadge.offer(
+            status: item.offer.status ?? 'pending',
+            compact: false,
+            showIcon: false,
+          ),
         );
       },
     );
@@ -205,7 +224,11 @@ class _OffersAppBodyState extends State<OffersAppBody> {
 
   Widget _buildOfferDetails(bool isBuyer) {
     if (_selected == null) {
-      return const Center(child: Text('Select an offer to view details.'));
+      return const EmptyState(
+        icon: Icons.touch_app_outlined,
+        title: 'Select an offer',
+        message: 'Choose an offer from the list to view details',
+      );
     }
     final offer = _selected!.offer;
     return Padding(
@@ -220,26 +243,70 @@ class _OffersAppBodyState extends State<OffersAppBody> {
                 style: const TextStyle(color: Colors.redAccent),
               ),
             ),
-          Text(
-            'Offer Details',
-            style: Theme.of(context).textTheme.titleMedium,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Offer Details',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              StatusBadge.offer(status: offer.status ?? 'pending'),
+            ],
           ),
-          const SizedBox(height: 16),
-          _detailRow('Offer ID', offer.id ?? '-'),
-          _detailRow('Inquiry', _selected!.inquiryTitle),
-          _detailRow('Provider Company', offer.providerCompanyId ?? '-'),
-          _detailRow('Status', offer.status ?? 'pending'),
-          _detailRow('Forwarded', _formatDate(offer.forwardedAt)),
-          _detailRow('Resolved', _formatDate(offer.resolvedAt)),
-          _detailRow('Buyer Decision', offer.buyerDecision ?? '-'),
-          _detailRow('Provider Decision', offer.providerDecision ?? '-'),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Summary',
+            icon: Icons.description_outlined,
+            child: Column(
+              children: [
+                DetailRow(
+                  label: 'Offer ID',
+                  value: SomFormatters.shortId(offer.id),
+                ),
+                DetailRow(
+                  label: 'Inquiry',
+                  value: _selected!.inquiryTitle,
+                ),
+                DetailRow(
+                  label: 'Provider',
+                  value: SomFormatters.shortId(offer.providerCompanyId),
+                ),
+                DetailRow(
+                  label: 'Forwarded',
+                  value: SomFormatters.dateTime(offer.forwardedAt),
+                ),
+                DetailRow(
+                  label: 'Resolved',
+                  value: SomFormatters.dateTime(offer.resolvedAt),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Decisions',
+            icon: Icons.rule_outlined,
+            child: Column(
+              children: [
+                DetailRow(
+                  label: 'Buyer',
+                  value: offer.buyerDecision ?? '-',
+                ),
+                DetailRow(
+                  label: 'Provider',
+                  value: offer.providerDecision ?? '-',
+                ),
+              ],
+            ),
+          ),
           if (offer.pdfPath != null) ...[
-            const SizedBox(height: 12),
-            TextButton.icon(
+            const SizedBox(height: SomSpacing.md),
+            FilledButton.tonalIcon(
               onPressed: offer.id == null
                   ? null
                   : () => _openOfferPdf(offer.id!),
-              icon: const Icon(Icons.download),
+              icon: const Icon(Icons.download, size: SomIconSize.sm),
               label: const Text('Download PDF'),
             ),
           ],
@@ -250,25 +317,18 @@ class _OffersAppBodyState extends State<OffersAppBody> {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: 12),
-            Row(
+            Wrap(
+              spacing: SomSpacing.sm,
               children: [
-                ElevatedButton.icon(
+                FilledButton.icon(
                   onPressed: () => _acceptOffer(_selected!),
-                  icon: const Icon(Icons.check),
+                  icon: const Icon(Icons.check, size: SomIconSize.sm),
                   label: const Text('Accept'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                  ),
                 ),
-                const SizedBox(width: 12),
                 OutlinedButton.icon(
                   onPressed: () => _rejectOffer(_selected!),
-                  icon: const Icon(Icons.close),
+                  icon: const Icon(Icons.close, size: SomIconSize.sm),
                   label: const Text('Reject'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                  ),
                 ),
               ],
             ),
@@ -276,55 +336,6 @@ class _OffersAppBodyState extends State<OffersAppBody> {
         ],
       ),
     );
-  }
-
-  Widget _detailRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 140,
-            child: Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ),
-          Expanded(child: Text(value)),
-        ],
-      ),
-    );
-  }
-
-  Widget _statusBadge(String? status) {
-    Color color;
-    switch (status?.toLowerCase()) {
-      case 'accepted':
-        color = Colors.green;
-        break;
-      case 'rejected':
-        color = Colors.red;
-        break;
-      default:
-        color = Colors.orange;
-    }
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        status ?? 'pending',
-        style: TextStyle(color: color, fontSize: 12),
-      ),
-    );
-  }
-
-  String _formatDate(DateTime? date) {
-    if (date == null) return '-';
-    return '${date.day}.${date.month}.${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
   }
 
   Future<void> _openOfferPdf(String offerId) async {

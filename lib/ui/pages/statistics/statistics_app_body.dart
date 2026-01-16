@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../widgets/app_toolbar.dart';
 import '../../utils/ui_logger.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
@@ -144,10 +145,9 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
         }
         final data = snapshot.data ?? _StatsResult();
         return AppBody(
-          contextMenu: Row(
-            children: [
-              Text('Statistics', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 12),
+          contextMenu: AppToolbar(
+            title: const Text('Statistics'),
+            actions: [
               TextButton(onPressed: _refresh, child: const Text('Refresh')),
               TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
             ],

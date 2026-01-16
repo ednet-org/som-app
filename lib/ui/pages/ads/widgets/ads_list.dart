@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../theme/tokens.dart';
+import '../../../utils/formatters.dart';
+import '../../../widgets/empty_state.dart';
+import '../../../widgets/status_badge.dart';
+
 /// Widget for displaying a list of ads.
 class AdsList extends StatelessWidget {
   const AdsList({
@@ -22,7 +27,11 @@ class AdsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (ads.isEmpty) {
-      return const Center(child: Text('No ads found.'));
+      return const EmptyState(
+        icon: Icons.campaign_outlined,
+        title: 'No ads found',
+        message: 'Create an ad to promote your offers',
+      );
     }
 
     return ListView.builder(
@@ -61,8 +70,15 @@ class AdsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(ad.headline ?? ad.id ?? 'Ad'),
-      subtitle: Text('${ad.status ?? '-'} | ${ad.type ?? '-'}'),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: SomSpacing.md,
+        vertical: SomSpacing.xs,
+      ),
+      title: Text(ad.headline ?? 'Ad ${SomFormatters.shortId(ad.id)}'),
+      subtitle: Text(
+        '${SomFormatters.capitalize(ad.type ?? 'unknown')} • '
+        '${SomFormatters.capitalize(ad.status ?? 'draft')}',
+      ),
       selected: isSelected,
       onTap: onTap,
       onLongPress: isBuyer
@@ -75,6 +91,11 @@ class AdsListTile extends StatelessWidget {
               }
             }
           : null,
+      trailing: StatusBadge.ad(
+        status: ad.status ?? 'draft',
+        compact: false,
+        showIcon: false,
+      ),
     );
   }
 }

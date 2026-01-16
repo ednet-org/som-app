@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'expanded_body_container.dart';
-import 'extended_split.dart';
 import 'spaced_container.dart';
 
 class AppBody extends StatelessWidget {
@@ -21,26 +20,11 @@ class AppBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpacedContainer(
-      horizontalBody: body != null
-          ? ExpandedBodyContainer(
-              expandedBodyMenu: contextMenu,
-              expandedBodyContentSplitLeft: ExpandedSplit(child: body),
-            )
-          : ExpandedBodyContainer(
-              expandedBodyMenu: contextMenu,
-              expandedBodyContentSplitLeft: ExpandedSplit(child: leftSplit),
-              expandedBodyContentSplitRight:
-                  rightSplit != null ? ExpandedSplit(child: rightSplit) : null,
-            ),
-    );
-  }
-
-  Widget get expandedBodyMenu {
-    return Expanded(
-      flex: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: contextMenu,
+      horizontalBody: ExpandedBodyContainer(
+        toolbar: contextMenu,
+        left: leftSplit,
+        right: rightSplit,
+        body: body,
       ),
     );
   }
