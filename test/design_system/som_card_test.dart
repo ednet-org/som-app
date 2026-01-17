@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/theme/som_theme_futuristic.dart';
 import 'package:som/ui/widgets/design_system/som_card.dart';
 
@@ -45,8 +46,14 @@ void main() {
       ),
     );
 
-    // Should find SVG picture for the mesh pattern
-    expect(find.byType(SvgPicture), findsOneWidget);
+    final meshFinder = find.byWidgetPredicate((widget) {
+      if (widget is! SvgPicture) return false;
+      final loader = widget.bytesLoader;
+      return loader is SvgAssetLoader &&
+          loader.assetName == SomAssets.patternSubtleMesh;
+    });
+
+    expect(meshFinder, findsOneWidget);
   });
 
   testWidgets('SomCard has correct padding', (tester) async {
