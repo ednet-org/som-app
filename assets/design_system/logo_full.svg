@@ -1,0 +1,12 @@
+<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="somGradient" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="64" height="64" rx="16" fill="url(#somGradient)"/>
+  <path d="M32 14C22.61 14 15 21.61 15 31C15 40.39 22.61 48 32 48C41.39 48 49 40.39 49 31C49 21.61 41.39 14 32 14ZM32 44C24.82 44 19 38.18 19 31C19 23.82 24.82 18 32 18C39.18 18 45 23.82 45 31C45 38.18 39.18 44 32 44Z" fill="white" fill-opacity="0.2"/>
+  <path d="M32 22L38 36H26L32 22Z" fill="white"/>
+  <text x="84" y="40" font-family="Roboto, Arial, sans-serif" font-size="28" font-weight="700" fill="#F8FAFC" letter-spacing="2">SOM</text>
+</svg>
