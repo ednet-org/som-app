@@ -17,6 +17,7 @@ dependencies:
   http: ^1.1.0
   html: ^0.15.4
   retry: ^3.1.2
+  archive: ^3.4.10
 
 dev_dependencies:
   lints: ^3.0.0

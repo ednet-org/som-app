@@ -33,24 +33,15 @@ void main(List<String> args) async {
       help: 'Specific Bundesland to scrape (comma-separated for multiple)',
     )
     ..addOption(
-      'branch',
-      help: 'Specific WKO branch to scrape (comma-separated for multiple)',
+      'category',
+      abbr: 'c',
+      help: 'Specific WKO category to scrape (comma-separated for multiple)',
     )
     ..addOption(
       'delay',
       abbr: 'd',
-      defaultsTo: '1000',
+      defaultsTo: '1500',
       help: 'Delay between requests in milliseconds',
-    )
-    ..addOption(
-      'max-pages',
-      defaultsTo: '100',
-      help: 'Maximum pages per branch/Bundesland combination',
-    )
-    ..addFlag(
-      'wholesale-only',
-      defaultsTo: true,
-      help: 'Only scrape wholesale (NACE 46) branches',
     )
     ..addFlag(
       'verbose',
@@ -71,19 +62,25 @@ void main(List<String> args) async {
     print('WKO Firmen A-Z Wholesale Scraper');
     print('');
     print('Scrapes wholesale business information from the Austrian');
-    print('Chamber of Commerce business directory.');
+    print('Chamber of Commerce business directory (firmen.wko.at).');
     print('');
     print('Usage: dart run bin/scrape_wko.dart [options]');
     print('');
     print(parser.usage);
     print('');
-    print('Bundesland codes:');
+    print('Bundesland options:');
     print('  wien, niederoesterreich, oberoesterreich, salzburg,');
     print('  tirol, vorarlberg, kaernten, steiermark, burgenland');
     print('');
+    print('Default categories (wholesale/Großhandel):');
+    for (final cat in WkoWholesaleCategories.categories.take(10)) {
+      print('  ${cat[0]} (${cat[1]})');
+    }
+    print('  ... and ${WkoWholesaleCategories.categories.length - 10} more');
+    print('');
     print('Example:');
     print('  dart run bin/scrape_wko.dart --output raw/wko.json');
-    print('  dart run bin/scrape_wko.dart -b wien,salzburg -d 2000');
+    print('  dart run bin/scrape_wko.dart -b wien -d 2000');
     exit(0);
   }
 
@@ -92,42 +89,36 @@ void main(List<String> args) async {
   }
 
   final outputPath = results['output'] as String;
-  final delayMs = int.tryParse(results['delay'] as String) ?? 1000;
-  final maxPages = int.tryParse(results['max-pages'] as String) ?? 100;
-  final wholesaleOnly = results['wholesale-only'] as bool;
+  final delayMs = int.tryParse(results['delay'] as String) ?? 1500;
 
-  // Parse bundeslaender
+  // Parse bundeslaender - map simple names to URL-encoded versions
   List<String>? bundeslaender;
   if (results['bundesland'] != null) {
     bundeslaender = (results['bundesland'] as String)
         .split(',')
-        .map((s) => s.trim().toLowerCase())
+        .map((s) => _mapBundesland(s.trim().toLowerCase()))
         .toList();
   }
 
-  // Parse branches
-  List<String>? branches;
-  if (results['branch'] != null) {
-    branches = (results['branch'] as String)
+  // Parse categories
+  List<String>? categories;
+  if (results['category'] != null) {
+    categories = (results['category'] as String)
         .split(',')
-        .map((s) => s.trim().toLowerCase())
+        .map((s) => s.trim())
         .toList();
-  } else if (wholesaleOnly) {
-    branches = WkoWholesaleBranches.all;
   }
 
   _log.info('Starting WKO wholesale scraper');
   _log.info('Output: $outputPath');
   _log.info('Delay: ${delayMs}ms');
-  _log.info('Max pages per branch: $maxPages');
-  _log.info('Bundeslaender: ${bundeslaender ?? "all"}');
-  _log.info('Branches: ${branches?.length ?? "all"} wholesale categories');
+  _log.info('Bundeslaender: ${bundeslaender?.length ?? 9} regions');
+  _log.info('Categories: ${categories?.length ?? WkoWholesaleCategories.slugs.length} wholesale categories');
 
   // Create scraper
   final config = WkoScraperConfig(
     requestDelayMs: delayMs,
     randomDelayMs: (delayMs * 0.5).round(),
-    maxPagesPerBranch: maxPages,
   );
 
   final scraper = WkoScraper(config: config);
@@ -136,7 +127,7 @@ void main(List<String> args) async {
     // Scrape
     final result = await scraper.scrapeWholesale(
       bundeslaender: bundeslaender,
-      branches: branches,
+      categories: categories,
       onProgress: (current, total) {
         final pct = (current * 100 / total).toStringAsFixed(1);
         stdout.write('\rProgress: $current/$total ($pct%)');
@@ -151,6 +142,13 @@ void main(List<String> args) async {
     // Log by Bundesland
     _log.info('By Bundesland:');
     for (final entry in result.byBundesland.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value))) {
+      _log.info('  ${entry.key}: ${entry.value}');
+    }
+
+    // Log by category
+    _log.info('By Category:');
+    for (final entry in result.byCategory.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value))) {
       _log.info('  ${entry.key}: ${entry.value}');
     }
@@ -189,5 +187,34 @@ void main(List<String> args) async {
     exit(1);
   } finally {
     scraper.close();
+  }
+}
+
+/// Map simple bundesland name to URL-encoded version.
+String _mapBundesland(String name) {
+  switch (name) {
+    case 'wien':
+      return WkoBundesland.wien;
+    case 'niederoesterreich':
+    case 'niederösterreich':
+      return WkoBundesland.niederoesterreich;
+    case 'oberoesterreich':
+    case 'oberösterreich':
+      return WkoBundesland.oberoesterreich;
+    case 'salzburg':
+      return WkoBundesland.salzburg;
+    case 'tirol':
+      return WkoBundesland.tirol;
+    case 'vorarlberg':
+      return WkoBundesland.vorarlberg;
+    case 'kaernten':
+    case 'kärnten':
+      return WkoBundesland.kaernten;
+    case 'steiermark':
+      return WkoBundesland.steiermark;
+    case 'burgenland':
+      return WkoBundesland.burgenland;
+    default:
+      return name;
   }
 }
