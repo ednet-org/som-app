@@ -46,6 +46,18 @@ All assets located in `assets/design_system/` organized by context:
 - `icon_dashboard.svg`, `icon_inquiries.svg`, `icon_offers.svg`, `icon_statistics.svg`, `icon_settings.svg`, `icon_user.svg`
 - `illustration_empty_state.svg`
 
+### Common Actions (`assets/design_system/common/`)
+- **Navigation**: `icon_menu.svg`, `icon_close.svg`, `icon_chevron_left.svg`, `icon_chevron_right.svg`, `icon_chevron_up.svg`, `icon_chevron_down.svg`
+- **Actions**: `icon_search.svg`, `icon_filter.svg`, `icon_edit.svg`, `icon_delete.svg`, `icon_notification.svg`, `icon_calendar.svg`
+- **Status Types**: `icon_warning.svg`, `icon_info.svg`
+- **Input Controls**: `icon_visibility_on.svg`, `icon_visibility_off.svg`, `icon_clear_circle.svg` (for Inputs)
+
+### Patterns (`assets/design_system/patterns/`)
+- **Textures**: `subtle_mesh.svg`, `dot_noise.svg` (For Cards/Backgrounds)
+
+### Illustrations (`assets/design_system/illustrations/`)
+- **Hero**: `login_hero.svg` (Abstract network concept)
+
 ### Auth & Identity (`assets/design_system/auth/`)
 - **Roles**: `role_buyer.svg`, `role_provider.svg` (Large selection cards)
 - **Provider Types**: `type_wholesaler.svg`, `type_manufacturer.svg`, `type_service.svg`
@@ -187,12 +199,69 @@ All assets located in `assets/design_system/` organized by context:
     - Actions: `Approve` (adds to global list), `Reject`, `Edit`.
 
 ## 6. Shared Widget Catalog
-The following widgets should be implemented first as reusable components:
+The following widgets should be implemented first as reusable components.
 
-- [ ] `SOMCard`: Standard container with border-radius 16px, background `bg-secondary`, shadow.
-- [ ] `SOMButton`: Variants (Primary `accent-gradient`, Secondary `outline`, Danger `text-error`).
-- [ ] `SOMInput`: Text field with Label, Hint, Error state.
-- [ ] `SOMBadge`: Status pill (Success, Warning, Error, Info, Neutral).
-- [ ] `SOMTable`: Sortable headers, pagination footer, row hover effects.
-- [ ] `SOMModal`: Overlay with Title, Content, Footer (Cancel/Confirm actions).
-- [ ] `SOMSidebar`: Responsive navigation drawer using new SVG icons.
+### 6.1 `SOMCard`
+Standard container for content blocks.
+- **Assets**: Use `assets/design_system/patterns/subtle_mesh.svg` as a subtle overlay for "Featured" cards.
+- **Specs**:
+  - Background: `bg-secondary`
+  - Border Radius: `16px`
+  - Shadow: `shadow-lg`
+  - Padding: `24px`
+
+### 6.2 `SOMButton`
+- **Variants**:
+  - `Primary`: Gradient background (`accent-gradient`).
+  - `Secondary`: Outline (`border-2 border-accent`).
+  - `Ghost`: Text only with hover effect.
+- **Icon Support**: Must support prefix/suffix icons (e.g., `icon_chevron_right.svg`).
+
+### 6.3 `SOMInput`
+Text field with built-in validation and icon support.
+- **Assets**:
+  - **Password Toggle**: Use `assets/design_system/common/icon_visibility_on.svg` / `off.svg`.
+  - **Clear Action**: Use `assets/design_system/common/icon_clear_circle.svg`.
+- **Specs**:
+  - Height: `56px`
+  - Label: Floating label style.
+  - Error State: Red border + `text-error` caption.
+
+### 6.4 `SOMBadge`
+Status indicator pill.
+- **Assets**:
+  - **Success**: `assets/design_system/offers/status_accepted.svg` (Check)
+  - **Warning**: `assets/design_system/common/icon_warning.svg`
+  - **Error**: `assets/design_system/common/icon_close.svg` or `icon_delete.svg`
+  - **Info**: `assets/design_system/common/icon_info.svg`
+- **Specs**:
+  - Radius: `99px` (Pill shape)
+  - Padding: `4px 12px`
+  - Typography: `text-xs font-bold uppercase`
+
+### 6.5 `SOMTable`
+Data grid with sorting and actions.
+- **Assets**:
+  - **Sorting**: `assets/design_system/common/icon_chevron_up.svg` / `down.svg`.
+  - **Actions**: `icon_edit.svg`, `icon_delete.svg` in the actions column.
+- **Specs**:
+  - Header: `bg-surface-variant` text-sm font-bold.
+  - Rows: Hover effect `bg-primary/5`.
+
+### 6.6 `SOMModal`
+Overlay dialogs.
+- **Assets**:
+  - **Close**: `assets/design_system/common/icon_close.svg` top-right.
+- **Specs**:
+  - Max Width: `600px` (or responsive)
+  - Backdrop: `bg-black/80` blur-sm.
+
+### 6.7 `SOMSidebar`
+Responsive navigation drawer.
+- **Assets**:
+  - **Logo**: `assets/design_system/logo_full.svg` top.
+  - **Toggle**: `assets/design_system/common/icon_menu.svg` (mobile).
+  - **Icons**: Use mapped global icons (`icon_dashboard.svg`, etc).
+- **Specs**:
+  - Width: `280px` (Expanded) / `80px` (Collapsed).
+  - Background: `bg-primary` with Glassmorphism effect.

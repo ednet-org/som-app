@@ -2,6 +2,197 @@
 
 Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 
+## Design System Spec (Source of Truth)
+
+### 1) Design System & Tokens
+#### Color Palette (Premium/Dark Mode)
+- **Backgrounds**
+  - `bg-primary`: `#0F172A` (Rich dark blue/slate)
+  - `bg-secondary`: `#1E293B` (Lighter slate for cards/sidebar)
+  - `bg-tertiary`: `#334155` (Hover states, specific widgets)
+- **Accents**
+  - `accent-primary`: `#38BDF8` (Bright distinct blue for primary actions)
+  - `accent-secondary`: `#818CF8` (Soft indigo for secondary highlights)
+  - `accent-gradient`: `Linear Gradient(135deg, #38BDF8 0%, #818CF8 100%)`
+- **Text**
+  - `text-primary`: `#F8FAFC` (Almost white)
+  - `text-secondary`: `#94A3B8` (Muted blue-grey)
+  - `text-disabled`: `#475569`
+- **Semantic**
+  - `success`: `#10B981` (Emerald)
+  - `warning`: `#F59E0B` (Amber)
+  - `error`: `#EF4444` (Red)
+  - `info`: `#3B82F6` (Blue)
+
+#### Typography (Modern Sans-Serif - e.g., Inter or Roboto)
+- **H1 (Page Title)**: 32px, Bold, Tracking -0.5px
+- **H2 (Section Title)**: 24px, SemiBold
+- **H3 (Card Title)**: 18px, Medium
+- **Body Regular**: 14px, Regular, Height 1.5
+- **Body Small**: 12px, Regular
+- **Label/Button**: 14px, SemiBold, Uppercase (optional)
+
+#### Global Layout Specs
+- **Sidebar**: Fixed width `280px`, `bg-secondary` with `1px` border-right (`#334155`). Glassmorphism overlay optional.
+- **Top Bar**: Height `64px`, `bg-primary` (or transparent with blur), Sticky.
+- **Content Area**: Padding `24px` or `32px` (responsive).
+- **Cards**: `bg-secondary`, `borderRadius: 16px`, `shadow-lg` (`0 10px 15px -3px rgba(0, 0, 0, 0.1)`).
+
+### 2) Global & Domain Assets (SVGs)
+All assets located in `assets/design_system/` organized by context:
+
+#### Global (`assets/design_system/`)
+- `logo_full.svg`, `logo_mark.svg`
+- `icon_dashboard.svg`, `icon_inquiries.svg`, `icon_offers.svg`, `icon_statistics.svg`, `icon_settings.svg`, `icon_user.svg`
+- `illustration_empty_state.svg`
+
+#### Common Actions (`assets/design_system/common/`)
+- **Navigation**: `icon_menu.svg`, `icon_close.svg`, `icon_chevron_left.svg`, `icon_chevron_right.svg`, `icon_chevron_up.svg`, `icon_chevron_down.svg`
+- **Actions**: `icon_search.svg`, `icon_filter.svg`, `icon_edit.svg`, `icon_delete.svg`, `icon_notification.svg`, `icon_calendar.svg`
+- **Status Types**: `icon_warning.svg`, `icon_info.svg`
+- **Input Controls**: `icon_visibility_on.svg`, `icon_visibility_off.svg`, `icon_clear_circle.svg` (for Inputs)
+
+#### Patterns (`assets/design_system/patterns/`)
+- **Textures**: `subtle_mesh.svg`, `dot_noise.svg` (For Cards/Backgrounds)
+
+#### Illustrations (`assets/design_system/illustrations/`)
+- **Hero**: `login_hero.svg` (Abstract network concept)
+
+#### Auth & Identity (`assets/design_system/auth/`)
+- **Roles**: `role_buyer.svg`, `role_provider.svg` (Large selection cards)
+- **Provider Types**: `type_wholesaler.svg`, `type_manufacturer.svg`, `type_service.svg`
+
+#### Inquiry (`assets/design_system/inquiry/`)
+- **Status**: `status_open.svg`, `status_won.svg`, `status_lost.svg`
+- **States**: `empty_inquiries.svg`
+
+#### Offers (`assets/design_system/offers/`)
+- **Status**: `status_accepted.svg`, `status_rejected.svg`
+- **Files**: `icon_pdf.svg`
+
+#### Ads (`assets/design_system/ads/`)
+- **Placeholders**: `banner_placeholder.svg`, `sidebar_placeholder.svg`
+
+#### Statistics (`assets/design_system/statistics/`)
+- **Icons**: `chart_bar.svg`, `chart_pie.svg`
+
+#### Subscription (`assets/design_system/subscription/`)
+- **Tiers**: `tier_standard.svg`, `tier_premium.svg`, `tier_enterprise.svg`
+
+### 3) Screen-Level Specifications (must follow)
+#### Authentication (All Roles)
+- **Global Auth Layout**: Split screen. Left 50% `bg-primary` with `logo_full.svg` centered + marketing copy. Right 50% `bg-secondary` with form card.
+
+##### Login Screen
+- **Components**:
+  - `Input(Email)`: Placeholder "name@company.com", `bg-tertiary` border `text-secondary`.
+  - `Input(Password)`: Toggle visibility icon.
+  - `Button(Primary)`: "Sign In", full width, `accent-gradient`.
+  - `Link`: "Forgot Password?", `text-secondary` hover `text-primary`.
+- **States**:
+  - Error: Show Toast `bg-error` + red border on inputs.
+
+##### Registration - Landing (Role Selection)
+- **Layout**: Centered container, max-width `800px`.
+- **Header**: "Join SOM Network - Choose your path".
+- **Cards**: Two large cards (`350x400px`).
+  - **Buyer Card**: Icon `icon_inquiries.svg` (large), Title "Buyer", Text "Source products & services.", Button "Register as Buyer".
+  - **Provider Card**: Icon `icon_offers.svg` (large), Title "Provider", Text "Grow your business.", Button "Register as Provider".
+- **Interaction**: Hover scales card 1.05x, border glow `accent-primary`.
+
+##### Registration - Forms (Buyer & Provider)
+- **Multi-step Wizard**:
+  - **Step 1: Company**: Name, Address, UID.
+  - **Step 2: Contact**: Admin User (Name, Email, Phone).
+  - **Step 3 (Provider Only)**: Banking, Subscriptions (3 column pricing table).
+- **Validation**: Real-time check for Email uniqueness.
+
+#### Buyer Role (Layout: Sidebar + Top Bar)
+##### Dashboard
+- **Stats Row**: 3 Cards.
+  - "Active Inquiries": Value `12`, Icon `icon_inquiries.svg` (`text-info`).
+  - "New Offers": Value `5`, Icon `icon_offers.svg` (`text-success`).
+  - "Offers expire soon": Value `2`, Icon `icon_time.svg` (`text-warning`).
+- **Recent Activity**: Table showing last 5 actions.
+- **Ads Banner**: `height: 120px`, `bg-tertiary` (placeholder for ad image), rounded corners.
+
+##### Inquiry Management
+- **List View**:
+  - **Filter Bar**: `Dropdown(Status)`, `DateRangePicker`, `Input(Search)`.
+  - **Table Columns**: ID, Branch (Tag), Deadline (Date), Offers (Count badge), Status (Badge `bg-success/warning/error`).
+  - **Empty State**: Use `illustration_empty_state.svg` with text "No inquiries found. Create your first one!".
+- **Create Inquiry (Wizard)**:
+  - **Step 1: Basics**: `Dropdown(Branch)`, `TagsInput(Products)`.
+  - **Step 2: Details**: `DatePicker(Deadline)`, `TextArea(Description)` + count, `FileUpload` (PDF only).
+  - **Step 3: Provider**: `Slider(Radius)`, `CheckboxGroup(Type)` (Wholesaler/Manufacturer/Service).
+  - **Summary**: Read-only view + "Confirm & Send".
+
+##### Offer Management
+- **Offer Detail**:
+  - **Header**: Provider Name, Price/Terms summary.
+  - **PDF Viewer**: Embedded or "Download".
+  - **Actions**:
+    - `Button(Accept)`: Modal "Confirm Contact Details".
+    - `Button(Reject)`: Modal "Reason for rejection" (optional).
+
+#### Provider Role
+##### Dashboard
+- "New Inquiries" (info), "Won Offers" (success), "Lost Offers" (error)
+- Subscription widget: "Premium Plan - Expires in 30 days" + `Button(Upgrade)`
+
+##### Inquiry Management (Provider View)
+- Read-only inquiry details + offer creation (upload PDF / pass)
+- Upload modal with drag & drop zone and toast "Offer Uploaded!"
+
+##### Ads Management (Admin)
+- Banner vs Normal, calendar scheduling for banners
+- Image upload (aspect ratio validation), URL, headline
+- Ads list with status
+
+##### Statistics & Subscription
+- Bar chart (Inquiry vs Offer vs Won)
+- Billing list + tier cards (Standard, Premium, Enterprise)
+
+#### Consultant Role
+- Dashboard inbox for approvals
+- Search for companies/users
+- Registered companies table with filters + actions
+- Manual onboarding flow
+- Global inquiry list and category review queue
+
+### 4) Shared Widget Catalog (Reusable Components)
+#### `SOMCard`
+- **Assets**: `assets/design_system/patterns/subtle_mesh.svg` overlay for featured cards.
+- **Specs**: Background `bg-secondary`, radius `16px`, shadow `shadow-lg`, padding `24px`.
+
+#### `SOMButton`
+- **Variants**: Primary (gradient), Secondary (outline), Ghost (text).
+- **Icon Support**: prefix/suffix icons (e.g., `icon_chevron_right.svg`).
+
+#### `SOMInput`
+- **Assets**: `icon_visibility_on/off.svg`, `icon_clear_circle.svg`.
+- **Specs**: Height `56px`, floating label, error state (red border + caption).
+
+#### `SOMBadge`
+- **Assets**:
+  - Success: `assets/design_system/offers/status_accepted.svg`
+  - Warning: `assets/design_system/common/icon_warning.svg`
+  - Error: `assets/design_system/common/icon_close.svg` or `icon_delete.svg`
+  - Info: `assets/design_system/common/icon_info.svg`
+- **Specs**: Pill radius `99px`, padding `4px 12px`, uppercase text.
+
+#### `SOMTable`
+- **Assets**: `icon_chevron_up/down.svg`, `icon_edit.svg`, `icon_delete.svg`.
+- **Specs**: Header `bg-surface-variant`, rows hover `bg-primary/5`.
+
+#### `SOMModal`
+- **Assets**: `icon_close.svg` in top-right.
+- **Specs**: Max width `600px`, backdrop `bg-black/80` blur-sm.
+
+#### `SOMSidebar`
+- **Assets**: `logo_full.svg`, `icon_menu.svg`, nav icons.
+- **Specs**: Width `280px` (expanded) / `80px` (collapsed), glassmorphism effect.
+
 ## Priority Legend
 - **P0**: Critical (blocks usability)
 - **P1**: High (significant UX improvement)
@@ -63,6 +254,13 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 - [x] Add density switcher (compact/standard/comfortable).
 - [x] Persist theme + density using shared preferences.
 - [ ] Add user-level preference indicators in profile menu.
+
+### Design System Assets Integration
+- [ ] Register all `assets/design_system/**` entries in `pubspec.yaml`.
+- [ ] Create a single source of truth for asset paths (e.g., `SomAssets`).
+- [ ] Replace default Material icons with design system SVGs.
+- [ ] Add SVG placeholders for ads + empty states.
+- [ ] Add pattern overlays to cards where specified.
 
 ### Material 3 Color System (Aesthetic)
 - [x] Base theme on `ThemeData.from(colorScheme: ColorScheme.fromSeed(...))`.
