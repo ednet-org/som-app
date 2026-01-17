@@ -203,6 +203,16 @@ mixin _$Application on _Application, Store {
     });
   }
 
+  late final _$loadPreferencesAsyncAction = AsyncAction(
+    '_Application.loadPreferences',
+    context: context,
+  );
+
+  @override
+  Future<void> loadPreferences() {
+    return _$loadPreferencesAsyncAction.run(() => super.loadPreferences());
+  }
+
   late final _$loginAsyncAction = AsyncAction(
     '_Application.login',
     context: context,

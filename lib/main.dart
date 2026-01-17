@@ -60,6 +60,7 @@ void main() async {
   // final Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
   // final sharedPrefs = await prefsFuture;
   appStore = Application();
+  await appStore.loadPreferences();
 
   // dio perform awful if not spawn to own worker
   apiInstance.dio.transformer = BackgroundTransformer()

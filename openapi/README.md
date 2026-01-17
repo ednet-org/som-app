@@ -122,7 +122,7 @@ Class | Method | HTTP request | Description
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsPost**](doc/ProvidersApi.md#providerscompanyidproductspost) | **POST** /providers/{companyId}/products | Create provider product
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdDelete**](doc/ProvidersApi.md#providerscompanyidproductsproductiddelete) | **DELETE** /providers/{companyId}/products/{productId} | Delete provider product
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdPut**](doc/ProvidersApi.md#providerscompanyidproductsproductidput) | **PUT** /providers/{companyId}/products/{productId} | Update provider product
-[*ProvidersApi*](doc/ProvidersApi.md) | [**providersGet**](doc/ProvidersApi.md#providersget) | **GET** /providers | List providers
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersGet**](doc/ProvidersApi.md#providersget) | **GET** /providers | List providers with pagination
 [*RolesApi*](doc/RolesApi.md) | [**rolesGet**](doc/RolesApi.md#rolesget) | **GET** /roles | List roles
 [*RolesApi*](doc/RolesApi.md) | [**rolesPost**](doc/RolesApi.md#rolespost) | **POST** /roles | Create role
 [*RolesApi*](doc/RolesApi.md) | [**rolesRoleIdDelete**](doc/RolesApi.md#rolesroleiddelete) | **DELETE** /roles/{roleId} | Delete role

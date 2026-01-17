@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/customer_management/roles.dart';
 
@@ -10,6 +11,10 @@ part 'application.g.dart';
 class Application = _Application with _$Application;
 
 abstract class _Application with Store {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  static const String _prefThemeMode = 'ui.themeMode';
+  static const String _prefDensity = 'ui.density';
+
   @observable
   double applicationWidth = 600;
 
@@ -43,29 +48,61 @@ abstract class _Application with Store {
   @action
   void setThemeMode(ThemeMode mode) {
     themeMode = mode;
+    _saveThemeMode(mode);
   }
 
   @action
   void setDensity(UiDensity value) {
     density = value;
+    _saveDensity(value);
   }
 
   @action
   void toggleDarkMode() {
-    if (themeMode == ThemeMode.dark) {
-      themeMode = ThemeMode.light;
-    } else {
-      themeMode = ThemeMode.dark;
-    }
+    setThemeMode(
+        themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
   }
 
   @action
   void cycleThemeMode() {
-    themeMode = switch (themeMode) {
+    setThemeMode(switch (themeMode) {
       ThemeMode.system => ThemeMode.light,
       ThemeMode.light => ThemeMode.dark,
       ThemeMode.dark => ThemeMode.system,
+    });
+  }
+
+  @action
+  Future<void> loadPreferences() async {
+    final sharedPrefs = await _prefs;
+    themeMode = _themeModeFromString(
+        sharedPrefs.getString(_prefThemeMode));
+    density = _uiDensityFromString(
+        sharedPrefs.getString(_prefDensity));
+  }
+
+  ThemeMode _themeModeFromString(String? value) {
+    return switch (value) {
+      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
+      _ => ThemeMode.system,
     };
+  }
+
+  UiDensity _uiDensityFromString(String? value) {
+    return UiDensity.values
+        .firstWhere((density) => density.name == value,
+            orElse: () => UiDensity.standard);
+  }
+
+  Future<void> _saveThemeMode(ThemeMode mode) async {
+    final sharedPrefs = await _prefs;
+    await sharedPrefs.setString(_prefThemeMode, mode.name);
+  }
+
+  Future<void> _saveDensity(UiDensity value) async {
+    final sharedPrefs = await _prefs;
+    await sharedPrefs.setString(_prefDensity, value.name);
   }
 
   @action

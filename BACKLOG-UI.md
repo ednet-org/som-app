@@ -13,10 +13,10 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 ## P0: Critical Fixes
 
 ### Layout Overflow + Action Bars (Screenshots #1, #3, #6, #7)
-- [ ] Replace the current `contextMenu` layout with a top toolbar (no left column).
-- [ ] Add a shared `AppToolbar` that uses `Wrap`/`OverflowBar` for actions.
-- [ ] Remove the hard-coded “Filters” label from `ExpandedBodyContainer`.
-- [ ] Ensure toolbar actions never overflow on narrow widths.
+- [x] Replace the current `contextMenu` layout with a top toolbar (no left column).
+- [x] Add a shared `AppToolbar` that uses wrapping actions.
+- [x] Remove the hard-coded “Filters” label from `ExpandedBodyContainer`.
+- [x] Ensure toolbar actions never overflow on narrow widths.
 
 ### UUID + Date Formatting
 - [x] Replace raw UUIDs with readable short IDs where displayed.
@@ -31,16 +31,17 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 ## P1: High Priority
 
 ### Material 3 Structure + Consistency
-- [ ] Create shared layout widgets:
+- [x] Shared layout widgets:
   - `AppToolbar` (title + actions + optional subtitle)
-  - `SectionCard` / `DetailRow` for key-value blocks
+  - `DetailSection` / `DetailRow` for key-value blocks
   - `EmptyState` for empty lists
+- [ ] Apply new toolbar + empty state on all remaining screens.
 - [ ] Use M3 buttons consistently (Filled / Tonal / Outlined / Text).
 - [ ] Standardize list tile density, padding, and hover/selection states.
 
 ### Status Visualization
-- [x] Status badges and semantic colors.
-- [ ] Apply status badges consistently in offers, ads, providers, companies.
+- [x] Status badges + semantic colors.
+- [ ] Apply status badges consistently in offers, ads, providers, companies, branches.
 - [ ] Add status legend hints where needed.
 
 ### State of System (HCI)
@@ -49,9 +50,31 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 - [ ] Add inline error states in detail panels (not only toast).
 
 ### Accessibility
-- [ ] Ensure minimum touch target (48dp) for icon actions.
+- [x] Minimum touch target (48dp) for icon actions.
 - [ ] Add `Tooltip`/`Semantics` for icon-only actions.
 - [ ] Verify contrast ratios for status colors in dark theme.
+
+---
+
+## P1: Theme + Density + Aesthetics
+
+### Theme Switcher
+- [x] Add light/dark/system switcher.
+- [x] Add density switcher (compact/standard/comfortable).
+- [x] Persist theme + density using shared preferences.
+- [ ] Add user-level preference indicators in profile menu.
+
+### Material 3 Color System (Aesthetic)
+- [x] Base theme on `ThemeData.from(colorScheme: ColorScheme.fromSeed(...))`.
+- [x] Explicitly set `useMaterial3: true` in theme definitions.
+- [ ] Normalize use of `surfaceContainer*` roles for layers, avoid legacy `surfaceVariant`.
+- [ ] Define semantic feedback colors against M3 surface containers.
+- [ ] Add component themes where `VisualDensity` is ignored (IconButton/Checkbox/etc).
+
+### Typography (Aesthetic)
+- [x] Use `Typography.material2021()` defaults for both light/dark themes.
+- [ ] Align usage to M3 type scale: display/headline/title/body/label.
+- [ ] Audit heading hierarchy across admin pages.
 
 ---
 
@@ -59,8 +82,9 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 
 ### Design Tokens + Theme
 - [x] Introduce spacing, radius, icon size tokens.
+- [x] Create `som_theme.dart` with Material 3 color scheme + component theming.
 - [ ] Expand tokens for typography scales and component density.
-- [ ] Create `som_theme.dart` to unify `ThemeData` (inputs, cards, dividers, buttons).
+- [ ] Extend theme to cover tables, data grids, dialogs.
 
 ### Information Hierarchy
 - [ ] Add section headers and visual grouping in detail views.
@@ -69,6 +93,7 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 
 ### Navigation + Responsiveness
 - [ ] Evaluate `NavigationRail` on wide screens vs top bar.
+- [ ] Adopt M3 `NavigationBar` on narrow screens.
 - [ ] Ensure filters are collapsible on smaller widths.
 - [ ] Add responsive breakpoints for list/detail split widths.
 
@@ -90,9 +115,9 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 ## Dependency + Platform Hygiene (P1)
 
 ### Flutter SDK + Packages
-- [ ] Verify Flutter SDK is current stable; upgrade if behind.
-- [ ] Upgrade key UI dependencies (provider, url_launcher, cached_network_image, shared_preferences).
-- [ ] Re-run `flutter pub get` + full test suite.
+- [x] Verified Flutter SDK version.
+- [x] Bumped `provider`, `url_launcher`, `shared_preferences`, `cached_network_image`.
+- [ ] Review remaining outdated packages with `flutter pub outdated`.
 
 ---
 
@@ -113,19 +138,60 @@ Based on HCI principles, Nielsen's heuristics, and Material 3 guidance.
 
 ---
 
+## Widget File Index (Audit / Future Updates)
+
+### Layout + Theme
+- `lib/ui/domain/model/layout/app_body.dart`
+- `lib/ui/domain/model/layout/expanded_body_container.dart`
+- `lib/ui/theme/som_theme.dart`
+- `lib/ui/theme/tokens.dart`
+- `lib/ui/theme/semantic_colors.dart`
+- `lib/ui/som_application.dart`
+- `lib/ui/widgets/funny_logo.dart`
+
+### Shared Widgets
+- `lib/ui/widgets/app_toolbar.dart`
+- `lib/ui/widgets/detail_section.dart`
+- `lib/ui/widgets/empty_state.dart`
+- `lib/ui/widgets/status_badge.dart`
+
+### Screens (List + Detail)
+- `lib/ui/pages/inquiry/inquiry_page.dart`
+- `lib/ui/pages/inquiry/widgets/inquiry_list.dart`
+- `lib/ui/pages/inquiry/widgets/inquiry_detail.dart`
+- `lib/ui/pages/inquiry/widgets/offer_list.dart`
+- `lib/ui/pages/offers/offers_app_body.dart`
+- `lib/ui/pages/ads/ads_page.dart`
+- `lib/ui/pages/ads/widgets/ads_list.dart`
+- `lib/ui/pages/providers/providers_app_body.dart`
+- `lib/ui/pages/companies/companies_app_body.dart`
+- `lib/ui/pages/company/company_app_body.dart`
+- `lib/ui/pages/branches/branches_app_body.dart`
+- `lib/ui/pages/consultants/consultants_app_body.dart`
+- `lib/ui/pages/subscriptions/subscriptions_app_body.dart`
+- `lib/ui/pages/roles/roles_app_body.dart`
+- `lib/ui/pages/user/user_app_body.dart`
+- `lib/ui/pages/audit/audit_app_body.dart`
+- `lib/ui/pages/statistics/statistics_app_body.dart`
+
+---
+
 ## Progress Tracking
 
 ### Sprint 1: Layout + Overflow (P0)
-- [ ] Toolbar layout refactor
-- [ ] AppBody/ExpandedBodyContainer update
-- [ ] Fix all toolbar overflow errors
+- [x] Toolbar layout refactor
+- [x] AppBody/ExpandedBodyContainer update
+- [x] Fix all toolbar overflow errors
 
 ### Sprint 2: Core Visual System (P1)
-- [ ] Shared toolbar + empty state
-- [ ] Status badges everywhere
-- [ ] Detail cards + key/value layout
+- [x] Shared toolbar + empty state
+- [x] Status badges + semantic colors
+- [ ] Apply status badges everywhere
+- [ ] Detail cards + key/value layout everywhere
 
-### Sprint 3: Accessibility + Theme (P2)
-- [ ] Accessibility annotations + touch targets
-- [ ] Unified Material 3 theme
-
+### Sprint 3: Appearance + Theme (P1/P2)
+- [x] Material 3 theme file
+- [x] Light/dark/system switcher
+- [x] Density switcher
+- [ ] Persist theme + density
+- [ ] Contrast audit + typography alignment

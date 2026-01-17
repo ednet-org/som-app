@@ -705,10 +705,13 @@ class ProvidersApi {
     );
   }
 
-  /// List providers
-  /// 
+  /// List providers with pagination
+  /// Returns paginated list of providers with total count in headers.
   ///
   /// Parameters:
+  /// * [limit] - Number of results per page (max 200)
+  /// * [offset] - Number of results to skip
+  /// * [search] - Search by company name (case-insensitive)
   /// * [branchId] 
   /// * [companySize] 
   /// * [providerType] 
@@ -726,6 +729,9 @@ class ProvidersApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<ProviderSummary>] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<ProviderSummary>>> providersGet({ 
+    int? limit = 50,
+    int? offset = 0,
+    String? search,
     String? branchId,
     String? companySize,
     String? providerType,
@@ -760,6 +766,9 @@ class ProvidersApi {
     );
 
     final _queryParameters = <String, dynamic>{
+      if (limit != null) r'limit': encodeQueryParameter(_serializers, limit, const FullType(int)),
+      if (offset != null) r'offset': encodeQueryParameter(_serializers, offset, const FullType(int)),
+      if (search != null) r'search': encodeQueryParameter(_serializers, search, const FullType(String)),
       if (branchId != null) r'branchId': encodeQueryParameter(_serializers, branchId, const FullType(String)),
       if (companySize != null) r'companySize': encodeQueryParameter(_serializers, companySize, const FullType(String)),
       if (providerType != null) r'providerType': encodeQueryParameter(_serializers, providerType, const FullType(String)),

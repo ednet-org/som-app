@@ -692,6 +692,96 @@ class AdRecord {
   final DateTime updatedAt;
 }
 
+class ProviderSearchParams {
+  ProviderSearchParams({
+    this.limit = 50,
+    this.offset = 0,
+    this.search,
+    this.branchId,
+    this.providerType,
+    this.status,
+    this.zipPrefix,
+    this.companySize,
+    this.claimed,
+  });
+
+  final int limit;
+  final int offset;
+  final String? search;
+  final String? branchId;
+  final String? providerType;
+  final String? status;
+  final String? zipPrefix;
+  final String? companySize;
+  final bool? claimed;
+}
+
+class ProviderSearchResult {
+  ProviderSearchResult({
+    required this.totalCount,
+    required this.items,
+  });
+
+  final int totalCount;
+  final List<ProviderSummaryRecord> items;
+}
+
+class ProviderSummaryRecord {
+  ProviderSummaryRecord({
+    required this.companyId,
+    required this.companyName,
+    required this.companySize,
+    required this.providerType,
+    required this.postcode,
+    required this.branchIds,
+    required this.pendingBranchIds,
+    required this.status,
+    required this.rejectionReason,
+    required this.rejectedAt,
+    required this.subscriptionPlanId,
+    required this.paymentInterval,
+    required this.bankDetails,
+    required this.registrationDate,
+  });
+
+  final String companyId;
+  final String companyName;
+  final String companySize;
+  final String? providerType;
+  final String postcode;
+  final List<String> branchIds;
+  final List<String> pendingBranchIds;
+  final String status;
+  final String? rejectionReason;
+  final DateTime? rejectedAt;
+  final String subscriptionPlanId;
+  final String paymentInterval;
+  final BankDetails bankDetails;
+  final DateTime registrationDate;
+
+  bool get claimed => status == 'active';
+
+  Map<String, dynamic> toJson() => {
+        'companyId': companyId,
+        'companyName': companyName,
+        'companySize': companySize,
+        'providerType': providerType,
+        'postcode': postcode,
+        'branchIds': branchIds,
+        'pendingBranchIds': pendingBranchIds,
+        'status': status,
+        'rejectionReason': rejectionReason,
+        'rejectedAt': rejectedAt?.toIso8601String(),
+        'claimed': claimed,
+        'subscriptionPlanId': subscriptionPlanId,
+        'paymentInterval': paymentInterval,
+        'iban': bankDetails.iban,
+        'bic': bankDetails.bic,
+        'accountOwner': bankDetails.accountOwner,
+        'registrationDate': registrationDate.toIso8601String(),
+      };
+}
+
 String encodeJson(Object value) => jsonEncode(value);
 
 Map<String, dynamic> decodeJsonMap(Object? value) {

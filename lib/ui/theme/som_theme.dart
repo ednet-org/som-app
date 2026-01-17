@@ -40,17 +40,17 @@ class SomTheme {
     required Brightness brightness,
     required VisualDensity visualDensity,
   }) {
-    final textTheme = Typography.material2021()
-        .black
+    final typography = Typography.material2021();
+    final textTheme = (brightness == Brightness.dark
+            ? typography.white
+            : typography.black)
         .apply(fontFamily: 'Regular');
 
-    final base = ThemeData(
-      useMaterial3: true,
+    final base = ThemeData.from(
       colorScheme: colorScheme,
-      brightness: brightness,
-      visualDensity: visualDensity,
       textTheme: textTheme,
-    );
+      useMaterial3: true,
+    ).copyWith(visualDensity: visualDensity);
 
     return base.copyWith(
       appBarTheme: AppBarTheme(

@@ -18,6 +18,8 @@ const _apiBaseUrl = String.fromEnvironment(
   defaultValue: 'http://127.0.0.1:8081',
 );
 
+const _pageSize = 50;
+
 class ProvidersAppBody extends StatefulWidget {
   const ProvidersAppBody({Key? key}) : super(key: key);
 
@@ -26,24 +28,61 @@ class ProvidersAppBody extends StatefulWidget {
 }
 
 class _ProvidersAppBodyState extends State<ProvidersAppBody> {
-  Future<List<ProviderSummary>>? _providersFuture;
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+
   List<ProviderSummary> _providers = const [];
   ProviderSummary? _selected;
 
+  // Pagination state
+  int _totalCount = 0;
+  int _currentOffset = 0;
+  bool _hasMore = true;
+  bool _isLoading = false;
+  bool _isLoadingMore = false;
+  String? _error;
+
+  // Filter state
   String? _branchId;
   String? _companySize;
   String? _providerType;
   String? _zipPrefix;
   String? _status;
   String? _claimed;
+  String? _search;
 
   List<Branch> _branches = const [];
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _providersFuture ??= _loadProviders();
-    _loadBranches();
+    if (_providers.isEmpty && !_isLoading) {
+      _loadInitialProviders();
+      _loadBranches();
+    }
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 200 &&
+        !_isLoadingMore &&
+        _hasMore) {
+      _loadMoreProviders();
+    }
   }
 
   Future<void> _loadBranches() async {
@@ -58,24 +97,98 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     }
   }
 
-  Future<List<ProviderSummary>> _loadProviders() async {
-    final api = Provider.of<Openapi>(context, listen: false);
-    final response = await api.getProvidersApi().providersGet(
-          branchId: _branchId,
-          companySize: _companySize,
-          providerType: _providerType,
-          zipPrefix: _zipPrefix,
-          status: _status,
-          claimed: _claimed,
-        );
-    _providers = response.data?.toList() ?? const [];
-    return _providers;
+  Future<void> _loadInitialProviders() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+      _providers = const [];
+      _currentOffset = 0;
+      _hasMore = true;
+    });
+
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      final response = await api.getProvidersApi().providersGet(
+            limit: _pageSize,
+            offset: 0,
+            search: _search,
+            branchId: _branchId,
+            companySize: _companySize,
+            providerType: _providerType,
+            zipPrefix: _zipPrefix,
+            status: _status,
+            claimed: _claimed,
+          );
+
+      // Parse pagination headers
+      final totalCountHeader = response.headers.value('X-Total-Count');
+      final hasMoreHeader = response.headers.value('X-Has-More');
+
+      setState(() {
+        _providers = response.data?.toList() ?? const [];
+        _totalCount = int.tryParse(totalCountHeader ?? '') ?? _providers.length;
+        _hasMore = hasMoreHeader?.toLowerCase() == 'true';
+        _currentOffset = _providers.length;
+        _isLoading = false;
+      });
+    } catch (error, stackTrace) {
+      UILogger.silentError('ProvidersAppBody._loadInitialProviders', error, stackTrace);
+      setState(() {
+        _isLoading = false;
+        _error = _extractError(error);
+      });
+    }
+  }
+
+  Future<void> _loadMoreProviders() async {
+    if (_isLoadingMore || !_hasMore) return;
+
+    setState(() {
+      _isLoadingMore = true;
+    });
+
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      final response = await api.getProvidersApi().providersGet(
+            limit: _pageSize,
+            offset: _currentOffset,
+            search: _search,
+            branchId: _branchId,
+            companySize: _companySize,
+            providerType: _providerType,
+            zipPrefix: _zipPrefix,
+            status: _status,
+            claimed: _claimed,
+          );
+
+      final totalCountHeader = response.headers.value('X-Total-Count');
+      final hasMoreHeader = response.headers.value('X-Has-More');
+      final newProviders = response.data?.toList() ?? const [];
+
+      setState(() {
+        _providers = [..._providers, ...newProviders];
+        _totalCount = int.tryParse(totalCountHeader ?? '') ?? _totalCount;
+        _hasMore = hasMoreHeader?.toLowerCase() == 'true';
+        _currentOffset = _providers.length;
+        _isLoadingMore = false;
+      });
+    } catch (error, stackTrace) {
+      UILogger.silentError('ProvidersAppBody._loadMoreProviders', error, stackTrace);
+      setState(() {
+        _isLoadingMore = false;
+      });
+    }
   }
 
   Future<void> _refresh() async {
+    await _loadInitialProviders();
+  }
+
+  void _onSearchSubmitted(String value) {
     setState(() {
-      _providersFuture = _loadProviders();
+      _search = value.trim().isEmpty ? null : value.trim();
     });
+    _loadInitialProviders();
   }
 
   Future<void> _exportCsv() async {
@@ -89,6 +202,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           'zipPrefix': _zipPrefix,
         if (_status != null) 'status': _status,
         if (_claimed != null) 'claimed': _claimed,
+        if (_search != null && _search!.isNotEmpty) 'search': _search,
         'format': 'csv',
       },
     );
@@ -178,20 +292,23 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     );
   }
 
-  String _extractError(DioException error) {
-    final data = error.response?.data;
-    if (data is String) return data;
-    if (data is Map && data['message'] != null) {
-      return data['message'].toString();
+  String _extractError(Object error) {
+    if (error is DioException) {
+      final data = error.response?.data;
+      if (data is String) return data;
+      if (data is Map && data['message'] != null) {
+        return data['message'].toString();
+      }
+      return error.message ?? 'Request failed.';
     }
-    return error.message ?? 'Request failed.';
+    return error.toString();
   }
 
   void _filterPendingOnly() {
     setState(() {
       _status = 'pending';
-      _providersFuture = _loadProviders();
     });
+    _loadInitialProviders();
   }
 
   @override
@@ -207,172 +324,213 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       );
     }
 
-    return FutureBuilder<List<ProviderSummary>>(
-      future: _providersFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
-          );
-        }
-        if (snapshot.hasError) {
-          return AppBody(
-            contextMenu: const Text('Error'),
-            leftSplit: Center(
-              child: Text('Failed to load providers: ${snapshot.error}'),
-            ),
-            rightSplit: const SizedBox.shrink(),
-          );
-        }
-        final providers = snapshot.data ?? const [];
-        if (providers.isEmpty) {
-          return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Providers'),
-              actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
-                TextButton(
-                  onPressed: _filterPendingOnly,
-                  child: const Text('Pending Approval'),
-                ),
-                TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
-              ],
-            ),
-            leftSplit: const EmptyState(
-              icon: Icons.apartment_outlined,
-              title: 'No providers found',
-              message: 'Try adjusting filters or importing providers',
-            ),
-            rightSplit: const SizedBox.shrink(),
-          );
-        }
-        return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Providers'),
-            actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(
-                onPressed: _filterPendingOnly,
-                child: const Text('Pending Approval'),
-              ),
-              TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
-            ],
-          ),
-          leftSplit: Column(
+    if (_isLoading && _providers.isEmpty) {
+      return const AppBody(
+        contextMenu: Text('Loading'),
+        leftSplit: Center(child: CircularProgressIndicator()),
+        rightSplit: SizedBox.shrink(),
+      );
+    }
+
+    if (_error != null && _providers.isEmpty) {
+      return AppBody(
+        contextMenu: const Text('Error'),
+        leftSplit: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildFilters(),
-              const Divider(height: 1),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: providers.length,
-                  itemBuilder: (context, index) {
-                    final provider = providers[index];
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: SomSpacing.md,
-                        vertical: SomSpacing.xs,
-                      ),
-                      title: Text(
-                        provider.companyName ?? provider.companyId ?? 'Provider',
-                      ),
-                      subtitle: Text(
-                        'Type: ${provider.providerType ?? '-'} | '
-                        'Size: ${provider.companySize ?? '-'}',
-                      ),
-                      selected: _selected?.companyId == provider.companyId,
-                      onTap: () => setState(() => _selected = provider),
-                      trailing: StatusBadge.provider(
-                        status: provider.status ?? 'pending',
-                        compact: false,
-                        showIcon: false,
-                      ),
-                    );
-                  },
-                ),
+              Text('Failed to load providers: $_error'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _refresh,
+                child: const Text('Retry'),
               ),
             ],
           ),
-          rightSplit: _selected == null
-              ? const EmptyState(
-                  icon: Icons.touch_app_outlined,
-                  title: 'Select a provider',
-                  message: 'Choose a provider from the list to view details',
+        ),
+        rightSplit: const SizedBox.shrink(),
+      );
+    }
+
+    return AppBody(
+      contextMenu: AppToolbar(
+        title: Text('Providers ($_totalCount total)'),
+        actions: [
+          TextButton(onPressed: _refresh, child: const Text('Refresh')),
+          TextButton(
+            onPressed: _filterPendingOnly,
+            child: const Text('Pending Approval'),
+          ),
+          TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
+        ],
+      ),
+      leftSplit: Column(
+        children: [
+          _buildSearchBar(),
+          _buildFilters(),
+          const Divider(height: 1),
+          if (_providers.isEmpty)
+            const Expanded(
+              child: EmptyState(
+                icon: Icons.apartment_outlined,
+                title: 'No providers found',
+                message: 'Try adjusting filters or search term',
+              ),
+            )
+          else
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _providers.length + (_hasMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index >= _providers.length) {
+                    return _buildLoadingIndicator();
+                  }
+                  final provider = _providers[index];
+                  return ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: SomSpacing.md,
+                      vertical: SomSpacing.xs,
+                    ),
+                    title: Text(
+                      provider.companyName ?? provider.companyId ?? 'Provider',
+                    ),
+                    subtitle: Text(
+                      'Type: ${provider.providerType ?? '-'} | '
+                      'Size: ${provider.companySize ?? '-'}',
+                    ),
+                    selected: _selected?.companyId == provider.companyId,
+                    onTap: () => setState(() => _selected = provider),
+                    trailing: StatusBadge.provider(
+                      status: provider.status ?? 'pending',
+                      compact: false,
+                      showIcon: false,
+                    ),
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
+      rightSplit: _selected == null
+          ? const EmptyState(
+              icon: Icons.touch_app_outlined,
+              title: 'Select a provider',
+              message: 'Choose a provider from the list to view details',
+            )
+          : _buildProviderDetails(),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.sm),
+      child: TextField(
+        controller: _searchController,
+        decoration: InputDecoration(
+          hintText: 'Search by company name...',
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: _searchController.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    _searchController.clear();
+                    _onSearchSubmitted('');
+                  },
                 )
-              : Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListView(
-                    children: [
-                      Text(_selected!.companyName ?? 'Provider',
-                          style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: SomSpacing.xs),
-                      StatusBadge.provider(status: _selected!.status ?? 'pending'),
-                      const SizedBox(height: 8),
-                      Text('Company ID: ${SomFormatters.shortId(_selected!.companyId)}'),
-                      Text('Size: ${_selected!.companySize ?? '-'}'),
-                      Text('Type: ${SomFormatters.capitalize(_selected!.providerType)}'),
-                      Text('Postcode: ${_selected!.postcode ?? '-'}'),
-                      Text('Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}'),
-                      Text(
-                        'Pending branches: '
-                        '${SomFormatters.list(_selected!.pendingBranchIds?.toList())}',
-                      ),
-                      Text('Status: ${_selected!.status ?? '-'}'),
-                      if (_selected!.rejectionReason != null)
-                        Text(
-                          'Rejection reason: '
-                          '${_selected!.rejectionReason ?? '-'}',
-                        ),
-                      if (_selected!.rejectedAt != null)
-                        Text(
-                          'Rejected at: '
-                          '${SomFormatters.dateTime(_selected!.rejectedAt)}',
-                        ),
-                      const Divider(height: 24),
-                      Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),
-                      Text('Payment interval: ${_selected!.paymentInterval ?? '-'}'),
-                      const Divider(height: 24),
-                      Text('IBAN: ${_selected!.iban ?? '-'}'),
-                      Text('BIC: ${_selected!.bic ?? '-'}'),
-                      Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
-                      Text('Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}'),
-                      if (_selected!.status == 'pending' ||
-                          (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
-                        const Divider(height: 24),
-                        Text(
-                          'Approval Actions',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () => _approveProvider(_selected!),
-                              icon: const Icon(Icons.check),
-                              label: const Text('Approve'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                foregroundColor: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            OutlinedButton.icon(
-                              onPressed: () => _showDeclineDialog(_selected!),
-                              icon: const Icon(Icons.close),
-                              label: const Text('Decline'),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ],
+              : null,
+          border: const OutlineInputBorder(),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: SomSpacing.sm,
+            vertical: SomSpacing.xs,
+          ),
+        ),
+        onSubmitted: _onSearchSubmitted,
+        onChanged: (value) {
+          setState(() {}); // Update UI for clear button visibility
+        },
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Padding(
+      padding: EdgeInsets.all(SomSpacing.md),
+      child: Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget _buildProviderDetails() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: ListView(
+        children: [
+          Text(_selected!.companyName ?? 'Provider',
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: SomSpacing.xs),
+          StatusBadge.provider(status: _selected!.status ?? 'pending'),
+          const SizedBox(height: 8),
+          Text('Company ID: ${SomFormatters.shortId(_selected!.companyId)}'),
+          Text('Size: ${_selected!.companySize ?? '-'}'),
+          Text('Type: ${SomFormatters.capitalize(_selected!.providerType)}'),
+          Text('Postcode: ${_selected!.postcode ?? '-'}'),
+          Text('Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}'),
+          Text(
+            'Pending branches: '
+            '${SomFormatters.list(_selected!.pendingBranchIds?.toList())}',
+          ),
+          Text('Status: ${_selected!.status ?? '-'}'),
+          if (_selected!.rejectionReason != null)
+            Text(
+              'Rejection reason: '
+              '${_selected!.rejectionReason ?? '-'}',
+            ),
+          if (_selected!.rejectedAt != null)
+            Text(
+              'Rejected at: '
+              '${SomFormatters.dateTime(_selected!.rejectedAt)}',
+            ),
+          const Divider(height: 24),
+          Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),
+          Text('Payment interval: ${_selected!.paymentInterval ?? '-'}'),
+          const Divider(height: 24),
+          Text('IBAN: ${_selected!.iban ?? '-'}'),
+          Text('BIC: ${_selected!.bic ?? '-'}'),
+          Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
+          Text('Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}'),
+          if (_selected!.status == 'pending' ||
+              (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
+            const Divider(height: 24),
+            Text(
+              'Approval Actions',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => _approveProvider(_selected!),
+                  icon: const Icon(Icons.check),
+                  label: const Text('Approve'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
                   ),
                 ),
-        );
-      },
+                const SizedBox(width: 12),
+                OutlinedButton.icon(
+                  onPressed: () => _showDeclineDialog(_selected!),
+                  icon: const Icon(Icons.close),
+                  label: const Text('Decline'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -456,13 +614,15 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                     _zipPrefix = null;
                     _status = null;
                     _claimed = null;
+                    _search = null;
+                    _searchController.clear();
                   });
-                  _refresh();
+                  _loadInitialProviders();
                 },
                 child: const Text('Clear'),
               ),
               ElevatedButton(
-                onPressed: _refresh,
+                onPressed: _loadInitialProviders,
                 child: const Text('Apply'),
               ),
             ],

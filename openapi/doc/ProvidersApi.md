@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**providersCompanyIdProductsPost**](ProvidersApi.md#providerscompanyidproductspost) | **POST** /providers/{companyId}/products | Create provider product
 [**providersCompanyIdProductsProductIdDelete**](ProvidersApi.md#providerscompanyidproductsproductiddelete) | **DELETE** /providers/{companyId}/products/{productId} | Delete provider product
 [**providersCompanyIdProductsProductIdPut**](ProvidersApi.md#providerscompanyidproductsproductidput) | **PUT** /providers/{companyId}/products/{productId} | Update provider product
-[**providersGet**](ProvidersApi.md#providersget) | **GET** /providers | List providers
+[**providersGet**](ProvidersApi.md#providersget) | **GET** /providers | List providers with pagination
 
 
 # **providersCompanyIdApprovePost**
@@ -360,15 +360,20 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **providersGet**
-> BuiltList<ProviderSummary> providersGet(branchId, companySize, providerType, zipPrefix, status, claimed, format)
+> BuiltList<ProviderSummary> providersGet(limit, offset, search, branchId, companySize, providerType, zipPrefix, status, claimed, format)
 
-List providers
+List providers with pagination
+
+Returns paginated list of providers with total count in headers.
 
 ### Example
 ```dart
 import 'package:openapi/api.dart';
 
 final api = Openapi().getProvidersApi();
+final int limit = 56; // int | Number of results per page (max 200)
+final int offset = 56; // int | Number of results to skip
+final String search = search_example; // String | Search by company name (case-insensitive)
 final String branchId = branchId_example; // String | 
 final String companySize = companySize_example; // String | 
 final String providerType = providerType_example; // String | 
@@ -378,7 +383,7 @@ final String claimed = claimed_example; // String |
 final String format = format_example; // String | Use format=csv to export providers list.
 
 try {
-    final response = api.providersGet(branchId, companySize, providerType, zipPrefix, status, claimed, format);
+    final response = api.providersGet(limit, offset, search, branchId, companySize, providerType, zipPrefix, status, claimed, format);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling ProvidersApi->providersGet: $e\n');
@@ -389,6 +394,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **limit** | **int**| Number of results per page (max 200) | [optional] [default to 50]
+ **offset** | **int**| Number of results to skip | [optional] [default to 0]
+ **search** | **String**| Search by company name (case-insensitive) | [optional] 
  **branchId** | **String**|  | [optional] 
  **companySize** | **String**|  | [optional] 
  **providerType** | **String**|  | [optional] 
@@ -408,7 +416,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/csv
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
