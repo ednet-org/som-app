@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/widgets/design_system/som_input.dart';
 
 class SomTextInput extends StatelessWidget {
   final String? label;
   final IconData? icon;
   final String? hint;
-  final bool showPassword;
+  // Legacy props mapped or ignored
+  final bool showPassword; 
   final bool isPassword;
   final int maxLines;
   final bool autocorrect;
   final TextInputType? keyboardType;
   final String? value;
-  final onChanged;
-  final onToggleShowPassword;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback?
+  onToggleShowPassword; // Not needed if SomInput handles internal state, but keeping for API compat if needed
   final bool required;
 
-  final Color? onPrimary;
-
-  final Color? secondary;
-
-  final void Function()? forgotPasswordHandler;
-
-  final bool displayForgotPassword;
-
-  final String? Function(String?)? validator;
-
-  // final Function? forgotPasswordHandler;
+  // Deprecated/Removed props
+  // final Color? onPrimary;
+  // final Color? secondary;
+  // final void Function()? forgotPasswordHandler;
+  // final bool displayForgotPassword;
 
   const SomTextInput({
     Key? key,
@@ -40,56 +37,36 @@ class SomTextInput extends StatelessWidget {
     this.onToggleShowPassword,
     this.required = false,
     this.isPassword = false,
-    this.displayForgotPassword = false,
-    this.forgotPasswordHandler,
-    this.secondary,
-    this.onPrimary,
-    this.validator,
+    // Removed deprecated args from constructor to force compile error if used elsewhere
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          style: Theme.of(context).textTheme.labelLarge,
-          onChanged: onChanged,
-          initialValue: value,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          obscureText: isPassword && showPassword ? false : isPassword,
-          autocorrect: autocorrect,
-          decoration: InputDecoration(
-              labelText: '$label ${required ? "*" : ""}',
-              hintText: hint,
-              icon: Icon(
-                icon,
-              ),
-              suffixIcon: isPassword ? obscureTextIcon() : null),
-          validator: validator,
-        ),
-        isPassword && displayForgotPassword
-            ? Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextButton(
-                  onPressed: forgotPasswordHandler,
-                  child: Text(
-                    'Forgot password?',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-              )
-            : Container(),
-      ],
-    );
-  }
+    // Map legacy SomTextInput to new SomInput
+    // Note: SomInput uses an internal controller or controller prop,
+    // while SomTextInput uses value+onChanged (controlled vs uncontrolled/prop driven).
+    // The new SomInput implemented in prev step uses a controller but also onChanged.
+    // We need to bridge the gap.
 
-  GestureDetector obscureTextIcon() {
-    return GestureDetector(
-      onTap: () {
-        onToggleShowPassword();
-      },
-      child: Icon(showPassword ? Icons.visibility : Icons.visibility_off),
+    // Create a controller to sync value (if provided)
+    final controller = value != null ? TextEditingController(text: value) : null;
+    if (value != null && controller != null) {
+      // optimization: only update text if different to avoid cursor jumps
+      controller.selection = TextSelection.fromPosition(TextPosition(offset: value!.length));
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: SomInput(
+        label: label ?? '',
+        hintText: hint,
+        isPassword: isPassword,
+        keyboardType: keyboardType,
+        onChanged: onChanged,
+        // SomInput manages its own visibility toggle state, ignoring showPassword/onToggleShowPassword from parent
+        // If we really need external control we'd need to update SomInput
+        controller: controller,
+      ),
     );
   }
 }

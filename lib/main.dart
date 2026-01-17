@@ -22,6 +22,7 @@ import 'ui/domain/infrastructure/api/auth_token_interceptor.dart';
 import 'ui/domain/model/model.dart';
 import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart';
 import 'ui/theme/som_theme.dart';
+import 'ui/theme/som_theme_futuristic.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -129,7 +130,7 @@ class MyApp extends StatelessWidget {
             title: 'SOM${!isMobile ? ' ${platformName()}' : ''}',
             themeMode: appStore.themeMode,
             theme: SomTheme.light(visualDensity: appStore.visualDensity),
-            darkTheme: SomTheme.dark(visualDensity: appStore.visualDensity),
+              darkTheme: somFuturisticTheme(),
             builder: scrollBehaviour(),
             routerDelegate: routerDelegate,
           ),

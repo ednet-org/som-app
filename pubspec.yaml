@@ -145,6 +145,7 @@ flutter:
 
     # som
     - images/som/
+    - assets/design_system/wizards/
     - assets/design_system/
     - assets/design_system/ads/
     - assets/design_system/auth/

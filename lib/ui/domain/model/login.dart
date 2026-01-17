@@ -58,10 +58,20 @@ class Login extends StatelessWidget {
                 onToggleShowPassword: emailLoginStore.toggleShowPassword,
                 isPassword: true,
                 autocorrect: false,
-                displayForgotPassword: true,
-                forgotPasswordHandler: () {
-                  context.beamTo(AuthForgotPasswordPageLocation());
-                },
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    context.beamTo(AuthForgotPasswordPageLocation());
+                  },
+                  child: Text(
+                    'Forgot password?',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary, // or accent
+                    ),
+                  ),
+                ),
               ),
 
               const SizedBox(height: 20),

@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som/ui/theme/som_assets.dart';
+
+class SomCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final bool isFeatured;
+
+  const SomCard({
+    Key? key,
+    required this.child,
+    this.padding = const EdgeInsets.all(24.0),
+    this.isFeatured = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      color: theme.cardTheme.color,
+      shape: theme.cardTheme.shape,
+      clipBehavior: theme.cardTheme.clipBehavior,
+      margin: theme.cardTheme.margin,
+      child: Stack(
+        children: [
+          if (isFeatured)
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.5, // Subtle overlay
+                child: SvgPicture.asset(
+                  SomAssets.patternSubtleMesh,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          Padding(
+            padding: padding,
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
+}
