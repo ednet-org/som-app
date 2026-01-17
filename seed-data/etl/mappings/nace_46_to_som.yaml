@@ -1,0 +1,667 @@
+# NACE 46 Wholesale Categories to SOM Taxonomy Mapping
+# Maps NACE wholesale codes to SOM categories and product tags
+# All entries default to provider_type: GROSSHAENDLER unless specified
+
+mappings:
+  # NACE 46.1 - Wholesale on a fee or contract basis (Handelsvermittlung)
+  - nace: "46.11"
+    nace_name: "Agents involved in the sale of agricultural raw materials, live animals, textile raw materials and semi-finished goods"
+    som_category: "Handelsvermittlung Agrarprodukte"
+    product_tags:
+      - Agrarprodukte
+      - Lebendvieh
+      - Textilrohstoffe
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - handelsvermittlung
+      - handelsagenten
+      - agrarhandel-vermittlung
+
+  - nace: "46.12"
+    nace_name: "Agents involved in the sale of fuels, ores, metals and industrial chemicals"
+    som_category: "Handelsvermittlung Rohstoffe und Chemikalien"
+    product_tags:
+      - Brennstoffe
+      - Erze
+      - Metalle
+      - Industriechemikalien
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - handelsvermittlung-rohstoffe
+      - chemikalien-vermittlung
+
+  - nace: "46.13"
+    nace_name: "Agents involved in the sale of timber and building materials"
+    som_category: "Handelsvermittlung Baumaterialien"
+    product_tags:
+      - Holz
+      - Baumaterialien
+      - Baustoffe
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - handelsvermittlung-baumaterialien
+      - holzhandel-vermittlung
+
+  - nace: "46.14"
+    nace_name: "Agents involved in the sale of machinery, industrial equipment, ships and aircraft"
+    som_category: "Handelsvermittlung Maschinen"
+    product_tags:
+      - Maschinen
+      - Industrieausrüstung
+      - Fahrzeuge
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - maschinenhandel-vermittlung
+      - industrieausruestung-vermittlung
+
+  - nace: "46.15"
+    nace_name: "Agents involved in the sale of furniture, household goods, hardware and ironmongery"
+    som_category: "Handelsvermittlung Haushaltswaren"
+    product_tags:
+      - Möbel
+      - Haushaltswaren
+      - Eisenwaren
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - moebelhandel-vermittlung
+      - haushaltswaren-vermittlung
+
+  - nace: "46.16"
+    nace_name: "Agents involved in the sale of textiles, clothing, fur, footwear and leather goods"
+    som_category: "Handelsvermittlung Textilien und Bekleidung"
+    product_tags:
+      - Textilien
+      - Bekleidung
+      - Schuhe
+      - Lederwaren
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - textilhandel-vermittlung
+      - bekleidungshandel-vermittlung
+
+  - nace: "46.17"
+    nace_name: "Agents involved in the sale of food, beverages and tobacco"
+    som_category: "Handelsvermittlung Lebensmittel"
+    product_tags:
+      - Lebensmittel
+      - Getränke
+      - Tabakwaren
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - lebensmittel-vermittlung
+      - getraenke-vermittlung
+
+  - nace: "46.18"
+    nace_name: "Agents specialised in the sale of other particular products"
+    som_category: "Handelsvermittlung Spezialprodukte"
+    product_tags:
+      - Spezialwaren
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - spezialhandel-vermittlung
+
+  - nace: "46.19"
+    nace_name: "Agents involved in the sale of a variety of goods"
+    som_category: "Handelsvermittlung Sortiment"
+    product_tags:
+      - Sortiment
+      - Diverses
+    provider_type: DIENSTLEISTER
+    wko_branches:
+      - sortimentshandel-vermittlung
+
+  # NACE 46.2 - Wholesale of agricultural raw materials and live animals
+  - nace: "46.21"
+    nace_name: "Wholesale of grain, unmanufactured tobacco, seeds and animal feeds"
+    som_category: "Großhandel Getreide und Futtermittel"
+    product_tags:
+      - Getreide
+      - Rohtabak
+      - Saatgut
+      - Futtermittel
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-getreide
+      - grosshandel-saatgut
+      - grosshandel-futtermittel
+      - agrarhandel
+
+  - nace: "46.22"
+    nace_name: "Wholesale of flowers and plants"
+    som_category: "Großhandel Blumen und Pflanzen"
+    product_tags:
+      - Blumen
+      - Pflanzen
+      - Floristik
+      - Gartenbedarf
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-blumen-pflanzen
+      - blumengrosshandel
+      - gartenbedarf-grosshandel
+
+  - nace: "46.23"
+    nace_name: "Wholesale of live animals"
+    som_category: "Großhandel Lebendvieh"
+    product_tags:
+      - Lebendvieh
+      - Nutztiere
+      - Zuchtvieh
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-lebendvieh
+      - viehhandel
+      - nutztierhandel
+
+  - nace: "46.24"
+    nace_name: "Wholesale of hides, skins and leather"
+    som_category: "Großhandel Häute und Leder"
+    product_tags:
+      - Häute
+      - Felle
+      - Leder
+      - Rohleder
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-leder
+      - haeute-felle
+
+  # NACE 46.3 - Wholesale of food, beverages and tobacco
+  - nace: "46.31"
+    nace_name: "Wholesale of fruit and vegetables"
+    som_category: "Obst- und Gemüsegroßhandel"
+    product_tags:
+      - Obst
+      - Gemüse
+      - Frischware
+      - Südfrüchte
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-obst-gemuese
+      - obstgrosshandel
+      - gemuesegrosshandel
+      - frischegrosshandel
+
+  - nace: "46.32"
+    nace_name: "Wholesale of meat and meat products"
+    som_category: "Fleisch-Großhandel"
+    product_tags:
+      - Fleisch
+      - Fleischwaren
+      - Wurstwaren
+      - Geflügel
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-fleisch-fleischwaren
+      - fleischgrosshandel
+      - wurstwaren-grosshandel
+
+  - nace: "46.33"
+    nace_name: "Wholesale of dairy products, eggs and edible oils and fats"
+    som_category: "Molkereiprodukte-Großhandel"
+    product_tags:
+      - Milchprodukte
+      - Käse
+      - Eier
+      - Speiseöle
+      - Speisefette
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-milchprodukte
+      - molkereigrosshandel
+      - kaesegrosshandel
+
+  - nace: "46.34"
+    nace_name: "Wholesale of beverages"
+    som_category: "Getränke-Großhandel"
+    product_tags:
+      - Getränke
+      - Wein
+      - Bier
+      - Spirituosen
+      - Softdrinks
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-getraenke
+      - getraenkegrosshandel
+      - weingrosshandel
+      - biergrosshandel
+
+  - nace: "46.35"
+    nace_name: "Wholesale of tobacco products"
+    som_category: "Tabakwaren-Großhandel"
+    product_tags:
+      - Tabakwaren
+      - Zigaretten
+      - Zigarren
+      - Rauchwaren
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-tabakwaren
+      - tabakgrosshandel
+
+  - nace: "46.36"
+    nace_name: "Wholesale of sugar and chocolate and sugar confectionery"
+    som_category: "Süßwaren-Großhandel"
+    product_tags:
+      - Zucker
+      - Schokolade
+      - Süßwaren
+      - Konditorwaren
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-suessigkeiten
+      - suesswaren-grosshandel
+      - schokoladengrosshandel
+
+  - nace: "46.37"
+    nace_name: "Wholesale of coffee, tea, cocoa and spices"
+    som_category: "Kaffee-, Tee- und Gewürz-Großhandel"
+    product_tags:
+      - Kaffee
+      - Tee
+      - Kakao
+      - Gewürze
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - kaffeegrosshandel
+      - teegrosshandel
+      - gewuerzgrosshandel
+
+  - nace: "46.38"
+    nace_name: "Wholesale of other food, including fish, crustaceans and molluscs"
+    som_category: "Lebensmittel-Großhandel Sonstige"
+    product_tags:
+      - Fisch
+      - Meeresfrüchte
+      - Feinkost
+      - Tiefkühlkost
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-nahrungsmittel
+      - fischgrosshandel
+      - feinkostgrosshandel
+      - lebensmittelgrosshandel
+
+  - nace: "46.39"
+    nace_name: "Non-specialised wholesale of food, beverages and tobacco"
+    som_category: "Lebensmittel-Großhandel Sortiment"
+    product_tags:
+      - Lebensmittel
+      - Sortiment
+      - Großmarkt
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - lebensmittelgrosshandel-sortiment
+      - grossmarkt
+
+  # NACE 46.4 - Wholesale of household goods
+  - nace: "46.41"
+    nace_name: "Wholesale of textiles"
+    som_category: "Textil-Großhandel"
+    product_tags:
+      - Textilien
+      - Stoffe
+      - Heimtextilien
+      - Meterware
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-textilien
+      - textilgrosshandel
+      - stoffgrosshandel
+
+  - nace: "46.42"
+    nace_name: "Wholesale of clothing and footwear"
+    som_category: "Bekleidungs- und Schuh-Großhandel"
+    product_tags:
+      - Bekleidung
+      - Schuhe
+      - Mode
+      - Accessoires
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-bekleidung
+      - grosshandel-schuhe
+      - modegrosshandel
+
+  - nace: "46.43"
+    nace_name: "Wholesale of electrical household appliances"
+    som_category: "Elektrogeräte-Großhandel"
+    product_tags:
+      - Elektrogeräte
+      - Haushaltsgeräte
+      - Weißware
+      - Kleingeräte
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-elektrogeraete
+      - elektrogrosshandel
+      - haushaltsgeraete-grosshandel
+
+  - nace: "46.44"
+    nace_name: "Wholesale of china and glassware and cleaning materials"
+    som_category: "Porzellan-, Glas- und Reinigungsmittel-Großhandel"
+    product_tags:
+      - Porzellan
+      - Glas
+      - Keramik
+      - Reinigungsmittel
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-porzellan
+      - glaswaren-grosshandel
+      - reinigungsmittel-grosshandel
+
+  - nace: "46.45"
+    nace_name: "Wholesale of perfume and cosmetics"
+    som_category: "Parfümerie- und Kosmetik-Großhandel"
+    product_tags:
+      - Parfum
+      - Kosmetik
+      - Körperpflege
+      - Drogeriewaren
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - kosmetikgrosshandel
+      - parfuemgrosshandel
+      - drogeriegrosshandel
+
+  - nace: "46.46"
+    nace_name: "Wholesale of pharmaceutical goods"
+    som_category: "Pharma-Großhandel"
+    product_tags:
+      - Medikamente
+      - Pharmazeutika
+      - Gesundheitsprodukte
+      - Apothekenbedarf
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - pharmagrosshandel
+      - medikamentengrosshandel
+      - gesundheitsgrosshandel
+
+  - nace: "46.47"
+    nace_name: "Wholesale of furniture, carpets and lighting equipment"
+    som_category: "Möbel- und Einrichtungs-Großhandel"
+    product_tags:
+      - Möbel
+      - Teppiche
+      - Leuchten
+      - Einrichtung
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-moebel
+      - moebelgrosshandel
+      - einrichtungsgrosshandel
+      - leuchtengrosshandel
+
+  - nace: "46.48"
+    nace_name: "Wholesale of watches and jewellery"
+    som_category: "Uhren- und Schmuck-Großhandel"
+    product_tags:
+      - Uhren
+      - Schmuck
+      - Juwelen
+      - Edelsteine
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-uhren-schmuck
+      - uhrengrosshandel
+      - schmuckgrosshandel
+
+  - nace: "46.49"
+    nace_name: "Wholesale of other household goods"
+    som_category: "Haushaltswaren-Großhandel Sonstige"
+    product_tags:
+      - Haushaltswaren
+      - Geschenkartikel
+      - Spielwaren
+      - Sportartikel
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - haushaltswarengrosshandel
+      - spielwarengrosshandel
+      - sportartikelgrosshandel
+
+  # NACE 46.5 - Wholesale of information and communication equipment
+  - nace: "46.51"
+    nace_name: "Wholesale of computers, computer peripheral equipment and software"
+    som_category: "IT-Hardware und Software-Großhandel"
+    product_tags:
+      - Computer
+      - Hardware
+      - Software
+      - IT-Zubehör
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-computer
+      - grosshandel-software
+      - it-grosshandel
+      - computergrosshandel
+
+  - nace: "46.52"
+    nace_name: "Wholesale of electronic and telecommunications equipment and parts"
+    som_category: "Elektronik- und Telekommunikations-Großhandel"
+    product_tags:
+      - Elektronik
+      - Telekommunikation
+      - Mobilfunk
+      - Bauteile
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-telekommunikation
+      - grosshandel-elektronik
+      - elektronikgrosshandel
+      - telekommunikationsgrosshandel
+
+  # NACE 46.6 - Wholesale of other machinery, equipment and supplies
+  - nace: "46.61"
+    nace_name: "Wholesale of agricultural machinery, equipment and supplies"
+    som_category: "Landmaschinen-Großhandel"
+    product_tags:
+      - Landmaschinen
+      - Agrartechnik
+      - Landwirtschaftsbedarf
+      - Traktoren
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-landmaschinen
+      - landmaschinengrosshandel
+      - agrartechnik-grosshandel
+
+  - nace: "46.62"
+    nace_name: "Wholesale of machine tools"
+    som_category: "Werkzeugmaschinen-Großhandel"
+    product_tags:
+      - Werkzeugmaschinen
+      - CNC-Maschinen
+      - Industriemaschinen
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-werkzeugmaschinen
+      - werkzeugmaschinengrosshandel
+      - maschinengrosshandel
+
+  - nace: "46.63"
+    nace_name: "Wholesale of mining, construction and civil engineering machinery"
+    som_category: "Baumaschinen-Großhandel"
+    product_tags:
+      - Baumaschinen
+      - Bergbaumaschinen
+      - Tiefbaugeräte
+      - Krane
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-baumaschinen
+      - baumaschinengrosshandel
+      - bergbaumaschinen-grosshandel
+
+  - nace: "46.64"
+    nace_name: "Wholesale of machinery for the textile industry and of sewing and knitting machines"
+    som_category: "Textilmaschinen-Großhandel"
+    product_tags:
+      - Textilmaschinen
+      - Nähmaschinen
+      - Strickmaschinen
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - textilmaschinengrosshandel
+      - naehmaschinen-grosshandel
+
+  - nace: "46.65"
+    nace_name: "Wholesale of office furniture"
+    som_category: "Büromöbel-Großhandel"
+    product_tags:
+      - Büromöbel
+      - Büroeinrichtung
+      - Bürostühle
+      - Schreibtische
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-bueromaschinen
+      - bueromoebelgrosshandel
+      - bueroeinrichtung-grosshandel
+
+  - nace: "46.66"
+    nace_name: "Wholesale of other office machinery and equipment"
+    som_category: "Büromaschinen-Großhandel"
+    product_tags:
+      - Büromaschinen
+      - Kopierer
+      - Drucker
+      - Bürotechnik
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - bueromaschinengrosshandel
+      - buerotechnik-grosshandel
+
+  - nace: "46.69"
+    nace_name: "Wholesale of other machinery and equipment"
+    som_category: "Maschinen-Großhandel Sonstige"
+    product_tags:
+      - Maschinen
+      - Industriebedarf
+      - Produktionsanlagen
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - maschinengrosshandel-sonstige
+      - industriebedarf-grosshandel
+
+  # NACE 46.7 - Other specialised wholesale
+  - nace: "46.71"
+    nace_name: "Wholesale of solid, liquid and gaseous fuels and related products"
+    som_category: "Brennstoff-Großhandel"
+    product_tags:
+      - Brennstoffe
+      - Heizöl
+      - Kohle
+      - Gas
+      - Schmierstoffe
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-brennstoffe
+      - brennstoffgrosshandel
+      - heizoel-grosshandel
+      - mineraloel-grosshandel
+
+  - nace: "46.72"
+    nace_name: "Wholesale of metals and metal ores"
+    som_category: "Metall-Großhandel"
+    product_tags:
+      - Metalle
+      - Erze
+      - Stahl
+      - NE-Metalle
+      - Halbzeuge
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-metalle
+      - metallgrosshandel
+      - stahlgrosshandel
+      - ne-metall-grosshandel
+
+  - nace: "46.73"
+    nace_name: "Wholesale of wood, construction materials and sanitary equipment"
+    som_category: "Baustoff-Großhandel"
+    product_tags:
+      - Holz
+      - Baustoffe
+      - Sanitärbedarf
+      - Fliesen
+      - Dämmstoffe
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-baumaterialien
+      - grosshandel-sanitaerbedarf
+      - baustoffgrosshandel
+      - holzgrosshandel
+      - sanitaergrosshandel
+
+  - nace: "46.74"
+    nace_name: "Wholesale of hardware, plumbing and heating equipment and supplies"
+    som_category: "Installationsbedarf-Großhandel"
+    product_tags:
+      - Eisenwaren
+      - Installationsmaterial
+      - Heizungsbedarf
+      - Sanitärinstallation
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - eisenwarengrosshandel
+      - installationsbedarf-grosshandel
+      - heizungsgrosshandel
+
+  - nace: "46.75"
+    nace_name: "Wholesale of chemical products"
+    som_category: "Chemikalien-Großhandel"
+    product_tags:
+      - Chemikalien
+      - Industriechemie
+      - Laborchemikalien
+      - Klebstoffe
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-chemikalien
+      - chemikaliengrosshandel
+      - industriechemie-grosshandel
+
+  - nace: "46.76"
+    nace_name: "Wholesale of other intermediate products"
+    som_category: "Vorprodukte-Großhandel"
+    product_tags:
+      - Vorprodukte
+      - Halbfertigwaren
+      - Zwischenprodukte
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - vorprodukte-grosshandel
+      - halbfertigwaren-grosshandel
+
+  - nace: "46.77"
+    nace_name: "Wholesale of waste and scrap"
+    som_category: "Altmaterial-Großhandel"
+    product_tags:
+      - Altmaterial
+      - Schrott
+      - Recycling
+      - Sekundärrohstoffe
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel-altmaterialien
+      - schrottgrosshandel
+      - recycling-grosshandel
+
+  # NACE 46.9 - Non-specialised wholesale trade
+  - nace: "46.90"
+    nace_name: "Non-specialised wholesale trade"
+    som_category: "Sortiments-Großhandel"
+    product_tags:
+      - Sortiment
+      - C&C-Markt
+      - Abholmarkt
+    provider_type: GROSSHAENDLER
+    wko_branches:
+      - grosshandel
+      - sortimentshandel
+      - cash-carry
+      - abholmarkt

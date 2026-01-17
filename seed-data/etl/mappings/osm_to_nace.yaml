@@ -1,0 +1,313 @@
+# OSM tag to NACE Rev. 2 code mappings
+# NACE codes follow the European standard classification
+
+mappings:
+  # Retail trade (47.xx)
+  - osm_tags: {shop: supermarket}
+    nace_code: "47.11"
+    nace_description: "Retail sale in non-specialised stores with food, beverages or tobacco predominating"
+
+  - osm_tags: {shop: convenience}
+    nace_code: "47.11"
+    nace_description: "Retail sale in non-specialised stores with food, beverages or tobacco predominating"
+
+  - osm_tags: {shop: department_store}
+    nace_code: "47.19"
+    nace_description: "Other retail sale in non-specialised stores"
+
+  - osm_tags: {shop: greengrocer}
+    nace_code: "47.21"
+    nace_description: "Retail sale of fruit and vegetables in specialised stores"
+
+  - osm_tags: {shop: butcher}
+    nace_code: "47.22"
+    nace_description: "Retail sale of meat and meat products in specialised stores"
+
+  - osm_tags: {shop: seafood}
+    nace_code: "47.23"
+    nace_description: "Retail sale of fish, crustaceans and molluscs in specialised stores"
+
+  - osm_tags: {shop: bakery}
+    nace_code: "47.24"
+    nace_description: "Retail sale of bread, cakes, flour confectionery and sugar confectionery in specialised stores"
+
+  - osm_tags: {shop: beverages}
+    nace_code: "47.25"
+    nace_description: "Retail sale of beverages in specialised stores"
+
+  - osm_tags: {shop: tobacco}
+    nace_code: "47.26"
+    nace_description: "Retail sale of tobacco products in specialised stores"
+
+  - osm_tags: {amenity: fuel}
+    nace_code: "47.30"
+    nace_description: "Retail sale of automotive fuel in specialised stores"
+
+  - osm_tags: {shop: computer}
+    nace_code: "47.41"
+    nace_description: "Retail sale of computers, peripheral units and software in specialised stores"
+
+  - osm_tags: {shop: mobile_phone}
+    nace_code: "47.42"
+    nace_description: "Retail sale of telecommunications equipment in specialised stores"
+
+  - osm_tags: {shop: electronics}
+    nace_code: "47.43"
+    nace_description: "Retail sale of audio and video equipment in specialised stores"
+
+  - osm_tags: {shop: fabric}
+    nace_code: "47.51"
+    nace_description: "Retail sale of textiles in specialised stores"
+
+  - osm_tags: {shop: hardware}
+    nace_code: "47.52"
+    nace_description: "Retail sale of hardware, paints and glass in specialised stores"
+
+  - osm_tags: {shop: doityourself}
+    nace_code: "47.52"
+    nace_description: "Retail sale of hardware, paints and glass in specialised stores"
+
+  - osm_tags: {shop: carpet}
+    nace_code: "47.53"
+    nace_description: "Retail sale of carpets, rugs, wall and floor coverings in specialised stores"
+
+  - osm_tags: {shop: houseware}
+    nace_code: "47.59"
+    nace_description: "Retail sale of furniture, lighting equipment and other household articles in specialised stores"
+
+  - osm_tags: {shop: furniture}
+    nace_code: "47.59"
+    nace_description: "Retail sale of furniture, lighting equipment and other household articles in specialised stores"
+
+  - osm_tags: {shop: books}
+    nace_code: "47.61"
+    nace_description: "Retail sale of books in specialised stores"
+
+  - osm_tags: {shop: newsagent}
+    nace_code: "47.62"
+    nace_description: "Retail sale of newspapers and stationery in specialised stores"
+
+  - osm_tags: {shop: stationery}
+    nace_code: "47.62"
+    nace_description: "Retail sale of newspapers and stationery in specialised stores"
+
+  - osm_tags: {shop: music}
+    nace_code: "47.63"
+    nace_description: "Retail sale of music and video recordings in specialised stores"
+
+  - osm_tags: {shop: sports}
+    nace_code: "47.64"
+    nace_description: "Retail sale of sporting equipment in specialised stores"
+
+  - osm_tags: {shop: toys}
+    nace_code: "47.65"
+    nace_description: "Retail sale of games and toys in specialised stores"
+
+  - osm_tags: {shop: clothes}
+    nace_code: "47.71"
+    nace_description: "Retail sale of clothing in specialised stores"
+
+  - osm_tags: {shop: shoes}
+    nace_code: "47.72"
+    nace_description: "Retail sale of footwear and leather goods in specialised stores"
+
+  - osm_tags: {shop: pharmacy}
+    nace_code: "47.73"
+    nace_description: "Dispensing chemist in specialised stores"
+
+  - osm_tags: {shop: medical_supply}
+    nace_code: "47.74"
+    nace_description: "Retail sale of medical and orthopaedic goods in specialised stores"
+
+  - osm_tags: {shop: cosmetics}
+    nace_code: "47.75"
+    nace_description: "Retail sale of cosmetic and toilet articles in specialised stores"
+
+  - osm_tags: {shop: florist}
+    nace_code: "47.76"
+    nace_description: "Retail sale of flowers, plants, seeds, fertilisers, pet animals and pet food in specialised stores"
+
+  - osm_tags: {shop: pet}
+    nace_code: "47.76"
+    nace_description: "Retail sale of flowers, plants, seeds, fertilisers, pet animals and pet food in specialised stores"
+
+  - osm_tags: {shop: jewelry}
+    nace_code: "47.77"
+    nace_description: "Retail sale of watches and jewellery in specialised stores"
+
+  - osm_tags: {shop: optician}
+    nace_code: "47.78"
+    nace_description: "Other retail sale of new goods in specialised stores"
+
+  # Motor vehicles (45.xx)
+  - osm_tags: {shop: car}
+    nace_code: "45.11"
+    nace_description: "Sale of cars and light motor vehicles"
+
+  - osm_tags: {craft: car_repair}
+    nace_code: "45.20"
+    nace_description: "Maintenance and repair of motor vehicles"
+
+  - osm_tags: {shop: car_repair}
+    nace_code: "45.20"
+    nace_description: "Maintenance and repair of motor vehicles"
+
+  - osm_tags: {shop: car_parts}
+    nace_code: "45.32"
+    nace_description: "Retail trade of motor vehicle parts and accessories"
+
+  - osm_tags: {shop: motorcycle}
+    nace_code: "45.40"
+    nace_description: "Sale, maintenance and repair of motorcycles and related parts and accessories"
+
+  # Wholesale (46.xx)
+  - osm_tags: {shop: wholesale}
+    nace_code: "46.90"
+    nace_description: "Non-specialised wholesale trade"
+
+  # Accommodation (55.xx)
+  - osm_tags: {tourism: hotel}
+    nace_code: "55.10"
+    nace_description: "Hotels and similar accommodation"
+
+  - osm_tags: {tourism: guest_house}
+    nace_code: "55.10"
+    nace_description: "Hotels and similar accommodation"
+
+  - osm_tags: {tourism: hostel}
+    nace_code: "55.20"
+    nace_description: "Holiday and other short-stay accommodation"
+
+  - osm_tags: {tourism: camp_site}
+    nace_code: "55.30"
+    nace_description: "Camping grounds, recreational vehicle parks and trailer parks"
+
+  # Food and beverage service (56.xx)
+  - osm_tags: {amenity: restaurant}
+    nace_code: "56.10"
+    nace_description: "Restaurants and mobile food service activities"
+
+  - osm_tags: {amenity: cafe}
+    nace_code: "56.10"
+    nace_description: "Restaurants and mobile food service activities"
+
+  - osm_tags: {amenity: fast_food}
+    nace_code: "56.10"
+    nace_description: "Restaurants and mobile food service activities"
+
+  - osm_tags: {amenity: bar}
+    nace_code: "56.30"
+    nace_description: "Beverage serving activities"
+
+  # IT and software (62.xx)
+  - osm_tags: {office: it}
+    nace_code: "62.01"
+    nace_description: "Computer programming activities"
+
+  # Financial services (64.xx, 65.xx)
+  - osm_tags: {amenity: bank}
+    nace_code: "64.19"
+    nace_description: "Other monetary intermediation"
+
+  - osm_tags: {office: insurance}
+    nace_code: "65.12"
+    nace_description: "Non-life insurance"
+
+  # Real estate (68.xx)
+  - osm_tags: {office: estate_agent}
+    nace_code: "68.31"
+    nace_description: "Real estate agencies"
+
+  # Legal and accounting (69.xx)
+  - osm_tags: {office: lawyer}
+    nace_code: "69.10"
+    nace_description: "Legal activities"
+
+  - osm_tags: {office: accountant}
+    nace_code: "69.20"
+    nace_description: "Accounting, bookkeeping and auditing activities; tax consultancy"
+
+  # Consulting (70.xx)
+  - osm_tags: {office: consulting}
+    nace_code: "70.22"
+    nace_description: "Business and other management consultancy activities"
+
+  # Veterinary (75.xx)
+  - osm_tags: {amenity: veterinary}
+    nace_code: "75.00"
+    nace_description: "Veterinary activities"
+
+  # Health (86.xx)
+  - osm_tags: {amenity: doctors}
+    nace_code: "86.21"
+    nace_description: "General medical practice activities"
+
+  - osm_tags: {amenity: dentist}
+    nace_code: "86.23"
+    nace_description: "Dental practice activities"
+
+  # Personal services (96.xx)
+  - osm_tags: {craft: hairdresser}
+    nace_code: "96.02"
+    nace_description: "Hairdressing and other beauty treatment"
+
+  - osm_tags: {shop: hairdresser}
+    nace_code: "96.02"
+    nace_description: "Hairdressing and other beauty treatment"
+
+  # Repair services (95.xx)
+  - osm_tags: {craft: shoemaker}
+    nace_code: "95.23"
+    nace_description: "Repair of footwear and leather goods"
+
+  # Construction (43.xx)
+  - osm_tags: {craft: electrician}
+    nace_code: "43.21"
+    nace_description: "Electrical installation"
+
+  - osm_tags: {craft: plumber}
+    nace_code: "43.22"
+    nace_description: "Plumbing, heat and air-conditioning installation"
+
+  - osm_tags: {craft: carpenter}
+    nace_code: "43.32"
+    nace_description: "Joinery installation"
+
+  - osm_tags: {craft: painter}
+    nace_code: "43.34"
+    nace_description: "Painting and glazing"
+
+  - osm_tags: {craft: roofer}
+    nace_code: "43.91"
+    nace_description: "Roofing activities"
+
+  # Manufacturing (various)
+  - osm_tags: {craft: tailor}
+    nace_code: "14.13"
+    nace_description: "Manufacture of other outerwear"
+
+  - osm_tags: {craft: locksmith}
+    nace_code: "25.12"
+    nace_description: "Manufacture of doors and windows of metal"
+
+  - osm_tags: {craft: jeweller}
+    nace_code: "32.12"
+    nace_description: "Manufacture of jewellery and related articles"
+
+  - osm_tags: {industrial: factory}
+    nace_code: "25.99"
+    nace_description: "Manufacture of other fabricated metal products n.e.c."
+
+  - osm_tags: {man_made: works}
+    nace_code: "25.99"
+    nace_description: "Manufacture of other fabricated metal products n.e.c."
+
+  # Warehousing and storage (52.xx)
+  - osm_tags: {industrial: warehouse}
+    nace_code: "52.10"
+    nace_description: "Warehousing and storage"
+
+  # Other business services (82.xx)
+  - osm_tags: {office: company}
+    nace_code: "82.99"
+    nace_description: "Other business support service activities n.e.c."

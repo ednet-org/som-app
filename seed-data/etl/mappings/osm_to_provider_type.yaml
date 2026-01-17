@@ -1,0 +1,46 @@
+# OSM tag to provider type mappings
+# Used for inferring provider type when no specific branch mapping exists
+
+mappings:
+  # HAENDLER (Retailer) - shop=* tags
+  - tag_key: shop
+    provider_type: HAENDLER
+    exceptions:
+      - value: wholesale
+        provider_type: GROSSHAENDLER
+
+  # GROSSHAENDLER (Wholesaler)
+  - tag_key: wholesale
+    tag_value: "*"
+    provider_type: GROSSHAENDLER
+
+  # DIENSTLEISTER (Service provider) - craft, office, amenity
+  - tag_key: craft
+    provider_type: DIENSTLEISTER
+
+  - tag_key: office
+    provider_type: DIENSTLEISTER
+
+  - tag_key: amenity
+    provider_type: DIENSTLEISTER
+    exceptions:
+      - value: fuel
+        provider_type: HAENDLER
+
+  # HERSTELLER (Manufacturer) - industrial, man_made
+  - tag_key: industrial
+    provider_type: HERSTELLER
+    exceptions:
+      - value: warehouse
+        provider_type: DIENSTLEISTER
+
+  - tag_key: man_made
+    tag_value: works
+    provider_type: HERSTELLER
+
+  # Tourism defaults to DIENSTLEISTER
+  - tag_key: tourism
+    provider_type: DIENSTLEISTER
+
+# Default fallback
+default_provider_type: UNKNOWN

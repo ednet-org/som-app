@@ -1,0 +1,589 @@
+# OSM to SOM Branch/Category mappings
+# Maps OSM tags to SOM taxonomy branch, category, provider type, and product tags
+
+mappings:
+  # Retail / Handel
+  - osm_tags:
+      shop: supermarket
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "lebensmittelhandel"
+    category_name: "Lebensmittelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Supermarkt", "Lebensmittel", "Einzelhandel"]
+    nace_code: "47.11"
+
+  - osm_tags:
+      shop: convenience
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "lebensmittelhandel"
+    category_name: "Lebensmittelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Nahversorger", "Lebensmittel"]
+    nace_code: "47.11"
+
+  - osm_tags:
+      shop: bakery
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "lebensmittelhandel"
+    category_name: "Lebensmittelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Baeckerei", "Backwaren", "Brot"]
+    nace_code: "47.24"
+
+  - osm_tags:
+      shop: butcher
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "lebensmittelhandel"
+    category_name: "Lebensmittelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Fleischerei", "Fleisch", "Wurst"]
+    nace_code: "47.22"
+
+  - osm_tags:
+      shop: greengrocer
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "lebensmittelhandel"
+    category_name: "Lebensmittelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Obst", "Gemuese", "Frischware"]
+    nace_code: "47.21"
+
+  - osm_tags:
+      shop: clothes
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "bekleidungshandel"
+    category_name: "Bekleidungshandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Bekleidung", "Mode", "Textilien"]
+    nace_code: "47.71"
+
+  - osm_tags:
+      shop: shoes
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "bekleidungshandel"
+    category_name: "Bekleidungshandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Schuhe", "Schuhhandel"]
+    nace_code: "47.72"
+
+  - osm_tags:
+      shop: electronics
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "elektronikhandel"
+    category_name: "Elektronikhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Elektronik", "Elektrogeraete", "Computer"]
+    nace_code: "47.43"
+
+  - osm_tags:
+      shop: computer
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "elektronikhandel"
+    category_name: "Elektronikhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Computer", "IT", "Hardware"]
+    nace_code: "47.41"
+
+  - osm_tags:
+      shop: mobile_phone
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "elektronikhandel"
+    category_name: "Elektronikhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Mobiltelefone", "Smartphones", "Telekommunikation"]
+    nace_code: "47.42"
+
+  - osm_tags:
+      shop: furniture
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "moebelhandel"
+    category_name: "Moebelhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Moebel", "Einrichtung", "Wohnen"]
+    nace_code: "47.59"
+
+  - osm_tags:
+      shop: hardware
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "baumarkt"
+    category_name: "Bau- und Heimwerkermarkt"
+    provider_type: "HAENDLER"
+    product_tags: ["Eisenwaren", "Werkzeug", "Heimwerken"]
+    nace_code: "47.52"
+
+  - osm_tags:
+      shop: doityourself
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "baumarkt"
+    category_name: "Bau- und Heimwerkermarkt"
+    provider_type: "HAENDLER"
+    product_tags: ["Baumarkt", "Heimwerken", "Baumaterial"]
+    nace_code: "47.52"
+
+  - osm_tags:
+      shop: car
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "autohandel"
+    category_name: "Autohandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Autohandel", "PKW", "Fahrzeuge"]
+    nace_code: "45.11"
+
+  - osm_tags:
+      shop: car_parts
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "autohandel"
+    category_name: "Autohandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Autoteile", "Ersatzteile", "Zubehoer"]
+    nace_code: "45.32"
+
+  - osm_tags:
+      shop: pharmacy
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "gesundheitshandel"
+    category_name: "Gesundheitshandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Apotheke", "Medikamente", "Gesundheit"]
+    nace_code: "47.73"
+
+  - osm_tags:
+      shop: optician
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "gesundheitshandel"
+    category_name: "Gesundheitshandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Optiker", "Brillen", "Sehhilfen"]
+    nace_code: "47.78"
+
+  - osm_tags:
+      shop: jewelry
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "schmuckhandel"
+    category_name: "Schmuck- und Uhrenhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Schmuck", "Juwelier", "Uhren"]
+    nace_code: "47.77"
+
+  - osm_tags:
+      shop: florist
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "blumenhandel"
+    category_name: "Blumenhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Blumen", "Floristik", "Pflanzen"]
+    nace_code: "47.76"
+
+  - osm_tags:
+      shop: books
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "buchhandel"
+    category_name: "Buchhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Buecher", "Literatur", "Buchhandlung"]
+    nace_code: "47.61"
+
+  - osm_tags:
+      shop: sports
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "sporthandel"
+    category_name: "Sporthandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Sport", "Sportartikel", "Fitness"]
+    nace_code: "47.64"
+
+  - osm_tags:
+      shop: toys
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "spielwarenhandel"
+    category_name: "Spielwarenhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Spielwaren", "Spielzeug", "Kinder"]
+    nace_code: "47.65"
+
+  - osm_tags:
+      shop: pet
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "tierhandel"
+    category_name: "Tierhandel"
+    provider_type: "HAENDLER"
+    product_tags: ["Tierbedarf", "Haustiere", "Zoofachhandel"]
+    nace_code: "47.76"
+
+  - osm_tags:
+      shop: wholesale
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "grosshandel"
+    category_name: "Grosshandel"
+    provider_type: "GROSSHAENDLER"
+    product_tags: ["Grosshandel", "B2B"]
+    nace_code: "46.90"
+
+  # Craft / Handwerk
+  - osm_tags:
+      craft: electrician
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "elektrotechnik"
+    category_name: "Elektrotechnik"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Elektriker", "Elektroinstallation", "Elektrotechnik"]
+    nace_code: "43.21"
+
+  - osm_tags:
+      craft: plumber
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "sanitaer"
+    category_name: "Sanitaer und Heizung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Installateur", "Sanitaer", "Heizung"]
+    nace_code: "43.22"
+
+  - osm_tags:
+      craft: carpenter
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "tischlerei"
+    category_name: "Tischlerei"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Tischler", "Holzarbeiten", "Moebelbau"]
+    nace_code: "43.32"
+
+  - osm_tags:
+      craft: painter
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "malerei"
+    category_name: "Malerei und Anstrich"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Maler", "Anstreicher", "Beschichtung"]
+    nace_code: "43.34"
+
+  - osm_tags:
+      craft: roofer
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "dachdecker"
+    category_name: "Dachdeckerei"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Dachdecker", "Dacharbeiten", "Spengler"]
+    nace_code: "43.91"
+
+  - osm_tags:
+      craft: locksmith
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "schlosser"
+    category_name: "Schlosserei"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Schlosser", "Metallarbeiten", "Sicherheitstechnik"]
+    nace_code: "25.12"
+
+  - osm_tags:
+      craft: car_repair
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "autowerkstatt"
+    category_name: "Autowerkstatt"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["KFZ-Werkstatt", "Autoreparatur", "Mechaniker"]
+    nace_code: "45.20"
+
+  - osm_tags:
+      craft: hairdresser
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "friseur"
+    category_name: "Friseur"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Friseur", "Haarpflege", "Kosmetik"]
+    nace_code: "96.02"
+
+  - osm_tags:
+      craft: tailor
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "schneiderei"
+    category_name: "Schneiderei"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Schneider", "Aenderungsschneiderei", "Massanfertigung"]
+    nace_code: "14.13"
+
+  - osm_tags:
+      craft: shoemaker
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "schuhmacher"
+    category_name: "Schuhmacher"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Schuhmacher", "Schuhreparatur"]
+    nace_code: "95.23"
+
+  - osm_tags:
+      craft: jeweller
+    branch_id: "handwerk"
+    branch_name: "Handwerk"
+    category_id: "goldschmied"
+    category_name: "Goldschmied"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Goldschmied", "Schmuckherstellung"]
+    nace_code: "32.12"
+
+  # Services / Dienstleistungen
+  - osm_tags:
+      office: lawyer
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "rechtsberatung"
+    category_name: "Rechtsberatung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Rechtsanwalt", "Kanzlei", "Rechtsberatung"]
+    nace_code: "69.10"
+
+  - osm_tags:
+      office: accountant
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "steuerberatung"
+    category_name: "Steuerberatung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Steuerberater", "Buchhaltung", "Wirtschaftspruefung"]
+    nace_code: "69.20"
+
+  - osm_tags:
+      office: insurance
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "versicherung"
+    category_name: "Versicherung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Versicherung", "Versicherungsmakler"]
+    nace_code: "65.12"
+
+  - osm_tags:
+      office: estate_agent
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "immobilien"
+    category_name: "Immobilien"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Immobilienmakler", "Immobilien", "Hausverwaltung"]
+    nace_code: "68.31"
+
+  - osm_tags:
+      office: it
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "it-dienstleistung"
+    category_name: "IT-Dienstleistung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["IT", "Software", "EDV"]
+    nace_code: "62.01"
+
+  - osm_tags:
+      office: company
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "unternehmen"
+    category_name: "Unternehmen"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Buero", "Unternehmen"]
+    nace_code: "82.99"
+
+  - osm_tags:
+      office: consulting
+    branch_id: "dienstleistung"
+    branch_name: "Dienstleistung"
+    category_id: "beratung"
+    category_name: "Unternehmensberatung"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Beratung", "Consulting", "Management"]
+    nace_code: "70.22"
+
+  # Amenities / Einrichtungen
+  - osm_tags:
+      amenity: restaurant
+    branch_id: "gastronomie"
+    branch_name: "Gastronomie"
+    category_id: "restaurant"
+    category_name: "Restaurant"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Restaurant", "Gastronomie", "Speisen"]
+    nace_code: "56.10"
+
+  - osm_tags:
+      amenity: cafe
+    branch_id: "gastronomie"
+    branch_name: "Gastronomie"
+    category_id: "cafe"
+    category_name: "Cafe"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Cafe", "Kaffee", "Konditorei"]
+    nace_code: "56.10"
+
+  - osm_tags:
+      amenity: bar
+    branch_id: "gastronomie"
+    branch_name: "Gastronomie"
+    category_id: "bar"
+    category_name: "Bar"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Bar", "Getraenke", "Nachtlokal"]
+    nace_code: "56.30"
+
+  - osm_tags:
+      amenity: fast_food
+    branch_id: "gastronomie"
+    branch_name: "Gastronomie"
+    category_id: "schnellrestaurant"
+    category_name: "Schnellrestaurant"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Fast Food", "Imbiss", "Schnellgastronomie"]
+    nace_code: "56.10"
+
+  - osm_tags:
+      amenity: bank
+    branch_id: "finanzwesen"
+    branch_name: "Finanzwesen"
+    category_id: "bank"
+    category_name: "Bank"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Bank", "Finanzdienstleistung", "Konto"]
+    nace_code: "64.19"
+
+  - osm_tags:
+      amenity: doctors
+    branch_id: "gesundheit"
+    branch_name: "Gesundheit"
+    category_id: "arztpraxis"
+    category_name: "Arztpraxis"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Arzt", "Praxis", "Medizin"]
+    nace_code: "86.21"
+
+  - osm_tags:
+      amenity: dentist
+    branch_id: "gesundheit"
+    branch_name: "Gesundheit"
+    category_id: "zahnarzt"
+    category_name: "Zahnarzt"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Zahnarzt", "Zahnmedizin", "Praxis"]
+    nace_code: "86.23"
+
+  - osm_tags:
+      amenity: veterinary
+    branch_id: "gesundheit"
+    branch_name: "Gesundheit"
+    category_id: "tierarzt"
+    category_name: "Tierarzt"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Tierarzt", "Veterinaer", "Tierklinik"]
+    nace_code: "75.00"
+
+  - osm_tags:
+      amenity: fuel
+    branch_id: "handel"
+    branch_name: "Handel"
+    category_id: "tankstelle"
+    category_name: "Tankstelle"
+    provider_type: "HAENDLER"
+    product_tags: ["Tankstelle", "Kraftstoff", "Benzin"]
+    nace_code: "47.30"
+
+  # Tourism / Tourismus
+  - osm_tags:
+      tourism: hotel
+    branch_id: "tourismus"
+    branch_name: "Tourismus"
+    category_id: "hotel"
+    category_name: "Hotel"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Hotel", "Unterkunft", "Uebernachtung"]
+    nace_code: "55.10"
+
+  - osm_tags:
+      tourism: guest_house
+    branch_id: "tourismus"
+    branch_name: "Tourismus"
+    category_id: "pension"
+    category_name: "Pension"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Pension", "Gasthaus", "Unterkunft"]
+    nace_code: "55.10"
+
+  - osm_tags:
+      tourism: hostel
+    branch_id: "tourismus"
+    branch_name: "Tourismus"
+    category_id: "hostel"
+    category_name: "Hostel"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Hostel", "Jugendherberge", "Unterkunft"]
+    nace_code: "55.20"
+
+  - osm_tags:
+      tourism: camp_site
+    branch_id: "tourismus"
+    branch_name: "Tourismus"
+    category_id: "campingplatz"
+    category_name: "Campingplatz"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Camping", "Campingplatz", "Stellplatz"]
+    nace_code: "55.30"
+
+  # Industry / Industrie
+  - osm_tags:
+      industrial: factory
+    branch_id: "industrie"
+    branch_name: "Industrie"
+    category_id: "produktion"
+    category_name: "Produktion"
+    provider_type: "HERSTELLER"
+    product_tags: ["Fabrik", "Produktion", "Fertigung"]
+    nace_code: "25.99"
+
+  - osm_tags:
+      industrial: warehouse
+    branch_id: "logistik"
+    branch_name: "Logistik"
+    category_id: "lager"
+    category_name: "Lager"
+    provider_type: "DIENSTLEISTER"
+    product_tags: ["Lager", "Logistik", "Warehousing"]
+    nace_code: "52.10"
+
+  - osm_tags:
+      man_made: works
+    branch_id: "industrie"
+    branch_name: "Industrie"
+    category_id: "produktion"
+    category_name: "Produktion"
+    provider_type: "HERSTELLER"
+    product_tags: ["Werk", "Produktion", "Fertigung"]
+    nace_code: "25.99"
