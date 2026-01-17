@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-01-16T23:43:16.623928Z",
+  "generated_at": "2026-01-17T08:58:46.062889Z",
   "sources": [
     {
       "id": "osm-geofabrik-austria",
@@ -8,34 +8,44 @@
       "url": "https://download.geofabrik.de/europe/austria-latest.osm.pbf",
       "license": "ODbL-1.0",
       "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
-      "fetched_at": "2026-01-16T23:43:11.511469Z",
+      "fetched_at": "2026-01-17T08:58:40.739971Z",
       "record_count": 135203
+    },
+    {
+      "id": "wko-firmen-az-austria",
+      "name": "WKO Firmen A-Z Austria",
+      "url": "https://firmen.wko.at",
+      "license": "Public",
+      "license_url": "https://firmen.wko.at/impressum",
+      "fetched_at": "2026-01-17T08:58:40.903236Z",
+      "record_count": 1255
     }
   ],
   "output_file": {
     "filename": "businesses.json",
-    "size_bytes": 196444215,
-    "record_count": 123776,
-    "sha256": "ca392768dc16485b9569f21e68833338c62573e42d6050f46a215bed66d51256"
+    "size_bytes": 199435526,
+    "record_count": 125010,
+    "sha256": "8b62f8b337fb5b63f2296ea6fe4795edcaded0d3b0980b4f90e3b681fa0d33c1"
   },
   "totals": {
-    "entities": 123776,
-    "dedupe_merges": 11427,
+    "entities": 125010,
+    "dedupe_merges": 11448,
     "by_bundesland": {
-      "Wien": 12352,
-      "Kaernten": 4988,
-      "Steiermark": 15795,
-      "Salzburg": 7134,
-      "Oberoesterreich": 9095,
-      "Tirol": 14478,
-      "Niederoesterreich": 14370,
-      "Burgenland": 2536
+      "Wien": 12683,
+      "Kaernten": 5081,
+      "Steiermark": 15952,
+      "Salzburg": 7191,
+      "Oberoesterreich": 9341,
+      "Tirol": 14551,
+      "Niederoesterreich": 14555,
+      "Burgenland": 2558,
+      "Vorarlberg": 70
     },
     "by_provider_type": {
       "HAENDLER": 48144,
-      "DIENSTLEISTER": 74065,
+      "DIENSTLEISTER": 74534,
       "HERSTELLER": 1412,
-      "GROSSHAENDLER": 155
+      "GROSSHAENDLER": 920
     },
     "by_category": {
       "Lebensmittelhandel": 9086,
@@ -82,7 +92,14 @@
       "Grosshandel": 156,
       "Unternehmensberatung": 153,
       "Dachdeckerei": 209,
-      "Lager": 16
+      "Lager": 16,
+      "Handelsvermittlung Agrarprodukte": 467,
+      "Sortiments-Großhandel": 47,
+      "Handelsvermittlung Textilien und Bekleidung": 1,
+      "Handelsvermittlung Baumaterialien": 1,
+      "Textil-Großhandel": 1,
+      "Großhandel Getreide und Futtermittel": 10,
+      "Metall-Großhandel": 2
     }
   }
 }

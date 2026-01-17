@@ -21,6 +21,7 @@ import 'ui/domain/application/som_localizations.dart';
 import 'ui/domain/infrastructure/api/auth_token_interceptor.dart';
 import 'ui/domain/model/model.dart';
 import 'ui/domain/model/user_account_confirmation/user_account_confirmation.dart';
+import 'ui/theme/som_theme.dart';
 
 // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -75,7 +76,6 @@ void main() async {
 }
 
 // Fixed: Alpha was 0x00 (transparent), now 0xFF (opaque)
-const seedColor = Color(0xFF44546A);
 
 class MyApp extends StatelessWidget {
   final beamerKey = BeamerProvidedKey();
@@ -126,15 +126,9 @@ class MyApp extends StatelessWidget {
               Locale('sr'),
             ],
             title: 'SOM${!isMobile ? ' ${platformName()}' : ''}',
-            themeMode: appStore.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-            theme: ThemeData(
-                useMaterial3: true,
-                colorSchemeSeed: seedColor,
-                brightness: Brightness.light),
-            darkTheme: ThemeData(
-                useMaterial3: true,
-                colorSchemeSeed: seedColor,
-                brightness: Brightness.dark),
+            themeMode: appStore.themeMode,
+            theme: SomTheme.light(visualDensity: appStore.visualDensity),
+            darkTheme: SomTheme.dark(visualDensity: appStore.visualDensity),
             builder: scrollBehaviour(),
             routerDelegate: routerDelegate,
           ),

@@ -18,6 +18,9 @@ dependencies:
   html: ^0.15.4
   retry: ^3.1.2
   archive: ^3.4.10
+  supabase: ^2.0.0
+  uuid: ^4.0.0
+  dotenv: ^4.2.0
 
 dev_dependencies:
   lints: ^3.0.0

@@ -9,6 +9,21 @@ part of 'application.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Application on _Application, Store {
+  Computed<bool>? _$isDarkModeOnComputed;
+
+  @override
+  bool get isDarkModeOn => (_$isDarkModeOnComputed ??= Computed<bool>(
+    () => super.isDarkModeOn,
+    name: '_Application.isDarkModeOn',
+  )).value;
+  Computed<VisualDensity>? _$visualDensityComputed;
+
+  @override
+  VisualDensity get visualDensity =>
+      (_$visualDensityComputed ??= Computed<VisualDensity>(
+        () => super.visualDensity,
+        name: '_Application.visualDensity',
+      )).value;
   Computed<dynamic>? _$isAuthenticatedComputed;
 
   @override
@@ -80,21 +95,39 @@ mixin _$Application on _Application, Store {
     });
   }
 
-  late final _$isDarkModeOnAtom = Atom(
-    name: '_Application.isDarkModeOn',
+  late final _$themeModeAtom = Atom(
+    name: '_Application.themeMode',
     context: context,
   );
 
   @override
-  bool get isDarkModeOn {
-    _$isDarkModeOnAtom.reportRead();
-    return super.isDarkModeOn;
+  ThemeMode get themeMode {
+    _$themeModeAtom.reportRead();
+    return super.themeMode;
   }
 
   @override
-  set isDarkModeOn(bool value) {
-    _$isDarkModeOnAtom.reportWrite(value, super.isDarkModeOn, () {
-      super.isDarkModeOn = value;
+  set themeMode(ThemeMode value) {
+    _$themeModeAtom.reportWrite(value, super.themeMode, () {
+      super.themeMode = value;
+    });
+  }
+
+  late final _$densityAtom = Atom(
+    name: '_Application.density',
+    context: context,
+  );
+
+  @override
+  UiDensity get density {
+    _$densityAtom.reportRead();
+    return super.density;
+  }
+
+  @override
+  set density(UiDensity value) {
+    _$densityAtom.reportWrite(value, super.density, () {
+      super.density = value;
     });
   }
 
@@ -198,12 +231,48 @@ mixin _$Application on _Application, Store {
   }
 
   @override
+  void setThemeMode(ThemeMode mode) {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.setThemeMode',
+    );
+    try {
+      return super.setThemeMode(mode);
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDensity(UiDensity value) {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.setDensity',
+    );
+    try {
+      return super.setDensity(value);
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleDarkMode() {
     final _$actionInfo = _$_ApplicationActionController.startAction(
       name: '_Application.toggleDarkMode',
     );
     try {
       return super.toggleDarkMode();
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void cycleThemeMode() {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.cycleThemeMode',
+    );
+    try {
+      return super.cycleThemeMode();
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }
@@ -263,11 +332,14 @@ mixin _$Application on _Application, Store {
 applicationWidth: ${applicationWidth},
 buttonWidth: ${buttonWidth},
 textScaleFactor: ${textScaleFactor},
-isDarkModeOn: ${isDarkModeOn},
+themeMode: ${themeMode},
+density: ${density},
 selectedLanguage: ${selectedLanguage},
 selectedDrawerItem: ${selectedDrawerItem},
 authorization: ${authorization},
 boxConstraints: ${boxConstraints},
+isDarkModeOn: ${isDarkModeOn},
+visualDensity: ${visualDensity},
 isAuthenticated: ${isAuthenticated},
 layout: ${layout}
     ''';

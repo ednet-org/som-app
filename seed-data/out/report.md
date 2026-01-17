@@ -1,15 +1,15 @@
 # Austrian B2B Business Seed Database Report
 
-Generated: 2026-01-16T23:43:16.623928Z
+Generated: 2026-01-17T08:58:46.062889Z
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Total Entities | 123776 |
-| Deduplication Merges | 11427 |
+| Total Entities | 125010 |
+| Deduplication Merges | 11448 |
 | Output File | businesses.json |
-| File Size | 187.3 MB |
+| File Size | 190.2 MB |
 
 ## Data Sources
 
@@ -19,30 +19,40 @@ Generated: 2026-01-16T23:43:16.623928Z
 - **URL**: https://download.geofabrik.de/europe/austria-latest.osm.pbf
 - **License**: ODbL-1.0
 - **License URL**: https://opendatacommons.org/licenses/odbl/1-0/
-- **Fetched**: 2026-01-16T23:43:11.511469Z
+- **Fetched**: 2026-01-17T08:58:40.739971Z
 - **Records**: 135203
+
+### WKO Firmen A-Z Austria
+
+- **ID**: wko-firmen-az-austria
+- **URL**: https://firmen.wko.at
+- **License**: Public
+- **License URL**: https://firmen.wko.at/impressum
+- **Fetched**: 2026-01-17T08:58:40.903236Z
+- **Records**: 1255
 
 ## Distribution by Bundesland
 
 | Bundesland | Count |
 |------------|-------|
-| Steiermark | 15795 |
-| Tirol | 14478 |
-| Niederoesterreich | 14370 |
-| Wien | 12352 |
-| Oberoesterreich | 9095 |
-| Salzburg | 7134 |
-| Kaernten | 4988 |
-| Burgenland | 2536 |
+| Steiermark | 15952 |
+| Niederoesterreich | 14555 |
+| Tirol | 14551 |
+| Wien | 12683 |
+| Oberoesterreich | 9341 |
+| Salzburg | 7191 |
+| Kaernten | 5081 |
+| Burgenland | 2558 |
+| Vorarlberg | 70 |
 
 ## Distribution by Provider Type
 
 | Provider Type | Count |
 |---------------|-------|
-| DIENSTLEISTER | 74065 |
+| DIENSTLEISTER | 74534 |
 | HAENDLER | 48144 |
 | HERSTELLER | 1412 |
-| GROSSHAENDLER | 155 |
+| GROSSHAENDLER | 920 |
 
 ## Top 50 SOM Categories
 
@@ -77,6 +87,7 @@ Generated: 2026-01-16T23:43:16.623928Z
 | Campingplatz | 567 |
 | IT-Dienstleistung | 517 |
 | Buchhandel | 471 |
+| Handelsvermittlung Agrarprodukte | 467 |
 | Elektrotechnik | 426 |
 | Immobilien | 373 |
 | Rechtsberatung | 346 |
@@ -90,41 +101,45 @@ Generated: 2026-01-16T23:43:16.623928Z
 | Schneiderei | 96 |
 | Steuerberatung | 92 |
 | Schuhmacher | 89 |
+| Sortiments-Großhandel | 47 |
 | Schlosserei | 36 |
 | Goldschmied | 18 |
 | Lager | 16 |
+| Großhandel Getreide und Futtermittel | 10 |
+| Metall-Großhandel | 2 |
+| Handelsvermittlung Textilien und Bekleidung | 1 |
 
 ## Deduplication Statistics
 
 | Metric | Value |
 |--------|-------|
-| Before Deduplication | 135203 |
-| After Deduplication | 123776 |
-| Total Merges | 11427 |
+| Before Deduplication | 136458 |
+| After Deduplication | 125010 |
+| Total Merges | 11448 |
 
 ## PII Audit Summary
 
 | Contact Type | Allowed | Filtered |
 |--------------|---------|----------|
-| Phone Numbers | 52974 | 0 |
-| Email Addresses | 12910 | 8821 |
-| Websites | 55041 | - |
+| Phone Numbers | 53194 | 0 |
+| Email Addresses | 13272 | 9025 |
+| Websites | 56293 | - |
 
 ### Filtering Reasons
 
 | Reason | Count |
 |--------|-------|
-| Unknown pattern - filtered for safety | 6235 |
-| Personal email (firstname.lastname pattern) | 2586 |
+| Unknown pattern - filtered for safety | 6353 |
+| Personal email (firstname.lastname pattern) | 2672 |
 
 ## Output File
 
 | Property | Value |
 |----------|-------|
 | Filename | businesses.json |
-| Size | 187.3 MB |
-| Records | 123776 |
-| SHA256 | `ca392768dc16485b9569f21e68833338c62573e42d6050f46a215bed66d51256` |
+| Size | 190.2 MB |
+| Records | 125010 |
+| SHA256 | `8b62f8b337fb5b63f2296ea6fe4795edcaded0d3b0980b4f90e3b681fa0d33c1` |
 
 ## Attribution & Licensing
 

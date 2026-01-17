@@ -263,8 +263,12 @@ class SomApplication extends StatelessWidget {
         PopupMenuItem(
           child: ListTile(
             leading: const Icon(Icons.settings_applications),
-            title: Text('App configuration',
+            title: Text('Appearance',
                 style: Theme.of(context).textTheme.titleSmall),
+            onTap: () {
+              Navigator.of(context).pop();
+              _showAppearanceDialog(context, appStore);
+            },
           ),
         ),
         const PopupMenuDivider(),
@@ -279,6 +283,92 @@ class SomApplication extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> _showAppearanceDialog(
+    BuildContext context,
+    Application appStore,
+  ) async {
+    ThemeMode selectedTheme = appStore.themeMode;
+    UiDensity selectedDensity = appStore.density;
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Appearance'),
+        content: StatefulBuilder(
+          builder: (context, setState) => Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Theme', style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(height: 8),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.system,
+                groupValue: selectedTheme,
+                title: const Text('System'),
+                onChanged: (value) => setState(() {
+                  selectedTheme = value ?? ThemeMode.system;
+                }),
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.light,
+                groupValue: selectedTheme,
+                title: const Text('Light'),
+                onChanged: (value) => setState(() {
+                  selectedTheme = value ?? ThemeMode.light;
+                }),
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.dark,
+                groupValue: selectedTheme,
+                title: const Text('Dark'),
+                onChanged: (value) => setState(() {
+                  selectedTheme = value ?? ThemeMode.dark;
+                }),
+              ),
+              const SizedBox(height: 12),
+              Text('Density', style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(height: 8),
+              DropdownButton<UiDensity>(
+                value: selectedDensity,
+                items: const [
+                  DropdownMenuItem(
+                    value: UiDensity.compact,
+                    child: Text('Compact'),
+                  ),
+                  DropdownMenuItem(
+                    value: UiDensity.standard,
+                    child: Text('Standard'),
+                  ),
+                  DropdownMenuItem(
+                    value: UiDensity.comfortable,
+                    child: Text('Comfortable'),
+                  ),
+                ],
+                onChanged: (value) => setState(() {
+                  selectedDensity = value ?? UiDensity.standard;
+                }),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              appStore.setThemeMode(selectedTheme);
+              appStore.setDensity(selectedDensity);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Apply'),
+          ),
+        ],
+      ),
     );
   }
 

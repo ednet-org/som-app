@@ -1,0 +1,74 @@
+{
+  "totalScraped": 10,
+  "uniqueBusinesses": 10,
+  "byBundesland": {
+    "Wien": 10
+  },
+  "byCategory": {
+    "lebensmittelgro%C3%9Fhandel": 10
+  },
+  "errors": [],
+  "scrapedAt": "2026-01-17T00:17:31.046751Z",
+  "businesses": [
+    {
+      "name": "12point5 Champagner and more Handelsgesellschaft mbH",
+      "wkoId": "60ecb20c-ed1c-4f8b-a736-00d1f8fef484",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/12point5-champagner-and-more-handelsgesellschaft-mbh/wien/?firmaid=60ecb20c-ed1c-4f8b-a736-00d1f8fef484&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "4You Gastro GroßhandelgesmbH",
+      "wkoId": "f5a8b868-51c3-4fd8-af11-e23c364656f1",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/4you-gastro-gro%c3%9fhandelgesmbh/wien/?firmaid=f5a8b868-51c3-4fd8-af11-e23c364656f1&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "A.E. Handelsgesellschaft mbH",
+      "wkoId": "d94345a7-e7a8-4b8e-9764-389ffb6e54d0",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/ae-handelsgesellschaft-mbh/wien/?firmaid=d94345a7-e7a8-4b8e-9764-389ffb6e54d0&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "Aapospa natürliche Heilmittel GmbH",
+      "wkoId": "149d3fb6-6447-4c8b-bd92-41a80b8d4258",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/aapospa-nat%c3%bcrliche-heilmittel-gmbh/wien/?firmaid=149d3fb6-6447-4c8b-bd92-41a80b8d4258&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "AB InBev Austria GmbH",
+      "wkoId": "c65d4191-6ff7-4911-8e66-70667ae51c6b",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/ab-inbev-austria-gmbh/wien/?firmaid=c65d4191-6ff7-4911-8e66-70667ae51c6b&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "Abdulkadir Gastro GmbH",
+      "wkoId": "3fa2718b-60f3-4170-9792-8ce7bba8631f",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/abdulkadir-gastro-gmbh/wien/?firmaid=3fa2718b-60f3-4170-9792-8ce7bba8631f&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "ACCADEMIA DEL CAFFE GASTRONOMIE- BETRIEBS GMBH",
+      "wkoId": "7a522b9e-19df-438d-a75c-5e1b2d1b196e",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/accademia-del-caffe-gastronomie--betriebs-gmbh/wien/?firmaid=7a522b9e-19df-438d-a75c-5e1b2d1b196e&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "ADDN Trading GmbH",
+      "wkoId": "0dfa26f5-78bc-4c39-9511-77f2c2f66cae",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/addn-trading-gmbh/wien/?firmaid=0dfa26f5-78bc-4c39-9511-77f2c2f66cae&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "ADRIATIC GROUP GmbH",
+      "wkoId": "f2580796-b98a-41ba-8bc6-6b79dfacc4fb",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/adriatic-group-gmbh/wien/?firmaid=f2580796-b98a-41ba-8bc6-6b79dfacc4fb&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    },
+    {
+      "name": "AeV GmbH",
+      "wkoId": "4da23804-07db-4329-84f9-65673cbeb284",
+      "bundesland": "Wien",
+      "detailUrl": "https://firmen.wko.at/aev-gmbh-1030-wien-lagergasse-6-16/wien/?firmaid=4da23804-07db-4329-84f9-65673cbeb284&standortid=1&standortname=wien%20%28bundesland%29&suchbegriff=lebensmittelgro%c3%9fhandel"
+    }
+  ]
+}
