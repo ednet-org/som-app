@@ -265,3 +265,28 @@ Responsive navigation drawer.
 - **Specs**:
   - Width: `280px` (Expanded) / `80px` (Collapsed).
   - Background: `bg-primary` with Glassmorphism effect.
+
+## 7. Future-Ready Assets (Newly Generated)
+These assets are located in `assets/design_system/` and follow the strict futuristic style guide.
+
+### Wizards
+- `wizards/stepper_company_info.svg`: Abstract skyscraper.
+- `wizards/stepper_verification.svg`: Shield with scanning laser.
+- `wizards/stepper_complete.svg`: Minimalist flag.
+
+### Empty States
+- `empty_states/empty_notifications.svg`: Silent bell.
+- `empty_states/empty_search_results.svg`: Wireframe search.
+- `empty_states/empty_ads.svg`: Ad placeholder frame.
+
+### Interaction
+- `interaction/state_upload_drag_drop.svg`: Upload zone.
+- `interaction/state_upload_success.svg`: Success check.
+- `interaction/state_tier_upgrade.svg`: Upgrade chevron.
+
+### Backgrounds
+- `backgrounds/bg_pattern_finance.svg`: Subtle hex grid.
+- `backgrounds/bg_pattern_network.svg`: Node map.
+
+## 8. Theme Implementation
+Use `somFuturisticTheme()` from `lib/ui/theme/som_theme_futuristic.dart` in your `MaterialApp`.

@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flag_gradient" x1="100" y1="40" x2="100" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Geometric Flag / Checkmark Hybrid -->
+  <path d="M80 160 V40 L160 70 L80 100" stroke="url(#flag_gradient)" stroke-width="0.8" fill="none" stroke-linejoin="bevel"/>
+  
+  <!-- Base -->
+  <ellipse cx="80" cy="160" rx="30" ry="5" stroke="#475569" stroke-width="0.5" fill="none"/>
+  
+  <!-- Confetti / Data Particles -->
+  <rect x="130" y="40" width="2" height="2" fill="#38BDF8"/>
+  <rect x="150" y="55" width="2" height="2" fill="#818CF8"/>
+  <rect x="140" y="110" width="2" height="2" fill="#38BDF8"/>
+  
+  <!-- Circle Glow Background -->
+  <circle cx="100" cy="100" r="60" stroke="#1E293B" stroke-width="0.5" stroke-dasharray="4 4"/>
+</svg>

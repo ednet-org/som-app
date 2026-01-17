@@ -1,0 +1,10 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.05">
+  <pattern id="hex_grid" x="0" y="0" width="50" height="43" patternUnits="userSpaceOnUse">
+    <path d="M25 0 L50 14.4 L50 43.3 L25 57.7 L0 43.3 L0 14.4 L25 0 Z" stroke="#38BDF8" stroke-width="0.5" fill="none"/>
+  </pattern>
+  
+  <rect x="0" y="0" width="400" height="400" fill="url(#hex_grid)"/>
+  
+  <path d="M0 300 C100 250 200 350 400 200" stroke="#818CF8" stroke-width="1" fill="none"/>
+  <path d="M0 320 C100 270 200 370 400 220" stroke="#38BDF8" stroke-width="1" fill="none"/>
+</svg>

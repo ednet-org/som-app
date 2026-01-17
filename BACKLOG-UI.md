@@ -56,7 +56,7 @@ All assets located in `assets/design_system/` organized by context:
 - **Textures**: `subtle_mesh.svg`, `dot_noise.svg` (For Cards/Backgrounds)
 
 #### Illustrations (`assets/design_system/illustrations/`)
-- **Hero**: `login_hero.svg` (Abstract network concept)
+- **Hero**: `hero_landing_3d.svg` (Pseudo-3D isometric abstract composition)
 
 #### Auth & Identity (`assets/design_system/auth/`)
 - **Roles**: `role_buyer.svg`, `role_provider.svg` (Large selection cards)
@@ -96,8 +96,8 @@ All assets located in `assets/design_system/` organized by context:
 - **Layout**: Centered container, max-width `800px`.
 - **Header**: "Join SOM Network - Choose your path".
 - **Cards**: Two large cards (`350x400px`).
-  - **Buyer Card**: Icon `icon_inquiries.svg` (large), Title "Buyer", Text "Source products & services.", Button "Register as Buyer".
-  - **Provider Card**: Icon `icon_offers.svg` (large), Title "Provider", Text "Grow your business.", Button "Register as Provider".
+  - **Buyer Card**: Illustration `assets/design_system/auth/role_buyer.svg`, Title "Buyer", Text "Source products & services.", Button "Register as Buyer".
+  - **Provider Card**: Illustration `assets/design_system/auth/role_provider.svg`, Title "Provider", Text "Grow your business.", Button "Register as Provider".
 - **Interaction**: Hover scales card 1.05x, border glow `accent-primary`.
 
 ##### Registration - Forms (Buyer & Provider)
@@ -335,6 +335,20 @@ All assets located in `assets/design_system/` organized by context:
 | H10: Help and documentation | N/A | Admin tool |
 
 ---
+
+### High-Fidelity Illustrations (`assets/design_system/illustrations/`)
+These higher-abstraction assets replace standard material placeholders for premium impact.
+
+- **Onboarding**:
+  - `hero_landing_3d.svg`: (Landing Page) Pseudo-3D isometric abstract composition using brand gradient.
+- **Feature Highlights**:
+  - `feature_analytics.svg`: (Features) Floating 3D charts and glassmorphism data cards.
+  - `feature_secure_auth.svg`: (Features) Shield lock concept for trust badges.
+- **Complex States**:
+  - `state_success_celebration.svg`: (Success) Confetti and motion lines for major completion events.
+  - `state_server_error.svg`: (Error) Robot/Server crash metaphor for 500 errors.
+  - `state_no_connection.svg`: (Offline) Stylized disconnected cloud.
+- **Hero**: `login_hero.svg` (Abstract network concept)
 
 ## Widget File Index (Audit / Future Updates)
 

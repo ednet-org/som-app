@@ -1,0 +1,33 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="800" height="600" fill="#0F172A"/>
+<circle cx="400" cy="300" r="250" fill="url(#paint0_radial)" fill-opacity="0.2"/>
+<g filter="url(#filter0_f)">
+<ellipse cx="400" cy="500" rx="300" ry="40" fill="#38BDF8" fill-opacity="0.2"/>
+</g>
+<path d="M400 150L600 250V450L400 550L200 450V250L400 150Z" fill="url(#paint1_linear)" stroke="#38BDF8" stroke-width="2"/>
+<path d="M400 150V350L600 250" stroke="#38BDF8" stroke-width="2"/>
+<path d="M400 350L200 250" stroke="#38BDF8" stroke-width="2"/>
+<path d="M400 350V550" stroke="#38BDF8" stroke-width="2"/>
+<path d="M400 220L530 286" stroke="#818CF8" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M400 220L270 286" stroke="#818CF8" stroke-width="2" stroke-dasharray="8 8"/>
+<path d="M400 220V480" stroke="#818CF8" stroke-width="2" stroke-dasharray="8 8"/>
+<circle cx="400" cy="220" r="12" fill="#38BDF8"/>
+<circle cx="600" cy="250" r="8" fill="#818CF8"/>
+<circle cx="200" cy="250" r="8" fill="#818CF8"/>
+<circle cx="400" cy="550" r="8" fill="#818CF8"/>
+<defs>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 300) rotate(90) scale(250)">
+<stop stop-color="#38BDF8"/>
+<stop offset="1" stop-color="#0F172A" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="paint1_linear" x1="400" y1="150" x2="400" y2="550" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1E293B" stop-opacity="0.8"/>
+<stop offset="1" stop-color="#0F172A" stop-opacity="0.8"/>
+</linearGradient>
+<filter id="filter0_f" x="50" y="410" width="700" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25" result="effect1_foregroundBlur"/>
+</filter>
+</defs>
+</svg>

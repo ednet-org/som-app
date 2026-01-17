@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="scan_gradient" x1="0" y1="100" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield Outline -->
+  <path d="M100 40 C100 40 150 50 150 90 V120 C150 150 100 170 100 170 C100 170 50 150 50 120 V90 C50 50 100 40 100 40 Z" stroke="#818CF8" stroke-width="0.8" fill="none"/>
+  
+  <!-- Inner Tech Detail -->
+  <path d="M100 50 V60 M100 150 V160 M60 100 H70 M130 100 H140" stroke="#38BDF8" stroke-width="0.5" stroke-opacity="0.5"/>
+  
+  <!-- Scanning Laser Line -->
+  <line x1="40" y1="100" x2="160" y2="100" stroke="url(#scan_gradient)" stroke-width="1"/>
+  
+  <!-- Subtle Nodes -->
+  <circle cx="100" cy="40" r="2" fill="#38BDF8"/>
+  <circle cx="100" cy="170" r="2" fill="#818CF8"/>
+</svg>

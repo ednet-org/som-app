@@ -1,0 +1,16 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bell Outline -->
+  <path d="M100 40 C100 40 140 50 140 90 V130 H60 V90 C60 50 100 40 100 40 Z" stroke="#38BDF8" stroke-width="0.5" fill="none" class="bell-body"/>
+  
+  <!-- Clapper (Silent - Dots) -->
+  <circle cx="90" cy="140" r="2" fill="#818CF8"/>
+  <circle cx="100" cy="145" r="2" fill="#818CF8"/>
+  <circle cx="110" cy="140" r="2" fill="#818CF8"/>
+
+  <!-- "Zzz" / Silence representation -->
+  <path d="M130 50 L140 50 L130 60 L140 60" stroke="#475569" stroke-width="0.5"/>
+  <path d="M145 35 L152 35 L145 42 L152 42" stroke="#475569" stroke-width="0.5"/>
+
+  <!-- Background Glow -->
+  <circle cx="100" cy="90" r="50" stroke="#1E293B" stroke-width="0.5" stroke-dasharray="2 4"/>
+</svg>

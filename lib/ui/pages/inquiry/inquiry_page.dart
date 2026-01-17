@@ -371,7 +371,10 @@ class _InquiryPageState extends State<InquiryPage> {
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
-  Future<List<ProviderSummary>> _loadProviders({
+  Future<ProviderSearchResult> _loadProviders({
+    required int limit,
+    required int offset,
+    String? search,
     String? branchId,
     String? companySize,
     String? providerType,
@@ -379,12 +382,24 @@ class _InquiryPageState extends State<InquiryPage> {
   }) async {
     final api = Provider.of<Openapi>(context, listen: false);
     final response = await api.getProvidersApi().providersGet(
+          limit: limit,
+          offset: offset,
+          search: search,
           branchId: branchId,
           companySize: companySize,
           providerType: providerType,
           zipPrefix: zipPrefix,
         );
-    return response.data?.toList() ?? const [];
+
+    // Parse pagination headers
+    final totalCountHeader = response.headers.value('X-Total-Count');
+    final hasMoreHeader = response.headers.value('X-Has-More');
+
+    return ProviderSearchResult(
+      providers: response.data?.toList() ?? const [],
+      totalCount: int.tryParse(totalCountHeader ?? '') ?? 0,
+      hasMore: hasMoreHeader?.toLowerCase() == 'true',
+    );
   }
 
   void _clearFilters() {

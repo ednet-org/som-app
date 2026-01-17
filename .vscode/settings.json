@@ -1,4 +1,5 @@
 {
     "cmake.configureOnOpen": false,
-    "cmake.sourceDirectory": "C:/Users/sMs/projects/som-app/windows"
+    "cmake.sourceDirectory": "C:/Users/sMs/projects/som-app/windows",
+    "dart.mcpServer": true
 }
