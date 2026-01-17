@@ -11,6 +11,8 @@ import 'routes/beamer_provided_key.dart';
 import 'routes/locations/auth/auth_login_page_location.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
+import 'package:som/ui/widgets/empty_state.dart';
 import 'utils/ui_logger.dart';
 
 class SomApplication extends StatelessWidget {
@@ -246,16 +248,26 @@ class SomApplication extends StatelessWidget {
         PopupMenuItem(child: userMenuItem(context, appStore)),
         PopupMenuItem(
           child: ListTile(
-            leading: const Icon(Icons.notifications),
+            leading: SomSvgIcon(
+              SomAssets.iconNotification,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             title: Text(
               'Notifications',
               style: Theme.of(context).textTheme.titleSmall,
             ),
+            onTap: () {
+              Navigator.of(context).pop();
+              Future.microtask(() => _showNotificationsDialog(context));
+            },
           ),
         ),
         PopupMenuItem(
           child: ListTile(
-            leading: const Icon(Icons.manage_accounts),
+            leading: SomSvgIcon(
+              SomAssets.iconUser,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             title: Text(
               'User account',
               style: Theme.of(context).textTheme.titleSmall,
@@ -265,7 +277,10 @@ class SomApplication extends StatelessWidget {
         if (auth?.canSwitchRole == true && auth?.activeRole != 'buyer')
           PopupMenuItem(
             child: ListTile(
-              leading: const Icon(Icons.swap_horiz),
+              leading: SomSvgIcon(
+                SomAssets.iconChevronRight,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               title: Text(
                 'Switch to buyer portal',
                 style: Theme.of(context).textTheme.titleSmall,
@@ -276,7 +291,10 @@ class SomApplication extends StatelessWidget {
         if (auth?.canSwitchRole == true && auth?.activeRole != 'provider')
           PopupMenuItem(
             child: ListTile(
-              leading: const Icon(Icons.swap_horiz),
+              leading: SomSvgIcon(
+                SomAssets.iconChevronRight,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               title: Text(
                 'Switch to provider portal',
                 style: Theme.of(context).textTheme.titleSmall,
@@ -286,7 +304,10 @@ class SomApplication extends StatelessWidget {
           ),
         PopupMenuItem(
           child: ListTile(
-            leading: const Icon(Icons.settings_applications),
+            leading: SomSvgIcon(
+              SomAssets.iconSettings,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             title: Text('Appearance',
                 style: Theme.of(context).textTheme.titleSmall),
             onTap: () {
@@ -298,7 +319,10 @@ class SomApplication extends StatelessWidget {
         const PopupMenuDivider(),
         PopupMenuItem(
           child: ListTile(
-            leading: const Icon(Icons.logout),
+            leading: SomSvgIcon(
+              SomAssets.iconClose,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             title:
                 Text('Logout', style: Theme.of(context).textTheme.titleSmall),
             onTap: () {
@@ -390,6 +414,29 @@ class SomApplication extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: const Text('Apply'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showNotificationsDialog(BuildContext context) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Notifications'),
+        content: const SizedBox(
+          width: 360,
+          child: EmptyState(
+            asset: SomAssets.emptyNotifications,
+            title: 'No notifications',
+            message: 'You are all caught up.',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
           ),
         ],
       ),

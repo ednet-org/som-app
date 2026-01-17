@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 /// View for buyers showing ads grouped by type.
 class AdsBuyerView extends StatelessWidget {
@@ -55,7 +57,19 @@ class _BannerAdButton extends StatelessWidget {
                 Uri.parse(ad.url!),
                 mode: LaunchMode.externalApplication,
               ),
-      child: Text(ad.headline ?? ad.id ?? 'Banner'),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            SomAssets.adBannerPlaceholder,
+            width: 220,
+            height: 80,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 6),
+          Text(ad.headline ?? ad.id ?? 'Banner'),
+        ],
+      ),
     );
   }
 }
@@ -69,6 +83,11 @@ class _NormalAdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        leading: SvgPicture.asset(
+          SomAssets.adSidebarPlaceholder,
+          width: 40,
+          height: 40,
+        ),
         title: Text(ad.headline ?? ad.id ?? 'Ad'),
         subtitle: Text(ad.description ?? ad.url ?? ''),
         trailing: Text(ad.status ?? ''),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/semantic_colors.dart';
 import '../theme/tokens.dart';
 import '../utils/formatters.dart';
+import 'design_system/som_svg_icon.dart';
 
 /// A badge widget for displaying status with appropriate coloring.
 ///
@@ -63,10 +64,10 @@ class StatusBadge extends StatelessWidget {
 
   Color get _backgroundColor => switch (type) {
         StatusType.inquiry => SomSemanticColors.forInquiryStatusBackground(status),
-        _ => _color.withOpacity(0.1),
+        _ => _color.withValues(alpha: 0.1),
       };
 
-  IconData get _icon => SomSemanticColors.iconForStatus(status);
+  String get _iconAsset => SomSemanticColors.iconAssetForStatus(status);
 
   String get _label => SomFormatters.capitalize(status);
 
@@ -92,8 +93,8 @@ class StatusBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (showIcon) ...[
-            Icon(
-              _icon,
+            SomSvgIcon(
+              _iconAsset,
               size: SomIconSize.sm,
               color: _color,
             ),

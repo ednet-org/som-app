@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
@@ -162,7 +163,7 @@ class _RolesAppBodyState extends State<RolesAppBody> {
           ),
           leftSplit: roles.isEmpty
               ? const EmptyState(
-                  icon: Icons.security_outlined,
+                  asset: SomAssets.emptySearchResults,
                   title: 'No roles yet',
                   message: 'Create a role to get started',
                 )

@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
@@ -244,7 +245,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   Widget _buildDeadlineSection() {
     return SomButton(
       text: _deadline == null ? 'Select deadline' : 'Deadline: ${_deadline!.toIso8601String().split('T').first}',
-      iconData: Icons.calendar_today,
+      icon: SomAssets.iconCalendar,
       type: SomButtonType.secondary,
       onPressed: () async {
         final picked = await showDatePicker(
@@ -379,7 +380,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
           text: _selectedPdf == null
               ? 'Attach PDF'
               : 'PDF: ${_selectedPdf!.name}',
-          iconData: Icons.attach_file,
+          icon: SomAssets.iconPdf,
           type: SomButtonType.ghost,
         ),
         const SizedBox(width: 12),

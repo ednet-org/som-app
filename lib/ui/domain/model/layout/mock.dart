@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 class TestHorizontalListView extends StatefulWidget {
   TestHorizontalListView({Key? key}) : super(key: key);
@@ -78,7 +80,10 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
                 child: Row(children: [
                   FloatingActionButton.small(
                     onPressed: _scrollRight,
-                    child: const Icon(Icons.arrow_right),
+                    child: SomSvgIcon(
+                      SomAssets.iconChevronRight,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                   Expanded(
                     child: Scrollbar(
@@ -102,7 +107,10 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
                   ),
                   FloatingActionButton.small(
                     onPressed: _scrollLeft,
-                    child: const Icon(Icons.arrow_left),
+                    child: SomSvgIcon(
+                      SomAssets.iconChevronLeft,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ]))));
   }

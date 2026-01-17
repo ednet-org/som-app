@@ -126,6 +126,50 @@ class AuthLoginPage extends StatelessWidget {
                   ).textTheme.displayLarge?.copyWith(fontWeight: FontWeight.w300, letterSpacing: 2.0),
                 ),
               ),
+              const SizedBox(height: 24),
+              SvgPicture.asset(
+                SomAssets.illustrationLoginHero,
+                width: 320,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 16,
+                runSpacing: 12,
+                alignment: WrapAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      SvgPicture.asset(
+                        SomAssets.illustrationFeatureAnalytics,
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Analytics',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SvgPicture.asset(
+                        SomAssets.illustrationFeatureSecureAuth,
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Secure Auth',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
         ),

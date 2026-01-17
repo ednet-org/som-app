@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -434,7 +435,7 @@ class _UserAppBodyState extends State<UserAppBody> {
               ],
             ),
             leftSplit: const EmptyState(
-              icon: Icons.person_outline,
+              asset: SomAssets.emptySearchResults,
               title: 'No users found',
               message: 'Invite a user to get started',
             ),

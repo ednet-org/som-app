@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/pages/customer/registration/plan_modal.dart';
 
@@ -112,7 +114,20 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
               ],
             )),
         16.height,
-        const Text('Choose subscription plan').paddingLeft(12.0),
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Row(
+            children: [
+              SomSvgIcon(
+                SomAssets.interactionTierUpgrade,
+                size: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              const Text('Choose subscription plan'),
+            ],
+          ),
+        ),
         16.height,
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -120,6 +135,11 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
           shrinkWrap: true,
           itemBuilder: (_, int index) {
             bool value = selectIndex == index;
+            final tierAsset = switch (index % 3) {
+              0 => SomAssets.tierStandard,
+              1 => SomAssets.tierPremium,
+              _ => SomAssets.tierEnterprise,
+            };
             return Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -131,6 +151,12 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                   children: [
                     Row(
                       children: [
+                        SomSvgIcon(
+                          tierAsset,
+                          size: 28,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        12.width,
                         Container(
                           height: 20,
                           width: 20,
@@ -146,9 +172,10 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                                         .colorScheme
                                         .secondary),
                           ),
-                          child: const Icon(
-                            Icons.check,
+                          child: SomSvgIcon(
+                            SomAssets.offerStatusAccepted,
                             size: 14,
+                            color: Theme.of(context).colorScheme.primary,
                           ).visible(value).center(),
                         ),
                         12.width,

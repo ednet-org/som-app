@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
 import 'widgets/ads_buyer_view.dart';
 import 'widgets/ads_create_form.dart';
 import 'widgets/ads_edit_form.dart';
@@ -217,8 +219,10 @@ class _AdsPageState extends State<AdsPage> {
         if (snapshot.hasError) {
           return AppBody(
             contextMenu: const Text('Error'),
-            leftSplit: Center(
-              child: Text('Failed to load ads: ${snapshot.error}'),
+            leftSplit: EmptyState(
+              asset: SomAssets.illustrationStateServerError,
+              title: 'Failed to load ads',
+              message: '${snapshot.error}',
             ),
             rightSplit: const SizedBox.shrink(),
           );

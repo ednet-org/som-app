@@ -3,7 +3,7 @@ import 'package:som/ui/widgets/design_system/som_input.dart';
 
 class SomTextInput extends StatelessWidget {
   final String? label;
-  final IconData? icon;
+  final String? iconAsset;
   final String? hint;
   final int maxLines; // restored
   final bool showPassword; 
@@ -21,7 +21,7 @@ class SomTextInput extends StatelessWidget {
   const SomTextInput({
     super.key,
     this.label,
-    this.icon,
+    this.iconAsset,
     this.hint,
     this.maxLines = 1,
     this.showPassword = false,
@@ -62,7 +62,7 @@ class SomTextInput extends StatelessWidget {
         keyboardType: keyboardType,
         onChanged: onChanged,
         validator: validator,
-        icon: icon,
+        iconAsset: iconAsset,
         maxLines: maxLines,
         controller: effectiveController,
         onFieldSubmitted: onFieldSubmitted,

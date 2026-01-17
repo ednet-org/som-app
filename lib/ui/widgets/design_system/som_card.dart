@@ -24,6 +24,15 @@ class SomCard extends StatelessWidget {
       margin: theme.cardTheme.margin,
       child: Stack(
         children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.08,
+              child: SvgPicture.asset(
+                SomAssets.patternDotNoise,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           if (isFeatured)
             Positioned.fill(
               child: Opacity(

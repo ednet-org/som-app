@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 /// Semantic colors for status indicators and feedback.
 ///
@@ -80,17 +81,20 @@ class SomSemanticColors {
     };
   }
 
-  /// Get icon for status
-  static IconData iconForStatus(String? status) {
+  /// Get icon asset for status
+  static String iconAssetForStatus(String? status) {
     return switch (status?.toLowerCase()) {
-      'open' || 'published' || 'pending' => Icons.schedule,
-      'closed' || 'accepted' || 'approved' || 'active' => Icons.check_circle,
-      'draft' => Icons.edit,
-      'expired' => Icons.timer_off,
-      'rejected' || 'declined' => Icons.cancel,
-      'assigned' => Icons.person,
-      'responded' => Icons.reply,
-      _ => Icons.circle,
+      'open' || 'published' || 'pending' => SomAssets.inquiryStatusOpen,
+      'won' => SomAssets.inquiryStatusWon,
+      'lost' => SomAssets.inquiryStatusLost,
+      'closed' || 'accepted' || 'approved' || 'active' =>
+        SomAssets.offerStatusAccepted,
+      'draft' => SomAssets.iconEdit,
+      'expired' => SomAssets.iconWarning,
+      'rejected' || 'declined' => SomAssets.offerStatusRejected,
+      'assigned' => SomAssets.iconUser,
+      'responded' => SomAssets.iconInfo,
+      _ => SomAssets.iconInfo,
     };
   }
 }

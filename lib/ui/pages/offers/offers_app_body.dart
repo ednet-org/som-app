@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -190,7 +192,7 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   Widget _buildOffersList(List<_OfferWithInquiry> offers) {
     if (offers.isEmpty) {
       return const EmptyState(
-        icon: Icons.request_quote_outlined,
+        asset: SomAssets.emptySearchResults,
         title: 'No offers found',
         message: 'Offers will appear here once they are submitted',
       );
@@ -225,7 +227,7 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   Widget _buildOfferDetails(bool isBuyer) {
     if (_selected == null) {
       return const EmptyState(
-        icon: Icons.touch_app_outlined,
+        asset: SomAssets.emptySearchResults,
         title: 'Select an offer',
         message: 'Choose an offer from the list to view details',
       );
@@ -257,7 +259,7 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           const SizedBox(height: SomSpacing.md),
           DetailSection(
             title: 'Summary',
-            icon: Icons.description_outlined,
+            iconAsset: SomAssets.iconInfo,
             child: Column(
               children: [
                 DetailRow(
@@ -286,7 +288,7 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           const SizedBox(height: SomSpacing.md),
           DetailSection(
             title: 'Decisions',
-            icon: Icons.rule_outlined,
+            iconAsset: SomAssets.iconWarning,
             child: Column(
               children: [
                 DetailRow(
@@ -306,7 +308,11 @@ class _OffersAppBodyState extends State<OffersAppBody> {
               onPressed: offer.id == null
                   ? null
                   : () => _openOfferPdf(offer.id!),
-              icon: const Icon(Icons.download, size: SomIconSize.sm),
+              icon: SomSvgIcon(
+                SomAssets.iconPdf,
+                size: SomIconSize.sm,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               label: const Text('Download PDF'),
             ),
           ],
@@ -322,12 +328,20 @@ class _OffersAppBodyState extends State<OffersAppBody> {
               children: [
                 FilledButton.icon(
                   onPressed: () => _acceptOffer(_selected!),
-                  icon: const Icon(Icons.check, size: SomIconSize.sm),
+                  icon: SomSvgIcon(
+                    SomAssets.offerStatusAccepted,
+                    size: SomIconSize.sm,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                   label: const Text('Accept'),
                 ),
                 OutlinedButton.icon(
                   onPressed: () => _rejectOffer(_selected!),
-                  icon: const Icon(Icons.close, size: SomIconSize.sm),
+                  icon: SomSvgIcon(
+                    SomAssets.offerStatusRejected,
+                    size: SomIconSize.sm,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   label: const Text('Reject'),
                 ),
               ],

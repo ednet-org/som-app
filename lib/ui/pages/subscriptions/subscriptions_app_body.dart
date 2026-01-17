@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -275,7 +277,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
               ],
             ),
             leftSplit: const EmptyState(
-              icon: Icons.card_membership_outlined,
+              asset: SomAssets.emptySearchResults,
               title: 'No subscription plans',
               message: 'Create a plan to manage subscriptions',
             ),
@@ -319,7 +321,13 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
                   'Price: ${(plan.priceInSubunit ?? 0) / 100} | '
                   'Active: ${plan.isActive ?? false}',
                 ),
-                trailing: isCurrent ? const Icon(Icons.check) : null,
+                trailing: isCurrent
+                    ? SomSvgIcon(
+                        SomAssets.offerStatusAccepted,
+                        size: SomIconSize.sm,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : null,
                 selected: _selected?.id == plan.id,
                 onTap: () => _selectPlan(plan),
               );

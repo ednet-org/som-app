@@ -25,8 +25,7 @@ void main() {
     expect(find.text('SIGN IN'), findsOneWidget); // Expecting uppercase
 
     // Verify background gradient (indirectly via type) or color
-    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
-    // Note: verifying gradient background on ElevatedButton is tricky in widget tests 
+    // Note: verifying gradient background on ElevatedButton is tricky in widget tests
     // without inspecting the Container decoration inside, but we verify the widget type usage.
 
     // Verify tap

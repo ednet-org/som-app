@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:som/ui/domain/application/application.dart';
 
 import '../../domain/model/model.dart' hide BankDetails;
@@ -327,7 +329,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.edit),
+                            icon: SomSvgIcon(
+                              SomAssets.iconEdit,
+                              color:
+                                  Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
                             onPressed: () async {
                               final controller = TextEditingController(
                                 text: product.name,
@@ -361,7 +367,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                             },
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete_outline),
+                            icon: SomSvgIcon(
+                              SomAssets.iconDelete,
+                              color:
+                                  Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
                             onPressed: () => _deleteProduct(product.id),
                           ),
                         ],

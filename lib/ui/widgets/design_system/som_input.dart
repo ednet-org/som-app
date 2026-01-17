@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 class SomInput extends StatefulWidget {
   final String label;
@@ -22,12 +23,14 @@ class SomInput extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.icon,
+    this.iconAsset,
     this.maxLines = 1,
     this.onFieldSubmitted,
   });
 
   final FormFieldValidator<String>? validator;
   final IconData? icon;
+  final String? iconAsset;
   final int maxLines;
   final ValueChanged<String>? onFieldSubmitted;
 
@@ -79,6 +82,22 @@ class _SomInputState extends State<SomInput> {
       );
     }
 
+    final iconColor =
+        theme.inputDecorationTheme.prefixIconColor ?? theme.colorScheme.primary;
+    Widget? prefixIcon;
+    if (widget.iconAsset != null) {
+      prefixIcon = Padding(
+        padding: const EdgeInsets.all(12),
+        child: SomSvgIcon(
+          widget.iconAsset!,
+          size: 20,
+          color: iconColor,
+        ),
+      );
+    } else if (widget.icon != null) {
+      prefixIcon = Icon(widget.icon, color: iconColor);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -97,7 +116,7 @@ class _SomInputState extends State<SomInput> {
             hintText: widget.hintText,
             errorText: widget.errorText,
             suffixIcon: suffixIcon,
-            icon: widget.icon != null ? Icon(widget.icon, color: theme.colorScheme.primary) : null,
+            prefixIcon: prefixIcon,
           ),
         ),
       ],

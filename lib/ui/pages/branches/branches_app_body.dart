@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -326,7 +328,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
               ],
             ),
             leftSplit: const EmptyState(
-              icon: Icons.account_tree_outlined,
+              asset: SomAssets.emptySearchResults,
               title: 'No branches yet',
               message: 'Create a branch to categorize inquiries',
             ),
@@ -386,7 +388,12 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                               onTap: () =>
                                   setState(() => _selectedCategory = category),
                               trailing: IconButton(
-                                icon: const Icon(Icons.delete),
+                                icon: SomSvgIcon(
+                                  SomAssets.iconDelete,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant,
+                                ),
                                 onPressed: () {
                                   _selectedCategory = category;
                                   _deleteCategory();

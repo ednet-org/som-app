@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -356,7 +357,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
               ],
             ),
             leftSplit: const EmptyState(
-              icon: Icons.apartment_outlined,
+              asset: SomAssets.emptySearchResults,
               title: 'No companies found',
               message: 'Register a company to get started',
             ),
@@ -437,7 +438,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
           ),
           rightSplit: _selected == null
               ? const EmptyState(
-                  icon: Icons.touch_app_outlined,
+                  asset: SomAssets.emptySearchResults,
                   title: 'Select a company',
                   message: 'Choose a company from the list to view details',
                 )

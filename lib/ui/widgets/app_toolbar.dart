@@ -40,8 +40,8 @@ class AppToolbar extends StatelessWidget {
         color: theme.colorScheme.surfaceContainer, // Darker surface
         borderRadius: BorderRadius.circular(SomRadius.md),
         border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.2)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, 2))],
+          color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4, offset: const Offset(0, 2))],
         // Gradient overlay for slick look
         gradient: LinearGradient(
           begin: Alignment.topLeft,

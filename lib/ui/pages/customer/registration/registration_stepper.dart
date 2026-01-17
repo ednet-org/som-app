@@ -2,6 +2,8 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/model/model.dart';
@@ -48,13 +50,13 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   List<Step> _buildSteps(RegistrationRequest request) {
     final buyerSteps = [
       Step(
-        title: _stepTitle('Role selection'),
+        title: _stepTitle('Role selection', SomAssets.wizardStepperCompany),
         isActive: _currentStep == 0,
         state: StepState.indexed,
         content: const RoleSelection(),
       ),
       Step(
-        title: _stepTitle('Company details'),
+        title: _stepTitle('Company details', SomAssets.wizardStepperCompany),
         isActive: _currentStep == 1,
         state: StepState.indexed,
         content: const CompanyDetailsStep(),
@@ -63,19 +65,19 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     final providerSteps = [
       Step(
-        title: _stepTitle('Company branches'),
+        title: _stepTitle('Company branches', SomAssets.wizardStepperVerification),
         isActive: _currentStep == 2,
         state: StepState.indexed,
         content: const ProviderBranchesStep(),
       ),
       Step(
-        title: _stepTitle('Subscription model'),
+        title: _stepTitle('Subscription model', SomAssets.interactionTierUpgrade),
         isActive: _currentStep == 3,
         state: StepState.indexed,
         content: const SubscriptionSelector(),
       ),
       Step(
-        title: _stepTitle('Payment details'),
+        title: _stepTitle('Payment details', SomAssets.wizardStepperVerification),
         isActive: _currentStep == 4,
         state: StepState.indexed,
         content: const PaymentDetailsStep(),
@@ -84,7 +86,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
 
     final commonSteps = [
       Step(
-        title: _stepTitle('Users'),
+        title: _stepTitle('Users', SomAssets.wizardStepperComplete),
         isActive: _currentStep == 5,
         state: StepState.indexed,
         content: const UsersStep(),
@@ -98,12 +100,23 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     ];
   }
 
-  Text _stepTitle(String title) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Theme.of(context).colorScheme.secondary,
+  Widget _stepTitle(String title, String iconAsset) {
+    final theme = Theme.of(context);
+    return Row(
+      children: [
+        SomSvgIcon(
+          iconAsset,
+          size: 18,
+          color: theme.colorScheme.primary,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: theme.colorScheme.secondary,
           ),
+        ),
+      ],
     );
   }
 
@@ -199,8 +212,9 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           ],
         ),
         if (request.isSuccess)
-          Icon(
-            Icons.check_circle_outlined,
+          SomSvgIcon(
+            SomAssets.offerStatusAccepted,
+            size: 24,
             color: Theme.of(context).colorScheme.primary,
           ),
         const SizedBox(height: 7),

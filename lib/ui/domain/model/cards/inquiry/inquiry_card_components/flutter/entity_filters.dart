@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import 'entity_filter.dart';
 import '../core/i_filter.dart';
@@ -89,7 +91,10 @@ class _EntityFiltersState<F, T> extends State<EntityFilters<F, T>> {
       onPressed: () {
         print('here comes menu');
       },
-      icon: const Icon(Icons.menu),
+      icon: SomSvgIcon(
+        SomAssets.iconMenu,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
     );
   }
 }

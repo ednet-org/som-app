@@ -2,6 +2,8 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/model.dart';
@@ -120,8 +122,8 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
           Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.check_circle_outline,
+          SomSvgIcon(
+            SomAssets.offerStatusAccepted,
             size: 100,
             color: Theme.of(context).colorScheme.primary,
           ),
@@ -143,6 +145,7 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
               onChanged: userAccountConfirmation.setPassword,
               label: 'Password',
               isPassword: true,
+              iconAsset: SomAssets.iconVisibilityOff,
             ),
           ),
           SizedBox(
@@ -152,6 +155,7 @@ class _AuthConfirmEmailPageState extends State<AuthConfirmEmailPage>
               label: 'Repeat password',
               hint: 'Please repeat your password',
               isPassword: true,
+              iconAsset: SomAssets.iconVisibilityOff,
             ),
           ),
           const SizedBox(height: 20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
@@ -152,7 +153,7 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
               ],
             ),
             leftSplit: const EmptyState(
-              icon: Icons.support_agent_outlined,
+              asset: SomAssets.emptySearchResults,
               title: 'No consultants found',
               message: 'Invite a consultant to get started',
             ),

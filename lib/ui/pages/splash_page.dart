@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../domain/application/application.dart';
 import '../domain/model/shared/som.dart';
@@ -62,9 +63,10 @@ class _SplashPageState extends State<SplashPage>
                               const CircularProgressIndicator(),
                             ],
                           )
-                        : Icon(
-                            Icons.check_circle_outlined,
-                            size: 100, color: Theme.of(context).colorScheme.primary,
+                        : SomSvgIcon(
+                            SomAssets.offerStatusAccepted,
+                            size: 100,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                   ),
                   const SizedBox(height: 20),

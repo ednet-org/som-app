@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
@@ -28,7 +29,7 @@ class AdsList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (ads.isEmpty) {
       return const EmptyState(
-        icon: Icons.campaign_outlined,
+        asset: SomAssets.emptyAds,
         title: 'No ads found',
         message: 'Create an ad to promote your offers',
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import '../../../utils/pdf_download.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
@@ -45,7 +46,7 @@ class OfferList extends StatelessWidget {
           ),
         if (offers.isEmpty && !isLoading)
           const EmptyState(
-            icon: Icons.inventory_2_outlined,
+            asset: SomAssets.emptySearchResults,
             title: 'No offers yet',
             message: 'Offers will appear here once providers respond',
           ),

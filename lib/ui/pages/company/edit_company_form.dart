@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/model/model.dart';
 
@@ -547,7 +548,7 @@ class CompanyFormWithSomTextInputs extends StatelessWidget {
           children: [
             SomTextInput(
               label: 'Company name',
-              icon: Icons.account_balance,
+              iconAsset: SomAssets.iconDashboard,
               hint: 'Enter legal entity name',
               value: company.name,
               onChanged: (value) => company.name = value,

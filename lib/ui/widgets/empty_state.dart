@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../theme/tokens.dart';
+import 'design_system/som_svg_icon.dart';
 
 /// Shared empty state widget for lists and panels.
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
-    required this.icon,
+    this.icon,
+    this.asset,
     required this.title,
     this.message,
     this.action,
   });
 
-  final IconData icon;
+  final IconData? icon;
+  final String? asset;
   final String title;
   final String? message;
   final Widget? action;
@@ -27,11 +30,18 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: SomIconSize.xxl,
-              color: theme.colorScheme.outline,
-            ),
+            if (asset != null)
+              SomSvgIcon(
+                asset!,
+                size: SomIconSize.xxl,
+                color: theme.colorScheme.outline,
+              )
+            else if (icon != null)
+              Icon(
+                icon,
+                size: SomIconSize.xxl,
+                color: theme.colorScheme.outline,
+              ),
             const SizedBox(height: SomSpacing.md),
             Text(
               title,

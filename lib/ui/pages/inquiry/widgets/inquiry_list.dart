@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../../theme/semantic_colors.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
+import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
 
 /// Widget for displaying a list of inquiries.
@@ -42,31 +45,10 @@ class InquiryList extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.inbox_outlined,
-            size: SomIconSize.xxl,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-          const SizedBox(height: SomSpacing.md),
-          Text(
-            'No inquiries found',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: SomSpacing.xs),
-          Text(
-            'Create a new inquiry to get started',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
-          ),
-        ],
-      ),
+    return const EmptyState(
+      asset: SomAssets.inquiryEmpty,
+      title: 'No inquiries found',
+      message: 'Create a new inquiry to get started',
     );
   }
 }
@@ -130,8 +112,8 @@ class InquiryListTile extends StatelessWidget {
               showIcon: false,
             ),
             const SizedBox(width: SomSpacing.sm),
-            Icon(
-              Icons.schedule,
+            SomSvgIcon(
+              SomAssets.iconCalendar,
               size: SomIconSize.sm,
               color: colorScheme.outline,
             ),
@@ -146,7 +128,11 @@ class InquiryListTile extends StatelessWidget {
         ),
       ),
       trailing: isSelected
-          ? Icon(Icons.chevron_right, color: colorScheme.primary)
+          ? SomSvgIcon(
+              SomAssets.iconChevronRight,
+              size: SomIconSize.md,
+              color: colorScheme.primary,
+            )
           : null,
       onTap: onTap,
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../../../domain/model/model.dart';
 import '../form_section_header.dart';
@@ -18,7 +19,7 @@ class PaymentDetailsStep extends StatelessWidget {
         20.height,
         SomTextInput(
           label: 'IBAN',
-          icon: Icons.account_balance,
+          iconAsset: SomAssets.iconDashboard,
           hint: 'Enter IBAN',
           value: request.company.providerData.bankDetails?.iban,
           onChanged: request.company.providerData.bankDetails?.setIban,
@@ -26,7 +27,7 @@ class PaymentDetailsStep extends StatelessWidget {
         ),
         SomTextInput(
           label: 'BIC',
-          icon: Icons.add_link,
+          iconAsset: SomAssets.iconInfo,
           hint: 'Enter BIC',
           value: request.company.providerData.bankDetails?.bic,
           onChanged: request.company.providerData.bankDetails?.setBic,
@@ -34,7 +35,7 @@ class PaymentDetailsStep extends StatelessWidget {
         ),
         SomTextInput(
           label: 'Account owner',
-          icon: Icons.person,
+          iconAsset: SomAssets.iconUser,
           hint: 'Enter account owner',
           value: request.company.providerData.bankDetails?.accountOwner,
           onChanged: request.company.providerData.bankDetails?.setAccountOwner,

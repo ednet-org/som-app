@@ -3,12 +3,23 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/main.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_button.dart';
+import 'package:som/ui/widgets/design_system/som_card.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../../domain/model/customer_management/registration_request.dart';
 import '../../../domain/model/customer_management/roles.dart';
 
-class RoleSelection extends StatelessWidget {
+class RoleSelection extends StatefulWidget {
   const RoleSelection({Key? key}) : super(key: key);
+
+  @override
+  State<RoleSelection> createState() => _RoleSelectionState();
+}
+
+class _RoleSelectionState extends State<RoleSelection> {
+  String? _hoveredRole;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +33,7 @@ class RoleSelection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Please select which type of company are you registering',
+              'Join SOM Network - Choose your path',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             16.height,
@@ -40,51 +51,57 @@ class RoleSelection extends StatelessWidget {
         : web(context, registrationRequest);
   }
 
-  ElevatedButton providerSelector(context, registrationRequest) {
-    return ElevatedButton(
-      onPressed: () => registrationRequest.company.switchRole(Roles.Provider),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: registrationRequest.company.isProvider
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.secondary,
-        foregroundColor: registrationRequest.company.isProvider
-            ? Theme.of(context).colorScheme.onPrimary
-            : Theme.of(context).colorScheme.onSecondary,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Text('Provider', style: Theme.of(context).textTheme.titleLarge),
-            Switch(
-                value: registrationRequest.company.isProvider,
-                onChanged: registrationRequest.company.activateProvider),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ElevatedButton buyerSelector(context, registrationRequest) {
-    return ElevatedButton(
-      onPressed: () => registrationRequest.switchRole(Roles.Buyer),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: registrationRequest.company.isBuyer
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.secondary,
-        foregroundColor: registrationRequest.company.isBuyer
-            ? Theme.of(context).colorScheme.onPrimary
-            : Theme.of(context).colorScheme.onSecondary,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Text('Buyer ', style: Theme.of(context).textTheme.titleLarge),
-            Switch(
-                value: registrationRequest.company.isBuyer,
-                onChanged: registrationRequest.company.activateBuyer),
-          ],
+  Widget _roleCard({
+    required BuildContext context,
+    required String roleKey,
+    required String title,
+    required String subtitle,
+    required String iconAsset,
+    required bool selected,
+    required VoidCallback onTap,
+    required String buttonText,
+  }) {
+    final isHovered = _hoveredRole == roleKey;
+    final theme = Theme.of(context);
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hoveredRole = roleKey),
+      onExit: (_) => setState(() => _hoveredRole = null),
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 150),
+        scale: isHovered ? 1.05 : 1.0,
+        child: SomCard(
+          padding: const EdgeInsets.all(20),
+          child: InkWell(
+            onTap: onTap,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SomSvgIcon(
+                  iconAsset,
+                  size: 120,
+                  color: theme.colorScheme.primary,
+                ),
+                Column(
+                  children: [
+                    Text(title, style: theme.textTheme.titleLarge),
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                SomButton(
+                  text: buttonText,
+                  type: selected ? SomButtonType.primary : SomButtonType.secondary,
+                  onPressed: onTap,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -96,12 +113,30 @@ class RoleSelection extends StatelessWidget {
       children: [
         SizedBox(
           width: appStore.buttonWidth,
-          child: buyerSelector(context, registrationRequest),
+          child: _roleCard(
+            context: context,
+            roleKey: 'buyer',
+            title: 'Buyer',
+            subtitle: 'Source products & services.',
+            iconAsset: SomAssets.authRoleBuyer,
+            selected: registrationRequest.company.isBuyer,
+            onTap: () => registrationRequest.switchRole(Roles.Buyer),
+            buttonText: 'Register as Buyer',
+          ),
         ),
         40.width,
         SizedBox(
           width: appStore.buttonWidth,
-          child: providerSelector(context, registrationRequest),
+          child: _roleCard(
+            context: context,
+            roleKey: 'provider',
+            title: 'Provider',
+            subtitle: 'Grow your business.',
+            iconAsset: SomAssets.authRoleProvider,
+            selected: registrationRequest.company.isProvider,
+            onTap: () => registrationRequest.company.switchRole(Roles.Provider),
+            buttonText: 'Register as Provider',
+          ),
         ),
       ],
     );
@@ -110,9 +145,27 @@ class RoleSelection extends StatelessWidget {
   mobile(context, registrationRequest) {
     return Column(
       children: [
-        buyerSelector(context, registrationRequest),
+        _roleCard(
+          context: context,
+          roleKey: 'buyer',
+          title: 'Buyer',
+          subtitle: 'Source products & services.',
+          iconAsset: SomAssets.authRoleBuyer,
+          selected: registrationRequest.company.isBuyer,
+          onTap: () => registrationRequest.switchRole(Roles.Buyer),
+          buttonText: 'Register as Buyer',
+        ),
         10.height,
-        providerSelector(context, registrationRequest),
+        _roleCard(
+          context: context,
+          roleKey: 'provider',
+          title: 'Provider',
+          subtitle: 'Grow your business.',
+          iconAsset: SomAssets.authRoleProvider,
+          selected: registrationRequest.company.isProvider,
+          onTap: () => registrationRequest.company.switchRole(Roles.Provider),
+          buttonText: 'Register as Provider',
+        ),
       ],
     );
   }

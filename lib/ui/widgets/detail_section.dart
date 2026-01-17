@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/tokens.dart';
+import 'design_system/som_svg_icon.dart';
 
 /// Shared card container for detail sections.
 class DetailSection extends StatelessWidget {
@@ -8,11 +9,13 @@ class DetailSection extends StatelessWidget {
     super.key,
     required this.title,
     this.icon,
+    this.iconAsset,
     required this.child,
   });
 
   final String title;
   final IconData? icon;
+  final String? iconAsset;
   final Widget child;
 
   @override
@@ -25,7 +28,7 @@ class DetailSection extends StatelessWidget {
         color: theme.colorScheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(SomRadius.md),
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.5),
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
         ),
       ),
       child: Column(
@@ -33,7 +36,14 @@ class DetailSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (icon != null) ...[
+              if (iconAsset != null) ...[
+                SomSvgIcon(
+                  iconAsset!,
+                  size: SomIconSize.sm,
+                  color: theme.colorScheme.outline,
+                ),
+                const SizedBox(width: SomSpacing.xs),
+              ] else if (icon != null) ...[
                 Icon(
                   icon,
                   size: SomIconSize.sm,

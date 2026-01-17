@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../routes/locations/auth/auth_forgot_password_page_location.dart';
 import 'model.dart';
@@ -41,7 +42,7 @@ class Login extends StatelessWidget {
             children: [
               SomTextInput(
                 label: 'Username',
-                icon: Icons.email_outlined,
+                iconAsset: SomAssets.iconUser,
                 hint: 'usually your email',
                 value: emailLoginStore.email,
                 onChanged: emailLoginStore.setEmail,
@@ -49,7 +50,7 @@ class Login extends StatelessWidget {
               ),
               SomTextInput(
                 label: 'Password',
-                icon: Icons.password_outlined,
+                iconAsset: SomAssets.iconVisibilityOff,
                 hint: 'usually your cat name',
                 value: emailLoginStore.password,
                 onChanged: emailLoginStore.setPassword,

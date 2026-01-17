@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/empty_state.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -137,8 +141,10 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
         if (snapshot.hasError) {
           return AppBody(
             contextMenu: const Text('Error'),
-            leftSplit: Center(
-              child: Text('Failed to load stats: ${snapshot.error}'),
+            leftSplit: EmptyState(
+              asset: SomAssets.illustrationStateNoConnection,
+              title: 'Failed to load stats',
+              message: '${snapshot.error}',
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -268,26 +274,55 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
     final data = values.entries
         .map((entry) => _ChartPoint(entry.key, entry.value))
         .toList();
+    final theme = Theme.of(context);
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              series: <CartesianSeries<_ChartPoint, String>>[
-                ColumnSeries<_ChartPoint, String>(
-                  dataSource: data,
-                  xValueMapper: (_ChartPoint point, _) => point.label,
-                  yValueMapper: (_ChartPoint point, _) => point.value,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.06,
+              child: SvgPicture.asset(
+                SomAssets.bgPatternFinance,
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  theme.colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SomSvgIcon(
+                      SomAssets.chartBar,
+                      size: 16,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(title,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  series: <CartesianSeries<_ChartPoint, String>>[
+                    ColumnSeries<_ChartPoint, String>(
+                      dataSource: data,
+                      xValueMapper: (_ChartPoint point, _) => point.label,
+                      yValueMapper: (_ChartPoint point, _) => point.value,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -296,27 +331,55 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
     final data = values.entries
         .map((entry) => _ChartPoint(entry.key, entry.value))
         .toList();
+    final theme = Theme.of(context);
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Consultant stats',
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              series: <CartesianSeries<_ChartPoint, String>>[
-                ColumnSeries<_ChartPoint, String>(
-                  dataSource: data,
-                  xValueMapper: (_ChartPoint point, _) => point.label,
-                  yValueMapper: (_ChartPoint point, _) => point.value,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.06,
+              child: SvgPicture.asset(
+                SomAssets.bgPatternNetwork,
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  theme.colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SomSvgIcon(
+                      SomAssets.chartPie,
+                      size: 16,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text('Consultant stats',
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  series: <CartesianSeries<_ChartPoint, String>>[
+                    ColumnSeries<_ChartPoint, String>(
+                      dataSource: data,
+                      xValueMapper: (_ChartPoint point, _) => point.label,
+                      yValueMapper: (_ChartPoint point, _) => point.value,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

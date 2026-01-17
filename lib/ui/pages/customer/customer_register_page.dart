@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/domain/model/funny_logo.dart';
 import 'package:som/ui/pages/customer/registration/registration_stepper.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/model/layout/main_body.dart';
 
@@ -19,9 +21,16 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
     return Scaffold(
       body: MainBody(
         child: Column(
-          children: const [
-            FunnyLogo(),
-            RegistrationStepper(),
+          children: [
+            const SizedBox(height: 16),
+            SvgPicture.asset(
+              SomAssets.illustrationHeroLanding,
+              width: 420,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 16),
+            const FunnyLogo(),
+            const RegistrationStepper(),
           ],
         ),
       ),

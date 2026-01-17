@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
@@ -372,7 +374,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           if (_providers.isEmpty)
             const Expanded(
               child: EmptyState(
-                icon: Icons.apartment_outlined,
+                asset: SomAssets.emptySearchResults,
                 title: 'No providers found',
                 message: 'Try adjusting filters or search term',
               ),
@@ -414,7 +416,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       ),
       rightSplit: _selected == null
           ? const EmptyState(
-              icon: Icons.touch_app_outlined,
+              asset: SomAssets.emptySearchResults,
               title: 'Select a provider',
               message: 'Choose a provider from the list to view details',
             )
@@ -429,10 +431,16 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
         controller: _searchController,
         decoration: InputDecoration(
           hintText: 'Search by company name...',
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon: SomSvgIcon(
+            SomAssets.iconSearch,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
           suffixIcon: _searchController.text.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear),
+                  icon: SomSvgIcon(
+                    SomAssets.iconClearCircle,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   onPressed: () {
                     _searchController.clear();
                     _onSearchSubmitted('');
@@ -510,7 +518,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               children: [
                 ElevatedButton.icon(
                   onPressed: () => _approveProvider(_selected!),
-                  icon: const Icon(Icons.check),
+                  icon: SomSvgIcon(
+                    SomAssets.offerStatusAccepted,
+                    size: SomIconSize.sm,
+                    color: Colors.white,
+                  ),
                   label: const Text('Approve'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
@@ -520,7 +532,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 const SizedBox(width: 12),
                 OutlinedButton.icon(
                   onPressed: () => _showDeclineDialog(_selected!),
-                  icon: const Icon(Icons.close),
+                  icon: SomSvgIcon(
+                    SomAssets.offerStatusRejected,
+                    size: SomIconSize.sm,
+                    color: Colors.red,
+                  ),
                   label: const Text('Decline'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.red,

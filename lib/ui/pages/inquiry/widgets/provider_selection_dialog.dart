@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
 import '../../../widgets/design_system/som_button.dart';
@@ -266,7 +267,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
     return SomTextInput(
       controller: _searchController,
       hint: 'Search by company name...',
-      icon: Icons.search,
+      iconAsset: SomAssets.iconSearch,
       onFieldSubmitted: _onSearchSubmitted,
       onChanged: (value) {
         setState(() {}); // Update UI for clear button visibility

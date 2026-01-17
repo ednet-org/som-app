@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../../../domain/model/model.dart';
 import '../form_section_header.dart';
@@ -25,7 +26,7 @@ class CompanyDetailsStep extends StatelessWidget {
         const FormSectionHeader(label: 'General info'),
         SomTextInput(
           label: 'Company name',
-          icon: Icons.account_balance,
+          iconAsset: SomAssets.iconDashboard,
           hint: 'Enter legal entity name',
           value: request.company.name,
           onChanged: request.company.setName,
@@ -33,7 +34,7 @@ class CompanyDetailsStep extends StatelessWidget {
         ),
         SomTextInput(
           label: 'UID number',
-          icon: Icons.add_link,
+          iconAsset: SomAssets.iconInfo,
           hint: 'Enter UID number',
           value: request.company.uidNr,
           onChanged: request.company.setUidNr,
@@ -41,7 +42,7 @@ class CompanyDetailsStep extends StatelessWidget {
         ),
         SomTextInput(
           label: 'Registration number',
-          icon: Icons.add_link,
+          iconAsset: SomAssets.iconInfo,
           hint: 'describe what is registration number, where to find it?',
           value: request.company.registrationNumber,
           onChanged: request.company.setRegistrationNumber,
@@ -59,14 +60,14 @@ class CompanyDetailsStep extends StatelessWidget {
         const FormSectionHeader(label: 'Contact details'),
         SomTextInput(
           label: 'Phone number',
-          icon: Icons.phone,
+          iconAsset: SomAssets.iconNotification,
           hint: 'Enter phone number',
           value: request.company.phoneNumber,
           onChanged: request.company.setPhoneNumber,
         ),
         SomTextInput(
           label: 'Web',
-          icon: Icons.web,
+          iconAsset: SomAssets.iconSearch,
           hint: 'Enter company web address',
           value: request.company.url,
           onChanged: request.company.setUrl,

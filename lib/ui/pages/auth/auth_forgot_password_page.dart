@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/model/model.dart';
 
@@ -52,7 +54,7 @@ class AuthForgotPasswordPage extends StatelessWidget {
                               label: 'Email',
                               value: authForgotPasswordState.email,
                               required: true,
-                              icon: Icons.email_outlined,
+                              iconAsset: SomAssets.iconUser,
                               onChanged: (value) =>
                                   authForgotPasswordState.setEmail(value),
                             ),
@@ -93,10 +95,10 @@ class AuthForgotPasswordPage extends StatelessWidget {
                                             .onErrorContainer),
                               ),
                               const SizedBox(width: 10),
-                              const Icon(
-                                Icons.check_circle_outline,
-                                // color: Theme.of(context).colorScheme.error,
+                              SomSvgIcon(
+                                SomAssets.offerStatusAccepted,
                                 size: 50,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../../domain/model/shared/som.dart';
 
@@ -104,9 +106,10 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.min,
       children: [
         _tags.isNotEmpty
-            ? const Icon(
-                Icons.local_offer_outlined,
+            ? SomSvgIcon(
+                SomAssets.iconOffers,
                 size: 25.0,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               )
             : Container(),
         _tagsWidget(),
@@ -149,7 +152,11 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
             onPressed: () => _addTags(
               TagModel(id: _searchText, title: _searchText),
             ),
-            icon: const Icon(Icons.add),
+            icon: SomSvgIcon(
+              SomAssets.iconChevronRight,
+              size: 16,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             label: Text('Add "$_searchText"'),
           ),
         ),
@@ -188,9 +195,9 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                   top: 16.0,
                   child: CircleAvatar(
                     radius: 10.0,
-                    child: Icon(
-                      Icons.clear,
-                      size: 15.0,
+                    child: SomSvgIcon(
+                      SomAssets.iconClose,
+                      size: 14,
                     ),
                   ),
                 )
@@ -216,8 +223,10 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
         ),
         _searchText.isNotEmpty
             ? InkWell(
-                child: const Icon(
-                  Icons.clear,
+                child: SomSvgIcon(
+                  SomAssets.iconClearCircle,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 onTap: () => _searchTextEditingController.clear(),
               )

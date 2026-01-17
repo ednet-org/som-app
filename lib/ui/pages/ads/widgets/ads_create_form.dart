@@ -1,6 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 /// Form widget for creating a new ad.
 class AdsCreateForm extends StatefulWidget {
@@ -188,9 +190,18 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
   Widget _buildSubmitRow() {
     return Row(
       children: [
-        TextButton(
+        TextButton.icon(
           onPressed: _pickImage,
-          child: Text(_image == null ? 'Upload image' : 'Image: ${_image!.name}'),
+          icon: SomSvgIcon(
+            _image == null
+                ? SomAssets.interactionUploadDragDrop
+                : SomAssets.interactionUploadSuccess,
+            size: 18,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          label: Text(
+            _image == null ? 'Upload image' : 'Image: ${_image!.name}',
+          ),
         ),
         const SizedBox(width: 12),
         ElevatedButton(

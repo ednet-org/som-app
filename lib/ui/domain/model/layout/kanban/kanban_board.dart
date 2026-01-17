@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 class AdaptiveLayout extends StatefulWidget {
   final Widget? header;
@@ -103,7 +105,10 @@ class KanbanBoard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              icon: Icon(Icons.add),
+              icon: SomSvgIcon(
+                SomAssets.iconChevronRight,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               onPressed: () => _AdaptiveLayoutState()._addSplit(),
             ),
           ],
@@ -117,7 +122,10 @@ class KanbanBoard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
-              icon: Icon(Icons.add),
+              icon: SomSvgIcon(
+                SomAssets.iconChevronRight,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               onPressed: () => _AdaptiveLayoutState()._addSplit(),
             ),
           ],

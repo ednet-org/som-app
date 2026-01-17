@@ -82,10 +82,10 @@ extension AppBarIconsExtension on AppBarIcons {
   String get value {
     switch (this) {
       case AppBarIcons.company:
-        return SomAssets.iconDashboard; // Mapping to Dashboard for now
+        return SomAssets.iconSettings;
 
       case AppBarIcons.ads:
-        return SomAssets.iconInfo; // Placeholder
+        return SomAssets.iconOffers;
 
       case AppBarIcons.inquiry:
         return SomAssets.iconInquiries;

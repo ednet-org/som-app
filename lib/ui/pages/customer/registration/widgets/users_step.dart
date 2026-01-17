@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../../../domain/model/model.dart';
 
@@ -64,13 +65,13 @@ class _AdminUserSection extends StatelessWidget {
             children: [
               SizedBox(
                 width: 260,
-                child: SomTextInput(
-                  label: 'E-mail',
-                  icon: Icons.email,
-                  hint: 'Enter email of SOM administrator account',
-                  value: request.company.admin.email,
-                  onChanged: request.company.admin.setEmail,
-                ),
+              child: SomTextInput(
+                label: 'E-mail',
+                iconAsset: SomAssets.iconUser,
+                hint: 'Enter email of SOM administrator account',
+                value: request.company.admin.email,
+                onChanged: request.company.admin.setEmail,
+              ),
               ),
               30.width,
               request.company.canCreateMoreUsers
@@ -166,7 +167,7 @@ class _AdditionalUserItem extends StatelessWidget {
               width: 350,
               child: SomTextInput(
                 label: 'User ${index + 1}',
-                icon: Icons.email,
+                iconAsset: SomAssets.iconUser,
                 hint: 'Enter employee email',
                 value: user.email,
                 onChanged: user.setEmail,

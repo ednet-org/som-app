@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import '../../../utils/pdf_download.dart';
 
 import '../../../theme/semantic_colors.dart';
@@ -111,8 +113,8 @@ class InquiryDetail extends StatelessWidget {
         StatusBadge.inquiry(status: inquiry.status ?? 'unknown'),
         const SizedBox(width: SomSpacing.md),
         if (inquiry.deadline != null) ...[
-          Icon(
-            Icons.event,
+          SomSvgIcon(
+            SomAssets.iconCalendar,
             size: SomIconSize.sm,
             color: Theme.of(context).colorScheme.outline,
           ),
@@ -129,7 +131,7 @@ class InquiryDetail extends StatelessWidget {
   Widget _buildDetailsSection(BuildContext context) {
     return DetailSection(
       title: 'Details',
-      icon: Icons.info_outline,
+      iconAsset: SomAssets.iconInfo,
       child: Column(
         children: [
           DetailRow(
@@ -171,7 +173,7 @@ class InquiryDetail extends StatelessWidget {
   Widget _buildDescriptionSection(BuildContext context) {
     return DetailSection(
       title: 'Description',
-      icon: Icons.description_outlined,
+      iconAsset: SomAssets.iconEdit,
       child: Text(
         inquiry.description ?? '',
         style: Theme.of(context).textTheme.bodyMedium,
@@ -182,13 +184,13 @@ class InquiryDetail extends StatelessWidget {
   Widget _buildAttachmentSection(BuildContext context) {
     return DetailSection(
       title: 'Attachment',
-      icon: Icons.attach_file,
+      iconAsset: SomAssets.iconPdf,
       child: Row(
         children: [
-          Icon(
-            Icons.picture_as_pdf,
-            color: SomSemanticColors.error,
+          SomSvgIcon(
+            SomAssets.iconPdf,
             size: SomIconSize.lg,
+            color: SomSemanticColors.error,
           ),
           const SizedBox(width: SomSpacing.sm),
           Expanded(
@@ -204,14 +206,14 @@ class InquiryDetail extends StatelessWidget {
                       context,
                       inquiryId: inquiry.id!,
                     ),
-            iconData: Icons.download,
+            icon: SomAssets.iconChevronDown,
             text: 'Download',
             type: SomButtonType.ghost,
           ),
           if (isBuyer || isConsultant)
             SomButton(
               onPressed: onRemoveAttachment,
-              iconData: Icons.delete_outline,
+              icon: SomAssets.iconDelete,
               text: 'Remove',
               type: SomButtonType.ghost,
             ),
@@ -241,7 +243,7 @@ class InquiryDetail extends StatelessWidget {
             if (isProvider) ...[
               SomButton(
                 onPressed: onUploadOffer,
-                iconData: Icons.upload,
+                icon: SomAssets.iconChevronUp,
                 text: 'Upload offer',
                 type: SomButtonType.primary,
               ),
@@ -254,7 +256,7 @@ class InquiryDetail extends StatelessWidget {
             if (isConsultant)
               SomButton(
                 onPressed: onAssignProviders,
-                iconData: Icons.person_add,
+                icon: SomAssets.iconUser,
                 text: 'Assign providers',
                 type: SomButtonType.primary,
               ),
@@ -262,7 +264,7 @@ class InquiryDetail extends StatelessWidget {
                 (inquiry.status ?? '').toLowerCase() != 'closed')
               SomButton(
                 onPressed: onCloseInquiry,
-                iconData: Icons.check_circle_outline,
+                icon: SomAssets.offerStatusAccepted,
                 text: 'Close inquiry',
                 type: SomButtonType.secondary,
               ),
@@ -326,7 +328,7 @@ class NoInquirySelected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const EmptyState(
-      icon: Icons.touch_app_outlined,
+      asset: SomAssets.inquiryEmpty,
       title: 'Select an inquiry',
       message: 'Choose an inquiry from the list to view details',
     );

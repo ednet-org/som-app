@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/domain/model/funny_logo.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 
 import '../../domain/model/customer_management/registration_request.dart';
@@ -22,7 +24,17 @@ class CustomerRegisterSuccessPage extends StatelessWidget {
               const SizedBox(height: 50),
               Container(
                 alignment: Alignment.center,
-                child: const FunnyLogo(),
+                child: Column(
+                  children: [
+                    SvgPicture.asset(
+                      SomAssets.illustrationStateSuccess,
+                      width: 320,
+                      fit: BoxFit.contain,
+                    ),
+                    const SizedBox(height: 12),
+                    const FunnyLogo(),
+                  ],
+                ),
               ),
               Text('Smart offer management'.toUpperCase(),
                       style: Theme.of(context).textTheme.displayMedium)

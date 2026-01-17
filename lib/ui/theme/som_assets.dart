@@ -59,6 +59,13 @@ class SomAssets {
   static const String inquiryStatusLost = '$_base/inquiry/status_lost.svg';
   static const String inquiryEmpty = '$_base/inquiry/empty_inquiries.svg';
 
+  // Empty states
+  static const String emptyAds = '$_base/empty_states/empty_ads.svg';
+  static const String emptyNotifications =
+      '$_base/empty_states/empty_notifications.svg';
+  static const String emptySearchResults =
+      '$_base/empty_states/empty_search_results.svg';
+
   // Offers
   static const String offerStatusAccepted = '$_base/offers/status_accepted.svg';
   static const String offerStatusRejected = '$_base/offers/status_rejected.svg';
