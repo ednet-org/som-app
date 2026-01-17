@@ -47,9 +47,11 @@ class CompanyDetailsStep extends StatelessWidget {
           onChanged: request.company.setRegistrationNumber,
           required: true,
         ),
-        SomDropDown(
+        SomDropDown<String>(
           value: request.company.companySize,
-          onChanged: request.company.setCompanySize,
+          onChanged: (val) {
+            if (val != null) request.company.setCompanySize(val);
+          },
           hint: 'Select company size',
           label: 'Number of employees',
           items: _companySizeOptions,
@@ -70,9 +72,11 @@ class CompanyDetailsStep extends StatelessWidget {
           onChanged: request.company.setUrl,
         ),
         const FormSectionHeader(label: 'Company address'),
-        SomDropDown(
+        SomDropDown<String>(
           value: request.company.address.country,
-          onChanged: request.company.address.setCountry,
+          onChanged: (val) {
+            if (val != null) request.company.address.setCountry(val);
+          },
           hint: 'Select country',
           label: 'Country',
           items: countries,

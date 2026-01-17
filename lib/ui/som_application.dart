@@ -9,6 +9,8 @@ import 'domain/model/model.dart';
 import 'routes/authenticated_pages_delegate.dart';
 import 'routes/beamer_provided_key.dart';
 import 'routes/locations/auth/auth_login_page_location.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import 'utils/ui_logger.dart';
 
 class SomApplication extends StatelessWidget {
@@ -187,6 +189,28 @@ class SomApplication extends StatelessWidget {
             ),
           ],
           automaticallyImplyLeading: false,
+          flexibleSpace: Stack(
+            children: [
+              Container(color: Theme.of(context).colorScheme.surface),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.1,
+                  child: SvgPicture.asset(
+                    SomAssets.patternSubtleMesh,
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         body: Beamer(
           key: beamer,
@@ -381,7 +405,9 @@ class SomApplication extends StatelessWidget {
       UILogger.silentError('SomApplication._logout', error, stackTrace);
     }
     appStore.logout();
-    context.beamTo(AuthLoginPageLocation());
+    if (context.mounted) {
+      context.beamTo(AuthLoginPageLocation());
+    }
   }
 
   Future<void> _switchRole(BuildContext context, String role) async {

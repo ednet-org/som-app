@@ -5,6 +5,7 @@ import '../../../utils/pdf_download.dart';
 import '../../../theme/semantic_colors.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
+import '../../../widgets/design_system/som_button.dart';
 import '../../../widgets/detail_section.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
@@ -196,28 +197,23 @@ class InquiryDetail extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          TextButton.icon(
+          SomButton(
             onPressed: inquiry.id == null
                 ? null
                 : () => openInquiryPdf(
                       context,
                       inquiryId: inquiry.id!,
                     ),
-            icon: const Icon(Icons.download, size: SomIconSize.sm),
-            label: const Text('Download'),
+            iconData: Icons.download,
+            text: 'Download',
+            type: SomButtonType.ghost,
           ),
           if (isBuyer || isConsultant)
-            TextButton.icon(
+            SomButton(
               onPressed: onRemoveAttachment,
-              icon: Icon(
-                Icons.delete_outline,
-                size: SomIconSize.sm,
-                color: SomSemanticColors.error,
-              ),
-              label: Text(
-                'Remove',
-                style: TextStyle(color: SomSemanticColors.error),
-              ),
+              iconData: Icons.delete_outline,
+              text: 'Remove',
+              type: SomButtonType.ghost,
             ),
         ],
       ),
@@ -243,29 +239,32 @@ class InquiryDetail extends StatelessWidget {
           runSpacing: SomSpacing.sm,
           children: [
             if (isProvider) ...[
-              FilledButton.icon(
+              SomButton(
                 onPressed: onUploadOffer,
-                icon: const Icon(Icons.upload, size: SomIconSize.sm),
-                label: const Text('Upload offer'),
+                iconData: Icons.upload,
+                text: 'Upload offer',
+                type: SomButtonType.primary,
               ),
-              OutlinedButton(
+              SomButton(
                 onPressed: onIgnoreInquiry,
-                child: const Text("I don't want to make an offer"),
+                text: "I don't want to make an offer",
+                type: SomButtonType.secondary,
               ),
             ],
             if (isConsultant)
-              FilledButton.tonalIcon(
+              SomButton(
                 onPressed: onAssignProviders,
-                icon: const Icon(Icons.person_add, size: SomIconSize.sm),
-                label: const Text('Assign providers'),
+                iconData: Icons.person_add,
+                text: 'Assign providers',
+                type: SomButtonType.primary,
               ),
             if ((isBuyer || isConsultant) &&
                 (inquiry.status ?? '').toLowerCase() != 'closed')
-              OutlinedButton.icon(
+              SomButton(
                 onPressed: onCloseInquiry,
-                icon: const Icon(Icons.check_circle_outline,
-                    size: SomIconSize.sm),
-                label: const Text('Close inquiry'),
+                iconData: Icons.check_circle_outline,
+                text: 'Close inquiry',
+                type: SomButtonType.secondary,
               ),
           ],
         ),

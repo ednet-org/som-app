@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../domain/model/inquiry_management/inquiry.dart';
 import '../../../../../../../domain/model/core/entity.dart';
+import 'package:som/ui/widgets/design_system/som_card.dart';
 import 'inquiry/description.dart';
 import 'inquiry/entity_title.dart';
 import 'inquiry/inquiry_card_divider.dart';
@@ -15,14 +16,8 @@ class EntityCard<T extends Entity> extends StatelessWidget {
   Widget build(BuildContext context) {
     final summary = entity.getSummaryAttributes();
     return Center(
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-        ),
+      child: SomCard(
+        // padding: const EdgeInsets.all(20.0), // SomCard default is 24, typically fine or we override
         child: Container(
             constraints: const BoxConstraints(
               maxWidth: 450, // layout.constraints.containerLayout.maxWidth,

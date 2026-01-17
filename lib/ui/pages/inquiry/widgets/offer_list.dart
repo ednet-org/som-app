@@ -3,6 +3,8 @@ import 'package:openapi/openapi.dart';
 import '../../../utils/pdf_download.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
+import '../../../widgets/design_system/som_button.dart';
+import '../../../widgets/design_system/som_card.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
 
@@ -75,8 +77,8 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: SomSpacing.sm),
+    return SomCard(
+      padding: EdgeInsets.zero,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(
           horizontal: SomSpacing.md,
@@ -95,25 +97,27 @@ class OfferCard extends StatelessWidget {
         ),
         trailing: Wrap(
           spacing: 8,
+          runSpacing: 8,
           children: [
             if (offer.pdfPath != null)
-              TextButton(
+              SomButton(
                 onPressed: offer.id == null
                     ? null
                     : () => openOfferPdf(
                           context,
                           offerId: offer.id!,
                         ),
-                child: const Text('PDF'),
+                text: 'PDF',
+                type: SomButtonType.ghost,
               ),
             if (isBuyer && offer.status?.toLowerCase() == 'pending') ...[
-              TextButton(
+              SomButton(
                 onPressed: onAccept,
-                child: const Text('Accept'),
+                text: 'Accept', type: SomButtonType.primary,
               ),
-              TextButton(
+              SomButton(
                 onPressed: onReject,
-                child: const Text('Reject'),
+                text: 'Reject', type: SomButtonType.secondary,
               ),
             ],
           ],

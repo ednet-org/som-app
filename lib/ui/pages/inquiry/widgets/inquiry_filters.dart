@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import '../../../domain/model/forms/som_drop_down.dart';
+import '../../../domain/model/forms/som_text_input.dart';
+import '../../../widgets/design_system/som_button.dart';
 
 /// Widget for filtering inquiries by various criteria.
 ///
@@ -81,58 +84,62 @@ class InquiryFilters extends StatelessWidget {
             spacing: 12,
             runSpacing: 12,
             children: [
-              DropdownButton<String>(
-                hint: const Text('Status'),
-                value: statusFilter,
-                items: _statusOptions
-                    .map((status) => DropdownMenuItem(
-                          value: status,
-                          child: Text(status),
-                        ))
-                    .toList(),
-                onChanged: onStatusChanged,
+              SizedBox(
+                width: 150,
+                child: SomDropDown<String>(
+                  hint: 'Status',
+                  value: statusFilter,
+                  items: _statusOptions,
+                  onChanged: onStatusChanged,
+                ),
               ),
-              DropdownButton<String>(
-                hint: const Text('Branch'),
-                value: branchIdFilter,
-                items: branches
-                    .map((branch) => DropdownMenuItem(
-                          value: branch.id,
-                          child: Text(branch.name ?? branch.id ?? '-'),
-                        ))
-                    .toList(),
-                onChanged: onBranchIdChanged,
+              SizedBox(
+                width: 200,
+                child: SomDropDown<String>(
+                  hint: 'Branch',
+                  value: branchIdFilter,
+                  items: branches.map((b) => b.id!).toList(),
+                  itemAsString: (id) => branches.firstWhere((b) => b.id == id).name ?? id,
+                  onChanged: onBranchIdChanged,
+                ),
               ),
               SizedBox(
                 width: 160,
-                child: TextField(
-                  decoration: const InputDecoration(labelText: 'Branch (text)'),
+                child: SomTextInput(label: 'Branch (text)',
                   onChanged: (value) => onBranchNameChanged(value.trim()),
                 ),
               ),
-              DropdownButton<String>(
-                hint: const Text('Provider type'),
-                value: providerTypeFilter,
-                items: const [
-                  DropdownMenuItem(value: 'haendler', child: Text('Händler')),
-                  DropdownMenuItem(value: 'hersteller', child: Text('Hersteller')),
-                  DropdownMenuItem(value: 'dienstleister', child: Text('Dienstleister')),
-                  DropdownMenuItem(value: 'grosshaendler', child: Text('Großhändler')),
-                ],
-                onChanged: onProviderTypeChanged,
+              SizedBox(
+                width: 180,
+                child: SomDropDown<String>(
+                  hint: 'Provider type',
+                  value: providerTypeFilter,
+                  items: const ['haendler', 'hersteller', 'dienstleister', 'grosshaendler'],
+                  itemAsString: (String s) {
+                    switch (s) {
+                      case 'haendler':
+                        return 'Händler';
+                      case 'hersteller':
+                        return 'Hersteller';
+                      case 'dienstleister':
+                        return 'Dienstleister';
+                      case 'grosshaendler':
+                        return 'Großhändler';
+                      default:
+                        return s;
+                    }
+                  },
+                  onChanged: onProviderTypeChanged,
+                ),
               ),
-              DropdownButton<String>(
-                hint: const Text('Provider size'),
-                value: providerSizeFilter,
-                items: const [
-                  DropdownMenuItem(value: '0-10', child: Text('0-10')),
-                  DropdownMenuItem(value: '11-50', child: Text('11-50')),
-                  DropdownMenuItem(value: '51-100', child: Text('51-100')),
-                  DropdownMenuItem(value: '101-250', child: Text('101-250')),
-                  DropdownMenuItem(value: '251-500', child: Text('251-500')),
-                  DropdownMenuItem(value: '500+', child: Text('500+')),
-                ],
-                onChanged: onProviderSizeChanged,
+              SizedBox(
+                width: 150,
+                child: SomDropDown<String>(
+                  hint: 'Provider size',
+                  value: providerSizeFilter,
+                  items: const ['0-10', '11-50', '51-100', '101-250', '251-500', '500+'],
+                  onChanged: onProviderSizeChanged,
+                ),
               ),
               _DateFilterButton(
                 label: 'Created from',
@@ -155,24 +162,23 @@ class InquiryFilters extends StatelessWidget {
                 onSelected: onDeadlineToChanged,
               ),
               if (isAdmin)
-                DropdownButton<String>(
-                  hint: const Text('Editor'),
-                  value: editorFilter,
-                  items: companyUsers
-                      .map((user) => DropdownMenuItem(
-                            value: user.id,
-                            child: Text(user.email ?? user.id ?? '-'),
-                          ))
-                      .toList(),
-                  onChanged: onEditorChanged,
+                SizedBox(
+                  width: 200,
+                  child: SomDropDown<String>(
+                    hint: 'Editor',
+                    value: editorFilter,
+                    items: companyUsers.map((u) => u.id!).toList(),
+                    itemAsString: (id) => companyUsers.firstWhere((u) => u.id == id).email ?? id,
+                    onChanged: onEditorChanged,
+                  ),
                 ),
-              TextButton(
+              SomButton(
                 onPressed: onClear,
-                child: const Text('Clear'),
+                text: 'Clear', type: SomButtonType.ghost,
               ),
-              ElevatedButton(
+              SomButton(
                 onPressed: onApply,
-                child: const Text('Apply'),
+                text: 'Apply', type: SomButtonType.primary,
               ),
             ],
           ),
@@ -195,7 +201,7 @@ class _DateFilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return SomButton(
       onPressed: () async {
         final picked = await showDatePicker(
           context: context,
@@ -207,9 +213,11 @@ class _DateFilterButton extends StatelessWidget {
           onSelected(picked);
         }
       },
-      child: Text(value == null
+      text: value == null
           ? label
-          : '$label: ${value!.toIso8601String().split('T').first}'),
+          : '$label: ${value!.toIso8601String().split('T').first}',
+      type: SomButtonType.secondary,
+      iconData: Icons.calendar_today,
     );
   }
 }

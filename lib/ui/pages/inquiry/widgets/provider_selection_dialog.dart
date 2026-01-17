@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import '../../../domain/model/forms/som_drop_down.dart';
+import '../../../domain/model/forms/som_text_input.dart';
+import '../../../widgets/design_system/som_button.dart';
 
 /// Result of a paginated provider search.
 class ProviderSearchResult {
@@ -242,41 +245,29 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        SomButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          text: 'Cancel', type: SomButtonType.ghost,
         ),
-        ElevatedButton(
+        SomButton(
           onPressed: _selectedIds.isEmpty || _overLimit
               ? null
               : () {
                   Navigator.of(context).pop(_selectedProviders.values.toList());
                 },
-          child: Text('Assign (${_selectedIds.length})'),
+          text: 'Assign (${_selectedIds.length})',
+          type: SomButtonType.primary,
         ),
       ],
     );
   }
 
   Widget _buildSearchBar() {
-    return TextField(
+    return SomTextInput(
       controller: _searchController,
-      decoration: InputDecoration(
-        hintText: 'Search by company name...',
-        prefixIcon: const Icon(Icons.search),
-        suffixIcon: _searchController.text.isNotEmpty
-            ? IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  _searchController.clear();
-                  _onSearchSubmitted('');
-                },
-              )
-            : null,
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      ),
-      onSubmitted: _onSearchSubmitted,
+      hint: 'Search by company name...',
+      icon: Icons.search,
+      onFieldSubmitted: _onSearchSubmitted,
       onChanged: (value) {
         setState(() {}); // Update UI for clear button visibility
       },
@@ -288,73 +279,73 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          DropdownButton<String>(
-            hint: const Text('Branch'),
-            value: _branchId,
-            items: widget.branches
-                .map((branch) => DropdownMenuItem(
-                      value: branch.id,
-                      child: Text(branch.name ?? branch.id ?? '-'),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() => _branchId = value);
-              _loadInitialProviders();
-            },
+          SizedBox(
+            width: 200,
+            child: SomDropDown<String>(
+              hint: 'Branch',
+              value: _branchId,
+              items: widget.branches.map((b) => b.id!).toList(),
+              itemAsString: (id) => widget.branches.firstWhere((b) => b.id == id).name ?? id,
+              onChanged: (value) {
+                setState(() => _branchId = value);
+                _loadInitialProviders();
+              },
+            ),
           ),
           const SizedBox(width: 8),
-          DropdownButton<String>(
-            hint: const Text('Provider type'),
-            value: _providerType,
-            items: const [
-              DropdownMenuItem(value: 'haendler', child: Text('Händler')),
-              DropdownMenuItem(value: 'hersteller', child: Text('Hersteller')),
-              DropdownMenuItem(
-                  value: 'dienstleister', child: Text('Dienstleister')),
-              DropdownMenuItem(
-                  value: 'grosshaendler', child: Text('Großhändler')),
-            ],
-            onChanged: (value) {
-              setState(() => _providerType = value);
-              _loadInitialProviders();
-            },
+          SizedBox(
+            width: 150,
+            child: SomDropDown<String>(
+              hint: 'Provider type',
+              value: _providerType,
+              items: const ['haendler', 'hersteller', 'dienstleister', 'grosshaendler'],
+              itemAsString: (String s) {
+                switch (s) {
+                  case 'haendler':
+                    return 'Händler';
+                  case 'hersteller':
+                    return 'Hersteller';
+                  case 'dienstleister':
+                    return 'Dienstleister';
+                  case 'grosshaendler':
+                    return 'Großhändler';
+                  default:
+                    return s;
+                }
+              },
+              onChanged: (value) {
+                setState(() => _providerType = value);
+                _loadInitialProviders();
+              },
+            ),
           ),
           const SizedBox(width: 8),
-          DropdownButton<String>(
-            hint: const Text('Company size'),
-            value: _companySize,
-            items: const [
-              DropdownMenuItem(value: '0-10', child: Text('0-10')),
-              DropdownMenuItem(value: '11-50', child: Text('11-50')),
-              DropdownMenuItem(value: '51-100', child: Text('51-100')),
-              DropdownMenuItem(value: '101-250', child: Text('101-250')),
-              DropdownMenuItem(value: '251-500', child: Text('251-500')),
-              DropdownMenuItem(value: '500+', child: Text('500+')),
-            ],
-            onChanged: (value) {
-              setState(() => _companySize = value);
-              _loadInitialProviders();
-            },
+          SizedBox(
+            width: 120,
+            child: SomDropDown<String>(
+              hint: 'Company size',
+              value: _companySize,
+              items: const ['0-10', '11-50', '51-100', '101-250', '251-500', '500+'],
+              onChanged: (value) {
+                setState(() => _companySize = value);
+                _loadInitialProviders();
+              },
+            ),
           ),
           const SizedBox(width: 8),
           SizedBox(
             width: 100,
-            child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'ZIP prefix',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              ),
+            child: SomTextInput(
+              label: 'ZIP prefix',
               onChanged: (value) {
                 setState(
                     () => _zipPrefix = value.trim().isEmpty ? null : value.trim());
               },
-              onSubmitted: (_) => _loadInitialProviders(),
+              onFieldSubmitted: (_) => _loadInitialProviders(),
             ),
           ),
           const SizedBox(width: 8),
-          TextButton(
+          SomButton(
             onPressed: () {
               setState(() {
                 _branchId = null;
@@ -366,7 +357,8 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
               });
               _loadInitialProviders();
             },
-            child: const Text('Clear'),
+            text: 'Clear',
+            type: SomButtonType.ghost,
           ),
         ],
       ),
@@ -385,9 +377,9 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
           children: [
             Text('Failed to load providers: $_error'),
             const SizedBox(height: 16),
-            ElevatedButton(
+            SomButton(
               onPressed: _loadInitialProviders,
-              child: const Text('Retry'),
+              text: 'Retry', type: SomButtonType.primary,
             ),
           ],
         ),

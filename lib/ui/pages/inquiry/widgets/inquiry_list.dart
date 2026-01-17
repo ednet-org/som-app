@@ -104,9 +104,9 @@ class InquiryListTile extends StatelessWidget {
         vertical: SomSpacing.xs,
       ),
       selected: isSelected,
-      selectedTileColor: colorScheme.primaryContainer.withOpacity(0.3),
+      selectedTileColor: colorScheme.primaryContainer.withValues(alpha: 0.3),
       leading: CircleAvatar(
-        backgroundColor: statusColor.withOpacity(0.15),
+        backgroundColor: statusColor.withValues(alpha: 0.15),
         foregroundColor: statusColor,
         child: Text(
           SomFormatters.shortId(inquiry.id).substring(1, 3).toUpperCase(),

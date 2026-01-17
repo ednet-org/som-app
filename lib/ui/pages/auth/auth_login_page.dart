@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:som/ui/domain/model/funny_logo.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/som_application.dart';
 
 import '../../domain/application/application.dart';
@@ -91,55 +92,52 @@ class AuthLoginPage extends StatelessWidget {
   }
 
   splitWithLogo(context, emailLoginStore, is4K) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: !is4K ? Alignment.topCenter : Alignment.centerLeft,
-          end: !is4K ? Alignment.bottomCenter : Alignment.centerRight,
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.onPrimary,
-          ],
+    return Stack(
+      children: [
+        // Background Layer
+        Positioned.fill(
+          child: Container(
+            color: Theme.of(context).colorScheme.surface,
+            child: Opacity(
+              opacity: 0.1, // Subtle pattern
+              child: SvgPicture.asset(
+                SomAssets.patternSubtleMesh,
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary,
+                   BlendMode.srcIn),
+              ),
+            ),
+          ),
         ),
-      ),
-      // color: Theme.of(context).colorScheme.primary,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: FunnyLogo(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+        // Content Layer
+        Positioned.fill(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(padding: const EdgeInsets.all(20.0),
+                child: SvgPicture.asset(SomAssets.logoFull, width: 250)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Smart offer management'.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.displayLarge?.copyWith(fontWeight: FontWeight.w300, letterSpacing: 2.0),
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Smart offer management'.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   splitWithLogin(context, is4K, constraints) {
     return Container(
       padding: const EdgeInsets.all(50.0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: !is4K ? Alignment.bottomCenter : Alignment.centerRight,
-          end: !is4K ? Alignment.topCenter : Alignment.centerLeft,
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.onPrimary,
-          ],
-        ),
-      ),
+      color: Theme.of(context).colorScheme.surface, 
       alignment: Alignment.center,
-      // color: Theme.of(context).colorScheme.primaryContainer,
       child: Column(
         mainAxisAlignment:
             is4K ? MainAxisAlignment.center : MainAxisAlignment.start,

@@ -12,7 +12,7 @@ class SomInput extends StatefulWidget {
   final ValueChanged<String>? onChanged;
 
   const SomInput({
-    Key? key,
+    super.key,
     required this.label,
     this.hintText,
     this.errorText,
@@ -20,7 +20,16 @@ class SomInput extends StatefulWidget {
     this.controller,
     this.keyboardType,
     this.onChanged,
-  }) : super(key: key);
+    this.validator,
+    this.icon,
+    this.maxLines = 1,
+    this.onFieldSubmitted,
+  });
+
+  final FormFieldValidator<String>? validator;
+  final IconData? icon;
+  final int maxLines;
+  final ValueChanged<String>? onFieldSubmitted;
 
   @override
   State<SomInput> createState() => _SomInputState();
@@ -74,17 +83,21 @@ class _SomInputState extends State<SomInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Using InputDecorator implicitly via TextField
-        TextField(
+        TextFormField(
           controller: widget.controller,
           obscureText: widget.isPassword && _obscureText,
           keyboardType: widget.keyboardType,
           onChanged: widget.onChanged,
           style: theme.textTheme.bodyMedium,
+          validator: widget.validator,
+          maxLines: widget.isPassword ? 1 : widget.maxLines,
+          onFieldSubmitted: widget.onFieldSubmitted,
           decoration: InputDecoration(
             labelText: widget.label,
             hintText: widget.hintText,
             errorText: widget.errorText,
             suffixIcon: suffixIcon,
+            icon: widget.icon != null ? Icon(widget.icon, color: theme.colorScheme.primary) : null,
           ),
         ),
       ],

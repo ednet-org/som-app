@@ -2,6 +2,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../../../domain/model/forms/som_drop_down.dart';
+import '../../../domain/model/forms/som_text_input.dart';
+import '../../../widgets/design_system/som_button.dart';
+
 /// Form widget for creating a new inquiry.
 ///
 /// Handles all form fields including branch/category selection,
@@ -198,40 +202,33 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DropdownButton<String>(
-          hint: const Text('Branch'),
-          value: _selectedBranchId,
-          items: widget.branches
-              .map((branch) => DropdownMenuItem(
-                    value: branch.id,
-                    child: Text(branch.name ?? branch.id ?? '-'),
-                  ))
-              .toList(),
-          onChanged: (value) => setState(() {
-            _selectedBranchId = value;
+        SomDropDown<Branch>(
+          label: 'Branch',
+          value: _selectedBranchId == null ? null : widget.branches.where((b) => b.id == _selectedBranchId).firstOrNull,
+          items: widget.branches,
+          itemAsString: (Branch b) => b.name ?? b.id ?? '-',
+          onChanged: (Branch? b) => setState(() {
+            _selectedBranchId = b?.id;
             _selectedCategoryId = null;
           }),
         ),
-        DropdownButton<String>(
-          hint: const Text('Category'),
-          value: _selectedCategoryId,
-          items: (_categories ?? const [])
-              .map((category) => DropdownMenuItem(
-                    value: category.id,
-                    child: Text(category.name ?? category.id ?? '-'),
-                  ))
-              .toList(),
-          onChanged: (value) => setState(() => _selectedCategoryId = value),
+        const SizedBox(height: 12),
+        SomDropDown<Category>(
+          label: 'Category',
+          value: _selectedCategoryId == null
+              ? null
+              : _categories?.where((c) => c.id == _selectedCategoryId).firstOrNull,
+          items: _categories ?? [],
+          itemAsString: (Category c) => c.name ?? c.id ?? '-',
+          onChanged: (Category? c) => setState(() => _selectedCategoryId = c?.id),
         ),
       ],
     );
   }
 
   Widget _buildProductTagsField() {
-    return TextField(
-      decoration: const InputDecoration(
-        labelText: 'Product tags (comma separated)',
-      ),
+    return SomTextInput(
+      label: 'Product tags (comma separated)',
       onChanged: (value) {
         setState(() {
           _productTags = value
@@ -245,7 +242,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   Widget _buildDeadlineSection() {
-    return TextButton(
+    return SomButton(
+      text: _deadline == null ? 'Select deadline' : 'Deadline: ${_deadline!.toIso8601String().split('T').first}',
+      iconData: Icons.calendar_today,
+      type: SomButtonType.secondary,
       onPressed: () async {
         final picked = await showDatePicker(
           context: context,
@@ -257,39 +257,30 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
           setState(() => _deadline = picked);
         }
       },
-      child: Text(_deadline == null
-          ? 'Select deadline'
-          : 'Deadline: ${_deadline!.toIso8601String().split('T').first}'),
     );
   }
 
   Widget _buildDeliveryZipsField() {
-    return TextField(
+    return SomTextInput(
       controller: _deliveryZipsController,
-      decoration: const InputDecoration(
-        labelText: 'Delivery ZIPs (comma separated)',
-      ),
+      label: 'Delivery ZIPs (comma separated)', required: true,
     );
   }
 
   Widget _buildProvidersCountSection() {
-    return DropdownButton<int>(
+    return SomDropDown<int>(
+      label: 'Number of providers',
       value: _numberOfProviders,
-      items: List.generate(10, (index) => index + 1)
-          .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(value.toString()),
-              ))
-          .toList(),
+      items: List.generate(10, (index) => index + 1),
       onChanged: (value) => setState(() => _numberOfProviders = value ?? 1),
     );
   }
 
   Widget _buildDescriptionField() {
-    return TextField(
+    return SomTextInput(
       controller: _descriptionController,
+      label: 'Description',
       maxLines: 3,
-      decoration: const InputDecoration(labelText: 'Description'),
     );
   }
 
@@ -297,42 +288,44 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
+        SomTextInput(
           controller: _providerZipController,
-          decoration: const InputDecoration(labelText: 'Provider ZIP (optional)'),
+          label: 'Provider ZIP (optional)',
         ),
-        DropdownButton<int>(
-          hint: const Text('Radius km'),
+        const SizedBox(height: 12),
+        SomDropDown<int>(
+          label: 'Radius km',
           value: _radiusKm,
-          items: const [
-            DropdownMenuItem(value: 50, child: Text('50km')),
-            DropdownMenuItem(value: 150, child: Text('150km')),
-            DropdownMenuItem(value: 250, child: Text('250km')),
-          ],
+          items: const [50, 150, 250],
+          itemAsString: (int i) => '${i}km',
           onChanged: (value) => setState(() => _radiusKm = value),
         ),
-        DropdownButton<String>(
-          hint: const Text('Provider type'),
+        const SizedBox(height: 12),
+        SomDropDown<String>(
+          label: 'Provider type',
           value: _providerType,
-          items: const [
-            DropdownMenuItem(value: 'haendler', child: Text('Händler')),
-            DropdownMenuItem(value: 'hersteller', child: Text('Hersteller')),
-            DropdownMenuItem(value: 'dienstleister', child: Text('Dienstleister')),
-            DropdownMenuItem(value: 'grosshaendler', child: Text('Großhändler')),
-          ],
+          items: const ['haendler', 'hersteller', 'dienstleister', 'grosshaendler'],
+          itemAsString: (String s) {
+            switch (s) {
+              case 'haendler':
+                return 'Händler';
+              case 'hersteller':
+                return 'Hersteller';
+              case 'dienstleister':
+                return 'Dienstleister';
+              case 'grosshaendler':
+                return 'Großhändler';
+              default:
+                return s;
+            }
+          },
           onChanged: (value) => setState(() => _providerType = value),
         ),
-        DropdownButton<String>(
-          hint: const Text('Provider size'),
+        const SizedBox(height: 12),
+        SomDropDown<String>(
+          label: 'Provider size',
           value: _providerCompanySize,
-          items: const [
-            DropdownMenuItem(value: '0-10', child: Text('0-10')),
-            DropdownMenuItem(value: '11-50', child: Text('11-50')),
-            DropdownMenuItem(value: '51-100', child: Text('51-100')),
-            DropdownMenuItem(value: '101-250', child: Text('101-250')),
-            DropdownMenuItem(value: '251-500', child: Text('251-500')),
-            DropdownMenuItem(value: '500+', child: Text('500+')),
-          ],
+          items: const ['0-10', '11-50', '51-100', '101-250', '251-500', '500+'],
           onChanged: (value) => setState(() => _providerCompanySize = value),
         ),
       ],
@@ -344,29 +337,35 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Contact info', style: Theme.of(context).textTheme.titleSmall),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactSalutationController,
-          decoration: const InputDecoration(labelText: 'Salutation'),
+          label: 'Salutation',
         ),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactTitleController,
-          decoration: const InputDecoration(labelText: 'Title'),
+          label: 'Title',
         ),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactFirstNameController,
-          decoration: const InputDecoration(labelText: 'First name'),
+          label: 'First name',
         ),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactLastNameController,
-          decoration: const InputDecoration(labelText: 'Last name'),
+          label: 'Last name',
         ),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactTelephoneController,
-          decoration: const InputDecoration(labelText: 'Telephone'),
+          label: 'Telephone',
         ),
-        TextField(
+        const SizedBox(height: 12),
+        SomTextInput(
           controller: _contactEmailController,
-          decoration: const InputDecoration(labelText: 'Email'),
+          label: 'Email',
         ),
       ],
     );
@@ -375,22 +374,22 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   Widget _buildSubmitSection() {
     return Row(
       children: [
-        TextButton(
+        SomButton(
           onPressed: _pickPdf,
-          child: Text(_selectedPdf == null
+          text: _selectedPdf == null
               ? 'Attach PDF'
-              : 'PDF: ${_selectedPdf!.name}'),
+              : 'PDF: ${_selectedPdf!.name}',
+          iconData: Icons.attach_file,
+          type: SomButtonType.ghost,
         ),
         const SizedBox(width: 12),
-        ElevatedButton(
-          onPressed: _isSubmitting ? null : _submit,
-          child: _isSubmitting
-              ? const SizedBox(
-                  height: 16,
-                  width: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : const Text('Create inquiry'),
+        Expanded(
+          child: SomButton(
+            onPressed: _isSubmitting ? null : _submit,
+            text: 'Create inquiry',
+            isLoading: _isSubmitting,
+            type: SomButtonType.primary,
+          ),
         ),
       ],
     );

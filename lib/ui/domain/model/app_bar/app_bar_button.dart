@@ -1,5 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 class AppBarButton extends StatefulWidget {
   const AppBarButton({
@@ -41,15 +43,15 @@ class _AppBarButtonState extends State<AppBarButton> {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          // hoverColor: Theme.of(context).colorScheme.secondary,
-          icon: ImageIcon(
-            AssetImage(widget.child),
-            // color: Theme.of(context).colorScheme.primaryContainer,
+          icon: SvgPicture.asset(
+            widget.child,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
           ),
           onPressed: () => widget.beamer.currentState?.routerDelegate
               .beamToNamed(widget.uri),
           tooltip: '${widget.title} management page',
-          iconSize: 50,
         ),
         Text(
           widget.title,
@@ -80,25 +82,25 @@ extension AppBarIconsExtension on AppBarIcons {
   String get value {
     switch (this) {
       case AppBarIcons.company:
-        return "images/som/icons/company_icon_outlined.png";
+        return SomAssets.iconDashboard; // Mapping to Dashboard for now
 
       case AppBarIcons.ads:
-        return "images/som/icons/ads_icon_outlined.png";
+        return SomAssets.iconInfo; // Placeholder
 
       case AppBarIcons.inquiry:
-        return "images/som/icons/inquiries_icon_outlined_sec.png";
+        return SomAssets.iconInquiries;
 
       case AppBarIcons.offer:
-        return "images/som/icons/offer_icon_outlined.png";
+        return SomAssets.iconOffers;
 
       case AppBarIcons.statistics:
-        return "images/som/icons/statistics_icon_outlined.png";
+        return SomAssets.iconStatistics;
 
       case AppBarIcons.user:
-        return "images/som/icons/user_icon_outlined.png";
+        return SomAssets.iconUser;
 
       default:
-        return "";
+        return SomAssets.logoMark;
     }
   }
 }

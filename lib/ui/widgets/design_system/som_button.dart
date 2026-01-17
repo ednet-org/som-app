@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:som/ui/theme/som_assets.dart';
 
 enum SomButtonType { primary, secondary, ghost }
 enum SomButtonIconPosition { left, right }
@@ -9,23 +8,24 @@ class SomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final SomButtonType type;
-  final String? icon;
-  final SomButtonIconPosition iconPosition;
-  final bool isLoading;
+  final IconData? iconData;
+  final String? icon; // restored
+  final SomButtonIconPosition iconPosition; // restored
+  final bool isLoading; // restored
 
   const SomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.type = SomButtonType.primary,
     this.icon,
+    this.iconData,
     this.iconPosition = SomButtonIconPosition.left,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final uppercaseText = text.toUpperCase();
     
     Widget label = Text(uppercaseText);
@@ -35,31 +35,30 @@ class SomButton extends StatelessWidget {
         height: 20,
         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
       );
-    } else if (icon != null) {
-      final svgIcon = SvgPicture.asset(
-        icon!,
-        width: 20,
-        height: 20,
-        colorFilter: ColorFilter.mode(
-          _getIconColor(context),
-          BlendMode.srcIn,
-        ),
-      );
-      
-      label = Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (iconPosition == SomButtonIconPosition.left) ...[
-            svgIcon,
-            const SizedBox(width: 8),
+    } else {
+      Widget? iconWidget;
+      if (icon != null) {
+        iconWidget = SvgPicture.asset(
+          icon!,
+          width: 20,
+          height: 20,
+          colorFilter: ColorFilter.mode(_getIconColor(context), BlendMode.srcIn),
+        );
+      } else if (iconData != null) {
+        iconWidget = Icon(iconData, size: 20, color: _getIconColor(context));
+      }
+
+      if (iconWidget != null) {
+        label = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (iconPosition == SomButtonIconPosition.left) ...[
+                iconWidget, const SizedBox(width: 8)],
+            Text(uppercaseText),
+            if (iconPosition == SomButtonIconPosition.right) ...[const SizedBox(width: 8), iconWidget],
           ],
-          Text(uppercaseText),
-          if (iconPosition == SomButtonIconPosition.right) ...[
-            const SizedBox(width: 8),
-            svgIcon,
-          ],
-        ],
-      );
+        );
+      }
     }
 
     switch (type) {

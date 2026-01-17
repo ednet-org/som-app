@@ -4,6 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:som/ui/theme/som_assets.dart';
+
 import '../domain/application/application.dart';
 import '../domain/model/shared/som.dart';
 import '../routes/routes.dart';
@@ -52,20 +55,22 @@ class _SplashPageState extends State<SplashPage>
                   Container(
                     alignment: Alignment.center,
                     child: som.isLoadingData
-                        ? Image.asset(
-                            'images/som/logo.png',
-                            height: 300,
-                            fit: BoxFit.fitHeight,
+                        ? Column(
+                            children: [
+                              SvgPicture.asset(SomAssets.logoFull, width: 300),
+                              const SizedBox(height: 20),
+                              const CircularProgressIndicator(),
+                            ],
                           )
-                        : const Icon(
+                        : Icon(
                             Icons.check_circle_outlined,
-                            size: 300,
+                            size: 100, color: Theme.of(context).colorScheme.primary,
                           ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Loading...",
-                    style: Theme.of(context).textTheme.titleSmall,
+                    "INITIALIZING SYSTEM...",
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(letterSpacing: 2.0),
                   )
                 ],
               ),

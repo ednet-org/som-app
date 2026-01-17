@@ -27,9 +27,11 @@ class ProviderBranchesStep extends StatelessWidget {
           onRemove: request.som.removeRequestedBranch,
         ),
         const SizedBox(height: 20),
-        SomDropDown(
+        SomDropDown<String>(
           value: request.company.providerData.providerType,
-          onChanged: request.company.providerData.setProviderType,
+          onChanged: (val) {
+            if (val != null) request.company.providerData.setProviderType(val);
+          },
           hint: 'Select provider type',
           label: 'Provider type',
           items: _providerTypeOptions,
