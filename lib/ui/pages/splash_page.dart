@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
@@ -58,7 +57,12 @@ class _SplashPageState extends State<SplashPage>
                     child: som.isLoadingData
                         ? Column(
                             children: [
-                              SvgPicture.asset(SomAssets.logoFull, width: 300),
+                              Image.asset(
+                                SomAssets.logoPng,
+                                width: 300,
+                                height: 300,
+                                fit: BoxFit.contain,
+                              ),
                               const SizedBox(height: 20),
                               const CircularProgressIndicator(),
                             ],

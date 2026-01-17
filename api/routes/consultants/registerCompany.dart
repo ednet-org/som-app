@@ -32,6 +32,6 @@ Future<Response> onRequest(RequestContext context) async {
     );
     return Response(statusCode: 200);
   } on RegistrationException catch (error) {
-    return Response.json(statusCode: 400, body: error.message);
+    return Response.json(statusCode: 400, body: error.toJson());
   }
 }

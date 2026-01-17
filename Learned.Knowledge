@@ -1,0 +1,4 @@
+# Learned Knowledge
+
+- 2026-01-17: macOS debug builds use JIT entitlements. If debug launches fail with amfid provisioning-profile errors, ensure Xcode automatic signing creates a Mac Development provisioning profile. As a workaround, profile mode runs without JIT.
+- 2026-01-17: `macos/Runner/DebugProfile.entitlements` sets `com.apple.security.get-task-allow` to false to reduce provisioning profile validation needs; set to true if LLDB attach is required.

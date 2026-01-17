@@ -88,12 +88,18 @@ class _InquiryPageState extends State<InquiryPage> {
         _branches = branchResponse.data?.toList() ?? const [];
       });
     } catch (error, stackTrace) {
-      UILogger.silentError('InquiryPage._bootstrap.branches', error, stackTrace);
+      UILogger.silentError(
+        'InquiryPage._bootstrap.branches',
+        error,
+        stackTrace,
+      );
     }
 
     if (appStore.authorization?.companyId != null) {
       try {
-        final usersResponse = await api.getUsersApi().companiesCompanyIdUsersGet(
+        final usersResponse = await api
+            .getUsersApi()
+            .companiesCompanyIdUsersGet(
               companyId: appStore.authorization!.companyId!,
               headers: _authHeader(appStore.authorization?.token),
             );
@@ -101,7 +107,11 @@ class _InquiryPageState extends State<InquiryPage> {
           _companyUsers = usersResponse.data?.toList() ?? const [];
         });
       } catch (error, stackTrace) {
-        UILogger.silentError('InquiryPage._bootstrap.companyUsers', error, stackTrace);
+        UILogger.silentError(
+          'InquiryPage._bootstrap.companyUsers',
+          error,
+          stackTrace,
+        );
       }
     }
 
@@ -120,11 +130,16 @@ class _InquiryPageState extends State<InquiryPage> {
             _contactFirstName = data.firstName;
             _contactLastName = data.lastName;
             _contactTelephone = data.telephoneNr;
-            _contactEmail = data.emailAddress ?? appStore.authorization?.emailAddress;
+            _contactEmail =
+                data.emailAddress ?? appStore.authorization?.emailAddress;
           });
         }
       } catch (error, stackTrace) {
-        UILogger.silentError('InquiryPage._bootstrap.userProfile', error, stackTrace);
+        UILogger.silentError(
+          'InquiryPage._bootstrap.userProfile',
+          error,
+          stackTrace,
+        );
       }
     }
   }
@@ -133,17 +148,17 @@ class _InquiryPageState extends State<InquiryPage> {
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       final response = await api.getInquiriesApi().inquiriesGet(
-            status: _statusFilter,
-            branchId: _branchIdFilter,
-            branch: _branchNameFilter,
-            providerType: _providerTypeFilter,
-            providerSize: _providerSizeFilter,
-            createdFrom: _createdFrom,
-            createdTo: _createdTo,
-            deadlineFrom: _deadlineFrom,
-            deadlineTo: _deadlineTo,
-            editorIds: _editorFilter,
-          );
+        status: _statusFilter,
+        branchId: _branchIdFilter,
+        branch: _branchNameFilter,
+        providerType: _providerTypeFilter,
+        providerSize: _providerSizeFilter,
+        createdFrom: _createdFrom,
+        createdTo: _createdTo,
+        deadlineFrom: _deadlineFrom,
+        deadlineTo: _deadlineTo,
+        editorIds: _editorFilter,
+      );
       final list = response.data?.toList() ?? const [];
       _inquiriesError = null;
       return list;
@@ -184,9 +199,9 @@ class _InquiryPageState extends State<InquiryPage> {
     });
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      final response = await api
-          .getOffersApi()
-          .inquiriesInquiryIdOffersGet(inquiryId: inquiryId);
+      final response = await api.getOffersApi().inquiriesInquiryIdOffersGet(
+        inquiryId: inquiryId,
+      );
       setState(() {
         _offers = response.data?.toList() ?? const [];
       });
@@ -203,38 +218,52 @@ class _InquiryPageState extends State<InquiryPage> {
 
   Future<void> _submitInquiry(InquiryFormData data) async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final request = CreateInquiryRequest((b) => b
-      ..branchId = data.branchId
-      ..categoryId = data.categoryId
-      ..deadline = data.deadline
-      ..deliveryZips.replace(data.deliveryZips)
-      ..numberOfProviders = data.numberOfProviders
-      ..description = data.description?.isEmpty == true ? null : data.description
-      ..productTags.replace(data.productTags)
-      ..providerZip = data.providerZip?.isEmpty == true ? null : data.providerZip
-      ..radiusKm = data.radiusKm
-      ..providerType = data.providerType
-      ..providerCompanySize = data.providerCompanySize
-      ..salutation = data.contactSalutation?.isEmpty == true ? null : data.contactSalutation
-      ..title = data.contactTitle?.isEmpty == true ? null : data.contactTitle
-      ..firstName = data.contactFirstName?.isEmpty == true ? null : data.contactFirstName
-      ..lastName = data.contactLastName?.isEmpty == true ? null : data.contactLastName
-      ..telephone = data.contactTelephone?.isEmpty == true ? null : data.contactTelephone
-      ..email = data.contactEmail?.isEmpty == true ? null : data.contactEmail);
+    final request = CreateInquiryRequest(
+      (b) => b
+        ..branchId = data.branchId
+        ..categoryId = data.categoryId
+        ..deadline = data.deadline.toUtc()
+        ..deliveryZips.replace(data.deliveryZips)
+        ..numberOfProviders = data.numberOfProviders
+        ..description = data.description?.isEmpty == true
+            ? null
+            : data.description
+        ..productTags.replace(data.productTags)
+        ..providerZip = data.providerZip?.isEmpty == true
+            ? null
+            : data.providerZip
+        ..radiusKm = data.radiusKm
+        ..providerType = data.providerType
+        ..providerCompanySize = data.providerCompanySize
+        ..salutation = data.contactSalutation?.isEmpty == true
+            ? null
+            : data.contactSalutation
+        ..title = data.contactTitle?.isEmpty == true ? null : data.contactTitle
+        ..firstName = data.contactFirstName?.isEmpty == true
+            ? null
+            : data.contactFirstName
+        ..lastName = data.contactLastName?.isEmpty == true
+            ? null
+            : data.contactLastName
+        ..telephone = data.contactTelephone?.isEmpty == true
+            ? null
+            : data.contactTelephone
+        ..email = data.contactEmail?.isEmpty == true ? null : data.contactEmail,
+    );
 
-    final response = await api
-        .getInquiriesApi()
-        .createInquiry(createInquiryRequest: request);
+    final response = await api.getInquiriesApi().createInquiry(
+      createInquiryRequest: request,
+    );
     final inquiry = response.data;
 
     if (inquiry?.id != null && data.pdfFile?.bytes != null) {
       await api.getInquiriesApi().inquiriesInquiryIdPdfPost(
-            inquiryId: inquiry!.id!,
-            file: MultipartFile.fromBytes(
-              data.pdfFile!.bytes!,
-              filename: data.pdfFile!.name,
-            ),
-          );
+        inquiryId: inquiry!.id!,
+        file: MultipartFile.fromBytes(
+          data.pdfFile!.bytes!,
+          filename: data.pdfFile!.name,
+        ),
+      );
     }
 
     _showSnack('Inquiry created.');
@@ -249,9 +278,9 @@ class _InquiryPageState extends State<InquiryPage> {
 
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getOffersApi().inquiriesInquiryIdOffersPost(
-          inquiryId: _selectedInquiry!.id!,
-          file: MultipartFile.fromBytes(result.bytes!, filename: result.name),
-        );
+      inquiryId: _selectedInquiry!.id!,
+      file: MultipartFile.fromBytes(result.bytes!, filename: result.name),
+    );
     _showSnack('Offer uploaded.');
     await _loadOffers(_selectedInquiry!.id);
     await _refresh();
@@ -261,8 +290,8 @@ class _InquiryPageState extends State<InquiryPage> {
     if (_selectedInquiry?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getInquiriesApi().inquiriesInquiryIdIgnorePost(
-          inquiryId: _selectedInquiry!.id!,
-        );
+      inquiryId: _selectedInquiry!.id!,
+    );
     _showSnack('Inquiry ignored.');
     await _refresh();
   }
@@ -296,17 +325,24 @@ class _InquiryPageState extends State<InquiryPage> {
     );
     if (providers == null || providers.isEmpty || !mounted) return;
 
+    final providerCompanyIds = providers
+        .map((p) => p.companyId)
+        .whereType<String>()
+        .toList();
+    if (providerCompanyIds.isEmpty) {
+      _showSnack('Selected providers cannot be assigned yet.');
+      return;
+    }
+
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       await api.getInquiriesApi().inquiriesInquiryIdAssignPost(
-            inquiryId: _selectedInquiry!.id!,
-            inquiriesInquiryIdAssignPostRequest:
-                InquiriesInquiryIdAssignPostRequest((b) => b
-                  ..providerCompanyIds.replace(providers
-                      .map((p) => p.companyId)
-                      .whereType<String>()
-                      .toList())),
-          );
+        inquiryId: _selectedInquiry!.id!,
+        inquiriesInquiryIdAssignPostRequest:
+            InquiriesInquiryIdAssignPostRequest(
+              (b) => b..providerCompanyIds.replace(providerCompanyIds),
+            ),
+      );
       _showSnack('Inquiry forwarded to providers.');
     } on DioException catch (error) {
       final message = error.response?.data?.toString() ?? error.message ?? '';
@@ -325,9 +361,9 @@ class _InquiryPageState extends State<InquiryPage> {
     if (!confirmed || !mounted) return;
 
     final api = Provider.of<Openapi>(context, listen: false);
-    await api
-        .getInquiriesApi()
-        .inquiriesInquiryIdClosePost(inquiryId: _selectedInquiry!.id!);
+    await api.getInquiriesApi().inquiriesInquiryIdClosePost(
+      inquiryId: _selectedInquiry!.id!,
+    );
     _showSnack('Inquiry closed.');
     await _refresh();
   }
@@ -344,9 +380,9 @@ class _InquiryPageState extends State<InquiryPage> {
     if (!confirmed || !mounted) return;
 
     final api = Provider.of<Openapi>(context, listen: false);
-    await api
-        .getInquiriesApi()
-        .inquiriesInquiryIdPdfDelete(inquiryId: _selectedInquiry!.id!);
+    await api.getInquiriesApi().inquiriesInquiryIdPdfDelete(
+      inquiryId: _selectedInquiry!.id!,
+    );
     _showSnack('Attachment removed.');
     await _refresh();
   }
@@ -360,9 +396,11 @@ class _InquiryPageState extends State<InquiryPage> {
         if (_branchNameFilter != null) 'branch': _branchNameFilter,
         if (_providerTypeFilter != null) 'providerType': _providerTypeFilter,
         if (_providerSizeFilter != null) 'providerSize': _providerSizeFilter,
-        if (_createdFrom != null) 'createdFrom': _createdFrom!.toIso8601String(),
+        if (_createdFrom != null)
+          'createdFrom': _createdFrom!.toIso8601String(),
         if (_createdTo != null) 'createdTo': _createdTo!.toIso8601String(),
-        if (_deadlineFrom != null) 'deadlineFrom': _deadlineFrom!.toIso8601String(),
+        if (_deadlineFrom != null)
+          'deadlineFrom': _deadlineFrom!.toIso8601String(),
         if (_deadlineTo != null) 'deadlineTo': _deadlineTo!.toIso8601String(),
         if (_editorFilter != null) 'editorIds': _editorFilter,
         'format': 'csv',
@@ -382,14 +420,14 @@ class _InquiryPageState extends State<InquiryPage> {
   }) async {
     final api = Provider.of<Openapi>(context, listen: false);
     final response = await api.getProvidersApi().providersGet(
-          limit: limit,
-          offset: offset,
-          search: search,
-          branchId: branchId,
-          companySize: companySize,
-          providerType: providerType,
-          zipPrefix: zipPrefix,
-        );
+      limit: limit,
+      offset: offset,
+      search: search,
+      branchId: branchId,
+      companySize: companySize,
+      providerType: providerType,
+      zipPrefix: zipPrefix,
+    );
 
     // Parse pagination headers
     final totalCountHeader = response.headers.value('X-Total-Count');
@@ -456,9 +494,9 @@ class _InquiryPageState extends State<InquiryPage> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -521,9 +559,12 @@ class _InquiryPageState extends State<InquiryPage> {
                 isProvider: appStore.authorization?.isProvider == true,
                 onStatusChanged: (v) => setState(() => _statusFilter = v),
                 onBranchIdChanged: (v) => setState(() => _branchIdFilter = v),
-                onBranchNameChanged: (v) => setState(() => _branchNameFilter = v),
-                onProviderTypeChanged: (v) => setState(() => _providerTypeFilter = v),
-                onProviderSizeChanged: (v) => setState(() => _providerSizeFilter = v),
+                onBranchNameChanged: (v) =>
+                    setState(() => _branchNameFilter = v),
+                onProviderTypeChanged: (v) =>
+                    setState(() => _providerTypeFilter = v),
+                onProviderSizeChanged: (v) =>
+                    setState(() => _providerSizeFilter = v),
                 onCreatedFromChanged: (v) => setState(() => _createdFrom = v),
                 onCreatedToChanged: (v) => setState(() => _createdTo = v),
                 onDeadlineFromChanged: (v) => setState(() => _deadlineFrom = v),
@@ -554,23 +595,23 @@ class _InquiryPageState extends State<InquiryPage> {
                   initialContactEmail: _contactEmail,
                 )
               : _selectedInquiry != null
-                  ? InquiryDetail(
-                      inquiry: _selectedInquiry!,
-                      offers: _offers,
-                      isLoadingOffers: _loadingOffers,
-                      offersError: _offersError,
-                      isBuyer: appStore.authorization?.isBuyer == true,
-                      isProvider: appStore.authorization?.isProvider == true,
-                      isConsultant: appStore.authorization?.isConsultant == true,
-                      onUploadOffer: _uploadOffer,
-                      onIgnoreInquiry: _ignoreInquiry,
-                      onAssignProviders: _assignProviders,
-                      onCloseInquiry: _closeInquiry,
-                      onRemoveAttachment: _removeAttachment,
-                      onAcceptOffer: _acceptOffer,
-                      onRejectOffer: _rejectOffer,
-                    )
-                  : const NoInquirySelected(),
+              ? InquiryDetail(
+                  inquiry: _selectedInquiry!,
+                  offers: _offers,
+                  isLoadingOffers: _loadingOffers,
+                  offersError: _offersError,
+                  isBuyer: appStore.authorization?.isBuyer == true,
+                  isProvider: appStore.authorization?.isProvider == true,
+                  isConsultant: appStore.authorization?.isConsultant == true,
+                  onUploadOffer: _uploadOffer,
+                  onIgnoreInquiry: _ignoreInquiry,
+                  onAssignProviders: _assignProviders,
+                  onCloseInquiry: _closeInquiry,
+                  onRemoveAttachment: _removeAttachment,
+                  onAcceptOffer: _acceptOffer,
+                  onRejectOffer: _rejectOffer,
+                )
+              : const NoInquirySelected(),
         );
       },
     );

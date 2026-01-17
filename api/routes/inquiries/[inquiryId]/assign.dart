@@ -27,7 +27,10 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       .map((e) => e.toString())
       .toList();
   if (providerIds.isEmpty) {
-    return Response(statusCode: 400);
+    return Response.json(
+      statusCode: 400,
+      body: 'Select at least one provider.',
+    );
   }
   final inquiryRepo = context.read<InquiryRepository>();
   final inquiry = await inquiryRepo.findById(inquiryId);
@@ -38,12 +41,12 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       await inquiryRepo.countAssignmentsForInquiry(inquiryId);
   if (existingAssignments >= inquiry.numberOfProviders) {
     await context.read<DomainEventService>().emitFailure(
-          type: 'inquiry.assignment',
-          entityType: 'inquiry',
-          entityId: inquiryId,
-          actorId: auth.userId,
-          payload: {'reason': 'cap_reached'},
-        );
+      type: 'inquiry.assignment',
+      entityType: 'inquiry',
+      entityId: inquiryId,
+      actorId: auth.userId,
+      payload: {'reason': 'cap_reached'},
+    );
     return Response.json(
       statusCode: 400,
       body: 'Assignment cap reached for this inquiry.',
@@ -74,12 +77,12 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   }
   if (activeProviderIds.isEmpty) {
     await context.read<DomainEventService>().emitFailure(
-          type: 'inquiry.assignment',
-          entityType: 'inquiry',
-          entityId: inquiryId,
-          actorId: auth.userId,
-          payload: {'reason': 'no_active_providers'},
-        );
+      type: 'inquiry.assignment',
+      entityType: 'inquiry',
+      entityId: inquiryId,
+      actorId: auth.userId,
+      payload: {'reason': 'no_active_providers'},
+    );
     return Response.json(
       statusCode: 400,
       body: 'No active providers available for assignment',
@@ -88,12 +91,12 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   final remainingSlots = inquiry.numberOfProviders - existingAssignments;
   if (activeProviderIds.length > remainingSlots) {
     await context.read<DomainEventService>().emitFailure(
-          type: 'inquiry.assignment',
-          entityType: 'inquiry',
-          entityId: inquiryId,
-          actorId: auth.userId,
-          payload: {'reason': 'exceeds_slots'},
-        );
+      type: 'inquiry.assignment',
+      entityType: 'inquiry',
+      entityId: inquiryId,
+      actorId: auth.userId,
+      payload: {'reason': 'exceeds_slots'},
+    );
     return Response.json(
       statusCode: 400,
       body: 'Assignment exceeds available provider slots.',
@@ -105,12 +108,12 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     providerCompanyIds: activeProviderIds,
   );
   await context.read<DomainEventService>().emit(
-        type: 'inquiry.assigned',
-        entityType: 'inquiry',
-        entityId: inquiryId,
-        actorId: auth.userId,
-        payload: {'providerCompanyIds': activeProviderIds},
-      );
+    type: 'inquiry.assigned',
+    entityType: 'inquiry',
+    entityId: inquiryId,
+    actorId: auth.userId,
+    payload: {'providerCompanyIds': activeProviderIds},
+  );
   return Response.json(
     body: {
       'assignedProviders': activeProviderIds,

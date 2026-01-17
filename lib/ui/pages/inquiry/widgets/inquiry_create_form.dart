@@ -86,7 +86,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
 
   List<Category>? get _categories {
     if (_selectedBranchId == null) return null;
-    return widget.branches
+    return _availableBranches
         .firstWhere(
           (branch) => branch.id == _selectedBranchId,
           orElse: () => Branch(),
@@ -94,6 +94,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
         .categories
         ?.toList();
   }
+
+  List<Branch> get _availableBranches => widget.branches
+      .where((branch) => branch.categories?.isNotEmpty == true)
+      .toList();
 
   Future<void> _pickPdf() async {
     final result = await FilePicker.platform.pickFiles(
@@ -129,26 +133,28 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     setState(() => _isSubmitting = true);
 
     try {
-      await widget.onSubmit(InquiryFormData(
-        branchId: _selectedBranchId!,
-        categoryId: _selectedCategoryId!,
-        productTags: _productTags,
-        deadline: _deadline!,
-        deliveryZips: zips,
-        numberOfProviders: _numberOfProviders,
-        description: _descriptionController.text.trim(),
-        providerZip: _providerZipController.text.trim(),
-        radiusKm: _radiusKm,
-        providerType: _providerType,
-        providerCompanySize: _providerCompanySize,
-        contactSalutation: _contactSalutationController.text.trim(),
-        contactTitle: _contactTitleController.text.trim(),
-        contactFirstName: _contactFirstNameController.text.trim(),
-        contactLastName: _contactLastNameController.text.trim(),
-        contactTelephone: _contactTelephoneController.text.trim(),
-        contactEmail: _contactEmailController.text.trim(),
-        pdfFile: _selectedPdf,
-      ));
+      await widget.onSubmit(
+        InquiryFormData(
+          branchId: _selectedBranchId!,
+          categoryId: _selectedCategoryId!,
+          productTags: _productTags,
+          deadline: _deadline!,
+          deliveryZips: zips,
+          numberOfProviders: _numberOfProviders,
+          description: _descriptionController.text.trim(),
+          providerZip: _providerZipController.text.trim(),
+          radiusKm: _radiusKm,
+          providerType: _providerType,
+          providerCompanySize: _providerCompanySize,
+          contactSalutation: _contactSalutationController.text.trim(),
+          contactTitle: _contactTitleController.text.trim(),
+          contactFirstName: _contactFirstNameController.text.trim(),
+          contactLastName: _contactLastNameController.text.trim(),
+          contactTelephone: _contactTelephoneController.text.trim(),
+          contactEmail: _contactEmailController.text.trim(),
+          pdfFile: _selectedPdf,
+        ),
+      );
       _clearForm();
     } finally {
       setState(() => _isSubmitting = false);
@@ -166,9 +172,9 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -177,7 +183,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
       padding: const EdgeInsets.all(16),
       child: ListView(
         children: [
-          Text('Create inquiry', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Create inquiry',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 12),
           _buildBranchCategorySection(),
           const SizedBox(height: 8),
@@ -200,13 +209,29 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   Widget _buildBranchCategorySection() {
+    if (_availableBranches.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Text(
+          'No categories available. Please contact support to configure branches.',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SomDropDown<Branch>(
           label: 'Branch',
-          value: _selectedBranchId == null ? null : widget.branches.where((b) => b.id == _selectedBranchId).firstOrNull,
-          items: widget.branches,
+          value: _selectedBranchId == null
+              ? null
+              : _availableBranches
+                    .where((b) => b.id == _selectedBranchId)
+                    .firstOrNull,
+          items: _availableBranches,
           itemAsString: (Branch b) => b.name ?? b.id ?? '-',
           onChanged: (Branch? b) => setState(() {
             _selectedBranchId = b?.id;
@@ -218,11 +243,24 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
           label: 'Category',
           value: _selectedCategoryId == null
               ? null
-              : _categories?.where((c) => c.id == _selectedCategoryId).firstOrNull,
+              : _categories
+                    ?.where((c) => c.id == _selectedCategoryId)
+                    .firstOrNull,
           items: _categories ?? [],
           itemAsString: (Category c) => c.name ?? c.id ?? '-',
-          onChanged: (Category? c) => setState(() => _selectedCategoryId = c?.id),
+          onChanged: (Category? c) =>
+              setState(() => _selectedCategoryId = c?.id),
         ),
+        if (_selectedBranchId != null && (_categories?.isEmpty ?? true))
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              'No categories for this branch. Choose another branch.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -244,7 +282,9 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
 
   Widget _buildDeadlineSection() {
     return SomButton(
-      text: _deadline == null ? 'Select deadline' : 'Deadline: ${_deadline!.toIso8601String().split('T').first}',
+      text: _deadline == null
+          ? 'Select deadline'
+          : 'Deadline: ${_deadline!.toIso8601String().split('T').first}',
       icon: SomAssets.iconCalendar,
       type: SomButtonType.secondary,
       onPressed: () async {
@@ -264,7 +304,8 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   Widget _buildDeliveryZipsField() {
     return SomTextInput(
       controller: _deliveryZipsController,
-      label: 'Delivery ZIPs (comma separated)', required: true,
+      label: 'Delivery ZIPs (comma separated)',
+      required: true,
     );
   }
 
@@ -305,7 +346,12 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
         SomDropDown<String>(
           label: 'Provider type',
           value: _providerType,
-          items: const ['haendler', 'hersteller', 'dienstleister', 'grosshaendler'],
+          items: const [
+            'haendler',
+            'hersteller',
+            'dienstleister',
+            'grosshaendler',
+          ],
           itemAsString: (String s) {
             switch (s) {
               case 'haendler':
@@ -326,7 +372,14 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
         SomDropDown<String>(
           label: 'Provider size',
           value: _providerCompanySize,
-          items: const ['0-10', '11-50', '51-100', '101-250', '251-500', '500+'],
+          items: const [
+            '0-10',
+            '11-50',
+            '51-100',
+            '101-250',
+            '251-500',
+            '500+',
+          ],
           onChanged: (value) => setState(() => _providerCompanySize = value),
         ),
       ],
@@ -344,10 +397,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
           label: 'Salutation',
         ),
         const SizedBox(height: 12),
-        SomTextInput(
-          controller: _contactTitleController,
-          label: 'Title',
-        ),
+        SomTextInput(controller: _contactTitleController, label: 'Title'),
         const SizedBox(height: 12),
         SomTextInput(
           controller: _contactFirstNameController,
@@ -364,10 +414,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
           label: 'Telephone',
         ),
         const SizedBox(height: 12),
-        SomTextInput(
-          controller: _contactEmailController,
-          label: 'Email',
-        ),
+        SomTextInput(controller: _contactEmailController, label: 'Email'),
       ],
     );
   }

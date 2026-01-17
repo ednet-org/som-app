@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
-import 'package:supabase/supabase.dart';
+import 'package:supabase/supabase.dart' as supa;
 import 'package:uuid/uuid.dart';
 
 import '../infrastructure/clock.dart';
@@ -25,8 +25,8 @@ class AuthService {
     required this.email,
     required this.emailEvents,
     required this.clock,
-    required SupabaseClient adminClient,
-    required SupabaseClient anonClient,
+    required supa.SupabaseClient adminClient,
+    required supa.SupabaseClient anonClient,
   })  : _adminClient = adminClient,
         _anonClient = anonClient;
 
@@ -35,8 +35,8 @@ class AuthService {
   final EmailService email;
   final EmailEventRepository emailEvents;
   final Clock clock;
-  final SupabaseClient _adminClient;
-  final SupabaseClient _anonClient;
+  final supa.SupabaseClient _adminClient;
+  final supa.SupabaseClient _anonClient;
   static const int maxFailedLoginAttempts = 5;
 
   Future<AuthTokens> login(
@@ -267,20 +267,62 @@ class AuthService {
     late final dynamic response;
     try {
       response = await _adminClient.auth.admin.createUser(
-        AdminUserAttributes(
+        supa.AdminUserAttributes(
           email: email,
           password: password,
           emailConfirm: emailConfirmed,
         ),
       );
+    } on supa.AuthException catch (error) {
+      final existingUserId = await _findAuthUserIdByEmail(email);
+      if (existingUserId != null) {
+        return existingUserId;
+      }
+      throw AuthException(error.message);
     } catch (_) {
-      throw AuthException('E-mail already used.');
+      final existingUserId = await _findAuthUserIdByEmail(email);
+      if (existingUserId != null) {
+        return existingUserId;
+      }
+      throw AuthException('Failed to create auth user');
     }
     final userId = response.user?.id;
     if (userId == null) {
+      final existingUserId = await _findAuthUserIdByEmail(email);
+      if (existingUserId != null) {
+        return existingUserId;
+      }
       throw AuthException('Failed to create auth user');
     }
     return userId;
+  }
+
+  Future<String?> _findAuthUserIdByEmail(String email) async {
+    if (email.trim().isEmpty) {
+      return null;
+    }
+    final normalized = email.trim().toLowerCase();
+    const perPage = 200;
+    var page = 1;
+    while (true) {
+      final users = await _adminClient.auth.admin.listUsers(
+        page: page,
+        perPage: perPage,
+      );
+      if (users.isEmpty) {
+        return null;
+      }
+      for (final user in users) {
+        final userEmail = user.email?.toLowerCase();
+        if (userEmail == normalized) {
+          return user.id;
+        }
+      }
+      if (users.length < perPage) {
+        return null;
+      }
+      page++;
+    }
   }
 
   Future<void> updateAuthPassword({
@@ -290,7 +332,7 @@ class AuthService {
   }) async {
     await _adminClient.auth.admin.updateUserById(
       userId,
-      attributes: AdminUserAttributes(
+      attributes: supa.AdminUserAttributes(
         password: password,
         emailConfirm: emailConfirmed,
       ),

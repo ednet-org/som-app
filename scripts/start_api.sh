@@ -5,14 +5,43 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 export PORT="${PORT:-8081}"
+API_URL="http://127.0.0.1:${PORT}"
 
 # Idempotent: Check if API is already running
-if curl -s "http://127.0.0.1:$PORT" >/dev/null 2>&1; then
-  echo "API already running on port $PORT"
+if curl -s "$API_URL" >/dev/null 2>&1; then
+  echo "API already running on $API_URL"
   exit 0
 fi
 
-SUPA_JSON="$(supabase status --output json)"
+ensure_supabase() {
+  if ! command -v supabase >/dev/null 2>&1; then
+    echo "Supabase CLI not found. Install it or start Supabase manually." >&2
+    exit 1
+  fi
+
+  local status_json=""
+  if status_json="$(supabase status --output json 2>/dev/null)"; then
+    if ! python3 - "$status_json" <<'PY' >/dev/null 2>&1; then
+import json, sys
+data = json.loads(sys.argv[1])
+services = data.get("services", {})
+stopped = [name for name, info in services.items() if info.get("status") != "running"]
+sys.exit(1 if stopped else 0)
+PY
+      echo "Supabase not healthy. Starting..."
+      supabase start
+      status_json="$(supabase status --output json)"
+    fi
+  else
+    echo "Supabase not running. Starting..."
+    supabase start
+    status_json="$(supabase status --output json)"
+  fi
+
+  echo "$status_json"
+}
+
+SUPA_JSON="$(ensure_supabase)"
 export DEV_FIXTURES="${DEV_FIXTURES:-true}"
 export DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"
 export SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
@@ -45,8 +74,22 @@ PY
 )"
 
 cd "$ROOT/api"
-if [[ ! -f build/bin/server.dart ]]; then
+BUILD_TARGET="$ROOT/api/build/bin/server.dart"
+NEEDS_BUILD=false
+if [[ ! -f "$BUILD_TARGET" ]]; then
+  NEEDS_BUILD=true
+else
+  if find "$ROOT/api/lib" "$ROOT/api/routes" -type f -name '*.dart' -newer "$BUILD_TARGET" | grep -q .; then
+    NEEDS_BUILD=true
+  fi
+  if [[ "$ROOT/api/pubspec.yaml" -nt "$BUILD_TARGET" ]]; then
+    NEEDS_BUILD=true
+  fi
+fi
+
+if [[ "$NEEDS_BUILD" == "true" ]]; then
   dart_frog build
 fi
 
+echo "Starting API on $API_URL"
 exec dart $DART_DEFINES build/bin/server.dart

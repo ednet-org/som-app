@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_card.dart';
@@ -20,65 +21,92 @@ class ProviderBranchesStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = Provider.of<RegistrationRequest>(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SomTags(
-          tags: request.som.availableBranches,
-          selectedTags: request.som.requestedBranches,
-          onAdd: request.som.requestBranch,
-          onRemove: request.som.removeRequestedBranch,
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'Provider type',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            _typeCard(
-              context,
-              label: 'Wholesaler',
-              value: 'grosshaendler',
-              asset: SomAssets.authTypeWholesaler,
-              selected: request.company.providerData.providerType == 'grosshaendler',
-              onTap: () =>
-                  request.company.providerData.setProviderType('grosshaendler'),
+    return Observer(
+      builder: (_) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SomTags(
+            tags: request.som.availableBranches,
+            selectedTags: request.som.requestedBranches,
+            onAdd: (tag) {
+              request.som.requestBranch(tag);
+              request.clearFieldError('provider.branchIds');
+            },
+            onRemove: request.som.removeRequestedBranch,
+          ),
+          if (request.fieldError('provider.branchIds') != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                request.fieldError('provider.branchIds')!,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
             ),
-            _typeCard(
-              context,
-              label: 'Manufacturer',
-              value: 'hersteller',
-              asset: SomAssets.authTypeManufacturer,
-              selected: request.company.providerData.providerType == 'hersteller',
-              onTap: () =>
-                  request.company.providerData.setProviderType('hersteller'),
-            ),
-            _typeCard(
-              context,
-              label: 'Service',
-              value: 'dienstleister',
-              asset: SomAssets.authTypeService,
-              selected: request.company.providerData.providerType == 'dienstleister',
-              onTap: () =>
-                  request.company.providerData.setProviderType('dienstleister'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        SomDropDown<String>(
-          value: request.company.providerData.providerType,
-          onChanged: (val) {
-            if (val != null) request.company.providerData.setProviderType(val);
-          },
-          hint: 'Select provider type',
-          label: 'Provider type',
-          items: _providerTypeOptions,
-        ),
-      ],
+          const SizedBox(height: 20),
+          Text('Provider type', style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              _typeCard(
+                context,
+                label: 'Wholesaler',
+                value: 'grosshaendler',
+                asset: SomAssets.authTypeWholesaler,
+                selected:
+                    request.company.providerData.providerType ==
+                    'grosshaendler',
+                onTap: () {
+                  request.company.providerData.setProviderType('grosshaendler');
+                  request.clearFieldError('provider.providerType');
+                },
+              ),
+              _typeCard(
+                context,
+                label: 'Manufacturer',
+                value: 'hersteller',
+                asset: SomAssets.authTypeManufacturer,
+                selected:
+                    request.company.providerData.providerType == 'hersteller',
+                onTap: () {
+                  request.company.providerData.setProviderType('hersteller');
+                  request.clearFieldError('provider.providerType');
+                },
+              ),
+              _typeCard(
+                context,
+                label: 'Service',
+                value: 'dienstleister',
+                asset: SomAssets.authTypeService,
+                selected:
+                    request.company.providerData.providerType ==
+                    'dienstleister',
+                onTap: () {
+                  request.company.providerData.setProviderType('dienstleister');
+                  request.clearFieldError('provider.providerType');
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          SomDropDown<String>(
+            value: request.company.providerData.providerType,
+            onChanged: (val) {
+              if (val != null) {
+                request.company.providerData.setProviderType(val);
+                request.clearFieldError('provider.providerType');
+              }
+            },
+            hint: 'Select provider type',
+            label: 'Provider type',
+            errorText: request.fieldError('provider.providerType'),
+            items: _providerTypeOptions,
+          ),
+        ],
+      ),
     );
   }
 
@@ -109,11 +137,7 @@ class ProviderBranchesStep extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SomSvgIcon(
-                asset,
-                size: 64,
-                color: theme.colorScheme.primary,
-              ),
+              SomSvgIcon(asset, size: 64, color: theme.colorScheme.primary),
               const SizedBox(height: 8),
               Text(label, style: theme.textTheme.bodyMedium),
             ],

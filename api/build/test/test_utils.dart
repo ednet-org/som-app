@@ -295,6 +295,89 @@ class InMemoryProviderRepository implements ProviderRepository {
           profile.pendingBranchIds.contains(branchId);
     }).toList();
   }
+
+  @override
+  Future<ProviderSearchResult> searchProviders(
+    ProviderSearchParams params,
+    CompanyRepository companyRepo,
+  ) async {
+    final effectiveLimit = params.limit > 200 ? 200 : params.limit;
+    final allCompanies = await companyRepo.listAll();
+
+    // Filter companies by type and match with profiles
+    var results = <ProviderSummaryRecord>[];
+    for (final company in allCompanies) {
+      if (company.type != 'provider' && company.type != 'buyer_provider') {
+        continue;
+      }
+      final profile = _profiles[company.id];
+      if (profile == null) {
+        continue;
+      }
+
+      // Apply filters
+      if (params.providerType != null &&
+          profile.providerType != params.providerType) {
+        continue;
+      }
+      if (params.status != null && profile.status != params.status) {
+        continue;
+      }
+      if (params.claimed != null) {
+        if (params.claimed! && profile.status != 'active') {
+          continue;
+        }
+        if (!params.claimed! && profile.status == 'active') {
+          continue;
+        }
+      }
+      if (params.branchId != null &&
+          !profile.branchIds.contains(params.branchId)) {
+        continue;
+      }
+      if (params.companySize != null &&
+          company.companySize != params.companySize) {
+        continue;
+      }
+      if (params.zipPrefix != null &&
+          params.zipPrefix!.isNotEmpty &&
+          !company.address.zip
+              .toLowerCase()
+              .startsWith(params.zipPrefix!.toLowerCase())) {
+        continue;
+      }
+      if (params.search != null &&
+          params.search!.isNotEmpty &&
+          !company.name.toLowerCase().contains(params.search!.toLowerCase())) {
+        continue;
+      }
+
+      results.add(ProviderSummaryRecord(
+        companyId: company.id,
+        companyName: company.name,
+        companySize: company.companySize,
+        providerType: profile.providerType,
+        postcode: company.address.zip,
+        branchIds: profile.branchIds,
+        pendingBranchIds: profile.pendingBranchIds,
+        status: profile.status,
+        rejectionReason: profile.rejectionReason,
+        rejectedAt: profile.rejectedAt,
+        subscriptionPlanId: profile.subscriptionPlanId,
+        paymentInterval: profile.paymentInterval,
+        bankDetails: profile.bankDetails,
+        registrationDate: company.createdAt,
+      ));
+    }
+
+    // Sort by company name for consistent ordering
+    results.sort((a, b) => a.companyName.compareTo(b.companyName));
+
+    final totalCount = results.length;
+    final paginated = results.skip(params.offset).take(effectiveLimit).toList();
+
+    return ProviderSearchResult(totalCount: totalCount, items: paginated);
+  }
 }
 
 class InMemorySubscriptionRepository implements SubscriptionRepository {

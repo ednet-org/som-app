@@ -48,38 +48,48 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   }
 
   List<Step> _buildSteps(RegistrationRequest request) {
+    final errorSteps = _errorSteps(request);
     final buyerSteps = [
       Step(
         title: _stepTitle('Role selection', SomAssets.wizardStepperCompany),
         isActive: _currentStep == 0,
-        state: StepState.indexed,
+        state: errorSteps.contains(0) ? StepState.error : StepState.indexed,
         content: const RoleSelection(),
       ),
       Step(
         title: _stepTitle('Company details', SomAssets.wizardStepperCompany),
         isActive: _currentStep == 1,
-        state: StepState.indexed,
+        state: errorSteps.contains(1) ? StepState.error : StepState.indexed,
         content: const CompanyDetailsStep(),
       ),
     ];
 
     final providerSteps = [
       Step(
-        title: _stepTitle('Company branches', SomAssets.wizardStepperVerification),
+        title: _stepTitle(
+          'Company branches',
+          SomAssets.wizardStepperVerification,
+        ),
         isActive: _currentStep == 2,
-        state: StepState.indexed,
+        state: errorSteps.contains(2) ? StepState.error : StepState.indexed,
         content: const ProviderBranchesStep(),
       ),
       Step(
-        title: _stepTitle('Subscription model', SomAssets.interactionTierUpgrade),
+        title: _stepTitle(
+          'Subscription model',
+          SomAssets.interactionTierUpgrade,
+        ),
         isActive: _currentStep == 3,
-        state: StepState.indexed,
+        state: errorSteps.contains(3) ? StepState.error : StepState.indexed,
         content: const SubscriptionSelector(),
       ),
       Step(
-        title: _stepTitle('Payment details', SomAssets.wizardStepperVerification),
+        title: _stepTitle(
+          'Payment details',
+          SomAssets.wizardStepperVerification,
+        ),
         isActive: _currentStep == 4,
-        state: StepState.indexed,
+        state: errorSteps.contains(4) ? StepState.error : StepState.indexed,
         content: const PaymentDetailsStep(),
       ),
     ];
@@ -88,7 +98,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
       Step(
         title: _stepTitle('Users', SomAssets.wizardStepperComplete),
         isActive: _currentStep == 5,
-        state: StepState.indexed,
+        state: errorSteps.contains(5) ? StepState.error : StepState.indexed,
         content: const UsersStep(),
       ),
     ];
@@ -104,11 +114,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     final theme = Theme.of(context);
     return Row(
       children: [
-        SomSvgIcon(
-          iconAsset,
-          size: 18,
-          color: theme.colorScheme.primary,
-        ),
+        SomSvgIcon(iconAsset, size: 18, color: theme.colorScheme.primary),
         const SizedBox(width: 8),
         Text(
           title,
@@ -123,9 +129,6 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
   @override
   Widget build(BuildContext context) {
     final request = Provider.of<RegistrationRequest>(context);
-    final isLastStep = _isLastStep(request);
-    final steps = _buildSteps(request);
-
     return Column(
       children: [
         Text(
@@ -135,33 +138,44 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         ),
         40.height,
         Observer(
-          builder: (_) => Column(
-            children: [
-              Stepper(
-                elevation: 40,
-                key: Key('registration-stepper-${steps.length}'),
-                steps: steps,
-                type: StepperType.vertical,
-                currentStep: _currentStep,
-                controlsBuilder: (context, details) => _buildControls(
-                  context,
-                  details,
-                  request,
-                  isLastStep,
-                ),
-                onStepContinue: () => _onStepContinue(steps.length),
-                onStepCancel: _onStepCancel,
-                onStepTapped: (step) => setState(() => _currentStep = step),
-              ),
-              if (request.isFailedRegistration)
-                Text(
-                  request.errorMessage,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+          builder: (_) {
+            final steps = _buildSteps(request);
+            final isLastStep = _isLastStep(request);
+            if (_currentStep >= steps.length) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!mounted) return;
+                setState(() {
+                  _currentStep = steps.isEmpty ? 0 : steps.length - 1;
+                });
+              });
+            }
+            return Column(
+              children: [
+                if (request.errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      request.errorMessage,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Theme.of(context).colorScheme.error,
                       ),
+                    ),
+                  ),
+                Stepper(
+                  elevation: 40,
+                  key: Key('registration-stepper-${steps.length}'),
+                  steps: steps,
+                  type: StepperType.vertical,
+                  currentStep: _currentStep,
+                  controlsBuilder: (context, details) =>
+                      _buildControls(context, details, request, isLastStep),
+                  onStepContinue: () => _onStepContinue(steps.length),
+                  onStepCancel: _onStepCancel,
+                  onStepTapped: (step) => setState(() => _currentStep = step),
                 ),
-            ],
-          ),
+              ],
+            );
+          },
         ),
       ],
     );
@@ -179,7 +193,10 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
     return _buildNavigationControls(details);
   }
 
-  Widget _buildFinalStepControls(BuildContext context, RegistrationRequest request) {
+  Widget _buildFinalStepControls(
+    BuildContext context,
+    RegistrationRequest request,
+  ) {
     return Column(
       children: [
         Row(
@@ -199,15 +216,24 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
                       ),
                     )
                   : !request.isSuccess
-                      ? ActionButton(
-                          onPressed: () async {
-                            final beamer = Beamer.of(context);
-                            await request.registerCustomer();
-                            beamer.beamTo(CustomerRegisterSuccessPageLocation());
-                          },
-                          textContent: 'Register',
-                        )
-                      : Container(),
+                  ? ActionButton(
+                      onPressed: () async {
+                        final beamer = Beamer.of(context);
+                        await request.registerCustomer();
+                        if (!request.isSuccess &&
+                            request.fieldErrors.isNotEmpty) {
+                          final step = _firstErrorStep(request);
+                          if (step != null && mounted) {
+                            setState(() => _currentStep = step);
+                          }
+                        }
+                        if (request.isSuccess) {
+                          beamer.beamTo(CustomerRegisterSuccessPageLocation());
+                        }
+                      },
+                      textContent: 'Register',
+                    )
+                  : Container(),
             ),
           ],
         ),
@@ -233,10 +259,7 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
           child: const Text('CONTINUE'),
         ),
         50.width,
-        TextButton(
-          onPressed: details.onStepCancel,
-          child: const Text('BACK'),
-        ),
+        TextButton(onPressed: details.onStepCancel, child: const Text('BACK')),
       ],
     );
   }
@@ -261,5 +284,43 @@ class _RegistrationStepperState extends State<RegistrationStepper> {
         context.beamTo(AuthLoginPageLocation());
       }
     });
+  }
+
+  Set<int> _errorSteps(RegistrationRequest request) {
+    final steps = <int>{};
+    for (final field in request.fieldErrors.keys) {
+      steps.add(_stepIndexForField(request, field));
+    }
+    return steps;
+  }
+
+  int? _firstErrorStep(RegistrationRequest request) {
+    if (request.fieldErrors.isEmpty) return null;
+    final steps = _errorSteps(request).toList()..sort();
+    return steps.isEmpty ? null : steps.first;
+  }
+
+  int _stepIndexForField(RegistrationRequest request, String field) {
+    final isProvider = request.company.isProvider;
+    if (field == 'company.type') return 0;
+    if (field.startsWith('company.')) return 1;
+    if (field.startsWith('provider.branchIds') ||
+        field.startsWith('provider.providerType')) {
+      return isProvider ? 2 : 1;
+    }
+    if (field.startsWith('provider.subscriptionPlanId')) {
+      return isProvider ? 3 : 1;
+    }
+    if (field.startsWith('provider.bankDetails')) {
+      return isProvider ? 4 : 1;
+    }
+    if (field.startsWith('admin.') ||
+        field.startsWith('users.') ||
+        field == 'termsAccepted' ||
+        field == 'privacyAccepted' ||
+        field == 'company.users') {
+      return isProvider ? 5 : 2;
+    }
+    return isProvider ? 5 : 2;
   }
 }

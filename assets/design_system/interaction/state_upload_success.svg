@@ -1,17 +1,10 @@
 <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="glow_success" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
-
   <!-- Construction Circle -->
   <circle cx="100" cy="100" r="40" stroke="#1E293B" stroke-width="2"/>
   <circle cx="100" cy="100" r="40" stroke="#38BDF8" stroke-width="2" stroke-dasharray="60 200" transform="rotate(-90 100 100)"/>
   
   <!-- Checkmark -->
-  <path d="M85 100 L95 110 L115 90" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow_success)"/>
+  <path d="M85 100 L95 110 L115 90" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   
   <!-- Sparkles -->
   <path d="M140 60 L142 55 L144 60 L149 62 L144 64 L142 69 L140 64 L135 62 Z" fill="#38BDF8"/>

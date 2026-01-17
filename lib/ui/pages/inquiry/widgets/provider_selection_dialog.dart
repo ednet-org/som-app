@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
@@ -19,15 +20,16 @@ class ProviderSearchResult {
 }
 
 /// Callback type for loading providers with pagination.
-typedef LoadProvidersCallback = Future<ProviderSearchResult> Function({
-  required int limit,
-  required int offset,
-  String? search,
-  String? branchId,
-  String? companySize,
-  String? providerType,
-  String? zipPrefix,
-});
+typedef LoadProvidersCallback =
+    Future<ProviderSearchResult> Function({
+      required int limit,
+      required int offset,
+      String? search,
+      String? branchId,
+      String? companySize,
+      String? providerType,
+      String? zipPrefix,
+    });
 
 /// Dialog for selecting providers to assign to an inquiry.
 ///
@@ -94,6 +96,9 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   bool get _overLimit =>
       widget.maxProviders > 0 && _selectedIds.length > widget.maxProviders;
+
+  BoxConstraints get _filterPopupConstraints =>
+      const BoxConstraints(minWidth: 240, maxWidth: 360, maxHeight: 360);
 
   @override
   void initState() {
@@ -194,7 +199,13 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
   }
 
   void _toggleSelection(ProviderSummary provider) {
-    final id = provider.companyId ?? 'unknown';
+    final id = provider.companyId;
+    if (id == null || id.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Provider is missing a company ID.')),
+      );
+      return;
+    }
     setState(() {
       if (_selectedIds.contains(id)) {
         _selectedIds.remove(id);
@@ -208,13 +219,19 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedLabel = widget.maxProviders > 0
+        ? '${_selectedIds.length}/${widget.maxProviders} selected'
+        : '${_selectedIds.length} selected';
     return AlertDialog(
       title: Row(
         children: [
           const Expanded(child: Text('Select providers')),
           Text(
-            '${_selectedIds.length} selected',
-            style: Theme.of(context).textTheme.bodySmall,
+            selectedLabel,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: _overLimit ? Colors.orangeAccent : null,
+              fontWeight: _overLimit ? FontWeight.w600 : null,
+            ),
           ),
         ],
       ),
@@ -225,7 +242,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildSearchBar(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             _buildFilters(),
             const SizedBox(height: 8),
             if (_overLimit)
@@ -248,7 +265,8 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
       actions: [
         SomButton(
           onPressed: () => Navigator.of(context).pop(),
-          text: 'Cancel', type: SomButtonType.ghost,
+          text: 'Cancel',
+          type: SomButtonType.ghost,
         ),
         SomButton(
           onPressed: _selectedIds.isEmpty || _overLimit
@@ -276,93 +294,133 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
   }
 
   Widget _buildFilters() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          SizedBox(
-            width: 200,
-            child: SomDropDown<String>(
-              hint: 'Branch',
-              value: _branchId,
-              items: widget.branches.map((b) => b.id!).toList(),
-              itemAsString: (id) => widget.branches.firstWhere((b) => b.id == id).name ?? id,
-              onChanged: (value) {
-                setState(() => _branchId = value);
-                _loadInitialProviders();
-              },
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < 640;
+        final popupMode = isCompact
+            ? PopupMode.modalBottomSheet
+            : PopupMode.menu;
+        final popupConstraints = isCompact ? null : _filterPopupConstraints;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text('Filters', style: Theme.of(context).textTheme.bodySmall),
+                const Spacer(),
+                SomButton(
+                  onPressed: () {
+                    setState(() {
+                      _branchId = null;
+                      _companySize = null;
+                      _providerType = null;
+                      _zipPrefix = null;
+                      _search = null;
+                      _searchController.clear();
+                    });
+                    _loadInitialProviders();
+                  },
+                  text: 'Clear filters',
+                  type: SomButtonType.ghost,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 8),
-          SizedBox(
-            width: 150,
-            child: SomDropDown<String>(
-              hint: 'Provider type',
-              value: _providerType,
-              items: const ['haendler', 'hersteller', 'dienstleister', 'grosshaendler'],
-              itemAsString: (String s) {
-                switch (s) {
-                  case 'haendler':
-                    return 'Händler';
-                  case 'hersteller':
-                    return 'Hersteller';
-                  case 'dienstleister':
-                    return 'Dienstleister';
-                  case 'grosshaendler':
-                    return 'Großhändler';
-                  default:
-                    return s;
-                }
-              },
-              onChanged: (value) {
-                setState(() => _providerType = value);
-                _loadInitialProviders();
-              },
+            const SizedBox(height: 6),
+            Wrap(
+              spacing: 12,
+              runSpacing: 8,
+              children: [
+                SizedBox(
+                  width: 220,
+                  child: SomDropDown<String>(
+                    hint: 'Branch',
+                    value: _branchId,
+                    items: widget.branches.map((b) => b.id!).toList(),
+                    itemAsString: (id) =>
+                        widget.branches.firstWhere((b) => b.id == id).name ??
+                        id,
+                    popupMode: popupMode,
+                    popupConstraints: popupConstraints,
+                    onChanged: (value) {
+                      setState(() => _branchId = value);
+                      _loadInitialProviders();
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 190,
+                  child: SomDropDown<String>(
+                    hint: 'Provider type',
+                    value: _providerType,
+                    items: const [
+                      'haendler',
+                      'hersteller',
+                      'dienstleister',
+                      'grosshaendler',
+                    ],
+                    itemAsString: (String s) {
+                      switch (s) {
+                        case 'haendler':
+                          return 'Händler';
+                        case 'hersteller':
+                          return 'Hersteller';
+                        case 'dienstleister':
+                          return 'Dienstleister';
+                        case 'grosshaendler':
+                          return 'Großhändler';
+                        default:
+                          return s;
+                      }
+                    },
+                    popupMode: popupMode,
+                    popupConstraints: popupConstraints,
+                    onChanged: (value) {
+                      setState(() => _providerType = value);
+                      _loadInitialProviders();
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 160,
+                  child: SomDropDown<String>(
+                    hint: 'Company size',
+                    value: _companySize,
+                    items: const [
+                      '0-10',
+                      '11-50',
+                      '51-100',
+                      '101-250',
+                      '251-500',
+                      '500+',
+                    ],
+                    popupMode: popupMode,
+                    popupConstraints: popupConstraints,
+                    onChanged: (value) {
+                      setState(() => _companySize = value);
+                      _loadInitialProviders();
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 140,
+                  child: SomTextInput(
+                    label: 'ZIP prefix',
+                    onChanged: (value) {
+                      setState(
+                        () => _zipPrefix = value.trim().isEmpty
+                            ? null
+                            : value.trim(),
+                      );
+                    },
+                    onFieldSubmitted: (_) => _loadInitialProviders(),
+                  ),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 8),
-          SizedBox(
-            width: 120,
-            child: SomDropDown<String>(
-              hint: 'Company size',
-              value: _companySize,
-              items: const ['0-10', '11-50', '51-100', '101-250', '251-500', '500+'],
-              onChanged: (value) {
-                setState(() => _companySize = value);
-                _loadInitialProviders();
-              },
-            ),
-          ),
-          const SizedBox(width: 8),
-          SizedBox(
-            width: 100,
-            child: SomTextInput(
-              label: 'ZIP prefix',
-              onChanged: (value) {
-                setState(
-                    () => _zipPrefix = value.trim().isEmpty ? null : value.trim());
-              },
-              onFieldSubmitted: (_) => _loadInitialProviders(),
-            ),
-          ),
-          const SizedBox(width: 8),
-          SomButton(
-            onPressed: () {
-              setState(() {
-                _branchId = null;
-                _companySize = null;
-                _providerType = null;
-                _zipPrefix = null;
-                _search = null;
-                _searchController.clear();
-              });
-              _loadInitialProviders();
-            },
-            text: 'Clear',
-            type: SomButtonType.ghost,
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 
@@ -380,7 +438,8 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
             const SizedBox(height: 16),
             SomButton(
               onPressed: _loadInitialProviders,
-              text: 'Retry', type: SomButtonType.primary,
+              text: 'Retry',
+              type: SomButtonType.primary,
             ),
           ],
         ),
@@ -403,13 +462,13 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         }
 
         final provider = _providers[index];
-        final id = provider.companyId ?? 'unknown';
-        final checked = _selectedIds.contains(id);
+        final id = provider.companyId;
+        final checked = id != null && _selectedIds.contains(id);
 
         return CheckboxListTile(
           value: checked,
-          onChanged: (_) => _toggleSelection(provider),
-          title: Text(provider.companyName ?? id),
+          onChanged: id == null ? null : (_) => _toggleSelection(provider),
+          title: Text(provider.companyName ?? (id ?? 'Unknown provider')),
           subtitle: Text(
             'Branch: ${provider.branchIds?.join(', ') ?? '-'} | '
             'Type: ${provider.providerType ?? '-'} | '

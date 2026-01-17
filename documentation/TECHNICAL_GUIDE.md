@@ -45,6 +45,27 @@ Optional overrides:
 - `SYSTEM_ADMIN_PASSWORD` (default `ChangeMe123!`)
 - `FLUTTER_WEB_MODE=release` to build a production-like web bundle and serve `build/web` via `python3 -m http.server`.
 
+## Start Flutter macOS (Debug/Profile)
+Debug mode on macOS uses JIT entitlements and can fail with:
+`Error waiting for a debug connection: The log reader stopped unexpectedly`
+and an `amfid` log mentioning provisioning profiles.
+
+If that happens:
+- Open `macos/Runner.xcworkspace` in Xcode and set the signing Team for the Runner target.
+- Enable "Automatically manage signing" and let Xcode create/install a Mac Development provisioning profile.
+- Rebuild with `flutter run -d macos`.
+
+If debug still fails, run in profile mode:
+```
+flutter run -d macos --profile \
+  --dart-define=API_BASE_URL=http://127.0.0.1:8081 \
+  --dart-define=DEV_QUICK_LOGIN=true
+```
+
+Note: `macos/Runner/DebugProfile.entitlements` explicitly sets
+`com.apple.security.get-task-allow` to `false`. If you need LLDB attach,
+set it back to `true` and ensure a valid Mac Development profile is installed.
+
 ## Full Stack (Supabase + API + Flutter)
 ```
 scripts/start_full_stack.sh

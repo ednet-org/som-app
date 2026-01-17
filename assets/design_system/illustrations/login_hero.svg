@@ -1,16 +1,15 @@
 <svg width="400" height="600" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="400" height="600" fill="#0F172A"/>
 <circle cx="50" cy="50" r="150" fill="#38BDF8" fill-opacity="0.05"/>
 <circle cx="350" cy="550" r="200" fill="#818CF8" fill-opacity="0.05"/>
 <path d="M200 200L250 250L150 350L300 400" stroke="#38BDF8" stroke-width="2" stroke-opacity="0.2"/>
 <path d="M100 150L200 200L100 400" stroke="#818CF8" stroke-width="2" stroke-opacity="0.2"/>
-<circle cx="200" cy="200" r="8" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
-<circle cx="250" cy="250" r="6" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
-<circle cx="150" cy="350" r="6" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
-<circle cx="300" cy="400" r="8" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
-<circle cx="100" cy="150" r="6" fill="#0F172A" stroke="#818CF8" stroke-width="2"/>
-<circle cx="100" cy="400" r="6" fill="#0F172A" stroke="#818CF8" stroke-width="2"/>
-<rect x="180" y="290" width="40" height="40" rx="8" fill="#1E293B" stroke="#94A3B8" stroke-width="2"/>
+<circle cx="200" cy="200" r="8" fill="none" stroke="#38BDF8" stroke-width="2"/>
+<circle cx="250" cy="250" r="6" fill="none" stroke="#38BDF8" stroke-width="2"/>
+<circle cx="150" cy="350" r="6" fill="none" stroke="#38BDF8" stroke-width="2"/>
+<circle cx="300" cy="400" r="8" fill="none" stroke="#38BDF8" stroke-width="2"/>
+<circle cx="100" cy="150" r="6" fill="none" stroke="#818CF8" stroke-width="2"/>
+<circle cx="100" cy="400" r="6" fill="none" stroke="#818CF8" stroke-width="2"/>
+<rect x="180" y="290" width="40" height="40" rx="8" fill="none" stroke="#94A3B8" stroke-width="2"/>
 <path d="M190 310H210" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
 <path d="M200 300V320" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
 </svg>

@@ -1899,8 +1899,6 @@ paths:
           description: Forbidden
         '404':
           description: Not found
-        '404':
-          description: Not found
   /inquiries/{inquiryId}/close:
     post:
       tags: [Inquiries]
@@ -2549,10 +2547,29 @@ paths:
   /providers:
     get:
       tags: [Providers]
-      summary: List providers
+      summary: List providers with pagination
+      description: Returns paginated list of providers with total count in headers.
       security:
         - BearerAuth: []
       parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+          description: Number of results per page (max 200)
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: Number of results to skip
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search by company name (case-insensitive)
         - in: query
           name: branchId
           schema:
@@ -2585,12 +2602,24 @@ paths:
       responses:
         '200':
           description: Provider list
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of matching providers
+            X-Has-More:
+              schema:
+                type: boolean
+              description: Whether there are more results after this page
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProviderSummary'
+            text/csv:
+              schema:
+                type: string
         '403':
           description: Forbidden
   /providers/{companyId}/decline:

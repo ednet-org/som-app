@@ -211,23 +211,27 @@ abstract class _InquiryFormStore with Store {
     error = null;
 
     try {
-      final request = CreateInquiryRequest((b) => b
-        ..branchId = branchId
-        ..categoryId = categoryId
-        ..productTags = productTags.isNotEmpty ? ListBuilder(productTags) : null
-        ..deadline = deadline
-        ..description = description.trim()
-        ..deliveryZips = ListBuilder(deliveryZips)
-        ..numberOfProviders = numberOfProviders
-        ..providerType = providerType
-        ..providerCompanySize = providerSize
-        ..providerZip = providerZipPrefix
-        ..salutation = contactSalutation.isNotEmpty ? contactSalutation : null
-        ..title = contactTitle.isNotEmpty ? contactTitle : null
-        ..firstName = contactFirstName.isNotEmpty ? contactFirstName : null
-        ..lastName = contactLastName.isNotEmpty ? contactLastName : null
-        ..telephone = contactTelephone.isNotEmpty ? contactTelephone : null
-        ..email = contactEmail.isNotEmpty ? contactEmail : null);
+      final request = CreateInquiryRequest(
+        (b) => b
+          ..branchId = branchId
+          ..categoryId = categoryId
+          ..productTags = productTags.isNotEmpty
+              ? ListBuilder(productTags)
+              : null
+          ..deadline = deadline!.toUtc()
+          ..description = description.trim()
+          ..deliveryZips = ListBuilder(deliveryZips)
+          ..numberOfProviders = numberOfProviders
+          ..providerType = providerType
+          ..providerCompanySize = providerSize
+          ..providerZip = providerZipPrefix
+          ..salutation = contactSalutation.isNotEmpty ? contactSalutation : null
+          ..title = contactTitle.isNotEmpty ? contactTitle : null
+          ..firstName = contactFirstName.isNotEmpty ? contactFirstName : null
+          ..lastName = contactLastName.isNotEmpty ? contactLastName : null
+          ..telephone = contactTelephone.isNotEmpty ? contactTelephone : null
+          ..email = contactEmail.isNotEmpty ? contactEmail : null,
+      );
 
       final inquiry = await repository.createInquiry(request);
 

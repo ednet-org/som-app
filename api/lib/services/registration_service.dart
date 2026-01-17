@@ -41,11 +41,14 @@ class RegistrationService {
     final companyId = const Uuid().v4();
     final now = clock.nowUtc();
     final rawType = companyJson['type'];
-    final parsedType = rawType is int
-        ? rawType
-        : int.tryParse(rawType?.toString() ?? '');
+    final parsedType =
+        rawType is int ? rawType : int.tryParse(rawType?.toString() ?? '');
     if (parsedType == null || parsedType < 0 || parsedType > 2) {
-      throw RegistrationException('Company type is required.');
+      throw RegistrationException(
+        'Company type is required.',
+        field: 'company.type',
+        code: 'required',
+      );
     }
     final companyType = companyTypeFromWire(parsedType);
     final termsAccepted = companyJson['termsAccepted'] == true;
@@ -56,18 +59,22 @@ class RegistrationService {
     );
 
     final websiteUrl = companyJson['websiteUrl'] as String?;
-    if (websiteUrl != null && websiteUrl.isNotEmpty) {
-      final parsed = Uri.tryParse(websiteUrl);
-      final validScheme = parsed != null &&
-          (parsed.scheme == 'http' || parsed.scheme == 'https') &&
-          parsed.hasAuthority;
-      if (!validScheme && !allowIncomplete) {
-        throw RegistrationException('Website URL must be a valid URL.');
-      }
-    }
 
-    if (!allowIncomplete && (!termsAccepted || !privacyAccepted)) {
-      throw RegistrationException('Terms and privacy policy must be accepted.');
+    if (!allowIncomplete) {
+      if (!termsAccepted) {
+        throw RegistrationException(
+          'Accept terms and conditions.',
+          field: 'termsAccepted',
+          code: 'required',
+        );
+      }
+      if (!privacyAccepted) {
+        throw RegistrationException(
+          'Accept privacy policy.',
+          field: 'privacyAccepted',
+          code: 'required',
+        );
+      }
     }
 
     final companyRecord = CompanyRecord(
@@ -107,7 +114,11 @@ class RegistrationService {
     if (companyType == 'provider' || companyType == 'buyer_provider') {
       final providerData = companyJson['providerData'] as Map<String, dynamic>?;
       if (!allowIncomplete && providerData == null) {
-        throw RegistrationException('Provider registration data is required.');
+        throw RegistrationException(
+          'Provider registration data is required.',
+          field: 'providerData',
+          code: 'required',
+        );
       }
       final bankDetailsJson =
           providerData?['bankDetails'] as Map<String, dynamic>? ?? {};
@@ -120,14 +131,40 @@ class RegistrationService {
         final iban = bankDetailsJson['iban'] as String? ?? '';
         final bic = bankDetailsJson['bic'] as String? ?? '';
         final owner = bankDetailsJson['accountOwner'] as String? ?? '';
-        if (iban.isEmpty || bic.isEmpty || owner.isEmpty) {
-          throw RegistrationException('Bank details are required.');
+        if (iban.isEmpty) {
+          throw RegistrationException(
+            'IBAN is required.',
+            field: 'provider.bankDetails.iban',
+            code: 'required',
+          );
+        }
+        if (bic.isEmpty) {
+          throw RegistrationException(
+            'BIC is required.',
+            field: 'provider.bankDetails.bic',
+            code: 'required',
+          );
+        }
+        if (owner.isEmpty) {
+          throw RegistrationException(
+            'Account owner is required.',
+            field: 'provider.bankDetails.accountOwner',
+            code: 'required',
+          );
         }
         if (branchIds.isEmpty) {
-          throw RegistrationException('At least one branch is required.');
+          throw RegistrationException(
+            'Select at least one branch.',
+            field: 'provider.branchIds',
+            code: 'required',
+          );
         }
         if (providerType == null || providerType.isEmpty) {
-          throw RegistrationException('Provider type is required.');
+          throw RegistrationException(
+            'Provider type is required.',
+            field: 'provider.providerType',
+            code: 'required',
+          );
         }
       }
 
@@ -148,12 +185,20 @@ class RegistrationService {
       final paymentInterval = paymentIntervalFromWire(
           providerData?['paymentInterval'] as int? ?? 0);
       if (!allowIncomplete && subscriptionPlanId.isEmpty) {
-        throw RegistrationException('Subscription plan is required.');
+        throw RegistrationException(
+          'Subscription plan is required.',
+          field: 'provider.subscriptionPlanId',
+          code: 'required',
+        );
       }
       if (subscriptionPlanId.isNotEmpty) {
         final plan = await subscriptions.findPlanById(subscriptionPlanId);
         if (plan == null && !allowIncomplete) {
-          throw RegistrationException('Subscription plan not found.');
+          throw RegistrationException(
+            'Subscription plan not found.',
+            field: 'provider.subscriptionPlanId',
+            code: 'not_found',
+          );
         }
         if (plan != null) {
           maxUsers = _maxUsersForPlan(plan);
@@ -197,10 +242,15 @@ class RegistrationService {
     }
 
     if (maxUsers != null && maxUsers > 0 && usersJson.length > maxUsers) {
-      throw RegistrationException('User limit exceeded for subscription plan.');
+      throw RegistrationException(
+        'User limit exceeded for subscription plan.',
+        field: 'company.users',
+        code: 'limit_exceeded',
+      );
     }
 
     final createdUsers = <UserRecord>[];
+    var userIndex = 0;
     for (final entry in usersJson) {
       final userJson = entry as Map<String, dynamic>;
       final roles = (userJson['roles'] as List<dynamic>? ?? [])
@@ -211,12 +261,19 @@ class RegistrationService {
         companyType: companyType,
       );
       final email = (userJson['email'] as String? ?? '').toLowerCase();
-      await _ensureUniqueEmail(email);
+      final fieldKey = normalizedRoles.contains('admin')
+          ? 'admin.email'
+          : 'users.$userIndex.email';
+      await _ensureUniqueEmail(email, field: fieldKey);
       late final String authUserId;
       try {
         authUserId = await auth.ensureAuthUser(email: email);
       } on AuthException catch (error) {
-        throw RegistrationException(error.message);
+        throw RegistrationException(
+          error.message,
+          field: fieldKey,
+          code: 'auth',
+        );
       }
       final user = UserRecord(
         id: authUserId,
@@ -249,12 +306,17 @@ class RegistrationService {
       }
       await users.create(user);
       createdUsers.add(user);
+      userIndex++;
     }
 
     final adminExists =
         createdUsers.any((user) => user.roles.contains('admin'));
     if (!adminExists) {
-      throw RegistrationException('Admin user is required');
+      throw RegistrationException(
+        'Admin user is required.',
+        field: 'admin.email',
+        code: 'required',
+      );
     }
 
     for (final user in createdUsers) {
@@ -264,13 +326,21 @@ class RegistrationService {
     return companyRecord;
   }
 
-  Future<void> _ensureUniqueEmail(String email) async {
+  Future<void> _ensureUniqueEmail(String email, {String? field}) async {
     if (email.isEmpty) {
-      throw RegistrationException('E-mail is required.');
+      throw RegistrationException(
+        'E-mail is required.',
+        field: field ?? 'admin.email',
+        code: 'required',
+      );
     }
     final existing = await users.findByEmail(email);
-    if (existing != null) {
-      throw RegistrationException('E-mail already used.');
+    if (existing != null && existing.removedAt == null) {
+      throw RegistrationException(
+        'This email is already registered. Try logging in or use another.',
+        field: field ?? 'admin.email',
+        code: 'duplicate',
+      );
     }
   }
 
@@ -323,8 +393,17 @@ class RegistrationService {
 }
 
 class RegistrationException implements Exception {
-  RegistrationException(this.message);
+  RegistrationException(this.message, {this.field, this.code});
   final String message;
+  final String? field;
+  final String? code;
+
+  Map<String, dynamic> toJson() => {
+        'message': message,
+        if (field != null) 'field': field,
+        if (code != null) 'code': code,
+      };
+
   @override
   String toString() => message;
 }

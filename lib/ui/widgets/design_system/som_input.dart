@@ -9,8 +9,10 @@ class SomInput extends StatefulWidget {
   final String? errorText;
   final bool isPassword;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
+  final TextDirection? textDirection;
 
   const SomInput({
     super.key,
@@ -19,6 +21,7 @@ class SomInput extends StatefulWidget {
     this.errorText,
     this.isPassword = false,
     this.controller,
+    this.focusNode,
     this.keyboardType,
     this.onChanged,
     this.validator,
@@ -26,6 +29,7 @@ class SomInput extends StatefulWidget {
     this.iconAsset,
     this.maxLines = 1,
     this.onFieldSubmitted,
+    this.textDirection,
   });
 
   final FormFieldValidator<String>? validator;
@@ -56,12 +60,14 @@ class _SomInputState extends State<SomInput> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     Widget? suffixIcon;
     if (widget.isPassword) {
       suffixIcon = IconButton(
         icon: SvgPicture.asset(
-          _obscureText ? SomAssets.iconVisibilityOn : SomAssets.iconVisibilityOff,
+          _obscureText
+              ? SomAssets.iconVisibilityOn
+              : SomAssets.iconVisibilityOff,
           colorFilter: ColorFilter.mode(
             theme.inputDecorationTheme.suffixIconColor ?? Colors.grey,
             BlendMode.srcIn,
@@ -70,7 +76,7 @@ class _SomInputState extends State<SomInput> {
         onPressed: _toggleVisibility,
       );
     } else if (widget.controller?.text.isNotEmpty == true) {
-       suffixIcon = IconButton(
+      suffixIcon = IconButton(
         icon: SvgPicture.asset(
           SomAssets.iconClearCircle,
           colorFilter: ColorFilter.mode(
@@ -88,11 +94,7 @@ class _SomInputState extends State<SomInput> {
     if (widget.iconAsset != null) {
       prefixIcon = Padding(
         padding: const EdgeInsets.all(12),
-        child: SomSvgIcon(
-          widget.iconAsset!,
-          size: 20,
-          color: iconColor,
-        ),
+        child: SomSvgIcon(widget.iconAsset!, size: 20, color: iconColor),
       );
     } else if (widget.icon != null) {
       prefixIcon = Icon(widget.icon, color: iconColor);
@@ -104,6 +106,7 @@ class _SomInputState extends State<SomInput> {
         // Using InputDecorator implicitly via TextField
         TextFormField(
           controller: widget.controller,
+          focusNode: widget.focusNode,
           obscureText: widget.isPassword && _obscureText,
           keyboardType: widget.keyboardType,
           onChanged: widget.onChanged,
@@ -111,14 +114,31 @@ class _SomInputState extends State<SomInput> {
           validator: widget.validator,
           maxLines: widget.isPassword ? 1 : widget.maxLines,
           onFieldSubmitted: widget.onFieldSubmitted,
+          textDirection: widget.textDirection,
+          textAlign: TextAlign.left,
           decoration: InputDecoration(
             labelText: widget.label,
             hintText: widget.hintText,
-            errorText: widget.errorText,
+            errorText: widget.errorText?.isNotEmpty == true ? ' ' : null,
+            errorStyle: const TextStyle(
+              height: 0,
+              fontSize: 0,
+              color: Colors.transparent,
+            ),
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
           ),
         ),
+        if (widget.errorText?.isNotEmpty == true)
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 12),
+            child: Text(
+              widget.errorText!,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+            ),
+          ),
       ],
     );
   }

@@ -65,13 +65,13 @@ class _AdsPageState extends State<AdsPage> {
     final scope = appStore.authorization?.isConsultant == true
         ? 'all'
         : appStore.authorization?.isProvider == true
-            ? 'company'
-            : null;
+        ? 'company'
+        : null;
     final response = await api.getAdsApi().adsGet(
-          branchId: _filterBranchId,
-          status: _filterStatus,
-          scope: scope,
-        );
+      branchId: _filterBranchId,
+      status: _filterStatus,
+      scope: scope,
+    );
     return response.data?.toList() ?? const [];
   }
 
@@ -99,26 +99,28 @@ class _AdsPageState extends State<AdsPage> {
   Future<void> _createAd(AdFormData data) async {
     final api = Provider.of<Openapi>(context, listen: false);
     final response = await api.getAdsApi().createAd(
-          createAdRequest: CreateAdRequest((b) => b
-            ..type = data.type
-            ..status = CreateAdRequestStatusEnum.draft
-            ..branchId = data.branchId
-            ..url = data.url
-            ..headline = data.headline
-            ..description = data.description
-            ..startDate = data.startDate?.toIso8601String()
-            ..endDate = data.endDate?.toIso8601String()
-            ..bannerDate = data.bannerDate?.toIso8601String()),
-        );
+      createAdRequest: CreateAdRequest(
+        (b) => b
+          ..type = data.type
+          ..status = CreateAdRequestStatusEnum.draft
+          ..branchId = data.branchId
+          ..url = data.url
+          ..headline = data.headline
+          ..description = data.description
+          ..startDate = data.startDate?.toUtc().toIso8601String()
+          ..endDate = data.endDate?.toUtc().toIso8601String()
+          ..bannerDate = data.bannerDate?.toUtc().toIso8601String(),
+      ),
+    );
     final adId = response.data?.id;
     if (adId != null && data.image?.bytes != null) {
       await api.getAdsApi().adsAdIdImagePost(
-            adId: adId,
-            file: MultipartFile.fromBytes(
-              data.image!.bytes!,
-              filename: data.image!.name,
-            ),
-          );
+        adId: adId,
+        file: MultipartFile.fromBytes(
+          data.image!.bytes!,
+          filename: data.image!.name,
+        ),
+      );
     }
     _showSnack('Ad created.');
     setState(() => _showCreateForm = false);
@@ -128,22 +130,24 @@ class _AdsPageState extends State<AdsPage> {
   Future<void> _updateAd(AdEditData data) async {
     if (_selectedAd?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    final updated = _selectedAd!.rebuild((b) => b
-      ..url = data.url
-      ..headline = data.headline.isEmpty ? null : data.headline
-      ..description = data.description.isEmpty ? null : data.description
-      ..startDate = data.startDate
-      ..endDate = data.endDate
-      ..bannerDate = data.bannerDate);
+    final updated = _selectedAd!.rebuild(
+      (b) => b
+        ..url = data.url
+        ..headline = data.headline.isEmpty ? null : data.headline
+        ..description = data.description.isEmpty ? null : data.description
+        ..startDate = data.startDate?.toUtc()
+        ..endDate = data.endDate?.toUtc()
+        ..bannerDate = data.bannerDate?.toUtc(),
+    );
     await api.getAdsApi().adsAdIdPut(adId: updated.id!, ad: updated);
     if (data.image?.bytes != null) {
       await api.getAdsApi().adsAdIdImagePost(
-            adId: updated.id!,
-            file: MultipartFile.fromBytes(
-              data.image!.bytes!,
-              filename: data.image!.name,
-            ),
-          );
+        adId: updated.id!,
+        file: MultipartFile.fromBytes(
+          data.image!.bytes!,
+          filename: data.image!.name,
+        ),
+      );
     }
     _showSnack('Ad updated.');
     await _refresh();
@@ -154,12 +158,14 @@ class _AdsPageState extends State<AdsPage> {
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       await api.getAdsApi().adsAdIdActivatePost(
-            adId: _selectedAd!.id!,
-            adActivationRequest: AdActivationRequest((b) => b
-              ..startDate = _selectedAd!.startDate
-              ..endDate = _selectedAd!.endDate
-              ..bannerDate = _selectedAd!.bannerDate),
-          );
+        adId: _selectedAd!.id!,
+        adActivationRequest: AdActivationRequest(
+          (b) => b
+            ..startDate = _selectedAd!.startDate?.toUtc()
+            ..endDate = _selectedAd!.endDate?.toUtc()
+            ..bannerDate = _selectedAd!.bannerDate?.toUtc(),
+        ),
+      );
       _showSnack('Ad activated.');
       await _refresh();
     } catch (error) {
@@ -190,9 +196,9 @@ class _AdsPageState extends State<AdsPage> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -261,19 +267,16 @@ class _AdsPageState extends State<AdsPage> {
           rightSplit: isBuyer
               ? AdsBuyerView(ads: ads)
               : _showCreateForm
-                  ? AdsCreateForm(
-                      branches: _branches,
-                      onSubmit: _createAd,
-                    )
-                  : _selectedAd != null
-                      ? AdsEditForm(
-                          ad: _selectedAd!,
-                          onUpdate: _updateAd,
-                          onActivate: _activateAd,
-                          onDeactivate: _deactivateAd,
-                          onDelete: _deleteAd,
-                        )
-                      : const NoAdSelected(),
+              ? AdsCreateForm(branches: _branches, onSubmit: _createAd)
+              : _selectedAd != null
+              ? AdsEditForm(
+                  ad: _selectedAd!,
+                  onUpdate: _updateAd,
+                  onActivate: _activateAd,
+                  onDeactivate: _deactivateAd,
+                  onDelete: _deleteAd,
+                )
+              : const NoAdSelected(),
         );
       },
     );

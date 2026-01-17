@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
@@ -27,10 +28,14 @@ class SomCard extends StatelessWidget {
           Positioned.fill(
             child: Opacity(
               opacity: 0.08,
-              child: SvgPicture.asset(
-                SomAssets.patternDotNoise,
-                fit: BoxFit.cover,
-              ),
+              child: kIsWeb
+                  ? Container(
+                      color: theme.colorScheme.onSurface.withOpacity(0.04),
+                    )
+                  : SvgPicture.asset(
+                      SomAssets.patternDotNoise,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           if (isFeatured)
@@ -43,10 +48,7 @@ class SomCard extends StatelessWidget {
                 ),
               ),
             ),
-          Padding(
-            padding: padding,
-            child: child,
-          ),
+          Padding(padding: padding, child: child),
         ],
       ),
     );

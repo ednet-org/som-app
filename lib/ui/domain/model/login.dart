@@ -122,10 +122,10 @@ class Login extends StatelessWidget {
                   ));
                 }),
               ),
-              if (kDebugMode &&
+              if (!kReleaseMode &&
                   const bool.fromEnvironment(
                     'DEV_QUICK_LOGIN',
-                    defaultValue: false,
+                    defaultValue: true,
                   )) ...[
                 const SizedBox(height: 30),
                 Text(

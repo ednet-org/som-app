@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:som/ui/widgets/design_system/som_input.dart';
 
-class SomTextInput extends StatelessWidget {
+class SomTextInput extends StatefulWidget {
   final String? label;
   final String? iconAsset;
   final String? hint;
   final int maxLines; // restored
-  final bool showPassword; 
+  final bool showPassword;
   final bool isPassword;
   final bool autocorrect;
   final TextInputType? keyboardType;
@@ -17,6 +17,7 @@ class SomTextInput extends StatelessWidget {
   final bool required; // restored
   final FormFieldValidator<String>? validator; // restored
   final ValueChanged<String>? onFieldSubmitted;
+  final String? errorText;
 
   const SomTextInput({
     super.key,
@@ -35,37 +36,68 @@ class SomTextInput extends StatelessWidget {
     this.validator,
     this.controller,
     this.onFieldSubmitted,
+    this.errorText,
   });
 
   @override
-  Widget build(BuildContext context) {
-    // If controller is passed, use it. Otherwise create a local one if value is provided? 
-    // SomInput requires a controller or handles it internally?
-    // The previous implementation created a temporary controller 'controller' from 'value'.
-    // We should prioritize the passed 'controller'.
-    
-    final effectiveController = controller ?? (value != null ? TextEditingController(text: value) : null);
-    if (value != null && controller == null && effectiveController != null) {
-      // Only update if using the temp controlled value
-      if (effectiveController.text != value) {
-        effectiveController.text = value!;
-        effectiveController.selection = TextSelection.fromPosition(TextPosition(offset: value!.length));
+  State<SomTextInput> createState() => _SomTextInputState();
+}
+
+class _SomTextInputState extends State<SomTextInput> {
+  late final TextEditingController _internalController;
+  late final FocusNode _focusNode;
+
+  TextEditingController get _effectiveController =>
+      widget.controller ?? _internalController;
+
+  @override
+  void initState() {
+    super.initState();
+    _internalController = TextEditingController(text: widget.value ?? '');
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void didUpdateWidget(covariant SomTextInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller == null) {
+      final nextValue = widget.value ?? '';
+      if (!_focusNode.hasFocus && _internalController.text != nextValue) {
+        _internalController.text = nextValue;
+        _internalController.selection = TextSelection.fromPosition(
+          TextPosition(offset: nextValue.length),
+        );
       }
     }
+  }
 
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    if (widget.controller == null) {
+      _internalController.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: SomInput(
-        label: '${label ?? ''}${required ? " *" : ""}',
-        hintText: hint,
-        isPassword: isPassword,
-        keyboardType: keyboardType,
-        onChanged: onChanged,
-        validator: validator,
-        iconAsset: iconAsset,
-        maxLines: maxLines,
-        controller: effectiveController,
-        onFieldSubmitted: onFieldSubmitted,
+        label: '${widget.label ?? ''}${widget.required ? " *" : ""}',
+        hintText: widget.hint,
+        isPassword: widget.isPassword,
+        keyboardType: widget.keyboardType,
+        onChanged: widget.onChanged,
+        validator: widget.validator,
+        iconAsset: widget.iconAsset,
+        maxLines: widget.maxLines,
+        controller: _effectiveController,
+        onFieldSubmitted: widget.onFieldSubmitted,
+        errorText: widget.errorText,
+        focusNode: _focusNode,
+        textDirection: TextDirection.ltr,
       ),
     );
   }

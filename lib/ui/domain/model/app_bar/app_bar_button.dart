@@ -38,17 +38,28 @@ class _AppBarButtonState extends State<AppBarButton> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isSvg = widget.child.toLowerCase().endsWith('.svg');
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: SvgPicture.asset(
-            widget.child,
-            width: 24,
-            height: 24,
-            colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-          ),
+          icon: isSvg
+              ? SvgPicture.asset(
+                  widget.child,
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary,
+                    BlendMode.srcIn,
+                  ),
+                )
+              : Image.asset(
+                  widget.child,
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.contain,
+                ),
           onPressed: () => widget.beamer.currentState?.routerDelegate
               .beamToNamed(widget.uri),
           tooltip: '${widget.title} management page',

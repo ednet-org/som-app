@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
@@ -13,40 +14,54 @@ class PaymentDetailsStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = Provider.of<RegistrationRequest>(context);
-    return Column(
-      children: [
-        const FormSectionHeader(label: 'Bank details'),
-        20.height,
-        SomTextInput(
-          label: 'IBAN',
-          iconAsset: SomAssets.iconDashboard,
-          hint: 'Enter IBAN',
-          value: request.company.providerData.bankDetails?.iban,
-          onChanged: request.company.providerData.bankDetails?.setIban,
-          required: true,
-        ),
-        SomTextInput(
-          label: 'BIC',
-          iconAsset: SomAssets.iconInfo,
-          hint: 'Enter BIC',
-          value: request.company.providerData.bankDetails?.bic,
-          onChanged: request.company.providerData.bankDetails?.setBic,
-          required: true,
-        ),
-        SomTextInput(
-          label: 'Account owner',
-          iconAsset: SomAssets.iconUser,
-          hint: 'Enter account owner',
-          value: request.company.providerData.bankDetails?.accountOwner,
-          onChanged: request.company.providerData.bankDetails?.setAccountOwner,
-          required: true,
-        ),
-        30.height,
-        const FormSectionHeader(label: 'Payment interval'),
-        20.height,
-        _PaymentIntervalSelector(request: request),
-        50.height,
-      ],
+    return Observer(
+      builder: (_) => Column(
+        children: [
+          const FormSectionHeader(label: 'Bank details'),
+          20.height,
+          SomTextInput(
+            label: 'IBAN',
+            iconAsset: SomAssets.iconDashboard,
+            hint: 'Enter IBAN',
+            value: request.company.providerData.bankDetails?.iban,
+            errorText: request.fieldError('provider.bankDetails.iban'),
+            onChanged: (value) {
+              request.company.providerData.bankDetails?.setIban(value);
+              request.clearFieldError('provider.bankDetails.iban');
+            },
+            required: true,
+          ),
+          SomTextInput(
+            label: 'BIC',
+            iconAsset: SomAssets.iconInfo,
+            hint: 'Enter BIC',
+            value: request.company.providerData.bankDetails?.bic,
+            errorText: request.fieldError('provider.bankDetails.bic'),
+            onChanged: (value) {
+              request.company.providerData.bankDetails?.setBic(value);
+              request.clearFieldError('provider.bankDetails.bic');
+            },
+            required: true,
+          ),
+          SomTextInput(
+            label: 'Account owner',
+            iconAsset: SomAssets.iconUser,
+            hint: 'Enter account owner',
+            value: request.company.providerData.bankDetails?.accountOwner,
+            errorText: request.fieldError('provider.bankDetails.accountOwner'),
+            onChanged: (value) {
+              request.company.providerData.bankDetails?.setAccountOwner(value);
+              request.clearFieldError('provider.bankDetails.accountOwner');
+            },
+            required: true,
+          ),
+          30.height,
+          const FormSectionHeader(label: 'Payment interval'),
+          20.height,
+          _PaymentIntervalSelector(request: request),
+          50.height,
+        ],
+      ),
     );
   }
 }
@@ -68,12 +83,16 @@ class _PaymentIntervalSelector extends StatelessWidget {
           groupValue: request.company.providerData.paymentInterval,
           onChanged: (dynamic value) {
             toast('$value Selected');
-            request.company.providerData.setPaymentInterval(PaymentInterval.Monthly);
+            request.company.providerData.setPaymentInterval(
+              PaymentInterval.Monthly,
+            );
           },
         ),
         GestureDetector(
           onTap: () {
-            request.company.providerData.setPaymentInterval(PaymentInterval.Monthly);
+            request.company.providerData.setPaymentInterval(
+              PaymentInterval.Monthly,
+            );
           },
           child: Text(PaymentInterval.Monthly.name),
         ),
@@ -82,12 +101,16 @@ class _PaymentIntervalSelector extends StatelessWidget {
           groupValue: request.company.providerData.paymentInterval,
           onChanged: (dynamic value) {
             toast('$value Selected');
-            request.company.providerData.setPaymentInterval(PaymentInterval.Yearly);
+            request.company.providerData.setPaymentInterval(
+              PaymentInterval.Yearly,
+            );
           },
         ),
         GestureDetector(
           onTap: () {
-            request.company.providerData.setPaymentInterval(PaymentInterval.Yearly);
+            request.company.providerData.setPaymentInterval(
+              PaymentInterval.Yearly,
+            );
           },
           child: Text(PaymentInterval.Yearly.name),
         ),

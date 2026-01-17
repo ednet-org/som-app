@@ -5,7 +5,7 @@ homepage: https://github.com/ednet-dev/cms/tree/main/packages/core
 publish_to: none
 
 environment:
-  sdk: ^3.8.0
+  sdk: ">=3.10.7 <4.0.0"
 
 dependencies:
   ednet_expression_parser:

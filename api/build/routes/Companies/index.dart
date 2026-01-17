@@ -26,8 +26,8 @@ Future<Response> _listCompanies(RequestContext context) async {
     }
   }
   final body = companies
-      .where((company) =>
-          normalizedType == null || company.type == normalizedType)
+      .where(
+          (company) => normalizedType == null || company.type == normalizedType)
       .map((company) => {
             'id': company.id,
             'name': company.name,
@@ -54,13 +54,13 @@ Future<Response> _registerCompany(RequestContext context) async {
       companyJson: companyJson,
       usersJson: usersJson,
     );
-      await context.read<DomainEventService>().emit(
-            type: 'company.registered',
-            entityType: 'company',
-            entityId: company.id,
-          );
+    await context.read<DomainEventService>().emit(
+          type: 'company.registered',
+          entityType: 'company',
+          entityId: company.id,
+        );
     return Response(statusCode: 200);
   } on RegistrationException catch (error) {
-    return Response.json(statusCode: 400, body: error.message);
+    return Response.json(statusCode: 400, body: error.toJson());
   }
 }

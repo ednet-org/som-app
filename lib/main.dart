@@ -31,12 +31,13 @@ const apiBaseUrl = String.fromEnvironment(
 );
 
 final apiInstance = Openapi(
-    dio: Dio(BaseOptions(
-        baseUrl: apiBaseUrl))
-      // ..interceptors.add(PrettyDioLogger())
-      ..interceptors.add(CurlLoggerDioInterceptor(
-          printOnSuccess: true, convertFormData: false)),
-    serializers: standardSerializers);
+  dio: Dio(BaseOptions(baseUrl: apiBaseUrl))
+    // ..interceptors.add(PrettyDioLogger())
+    ..interceptors.add(
+      CurlLoggerDioInterceptor(printOnSuccess: true, convertFormData: false),
+    ),
+  serializers: standardSerializers,
+);
 
 //endregion
 
@@ -82,14 +83,15 @@ class MyApp extends StatelessWidget {
   final beamerKey = BeamerProvidedKey();
 
   final routerDelegate = BeamerDelegate(
-      initialPath: '/splash',
-      notFoundPage: const BeamPage(
-        key: ValueKey('not found page'),
-        title: 'Not Found',
-        child: NotFoundPage(),
-      ),
-      transitionDelegate: const NoAnimationTransitionDelegate(),
-      locationBuilder: BeamerLocationBuilder(beamLocations: [
+    initialPath: '/splash',
+    notFoundPage: const BeamPage(
+      key: ValueKey('not found page'),
+      title: 'Not Found',
+      child: NotFoundPage(),
+    ),
+    transitionDelegate: const NoAnimationTransitionDelegate(),
+    locationBuilder: BeamerLocationBuilder(
+      beamLocations: [
         SplashPageBeamLocation(),
         AuthLoginPageLocation(),
         AuthConfirmEmailPageLocation(),
@@ -97,59 +99,64 @@ class MyApp extends StatelessWidget {
         CustomerRegisterPageLocation(),
         CustomerRegisterSuccessPageLocation(),
         SmartOfferManagementPageLocation(),
-      ]).call);
+      ],
+    ).call,
+  );
 
   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      appStore.boxConstraints = constraints;
-      return MultiProvider(
-        providers: getProviders,
-        child: Observer(
-          builder: (_) => MaterialApp.router(
-            routeInformationParser: BeamerParser(),
-            // android back button behavior
-            backButtonDispatcher:
-                BeamerBackButtonDispatcher(delegate: routerDelegate),
-            localizationsDelegates: const [
-              SomLocalizations.delegate,
-              ...GlobalMaterialLocalizations.delegates,
-              GlobalWidgetsLocalizations.delegate
-            ],
-            localeResolutionCallback: (locale, supportedLocales) =>
-                Locale(appStore.selectedLanguage),
-            locale: Locale(appStore.selectedLanguage),
-            supportedLocales: const [
-              Locale('en'),
-              Locale('de'),
-              Locale('sr'),
-            ],
-            title: 'SOM${!isMobile ? ' ${platformName()}' : ''}',
-            themeMode: appStore.themeMode,
-            theme: somFuturisticTheme(
-              brightness: Brightness.light,
-              visualDensity: appStore.visualDensity,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        appStore.boxConstraints = constraints;
+        return MultiProvider(
+          providers: getProviders,
+          child: Observer(
+            builder: (_) => MaterialApp.router(
+              routeInformationParser: BeamerParser(),
+              // android back button behavior
+              backButtonDispatcher: BeamerBackButtonDispatcher(
+                delegate: routerDelegate,
+              ),
+              localizationsDelegates: const [
+                SomLocalizations.delegate,
+                ...GlobalMaterialLocalizations.delegates,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              localeResolutionCallback: (locale, supportedLocales) =>
+                  Locale(appStore.selectedLanguage),
+              locale: Locale(appStore.selectedLanguage),
+              supportedLocales: const [
+                Locale('en'),
+                Locale('de'),
+                Locale('sr'),
+              ],
+              title: 'SOM${!isMobile ? ' ${platformName()}' : ''}',
+              themeMode: appStore.themeMode,
+              theme: somFuturisticTheme(
+                brightness: Brightness.light,
+                visualDensity: appStore.visualDensity,
+              ),
+              darkTheme: somFuturisticTheme(
+                brightness: Brightness.dark,
+                visualDensity: appStore.visualDensity,
+              ),
+              builder: scrollBehaviour(),
+              routerDelegate: routerDelegate,
             ),
-            darkTheme: somFuturisticTheme(
-              brightness: Brightness.dark,
-              visualDensity: appStore.visualDensity,
-            ),
-            builder: scrollBehaviour(),
-            routerDelegate: routerDelegate,
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   List<SingleChildWidget> get getProviders {
     return [
       Provider<Openapi>(create: (_) => apiInstance),
       Provider<AuthForgotPasswordPageState>(
-          create: (_) =>
-              AuthForgotPasswordPageState(apiInstance.getAuthApi())),
+        create: (_) => AuthForgotPasswordPageState(apiInstance.getAuthApi()),
+      ),
       Provider<BeamerProvidedKey>(create: (_) => beamerKey),
       Provider<Application>(create: (_) => appStore),
       Provider<ApiSubscriptionRepository>(
@@ -157,18 +164,40 @@ class MyApp extends StatelessWidget {
             ApiSubscriptionRepository(apiInstance.getSubscriptionsApi()),
       ),
       ProxyProvider2<ApiSubscriptionRepository, Openapi, Som>(
-          update: (_, apiSubscriptionRepository, api, _) =>
-              Som(apiSubscriptionRepository, api.getBranchesApi())),
+        update: (_, apiSubscriptionRepository, api, _) =>
+            Som(apiSubscriptionRepository, api.getBranchesApi()),
+      ),
       // Som(apiSubscriptionRepository)..populateAvailableSubscriptions()),
       ProxyProvider<Som, RegistrationRequest>(
-          update: (_, som, _) => RegistrationRequest(som,
-              apiInstance.getCompaniesApi(), appStore, sharedPreferences)),
+        update: (_, som, previous) {
+          if (previous == null) {
+            return RegistrationRequest(
+              som,
+              apiInstance.getCompaniesApi(),
+              appStore,
+              sharedPreferences,
+            );
+          }
+          previous.som = som;
+          previous.api = apiInstance.getCompaniesApi();
+          previous.appStore = appStore;
+          return previous;
+        },
+      ),
       Provider<EmailLoginStore>(
-          create: (_) => EmailLoginStore(
-              apiInstance.getAuthApi(), apiInstance.getUsersApi(), appStore)),
+        create: (_) => EmailLoginStore(
+          apiInstance.getAuthApi(),
+          apiInstance.getUsersApi(),
+          appStore,
+        ),
+      ),
       ProxyProvider<EmailLoginStore, UserAccountConfirmation>(
-          update: (_, emailLoginStore, _) => UserAccountConfirmation(
-              apiInstance.getAuthApi(), appStore, emailLoginStore)),
+        update: (_, emailLoginStore, _) => UserAccountConfirmation(
+          apiInstance.getAuthApi(),
+          appStore,
+          emailLoginStore,
+        ),
+      ),
     ];
   }
 }

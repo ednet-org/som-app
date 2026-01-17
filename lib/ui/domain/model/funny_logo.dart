@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../application/application.dart';
+import '../../theme/som_assets.dart';
 
 class FunnyLogo extends StatelessWidget {
   final double height;
@@ -28,7 +29,7 @@ class FunnyLogo extends StatelessWidget {
               padding: EdgeInsets.all(height / 4),
               child: ImageIcon(
                 size: height,
-                const AssetImage('images/som/logo.png'),
+                const AssetImage(SomAssets.logoPng),
               ),
             ),
             ReactionBuilder(

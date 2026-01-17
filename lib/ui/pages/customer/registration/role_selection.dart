@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/main.dart';
@@ -45,7 +46,10 @@ class _RoleSelectionState extends State<RoleSelection> {
     );
   }
 
-  Widget selectionCards(context, registrationRequest) {
+  Widget selectionCards(
+    BuildContext context,
+    RegistrationRequest registrationRequest,
+  ) {
     return isMobile
         ? mobile(context, registrationRequest)
         : web(context, registrationRequest);
@@ -76,10 +80,11 @@ class _RoleSelectionState extends State<RoleSelection> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SomSvgIcon(
+                SvgPicture.asset(
                   iconAsset,
-                  size: 120,
-                  color: theme.colorScheme.primary,
+                  width: 140,
+                  height: 140,
+                  fit: BoxFit.contain,
                 ),
                 Column(
                   children: [
@@ -96,7 +101,9 @@ class _RoleSelectionState extends State<RoleSelection> {
                 ),
                 SomButton(
                   text: buttonText,
-                  type: selected ? SomButtonType.primary : SomButtonType.secondary,
+                  type: selected
+                      ? SomButtonType.primary
+                      : SomButtonType.secondary,
                   onPressed: onTap,
                 ),
               ],
@@ -107,7 +114,7 @@ class _RoleSelectionState extends State<RoleSelection> {
     );
   }
 
-  web(context, registrationRequest) {
+  Widget web(BuildContext context, RegistrationRequest registrationRequest) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -120,7 +127,7 @@ class _RoleSelectionState extends State<RoleSelection> {
             subtitle: 'Source products & services.',
             iconAsset: SomAssets.authRoleBuyer,
             selected: registrationRequest.company.isBuyer,
-            onTap: () => registrationRequest.switchRole(Roles.Buyer),
+            onTap: () => registrationRequest.company.setRole(Roles.Buyer),
             buttonText: 'Register as Buyer',
           ),
         ),
@@ -134,7 +141,7 @@ class _RoleSelectionState extends State<RoleSelection> {
             subtitle: 'Grow your business.',
             iconAsset: SomAssets.authRoleProvider,
             selected: registrationRequest.company.isProvider,
-            onTap: () => registrationRequest.company.switchRole(Roles.Provider),
+            onTap: () => registrationRequest.company.setRole(Roles.Provider),
             buttonText: 'Register as Provider',
           ),
         ),
@@ -142,7 +149,7 @@ class _RoleSelectionState extends State<RoleSelection> {
     );
   }
 
-  mobile(context, registrationRequest) {
+  Widget mobile(BuildContext context, RegistrationRequest registrationRequest) {
     return Column(
       children: [
         _roleCard(
@@ -152,7 +159,7 @@ class _RoleSelectionState extends State<RoleSelection> {
           subtitle: 'Source products & services.',
           iconAsset: SomAssets.authRoleBuyer,
           selected: registrationRequest.company.isBuyer,
-          onTap: () => registrationRequest.switchRole(Roles.Buyer),
+          onTap: () => registrationRequest.company.setRole(Roles.Buyer),
           buttonText: 'Register as Buyer',
         ),
         10.height,
@@ -163,7 +170,7 @@ class _RoleSelectionState extends State<RoleSelection> {
           subtitle: 'Grow your business.',
           iconAsset: SomAssets.authRoleProvider,
           selected: registrationRequest.company.isProvider,
-          onTap: () => registrationRequest.company.switchRole(Roles.Provider),
+          onTap: () => registrationRequest.company.setRole(Roles.Provider),
           buttonText: 'Register as Provider',
         ),
       ],

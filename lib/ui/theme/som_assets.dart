@@ -4,8 +4,11 @@ class SomAssets {
   static const String _base = 'assets/design_system';
 
   // Global
-  static const String logoFull = '$_base/logo_full.svg';
-  static const String logoMark = '$_base/logo_mark.svg';
+  static const String logoPng = 'images/som/logo.png';
+  @Deprecated('Use logoPng')
+  static const String logoFull = logoPng;
+  @Deprecated('Use logoPng')
+  static const String logoMark = logoPng;
   static const String iconDashboard = '$_base/icon_dashboard.svg';
   static const String iconInquiries = '$_base/icon_inquiries.svg';
   static const String iconOffers = '$_base/icon_offers.svg';

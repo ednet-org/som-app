@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -27,46 +29,43 @@ class AuthLoginPage extends StatelessWidget {
                   return reaction((_) => appStore.isAuthenticated, (result) {
                     final messenger = ScaffoldMessenger.of(context);
 
-                    messenger.showSnackBar(SnackBar(
-                        content: Text(result == true
-                            ? 'You\'re authenticated'
-                            : 'You\'re not authenticated')));
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          result == true
+                              ? 'You\'re authenticated'
+                              : 'You\'re not authenticated',
+                        ),
+                      ),
+                    );
                   }, delay: 4000);
                 },
                 child: Scaffold(
                   body: LayoutBuilder(
                     builder: (buildContext, BoxConstraints constraints) {
                       final is4K = constraints.maxWidth > 2200;
-                      return CustomScrollView(
-                        slivers: !is4K
-                            ? [
-                                SliverFillRemaining(
-                                  hasScrollBody: true,
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      // mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: expandedItems(is4K, context,
-                                          emailLoginStore, constraints),
-                                    ),
-                                  ),
-                                )
-                              ]
-                            : [
-                                SliverFillRemaining(
-                                  hasScrollBody: false,
-                                  child: Row(
-                                    // mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: expandedItems(is4K, context,
-                                        emailLoginStore, constraints),
-                                  ),
-                                )
-                              ],
+                      if (is4K) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: expandedItems(
+                            is4K,
+                            context,
+                            emailLoginStore,
+                            constraints,
+                          ),
+                        );
+                      }
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: expandedItems(
+                            is4K,
+                            context,
+                            emailLoginStore,
+                            constraints,
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -76,120 +75,188 @@ class AuthLoginPage extends StatelessWidget {
     );
   }
 
-  List<Widget> expandedItems(bool is4K, BuildContext context,
-      Application emailLoginStore, constraints) {
-    final logo = splitWithLogo(context, emailLoginStore, is4K);
+  List<Widget> expandedItems(
+    bool is4K,
+    BuildContext context,
+    Application emailLoginStore,
+    constraints,
+  ) {
+    final logo = splitWithLogo(context, emailLoginStore, is4K, constraints);
     final login = splitWithLogin(context, is4K, constraints);
 
     if (!is4K) {
       return [logo, login];
     }
 
-    return [
-      Expanded(flex: 5, child: logo),
-      Expanded(flex: 7, child: login),
-    ];
+    return [Expanded(flex: 5, child: logo), Expanded(flex: 7, child: login)];
   }
 
-  splitWithLogo(context, emailLoginStore, is4K) {
-    return Stack(
-      children: [
-        // Background Layer
-        Positioned.fill(
-          child: Container(
-            color: Theme.of(context).colorScheme.surface,
-            child: Opacity(
-              opacity: 0.1, // Subtle pattern
-              child: SvgPicture.asset(
-                SomAssets.patternSubtleMesh,
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary,
-                   BlendMode.srcIn),
+  splitWithLogo(context, emailLoginStore, is4K, BoxConstraints constraints) {
+    final double maxLogoHeight = constraints.maxHeight.isFinite
+        ? (constraints.maxHeight * 0.6).clamp(360.0, 640.0)
+        : 520.0;
+    final double logoSize = math.min(240.0, maxLogoHeight * 0.22);
+    final double heroSize = math.min(300.0, maxLogoHeight * 0.45);
+    return Container(
+      width: double.infinity,
+      constraints: is4K
+          ? const BoxConstraints.expand()
+          : const BoxConstraints(minHeight: 420),
+      child: Stack(
+        children: [
+          // Background Layer
+          Positioned.fill(
+            child: Container(
+              color: Theme.of(context).colorScheme.surface,
+              child: Opacity(
+                opacity: 0.12,
+                child: SvgPicture.asset(
+                  SomAssets.patternSubtleMesh,
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        // Content Layer
-        Positioned.fill(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(padding: const EdgeInsets.all(20.0),
-                child: SvgPicture.asset(SomAssets.logoFull, width: 250)),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Smart offer management'.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.displayLarge?.copyWith(fontWeight: FontWeight.w300, letterSpacing: 2.0),
+          // Content Layer
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 560),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Image.asset(
+                        SomAssets.logoPng,
+                        width: logoSize,
+                        height: logoSize,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'Smart offer management'.toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.displayLarge
+                              ?.copyWith(
+                                fontWeight: FontWeight.w300,
+                                letterSpacing: 2.0,
+                              ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SvgPicture.asset(
+                      SomAssets.illustrationLoginHero,
+                      width: heroSize,
+                      fit: BoxFit.contain,
+                    ),
+                    const SizedBox(height: 18),
+                    _buildFeatureRow(context),
+                  ],
                 ),
               ),
-              const SizedBox(height: 24),
-              SvgPicture.asset(
-                SomAssets.illustrationLoginHero,
-                width: 320,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 16),
-              Wrap(
-                spacing: 16,
-                runSpacing: 12,
-                alignment: WrapAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      SvgPicture.asset(
-                        SomAssets.illustrationFeatureAnalytics,
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Analytics',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset(
-                        SomAssets.illustrationFeatureSecureAuth,
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Secure Auth',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureRow(BuildContext context) {
+    final theme = Theme.of(context);
+    return Wrap(
+      spacing: 16,
+      runSpacing: 12,
+      alignment: WrapAlignment.center,
+      children: [
+        _featureTile(
+          context,
+          label: 'Analytics',
+          child: SvgPicture.asset(
+            SomAssets.illustrationFeatureAnalytics,
+            width: 80,
+            height: 80,
+            fit: BoxFit.contain,
+          ),
+        ),
+        _featureTile(
+          context,
+          label: 'Secure Auth',
+          child: SvgPicture.asset(
+            SomAssets.illustrationFeatureSecureAuth,
+            width: 80,
+            height: 80,
+            fit: BoxFit.contain,
+          ),
+        ),
+        _featureTile(
+          context,
+          label: 'Smart Offers',
+          child: SvgPicture.asset(
+            SomAssets.iconOffers,
+            width: 42,
+            height: 42,
+            colorFilter: ColorFilter.mode(
+              theme.colorScheme.primary,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],
     );
   }
 
+  Widget _featureTile(
+    BuildContext context, {
+    required String label,
+    required Widget child,
+  }) {
+    final theme = Theme.of(context);
+    return Container(
+      width: 140,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.18)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: 56, child: Center(child: child)),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+  }
+
   splitWithLogin(context, is4K, constraints) {
     return Container(
       padding: const EdgeInsets.all(50.0),
-      color: Theme.of(context).colorScheme.surface, 
+      color: Theme.of(context).colorScheme.surface,
       alignment: Alignment.center,
       child: Column(
-        mainAxisAlignment:
-            is4K ? MainAxisAlignment.center : MainAxisAlignment.start,
+        mainAxisAlignment: is4K
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
           if (!is4K) SizedBox(height: constraints.maxHeight * 0.02),
-          const Login(
-            key: Key('Login'),
-          ),
+          const Login(key: Key('Login')),
         ],
       ),
     );
