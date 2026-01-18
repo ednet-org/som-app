@@ -160,6 +160,7 @@ create table if not exists company_branches (
   branch_id uuid not null references branches(id) on delete cascade,
   source text not null,
   confidence numeric,
+  status text not null default 'active',
   created_at timestamptz not null,
   updated_at timestamptz not null,
   primary key (company_id, branch_id)
@@ -170,6 +171,7 @@ create table if not exists company_categories (
   category_id uuid not null references categories(id) on delete cascade,
   source text not null,
   confidence numeric,
+  status text not null default 'active',
   created_at timestamptz not null,
   updated_at timestamptz not null,
   primary key (company_id, category_id)

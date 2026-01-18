@@ -159,8 +159,8 @@ void main() {
       final body = jsonDecode(await response.body()) as List<dynamic>;
       expect(body.length, 2);
       expect(
-        body.every((p) =>
-            (p['companyName'] as String).toLowerCase().contains('acme')),
+        body.every(
+            (p) => (p['companyName'] as String).toLowerCase().contains('acme')),
         true,
       );
     });

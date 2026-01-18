@@ -41,6 +41,7 @@ void main() {
         providers: providers,
         subscriptions: subscriptions,
         branches: branches,
+        companyTaxonomy: InMemoryCompanyTaxonomyRepository(),
         auth: auth,
         clock: const Clock(),
         domain: SomDomainModel(),

@@ -79,8 +79,7 @@ Future<Response> onRequest(RequestContext context, String adId) async {
       }
       if (endDate.difference(startDate).inDays > 14) {
         return Response.json(
-            statusCode: 400,
-            body: 'Ad period cannot exceed 14 days');
+            statusCode: 400, body: 'Ad period cannot exceed 14 days');
       }
     }
     if (existing.type == 'banner') {

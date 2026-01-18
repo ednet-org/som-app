@@ -22,7 +22,8 @@ Future<Response> onRequest(RequestContext context) async {
     return Response(statusCode: 403);
   }
   final repository = context.read<SubscriptionRepository>();
-  final subscription = await repository.findSubscriptionByCompany(auth.companyId);
+  final subscription =
+      await repository.findSubscriptionByCompany(auth.companyId);
   if (subscription == null) {
     return Response(statusCode: 404);
   }

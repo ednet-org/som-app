@@ -14,7 +14,9 @@ Future<Response> onRequest(RequestContext context) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('consultant') || !auth.roles.contains('admin')) {
+  if (auth == null ||
+      !auth.roles.contains('consultant') ||
+      !auth.roles.contains('admin')) {
     return Response(statusCode: 403);
   }
   final limitParam = context.request.uri.queryParameters['limit'];

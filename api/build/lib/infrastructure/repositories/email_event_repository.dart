@@ -22,9 +22,7 @@ class EmailEventRepository {
         .select()
         .eq('user_id', userId)
         .order('created_at') as List<dynamic>;
-    return rows
-        .map((row) => _mapRow(row as Map<String, dynamic>))
-        .toList();
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
   EmailEventRecord _mapRow(Map<String, dynamic> row) {

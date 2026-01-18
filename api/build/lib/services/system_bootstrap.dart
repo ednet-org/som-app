@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../infrastructure/repositories/ads_repository.dart';
 import '../infrastructure/repositories/branch_repository.dart';
 import '../infrastructure/repositories/company_repository.dart';
+import '../infrastructure/repositories/company_taxonomy_repository.dart';
 import '../infrastructure/repositories/inquiry_repository.dart';
 import '../infrastructure/repositories/offer_repository.dart';
 import '../infrastructure/repositories/provider_repository.dart';
@@ -22,6 +23,7 @@ class SystemBootstrap {
     required this.auth,
     required this.branches,
     required this.providers,
+    required this.companyTaxonomy,
     required this.subscriptions,
     required this.inquiries,
     required this.offers,
@@ -33,6 +35,7 @@ class SystemBootstrap {
   final AuthService auth;
   final BranchRepository branches;
   final ProviderRepository providers;
+  final CompanyTaxonomyRepository companyTaxonomy;
   final SubscriptionRepository subscriptions;
   final InquiryRepository inquiries;
   final OfferRepository offers;
@@ -198,28 +201,37 @@ class SystemBootstrap {
         );
       }
       final profile = await providers.findByCompany(providerCompany.id);
+      ProviderProfileRecord ensuredProfile;
       if (profile == null) {
-        await providers.createProfile(
-          ProviderProfileRecord(
-            companyId: providerCompany.id,
-            bankDetails: BankDetails(
-              iban: 'AT000000000000000000',
-              bic: 'DEVATW00',
-              accountOwner: 'Demo Provider',
-            ),
-            branchIds: [branchIt.id],
-            pendingBranchIds: const [],
-            subscriptionPlanId: planId,
-            paymentInterval: 'monthly',
-            providerType: 'haendler',
-            status: 'active',
-            rejectionReason: null,
-            rejectedAt: null,
-            createdAt: now,
-            updatedAt: now,
+        ensuredProfile = ProviderProfileRecord(
+          companyId: providerCompany.id,
+          bankDetails: BankDetails(
+            iban: 'AT000000000000000000',
+            bic: 'DEVATW00',
+            accountOwner: 'Demo Provider',
           ),
+          branchIds: [branchIt.id],
+          pendingBranchIds: const [],
+          subscriptionPlanId: planId,
+          paymentInterval: 'monthly',
+          providerType: 'haendler',
+          status: 'active',
+          rejectionReason: null,
+          rejectedAt: null,
+          createdAt: now,
+          updatedAt: now,
         );
+        await providers.createProfile(ensuredProfile);
+      } else {
+        ensuredProfile = profile;
       }
+      await companyTaxonomy.replaceCompanyBranches(
+        companyId: providerCompany.id,
+        branchIds: ensuredProfile.branchIds.isNotEmpty
+            ? ensuredProfile.branchIds
+            : [branchIt.id],
+        source: 'bootstrap',
+      );
     }
 
     const devInquiryId = '00000000-0000-0000-0000-000000000001';
@@ -565,7 +577,8 @@ class SystemBootstrap {
     if (existing != null) {
       return existing;
     }
-    final branch = BranchRecord(id: const Uuid().v4(), name: name);
+    final branch =
+        BranchRecord(id: const Uuid().v4(), name: name, status: 'active');
     await branches.createBranch(branch);
     return branch;
   }
@@ -578,8 +591,12 @@ class SystemBootstrap {
     if (existing != null) {
       return existing;
     }
-    final category =
-        CategoryRecord(id: const Uuid().v4(), branchId: branch.id, name: name);
+    final category = CategoryRecord(
+      id: const Uuid().v4(),
+      branchId: branch.id,
+      name: name,
+      status: 'active',
+    );
     await branches.createCategory(category);
     return category;
   }

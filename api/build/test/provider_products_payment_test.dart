@@ -75,8 +75,8 @@ void main() {
       final createResponse =
           await products_route.onRequest(createContext.context, company.id);
       expect(createResponse.statusCode, 200);
-      final created = jsonDecode(await createResponse.body())
-          as Map<String, dynamic>;
+      final created =
+          jsonDecode(await createResponse.body()) as Map<String, dynamic>;
       final productId = created['id'] as String;
 
       final updateContext = TestRequestContext(

@@ -47,10 +47,14 @@ void main() {
           'imagePath': '/tmp/image.png',
           'headline': 'Test',
           'description': 'Desc',
-          'startDate':
-              DateTime.now().toUtc().add(const Duration(days: 1)).toIso8601String(),
-          'endDate':
-              DateTime.now().toUtc().add(const Duration(days: 7)).toIso8601String(),
+          'startDate': DateTime.now()
+              .toUtc()
+              .add(const Duration(days: 1))
+              .toIso8601String(),
+          'endDate': DateTime.now()
+              .toUtc()
+              .add(const Duration(days: 7))
+              .toIso8601String(),
         }),
       );
       context.provide<AdsRepository>(ads);

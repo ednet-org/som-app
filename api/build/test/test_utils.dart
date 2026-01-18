@@ -8,6 +8,7 @@ import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/company_taxonomy_repository.dart';
 import 'package:som_api/infrastructure/repositories/domain_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/audit_log_repository.dart';
 import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
@@ -25,6 +26,7 @@ import 'package:som_api/services/auth_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/subscription_seed.dart';
+import 'package:som_api/utils/name_normalizer.dart';
 
 const _testJwtSecret = 'som_dev_secret';
 
@@ -70,6 +72,85 @@ class InMemoryCompanyRepository implements CompanyRepository {
       }
     }
     return null;
+  }
+}
+
+class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
+  final Map<String, Set<String>> _companyBranches = {};
+  final Map<String, Set<String>> _companyCategories = {};
+
+  @override
+  Future<void> replaceCompanyBranches({
+    required String companyId,
+    required List<String> branchIds,
+    required String source,
+    double? confidence,
+    String status = 'active',
+  }) async {
+    _companyBranches[companyId] = branchIds.toSet();
+  }
+
+  @override
+  Future<void> replaceCompanyCategories({
+    required String companyId,
+    required List<String> categoryIds,
+    required String source,
+    double? confidence,
+    String status = 'active',
+  }) async {
+    _companyCategories[companyId] = categoryIds.toSet();
+  }
+
+  @override
+  Future<List<String>> listCompanyIdsByBranch(
+    String branchId, {
+    String status = 'active',
+  }) async {
+    final matches = <String>[];
+    for (final entry in _companyBranches.entries) {
+      if (entry.value.contains(branchId)) {
+        matches.add(entry.key);
+      }
+    }
+    return matches;
+  }
+
+  @override
+  Future<List<String>> listCompanyIdsByCategory(
+    String categoryId, {
+    String status = 'active',
+  }) async {
+    final matches = <String>[];
+    for (final entry in _companyCategories.entries) {
+      if (entry.value.contains(categoryId)) {
+        matches.add(entry.key);
+      }
+    }
+    return matches;
+  }
+
+  @override
+  Future<void> upsertCompanyBranch({
+    required String companyId,
+    required String branchId,
+    required String source,
+    double? confidence,
+    String status = 'pending',
+  }) async {
+    final existing = _companyBranches[companyId] ?? <String>{};
+    _companyBranches[companyId] = {...existing, branchId};
+  }
+
+  @override
+  Future<void> upsertCompanyCategory({
+    required String companyId,
+    required String categoryId,
+    required String source,
+    double? confidence,
+    String status = 'pending',
+  }) async {
+    final existing = _companyCategories[companyId] ?? <String>{};
+    _companyCategories[companyId] = {...existing, categoryId};
   }
 }
 
@@ -446,7 +527,13 @@ class InMemoryBranchRepository implements BranchRepository {
 
   @override
   Future<void> createBranch(BranchRecord branch) async {
-    _branches[branch.id] = branch;
+    _branches[branch.id] = BranchRecord(
+      id: branch.id,
+      name: branch.name,
+      status: branch.status,
+      externalId: branch.externalId,
+      normalizedName: branch.normalizedName ?? normalizeName(branch.name),
+    );
   }
 
   @override
@@ -455,12 +542,25 @@ class InMemoryBranchRepository implements BranchRepository {
     if (existing == null) {
       return;
     }
-    _branches[branchId] = BranchRecord(id: existing.id, name: name);
+    _branches[branchId] = BranchRecord(
+      id: existing.id,
+      name: name,
+      status: existing.status,
+      externalId: existing.externalId,
+      normalizedName: normalizeName(name),
+    );
   }
 
   @override
   Future<void> createCategory(CategoryRecord category) async {
-    _categories[category.id] = category;
+    _categories[category.id] = CategoryRecord(
+      id: category.id,
+      branchId: category.branchId,
+      name: category.name,
+      status: category.status,
+      externalId: category.externalId,
+      normalizedName: category.normalizedName ?? normalizeName(category.name),
+    );
   }
 
   @override
@@ -478,6 +578,9 @@ class InMemoryBranchRepository implements BranchRepository {
       id: existing.id,
       branchId: existing.branchId,
       name: name,
+      status: existing.status,
+      externalId: existing.externalId,
+      normalizedName: normalizeName(name),
     );
   }
 
@@ -498,8 +601,18 @@ class InMemoryBranchRepository implements BranchRepository {
 
   @override
   Future<BranchRecord?> findBranchByName(String name) async {
+    return findBranchByNormalizedName(normalizeName(name));
+  }
+
+  @override
+  Future<CategoryRecord?> findCategory(String branchId, String name) async {
+    return findCategoryByNormalizedName(branchId, normalizeName(name));
+  }
+
+  @override
+  Future<BranchRecord?> findBranchByNormalizedName(String normalized) async {
     for (final branch in _branches.values) {
-      if (branch.name.toLowerCase() == name.toLowerCase()) {
+      if (branch.normalizedName == normalized) {
         return branch;
       }
     }
@@ -507,14 +620,56 @@ class InMemoryBranchRepository implements BranchRepository {
   }
 
   @override
-  Future<CategoryRecord?> findCategory(String branchId, String name) async {
+  Future<CategoryRecord?> findCategoryByNormalizedName(
+    String branchId,
+    String normalized,
+  ) async {
     for (final category in _categories.values) {
       if (category.branchId == branchId &&
-          category.name.toLowerCase() == name.toLowerCase()) {
+          category.normalizedName == normalized) {
         return category;
       }
     }
     return null;
+  }
+
+  @override
+  Future<void> updateBranch(
+    String branchId, {
+    String? name,
+    String? status,
+  }) async {
+    final existing = _branches[branchId];
+    if (existing == null) {
+      return;
+    }
+    _branches[branchId] = BranchRecord(
+      id: existing.id,
+      name: name ?? existing.name,
+      status: status ?? existing.status,
+      externalId: existing.externalId,
+      normalizedName: normalizeName(name ?? existing.name),
+    );
+  }
+
+  @override
+  Future<void> updateCategory(
+    String categoryId, {
+    String? name,
+    String? status,
+  }) async {
+    final existing = _categories[categoryId];
+    if (existing == null) {
+      return;
+    }
+    _categories[categoryId] = CategoryRecord(
+      id: existing.id,
+      branchId: existing.branchId,
+      name: name ?? existing.name,
+      status: status ?? existing.status,
+      externalId: existing.externalId,
+      normalizedName: normalizeName(name ?? existing.name),
+    );
   }
 
   @override

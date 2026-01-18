@@ -100,6 +100,7 @@ class TaxonomyLoader {
             'branch_id': branchId,
             'source': 'etl',
             'confidence': taxonomy.inference?.confidence,
+            'status': 'active',
             'created_at': now,
             'updated_at': now,
           };
@@ -113,6 +114,7 @@ class TaxonomyLoader {
             'category_id': categoryId,
             'source': 'etl',
             'confidence': taxonomy.inference?.confidence,
+            'status': 'active',
             'created_at': now,
             'updated_at': now,
           };

@@ -197,8 +197,10 @@ class StatisticsService {
     DateTime? from,
     DateTime? to,
   }) async {
-    var query =
-        _client.from('offers').select('id').eq('provider_company_id', companyId);
+    var query = _client
+        .from('offers')
+        .select('id')
+        .eq('provider_company_id', companyId);
     if (from != null) {
       query = query.gte('created_at', from.toIso8601String());
     }

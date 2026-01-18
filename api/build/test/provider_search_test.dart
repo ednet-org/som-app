@@ -46,7 +46,8 @@ void main() {
       ));
       await providerRepo.createProfile(ProviderProfileRecord(
         companyId: companyId,
-        bankDetails: BankDetails(iban: 'AT123', bic: 'BIC123', accountOwner: name),
+        bankDetails:
+            BankDetails(iban: 'AT123', bic: 'BIC123', accountOwner: name),
         branchIds: branchIds,
         pendingBranchIds: const [],
         subscriptionPlanId: 'plan-1',
@@ -175,13 +176,17 @@ void main() {
       );
 
       expect(result.totalCount, 2);
-      expect(result.items.every((p) => p.companyName.toLowerCase().contains('acme')), true);
+      expect(
+          result.items
+              .every((p) => p.companyName.toLowerCase().contains('acme')),
+          true);
     });
 
     test('filters by branchId', () async {
       await seedProvider(name: 'Branch1 Provider', branchIds: ['branch-1']);
       await seedProvider(name: 'Branch2 Provider', branchIds: ['branch-2']);
-      await seedProvider(name: 'Both Branches', branchIds: ['branch-1', 'branch-2']);
+      await seedProvider(
+          name: 'Both Branches', branchIds: ['branch-1', 'branch-2']);
 
       final result = await providerRepo.searchProviders(
         ProviderSearchParams(branchId: 'branch-1'),
@@ -242,7 +247,12 @@ void main() {
         id: buyerCompanyId,
         name: 'Buyer Only Co',
         type: 'buyer',
-        address: Address(country: 'AT', city: 'Vienna', street: 'Main', number: '1', zip: '1010'),
+        address: Address(
+            country: 'AT',
+            city: 'Vienna',
+            street: 'Main',
+            number: '1',
+            zip: '1010'),
         uidNr: 'UID$buyerCompanyId',
         registrationNr: 'REG$buyerCompanyId',
         companySize: '0-10',

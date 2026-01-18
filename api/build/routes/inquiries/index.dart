@@ -54,9 +54,8 @@ Future<Response> _handleList(RequestContext context) async {
   if (isConsultant) {
     inquiries = await repo.listAll();
   } else if (activeRole == 'provider') {
-    final provider = await context
-        .read<ProviderRepository>()
-        .findByCompany(auth.companyId);
+    final provider =
+        await context.read<ProviderRepository>().findByCompany(auth.companyId);
     if (provider == null || provider.status != 'active') {
       return Response.json(
         statusCode: 403,

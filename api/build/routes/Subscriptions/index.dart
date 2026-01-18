@@ -44,7 +44,8 @@ Future<Response> onRequest(RequestContext context) async {
     final freeMonths = body['freeMonths'] as int?;
     final commitmentPeriodMonths = body['commitmentPeriodMonths'] as int?;
     final rules = (body['rules'] as List<dynamic>? ?? [])
-        .map((e) => (e as Map).map((key, value) => MapEntry(key.toString(), value)))
+        .map((e) =>
+            (e as Map).map((key, value) => MapEntry(key.toString(), value)))
         .toList();
     if (title.isEmpty) {
       return Response.json(statusCode: 400, body: 'Title is required');

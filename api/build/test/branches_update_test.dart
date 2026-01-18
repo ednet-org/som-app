@@ -18,7 +18,9 @@ void main() {
     test('requires consultant role', () async {
       final branches = InMemoryBranchRepository();
       final users = InMemoryUserRepository();
-      await branches.createBranch(BranchRecord(id: 'branch-1', name: 'Old'));
+      await branches.createBranch(
+        BranchRecord(id: 'branch-1', name: 'Old', status: 'active'),
+      );
 
       final context = TestRequestContext(
         path: '/branches/branch-1',
@@ -48,7 +50,8 @@ void main() {
         ),
       );
 
-      final response = await branch_route.onRequest(context.context, 'branch-1');
+      final response =
+          await branch_route.onRequest(context.context, 'branch-1');
       expect(response.statusCode, 403);
     });
 
@@ -63,7 +66,9 @@ void main() {
         email: 'consultant@som.test',
         roles: const ['consultant'],
       );
-      await branches.createBranch(BranchRecord(id: 'branch-1', name: 'Old'));
+      await branches.createBranch(
+        BranchRecord(id: 'branch-1', name: 'Old', status: 'active'),
+      );
       final token = buildTestJwt(userId: user.id);
 
       final context = TestRequestContext(
@@ -97,7 +102,8 @@ void main() {
         ),
       );
 
-      final response = await branch_route.onRequest(context.context, 'branch-1');
+      final response =
+          await branch_route.onRequest(context.context, 'branch-1');
       expect(response.statusCode, 200);
       final updated = await branches.findBranchById('branch-1');
       expect(updated?.name, 'New');
@@ -140,7 +146,9 @@ void main() {
           updatedAt: DateTime.now().toUtc(),
         ),
       );
-      await branches.createBranch(BranchRecord(id: 'branch-1', name: 'Old'));
+      await branches.createBranch(
+        BranchRecord(id: 'branch-1', name: 'Old', status: 'active'),
+      );
       final token = buildTestJwt(userId: consultant.id);
       final email = TestEmailService();
       final notifications = NotificationService(
@@ -173,7 +181,8 @@ void main() {
         ),
       );
 
-      final response = await branch_route.onRequest(context.context, 'branch-1');
+      final response =
+          await branch_route.onRequest(context.context, 'branch-1');
       expect(response.statusCode, 200);
       expect(email.sent.length, 1);
       expect(email.sent.first.subject, contains('Branch updated'));
@@ -192,9 +201,16 @@ void main() {
         email: 'consultant2@som.test',
         roles: const ['consultant'],
       );
-      await branches.createBranch(BranchRecord(id: 'branch-1', name: 'Main'));
+      await branches.createBranch(
+        BranchRecord(id: 'branch-1', name: 'Main', status: 'active'),
+      );
       await branches.createCategory(
-        CategoryRecord(id: 'cat-1', branchId: 'branch-1', name: 'Old'),
+        CategoryRecord(
+          id: 'cat-1',
+          branchId: 'branch-1',
+          name: 'Old',
+          status: 'active',
+        ),
       );
       final token = buildTestJwt(userId: user.id);
 
@@ -229,8 +245,7 @@ void main() {
         ),
       );
 
-      final response =
-          await category_route.onRequest(context.context, 'cat-1');
+      final response = await category_route.onRequest(context.context, 'cat-1');
       expect(response.statusCode, 200);
       final updated = await branches.findCategoryById('cat-1');
       expect(updated?.name, 'New');

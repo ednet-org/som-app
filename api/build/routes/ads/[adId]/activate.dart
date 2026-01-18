@@ -94,7 +94,8 @@ Future<Response> onRequest(RequestContext context, String adId) async {
           statusCode: 403,
           body: 'Provider profile is pending and cannot activate ads');
     }
-    final plan = await subscriptionRepo.findPlanById(profile.subscriptionPlanId);
+    final plan =
+        await subscriptionRepo.findPlanById(profile.subscriptionPlanId);
     if (plan != null) {
       final maxNormalAds = _ruleUpperLimit(plan.rules, 1);
       final maxBannerAds = _ruleUpperLimit(plan.rules, 2);

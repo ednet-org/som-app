@@ -21,9 +21,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (auth == null || auth.activeRole != 'provider') {
     return Response(statusCode: 403);
   }
-  final provider = await context
-      .read<ProviderRepository>()
-      .findByCompany(auth.companyId);
+  final provider =
+      await context.read<ProviderRepository>().findByCompany(auth.companyId);
   if (provider == null || provider.status != 'active') {
     return Response.json(
       statusCode: 403,

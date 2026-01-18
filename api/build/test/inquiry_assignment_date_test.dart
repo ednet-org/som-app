@@ -25,7 +25,8 @@ void main() {
       final subscriptions = InMemorySubscriptionRepository();
       final emailService = TestEmailService();
 
-      final consultantCompany = await seedCompany(companies, type: 'consultant');
+      final consultantCompany =
+          await seedCompany(companies, type: 'consultant');
       final consultant = await seedUser(
         users,
         consultantCompany,
@@ -143,7 +144,8 @@ void main() {
       final subscriptions = InMemorySubscriptionRepository();
       final emailService = TestEmailService();
 
-      final consultantCompany = await seedCompany(companies, type: 'consultant');
+      final consultantCompany =
+          await seedCompany(companies, type: 'consultant');
       final consultant = await seedUser(
         users,
         consultantCompany,

@@ -168,8 +168,7 @@ void main() {
           branchId: 'branch-1',
           categoryId: 'cat-1',
           productTags: const [],
-          deadline:
-              DateTime.now().toUtc().add(const Duration(days: 5)),
+          deadline: DateTime.now().toUtc().add(const Duration(days: 5)),
           deliveryZips: const ['1010'],
           numberOfProviders: 1,
           description: null,
@@ -213,8 +212,7 @@ void main() {
       );
       context.provide<SomDomainModel>(SomDomainModel());
 
-      final response =
-          await offers_route.onRequest(context.context, 'inq-1');
+      final response = await offers_route.onRequest(context.context, 'inq-1');
       expect(response.statusCode, 403);
     });
   });

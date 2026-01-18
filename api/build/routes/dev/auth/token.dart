@@ -19,7 +19,8 @@ bool _isDevToolsEnabled() {
         defaultValue: false,
       ) ||
       (Platform.environment['DEV_TOOLS'] ?? '').toLowerCase() == 'true';
-  final supabaseUrl = (Platform.environment['SUPABASE_URL'] ?? '').toLowerCase();
+  final supabaseUrl =
+      (Platform.environment['SUPABASE_URL'] ?? '').toLowerCase();
   final isLocalSupabase =
       supabaseUrl.contains('localhost') || supabaseUrl.contains('127.0.0.1');
   return devFixtures || devTools || isLocalSupabase;

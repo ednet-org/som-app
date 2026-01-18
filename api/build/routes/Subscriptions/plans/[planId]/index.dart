@@ -84,15 +84,15 @@ Future<Response> onRequest(RequestContext context, String planId) async {
     );
     await repository.updatePlan(updated);
     await context.read<AuditService>().log(
-          action: 'subscription.plan.updated',
-          entityType: 'subscription_plan',
-          entityId: updated.id,
-          actorId: auth.userId,
-          metadata: {
-            'confirm': confirm,
-            'activeSubscribers': activeCount,
-          },
-        );
+      action: 'subscription.plan.updated',
+      entityType: 'subscription_plan',
+      entityId: updated.id,
+      actorId: auth.userId,
+      metadata: {
+        'confirm': confirm,
+        'activeSubscribers': activeCount,
+      },
+    );
     return Response(statusCode: 200);
   }
 

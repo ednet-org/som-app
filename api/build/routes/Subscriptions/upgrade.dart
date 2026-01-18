@@ -71,11 +71,11 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   await context.read<AuditService>().log(
-        action: 'subscription.upgraded',
-        entityType: 'subscription',
-        entityId: auth.companyId,
-        actorId: auth.userId,
-        metadata: {'planId': planId},
-      );
+    action: 'subscription.upgraded',
+    entityType: 'subscription',
+    entityId: auth.companyId,
+    actorId: auth.userId,
+    metadata: {'planId': planId},
+  );
   return Response(statusCode: 200);
 }

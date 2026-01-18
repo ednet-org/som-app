@@ -181,8 +181,7 @@ class NotificationService {
         await email.send(
           to: admin.email,
           subject: 'New inquiry assigned',
-          text:
-              'A new inquiry has been assigned to your company.\n'
+          text: 'A new inquiry has been assigned to your company.\n'
               'Inquiry ID: ${inquiry.id}\n'
               'Deadline: ${inquiry.deadline.toIso8601String()}\n'
               'View: $link',
@@ -351,8 +350,7 @@ class NotificationService {
         await email.send(
           to: admin.email,
           subject: 'Branch updated',
-          text:
-              'Branch "$oldName" has been renamed to "$newName". '
+          text: 'Branch "$oldName" has been renamed to "$newName". '
               'Please review your provider profile.',
         );
       }
@@ -396,8 +394,7 @@ class NotificationService {
         await email.send(
           to: admin.email,
           subject: 'Category updated',
-          text:
-              'Category "$oldName" has been renamed to "$newName". '
+          text: 'Category "$oldName" has been renamed to "$newName". '
               'Please review your provider profile and inquiries.',
         );
       }

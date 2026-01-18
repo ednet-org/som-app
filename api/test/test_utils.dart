@@ -85,6 +85,7 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     required List<String> branchIds,
     required String source,
     double? confidence,
+    String status = 'active',
   }) async {
     _companyBranches[companyId] = branchIds.toSet();
   }
@@ -95,12 +96,16 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     required List<String> categoryIds,
     required String source,
     double? confidence,
+    String status = 'active',
   }) async {
     _companyCategories[companyId] = categoryIds.toSet();
   }
 
   @override
-  Future<List<String>> listCompanyIdsByBranch(String branchId) async {
+  Future<List<String>> listCompanyIdsByBranch(
+    String branchId, {
+    String status = 'active',
+  }) async {
     final matches = <String>[];
     for (final entry in _companyBranches.entries) {
       if (entry.value.contains(branchId)) {
@@ -111,7 +116,10 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
   }
 
   @override
-  Future<List<String>> listCompanyIdsByCategory(String categoryId) async {
+  Future<List<String>> listCompanyIdsByCategory(
+    String categoryId, {
+    String status = 'active',
+  }) async {
     final matches = <String>[];
     for (final entry in _companyCategories.entries) {
       if (entry.value.contains(categoryId)) {
@@ -119,6 +127,30 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
       }
     }
     return matches;
+  }
+
+  @override
+  Future<void> upsertCompanyBranch({
+    required String companyId,
+    required String branchId,
+    required String source,
+    double? confidence,
+    String status = 'pending',
+  }) async {
+    final existing = _companyBranches[companyId] ?? <String>{};
+    _companyBranches[companyId] = {...existing, branchId};
+  }
+
+  @override
+  Future<void> upsertCompanyCategory({
+    required String companyId,
+    required String categoryId,
+    required String source,
+    double? confidence,
+    String status = 'pending',
+  }) async {
+    final existing = _companyCategories[companyId] ?? <String>{};
+    _companyCategories[companyId] = {...existing, categoryId};
   }
 }
 
