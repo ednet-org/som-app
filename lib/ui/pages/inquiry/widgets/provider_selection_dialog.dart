@@ -26,6 +26,7 @@ typedef LoadProvidersCallback =
       required int offset,
       String? search,
       String? branchId,
+      String? categoryId,
       String? companySize,
       String? providerType,
       String? zipPrefix,
@@ -76,6 +77,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   // Filter state
   String? _branchId;
+  String? _categoryId;
   String? _companySize;
   String? _providerType;
   String? _zipPrefix;
@@ -96,6 +98,47 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   bool get _overLimit =>
       widget.maxProviders > 0 && _selectedIds.length > widget.maxProviders;
+
+  List<Category> get _allCategories => widget.branches
+      .expand((branch) => branch.categories?.toList() ?? const <Category>[])
+      .where((category) => category.status != 'declined')
+      .toList();
+
+  List<Category> get _categoryOptions {
+    if (_branchId == null) {
+      return _allCategories;
+    }
+    final branch = widget.branches.firstWhere(
+      (b) => b.id == _branchId,
+      orElse: () => Branch(),
+    );
+    return (branch.categories?.toList() ?? const <Category>[])
+        .where((category) => category.status != 'declined')
+        .toList();
+  }
+
+  String _categoryLabel(String id) {
+    String? name;
+    String? branchName;
+    for (final branch in widget.branches) {
+      for (final category
+          in branch.categories?.toList() ?? const <Category>[]) {
+        if (category.id == id) {
+          name = category.name;
+          branchName = branch.name;
+          break;
+        }
+      }
+      if (name != null) {
+        break;
+      }
+    }
+    final label = name ?? id;
+    if (branchName == null || branchName.isEmpty) {
+      return label;
+    }
+    return '$branchName — $label';
+  }
 
   BoxConstraints get _filterPopupConstraints =>
       const BoxConstraints(minWidth: 240, maxWidth: 360, maxHeight: 360);
@@ -139,6 +182,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         offset: 0,
         search: _search,
         branchId: _branchId,
+        categoryId: _categoryId,
         companySize: _companySize,
         providerType: _providerType,
         zipPrefix: _zipPrefix,
@@ -172,6 +216,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         offset: _currentOffset,
         search: _search,
         branchId: _branchId,
+        categoryId: _categoryId,
         companySize: _companySize,
         providerType: _providerType,
         zipPrefix: _zipPrefix,
@@ -313,6 +358,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
                   onPressed: () {
                     setState(() {
                       _branchId = null;
+                      _categoryId = null;
                       _companySize = null;
                       _providerType = null;
                       _zipPrefix = null;
@@ -343,7 +389,28 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
                     popupMode: popupMode,
                     popupConstraints: popupConstraints,
                     onChanged: (value) {
-                      setState(() => _branchId = value);
+                      setState(() {
+                        _branchId = value;
+                        _categoryId = null;
+                      });
+                      _loadInitialProviders();
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 240,
+                  child: SomDropDown<String>(
+                    hint: 'Category',
+                    value: _categoryId,
+                    items: _categoryOptions
+                        .map((category) => category.id)
+                        .whereType<String>()
+                        .toList(),
+                    itemAsString: _categoryLabel,
+                    popupMode: popupMode,
+                    popupConstraints: popupConstraints,
+                    onChanged: (value) {
+                      setState(() => _categoryId = value);
                       _loadInitialProviders();
                     },
                   ),

@@ -10,7 +10,8 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/audit_service.dart';
-import '../routes/Companies/[companyId]/users/[userId]/update.dart' as user_update_route;
+import '../routes/Companies/[companyId]/users/[userId]/update.dart'
+    as user_update_route;
 import '../routes/Subscriptions/downgrade.dart' as downgrade_route;
 import 'test_utils.dart';
 
@@ -43,14 +44,16 @@ void main() {
           'authorization': 'Bearer $token',
           'content-type': 'application/json',
         },
-        body: jsonEncode({'roles': [1]}),
+        body: jsonEncode({
+          'roles': [1]
+        }),
       );
       context.provide<UserRepository>(users);
       context.provide<CompanyRepository>(companies);
       context.provide<AuditService>(audit);
 
-      final response =
-          await user_update_route.onRequest(context.context, company.id, member.id);
+      final response = await user_update_route.onRequest(
+          context.context, company.id, member.id);
       expect(response.statusCode, 200);
 
       final entries = await auditRepo.listRecent();

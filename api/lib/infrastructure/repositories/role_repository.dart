@@ -18,8 +18,8 @@ class RoleRepository {
   }
 
   Future<List<RoleRecord>> listAll() async {
-    final rows = await _client.from('roles').select().order('name')
-        as List<dynamic>;
+    final rows =
+        await _client.from('roles').select().order('name') as List<dynamic>;
     return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 

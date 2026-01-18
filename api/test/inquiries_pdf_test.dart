@@ -41,21 +41,21 @@ void main() {
         description: 'Test',
         pdfPath: null,
         providerCriteria: ProviderCriteria(),
-      contactInfo: ContactInfo(
-        companyName: company.name,
-        salutation: user.salutation,
-        title: user.title ?? '',
-        firstName: user.firstName,
-        lastName: user.lastName,
-        telephone: user.telephoneNr ?? '',
-        email: user.email,
-      ),
-      notifiedAt: null,
-      assignedAt: null,
-      closedAt: null,
-      createdAt: now,
-      updatedAt: now,
-    );
+        contactInfo: ContactInfo(
+          companyName: company.name,
+          salutation: user.salutation,
+          title: user.title ?? '',
+          firstName: user.firstName,
+          lastName: user.lastName,
+          telephone: user.telephoneNr ?? '',
+          email: user.email,
+        ),
+        notifiedAt: null,
+        assignedAt: null,
+        closedAt: null,
+        createdAt: now,
+        updatedAt: now,
+      );
       await inquiries.create(inquiry);
 
       const boundary = 'dartfrog';

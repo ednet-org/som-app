@@ -31,8 +31,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   }
   final repo = context.read<UserRepository>();
   final auth = context.read<AuthService>();
-  final company =
-      await context.read<CompanyRepository>().findById(companyId);
+  final company = await context.read<CompanyRepository>().findById(companyId);
   if (company == null) {
     return Response(statusCode: 404);
   }

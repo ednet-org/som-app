@@ -101,9 +101,9 @@ class SeedSupabaseClient {
     while (true) {
       try {
         await _client.from(table).upsert(
-          batch,
-          onConflict: conflictColumn,
-        );
+              batch,
+              onConflict: conflictColumn,
+            );
         return;
       } catch (e) {
         attempts++;
@@ -128,10 +128,8 @@ class SeedSupabaseClient {
 
   /// Get counts grouped by a column.
   Future<Map<String, int>> countGroupBy(String table, String column) async {
-    final response = await _client
-        .from(table)
-        .select(column)
-        .not(column, 'is', null);
+    final response =
+        await _client.from(table).select(column).not(column, 'is', null);
 
     final counts = <String, int>{};
     for (final row in response) {
@@ -191,5 +189,6 @@ class BatchError {
   final String? details;
 
   @override
-  String toString() => 'Batch $batchIndex: $message${details != null ? ' ($details)' : ''}';
+  String toString() =>
+      'Batch $batchIndex: $message${details != null ? ' ($details)' : ''}';
 }

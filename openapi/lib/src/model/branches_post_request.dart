@@ -12,10 +12,14 @@ part 'branches_post_request.g.dart';
 ///
 /// Properties:
 /// * [name] 
+/// * [status] 
 @BuiltValue()
 abstract class BranchesPostRequest implements Built<BranchesPostRequest, BranchesPostRequestBuilder> {
   @BuiltValueField(wireName: r'name')
   String get name;
+
+  @BuiltValueField(wireName: r'status')
+  String? get status;
 
   BranchesPostRequest._();
 
@@ -45,6 +49,13 @@ class _$BranchesPostRequestSerializer implements PrimitiveSerializer<BranchesPos
       object.name,
       specifiedType: const FullType(String),
     );
+    if (object.status != null) {
+      yield r'status';
+      yield serializers.serialize(
+        object.status,
+        specifiedType: const FullType(String),
+      );
+    }
   }
 
   @override
@@ -74,6 +85,13 @@ class _$BranchesPostRequestSerializer implements PrimitiveSerializer<BranchesPos
             specifiedType: const FullType(String),
           ) as String;
           result.name = valueDes;
+          break;
+        case r'status':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.status = valueDes;
           break;
         default:
           unhandled.add(key);

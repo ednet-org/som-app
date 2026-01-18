@@ -505,12 +505,16 @@ components:
       properties:
         name:
           type: string
+        status:
+          type: string
     Branch:
       type: object
       properties:
         id:
           type: string
         name:
+          type: string
+        status:
           type: string
         categories:
           type: array
@@ -522,6 +526,8 @@ components:
         id:
           type: string
         name:
+          type: string
+        status:
           type: string
     SubscriptionPlan:
       type: object
@@ -2315,6 +2321,10 @@ paths:
       responses:
         '200':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
         '400':
           description: Exists
           content:
@@ -2391,6 +2401,10 @@ paths:
       responses:
         '200':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
         '400':
           description: Exists
           content:
@@ -2572,6 +2586,10 @@ paths:
           description: Search by company name (case-insensitive)
         - in: query
           name: branchId
+          schema:
+            type: string
+        - in: query
+          name: categoryId
           schema:
             type: string
         - in: query

@@ -1,6 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/company_taxonomy_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
@@ -30,6 +31,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   // Filter parameters
   final branchId = queryParams['branchId'];
+  final categoryId = queryParams['categoryId'];
   final companySize = queryParams['companySize'];
   final providerType = queryParams['providerType'];
   final zipPrefix = queryParams['zipPrefix'];
@@ -44,9 +46,32 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   final companyRepo = context.read<CompanyRepository>();
+  final taxonomyRepo = context.read<CompanyTaxonomyRepository>();
   final providerRepo = context.read<ProviderRepository>();
   final inquiryRepo = context.read<InquiryRepository>();
   final offerRepo = context.read<OfferRepository>();
+
+  List<String>? companyIdsFilter;
+  if (branchId != null || categoryId != null) {
+    Set<String>? branchCompanyIds;
+    Set<String>? categoryCompanyIds;
+    if (branchId != null) {
+      branchCompanyIds =
+          (await taxonomyRepo.listCompanyIdsByBranch(branchId)).toSet();
+    }
+    if (categoryId != null) {
+      categoryCompanyIds =
+          (await taxonomyRepo.listCompanyIdsByCategory(categoryId)).toSet();
+    }
+    if (branchCompanyIds != null && categoryCompanyIds != null) {
+      companyIdsFilter =
+          branchCompanyIds.intersection(categoryCompanyIds).toList();
+    } else if (branchCompanyIds != null) {
+      companyIdsFilter = branchCompanyIds.toList();
+    } else if (categoryCompanyIds != null) {
+      companyIdsFilter = categoryCompanyIds.toList();
+    }
+  }
 
   // Use the optimized search method with pagination
   final searchResult = await providerRepo.searchProviders(
@@ -55,6 +80,7 @@ Future<Response> onRequest(RequestContext context) async {
       offset: offset,
       search: search,
       branchId: branchId,
+      categoryId: categoryId,
       providerType: providerType,
       status: status,
       zipPrefix: zipPrefix,
@@ -62,6 +88,7 @@ Future<Response> onRequest(RequestContext context) async {
       claimed: claimed,
     ),
     companyRepo,
+    companyIdsFilter: companyIdsFilter,
   );
 
   final totalCount = searchResult.totalCount;

@@ -140,13 +140,39 @@ create table if not exists provider_profiles (
 
 create table if not exists branches (
   id uuid primary key,
-  name text not null
+  name text not null,
+  external_id text unique,
+  normalized_name text,
+  status text not null default 'active'
 );
 
 create table if not exists categories (
   id uuid primary key,
   branch_id uuid not null references branches(id) on delete cascade,
-  name text not null
+  name text not null,
+  external_id text,
+  normalized_name text,
+  status text not null default 'active'
+);
+
+create table if not exists company_branches (
+  company_id uuid not null references companies(id) on delete cascade,
+  branch_id uuid not null references branches(id) on delete cascade,
+  source text not null,
+  confidence numeric,
+  created_at timestamptz not null,
+  updated_at timestamptz not null,
+  primary key (company_id, branch_id)
+);
+
+create table if not exists company_categories (
+  company_id uuid not null references companies(id) on delete cascade,
+  category_id uuid not null references categories(id) on delete cascade,
+  source text not null,
+  confidence numeric,
+  created_at timestamptz not null,
+  updated_at timestamptz not null,
+  primary key (company_id, category_id)
 );
 
 create table if not exists products (

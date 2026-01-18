@@ -62,8 +62,10 @@ class OfferRepository {
     required String companyId,
     String? status,
   }) async {
-    var query =
-        _client.from('offers').select('id').eq('provider_company_id', companyId);
+    var query = _client
+        .from('offers')
+        .select('id')
+        .eq('provider_company_id', companyId);
     if (status != null) {
       query = query.eq('status', status);
     }

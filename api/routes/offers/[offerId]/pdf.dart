@@ -44,8 +44,7 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   if (pdfPath == null || pdfPath.isEmpty) {
     return Response(statusCode: 404);
   }
-  final signedUrl =
-      await context.read<FileStorage>().createSignedUrl(pdfPath);
+  final signedUrl = await context.read<FileStorage>().createSignedUrl(pdfPath);
   if (signedUrl.isEmpty) {
     return Response(statusCode: 404);
   }

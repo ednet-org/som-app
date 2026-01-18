@@ -1,7 +1,9 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/design_system/som_input.dart';
 
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
@@ -16,6 +18,8 @@ class InquiryCreateForm extends StatefulWidget {
     Key? key,
     required this.branches,
     required this.onSubmit,
+    required this.onEnsureBranch,
+    required this.onEnsureCategory,
     this.initialContactSalutation,
     this.initialContactTitle,
     this.initialContactFirstName,
@@ -26,6 +30,9 @@ class InquiryCreateForm extends StatefulWidget {
 
   final List<Branch> branches;
   final Future<void> Function(InquiryFormData data) onSubmit;
+  final Future<Branch> Function(String name) onEnsureBranch;
+  final Future<Category> Function(String branchId, String name)
+  onEnsureCategory;
   final String? initialContactSalutation;
   final String? initialContactTitle;
   final String? initialContactFirstName;
@@ -38,6 +45,10 @@ class InquiryCreateForm extends StatefulWidget {
 }
 
 class _InquiryCreateFormState extends State<InquiryCreateForm> {
+  final _branchController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _branchFocusNode = FocusNode();
+  final _categoryFocusNode = FocusNode();
   final _deliveryZipsController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _providerZipController = TextEditingController();
@@ -58,10 +69,12 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   int? _radiusKm;
   PlatformFile? _selectedPdf;
   bool _isSubmitting = false;
+  late List<Branch> _branchOptions;
 
   @override
   void initState() {
     super.initState();
+    _branchOptions = List.of(widget.branches);
     _contactSalutationController.text = widget.initialContactSalutation ?? '';
     _contactTitleController.text = widget.initialContactTitle ?? '';
     _contactFirstNameController.text = widget.initialContactFirstName ?? '';
@@ -71,7 +84,28 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   @override
+  void didUpdateWidget(covariant InquiryCreateForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.branches != widget.branches) {
+      final byId = {
+        for (final branch in _branchOptions)
+          if (branch.id != null) branch.id!: branch,
+      };
+      for (final branch in widget.branches) {
+        if (branch.id != null) {
+          byId[branch.id!] = branch;
+        }
+      }
+      _branchOptions = byId.values.toList();
+    }
+  }
+
+  @override
   void dispose() {
+    _branchController.dispose();
+    _categoryController.dispose();
+    _branchFocusNode.dispose();
+    _categoryFocusNode.dispose();
     _deliveryZipsController.dispose();
     _descriptionController.dispose();
     _providerZipController.dispose();
@@ -86,18 +120,16 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
 
   List<Category>? get _categories {
     if (_selectedBranchId == null) return null;
-    return _availableBranches
-        .firstWhere(
-          (branch) => branch.id == _selectedBranchId,
-          orElse: () => Branch(),
-        )
-        .categories
-        ?.toList();
+    final branch = _availableBranches.firstWhere(
+      (b) => b.id == _selectedBranchId,
+      orElse: () => Branch(),
+    );
+    final categories = branch.categories?.toList() ?? const [];
+    return categories.where((c) => c.status != 'declined').toList();
   }
 
-  List<Branch> get _availableBranches => widget.branches
-      .where((branch) => branch.categories?.isNotEmpty == true)
-      .toList();
+  List<Branch> get _availableBranches =>
+      _branchOptions.where((b) => b.status != 'declined').toList();
 
   Future<void> _pickPdf() async {
     final result = await FilePicker.platform.pickFiles(
@@ -111,9 +143,133 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     });
   }
 
+  String _normalize(String value) {
+    return value
+        .toLowerCase()
+        .replaceAll(RegExp(r'[,_]+'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+  }
+
+  Branch? _findBranchByText(String text) {
+    final query = _normalize(text);
+    if (query.isEmpty) return null;
+    for (final branch in _availableBranches) {
+      if (_normalize(branch.name ?? '') == query) {
+        return branch;
+      }
+    }
+    return null;
+  }
+
+  Category? _findCategoryByText(String text) {
+    final query = _normalize(text);
+    if (query.isEmpty) return null;
+    final categories = _categories ?? const [];
+    for (final category in categories) {
+      if (_normalize(category.name ?? '') == query) {
+        return category;
+      }
+    }
+    return null;
+  }
+
+  void _upsertBranch(Branch branch) {
+    final id = branch.id;
+    if (id == null) return;
+    setState(() {
+      final index = _branchOptions.indexWhere((b) => b.id == id);
+      if (index == -1) {
+        _branchOptions = [..._branchOptions, branch];
+      } else {
+        final updated = [..._branchOptions];
+        updated[index] = branch;
+        _branchOptions = updated;
+      }
+    });
+  }
+
+  void _upsertCategory(Category category) {
+    final branchId = _selectedBranchId;
+    if (branchId == null) return;
+    setState(() {
+      final branchIndex = _branchOptions.indexWhere((b) => b.id == branchId);
+      if (branchIndex == -1) return;
+      final branch = _branchOptions[branchIndex];
+      final categories = branch.categories?.toList() ?? <Category>[];
+      final existingIndex = categories.indexWhere((c) => c.id == category.id);
+      if (existingIndex == -1) {
+        categories.add(category);
+      } else {
+        categories[existingIndex] = category;
+      }
+      final updatedBranch = branch.rebuild(
+        (b) => b..categories = ListBuilder<Category>(categories),
+      );
+      final updated = [..._branchOptions];
+      updated[branchIndex] = updatedBranch;
+      _branchOptions = updated;
+    });
+  }
+
+  Future<String?> _resolveBranchId() async {
+    final text = _branchController.text.trim();
+    if (text.isEmpty) return null;
+    final match = _findBranchByText(text);
+    if (match?.id != null) {
+      setState(() {
+        _selectedBranchId = match!.id;
+        _selectedCategoryId = null;
+        _categoryController.clear();
+      });
+      return match.id!;
+    }
+    try {
+      final created = await widget.onEnsureBranch(text);
+      if (created.id == null) return null;
+      _upsertBranch(created);
+      setState(() {
+        _selectedBranchId = created.id;
+        _selectedCategoryId = null;
+        _categoryController.clear();
+      });
+      return created.id!;
+    } catch (error) {
+      _showSnack('Failed to create branch: $error');
+      return null;
+    }
+  }
+
+  Future<String?> _resolveCategoryId() async {
+    if (_selectedBranchId == null) return null;
+    final text = _categoryController.text.trim();
+    if (text.isEmpty) return null;
+    final match = _findCategoryByText(text);
+    if (match?.id != null) {
+      setState(() => _selectedCategoryId = match!.id);
+      return match.id!;
+    }
+    try {
+      final created = await widget.onEnsureCategory(_selectedBranchId!, text);
+      if (created.id == null) return null;
+      _upsertCategory(created);
+      setState(() => _selectedCategoryId = created.id);
+      return created.id!;
+    } catch (error) {
+      _showSnack('Failed to create category: $error');
+      return null;
+    }
+  }
+
   Future<void> _submit() async {
-    if (_selectedBranchId == null || _selectedCategoryId == null) {
-      _showSnack('Please select branch and category.');
+    final branchId = await _resolveBranchId();
+    if (branchId == null) {
+      _showSnack('Please select or enter a branch.');
+      return;
+    }
+    final categoryId = await _resolveCategoryId();
+    if (categoryId == null) {
+      _showSnack('Please select or enter a category.');
       return;
     }
     if (_deadline == null) {
@@ -135,8 +291,8 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     try {
       await widget.onSubmit(
         InquiryFormData(
-          branchId: _selectedBranchId!,
-          categoryId: _selectedCategoryId!,
+          branchId: branchId,
+          categoryId: categoryId,
           productTags: _productTags,
           deadline: _deadline!,
           deliveryZips: zips,
@@ -165,6 +321,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     setState(() {
       _selectedPdf = null;
       _productTags = [];
+      _selectedBranchId = null;
+      _selectedCategoryId = null;
+      _branchController.clear();
+      _categoryController.clear();
       _deliveryZipsController.clear();
       _descriptionController.clear();
       _providerZipController.clear();
@@ -209,53 +369,175 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   Widget _buildBranchCategorySection() {
-    if (_availableBranches.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: Text(
-          'No categories available. Please contact support to configure branches.',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.error,
-          ),
-        ),
-      );
-    }
+    final selectedBranch = _availableBranches
+        .where((b) => b.id == _selectedBranchId)
+        .toList();
+    final branch = selectedBranch.isEmpty ? null : selectedBranch.first;
+    final selectedCategory = (_categories ?? const [])
+        .where((c) => c.id == _selectedCategoryId)
+        .toList();
+    final category = selectedCategory.isEmpty ? null : selectedCategory.first;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SomDropDown<Branch>(
-          label: 'Branch',
-          value: _selectedBranchId == null
-              ? null
-              : _availableBranches
-                    .where((b) => b.id == _selectedBranchId)
-                    .firstOrNull,
-          items: _availableBranches,
-          itemAsString: (Branch b) => b.name ?? b.id ?? '-',
-          onChanged: (Branch? b) => setState(() {
-            _selectedBranchId = b?.id;
-            _selectedCategoryId = null;
-          }),
+        RawAutocomplete<Branch>(
+          textEditingController: _branchController,
+          focusNode: _branchFocusNode,
+          displayStringForOption: (option) => option.name ?? '',
+          optionsBuilder: (TextEditingValue value) {
+            final query = _normalize(value.text);
+            final options = _availableBranches;
+            if (query.isEmpty) return options;
+            return options.where(
+              (b) => _normalize(b.name ?? '').contains(query),
+            );
+          },
+          onSelected: (Branch b) {
+            setState(() {
+              _selectedBranchId = b.id;
+              _selectedCategoryId = null;
+              _categoryController.clear();
+            });
+          },
+          fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+            return SomInput(
+              label: 'Branch *',
+              hintText: 'Type to search or add a new branch',
+              controller: controller,
+              focusNode: focusNode,
+              onChanged: (value) {
+                final match = _findBranchByText(value);
+                setState(() {
+                  _selectedBranchId = match?.id;
+                  if (match == null) {
+                    _selectedCategoryId = null;
+                    _categoryController.clear();
+                  }
+                });
+              },
+            );
+          },
+          optionsViewBuilder: (context, onSelected, options) {
+            return Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                color: Theme.of(context).colorScheme.surface,
+                elevation: 4,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 240,
+                    maxWidth: 360,
+                  ),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: options.length,
+                    itemBuilder: (context, index) {
+                      final option = options.elementAt(index);
+                      return ListTile(
+                        title: Text(option.name ?? option.id ?? 'Branch'),
+                        subtitle: option.status == 'pending'
+                            ? const Text('Pending approval')
+                            : null,
+                        onTap: () => onSelected(option),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            );
+          },
         ),
-        const SizedBox(height: 12),
-        SomDropDown<Category>(
-          label: 'Category',
-          value: _selectedCategoryId == null
-              ? null
-              : _categories
-                    ?.where((c) => c.id == _selectedCategoryId)
-                    .firstOrNull,
-          items: _categories ?? [],
-          itemAsString: (Category c) => c.name ?? c.id ?? '-',
-          onChanged: (Category? c) =>
-              setState(() => _selectedCategoryId = c?.id),
-        ),
-        if (_selectedBranchId != null && (_categories?.isEmpty ?? true))
+        if (branch?.status == 'pending')
           Padding(
-            padding: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.only(top: 4),
             child: Text(
-              'No categories for this branch. Choose another branch.',
+              'Branch pending approval.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
+        const SizedBox(height: 12),
+        IgnorePointer(
+          ignoring: _selectedBranchId == null,
+          child: Opacity(
+            opacity: _selectedBranchId == null ? 0.5 : 1,
+            child: RawAutocomplete<Category>(
+              textEditingController: _categoryController,
+              focusNode: _categoryFocusNode,
+              displayStringForOption: (option) => option.name ?? '',
+              optionsBuilder: (TextEditingValue value) {
+                final query = _normalize(value.text);
+                final options = _categories ?? const [];
+                if (query.isEmpty) return options;
+                return options.where(
+                  (c) => _normalize(c.name ?? '').contains(query),
+                );
+              },
+              onSelected: (Category c) =>
+                  setState(() => _selectedCategoryId = c.id),
+              fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+                return SomInput(
+                  label: 'Category *',
+                  hintText: _selectedBranchId == null
+                      ? 'Select branch first'
+                      : 'Type to search or add a new category',
+                  controller: controller,
+                  focusNode: focusNode,
+                  onChanged: (value) {
+                    final match = _findCategoryByText(value);
+                    setState(() => _selectedCategoryId = match?.id);
+                  },
+                );
+              },
+              optionsViewBuilder: (context, onSelected, options) {
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    color: Theme.of(context).colorScheme.surface,
+                    elevation: 4,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxHeight: 240,
+                        maxWidth: 360,
+                      ),
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: options.length,
+                        itemBuilder: (context, index) {
+                          final option = options.elementAt(index);
+                          return ListTile(
+                            title: Text(option.name ?? option.id ?? 'Category'),
+                            subtitle: option.status == 'pending'
+                                ? const Text('Pending approval')
+                                : null,
+                            onTap: () => onSelected(option),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        if (_selectedBranchId == null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              'Choose a branch to see categories.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        if (category?.status == 'pending')
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              'Category pending approval.',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.error,
               ),

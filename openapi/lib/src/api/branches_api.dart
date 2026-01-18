@@ -12,6 +12,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/branch.dart';
 import 'package:openapi/src/model/branches_post_request.dart';
+import 'package:openapi/src/model/category.dart';
 
 class BranchesApi {
 
@@ -34,9 +35,9 @@ class BranchesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [Category] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> branchesBranchIdCategoriesPost({ 
+  Future<Response<Category>> branchesBranchIdCategoriesPost({ 
     required String branchId,
     required BranchesPostRequest branchesPostRequest,
     CancelToken? cancelToken,
@@ -93,7 +94,35 @@ class BranchesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    Category? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(Category),
+      ) as Category;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<Category>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// Delete branch
@@ -309,9 +338,9 @@ class BranchesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [Branch] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> branchesPost({ 
+  Future<Response<Branch>> branchesPost({ 
     required BranchesPostRequest branchesPostRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -367,7 +396,35 @@ class BranchesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    Branch? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(Branch),
+      ) as Branch;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<Branch>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// Delete category

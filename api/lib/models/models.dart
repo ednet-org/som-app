@@ -263,9 +263,8 @@ class UserRecord {
       lastFailedLoginAt: identical(lastFailedLoginAt, _unset)
           ? this.lastFailedLoginAt
           : lastFailedLoginAt as DateTime?,
-      lockedAt: identical(lockedAt, _unset)
-          ? this.lockedAt
-          : lockedAt as DateTime?,
+      lockedAt:
+          identical(lockedAt, _unset) ? this.lockedAt : lockedAt as DateTime?,
       lockReason: identical(lockReason, _unset)
           ? this.lockReason
           : lockReason as String?,
@@ -698,6 +697,7 @@ class ProviderSearchParams {
     this.offset = 0,
     this.search,
     this.branchId,
+    this.categoryId,
     this.providerType,
     this.status,
     this.zipPrefix,
@@ -709,6 +709,7 @@ class ProviderSearchParams {
   final int offset;
   final String? search;
   final String? branchId;
+  final String? categoryId;
   final String? providerType;
   final String? status;
   final String? zipPrefix;

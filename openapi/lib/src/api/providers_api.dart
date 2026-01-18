@@ -713,6 +713,7 @@ class ProvidersApi {
   /// * [offset] - Number of results to skip
   /// * [search] - Search by company name (case-insensitive)
   /// * [branchId] 
+  /// * [categoryId] 
   /// * [companySize] 
   /// * [providerType] 
   /// * [zipPrefix] 
@@ -733,6 +734,7 @@ class ProvidersApi {
     int? offset = 0,
     String? search,
     String? branchId,
+    String? categoryId,
     String? companySize,
     String? providerType,
     String? zipPrefix,
@@ -770,6 +772,7 @@ class ProvidersApi {
       if (offset != null) r'offset': encodeQueryParameter(_serializers, offset, const FullType(int)),
       if (search != null) r'search': encodeQueryParameter(_serializers, search, const FullType(String)),
       if (branchId != null) r'branchId': encodeQueryParameter(_serializers, branchId, const FullType(String)),
+      if (categoryId != null) r'categoryId': encodeQueryParameter(_serializers, categoryId, const FullType(String)),
       if (companySize != null) r'companySize': encodeQueryParameter(_serializers, companySize, const FullType(String)),
       if (providerType != null) r'providerType': encodeQueryParameter(_serializers, providerType, const FullType(String)),
       if (zipPrefix != null) r'zipPrefix': encodeQueryParameter(_serializers, zipPrefix, const FullType(String)),

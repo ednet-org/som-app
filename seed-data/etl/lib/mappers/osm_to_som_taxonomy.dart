@@ -75,7 +75,8 @@ class OsmToSomTaxonomyMapper {
       }
 
       final productTagsYaml = m['product_tags'] as YamlList?;
-      final productTags = productTagsYaml?.map((e) => e as String).toList() ?? [];
+      final productTags =
+          productTagsYaml?.map((e) => e as String).toList() ?? [];
 
       rules.add(_MappingRule(
         osmTags: osmTags,

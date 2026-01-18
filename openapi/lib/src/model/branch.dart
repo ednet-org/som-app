@@ -15,6 +15,7 @@ part 'branch.g.dart';
 /// Properties:
 /// * [id] 
 /// * [name] 
+/// * [status] 
 /// * [categories] 
 @BuiltValue()
 abstract class Branch implements Built<Branch, BranchBuilder> {
@@ -23,6 +24,9 @@ abstract class Branch implements Built<Branch, BranchBuilder> {
 
   @BuiltValueField(wireName: r'name')
   String? get name;
+
+  @BuiltValueField(wireName: r'status')
+  String? get status;
 
   @BuiltValueField(wireName: r'categories')
   BuiltList<Category>? get categories;
@@ -61,6 +65,13 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
       yield r'name';
       yield serializers.serialize(
         object.name,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.status != null) {
+      yield r'status';
+      yield serializers.serialize(
+        object.status,
         specifiedType: const FullType(String),
       );
     }
@@ -107,6 +118,13 @@ class _$BranchSerializer implements PrimitiveSerializer<Branch> {
             specifiedType: const FullType(String),
           ) as String;
           result.name = valueDes;
+          break;
+        case r'status':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.status = valueDes;
           break;
         case r'categories':
           final valueDes = serializers.deserialize(

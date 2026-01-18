@@ -117,8 +117,7 @@ void main() {
         ),
       );
 
-      final response =
-          await assign_route.onRequest(context.context, 'inq-1');
+      final response = await assign_route.onRequest(context.context, 'inq-1');
       expect(response.statusCode, 400);
     });
 
@@ -187,8 +186,7 @@ void main() {
       context.provide<NotificationService>(notification);
       context.provide<SomDomainModel>(SomDomainModel());
 
-      final response =
-          await offers_route.onRequest(context.context, 'inq-2');
+      final response = await offers_route.onRequest(context.context, 'inq-2');
       expect(response.statusCode, 400);
     });
 
@@ -252,8 +250,7 @@ void main() {
       context.provide<NotificationService>(notification);
       context.provide<SomDomainModel>(SomDomainModel());
 
-      final response =
-          await offers_route.onRequest(context.context, 'inq-3');
+      final response = await offers_route.onRequest(context.context, 'inq-3');
       expect(response.statusCode, 403);
     });
 
@@ -322,8 +319,7 @@ void main() {
       context.provide<NotificationService>(notification);
       context.provide<SomDomainModel>(SomDomainModel());
 
-      final response =
-          await offers_route.onRequest(context.context, 'inq-4');
+      final response = await offers_route.onRequest(context.context, 'inq-4');
       expect(response.statusCode, 200);
       final updated = await inquiries.findById('inq-4');
       expect(updated?.notifiedAt, isNotNull);

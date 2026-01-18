@@ -84,14 +84,16 @@ Future<Response> onRequest(RequestContext context) async {
     }
     final providerRepo = context.read<ProviderRepository>();
     final subscriptionRepo = context.read<SubscriptionRepository>();
-    final data = jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    final data =
+        jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
     if (status != 'draft') {
       return Response.json(
           statusCode: 400,
-          body: 'Ads must be created as draft; activate via /ads/{id}/activate');
+          body:
+              'Ads must be created as draft; activate via /ads/{id}/activate');
     }
     final bannerDate = data['bannerDate'] == null
         ? null
@@ -117,8 +119,7 @@ Future<Response> onRequest(RequestContext context) async {
       }
       if (endDate.difference(startDate).inDays > 14) {
         return Response.json(
-            statusCode: 400,
-            body: 'Ad period cannot exceed 14 days');
+            statusCode: 400, body: 'Ad period cannot exceed 14 days');
       }
     }
     final profile = await providerRepo.findByCompany(auth.companyId);

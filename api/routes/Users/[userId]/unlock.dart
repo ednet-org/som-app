@@ -18,8 +18,8 @@ Future<Response> onRequest(RequestContext context, String userId) async {
   if (authResult == null) {
     return Response(statusCode: 401);
   }
-  final isConsultantAdmin =
-      authResult.roles.contains('consultant') && authResult.roles.contains('admin');
+  final isConsultantAdmin = authResult.roles.contains('consultant') &&
+      authResult.roles.contains('admin');
   if (!isConsultantAdmin) {
     return Response(statusCode: 403);
   }

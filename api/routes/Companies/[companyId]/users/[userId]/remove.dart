@@ -46,15 +46,15 @@ Future<Response> onRequest(
   if (company != null) {
     final removedBy = await users.findById(authResult.userId);
     await context.read<DomainEventService>().emit(
-          type: 'user.removed',
-          entityType: 'company',
-          entityId: company.id,
-          actorId: authResult.userId,
-          payload: {
-            'userEmail': user.email,
-            'removedByEmail': removedBy?.email,
-          },
-        );
+      type: 'user.removed',
+      entityType: 'company',
+      entityId: company.id,
+      actorId: authResult.userId,
+      payload: {
+        'userEmail': user.email,
+        'removedByEmail': removedBy?.email,
+      },
+    );
   }
   return Response(statusCode: 200);
 }

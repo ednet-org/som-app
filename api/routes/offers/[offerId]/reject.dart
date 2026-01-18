@@ -51,14 +51,14 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
     );
   }
   await context.read<DomainEventService>().emit(
-        type: 'offer.rejected',
-        entityType: 'offer',
-        entityId: offerId,
-        actorId: auth.userId,
-        payload: {
-          'inquiryId': offer.inquiryId,
-          'providerCompanyId': offer.providerCompanyId,
-        },
-      );
+    type: 'offer.rejected',
+    entityType: 'offer',
+    entityId: offerId,
+    actorId: auth.userId,
+    payload: {
+      'inquiryId': offer.inquiryId,
+      'providerCompanyId': offer.providerCompanyId,
+    },
+  );
   return Response(statusCode: 200);
 }

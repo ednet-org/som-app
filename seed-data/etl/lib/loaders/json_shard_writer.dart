@@ -54,9 +54,8 @@ class JsonFileWriter {
     final filepath = '$outputDir/$filename';
 
     // Encode JSON (pretty print for readability)
-    final encoder = prettyPrint
-        ? const JsonEncoder.withIndent('  ')
-        : const JsonEncoder();
+    final encoder =
+        prettyPrint ? const JsonEncoder.withIndent('  ') : const JsonEncoder();
     final json = encoder.convert(entities.map((e) => e.toJson()).toList());
     final bytes = utf8.encode(json);
 

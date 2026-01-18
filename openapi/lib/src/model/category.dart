@@ -13,6 +13,7 @@ part 'category.g.dart';
 /// Properties:
 /// * [id] 
 /// * [name] 
+/// * [status] 
 @BuiltValue()
 abstract class Category implements Built<Category, CategoryBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -20,6 +21,9 @@ abstract class Category implements Built<Category, CategoryBuilder> {
 
   @BuiltValueField(wireName: r'name')
   String? get name;
+
+  @BuiltValueField(wireName: r'status')
+  String? get status;
 
   Category._();
 
@@ -55,6 +59,13 @@ class _$CategorySerializer implements PrimitiveSerializer<Category> {
       yield r'name';
       yield serializers.serialize(
         object.name,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.status != null) {
+      yield r'status';
+      yield serializers.serialize(
+        object.status,
         specifiedType: const FullType(String),
       );
     }
@@ -94,6 +105,13 @@ class _$CategorySerializer implements PrimitiveSerializer<Category> {
             specifiedType: const FullType(String),
           ) as String;
           result.name = valueDes;
+          break;
+        case r'status':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.status = valueDes;
           break;
         default:
           unhandled.add(key);

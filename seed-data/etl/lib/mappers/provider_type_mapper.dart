@@ -88,7 +88,9 @@ class ProviderTypeMapper {
       if (tagValue == null) continue;
 
       // Check if rule matches this tag
-      if (rule.tagValue != null && rule.tagValue != '*' && rule.tagValue != tagValue) {
+      if (rule.tagValue != null &&
+          rule.tagValue != '*' &&
+          rule.tagValue != tagValue) {
         continue;
       }
 
@@ -114,7 +116,8 @@ class ProviderTypeMapper {
           tagKey: 'shop',
           providerType: ProviderType.haendler,
           exceptions: [
-            _ExceptionRule(value: 'wholesale', providerType: ProviderType.grosshaendler),
+            _ExceptionRule(
+                value: 'wholesale', providerType: ProviderType.grosshaendler),
           ],
         ),
         // Craft = DIENSTLEISTER
@@ -140,7 +143,8 @@ class ProviderTypeMapper {
           tagKey: 'industrial',
           providerType: ProviderType.hersteller,
           exceptions: [
-            _ExceptionRule(value: 'warehouse', providerType: ProviderType.dienstleister),
+            _ExceptionRule(
+                value: 'warehouse', providerType: ProviderType.dienstleister),
           ],
         ),
         // man_made=works = HERSTELLER

@@ -23,6 +23,16 @@ class EntityToRecordMapper {
     return _uuid.v5(_somNamespace, etlId);
   }
 
+  /// Generate deterministic UUID for branch external ids.
+  String generateBranchId(String externalId) {
+    return _uuid.v5(_somNamespace, 'branch:$externalId');
+  }
+
+  /// Generate deterministic UUID for category external ids.
+  String generateCategoryId(String externalId) {
+    return _uuid.v5(_somNamespace, 'category:$externalId');
+  }
+
   /// Map BusinessEntity to companies table record.
   Map<String, dynamic> toCompanyRecord(BusinessEntity entity) {
     final companyId = generateCompanyId(entity.id);
@@ -33,7 +43,8 @@ class EntityToRecordMapper {
       'external_id': entity.id,
       'name': entity.name,
       'type': 'seeded', // Distinguish from user-registered companies
-      'address_json': _formatAddressJson(entity.addresses.isNotEmpty ? entity.addresses.first : null),
+      'address_json': _formatAddressJson(
+          entity.addresses.isNotEmpty ? entity.addresses.first : null),
       'uid_nr': entity.externalIds.uidNr ?? '',
       'registration_nr': entity.externalIds.firmenbuchNr ?? '',
       'company_size': entity.companySize.toJson(),
@@ -56,7 +67,8 @@ class EntityToRecordMapper {
       'bank_details_json': <String, dynamic>{}, // Empty for seeded providers
       'branches_json': _formatBranchesJson(entity.taxonomy),
       'pending_branches_json': <String, dynamic>{},
-      'subscription_plan_id': '00000000-0000-0000-0000-000000000000', // Placeholder
+      'subscription_plan_id':
+          '00000000-0000-0000-0000-000000000000', // Placeholder
       'payment_interval': 'none',
       'provider_type': _mapProviderType(entity.providerType),
       'status': 'seeded', // Special status for seeded providers
@@ -72,8 +84,10 @@ class EntityToRecordMapper {
       'company_id': generateCompanyId(entity.id),
       'name': entity.name,
       'provider_type': entity.providerType.toJson(),
-      'address_city': entity.addresses.isNotEmpty ? entity.addresses.first.city : null,
-      'address_postcode': entity.addresses.isNotEmpty ? entity.addresses.first.postcode : null,
+      'address_city':
+          entity.addresses.isNotEmpty ? entity.addresses.first.city : null,
+      'address_postcode':
+          entity.addresses.isNotEmpty ? entity.addresses.first.postcode : null,
       'has_phone': entity.contacts.phones.isNotEmpty,
       'has_email': entity.contacts.emails.isNotEmpty,
       'has_website': entity.contacts.websites.isNotEmpty,
@@ -180,7 +194,8 @@ class MappingStats {
     final typeKey = entity.providerType.toJson();
     byProviderType[typeKey] = (byProviderType[typeKey] ?? 0) + 1;
 
-    if (entity.addresses.isNotEmpty && entity.addresses.first.bundesland != null) {
+    if (entity.addresses.isNotEmpty &&
+        entity.addresses.first.bundesland != null) {
       final landKey = entity.addresses.first.bundesland!.toJson();
       byBundesland[landKey] = (byBundesland[landKey] ?? 0) + 1;
     }

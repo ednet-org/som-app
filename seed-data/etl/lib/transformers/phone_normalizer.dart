@@ -56,7 +56,16 @@ class PhoneNormalizer {
   /// Check if a phone number looks like a mobile number.
   static bool isMobile(String normalized) {
     // Austrian mobile prefixes after country code: 650, 660, 664, 676, 680, 681, 688, 699
-    final mobilePrefixes = ['650', '660', '664', '676', '680', '681', '688', '699'];
+    final mobilePrefixes = [
+      '650',
+      '660',
+      '664',
+      '676',
+      '680',
+      '681',
+      '688',
+      '699'
+    ];
     final numberPart = normalized.replaceFirst('+43', '');
     return mobilePrefixes.any((prefix) => numberPart.startsWith(prefix));
   }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
+import 'package:som_api/infrastructure/repositories/company_taxonomy_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/email_service.dart';
@@ -46,6 +47,11 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     updatedAt: DateTime.now().toUtc(),
   );
   await repo.update(updated);
+  await context.read<CompanyTaxonomyRepository>().replaceCompanyBranches(
+        companyId: companyId,
+        branchIds: updated.branchIds,
+        source: 'approval',
+      );
   final admins =
       await context.read<UserRepository>().listAdminsByCompany(companyId);
   final email = context.read<EmailService>();

@@ -3,6 +3,7 @@ import 'package:ednet_core/ednet_core.dart' show EDNetException;
 
 import '../infrastructure/clock.dart';
 import '../infrastructure/repositories/branch_repository.dart';
+import '../infrastructure/repositories/company_taxonomy_repository.dart';
 import '../infrastructure/repositories/company_repository.dart';
 import '../infrastructure/repositories/provider_repository.dart';
 import '../infrastructure/repositories/subscription_repository.dart';
@@ -19,6 +20,7 @@ class RegistrationService {
     required this.providers,
     required this.subscriptions,
     required this.branches,
+    required this.companyTaxonomy,
     required this.auth,
     required this.clock,
     required this.domain,
@@ -29,6 +31,7 @@ class RegistrationService {
   final ProviderRepository providers;
   final SubscriptionRepository subscriptions;
   final BranchRepository branches;
+  final CompanyTaxonomyRepository companyTaxonomy;
   final AuthService auth;
   final Clock clock;
   final SomDomainModel domain;
@@ -220,6 +223,11 @@ class RegistrationService {
           createdAt: now,
           updatedAt: now,
         ),
+      );
+      await companyTaxonomy.replaceCompanyBranches(
+        companyId: companyId,
+        branchIds: confirmedBranchIds,
+        source: 'registration',
       );
 
       if (subscriptionPlanId.isNotEmpty) {

@@ -342,13 +342,14 @@ enum WebsiteType {
   other;
 
   String toJson() => name;
-  static WebsiteType fromJson(String value) =>
-      WebsiteType.values.firstWhere((e) => e.name == value, orElse: () => other);
+  static WebsiteType fromJson(String value) => WebsiteType.values
+      .firstWhere((e) => e.name == value, orElse: () => other);
 }
 
 /// Phone contact info.
 class PhoneContact {
-  PhoneContact({required this.value, this.type = PhoneType.main, this.sourceUrl});
+  PhoneContact(
+      {required this.value, this.type = PhoneType.main, this.sourceUrl});
 
   factory PhoneContact.fromJson(Map<String, dynamic> json) {
     return PhoneContact(
@@ -679,7 +680,8 @@ class Taxonomy {
               .toList() ??
           [],
       inference: json['inference'] != null
-          ? TaxonomyInference.fromJson(json['inference'] as Map<String, dynamic>)
+          ? TaxonomyInference.fromJson(
+              json['inference'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -805,7 +807,8 @@ class BusinessEntity {
           ? ExternalIds.fromJson(json['externalIds'] as Map<String, dynamic>)
           : null,
       classification: json['classification'] != null
-          ? Classification.fromJson(json['classification'] as Map<String, dynamic>)
+          ? Classification.fromJson(
+              json['classification'] as Map<String, dynamic>)
           : null,
       taxonomy: json['taxonomy'] != null
           ? Taxonomy.fromJson(json['taxonomy'] as Map<String, dynamic>)
@@ -875,8 +878,9 @@ class BusinessEntity {
       id: id,
       name: name.isNotEmpty ? name : other.name,
       legalForm: legalForm ?? other.legalForm,
-      providerType:
-          providerType != ProviderType.unknown ? providerType : other.providerType,
+      providerType: providerType != ProviderType.unknown
+          ? providerType
+          : other.providerType,
       companySize:
           companySize != CompanySize.unknown ? companySize : other.companySize,
       addresses: addresses,

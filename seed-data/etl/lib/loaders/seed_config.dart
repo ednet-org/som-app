@@ -46,7 +46,8 @@ class SeedConfig {
     final supabaseServiceKey = env['SUPABASE_SERVICE_KEY'];
 
     if (supabaseUrl == null || supabaseUrl.isEmpty) {
-      throw ConfigurationError('SUPABASE_URL not set in ${environment.envFileName}');
+      throw ConfigurationError(
+          'SUPABASE_URL not set in ${environment.envFileName}');
     }
     if (supabaseServiceKey == null || supabaseServiceKey.isEmpty) {
       throw ConfigurationError(

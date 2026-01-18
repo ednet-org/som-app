@@ -1,17 +1,37 @@
 import 'package:supabase/supabase.dart';
 
+import '../../utils/name_normalizer.dart';
+
 class BranchRecord {
-  BranchRecord({required this.id, required this.name});
+  BranchRecord({
+    required this.id,
+    required this.name,
+    required this.status,
+    this.externalId,
+    this.normalizedName,
+  });
   final String id;
   final String name;
+  final String status;
+  final String? externalId;
+  final String? normalizedName;
 }
 
 class CategoryRecord {
-  CategoryRecord(
-      {required this.id, required this.branchId, required this.name});
+  CategoryRecord({
+    required this.id,
+    required this.branchId,
+    required this.name,
+    required this.status,
+    this.externalId,
+    this.normalizedName,
+  });
   final String id;
   final String branchId;
   final String name;
+  final String status;
+  final String? externalId;
+  final String? normalizedName;
 }
 
 class BranchRepository {
@@ -29,18 +49,27 @@ class BranchRepository {
       return null;
     }
     final row = rows.first as Map<String, dynamic>;
-    return BranchRecord(id: row['id'] as String, name: row['name'] as String);
+    return BranchRecord(
+      id: row['id'] as String,
+      name: row['name'] as String,
+      status: row['status'] as String? ?? 'active',
+      externalId: row['external_id'] as String?,
+      normalizedName: row['normalized_name'] as String?,
+    );
   }
 
   Future<void> createBranch(BranchRecord branch) async {
     await _client.from('branches').insert({
       'id': branch.id,
       'name': branch.name,
+      'external_id': branch.externalId,
+      'normalized_name': branch.normalizedName ?? normalizeName(branch.name),
+      'status': branch.status,
     });
   }
 
   Future<void> updateBranchName(String branchId, String name) async {
-    await _client.from('branches').update({'name': name}).eq('id', branchId);
+    await updateBranch(branchId, name: name);
   }
 
   Future<void> createCategory(CategoryRecord category) async {
@@ -48,6 +77,10 @@ class BranchRepository {
       'id': category.id,
       'branch_id': category.branchId,
       'name': category.name,
+      'external_id': category.externalId,
+      'normalized_name':
+          category.normalizedName ?? normalizeName(category.name),
+      'status': category.status,
     });
   }
 
@@ -65,11 +98,14 @@ class BranchRepository {
       id: row['id'] as String,
       branchId: row['branch_id'] as String,
       name: row['name'] as String,
+      status: row['status'] as String? ?? 'active',
+      externalId: row['external_id'] as String?,
+      normalizedName: row['normalized_name'] as String?,
     );
   }
 
   Future<void> updateCategoryName(String categoryId, String name) async {
-    await _client.from('categories').update({'name': name}).eq('id', categoryId);
+    await updateCategory(categoryId, name: name);
   }
 
   Future<List<BranchRecord>> listBranches() async {
@@ -79,6 +115,9 @@ class BranchRepository {
         .map((row) => BranchRecord(
               id: (row as Map<String, dynamic>)['id'] as String,
               name: row['name'] as String,
+              status: row['status'] as String? ?? 'active',
+              externalId: row['external_id'] as String?,
+              normalizedName: row['normalized_name'] as String?,
             ))
         .toList();
   }
@@ -94,29 +133,49 @@ class BranchRepository {
               id: (row as Map<String, dynamic>)['id'] as String,
               branchId: row['branch_id'] as String,
               name: row['name'] as String,
+              status: row['status'] as String? ?? 'active',
+              externalId: row['external_id'] as String?,
+              normalizedName: row['normalized_name'] as String?,
             ))
         .toList();
   }
 
   Future<BranchRecord?> findBranchByName(String name) async {
+    return findBranchByNormalizedName(normalizeName(name));
+  }
+
+  Future<BranchRecord?> findBranchByNormalizedName(String normalized) async {
     final rows = await _client
         .from('branches')
         .select()
-        .ilike('name', name)
+        .eq('normalized_name', normalized)
         .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }
     final row = rows.first as Map<String, dynamic>;
-    return BranchRecord(id: row['id'] as String, name: row['name'] as String);
+    return BranchRecord(
+      id: row['id'] as String,
+      name: row['name'] as String,
+      status: row['status'] as String? ?? 'active',
+      externalId: row['external_id'] as String?,
+      normalizedName: row['normalized_name'] as String?,
+    );
   }
 
   Future<CategoryRecord?> findCategory(String branchId, String name) async {
+    return findCategoryByNormalizedName(branchId, normalizeName(name));
+  }
+
+  Future<CategoryRecord?> findCategoryByNormalizedName(
+    String branchId,
+    String normalized,
+  ) async {
     final rows = await _client
         .from('categories')
         .select()
         .eq('branch_id', branchId)
-        .ilike('name', name)
+        .eq('normalized_name', normalized)
         .limit(1) as List<dynamic>;
     if (rows.isEmpty) {
       return null;
@@ -126,7 +185,48 @@ class BranchRepository {
       id: row['id'] as String,
       branchId: row['branch_id'] as String,
       name: row['name'] as String,
+      status: row['status'] as String? ?? 'active',
+      externalId: row['external_id'] as String?,
+      normalizedName: row['normalized_name'] as String?,
     );
+  }
+
+  Future<void> updateBranch(
+    String branchId, {
+    String? name,
+    String? status,
+  }) async {
+    final payload = <String, dynamic>{};
+    if (name != null) {
+      payload['name'] = name;
+      payload['normalized_name'] = normalizeName(name);
+    }
+    if (status != null) {
+      payload['status'] = status;
+    }
+    if (payload.isEmpty) {
+      return;
+    }
+    await _client.from('branches').update(payload).eq('id', branchId);
+  }
+
+  Future<void> updateCategory(
+    String categoryId, {
+    String? name,
+    String? status,
+  }) async {
+    final payload = <String, dynamic>{};
+    if (name != null) {
+      payload['name'] = name;
+      payload['normalized_name'] = normalizeName(name);
+    }
+    if (status != null) {
+      payload['status'] = status;
+    }
+    if (payload.isEmpty) {
+      return;
+    }
+    await _client.from('categories').update(payload).eq('id', categoryId);
   }
 
   Future<void> deleteBranch(String branchId) async {

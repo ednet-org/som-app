@@ -12,12 +12,14 @@ class _$Branch extends Branch {
   @override
   final String? name;
   @override
+  final String? status;
+  @override
   final BuiltList<Category>? categories;
 
   factory _$Branch([void Function(BranchBuilder)? updates]) =>
       (BranchBuilder()..update(updates))._build();
 
-  _$Branch._({this.id, this.name, this.categories}) : super._();
+  _$Branch._({this.id, this.name, this.status, this.categories}) : super._();
   @override
   Branch rebuild(void Function(BranchBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -31,6 +33,7 @@ class _$Branch extends Branch {
     return other is Branch &&
         id == other.id &&
         name == other.name &&
+        status == other.status &&
         categories == other.categories;
   }
 
@@ -39,6 +42,7 @@ class _$Branch extends Branch {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, categories.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -49,6 +53,7 @@ class _$Branch extends Branch {
     return (newBuiltValueToStringHelper(r'Branch')
           ..add('id', id)
           ..add('name', name)
+          ..add('status', status)
           ..add('categories', categories))
         .toString();
   }
@@ -65,6 +70,10 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
   ListBuilder<Category>? _categories;
   ListBuilder<Category> get categories =>
       _$this._categories ??= ListBuilder<Category>();
@@ -80,6 +89,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
     if ($v != null) {
       _id = $v.id;
       _name = $v.name;
+      _status = $v.status;
       _categories = $v.categories?.toBuilder();
       _$v = null;
     }
@@ -106,6 +116,7 @@ class BranchBuilder implements Builder<Branch, BranchBuilder> {
           _$Branch._(
             id: id,
             name: name,
+            status: status,
             categories: _categories?.build(),
           );
     } catch (_) {

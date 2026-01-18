@@ -55,7 +55,10 @@ class FirmenbuchEntity {
 
     // Remove common legal form suffixes
     normalized = normalized
-        .replaceAll(RegExp(r'\s+(gmbh|kg|og|ag|e\.u\.|keg|gesnbr|ges\.?m\.?b\.?h\.?)\.?\s*$'), '')
+        .replaceAll(
+            RegExp(
+                r'\s+(gmbh|kg|og|ag|e\.u\.|keg|gesnbr|ges\.?m\.?b\.?h\.?)\.?\s*$'),
+            '')
         .replaceAll(RegExp(r'\s+&\s+co\.?\s*'), ' ')
         .trim();
 
@@ -70,10 +73,7 @@ class FirmenbuchEntity {
 
   /// Name tokens for fuzzy matching.
   List<String> get nameTokens {
-    return normalizedName
-        .split(' ')
-        .where((t) => t.length > 2)
-        .toList();
+    return normalizedName.split(' ').where((t) => t.length > 2).toList();
   }
 }
 
@@ -142,7 +142,8 @@ class FirmenbuchExtractor {
         }
       }
 
-      final legalForm = r['rechtsform'] as String? ?? r['legal_form'] as String?;
+      final legalForm =
+          r['rechtsform'] as String? ?? r['legal_form'] as String?;
       final uidNr = r['uid'] as String? ?? r['uid_nr'] as String?;
       final activeStr = r['status'] as String? ?? r['active'] as String?;
       final active = activeStr == null
@@ -273,8 +274,8 @@ class FirmenbuchExtractor {
     normalized = normalized.replaceAll(' ', '');
 
     // Extract number and suffix
-    final match = RegExp(r'^(\d+)([a-z])?$', caseSensitive: false)
-        .firstMatch(normalized);
+    final match =
+        RegExp(r'^(\d+)([a-z])?$', caseSensitive: false).firstMatch(normalized);
 
     if (match != null) {
       final number = match.group(1);

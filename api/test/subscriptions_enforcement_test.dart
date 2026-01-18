@@ -15,7 +15,8 @@ import 'package:som_api/models/models.dart';
 import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
 import 'package:som_api/services/registration_service.dart';
-import '../routes/Companies/[companyId]/registerUser.dart' as register_user_route;
+import '../routes/Companies/[companyId]/registerUser.dart'
+    as register_user_route;
 import '../routes/Companies/index.dart' as companies_route;
 import '../routes/Subscriptions/plans/[planId]/index.dart' as plan_route;
 import '../routes/Subscriptions/downgrade.dart' as downgrade_route;
@@ -328,7 +329,7 @@ void main() {
       final clock = Clock();
       final domain = SomDomainModel();
       await branches.createBranch(
-        BranchRecord(id: 'branch-1', name: 'Demo'),
+        BranchRecord(id: 'branch-1', name: 'Demo', status: 'active'),
       );
       await subscriptions.createPlan(
         SubscriptionPlanRecord(
@@ -355,6 +356,7 @@ void main() {
         providers: providers,
         subscriptions: subscriptions,
         branches: branches,
+        companyTaxonomy: InMemoryCompanyTaxonomyRepository(),
         auth: auth,
         clock: clock,
         domain: domain,

@@ -27,7 +27,8 @@ class ProviderLoader {
     required List<BusinessEntity> entities,
     void Function(int processed, int total, String message)? onProgress,
   }) async {
-    onProgress?.call(0, entities.length, 'Mapping entities to provider records...');
+    onProgress?.call(
+        0, entities.length, 'Mapping entities to provider records...');
 
     // Map entities to provider profile records
     final records = <Map<String, dynamic>>[];
@@ -41,7 +42,8 @@ class ProviderLoader {
       typeStats[typeKey] = (typeStats[typeKey] ?? 0) + 1;
     }
 
-    onProgress?.call(0, entities.length, 'Upserting ${records.length} provider profiles...');
+    onProgress?.call(
+        0, entities.length, 'Upserting ${records.length} provider profiles...');
 
     // Perform batch upsert
     final result = await _client.batchUpsert(
@@ -50,7 +52,8 @@ class ProviderLoader {
       conflictColumn: 'company_id',
       onProgress: (processed, total) {
         final pct = (processed / total * 100).toStringAsFixed(1);
-        onProgress?.call(processed, total, 'Providers: $processed/$total ($pct%)');
+        onProgress?.call(
+            processed, total, 'Providers: $processed/$total ($pct%)');
       },
     );
 
@@ -70,7 +73,8 @@ class ProviderLoader {
     );
 
     // Get counts by provider type
-    final byType = await _client.countGroupBy('provider_profiles', 'provider_type');
+    final byType =
+        await _client.countGroupBy('provider_profiles', 'provider_type');
 
     return ProviderVerification(
       totalCount: totalCount,

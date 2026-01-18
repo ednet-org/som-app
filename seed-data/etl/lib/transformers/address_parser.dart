@@ -28,9 +28,10 @@ class AddressParser {
     final fullAddr = tags[tagFull]?.trim();
 
     // Validate postcode format
-    final validPostcode = postcode != null && _postcodePattern.hasMatch(postcode)
-        ? postcode
-        : null;
+    final validPostcode =
+        postcode != null && _postcodePattern.hasMatch(postcode)
+            ? postcode
+            : null;
 
     // Infer Bundesland from postcode
     final bundesland = Bundesland.fromPostcode(validPostcode);
@@ -69,12 +70,15 @@ class AddressParser {
     // Try to extract city (typically after postcode)
     String? city;
     if (postcode != null) {
-      final afterPostcode = trimmed.substring(
-        postcodeMatch!.end,
-      ).trim();
+      final afterPostcode = trimmed
+          .substring(
+            postcodeMatch!.end,
+          )
+          .trim();
       if (afterPostcode.isNotEmpty) {
         // City is usually the first word/phrase after postcode
-        final cityMatch = RegExp(r'^([A-Za-zÄÖÜäöüß\s\-]+)').firstMatch(afterPostcode);
+        final cityMatch =
+            RegExp(r'^([A-Za-zÄÖÜäöüß\s\-]+)').firstMatch(afterPostcode);
         if (cityMatch != null) {
           city = cityMatch.group(1)?.trim();
         }
@@ -92,8 +96,9 @@ class AddressParser {
 
     if (beforePostcode.isNotEmpty) {
       // Try to split street and house number
-      final houseMatch = RegExp(r'^(.+?)\s+(\d+(?:\s*[-/]\s*\d+)?(?:\s*[a-zA-Z])?)$')
-          .firstMatch(beforePostcode);
+      final houseMatch =
+          RegExp(r'^(.+?)\s+(\d+(?:\s*[-/]\s*\d+)?(?:\s*[a-zA-Z])?)$')
+              .firstMatch(beforePostcode);
 
       if (houseMatch != null) {
         street = houseMatch.group(1)?.trim();

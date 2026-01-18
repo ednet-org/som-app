@@ -52,8 +52,8 @@ class ProviderRepository {
   }
 
   Future<List<ProviderProfileRecord>> listByBranch(String branchId) async {
-    final rows = await _client.from('provider_profiles').select()
-        as List<dynamic>;
+    final rows =
+        await _client.from('provider_profiles').select() as List<dynamic>;
     return rows
         .map((row) => _mapRow(row as Map<String, dynamic>))
         .where((profile) =>
@@ -87,14 +87,13 @@ class ProviderRepository {
 
   Future<ProviderSearchResult> searchProviders(
     ProviderSearchParams params,
-    CompanyRepository companyRepo,
-  ) async {
+    CompanyRepository companyRepo, {
+    List<String>? companyIdsFilter,
+  }) async {
     final effectiveLimit = params.limit > 200 ? 200 : params.limit;
 
     // Build the query with JOINs and filters
-    var query = _client
-        .from('provider_profiles')
-        .select('''
+    var query = _client.from('provider_profiles').select('''
           company_id,
           bank_details_json,
           branches_json,
@@ -131,7 +130,12 @@ class ProviderRepository {
         query = query.neq('status', 'active');
       }
     }
-    if (params.branchId != null) {
+    if (companyIdsFilter != null) {
+      if (companyIdsFilter.isEmpty) {
+        return ProviderSearchResult(totalCount: 0, items: const []);
+      }
+      query = query.inFilter('company_id', companyIdsFilter);
+    } else if (params.branchId != null) {
       query = query.contains('branches_json', [params.branchId]);
     }
 
@@ -163,10 +167,8 @@ class ProviderRepository {
     final totalCount = filteredRows.length;
 
     // Apply pagination
-    final paginatedRows = filteredRows
-        .skip(params.offset)
-        .take(effectiveLimit)
-        .toList();
+    final paginatedRows =
+        filteredRows.skip(params.offset).take(effectiveLimit).toList();
 
     // Map to ProviderSummaryRecord
     final items = paginatedRows.map((row) {

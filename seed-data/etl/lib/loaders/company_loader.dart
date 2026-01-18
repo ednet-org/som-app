@@ -26,7 +26,8 @@ class CompanyLoader {
     required List<BusinessEntity> entities,
     void Function(int processed, int total, String message)? onProgress,
   }) async {
-    onProgress?.call(0, entities.length, 'Mapping entities to company records...');
+    onProgress?.call(
+        0, entities.length, 'Mapping entities to company records...');
 
     // Map entities to company records
     final records = <Map<String, dynamic>>[];
@@ -37,7 +38,8 @@ class CompanyLoader {
       stats.addEntity(entity);
     }
 
-    onProgress?.call(0, entities.length, 'Upserting ${records.length} companies...');
+    onProgress?.call(
+        0, entities.length, 'Upserting ${records.length} companies...');
 
     // Perform batch upsert
     final result = await _client.batchUpsert(
@@ -46,7 +48,8 @@ class CompanyLoader {
       conflictColumn: 'external_id',
       onProgress: (processed, total) {
         final pct = (processed / total * 100).toStringAsFixed(1);
-        onProgress?.call(processed, total, 'Companies: $processed/$total ($pct%)');
+        onProgress?.call(
+            processed, total, 'Companies: $processed/$total ($pct%)');
       },
     );
 
@@ -60,7 +63,8 @@ class CompanyLoader {
   /// Verify company counts in database.
   Future<CompanyVerification> verify() async {
     final totalCount = await _client.count('companies');
-    final seededCount = await _client.count('companies', filter: {'type': 'seeded'});
+    final seededCount =
+        await _client.count('companies', filter: {'type': 'seeded'});
     final registeredCount = await _client.count(
       'companies',
       filter: {'type': 'registered'},

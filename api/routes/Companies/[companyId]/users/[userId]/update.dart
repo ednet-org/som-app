@@ -45,9 +45,9 @@ Future<Response> onRequest(
       : existing.roles;
   final normalizedRoles = _ensureBaseRoles(
     roles: updatedRoles,
-    companyType: (await context.read<CompanyRepository>().findById(companyId))
-            ?.type ??
-        'buyer',
+    companyType:
+        (await context.read<CompanyRepository>().findById(companyId))?.type ??
+            'buyer',
   );
   final updated = UserRecord(
     id: existing.id,
@@ -81,15 +81,15 @@ Future<Response> onRequest(
   if (existing.roles.toSet().difference(updated.roles.toSet()).isNotEmpty ||
       updated.roles.toSet().difference(existing.roles.toSet()).isNotEmpty) {
     await context.read<AuditService>().log(
-          action: 'user.roles.updated',
-          entityType: 'user',
-          entityId: updated.id,
-          actorId: authResult.userId,
-          metadata: {
-            'before': existing.roles,
-            'after': updated.roles,
-          },
-        );
+      action: 'user.roles.updated',
+      entityType: 'user',
+      entityId: updated.id,
+      actorId: authResult.userId,
+      metadata: {
+        'before': existing.roles,
+        'after': updated.roles,
+      },
+    );
   }
   return Response.json(body: updated.toDtoJson());
 }

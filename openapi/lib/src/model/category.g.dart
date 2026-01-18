@@ -11,11 +11,13 @@ class _$Category extends Category {
   final String? id;
   @override
   final String? name;
+  @override
+  final String? status;
 
   factory _$Category([void Function(CategoryBuilder)? updates]) =>
       (CategoryBuilder()..update(updates))._build();
 
-  _$Category._({this.id, this.name}) : super._();
+  _$Category._({this.id, this.name, this.status}) : super._();
   @override
   Category rebuild(void Function(CategoryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -26,7 +28,10 @@ class _$Category extends Category {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Category && id == other.id && name == other.name;
+    return other is Category &&
+        id == other.id &&
+        name == other.name &&
+        status == other.status;
   }
 
   @override
@@ -34,6 +39,7 @@ class _$Category extends Category {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -42,7 +48,8 @@ class _$Category extends Category {
   String toString() {
     return (newBuiltValueToStringHelper(r'Category')
           ..add('id', id)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('status', status))
         .toString();
   }
 }
@@ -58,6 +65,10 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
   CategoryBuilder() {
     Category._defaults(this);
   }
@@ -67,6 +78,7 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
     if ($v != null) {
       _id = $v.id;
       _name = $v.name;
+      _status = $v.status;
       _$v = null;
     }
     return this;
@@ -90,6 +102,7 @@ class CategoryBuilder implements Builder<Category, CategoryBuilder> {
         _$Category._(
           id: id,
           name: name,
+          status: status,
         );
     replace(_$result);
     return _$result;

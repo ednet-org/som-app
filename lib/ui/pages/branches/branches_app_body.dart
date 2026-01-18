@@ -55,8 +55,9 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
   Future<void> _loadPendingProviders() async {
     final api = Provider.of<Openapi>(context, listen: false);
     try {
-      final response =
-          await api.getProvidersApi().providersGet(status: 'pending');
+      final response = await api.getProvidersApi().providersGet(
+        status: 'pending',
+      );
       final providers = response.data?.toList() ?? const [];
       setState(() {
         _pendingProviders = providers
@@ -64,7 +65,11 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             .toList();
       });
     } catch (error, stackTrace) {
-      UILogger.silentError('BranchesAppBody._loadPendingProviders', error, stackTrace);
+      UILogger.silentError(
+        'BranchesAppBody._loadPendingProviders',
+        error,
+        stackTrace,
+      );
     }
   }
 
@@ -72,14 +77,13 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (provider.companyId == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getProvidersApi().providersCompanyIdApprovePost(
-          companyId: provider.companyId!,
-          providersCompanyIdApprovePostRequest:
-              ProvidersCompanyIdApprovePostRequest((b) {
+      companyId: provider.companyId!,
+      providersCompanyIdApprovePostRequest:
+          ProvidersCompanyIdApprovePostRequest((b) {
             b.approvedBranchIds.clear();
-            b.approvedBranchIds
-                .addAll(provider.pendingBranchIds ?? const []);
+            b.approvedBranchIds.addAll(provider.pendingBranchIds ?? const []);
           }),
-        );
+    );
     await _loadPendingProviders();
   }
 
@@ -113,10 +117,11 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (confirmed != true) return;
     try {
       await api.getProvidersApi().providersCompanyIdDeclinePost(
-            companyId: provider.companyId!,
-            subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest((b) => b
-              ..reason = controller.text.trim()),
-          );
+        companyId: provider.companyId!,
+        subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest(
+          (b) => b..reason = controller.text.trim(),
+        ),
+      );
     } catch (error) {
       _showSnack('Failed to decline provider: $error');
     }
@@ -150,15 +155,18 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (name.isEmpty) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getBranchesApi().branchesPost(
-          branchesPostRequest: BranchesPostRequest((b) => b..name = name),
-        );
+      branchesPostRequest: BranchesPostRequest(
+        (b) => b
+          ..name = name
+          ..status = 'active',
+      ),
+    );
     await _refresh();
   }
 
   Future<void> _renameBranch() async {
     if (_selectedBranch?.id == null) return;
-    final controller =
-        TextEditingController(text: _selectedBranch?.name ?? '');
+    final controller = TextEditingController(text: _selectedBranch?.name ?? '');
     final renamed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -184,18 +192,50 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (name.isEmpty) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getBranchesApi().branchesBranchIdPut(
-          branchId: _selectedBranch!.id!,
-          branchesPostRequest: BranchesPostRequest((b) => b..name = name),
-        );
+      branchId: _selectedBranch!.id!,
+      branchesPostRequest: BranchesPostRequest((b) => b..name = name),
+    );
+    await _refresh();
+  }
+
+  Future<void> _setBranchStatus(Branch branch, String status) async {
+    if (branch.id == null) return;
+    final name = branch.name ?? '';
+    if (name.isEmpty) return;
+    final api = Provider.of<Openapi>(context, listen: false);
+    await api.getBranchesApi().branchesBranchIdPut(
+      branchId: branch.id!,
+      branchesPostRequest: BranchesPostRequest(
+        (b) => b
+          ..name = name
+          ..status = status,
+      ),
+    );
+    await _refresh();
+  }
+
+  Future<void> _setCategoryStatus(Category category, String status) async {
+    if (category.id == null) return;
+    final name = category.name ?? '';
+    if (name.isEmpty) return;
+    final api = Provider.of<Openapi>(context, listen: false);
+    await api.getBranchesApi().categoriesCategoryIdPut(
+      categoryId: category.id!,
+      branchesPostRequest: BranchesPostRequest(
+        (b) => b
+          ..name = name
+          ..status = status,
+      ),
+    );
     await _refresh();
   }
 
   Future<void> _deleteBranch() async {
     if (_selectedBranch?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    await api
-        .getBranchesApi()
-        .branchesBranchIdDelete(branchId: _selectedBranch!.id!);
+    await api.getBranchesApi().branchesBranchIdDelete(
+      branchId: _selectedBranch!.id!,
+    );
     setState(() {
       _selectedBranch = null;
     });
@@ -230,16 +270,21 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (name.isEmpty) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getBranchesApi().branchesBranchIdCategoriesPost(
-          branchId: _selectedBranch!.id!,
-          branchesPostRequest: BranchesPostRequest((b) => b..name = name),
-        );
+      branchId: _selectedBranch!.id!,
+      branchesPostRequest: BranchesPostRequest(
+        (b) => b
+          ..name = name
+          ..status = 'active',
+      ),
+    );
     await _refresh();
   }
 
   Future<void> _renameCategory() async {
     if (_selectedCategory?.id == null) return;
-    final controller =
-        TextEditingController(text: _selectedCategory?.name ?? '');
+    final controller = TextEditingController(
+      text: _selectedCategory?.name ?? '',
+    );
     final renamed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -265,18 +310,18 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (name.isEmpty) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getBranchesApi().categoriesCategoryIdPut(
-          categoryId: _selectedCategory!.id!,
-          branchesPostRequest: BranchesPostRequest((b) => b..name = name),
-        );
+      categoryId: _selectedCategory!.id!,
+      branchesPostRequest: BranchesPostRequest((b) => b..name = name),
+    );
     await _refresh();
   }
 
   Future<void> _deleteCategory() async {
     if (_selectedCategory?.id == null) return;
     final api = Provider.of<Openapi>(context, listen: false);
-    await api
-        .getBranchesApi()
-        .categoriesCategoryIdDelete(categoryId: _selectedCategory!.id!);
+    await api.getBranchesApi().categoriesCategoryIdDelete(
+      categoryId: _selectedCategory!.id!,
+    );
     setState(() {
       _selectedCategory = null;
     });
@@ -344,19 +389,34 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                 onPressed: _createBranch,
                 child: const Text('Add branch'),
               ),
-              TextButton(onPressed: _renameBranch, child: const Text('Rename branch')),
-              TextButton(onPressed: _createCategory, child: const Text('Add category')),
-              TextButton(onPressed: _renameCategory, child: const Text('Rename category')),
-              TextButton(onPressed: _deleteBranch, child: const Text('Delete branch')),
+              TextButton(
+                onPressed: _renameBranch,
+                child: const Text('Rename branch'),
+              ),
+              TextButton(
+                onPressed: _createCategory,
+                child: const Text('Add category'),
+              ),
+              TextButton(
+                onPressed: _renameCategory,
+                child: const Text('Rename category'),
+              ),
+              TextButton(
+                onPressed: _deleteBranch,
+                child: const Text('Delete branch'),
+              ),
             ],
           ),
           leftSplit: ListView.builder(
             itemCount: branches.length,
             itemBuilder: (context, index) {
               final branch = branches[index];
+              final statusLabel = branch.status ?? 'active';
               return ListTile(
                 title: Text(branch.name ?? branch.id ?? 'Branch'),
-                subtitle: Text('${branch.categories?.length ?? 0} categories'),
+                subtitle: Text(
+                  '${branch.categories?.length ?? 0} categories • $statusLabel',
+                ),
                 selected: _selectedBranch?.id == branch.id,
                 onTap: () {
                   setState(() {
@@ -364,6 +424,22 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                     _selectedCategory = null;
                   });
                 },
+                trailing: statusLabel == 'pending'
+                    ? Wrap(
+                        spacing: 8,
+                        children: [
+                          TextButton(
+                            onPressed: () => _setBranchStatus(branch, 'active'),
+                            child: const Text('Approve'),
+                          ),
+                          TextButton(
+                            onPressed: () =>
+                                _setBranchStatus(branch, 'declined'),
+                            child: const Text('Decline'),
+                          ),
+                        ],
+                      )
+                    : null,
               );
             },
           ),
@@ -374,30 +450,58 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(_selectedBranch!.name ?? 'Branch',
-                          style: Theme.of(context).textTheme.titleMedium),
+                      Text(
+                        _selectedBranch!.name ?? 'Branch',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                       const SizedBox(height: 12),
                       Expanded(
                         child: ListView.builder(
                           itemCount: _selectedBranch!.categories?.length ?? 0,
                           itemBuilder: (context, index) {
-                            final category = _selectedBranch!.categories![index];
+                            final category =
+                                _selectedBranch!.categories![index];
+                            final statusLabel = category.status ?? 'active';
                             return ListTile(
-                              title: Text(category.name ?? category.id ?? 'Category'),
+                              title: Text(
+                                category.name ?? category.id ?? 'Category',
+                              ),
+                              subtitle: Text(statusLabel),
                               selected: _selectedCategory?.id == category.id,
                               onTap: () =>
                                   setState(() => _selectedCategory = category),
-                              trailing: IconButton(
-                                icon: SomSvgIcon(
-                                  SomAssets.iconDelete,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
-                                ),
-                                onPressed: () {
-                                  _selectedCategory = category;
-                                  _deleteCategory();
-                                },
+                              trailing: Wrap(
+                                spacing: 8,
+                                children: [
+                                  if (statusLabel == 'pending')
+                                    TextButton(
+                                      onPressed: () => _setCategoryStatus(
+                                        category,
+                                        'active',
+                                      ),
+                                      child: const Text('Approve'),
+                                    ),
+                                  if (statusLabel == 'pending')
+                                    TextButton(
+                                      onPressed: () => _setCategoryStatus(
+                                        category,
+                                        'declined',
+                                      ),
+                                      child: const Text('Decline'),
+                                    ),
+                                  IconButton(
+                                    icon: SomSvgIcon(
+                                      SomAssets.iconDelete,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
+                                    ),
+                                    onPressed: () {
+                                      _selectedCategory = category;
+                                      _deleteCategory();
+                                    },
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -405,8 +509,10 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                       ),
                       if (_pendingProviders.isNotEmpty) ...[
                         const Divider(height: 24),
-                        Text('Pending provider approvals',
-                            style: Theme.of(context).textTheme.titleSmall),
+                        Text(
+                          'Pending provider approvals',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                         const SizedBox(height: 8),
                         Expanded(
                           child: ListView.builder(
@@ -427,11 +533,13 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                                     spacing: 8,
                                     children: [
                                       TextButton(
-                                        onPressed: () => _approvePending(provider),
+                                        onPressed: () =>
+                                            _approvePending(provider),
                                         child: const Text('Approve'),
                                       ),
                                       TextButton(
-                                        onPressed: () => _declinePending(provider),
+                                        onPressed: () =>
+                                            _declinePending(provider),
                                         child: const Text('Decline'),
                                       ),
                                     ],
@@ -451,8 +559,8 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }

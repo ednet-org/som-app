@@ -9,6 +9,7 @@ import 'company_loader.dart';
 import 'provider_loader.dart';
 import 'seed_config.dart';
 import 'supabase_client.dart';
+import 'taxonomy_loader.dart';
 
 /// Orchestrates the complete database seeding process.
 class DatabaseSeeder {
@@ -16,10 +17,12 @@ class DatabaseSeeder {
     required SeedSupabaseClient client,
     required SeedConfig config,
     required CompanyLoader companyLoader,
+    required TaxonomyLoader taxonomyLoader,
     required ProviderLoader providerLoader,
   })  : _client = client,
         _config = config,
         _companyLoader = companyLoader,
+        _taxonomyLoader = taxonomyLoader,
         _providerLoader = providerLoader;
 
   /// Create and initialize a database seeder.
@@ -29,6 +32,7 @@ class DatabaseSeeder {
       client: client,
       config: config,
       companyLoader: CompanyLoader(client: client, config: config),
+      taxonomyLoader: TaxonomyLoader(client: client, config: config),
       providerLoader: ProviderLoader(client: client, config: config),
     );
   }
@@ -36,6 +40,7 @@ class DatabaseSeeder {
   final SeedSupabaseClient _client;
   final SeedConfig _config;
   final CompanyLoader _companyLoader;
+  final TaxonomyLoader _taxonomyLoader;
   final ProviderLoader _providerLoader;
 
   /// Run the complete seeding process.
@@ -44,7 +49,8 @@ class DatabaseSeeder {
   /// [onProgress] - Callback for progress updates.
   Future<SeedResult> seed({
     required String inputPath,
-    void Function(String stage, int current, int total, String message)? onProgress,
+    void Function(String stage, int current, int total, String message)?
+        onProgress,
   }) async {
     final stopwatch = Stopwatch()..start();
 
@@ -67,7 +73,19 @@ class DatabaseSeeder {
     final companyTime = stopwatch.elapsedMilliseconds;
     stopwatch.reset();
 
-    onProgress?.call('providers', 0, entities.length, 'Seeding provider profiles...');
+    onProgress?.call('taxonomy', 0, entities.length, 'Seeding taxonomy...');
+
+    final taxonomyResult = await _taxonomyLoader.load(
+      entities: entities,
+      onProgress: (processed, total, message) {
+        onProgress?.call('taxonomy', processed, total, message);
+      },
+    );
+    final taxonomyTime = stopwatch.elapsedMilliseconds;
+    stopwatch.reset();
+
+    onProgress?.call(
+        'providers', 0, entities.length, 'Seeding provider profiles...');
 
     // Seed provider profiles
     final providerResult = await _providerLoader.load(
@@ -83,9 +101,11 @@ class DatabaseSeeder {
     return SeedResult(
       entityCount: entities.length,
       companyResult: companyResult,
+      taxonomyResult: taxonomyResult,
       providerResult: providerResult,
       loadTimeMs: loadTime,
       companyTimeMs: companyTime,
+      taxonomyTimeMs: taxonomyTime,
       providerTimeMs: providerTime,
       dryRun: _config.dryRun,
     );
@@ -105,7 +125,8 @@ class DatabaseSeeder {
   /// Load entities from JSON file with streaming for memory efficiency.
   Future<List<BusinessEntity>> _loadEntities(
     String inputPath,
-    void Function(String stage, int current, int total, String message)? onProgress,
+    void Function(String stage, int current, int total, String message)?
+        onProgress,
   ) async {
     final file = File(inputPath);
     if (!file.existsSync()) {
@@ -113,7 +134,8 @@ class DatabaseSeeder {
     }
 
     final fileSize = file.lengthSync();
-    onProgress?.call('load', 0, fileSize, 'Reading JSON file (${_formatBytes(fileSize)})...');
+    onProgress?.call('load', 0, fileSize,
+        'Reading JSON file (${_formatBytes(fileSize)})...');
 
     // For large files, we read and parse in one go
     // Future optimization: use streaming JSON parser
@@ -128,7 +150,8 @@ class DatabaseSeeder {
       entities.add(BusinessEntity.fromJson(json));
 
       if (i % 10000 == 0) {
-        onProgress?.call('load', i, jsonList.length, 'Parsing entities: $i/${jsonList.length}');
+        onProgress?.call('load', i, jsonList.length,
+            'Parsing entities: $i/${jsonList.length}');
       }
     }
 
@@ -152,24 +175,30 @@ class SeedResult {
   SeedResult({
     required this.entityCount,
     required this.companyResult,
+    required this.taxonomyResult,
     required this.providerResult,
     required this.loadTimeMs,
     required this.companyTimeMs,
+    required this.taxonomyTimeMs,
     required this.providerTimeMs,
     required this.dryRun,
   });
 
   final int entityCount;
   final CompanyLoadResult companyResult;
+  final TaxonomyLoadResult taxonomyResult;
   final ProviderLoadResult providerResult;
   final int loadTimeMs;
   final int companyTimeMs;
+  final int taxonomyTimeMs;
   final int providerTimeMs;
   final bool dryRun;
 
-  int get totalTimeMs => loadTimeMs + companyTimeMs + providerTimeMs;
+  int get totalTimeMs =>
+      loadTimeMs + companyTimeMs + taxonomyTimeMs + providerTimeMs;
 
-  bool get success => companyResult.success && providerResult.success;
+  bool get success =>
+      companyResult.success && taxonomyResult.success && providerResult.success;
 
   @override
   String toString() {
@@ -183,11 +212,15 @@ class SeedResult {
       ..writeln('Timing:')
       ..writeln('  Load entities: ${_formatMs(loadTimeMs)}')
       ..writeln('  Seed companies: ${_formatMs(companyTimeMs)}')
+      ..writeln('  Seed taxonomy: ${_formatMs(taxonomyTimeMs)}')
       ..writeln('  Seed providers: ${_formatMs(providerTimeMs)}')
       ..writeln('  Total: ${_formatMs(totalTimeMs)}')
       ..writeln()
       ..writeln('Companies:')
       ..writeln(companyResult)
+      ..writeln()
+      ..writeln('Taxonomy:')
+      ..writeln(taxonomyResult)
       ..writeln()
       ..writeln('Providers:')
       ..writeln(providerResult)

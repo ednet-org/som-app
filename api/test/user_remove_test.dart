@@ -64,7 +64,8 @@ void main() {
           inquiries: InMemoryInquiryRepository(),
         ),
       );
-      final response = await route.onRequest(context.context, company.id, member.id);
+      final response =
+          await route.onRequest(context.context, company.id, member.id);
       expect(response.statusCode, 403);
     });
 
@@ -89,7 +90,8 @@ void main() {
           inquiries: InMemoryInquiryRepository(),
         ),
       );
-      final response = await route.onRequest(context.context, company.id, member.id);
+      final response =
+          await route.onRequest(context.context, company.id, member.id);
       expect(response.statusCode, 200);
 
       final updated = await users.findById(member.id);

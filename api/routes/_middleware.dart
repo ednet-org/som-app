@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/branch_repository.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/company_taxonomy_repository.dart';
 import 'package:som_api/infrastructure/repositories/domain_event_repository.dart';
 import 'package:som_api/infrastructure/repositories/audit_log_repository.dart';
 import 'package:som_api/infrastructure/repositories/email_event_repository.dart';
@@ -45,6 +46,7 @@ final _emailEvents = EmailEventRepository(_supabase.adminClient);
 final _roles = RoleRepository(_supabase.adminClient);
 final _tokens = TokenRepository(_supabase.adminClient);
 final _companies = CompanyRepository(_supabase.adminClient);
+final _companyTaxonomy = CompanyTaxonomyRepository(_supabase.adminClient);
 final _branches = BranchRepository(_supabase.adminClient);
 final _subscriptions = SubscriptionRepository(_supabase.adminClient);
 final _providers = ProviderRepository(_supabase.adminClient);
@@ -75,8 +77,7 @@ final _domainEventService = DomainEventService(
   inquiries: _inquiries,
 );
 final _auditService = AuditService(repository: _auditLog);
-final _schemaVersionService =
-    SchemaVersionService(repository: _schemaVersions);
+final _schemaVersionService = SchemaVersionService(repository: _schemaVersions);
 final _auth = AuthService(
   users: _users,
   tokens: _tokens,
@@ -93,6 +94,7 @@ final _registration = RegistrationService(
   providers: _providers,
   subscriptions: _subscriptions,
   branches: _branches,
+  companyTaxonomy: _companyTaxonomy,
   auth: _auth,
   clock: _clock,
   domain: _domain,
@@ -120,6 +122,7 @@ final _systemBootstrap = SystemBootstrap(
   auth: _auth,
   branches: _branches,
   providers: _providers,
+  companyTaxonomy: _companyTaxonomy,
   subscriptions: _subscriptions,
   inquiries: _inquiries,
   offers: _offers,
@@ -150,6 +153,7 @@ Handler middleware(Handler handler) {
       .use(provider<RoleRepository>((_) => _roles))
       .use(provider<TokenRepository>((_) => _tokens))
       .use(provider<CompanyRepository>((_) => _companies))
+      .use(provider<CompanyTaxonomyRepository>((_) => _companyTaxonomy))
       .use(provider<BranchRepository>((_) => _branches))
       .use(provider<SubscriptionRepository>((_) => _subscriptions))
       .use(provider<ProviderRepository>((_) => _providers))

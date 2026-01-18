@@ -9,12 +9,14 @@ part of 'branches_post_request.dart';
 class _$BranchesPostRequest extends BranchesPostRequest {
   @override
   final String name;
+  @override
+  final String? status;
 
   factory _$BranchesPostRequest(
           [void Function(BranchesPostRequestBuilder)? updates]) =>
       (BranchesPostRequestBuilder()..update(updates))._build();
 
-  _$BranchesPostRequest._({required this.name}) : super._();
+  _$BranchesPostRequest._({required this.name, this.status}) : super._();
   @override
   BranchesPostRequest rebuild(
           void Function(BranchesPostRequestBuilder) updates) =>
@@ -27,13 +29,16 @@ class _$BranchesPostRequest extends BranchesPostRequest {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is BranchesPostRequest && name == other.name;
+    return other is BranchesPostRequest &&
+        name == other.name &&
+        status == other.status;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -41,7 +46,8 @@ class _$BranchesPostRequest extends BranchesPostRequest {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'BranchesPostRequest')
-          ..add('name', name))
+          ..add('name', name)
+          ..add('status', status))
         .toString();
   }
 }
@@ -54,6 +60,10 @@ class BranchesPostRequestBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
   BranchesPostRequestBuilder() {
     BranchesPostRequest._defaults(this);
   }
@@ -62,6 +72,7 @@ class BranchesPostRequestBuilder
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
+      _status = $v.status;
       _$v = null;
     }
     return this;
@@ -85,6 +96,7 @@ class BranchesPostRequestBuilder
         _$BranchesPostRequest._(
           name: BuiltValueNullFieldError.checkNotNull(
               name, r'BranchesPostRequest', 'name'),
+          status: status,
         );
     replace(_$result);
     return _$result;

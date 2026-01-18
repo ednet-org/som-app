@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 
 # **branchesBranchIdCategoriesPost**
-> branchesBranchIdCategoriesPost(branchId, branchesPostRequest)
+> Category branchesBranchIdCategoriesPost(branchId, branchesPostRequest)
 
 Create category
 
@@ -32,7 +32,8 @@ final String branchId = branchId_example; // String |
 final BranchesPostRequest branchesPostRequest = ; // BranchesPostRequest | 
 
 try {
-    api.branchesBranchIdCategoriesPost(branchId, branchesPostRequest);
+    final response = api.branchesBranchIdCategoriesPost(branchId, branchesPostRequest);
+    print(response);
 } catch on DioException (e) {
     print('Exception when calling BranchesApi->branchesBranchIdCategoriesPost: $e\n');
 }
@@ -47,7 +48,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**Category**](Category.md)
 
 ### Authorization
 
@@ -180,7 +181,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **branchesPost**
-> branchesPost(branchesPostRequest)
+> Branch branchesPost(branchesPostRequest)
 
 Create branch
 
@@ -192,7 +193,8 @@ final api = Openapi().getBranchesApi();
 final BranchesPostRequest branchesPostRequest = ; // BranchesPostRequest | 
 
 try {
-    api.branchesPost(branchesPostRequest);
+    final response = api.branchesPost(branchesPostRequest);
+    print(response);
 } catch on DioException (e) {
     print('Exception when calling BranchesApi->branchesPost: $e\n');
 }
@@ -206,7 +208,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**Branch**](Branch.md)
 
 ### Authorization
 

@@ -68,8 +68,9 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   final startDate = current.endDate.add(const Duration(days: 1));
-  final endDate = DateTime.utc(startDate.year + 1, startDate.month, startDate.day)
-      .subtract(const Duration(days: 1));
+  final endDate =
+      DateTime.utc(startDate.year + 1, startDate.month, startDate.day)
+          .subtract(const Duration(days: 1));
   await subscriptionRepo.createSubscription(
     SubscriptionRecord(
       id: const Uuid().v4(),
@@ -99,12 +100,12 @@ Future<Response> onRequest(RequestContext context) async {
     ),
   );
   await context.read<AuditService>().log(
-        action: 'subscription.downgraded',
-        entityType: 'subscription',
-        entityId: auth.companyId,
-        actorId: auth.userId,
-        metadata: {'planId': planId},
-      );
+    action: 'subscription.downgraded',
+    entityType: 'subscription',
+    entityId: auth.companyId,
+    actorId: auth.userId,
+    metadata: {'planId': planId},
+  );
   return Response(statusCode: 200);
 }
 

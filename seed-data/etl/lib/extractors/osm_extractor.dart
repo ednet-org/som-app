@@ -178,9 +178,8 @@ class OsmExtractor {
           inference: TaxonomyInference(
             method: InferenceMethod.osmTagMapping,
             confidence: 0.5,
-            matchedTags: osmTags.entries
-                .map((e) => '${e.key}=${e.value}')
-                .toList(),
+            matchedTags:
+                osmTags.entries.map((e) => '${e.key}=${e.value}').toList(),
           ),
         );
       }

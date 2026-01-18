@@ -360,7 +360,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **providersGet**
-> BuiltList<ProviderSummary> providersGet(limit, offset, search, branchId, companySize, providerType, zipPrefix, status, claimed, format)
+> BuiltList<ProviderSummary> providersGet(limit, offset, search, branchId, categoryId, companySize, providerType, zipPrefix, status, claimed, format)
 
 List providers with pagination
 
@@ -375,6 +375,7 @@ final int limit = 56; // int | Number of results per page (max 200)
 final int offset = 56; // int | Number of results to skip
 final String search = search_example; // String | Search by company name (case-insensitive)
 final String branchId = branchId_example; // String | 
+final String categoryId = categoryId_example; // String | 
 final String companySize = companySize_example; // String | 
 final String providerType = providerType_example; // String | 
 final String zipPrefix = zipPrefix_example; // String | 
@@ -383,7 +384,7 @@ final String claimed = claimed_example; // String |
 final String format = format_example; // String | Use format=csv to export providers list.
 
 try {
-    final response = api.providersGet(limit, offset, search, branchId, companySize, providerType, zipPrefix, status, claimed, format);
+    final response = api.providersGet(limit, offset, search, branchId, categoryId, companySize, providerType, zipPrefix, status, claimed, format);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling ProvidersApi->providersGet: $e\n');
@@ -398,6 +399,7 @@ Name | Type | Description  | Notes
  **offset** | **int**| Number of results to skip | [optional] [default to 0]
  **search** | **String**| Search by company name (case-insensitive) | [optional] 
  **branchId** | **String**|  | [optional] 
+ **categoryId** | **String**|  | [optional] 
  **companySize** | **String**|  | [optional] 
  **providerType** | **String**|  | [optional] 
  **zipPrefix** | **String**|  | [optional] 

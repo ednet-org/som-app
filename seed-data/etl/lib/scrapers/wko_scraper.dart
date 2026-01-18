@@ -314,7 +314,8 @@ class WkoScraper {
             }
           }
 
-          _log.info('Found ${businesses.length} businesses for $category/$blName');
+          _log.info(
+              'Found ${businesses.length} businesses for $category/$blName');
         } catch (e) {
           final errorMsg = 'Error scraping $category/$bundesland: $e';
           _log.warning(errorMsg);
@@ -361,7 +362,6 @@ class WkoScraper {
 
       // Apply rate limiting
       await _delay();
-
     } catch (e) {
       _log.warning('Error fetching $url: $e');
       rethrow;
@@ -375,7 +375,8 @@ class WkoScraper {
     final firmIds = <String>[];
 
     // Extract from firmaid parameters in URLs
-    final firmaidPattern = RegExp(r'firmaid=([a-f0-9\-]{36})', caseSensitive: false);
+    final firmaidPattern =
+        RegExp(r'firmaid=([a-f0-9\-]{36})', caseSensitive: false);
     for (final match in firmaidPattern.allMatches(htmlContent)) {
       final id = match.group(1);
       if (id != null && !firmIds.contains(id)) {
@@ -387,7 +388,8 @@ class WkoScraper {
   }
 
   /// Parse business listings from search results page.
-  List<WkoBusinessListing> _parseSearchResults(Document document, String bundesland) {
+  List<WkoBusinessListing> _parseSearchResults(
+      Document document, String bundesland) {
     final businesses = <WkoBusinessListing>[];
 
     // Find all links with firmaid parameter (these are business detail links)
@@ -399,7 +401,9 @@ class WkoScraper {
       final href = link.attributes['href'] ?? '';
 
       // Extract firmaid
-      final firmaidMatch = RegExp(r'firmaid=([a-f0-9\-]{36})', caseSensitive: false).firstMatch(href);
+      final firmaidMatch =
+          RegExp(r'firmaid=([a-f0-9\-]{36})', caseSensitive: false)
+              .firstMatch(href);
       if (firmaidMatch == null) continue;
 
       final firmId = firmaidMatch.group(1)!;
@@ -440,18 +444,20 @@ class WkoScraper {
   bool _isListingContainer(Element element) {
     final classes = element.className.toLowerCase();
     return classes.contains('result') ||
-           classes.contains('listing') ||
-           classes.contains('company') ||
-           classes.contains('firma') ||
-           element.localName == 'article' ||
-           element.localName == 'section';
+        classes.contains('listing') ||
+        classes.contains('company') ||
+        classes.contains('firma') ||
+        element.localName == 'article' ||
+        element.localName == 'section';
   }
 
   /// Parse a single listing container.
-  WkoBusinessListing? _parseListingContainer(Element container, String firmId, String bundesland) {
+  WkoBusinessListing? _parseListingContainer(
+      Element container, String firmId, String bundesland) {
     // Find company name (usually in h2, h3, or link)
     String? name;
-    final headings = container.querySelectorAll('h2, h3, h4, a[href*="firmaid="]');
+    final headings =
+        container.querySelectorAll('h2, h3, h4, a[href*="firmaid="]');
     for (final h in headings) {
       final text = h.text.trim();
       if (text.isNotEmpty && !text.contains('Treffer') && text.length > 2) {
@@ -468,7 +474,8 @@ class WkoScraper {
     String? city;
 
     // Look for address elements
-    final addressElements = container.querySelectorAll('[class*="address"], [class*="adresse"], p, span');
+    final addressElements = container
+        .querySelectorAll('[class*="address"], [class*="adresse"], p, span');
     for (final elem in addressElements) {
       final text = elem.text.trim();
 
@@ -495,10 +502,12 @@ class WkoScraper {
     String? phone;
     final phoneLinks = container.querySelectorAll('a[href^="tel:"]');
     if (phoneLinks.isNotEmpty) {
-      phone = phoneLinks.first.attributes['href']?.replaceFirst('tel:', '').trim();
+      phone =
+          phoneLinks.first.attributes['href']?.replaceFirst('tel:', '').trim();
     }
     if (phone == null) {
-      final phonePattern = RegExp(r'(\+43[\s\-]?[\d\s\-/]+|\b0\d{1,4}[\s\-/]?\d+[\s\-/]?\d+)');
+      final phonePattern =
+          RegExp(r'(\+43[\s\-]?[\d\s\-/]+|\b0\d{1,4}[\s\-/]?\d+[\s\-/]?\d+)');
       for (final elem in container.querySelectorAll('span, p, div')) {
         final match = phonePattern.firstMatch(elem.text);
         if (match != null) {
@@ -512,12 +521,16 @@ class WkoScraper {
     String? email;
     final emailLinks = container.querySelectorAll('a[href^="mailto:"]');
     if (emailLinks.isNotEmpty) {
-      email = emailLinks.first.attributes['href']?.replaceFirst('mailto:', '').split('?')[0].trim();
+      email = emailLinks.first.attributes['href']
+          ?.replaceFirst('mailto:', '')
+          .split('?')[0]
+          .trim();
     }
 
     // Extract website
     String? website;
-    final websiteLinks = container.querySelectorAll('a[href^="http"]:not([href*="firmen.wko.at"])');
+    final websiteLinks = container
+        .querySelectorAll('a[href^="http"]:not([href*="firmen.wko.at"])');
     for (final link in websiteLinks) {
       final href = link.attributes['href'];
       if (href != null && !href.contains('mailto:') && !href.contains('tel:')) {
@@ -553,18 +566,17 @@ class WkoScraper {
 
     return retry.retry(
       () async {
-        final response = await _client
-            .get(
-              Uri.parse(url),
-              headers: {
-                'User-Agent': config.userAgent,
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'de-AT,de;q=0.9,en;q=0.8',
-                'Accept-Encoding': 'gzip, deflate',
-                'Connection': 'keep-alive',
-              },
-            )
-            .timeout(const Duration(seconds: 30));
+        final response = await _client.get(
+          Uri.parse(url),
+          headers: {
+            'User-Agent': config.userAgent,
+            'Accept':
+                'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'de-AT,de;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            'Connection': 'keep-alive',
+          },
+        ).timeout(const Duration(seconds: 30));
 
         if (response.statusCode == 404) {
           // Return empty response for 404 (no results for this category/region)
@@ -621,7 +633,8 @@ Future<void> saveWkoResults(
   final file = File(outputPath);
   await file.parent.create(recursive: true);
 
-  final jsonString = const JsonEncoder.withIndent('  ').convert(result.toJson());
+  final jsonString =
+      const JsonEncoder.withIndent('  ').convert(result.toJson());
   await file.writeAsString(jsonString);
 }
 

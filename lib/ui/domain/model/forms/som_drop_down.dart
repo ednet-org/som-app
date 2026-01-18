@@ -117,7 +117,7 @@ class SomDropDown<T> extends StatelessWidget {
     PopupProps<T> popupProps;
     switch (popupMode) {
       case PopupMode.menu:
-        popupProps = PopupProps.menu(
+        popupProps = PopupProps.menu<T>(
           showSelectedItems: true,
           showSearchBox: showSearchBox,
           constraints: popupConstraints ?? const BoxConstraints(maxHeight: 350),
@@ -138,7 +138,7 @@ class SomDropDown<T> extends StatelessWidget {
         );
         break;
       case PopupMode.dialog:
-        popupProps = PopupProps.dialog(
+        popupProps = PopupProps.dialog<T>(
           showSelectedItems: true,
           showSearchBox: showSearchBox,
           constraints:
@@ -164,7 +164,7 @@ class SomDropDown<T> extends StatelessWidget {
         break;
       case PopupMode.modalBottomSheet:
       case PopupMode.bottomSheet:
-        popupProps = PopupProps.modalBottomSheet(
+        popupProps = PopupProps.modalBottomSheet<T>(
           showSelectedItems: true,
           showSearchBox: showSearchBox,
           modalBottomSheetProps: ModalBottomSheetProps(

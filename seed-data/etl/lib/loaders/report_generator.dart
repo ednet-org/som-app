@@ -48,9 +48,11 @@ class ReportGenerator {
     buffer.writeln('| Metric | Value |');
     buffer.writeln('|--------|-------|');
     buffer.writeln('| Total Entities | ${manifest.totals.totalEntities} |');
-    buffer.writeln('| Deduplication Merges | ${manifest.totals.dedupeMerges} |');
+    buffer
+        .writeln('| Deduplication Merges | ${manifest.totals.dedupeMerges} |');
     buffer.writeln('| Output File | ${manifest.outputFile.filename} |');
-    buffer.writeln('| File Size | ${_formatBytes(manifest.outputFile.sizeBytes)} |');
+    buffer.writeln(
+        '| File Size | ${_formatBytes(manifest.outputFile.sizeBytes)} |');
     buffer.writeln();
 
     // Data Sources
@@ -133,8 +135,10 @@ class ReportGenerator {
     buffer.writeln();
     buffer.writeln('| Contact Type | Allowed | Filtered |');
     buffer.writeln('|--------------|---------|----------|');
-    buffer.writeln('| Phone Numbers | ${piiReport.allowedPhones} | ${piiReport.filteredPhones} |');
-    buffer.writeln('| Email Addresses | ${piiReport.allowedEmails} | ${piiReport.filteredEmails} |');
+    buffer.writeln(
+        '| Phone Numbers | ${piiReport.allowedPhones} | ${piiReport.filteredPhones} |');
+    buffer.writeln(
+        '| Email Addresses | ${piiReport.allowedEmails} | ${piiReport.filteredEmails} |');
     buffer.writeln('| Websites | ${piiReport.allowedWebsites} | - |');
     buffer.writeln();
 
@@ -168,9 +172,12 @@ class ReportGenerator {
     buffer.writeln();
     buffer.writeln(OsmDataSource.attribution);
     buffer.writeln();
-    buffer.writeln('This database contains information derived from OpenStreetMap,');
-    buffer.writeln('which is available under the Open Database License (ODbL).');
-    buffer.writeln('Any rights in individual contents of the database are licensed');
+    buffer.writeln(
+        'This database contains information derived from OpenStreetMap,');
+    buffer
+        .writeln('which is available under the Open Database License (ODbL).');
+    buffer.writeln(
+        'Any rights in individual contents of the database are licensed');
     buffer.writeln('under the Database Contents License.');
     buffer.writeln();
     buffer.writeln('Full license: ${OsmDataSource.licenseUrl}');
@@ -179,8 +186,10 @@ class ReportGenerator {
     buffer.writeln();
     buffer.writeln(FirmenbuchDataSource.attribution);
     buffer.writeln();
-    buffer.writeln('This database contains information from the Austrian Business Register');
-    buffer.writeln('(Firmenbuch), available under Creative Commons Attribution 4.0.');
+    buffer.writeln(
+        'This database contains information from the Austrian Business Register');
+    buffer.writeln(
+        '(Firmenbuch), available under Creative Commons Attribution 4.0.');
     buffer.writeln();
     buffer.writeln('Full license: ${FirmenbuchDataSource.licenseUrl}');
     buffer.writeln();

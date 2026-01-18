@@ -118,8 +118,10 @@ class PiiFilter {
 
     // Check for allowed prefixes
     for (final prefix in _allowedEmailPrefixes) {
-      if (localPart == prefix || localPart.startsWith('$prefix.') ||
-          localPart.startsWith('${prefix}_') || localPart.startsWith('$prefix-')) {
+      if (localPart == prefix ||
+          localPart.startsWith('$prefix.') ||
+          localPart.startsWith('${prefix}_') ||
+          localPart.startsWith('$prefix-')) {
         return const PiiFilterResult(
           allowed: true,
           filtered: false,

@@ -6,10 +6,8 @@ class SchemaVersionRepository {
   final SupabaseClient _client;
 
   Future<int?> getVersion() async {
-    final rows = await _client
-        .from('schema_version')
-        .select('version')
-        .limit(1) as List<dynamic>;
+    final rows = await _client.from('schema_version').select('version').limit(1)
+        as List<dynamic>;
     if (rows.isEmpty) {
       return null;
     }

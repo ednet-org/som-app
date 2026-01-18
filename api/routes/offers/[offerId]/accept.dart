@@ -57,8 +57,7 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
     await email.send(
       to: admin.email,
       subject: 'Offer accepted',
-      text:
-          'Offer $offerId has been accepted.\n'
+      text: 'Offer $offerId has been accepted.\n'
           'Buyer contact:\n'
           'Company: ${contact.companyName.isNotEmpty ? contact.companyName : '-'}\n'
           'Name: ${contactName.isNotEmpty ? contactName : '-'}\n'
@@ -67,14 +66,14 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
     );
   }
   await context.read<DomainEventService>().emit(
-        type: 'offer.accepted',
-        entityType: 'offer',
-        entityId: offerId,
-        actorId: auth.userId,
-        payload: {
-          'inquiryId': offer.inquiryId,
-          'providerCompanyId': offer.providerCompanyId,
-        },
-      );
+    type: 'offer.accepted',
+    entityType: 'offer',
+    entityId: offerId,
+    actorId: auth.userId,
+    payload: {
+      'inquiryId': offer.inquiryId,
+      'providerCompanyId': offer.providerCompanyId,
+    },
+  );
   return Response(statusCode: 200);
 }

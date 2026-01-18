@@ -40,8 +40,7 @@ void main() {
       createContext.provide<RoleRepository>(roles);
       createContext.provide<UserRepository>(users);
 
-      final createResponse =
-          await roles_route.onRequest(createContext.context);
+      final createResponse = await roles_route.onRequest(createContext.context);
       expect(createResponse.statusCode, 200);
       final createdBody =
           jsonDecode(await createResponse.body()) as Map<String, dynamic>;

@@ -271,6 +271,65 @@ class _InquiryPageState extends State<InquiryPage> {
     await _refresh();
   }
 
+  Future<Branch> _ensureBranch(String name) async {
+    final api = Provider.of<Openapi>(context, listen: false);
+    final response = await api.getBranchesApi().branchesPost(
+      branchesPostRequest: BranchesPostRequest((b) => b..name = name),
+    );
+    final branch = response.data;
+    if (branch == null) {
+      throw Exception('Failed to create branch');
+    }
+    setState(() {
+      final existingIndex = _branches.indexWhere(
+        (b) => b.id != null && b.id == branch.id,
+      );
+      if (existingIndex == -1) {
+        _branches = [..._branches, branch];
+      } else {
+        final updated = [..._branches];
+        updated[existingIndex] = branch;
+        _branches = updated;
+      }
+    });
+    return branch;
+  }
+
+  Future<Category> _ensureCategory(String branchId, String name) async {
+    final api = Provider.of<Openapi>(context, listen: false);
+    final response = await api.getBranchesApi().branchesBranchIdCategoriesPost(
+      branchId: branchId,
+      branchesPostRequest: BranchesPostRequest((b) => b..name = name),
+    );
+    final category = response.data;
+    if (category == null) {
+      throw Exception('Failed to create category');
+    }
+    setState(() {
+      final branchIndex = _branches.indexWhere(
+        (b) => b.id != null && b.id == branchId,
+      );
+      if (branchIndex == -1) return;
+      final branch = _branches[branchIndex];
+      final categories = branch.categories?.toList() ?? <Category>[];
+      final existingIndex = categories.indexWhere(
+        (c) => c.id != null && c.id == category.id,
+      );
+      if (existingIndex == -1) {
+        categories.add(category);
+      } else {
+        categories[existingIndex] = category;
+      }
+      final updatedBranch = branch.rebuild(
+        (b) => b..categories.replace(categories),
+      );
+      final updated = [..._branches];
+      updated[branchIndex] = updatedBranch;
+      _branches = updated;
+    });
+    return category;
+  }
+
   Future<void> _uploadOffer() async {
     if (_selectedInquiry?.id == null) return;
     final result = await _pickPdfFile();
@@ -414,6 +473,7 @@ class _InquiryPageState extends State<InquiryPage> {
     required int offset,
     String? search,
     String? branchId,
+    String? categoryId,
     String? companySize,
     String? providerType,
     String? zipPrefix,
@@ -424,6 +484,7 @@ class _InquiryPageState extends State<InquiryPage> {
       offset: offset,
       search: search,
       branchId: branchId,
+      categoryId: categoryId,
       companySize: companySize,
       providerType: providerType,
       zipPrefix: zipPrefix,
@@ -587,6 +648,8 @@ class _InquiryPageState extends State<InquiryPage> {
               ? InquiryCreateForm(
                   branches: _branches,
                   onSubmit: _submitInquiry,
+                  onEnsureBranch: _ensureBranch,
+                  onEnsureCategory: _ensureCategory,
                   initialContactSalutation: _contactSalutation,
                   initialContactTitle: _contactTitle,
                   initialContactFirstName: _contactFirstName,
