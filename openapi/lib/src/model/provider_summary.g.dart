@@ -22,6 +22,10 @@ class _$ProviderSummary extends ProviderSummary {
   @override
   final BuiltList<String>? pendingBranchIds;
   @override
+  final BuiltList<CompanyBranchAssignment>? branchAssignments;
+  @override
+  final BuiltList<CompanyCategoryAssignment>? categoryAssignments;
+  @override
   final String? status;
   @override
   final String? rejectionReason;
@@ -59,6 +63,8 @@ class _$ProviderSummary extends ProviderSummary {
       this.postcode,
       this.branchIds,
       this.pendingBranchIds,
+      this.branchAssignments,
+      this.categoryAssignments,
       this.status,
       this.rejectionReason,
       this.rejectedAt,
@@ -91,6 +97,8 @@ class _$ProviderSummary extends ProviderSummary {
         postcode == other.postcode &&
         branchIds == other.branchIds &&
         pendingBranchIds == other.pendingBranchIds &&
+        branchAssignments == other.branchAssignments &&
+        categoryAssignments == other.categoryAssignments &&
         status == other.status &&
         rejectionReason == other.rejectionReason &&
         rejectedAt == other.rejectedAt &&
@@ -116,6 +124,8 @@ class _$ProviderSummary extends ProviderSummary {
     _$hash = $jc(_$hash, postcode.hashCode);
     _$hash = $jc(_$hash, branchIds.hashCode);
     _$hash = $jc(_$hash, pendingBranchIds.hashCode);
+    _$hash = $jc(_$hash, branchAssignments.hashCode);
+    _$hash = $jc(_$hash, categoryAssignments.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, rejectionReason.hashCode);
     _$hash = $jc(_$hash, rejectedAt.hashCode);
@@ -143,6 +153,8 @@ class _$ProviderSummary extends ProviderSummary {
           ..add('postcode', postcode)
           ..add('branchIds', branchIds)
           ..add('pendingBranchIds', pendingBranchIds)
+          ..add('branchAssignments', branchAssignments)
+          ..add('categoryAssignments', categoryAssignments)
           ..add('status', status)
           ..add('rejectionReason', rejectionReason)
           ..add('rejectedAt', rejectedAt)
@@ -195,6 +207,20 @@ class ProviderSummaryBuilder
       _$this._pendingBranchIds ??= ListBuilder<String>();
   set pendingBranchIds(ListBuilder<String>? pendingBranchIds) =>
       _$this._pendingBranchIds = pendingBranchIds;
+
+  ListBuilder<CompanyBranchAssignment>? _branchAssignments;
+  ListBuilder<CompanyBranchAssignment> get branchAssignments =>
+      _$this._branchAssignments ??= ListBuilder<CompanyBranchAssignment>();
+  set branchAssignments(
+          ListBuilder<CompanyBranchAssignment>? branchAssignments) =>
+      _$this._branchAssignments = branchAssignments;
+
+  ListBuilder<CompanyCategoryAssignment>? _categoryAssignments;
+  ListBuilder<CompanyCategoryAssignment> get categoryAssignments =>
+      _$this._categoryAssignments ??= ListBuilder<CompanyCategoryAssignment>();
+  set categoryAssignments(
+          ListBuilder<CompanyCategoryAssignment>? categoryAssignments) =>
+      _$this._categoryAssignments = categoryAssignments;
 
   String? _status;
   String? get status => _$this._status;
@@ -268,6 +294,8 @@ class ProviderSummaryBuilder
       _postcode = $v.postcode;
       _branchIds = $v.branchIds?.toBuilder();
       _pendingBranchIds = $v.pendingBranchIds?.toBuilder();
+      _branchAssignments = $v.branchAssignments?.toBuilder();
+      _categoryAssignments = $v.categoryAssignments?.toBuilder();
       _status = $v.status;
       _rejectionReason = $v.rejectionReason;
       _rejectedAt = $v.rejectedAt;
@@ -311,6 +339,8 @@ class ProviderSummaryBuilder
             postcode: postcode,
             branchIds: _branchIds?.build(),
             pendingBranchIds: _pendingBranchIds?.build(),
+            branchAssignments: _branchAssignments?.build(),
+            categoryAssignments: _categoryAssignments?.build(),
             status: status,
             rejectionReason: rejectionReason,
             rejectedAt: rejectedAt,
@@ -332,6 +362,10 @@ class ProviderSummaryBuilder
         _branchIds?.build();
         _$failedField = 'pendingBranchIds';
         _pendingBranchIds?.build();
+        _$failedField = 'branchAssignments';
+        _branchAssignments?.build();
+        _$failedField = 'categoryAssignments';
+        _categoryAssignments?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'ProviderSummary', _$failedField, e.toString());

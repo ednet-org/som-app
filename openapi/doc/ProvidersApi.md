@@ -17,6 +17,8 @@ Method | HTTP request | Description
 [**providersCompanyIdProductsPost**](ProvidersApi.md#providerscompanyidproductspost) | **POST** /providers/{companyId}/products | Create provider product
 [**providersCompanyIdProductsProductIdDelete**](ProvidersApi.md#providerscompanyidproductsproductiddelete) | **DELETE** /providers/{companyId}/products/{productId} | Delete provider product
 [**providersCompanyIdProductsProductIdPut**](ProvidersApi.md#providerscompanyidproductsproductidput) | **PUT** /providers/{companyId}/products/{productId} | Update provider product
+[**providersCompanyIdTaxonomyGet**](ProvidersApi.md#providerscompanyidtaxonomyget) | **GET** /providers/{companyId}/taxonomy | Get provider taxonomy assignments
+[**providersCompanyIdTaxonomyPut**](ProvidersApi.md#providerscompanyidtaxonomyput) | **PUT** /providers/{companyId}/taxonomy | Replace provider taxonomy assignments
 [**providersGet**](ProvidersApi.md#providersget) | **GET** /providers | List providers with pagination
 
 
@@ -347,6 +349,90 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Product**](Product.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **providersCompanyIdTaxonomyGet**
+> CompanyTaxonomy providersCompanyIdTaxonomyGet(companyId)
+
+Get provider taxonomy assignments
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getProvidersApi();
+final String companyId = companyId_example; // String | 
+
+try {
+    final response = api.providersCompanyIdTaxonomyGet(companyId);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling ProvidersApi->providersCompanyIdTaxonomyGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **companyId** | **String**|  | 
+
+### Return type
+
+[**CompanyTaxonomy**](CompanyTaxonomy.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **providersCompanyIdTaxonomyPut**
+> CompanyTaxonomy providersCompanyIdTaxonomyPut(companyId, providersCompanyIdTaxonomyPutRequest)
+
+Replace provider taxonomy assignments
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getProvidersApi();
+final String companyId = companyId_example; // String | 
+final ProvidersCompanyIdTaxonomyPutRequest providersCompanyIdTaxonomyPutRequest = ; // ProvidersCompanyIdTaxonomyPutRequest | 
+
+try {
+    final response = api.providersCompanyIdTaxonomyPut(companyId, providersCompanyIdTaxonomyPutRequest);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling ProvidersApi->providersCompanyIdTaxonomyPut: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **companyId** | **String**|  | 
+ **providersCompanyIdTaxonomyPutRequest** | [**ProvidersCompanyIdTaxonomyPutRequest**](ProvidersCompanyIdTaxonomyPutRequest.md)|  | 
+
+### Return type
+
+[**CompanyTaxonomy**](CompanyTaxonomy.md)
 
 ### Authorization
 

@@ -5,6 +5,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
 import '../../../widgets/design_system/som_button.dart';
+import '../../../widgets/design_system/som_badge.dart';
 
 /// Result of a paginated provider search.
 class ProviderSearchResult {
@@ -142,6 +143,76 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   BoxConstraints get _filterPopupConstraints =>
       const BoxConstraints(minWidth: 240, maxWidth: 360, maxHeight: 360);
+
+  bool _isAiSource(String? source) {
+    if (source == null) return false;
+    final normalized = source.toLowerCase().trim();
+    return normalized == 'openai' || normalized == 'ai';
+  }
+
+  String _formatConfidence(num? confidence) {
+    if (confidence == null) return 'AI';
+    final percent = (confidence.toDouble() * 100).round();
+    return 'AI $percent%';
+  }
+
+  String _branchSummary(ProviderSummary provider) {
+    final assignments = provider.branchAssignments?.toList() ?? const [];
+    if (assignments.isNotEmpty) {
+      return assignments
+          .map((a) => a.branchName ?? a.branchId ?? '-')
+          .join(', ');
+    }
+    return provider.branchIds?.join(', ') ?? '-';
+  }
+
+  String _categorySummary(ProviderSummary provider) {
+    final assignments = provider.categoryAssignments?.toList() ?? const [];
+    if (assignments.isEmpty) return '';
+    return assignments.map(_categoryLabelForAssignment).join(', ');
+  }
+
+  String _categoryLabelForAssignment(CompanyCategoryAssignment assignment) {
+    final categoryLabel =
+        assignment.categoryName ?? assignment.categoryId ?? '-';
+    final branchLabel = assignment.branchName ?? assignment.branchId;
+    if (branchLabel == null || branchLabel.isEmpty) {
+      return categoryLabel;
+    }
+    return '$branchLabel — $categoryLabel';
+  }
+
+  SomBadge? _aiBadgeForProvider(ProviderSummary provider) {
+    bool hasAi = false;
+    num? maxConfidence;
+
+    for (final assignment in provider.branchAssignments?.toList() ?? const []) {
+      if (!_isAiSource(assignment.source_)) continue;
+      hasAi = true;
+      final confidence = assignment.confidence;
+      if (confidence == null) continue;
+      if (maxConfidence == null || confidence > maxConfidence) {
+        maxConfidence = confidence;
+      }
+    }
+
+    for (final assignment
+        in provider.categoryAssignments?.toList() ?? const []) {
+      if (!_isAiSource(assignment.source_)) continue;
+      hasAi = true;
+      final confidence = assignment.confidence;
+      if (confidence == null) continue;
+      if (maxConfidence == null || confidence > maxConfidence) {
+        maxConfidence = confidence;
+      }
+    }
+
+    if (!hasAi) return null;
+    return SomBadge(
+      text: _formatConfidence(maxConfidence),
+      type: SomBadgeType.info,
+    );
+  }
 
   @override
   void initState() {
@@ -531,15 +602,27 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         final provider = _providers[index];
         final id = provider.companyId;
         final checked = id != null && _selectedIds.contains(id);
+        final branchSummary = _branchSummary(provider);
+        final categorySummary = _categorySummary(provider);
+        final aiBadge = _aiBadgeForProvider(provider);
 
         return CheckboxListTile(
           value: checked,
           onChanged: id == null ? null : (_) => _toggleSelection(provider),
           title: Text(provider.companyName ?? (id ?? 'Unknown provider')),
-          subtitle: Text(
-            'Branch: ${provider.branchIds?.join(', ') ?? '-'} | '
-            'Type: ${provider.providerType ?? '-'} | '
-            'Size: ${provider.companySize ?? '-'}',
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Branches: $branchSummary'),
+              if (categorySummary.isNotEmpty)
+                Text('Categories: $categorySummary'),
+              Text(
+                'Type: ${provider.providerType ?? '-'} | '
+                'Size: ${provider.companySize ?? '-'}',
+              ),
+              if (aiBadge != null)
+                Padding(padding: const EdgeInsets.only(top: 4), child: aiBadge),
+            ],
           ),
         );
       },

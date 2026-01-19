@@ -26,8 +26,11 @@ doc/BranchesApi.md
 doc/BranchesPostRequest.md
 doc/Category.md
 doc/CompaniesApi.md
+doc/CompanyBranchAssignment.md
+doc/CompanyCategoryAssignment.md
 doc/CompanyDto.md
 doc/CompanyRegistration.md
+doc/CompanyTaxonomy.md
 doc/ConsultantsApi.md
 doc/ConsultantsRegisterCompanyPostRequest.md
 doc/ContactInfo.md
@@ -52,6 +55,7 @@ doc/ProviderSummary.md
 doc/ProvidersApi.md
 doc/ProvidersCompanyIdApprovePostRequest.md
 doc/ProvidersCompanyIdPaymentDetailsPut200Response.md
+doc/ProvidersCompanyIdTaxonomyPutRequest.md
 doc/RegisterCompanyRequest.md
 doc/Role.md
 doc/RoleInput.md
@@ -115,8 +119,11 @@ lib/src/model/billing_record.dart
 lib/src/model/branch.dart
 lib/src/model/branches_post_request.dart
 lib/src/model/category.dart
+lib/src/model/company_branch_assignment.dart
+lib/src/model/company_category_assignment.dart
 lib/src/model/company_dto.dart
 lib/src/model/company_registration.dart
+lib/src/model/company_taxonomy.dart
 lib/src/model/consultants_register_company_post_request.dart
 lib/src/model/contact_info.dart
 lib/src/model/create_ad200_response.dart
@@ -138,6 +145,7 @@ lib/src/model/provider_registration_data.dart
 lib/src/model/provider_summary.dart
 lib/src/model/providers_company_id_approve_post_request.dart
 lib/src/model/providers_company_id_payment_details_put200_response.dart
+lib/src/model/providers_company_id_taxonomy_put_request.dart
 lib/src/model/register_company_request.dart
 lib/src/model/role.dart
 lib/src/model/role_input.dart
@@ -157,3 +165,7 @@ lib/src/model/user_registration.dart
 lib/src/model/users_load_user_with_company_get200_response.dart
 lib/src/serializers.dart
 pubspec.yaml
+test/company_branch_assignment_test.dart
+test/company_category_assignment_test.dart
+test/company_taxonomy_test.dart
+test/providers_company_id_taxonomy_put_request_test.dart

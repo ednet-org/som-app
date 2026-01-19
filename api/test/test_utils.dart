@@ -76,8 +76,10 @@ class InMemoryCompanyRepository implements CompanyRepository {
 }
 
 class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
-  final Map<String, Set<String>> _companyBranches = {};
-  final Map<String, Set<String>> _companyCategories = {};
+  final Map<String, Map<String, CompanyBranchAssignmentRecord>>
+      _companyBranches = {};
+  final Map<String, Map<String, CompanyCategoryAssignmentRecord>>
+      _companyCategories = {};
 
   @override
   Future<void> replaceCompanyBranches({
@@ -87,7 +89,17 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     double? confidence,
     String status = 'active',
   }) async {
-    _companyBranches[companyId] = branchIds.toSet();
+    final assignments = <String, CompanyBranchAssignmentRecord>{};
+    for (final branchId in branchIds) {
+      assignments[branchId] = CompanyBranchAssignmentRecord(
+        branchId: branchId,
+        branchName: branchId,
+        source: source,
+        confidence: confidence,
+        status: status,
+      );
+    }
+    _companyBranches[companyId] = assignments;
   }
 
   @override
@@ -98,7 +110,19 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     double? confidence,
     String status = 'active',
   }) async {
-    _companyCategories[companyId] = categoryIds.toSet();
+    final assignments = <String, CompanyCategoryAssignmentRecord>{};
+    for (final categoryId in categoryIds) {
+      assignments[categoryId] = CompanyCategoryAssignmentRecord(
+        categoryId: categoryId,
+        categoryName: categoryId,
+        branchId: '',
+        branchName: '',
+        source: source,
+        confidence: confidence,
+        status: status,
+      );
+    }
+    _companyCategories[companyId] = assignments;
   }
 
   @override
@@ -108,7 +132,8 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
   }) async {
     final matches = <String>[];
     for (final entry in _companyBranches.entries) {
-      if (entry.value.contains(branchId)) {
+      final assignment = entry.value[branchId];
+      if (assignment != null && assignment.status == status) {
         matches.add(entry.key);
       }
     }
@@ -122,7 +147,8 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
   }) async {
     final matches = <String>[];
     for (final entry in _companyCategories.entries) {
-      if (entry.value.contains(categoryId)) {
+      final assignment = entry.value[categoryId];
+      if (assignment != null && assignment.status == status) {
         matches.add(entry.key);
       }
     }
@@ -137,8 +163,16 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     double? confidence,
     String status = 'pending',
   }) async {
-    final existing = _companyBranches[companyId] ?? <String>{};
-    _companyBranches[companyId] = {...existing, branchId};
+    final existing = _companyBranches[companyId] ??
+        <String, CompanyBranchAssignmentRecord>{};
+    existing[branchId] = CompanyBranchAssignmentRecord(
+      branchId: branchId,
+      branchName: branchId,
+      source: source,
+      confidence: confidence,
+      status: status,
+    );
+    _companyBranches[companyId] = existing;
   }
 
   @override
@@ -149,8 +183,72 @@ class InMemoryCompanyTaxonomyRepository implements CompanyTaxonomyRepository {
     double? confidence,
     String status = 'pending',
   }) async {
-    final existing = _companyCategories[companyId] ?? <String>{};
-    _companyCategories[companyId] = {...existing, categoryId};
+    final existing = _companyCategories[companyId] ??
+        <String, CompanyCategoryAssignmentRecord>{};
+    existing[categoryId] = CompanyCategoryAssignmentRecord(
+      categoryId: categoryId,
+      categoryName: categoryId,
+      branchId: '',
+      branchName: '',
+      source: source,
+      confidence: confidence,
+      status: status,
+    );
+    _companyCategories[companyId] = existing;
+  }
+
+  @override
+  Future<CompanyTaxonomyRecord> fetchCompanyTaxonomy(
+    String companyId, {
+    String? status,
+  }) async {
+    final branches = (await listBranchAssignmentsForCompanies([companyId],
+            status: status))[companyId] ??
+        const [];
+    final categories = (await listCategoryAssignmentsForCompanies([companyId],
+            status: status))[companyId] ??
+        const [];
+    return CompanyTaxonomyRecord(
+      companyId: companyId,
+      branches: branches,
+      categories: categories,
+    );
+  }
+
+  @override
+  Future<Map<String, List<CompanyBranchAssignmentRecord>>>
+      listBranchAssignmentsForCompanies(
+    List<String> companyIds, {
+    String? status,
+  }) async {
+    final result = <String, List<CompanyBranchAssignmentRecord>>{};
+    for (final companyId in companyIds) {
+      final assignments =
+          _companyBranches[companyId]?.values.toList() ?? const [];
+      final filtered = status == null
+          ? assignments
+          : assignments.where((a) => a.status == status).toList();
+      result[companyId] = filtered;
+    }
+    return result;
+  }
+
+  @override
+  Future<Map<String, List<CompanyCategoryAssignmentRecord>>>
+      listCategoryAssignmentsForCompanies(
+    List<String> companyIds, {
+    String? status,
+  }) async {
+    final result = <String, List<CompanyCategoryAssignmentRecord>>{};
+    for (final companyId in companyIds) {
+      final assignments =
+          _companyCategories[companyId]?.values.toList() ?? const [];
+      final filtered = status == null
+          ? assignments
+          : assignments.where((a) => a.status == status).toList();
+      result[companyId] = filtered;
+    }
+    return result;
   }
 }
 
@@ -380,15 +478,23 @@ class InMemoryProviderRepository implements ProviderRepository {
   @override
   Future<ProviderSearchResult> searchProviders(
     ProviderSearchParams params,
-    CompanyRepository companyRepo,
-  ) async {
+    CompanyRepository companyRepo, {
+    List<String>? companyIdsFilter,
+  }) async {
     final effectiveLimit = params.limit > 200 ? 200 : params.limit;
     final allCompanies = await companyRepo.listAll();
+
+    if (companyIdsFilter != null && companyIdsFilter.isEmpty) {
+      return ProviderSearchResult(totalCount: 0, items: const []);
+    }
 
     // Filter companies by type and match with profiles
     var results = <ProviderSummaryRecord>[];
     for (final company in allCompanies) {
       if (company.type != 'provider' && company.type != 'buyer_provider') {
+        continue;
+      }
+      if (companyIdsFilter != null && !companyIdsFilter.contains(company.id)) {
         continue;
       }
       final profile = _profiles[company.id];
@@ -412,7 +518,8 @@ class InMemoryProviderRepository implements ProviderRepository {
           continue;
         }
       }
-      if (params.branchId != null &&
+      if (companyIdsFilter == null &&
+          params.branchId != null &&
           !profile.branchIds.contains(params.branchId)) {
         continue;
       }

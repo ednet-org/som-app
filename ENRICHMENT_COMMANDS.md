@@ -96,15 +96,44 @@ cd /Users/slavisam/projects/som-app/seed-data/etl
 set -a && source /Users/slavisam/projects/som-app/.env && set +a
 
 OUT_DIR=/Users/slavisam/projects/som-app/seed-data/out/enrichment_gpt41
+MERGED_OUT="$OUT_DIR/enrichment_gpt41_merged.jsonl"
 SQL_OUT=/Users/slavisam/projects/som-app/seed-data/seed/taxonomy/enrichment_seed.sql
 
-cat "$OUT_DIR"/gpt-4.1_companies_part_*.jsonl > "$OUT_DIR"/gpt-4.1_full.jsonl
+dart run bin/merge_enrichment_jsonl.dart \
+  --input-dir "$OUT_DIR" \
+  --output "$MERGED_OUT"
+
+## 5a) Optional: one-time taxonomy cleanup (branches + categories)
+```bash
+cd /Users/slavisam/projects/som-app/seed-data/etl
+
+# Export current taxonomy (from local DB with enrichment applied)
+dart run bin/export_taxonomy_data.dart \
+  local \
+  ../out/taxonomy/branches.json \
+  ../out/taxonomy/categories.json
+
+# Run LLM-assisted cleanup
+dart run bin/cleanup_taxonomy.dart \
+  --branches-file ../out/taxonomy/branches.json \
+  --categories-file ../out/taxonomy/categories.json \
+  --input-jsonl "$MERGED_OUT"
+
+# Use cleaned outputs for migration generation
+MERGED_OUT="$OUT_DIR/enrichment_gpt41_merged_clean.jsonl"
+```
 
 dart run bin/generate_enrichment_sql.dart \
-  "$OUT_DIR/gpt-4.1_full.jsonl" \
+  "$MERGED_OUT" \
+  --branches-file /Users/slavisam/projects/som-app/seed-data/out/taxonomy/branches_clean.json \
+  --categories-file /Users/slavisam/projects/som-app/seed-data/out/taxonomy/categories_clean.json \
+  --output "$SQL_OUT"
+```
+
+If you skip cleanup, use the original seed files instead:
+```
   --branches-file /Users/slavisam/projects/som-app/seed-data/seed/taxonomy/branches.json \
   --categories-file /Users/slavisam/projects/som-app/seed-data/seed/taxonomy/categories.json \
-  --output "$SQL_OUT"
 ```
 
 Optional: write directly as a migration (recommended for reproducible deploys)
@@ -112,13 +141,23 @@ Optional: write directly as a migration (recommended for reproducible deploys)
 cd /Users/slavisam/projects/som-app/seed-data/etl
 
 dart run bin/generate_enrichment_sql.dart \
-  "/Users/slavisam/projects/som-app/seed-data/out/enrichment_gpt41/gpt-4.1_full.jsonl" \
+  "/Users/slavisam/projects/som-app/seed-data/out/enrichment_gpt41/enrichment_gpt41_merged.jsonl" \
   --branches-file /Users/slavisam/projects/som-app/seed-data/seed/taxonomy/branches.json \
   --categories-file /Users/slavisam/projects/som-app/seed-data/seed/taxonomy/categories.json \
+  --include-existing \
   --migration
 ```
 
-## 6) Apply SQL seed in production
+## 6) Apply migration locally (requires companies)
+```bash
+cd /Users/slavisam/projects/som-app/seed-data/etl
+dart run bin/seed_database.dart --env local --batch-size 100
+
+cd /Users/slavisam/projects/som-app
+supabase migration up
+```
+
+## 7) Apply SQL seed in production
 ```bash
 cd /Users/slavisam/projects/som-app
 # Apply in target environment using supabase/psql tooling

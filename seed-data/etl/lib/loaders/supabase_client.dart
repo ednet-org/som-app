@@ -171,8 +171,24 @@ class BatchUpsertResult {
     if (dryRun) {
       return 'BatchUpsertResult(dryRun: $total records validated)';
     }
-    final errorMsg = hasErrors ? ', errors: ${errors.length} batches' : '';
-    return 'BatchUpsertResult(processed: $total$errorMsg)';
+    final buffer = StringBuffer('BatchUpsertResult(processed: $total');
+    if (hasErrors) {
+      buffer.write(', errors: ${errors.length} batches');
+    }
+    buffer.writeln(')');
+    if (hasErrors) {
+      const maxSamples = 5;
+      final samples = errors.take(maxSamples).toList();
+      buffer
+          .writeln('  Error samples (${samples.length} of ${errors.length}):');
+      for (final error in samples) {
+        buffer.writeln('    $error');
+      }
+      if (errors.length > maxSamples) {
+        buffer.writeln('    ...');
+      }
+    }
+    return buffer.toString().trimRight();
   }
 }
 

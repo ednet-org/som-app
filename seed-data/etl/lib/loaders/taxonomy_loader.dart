@@ -3,6 +3,7 @@ library;
 
 import '../mappers/entity_to_record.dart';
 import '../models/business_entity.dart';
+import '../utils/name_normalizer.dart';
 import 'seed_config.dart';
 import 'supabase_client.dart';
 
@@ -46,13 +47,13 @@ class TaxonomyLoader {
       final branchExternalId = (taxonomy.branchId?.trim().isNotEmpty == true)
           ? taxonomy.branchId!.trim()
           : (branchName?.isNotEmpty == true
-              ? 'name:${_normalize(branchName!)}'
+              ? normalizeTaxonomyName(branchName!)
               : null);
       final categoryExternalId =
-          (taxonomy.categoryId?.trim().isNotEmpty == true)
-              ? taxonomy.categoryId!.trim()
-              : (categoryName?.isNotEmpty == true
-                  ? 'name:${_normalize(categoryName!)}'
+          (taxonomy.categoryId?.trim().isNotEmpty == true && branchExternalId != null)
+              ? '$branchExternalId:${taxonomy.categoryId!.trim()}'
+              : (categoryName?.isNotEmpty == true && branchExternalId != null
+                  ? 'name:$branchExternalId:${normalizeTaxonomyName(categoryName!)}'
                   : null);
 
       String? branchId;
@@ -65,7 +66,7 @@ class TaxonomyLoader {
             'id': branchId,
             'name': name,
             'external_id': branchExternalId,
-            'normalized_name': _normalize(name),
+            'normalized_name': normalizeTaxonomyName(name),
             'status': 'active',
           };
         });
@@ -85,7 +86,7 @@ class TaxonomyLoader {
             'branch_id': branchId,
             'name': name,
             'external_id': categoryExternalId,
-            'normalized_name': _normalize(name),
+            'normalized_name': normalizeTaxonomyName(name),
             'status': 'active',
           };
         });
@@ -163,14 +164,6 @@ class TaxonomyLoader {
     return type == ProviderType.haendler ||
         type == ProviderType.grosshaendler ||
         type == ProviderType.hersteller;
-  }
-
-  String _normalize(String value) {
-    return value
-        .toLowerCase()
-        .replaceAll(RegExp(r'[,_]+'), ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
   }
 }
 

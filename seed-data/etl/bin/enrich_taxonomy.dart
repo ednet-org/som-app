@@ -19,6 +19,7 @@ import 'dart:math';
 import 'package:args/args.dart';
 import 'package:etl/loaders/seed_config.dart';
 import 'package:etl/loaders/supabase_client.dart';
+import 'package:etl/utils/name_normalizer.dart';
 import 'package:etl/mappers/entity_to_record.dart';
 import 'package:http/http.dart' as http;
 
@@ -790,7 +791,7 @@ Future<_BranchInfo?> _createBranch({
   required String normalized,
   required bool dryRun,
 }) async {
-  final externalId = 'name:$normalized';
+  final externalId = normalized;
   final branchId = mapper.generateBranchId(externalId);
   if (!dryRun && supabase != null) {
     await supabase.client.from('branches').upsert(
@@ -913,13 +914,7 @@ String _buildBatchPrompt({
   });
 }
 
-String _normalize(String value) {
-  return value
-      .toLowerCase()
-      .replaceAll(RegExp(r'[,_]+'), ' ')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .trim();
-}
+String _normalize(String value) => normalizeTaxonomyName(value);
 
 List<String> _loadCompanyIds(String path) {
   final file = File(path);

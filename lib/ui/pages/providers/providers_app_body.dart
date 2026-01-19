@@ -14,6 +14,7 @@ import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/design_system/som_badge.dart';
 import '../../widgets/status_badge.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
@@ -56,8 +57,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
 
   List<Branch> _branches = const [];
   bool _realtimeReady = false;
-  late final RealtimeRefreshHandle _realtimeRefresh =
-      RealtimeRefreshHandle(_handleRealtimeRefresh);
+  late final RealtimeRefreshHandle _realtimeRefresh = RealtimeRefreshHandle(
+    _handleRealtimeRefresh,
+  );
 
   @override
   void initState() {
@@ -134,16 +136,16 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     try {
       final api = Provider.of<Openapi>(context, listen: false);
       final response = await api.getProvidersApi().providersGet(
-            limit: _pageSize,
-            offset: 0,
-            search: _search,
-            branchId: _branchId,
-            companySize: _companySize,
-            providerType: _providerType,
-            zipPrefix: _zipPrefix,
-            status: _status,
-            claimed: _claimed,
-          );
+        limit: _pageSize,
+        offset: 0,
+        search: _search,
+        branchId: _branchId,
+        companySize: _companySize,
+        providerType: _providerType,
+        zipPrefix: _zipPrefix,
+        status: _status,
+        claimed: _claimed,
+      );
 
       // Parse pagination headers
       final totalCountHeader = response.headers.value('X-Total-Count');
@@ -157,7 +159,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
         _isLoading = false;
       });
     } catch (error, stackTrace) {
-      UILogger.silentError('ProvidersAppBody._loadInitialProviders', error, stackTrace);
+      UILogger.silentError(
+        'ProvidersAppBody._loadInitialProviders',
+        error,
+        stackTrace,
+      );
       setState(() {
         _isLoading = false;
         _error = _extractError(error);
@@ -175,16 +181,16 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     try {
       final api = Provider.of<Openapi>(context, listen: false);
       final response = await api.getProvidersApi().providersGet(
-            limit: _pageSize,
-            offset: _currentOffset,
-            search: _search,
-            branchId: _branchId,
-            companySize: _companySize,
-            providerType: _providerType,
-            zipPrefix: _zipPrefix,
-            status: _status,
-            claimed: _claimed,
-          );
+        limit: _pageSize,
+        offset: _currentOffset,
+        search: _search,
+        branchId: _branchId,
+        companySize: _companySize,
+        providerType: _providerType,
+        zipPrefix: _zipPrefix,
+        status: _status,
+        claimed: _claimed,
+      );
 
       final totalCountHeader = response.headers.value('X-Total-Count');
       final hasMoreHeader = response.headers.value('X-Has-More');
@@ -198,7 +204,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
         _isLoadingMore = false;
       });
     } catch (error, stackTrace) {
-      UILogger.silentError('ProvidersAppBody._loadMoreProviders', error, stackTrace);
+      UILogger.silentError(
+        'ProvidersAppBody._loadMoreProviders',
+        error,
+        stackTrace,
+      );
       setState(() {
         _isLoadingMore = false;
       });
@@ -241,10 +251,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       final branchIdsToApprove = provider.pendingBranchIds?.toList() ?? [];
       await api.getProvidersApi().providersCompanyIdApprovePost(
         companyId: provider.companyId!,
-        providersCompanyIdApprovePostRequest: ProvidersCompanyIdApprovePostRequest((b) {
-          b.approvedBranchIds.clear();
-          b.approvedBranchIds.addAll(branchIdsToApprove);
-        }),
+        providersCompanyIdApprovePostRequest:
+            ProvidersCompanyIdApprovePostRequest((b) {
+              b.approvedBranchIds.clear();
+              b.approvedBranchIds.addAll(branchIdsToApprove);
+            }),
       );
       _showSnackbar('Provider approved successfully.');
       await _refresh();
@@ -301,8 +312,8 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     try {
       await api.getProvidersApi().providersCompanyIdDeclinePost(
         companyId: provider.companyId!,
-        subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest((b) => b
-          ..reason = reasonController.text.trim(),
+        subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest(
+          (b) => b..reason = reasonController.text.trim(),
         ),
       );
       _showSnackbar('Provider declined.');
@@ -312,11 +323,195 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     }
   }
 
+  Future<void> _showEditTaxonomyDialog() async {
+    final provider = _selected;
+    if (provider?.companyId == null) return;
+    if (_branches.isEmpty) {
+      _showSnackbar('Branches not loaded yet.');
+      return;
+    }
+
+    final selectedBranchIds = <String>{};
+    for (final assignment in _selectedBranchAssignments) {
+      final branchId = assignment.branchId;
+      if (branchId != null && branchId.isNotEmpty) {
+        selectedBranchIds.add(branchId);
+      }
+    }
+    if (selectedBranchIds.isEmpty) {
+      selectedBranchIds.addAll(
+        provider?.branchIds?.toList().where((id) => id.isNotEmpty) ??
+            const <String>[],
+      );
+    }
+    final selectedCategoryIds = _selectedCategoryAssignments
+        .map((c) => c.categoryId)
+        .whereType<String>()
+        .where((id) => id.isNotEmpty)
+        .toSet();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) {
+          final branchOptions = _branches
+              .where((b) => (b.id ?? '').isNotEmpty)
+              .toList();
+          final selectedBranches = branchOptions
+              .where((branch) => selectedBranchIds.contains(branch.id))
+              .toList();
+
+          return AlertDialog(
+            title: const Text('Edit classification'),
+            content: SizedBox(
+              width: 520,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Branches',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: branchOptions.map((branch) {
+                      final branchId = branch.id ?? '';
+                      final selected = selectedBranchIds.contains(branchId);
+                      return FilterChip(
+                        label: Text(branch.name ?? branchId),
+                        selected: selected,
+                        onSelected: branchId.isEmpty
+                            ? null
+                            : (value) {
+                                setDialogState(() {
+                                  if (value) {
+                                    selectedBranchIds.add(branchId);
+                                  } else {
+                                    selectedBranchIds.remove(branchId);
+                                    final branchCategoryIds =
+                                        (branch.categories?.toList() ??
+                                                const <Category>[])
+                                            .map((c) => c.id)
+                                            .whereType<String>()
+                                            .toSet();
+                                    selectedCategoryIds.removeWhere(
+                                      (id) => branchCategoryIds.contains(id),
+                                    );
+                                  }
+                                });
+                              },
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 12),
+                  if (selectedBranchIds.isEmpty)
+                    const Text(
+                      'Select at least one branch to choose categories.',
+                    )
+                  else
+                    SizedBox(
+                      height: 240,
+                      child: ListView(
+                        children: [
+                          for (final branch in selectedBranches)
+                            for (final category
+                                in (branch.categories?.toList() ??
+                                        const <Category>[])
+                                    .where((c) => c.status != 'declined'))
+                              CheckboxListTile(
+                                value: selectedCategoryIds.contains(
+                                  category.id ?? '',
+                                ),
+                                title: Text(
+                                  '${branch.name ?? branch.id ?? '-'} — '
+                                  '${category.name ?? category.id ?? '-'}',
+                                ),
+                                onChanged: (checked) {
+                                  final id = category.id ?? '';
+                                  if (id.isEmpty) return;
+                                  setDialogState(() {
+                                    if (checked == true) {
+                                      selectedCategoryIds.add(id);
+                                    } else {
+                                      selectedCategoryIds.remove(id);
+                                    }
+                                  });
+                                },
+                              ),
+                        ],
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Saving marks the classification as manual and removes AI labels.',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Save'),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    final api = Provider.of<Openapi>(context, listen: false);
+    try {
+      final validCategoryIds = <String>{};
+      for (final branch in _branches) {
+        final branchId = branch.id;
+        if (branchId == null || branchId.isEmpty) continue;
+        if (!selectedBranchIds.contains(branchId)) continue;
+        validCategoryIds.addAll(
+          (branch.categories?.toList() ?? const <Category>[])
+              .map((c) => c.id)
+              .whereType<String>(),
+        );
+      }
+      final filteredCategoryIds = selectedCategoryIds
+          .where((id) => validCategoryIds.contains(id))
+          .toList();
+      await api.getProvidersApi().providersCompanyIdTaxonomyPut(
+        companyId: provider!.companyId!,
+        providersCompanyIdTaxonomyPutRequest:
+            ProvidersCompanyIdTaxonomyPutRequest((b) {
+              b.branchIds.replace(selectedBranchIds.toList());
+              b.categoryIds.replace(filteredCategoryIds);
+            }),
+      );
+      _showSnackbar('Classification updated.');
+      await _loadInitialProviders();
+      if (!mounted) return;
+      setState(() {
+        _selected = _providers.firstWhere(
+          (p) => p.companyId == provider.companyId,
+          orElse: () => provider,
+        );
+      });
+    } on DioException catch (error) {
+      _showSnackbar('Failed to update: ${_extractError(error)}');
+    }
+  }
+
   void _showSnackbar(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   String _extractError(Object error) {
@@ -329,6 +524,59 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       return error.message ?? 'Request failed.';
     }
     return error.toString();
+  }
+
+  bool _isAiSource(String? source) {
+    if (source == null) return false;
+    final normalized = source.toLowerCase().trim();
+    return normalized == 'openai' || normalized == 'ai';
+  }
+
+  String _formatConfidence(num? confidence) {
+    if (confidence == null) return 'AI';
+    final percent = (confidence.toDouble() * 100).round();
+    return 'AI $percent%';
+  }
+
+  List<CompanyBranchAssignment> get _selectedBranchAssignments =>
+      _selected?.branchAssignments?.toList() ?? const [];
+
+  List<CompanyCategoryAssignment> get _selectedCategoryAssignments =>
+      _selected?.categoryAssignments?.toList() ?? const [];
+
+  bool get _hasAiAssignments {
+    for (final assignment in _selectedBranchAssignments) {
+      if (_isAiSource(assignment.source_)) {
+        return true;
+      }
+    }
+    for (final assignment in _selectedCategoryAssignments) {
+      if (_isAiSource(assignment.source_)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  num? get _aiSummaryConfidence {
+    num? maxConfidence;
+    for (final assignment in _selectedBranchAssignments) {
+      if (!_isAiSource(assignment.source_)) continue;
+      final value = assignment.confidence;
+      if (value == null) continue;
+      if (maxConfidence == null || value > maxConfidence) {
+        maxConfidence = value;
+      }
+    }
+    for (final assignment in _selectedCategoryAssignments) {
+      if (!_isAiSource(assignment.source_)) continue;
+      final value = assignment.confidence;
+      if (value == null) continue;
+      if (maxConfidence == null || value > maxConfidence) {
+        maxConfidence = value;
+      }
+    }
+    return maxConfidence;
   }
 
   void _filterPendingOnly() {
@@ -346,7 +594,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
         appStore.authorization?.isAdmin != true) {
       return const AppBody(
         contextMenu: Text('Consultant admin access required'),
-        leftSplit: Center(child: Text('Only consultant admins can manage providers.')),
+        leftSplit: Center(
+          child: Text('Only consultant admins can manage providers.'),
+        ),
         rightSplit: SizedBox.shrink(),
       );
     }
@@ -368,10 +618,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
             children: [
               Text('Failed to load providers: $_error'),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _refresh,
-                child: const Text('Retry'),
-              ),
+              ElevatedButton(onPressed: _refresh, child: const Text('Retry')),
             ],
           ),
         ),
@@ -497,8 +744,10 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       padding: const EdgeInsets.all(16),
       child: ListView(
         children: [
-          Text(_selected!.companyName ?? 'Provider',
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            _selected!.companyName ?? 'Provider',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: SomSpacing.xs),
           StatusBadge.provider(status: _selected!.status ?? 'pending'),
           const SizedBox(height: 8),
@@ -506,7 +755,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           Text('Size: ${_selected!.companySize ?? '-'}'),
           Text('Type: ${SomFormatters.capitalize(_selected!.providerType)}'),
           Text('Postcode: ${_selected!.postcode ?? '-'}'),
-          Text('Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}'),
+          Text(
+            'Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}',
+          ),
           Text(
             'Pending branches: '
             '${SomFormatters.list(_selected!.pendingBranchIds?.toList())}',
@@ -523,13 +774,39 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               '${SomFormatters.dateTime(_selected!.rejectedAt)}',
             ),
           const Divider(height: 24),
+          Row(
+            children: [
+              Text(
+                'Classification',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const Spacer(),
+              if (_hasAiAssignments) ...[
+                SomBadge(
+                  text: _formatConfidence(_aiSummaryConfidence),
+                  type: SomBadgeType.info,
+                ),
+                const SizedBox(width: 8),
+              ],
+              TextButton.icon(
+                onPressed: _showEditTaxonomyDialog,
+                icon: const Icon(Icons.edit, size: 16),
+                label: const Text('Edit'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          _buildClassificationSection(),
+          const Divider(height: 24),
           Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),
           Text('Payment interval: ${_selected!.paymentInterval ?? '-'}'),
           const Divider(height: 24),
           Text('IBAN: ${_selected!.iban ?? '-'}'),
           Text('BIC: ${_selected!.bic ?? '-'}'),
           Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
-          Text('Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}'),
+          Text(
+            'Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}',
+          ),
           if (_selected!.status == 'pending' ||
               (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
             const Divider(height: 24),
@@ -562,13 +839,81 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                     color: Colors.red,
                   ),
                   label: const Text('Decline'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                  ),
+                  style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
                 ),
               ],
             ),
           ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClassificationSection() {
+    final branchAssignments = _selectedBranchAssignments;
+    final categoryAssignments = _selectedCategoryAssignments;
+
+    if (branchAssignments.isEmpty && categoryAssignments.isEmpty) {
+      return const Text('No classifications assigned.');
+    }
+
+    final textStyle = Theme.of(context).textTheme.bodySmall;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (branchAssignments.isNotEmpty) ...[
+          Text('Branches', style: textStyle),
+          const SizedBox(height: 4),
+          ...branchAssignments.map(
+            (assignment) => _buildAssignmentRow(
+              label: assignment.branchName ?? assignment.branchId ?? '-',
+              source: assignment.source_,
+              confidence: assignment.confidence,
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+        if (categoryAssignments.isNotEmpty) ...[
+          Text('Categories', style: textStyle),
+          const SizedBox(height: 4),
+          ...categoryAssignments.map(
+            (assignment) => _buildAssignmentRow(
+              label: _categoryLabelForAssignment(assignment),
+              source: assignment.source_,
+              confidence: assignment.confidence,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  String _categoryLabelForAssignment(CompanyCategoryAssignment assignment) {
+    final categoryLabel =
+        assignment.categoryName ?? assignment.categoryId ?? '-';
+    final branchLabel = assignment.branchName ?? assignment.branchId;
+    if (branchLabel == null || branchLabel.isEmpty) {
+      return categoryLabel;
+    }
+    return '$branchLabel — $categoryLabel';
+  }
+
+  Widget _buildAssignmentRow({
+    required String label,
+    required String? source,
+    required num? confidence,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        children: [
+          Expanded(child: Text(label)),
+          if (_isAiSource(source))
+            SomBadge(
+              text: _formatConfidence(confidence),
+              type: SomBadgeType.info,
+            ),
         ],
       ),
     );
@@ -588,10 +933,12 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 hint: const Text('Branch'),
                 value: _branchId,
                 items: _branches
-                    .map((branch) => DropdownMenuItem(
-                          value: branch.id,
-                          child: Text(branch.name ?? branch.id ?? '-'),
-                        ))
+                    .map(
+                      (branch) => DropdownMenuItem(
+                        value: branch.id,
+                        child: Text(branch.name ?? branch.id ?? '-'),
+                      ),
+                    )
                     .toList(),
                 onChanged: (value) => setState(() => _branchId = value),
               ),
@@ -613,9 +960,18 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 value: _providerType,
                 items: const [
                   DropdownMenuItem(value: 'haendler', child: Text('Händler')),
-                  DropdownMenuItem(value: 'hersteller', child: Text('Hersteller')),
-                  DropdownMenuItem(value: 'dienstleister', child: Text('Dienstleister')),
-                  DropdownMenuItem(value: 'grosshaendler', child: Text('Großhändler')),
+                  DropdownMenuItem(
+                    value: 'hersteller',
+                    child: Text('Hersteller'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'dienstleister',
+                    child: Text('Dienstleister'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'grosshaendler',
+                    child: Text('Großhändler'),
+                  ),
                 ],
                 onChanged: (value) => setState(() => _providerType = value),
               ),
@@ -623,7 +979,8 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 width: 120,
                 child: TextField(
                   decoration: const InputDecoration(labelText: 'ZIP prefix'),
-                  onChanged: (value) => setState(() => _zipPrefix = value.trim()),
+                  onChanged: (value) =>
+                      setState(() => _zipPrefix = value.trim()),
                 ),
               ),
               DropdownButton<String>(

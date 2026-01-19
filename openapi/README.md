@@ -122,6 +122,8 @@ Class | Method | HTTP request | Description
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsPost**](doc/ProvidersApi.md#providerscompanyidproductspost) | **POST** /providers/{companyId}/products | Create provider product
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdDelete**](doc/ProvidersApi.md#providerscompanyidproductsproductiddelete) | **DELETE** /providers/{companyId}/products/{productId} | Delete provider product
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdProductsProductIdPut**](doc/ProvidersApi.md#providerscompanyidproductsproductidput) | **PUT** /providers/{companyId}/products/{productId} | Update provider product
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdTaxonomyGet**](doc/ProvidersApi.md#providerscompanyidtaxonomyget) | **GET** /providers/{companyId}/taxonomy | Get provider taxonomy assignments
+[*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdTaxonomyPut**](doc/ProvidersApi.md#providerscompanyidtaxonomyput) | **PUT** /providers/{companyId}/taxonomy | Replace provider taxonomy assignments
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersGet**](doc/ProvidersApi.md#providersget) | **GET** /providers | List providers with pagination
 [*RolesApi*](doc/RolesApi.md) | [**rolesGet**](doc/RolesApi.md#rolesget) | **GET** /roles | List roles
 [*RolesApi*](doc/RolesApi.md) | [**rolesPost**](doc/RolesApi.md#rolespost) | **POST** /roles | Create role
@@ -172,8 +174,11 @@ Class | Method | HTTP request | Description
  - [Branch](doc/Branch.md)
  - [BranchesPostRequest](doc/BranchesPostRequest.md)
  - [Category](doc/Category.md)
+ - [CompanyBranchAssignment](doc/CompanyBranchAssignment.md)
+ - [CompanyCategoryAssignment](doc/CompanyCategoryAssignment.md)
  - [CompanyDto](doc/CompanyDto.md)
  - [CompanyRegistration](doc/CompanyRegistration.md)
+ - [CompanyTaxonomy](doc/CompanyTaxonomy.md)
  - [ConsultantsRegisterCompanyPostRequest](doc/ConsultantsRegisterCompanyPostRequest.md)
  - [ContactInfo](doc/ContactInfo.md)
  - [CreateAd200Response](doc/CreateAd200Response.md)
@@ -194,6 +199,7 @@ Class | Method | HTTP request | Description
  - [ProviderSummary](doc/ProviderSummary.md)
  - [ProvidersCompanyIdApprovePostRequest](doc/ProvidersCompanyIdApprovePostRequest.md)
  - [ProvidersCompanyIdPaymentDetailsPut200Response](doc/ProvidersCompanyIdPaymentDetailsPut200Response.md)
+ - [ProvidersCompanyIdTaxonomyPutRequest](doc/ProvidersCompanyIdTaxonomyPutRequest.md)
  - [RegisterCompanyRequest](doc/RegisterCompanyRequest.md)
  - [Role](doc/Role.md)
  - [RoleInput](doc/RoleInput.md)

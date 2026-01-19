@@ -1,13 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-String _normalize(String value) {
-  return value
-      .toLowerCase()
-      .replaceAll(RegExp(r'[,_]+'), ' ')
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .trim();
-}
+import 'package:etl/utils/name_normalizer.dart';
 
 String _sqlString(String? value) {
   if (value == null) return 'NULL';
@@ -103,6 +97,7 @@ Future<void> main(List<String> args) async {
       '    --categories-file <path>\n'
       '    --output <path>\n'
       '    --migration (write to supabase/migrations)\n'
+      '    --include-existing (insert branches/categories even if in reference files)\n'
       '    --migration-dir <path>\n'
       '    --env <name> (ignored; kept for backward compatibility)',
     );
@@ -115,6 +110,7 @@ Future<void> main(List<String> args) async {
   var categoriesFile = '../seed/taxonomy/categories.json';
   var migrationDir = '../../supabase/migrations';
   var writeMigration = false;
+  var includeExisting = false;
 
   for (var i = 0; i < args.length; i++) {
     final arg = args[i];
@@ -126,6 +122,8 @@ Future<void> main(List<String> args) async {
       outputPath = args[++i];
     } else if (arg == '--migration') {
       writeMigration = true;
+    } else if (arg == '--include-existing') {
+      includeExisting = true;
     } else if (arg == '--migration-dir' && i + 1 < args.length) {
       migrationDir = args[++i];
     } else if (arg == '--env' && i + 1 < args.length) {
@@ -185,13 +183,16 @@ Future<void> main(List<String> args) async {
     final branchName = (data['branch'] as String?)?.trim();
     final branchConfidence = data['branchConfidence'];
     final raw = (data['raw'] as Map<String, dynamic>?) ?? {};
-    if (companyId == null || branchId == null || branchName == null || branchName.isEmpty) {
+    if (companyId == null ||
+        branchId == null ||
+        branchName == null ||
+        branchName.isEmpty) {
       continue;
     }
 
-    final branchNormalized = _normalize(branchName);
+    final branchNormalized = normalizeTaxonomyName(branchName);
     final branchExternalId = branchNormalized;
-    if (!existingBranches.containsKey(branchId)) {
+    if (includeExisting || !existingBranches.containsKey(branchId)) {
       branchRows[branchId] ??= [
         _sqlString(branchId),
         _sqlString(branchName),
@@ -227,9 +228,9 @@ Future<void> main(List<String> args) async {
       if (categoryName == null || categoryName.trim().isEmpty) {
         continue;
       }
-      final normalized = _normalize(categoryName);
+      final normalized = normalizeTaxonomyName(categoryName);
       final categoryExternalId = 'name:$branchNormalized:$normalized';
-      if (!existingCategories.containsKey(categoryId)) {
+      if (includeExisting || !existingCategories.containsKey(categoryId)) {
         categoryRows[categoryId] ??= [
           _sqlString(categoryId),
           _sqlString(branchId),
@@ -277,7 +278,15 @@ Future<void> main(List<String> args) async {
   _writeInsert(
     sink,
     'company_branches',
-    ['company_id', 'branch_id', 'source', 'confidence', 'status', 'created_at', 'updated_at'],
+    [
+      'company_id',
+      'branch_id',
+      'source',
+      'confidence',
+      'status',
+      'created_at',
+      'updated_at'
+    ],
     companyBranchRows,
     conflict: '(company_id, branch_id)',
   );
@@ -285,7 +294,15 @@ Future<void> main(List<String> args) async {
   _writeInsert(
     sink,
     'company_categories',
-    ['company_id', 'category_id', 'source', 'confidence', 'status', 'created_at', 'updated_at'],
+    [
+      'company_id',
+      'category_id',
+      'source',
+      'confidence',
+      'status',
+      'created_at',
+      'updated_at'
+    ],
     companyCategoryRows,
     conflict: '(company_id, category_id)',
   );

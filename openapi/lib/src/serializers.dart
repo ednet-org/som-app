@@ -33,8 +33,11 @@ import 'package:openapi/src/model/billing_record.dart';
 import 'package:openapi/src/model/branch.dart';
 import 'package:openapi/src/model/branches_post_request.dart';
 import 'package:openapi/src/model/category.dart';
+import 'package:openapi/src/model/company_branch_assignment.dart';
+import 'package:openapi/src/model/company_category_assignment.dart';
 import 'package:openapi/src/model/company_dto.dart';
 import 'package:openapi/src/model/company_registration.dart';
+import 'package:openapi/src/model/company_taxonomy.dart';
 import 'package:openapi/src/model/consultants_register_company_post_request.dart';
 import 'package:openapi/src/model/contact_info.dart';
 import 'package:openapi/src/model/create_ad200_response.dart';
@@ -55,6 +58,7 @@ import 'package:openapi/src/model/provider_registration_data.dart';
 import 'package:openapi/src/model/provider_summary.dart';
 import 'package:openapi/src/model/providers_company_id_approve_post_request.dart';
 import 'package:openapi/src/model/providers_company_id_payment_details_put200_response.dart';
+import 'package:openapi/src/model/providers_company_id_taxonomy_put_request.dart';
 import 'package:openapi/src/model/register_company_request.dart';
 import 'package:openapi/src/model/role.dart';
 import 'package:openapi/src/model/role_input.dart';
@@ -95,8 +99,11 @@ part 'serializers.g.dart';
   Branch,
   BranchesPostRequest,
   Category,
+  CompanyBranchAssignment,
+  CompanyCategoryAssignment,
   CompanyDto,
   CompanyRegistration,
+  CompanyTaxonomy,
   ConsultantsRegisterCompanyPostRequest,
   ContactInfo,
   CreateAd200Response,
@@ -117,6 +124,7 @@ part 'serializers.g.dart';
   ProviderSummary,
   ProvidersCompanyIdApprovePostRequest,
   ProvidersCompanyIdPaymentDetailsPut200Response,
+  ProvidersCompanyIdTaxonomyPutRequest,
   RegisterCompanyRequest,
   Role,
   RoleInput,

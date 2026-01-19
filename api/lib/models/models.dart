@@ -743,7 +743,10 @@ class ProviderSummaryRecord {
     required this.paymentInterval,
     required this.bankDetails,
     required this.registrationDate,
-  });
+    List<CompanyBranchAssignmentRecord>? branchAssignments,
+    List<CompanyCategoryAssignmentRecord>? categoryAssignments,
+  })  : branchAssignments = branchAssignments ?? const [],
+        categoryAssignments = categoryAssignments ?? const [];
 
   final String companyId;
   final String companyName;
@@ -759,6 +762,8 @@ class ProviderSummaryRecord {
   final String paymentInterval;
   final BankDetails bankDetails;
   final DateTime registrationDate;
+  final List<CompanyBranchAssignmentRecord> branchAssignments;
+  final List<CompanyCategoryAssignmentRecord> categoryAssignments;
 
   bool get claimed => status == 'active';
 
@@ -770,6 +775,9 @@ class ProviderSummaryRecord {
         'postcode': postcode,
         'branchIds': branchIds,
         'pendingBranchIds': pendingBranchIds,
+        'branchAssignments': branchAssignments.map((a) => a.toJson()).toList(),
+        'categoryAssignments':
+            categoryAssignments.map((a) => a.toJson()).toList(),
         'status': status,
         'rejectionReason': rejectionReason,
         'rejectedAt': rejectedAt?.toIso8601String(),
@@ -780,6 +788,78 @@ class ProviderSummaryRecord {
         'bic': bankDetails.bic,
         'accountOwner': bankDetails.accountOwner,
         'registrationDate': registrationDate.toIso8601String(),
+      };
+}
+
+class CompanyBranchAssignmentRecord {
+  CompanyBranchAssignmentRecord({
+    required this.branchId,
+    required this.branchName,
+    required this.source,
+    required this.status,
+    this.confidence,
+  });
+
+  final String branchId;
+  final String branchName;
+  final String source;
+  final String status;
+  final double? confidence;
+
+  Map<String, dynamic> toJson() => {
+        'branchId': branchId,
+        'branchName': branchName,
+        'source': source,
+        'confidence': confidence,
+        'status': status,
+      };
+}
+
+class CompanyCategoryAssignmentRecord {
+  CompanyCategoryAssignmentRecord({
+    required this.categoryId,
+    required this.categoryName,
+    required this.branchId,
+    required this.branchName,
+    required this.source,
+    required this.status,
+    this.confidence,
+  });
+
+  final String categoryId;
+  final String categoryName;
+  final String branchId;
+  final String branchName;
+  final String source;
+  final String status;
+  final double? confidence;
+
+  Map<String, dynamic> toJson() => {
+        'categoryId': categoryId,
+        'categoryName': categoryName,
+        'branchId': branchId,
+        'branchName': branchName,
+        'source': source,
+        'confidence': confidence,
+        'status': status,
+      };
+}
+
+class CompanyTaxonomyRecord {
+  CompanyTaxonomyRecord({
+    required this.companyId,
+    required this.branches,
+    required this.categories,
+  });
+
+  final String companyId;
+  final List<CompanyBranchAssignmentRecord> branches;
+  final List<CompanyCategoryAssignmentRecord> categories;
+
+  Map<String, dynamic> toJson() => {
+        'companyId': companyId,
+        'branches': branches.map((b) => b.toJson()).toList(),
+        'categories': categories.map((c) => c.toJson()).toList(),
       };
 }
 

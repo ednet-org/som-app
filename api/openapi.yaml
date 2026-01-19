@@ -680,6 +680,14 @@ components:
           type: array
           items:
             type: string
+        branchAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyBranchAssignment'
+        categoryAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryAssignment'
         status:
           type: string
         rejectionReason:
@@ -710,6 +718,51 @@ components:
         registrationDate:
           type: string
           format: date-time
+    CompanyBranchAssignment:
+      type: object
+      properties:
+        branchId:
+          type: string
+        branchName:
+          type: string
+        source:
+          type: string
+        confidence:
+          type: number
+          nullable: true
+        status:
+          type: string
+    CompanyCategoryAssignment:
+      type: object
+      properties:
+        categoryId:
+          type: string
+        categoryName:
+          type: string
+        branchId:
+          type: string
+        branchName:
+          type: string
+        source:
+          type: string
+        confidence:
+          type: number
+          nullable: true
+        status:
+          type: string
+    CompanyTaxonomy:
+      type: object
+      properties:
+        companyId:
+          type: string
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyBranchAssignment'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryAssignment'
     BillingRecord:
       type: object
       properties:
@@ -2638,6 +2691,62 @@ paths:
             text/csv:
               schema:
                 type: string
+        '403':
+          description: Forbidden
+  /providers/{companyId}/taxonomy:
+    get:
+      tags: [Providers]
+      summary: Get provider taxonomy assignments
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Provider taxonomy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyTaxonomy'
+        '403':
+          description: Forbidden
+    put:
+      tags: [Providers]
+      summary: Replace provider taxonomy assignments
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branchIds:
+                  type: array
+                  items:
+                    type: string
+                categoryIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated taxonomy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyTaxonomy'
         '403':
           description: Forbidden
   /providers/{companyId}/decline:

@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:openapi/src/model/company_branch_assignment.dart';
+import 'package:openapi/src/model/company_category_assignment.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -19,6 +21,8 @@ part 'provider_summary.g.dart';
 /// * [postcode] 
 /// * [branchIds] 
 /// * [pendingBranchIds] 
+/// * [branchAssignments] 
+/// * [categoryAssignments] 
 /// * [status] 
 /// * [rejectionReason] 
 /// * [rejectedAt] 
@@ -54,6 +58,12 @@ abstract class ProviderSummary implements Built<ProviderSummary, ProviderSummary
 
   @BuiltValueField(wireName: r'pendingBranchIds')
   BuiltList<String>? get pendingBranchIds;
+
+  @BuiltValueField(wireName: r'branchAssignments')
+  BuiltList<CompanyBranchAssignment>? get branchAssignments;
+
+  @BuiltValueField(wireName: r'categoryAssignments')
+  BuiltList<CompanyCategoryAssignment>? get categoryAssignments;
 
   @BuiltValueField(wireName: r'status')
   String? get status;
@@ -164,6 +174,20 @@ class _$ProviderSummarySerializer implements PrimitiveSerializer<ProviderSummary
       yield serializers.serialize(
         object.pendingBranchIds,
         specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.branchAssignments != null) {
+      yield r'branchAssignments';
+      yield serializers.serialize(
+        object.branchAssignments,
+        specifiedType: const FullType(BuiltList, [FullType(CompanyBranchAssignment)]),
+      );
+    }
+    if (object.categoryAssignments != null) {
+      yield r'categoryAssignments';
+      yield serializers.serialize(
+        object.categoryAssignments,
+        specifiedType: const FullType(BuiltList, [FullType(CompanyCategoryAssignment)]),
       );
     }
     if (object.status != null) {
@@ -328,6 +352,20 @@ class _$ProviderSummarySerializer implements PrimitiveSerializer<ProviderSummary
             specifiedType: const FullType(BuiltList, [FullType(String)]),
           ) as BuiltList<String>;
           result.pendingBranchIds.replace(valueDes);
+          break;
+        case r'branchAssignments':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(CompanyBranchAssignment)]),
+          ) as BuiltList<CompanyBranchAssignment>;
+          result.branchAssignments.replace(valueDes);
+          break;
+        case r'categoryAssignments':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(CompanyCategoryAssignment)]),
+          ) as BuiltList<CompanyCategoryAssignment>;
+          result.categoryAssignments.replace(valueDes);
           break;
         case r'status':
           final valueDes = serializers.deserialize(

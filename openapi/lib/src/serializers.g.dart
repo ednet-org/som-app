@@ -26,10 +26,13 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(Branch.serializer)
       ..add(BranchesPostRequest.serializer)
       ..add(Category.serializer)
+      ..add(CompanyBranchAssignment.serializer)
+      ..add(CompanyCategoryAssignment.serializer)
       ..add(CompanyDto.serializer)
       ..add(CompanyRegistration.serializer)
       ..add(CompanyRegistrationCompanySizeEnum.serializer)
       ..add(CompanyRegistrationTypeEnum.serializer)
+      ..add(CompanyTaxonomy.serializer)
       ..add(ConsultantsRegisterCompanyPostRequest.serializer)
       ..add(ContactInfo.serializer)
       ..add(CreateAd200Response.serializer)
@@ -52,6 +55,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(ProviderSummary.serializer)
       ..add(ProvidersCompanyIdApprovePostRequest.serializer)
       ..add(ProvidersCompanyIdPaymentDetailsPut200Response.serializer)
+      ..add(ProvidersCompanyIdTaxonomyPutRequest.serializer)
       ..add(RegisterCompanyRequest.serializer)
       ..add(Role.serializer)
       ..add(RoleInput.serializer)
@@ -75,8 +79,13 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(Category)]),
           () => ListBuilder<Category>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
+          const FullType(
+              BuiltList, const [const FullType(CompanyBranchAssignment)]),
+          () => ListBuilder<CompanyBranchAssignment>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(CompanyCategoryAssignment)]),
+          () => ListBuilder<CompanyCategoryAssignment>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>())
@@ -110,6 +119,23 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(CompanyBranchAssignment)]),
+          () => ListBuilder<CompanyBranchAssignment>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(CompanyCategoryAssignment)]),
+          () => ListBuilder<CompanyCategoryAssignment>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SubscriptionPlan)]),
           () => ListBuilder<SubscriptionPlan>())

@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **postcode** | **String** |  | [optional] 
 **branchIds** | **BuiltList&lt;String&gt;** |  | [optional] 
 **pendingBranchIds** | **BuiltList&lt;String&gt;** |  | [optional] 
+**branchAssignments** | [**BuiltList&lt;CompanyBranchAssignment&gt;**](CompanyBranchAssignment.md) |  | [optional] 
+**categoryAssignments** | [**BuiltList&lt;CompanyCategoryAssignment&gt;**](CompanyCategoryAssignment.md) |  | [optional] 
 **status** | **String** |  | [optional] 
 **rejectionReason** | **String** |  | [optional] 
 **rejectedAt** | [**DateTime**](DateTime.md) |  | [optional] 
