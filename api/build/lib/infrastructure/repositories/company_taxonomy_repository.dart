@@ -1,5 +1,7 @@
 import 'package:supabase/supabase.dart';
 
+import '../../models/models.dart';
+
 class CompanyTaxonomyRepository {
   CompanyTaxonomyRepository(this._client);
 
@@ -131,4 +133,163 @@ class CompanyTaxonomyRepository {
       onConflict: 'company_id,category_id',
     );
   }
+
+  Future<CompanyTaxonomyRecord> fetchCompanyTaxonomy(
+    String companyId, {
+    String? status,
+  }) async {
+    final branchesMap = await listBranchAssignmentsForCompanies(
+      [companyId],
+      status: status,
+    );
+    final categoriesMap = await listCategoryAssignmentsForCompanies(
+      [companyId],
+      status: status,
+    );
+    return CompanyTaxonomyRecord(
+      companyId: companyId,
+      branches: branchesMap[companyId] ?? const [],
+      categories: categoriesMap[companyId] ?? const [],
+    );
+  }
+
+  Future<Map<String, List<CompanyBranchAssignmentRecord>>>
+      listBranchAssignmentsForCompanies(
+    List<String> companyIds, {
+    String? status,
+  }) async {
+    if (companyIds.isEmpty) {
+      return {};
+    }
+    var query = _client.from('company_branches').select(
+          'company_id,branch_id,source,confidence,status',
+        );
+    query = query.inFilter('company_id', companyIds);
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    final rows = await query as List<dynamic>;
+    final branchIds = rows
+        .map((row) => (row as Map<String, dynamic>)['branch_id'] as String?)
+        .whereType<String>()
+        .toSet()
+        .toList();
+    final branchNames = await _loadBranchNames(branchIds);
+    final result = <String, List<CompanyBranchAssignmentRecord>>{};
+    for (final entry in rows.cast<Map<String, dynamic>>()) {
+      final companyId = entry['company_id'] as String;
+      final branchId = entry['branch_id'] as String;
+      final source = entry['source'] as String? ?? 'unknown';
+      final confidence = _asDouble(entry['confidence']);
+      final statusValue = entry['status'] as String? ?? 'active';
+      final assignment = CompanyBranchAssignmentRecord(
+        branchId: branchId,
+        branchName: branchNames[branchId] ?? branchId,
+        source: source,
+        confidence: confidence,
+        status: statusValue,
+      );
+      (result[companyId] ??= []).add(assignment);
+    }
+    return result;
+  }
+
+  Future<Map<String, List<CompanyCategoryAssignmentRecord>>>
+      listCategoryAssignmentsForCompanies(
+    List<String> companyIds, {
+    String? status,
+  }) async {
+    if (companyIds.isEmpty) {
+      return {};
+    }
+    var query = _client.from('company_categories').select(
+          'company_id,category_id,source,confidence,status',
+        );
+    query = query.inFilter('company_id', companyIds);
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    final rows = await query as List<dynamic>;
+    final categoryIds = rows
+        .map((row) => (row as Map<String, dynamic>)['category_id'] as String?)
+        .whereType<String>()
+        .toSet()
+        .toList();
+    final categoryInfo = await _loadCategoryInfo(categoryIds);
+    final branchIds =
+        categoryInfo.values.map((info) => info.branchId).toSet().toList();
+    final branchNames = await _loadBranchNames(branchIds);
+    final result = <String, List<CompanyCategoryAssignmentRecord>>{};
+    for (final entry in rows.cast<Map<String, dynamic>>()) {
+      final companyId = entry['company_id'] as String;
+      final categoryId = entry['category_id'] as String;
+      final source = entry['source'] as String? ?? 'unknown';
+      final confidence = _asDouble(entry['confidence']);
+      final statusValue = entry['status'] as String? ?? 'active';
+      final info = categoryInfo[categoryId];
+      final branchId = info?.branchId ?? '';
+      final branchName = branchNames[branchId] ?? branchId;
+      final assignment = CompanyCategoryAssignmentRecord(
+        categoryId: categoryId,
+        categoryName: info?.name ?? categoryId,
+        branchId: branchId,
+        branchName: branchName,
+        source: source,
+        confidence: confidence,
+        status: statusValue,
+      );
+      (result[companyId] ??= []).add(assignment);
+    }
+    return result;
+  }
+
+  double? _asDouble(Object? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value is num) {
+      return value.toDouble();
+    }
+    return double.tryParse(value.toString());
+  }
+
+  Future<Map<String, String>> _loadBranchNames(List<String> ids) async {
+    if (ids.isEmpty) {
+      return {};
+    }
+    final rows = await _client
+        .from('branches')
+        .select('id,name')
+        .inFilter('id', ids) as List<dynamic>;
+    return {
+      for (final row in rows.cast<Map<String, dynamic>>())
+        row['id'] as String: row['name'] as String,
+    };
+  }
+
+  Future<Map<String, _CategoryInfo>> _loadCategoryInfo(
+    List<String> ids,
+  ) async {
+    if (ids.isEmpty) {
+      return {};
+    }
+    final rows = await _client
+        .from('categories')
+        .select('id,name,branch_id')
+        .inFilter('id', ids) as List<dynamic>;
+    return {
+      for (final row in rows.cast<Map<String, dynamic>>())
+        row['id'] as String: _CategoryInfo(
+          name: row['name'] as String,
+          branchId: row['branch_id'] as String,
+        ),
+    };
+  }
+}
+
+class _CategoryInfo {
+  _CategoryInfo({required this.name, required this.branchId});
+
+  final String name;
+  final String branchId;
 }

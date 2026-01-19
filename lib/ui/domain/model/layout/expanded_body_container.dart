@@ -19,7 +19,7 @@ class ExpandedBodyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      final isNarrow = constraints.maxWidth < 900;
+      final isNarrow = constraints.maxWidth < SomBreakpoints.listDetailSplit;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

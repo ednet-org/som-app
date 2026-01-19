@@ -75,10 +75,34 @@ class SomSemanticColors {
     return switch (status?.toLowerCase()) {
       'approved' || 'active' => success,
       'pending' => warning,
-      'declined' || 'rejected' => error,
+      'declined' || 'rejected' || 'inactive' => error,
       'suspended' => error,
       _ => neutral,
     };
+  }
+
+  /// Get color for company status (aligns with provider semantics)
+  static Color forCompanyStatus(String? status) {
+    return forProviderStatus(status);
+  }
+
+  /// Get color for branch/category status
+  static Color forBranchStatus(String? status) {
+    return switch (status?.toLowerCase()) {
+      'active' => success,
+      'pending' => warning,
+      'declined' || 'inactive' => error,
+      _ => neutral,
+    };
+  }
+
+  /// Build a surface-tinted background for badges and messages.
+  static Color backgroundFor(Color base, ColorScheme scheme) {
+    final alpha = scheme.brightness == Brightness.dark ? 0.22 : 0.12;
+    return Color.alphaBlend(
+      base.withValues(alpha: alpha),
+      scheme.surfaceContainerHigh,
+    );
   }
 
   /// Get icon asset for status
@@ -90,8 +114,8 @@ class SomSemanticColors {
       'closed' || 'accepted' || 'approved' || 'active' =>
         SomAssets.offerStatusAccepted,
       'draft' => SomAssets.iconEdit,
-      'expired' => SomAssets.iconWarning,
-      'rejected' || 'declined' => SomAssets.offerStatusRejected,
+      'expired' || 'paused' => SomAssets.iconWarning,
+      'rejected' || 'declined' || 'inactive' => SomAssets.offerStatusRejected,
       'assigned' => SomAssets.iconUser,
       'responded' => SomAssets.iconInfo,
       _ => SomAssets.iconInfo,

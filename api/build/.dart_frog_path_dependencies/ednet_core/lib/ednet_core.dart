@@ -130,6 +130,7 @@ part 'domain/application/command_result.dart';
 part 'domain/application/value_object.dart';
 part 'domain/application/concept_value_object.dart';
 part 'domain/application/domain_event.dart';
+part 'domain/application/events/concept_metadata_changed_event.dart';
 part 'domain/application/event_publisher.dart';
 part 'domain/application/event_store.dart';
 part 'domain/application/application_service/i_application_service.dart';

@@ -44,17 +44,44 @@ class SomInput extends StatefulWidget {
 
 class _SomInputState extends State<SomInput> {
   bool _obscureText = true;
+  TextEditingController? _controller;
 
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
+    _attachController(widget.controller);
+  }
+
+  @override
+  void didUpdateWidget(covariant SomInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      _attachController(widget.controller);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.removeListener(_handleControllerChange);
+    super.dispose();
   }
 
   void _toggleVisibility() {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void _attachController(TextEditingController? controller) {
+    _controller?.removeListener(_handleControllerChange);
+    _controller = controller;
+    _controller?.addListener(_handleControllerChange);
+  }
+
+  void _handleControllerChange() {
+    if (!mounted) return;
+    setState(() {});
   }
 
   @override
@@ -64,6 +91,7 @@ class _SomInputState extends State<SomInput> {
     Widget? suffixIcon;
     if (widget.isPassword) {
       suffixIcon = IconButton(
+        tooltip: _obscureText ? 'Show password' : 'Hide password',
         icon: SvgPicture.asset(
           _obscureText
               ? SomAssets.iconVisibilityOn
@@ -75,8 +103,9 @@ class _SomInputState extends State<SomInput> {
         ),
         onPressed: _toggleVisibility,
       );
-    } else if (widget.controller?.text.isNotEmpty == true) {
+    } else if (_controller?.text.isNotEmpty == true) {
       suffixIcon = IconButton(
+        tooltip: 'Clear',
         icon: SvgPicture.asset(
           SomAssets.iconClearCircle,
           colorFilter: ColorFilter.mode(
@@ -84,7 +113,7 @@ class _SomInputState extends State<SomInput> {
             BlendMode.srcIn,
           ),
         ),
-        onPressed: () => widget.controller?.clear(),
+        onPressed: () => _controller?.clear(),
       );
     }
 

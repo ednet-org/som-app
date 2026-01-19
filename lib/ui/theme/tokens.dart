@@ -4,6 +4,8 @@
 /// across the application.
 library;
 
+import 'package:flutter/material.dart';
+
 /// Spacing scale following 4px base unit
 class SomSpacing {
   SomSpacing._();
@@ -117,4 +119,40 @@ class SomDuration {
 
   /// 500ms - Complex animations
   static const Duration slower = Duration(milliseconds: 500);
+}
+
+/// Typography scale tokens aligned with Material 3 type roles.
+class SomTypeScale {
+  SomTypeScale._();
+
+  static const double display = 32;
+  static const double headline = 24;
+  static const double title = 18;
+  static const double body = 14;
+  static const double label = 12;
+}
+
+/// Breakpoints used for responsive layouts.
+class SomBreakpoints {
+  SomBreakpoints._();
+
+  static const double navigationRail = 1100;
+  static const double navigationBar = 720;
+  static const double listDetailSplit = 900;
+  static const double filterCollapse = 720;
+}
+
+/// Density helpers for component padding.
+class SomDensityTokens {
+  SomDensityTokens._();
+
+  static EdgeInsets listTilePadding(VisualDensity density) {
+    final vertical = (SomSpacing.xs + density.vertical).clamp(2.0, 12.0);
+    return EdgeInsets.symmetric(horizontal: SomSpacing.md, vertical: vertical);
+  }
+
+  static EdgeInsets inputPadding(VisualDensity density) {
+    final vertical = (SomSpacing.sm + density.vertical).clamp(6.0, 18.0);
+    return EdgeInsets.symmetric(horizontal: SomSpacing.md, vertical: vertical);
+  }
 }

@@ -92,6 +92,13 @@ Future<Response> onRequest(RequestContext context) async {
   );
 
   final totalCount = searchResult.totalCount;
+
+  final companyIds = searchResult.items.map((p) => p.companyId).toList();
+  final branchAssignments =
+      await taxonomyRepo.listBranchAssignmentsForCompanies(companyIds);
+  final categoryAssignments =
+      await taxonomyRepo.listCategoryAssignmentsForCompanies(companyIds);
+
   final hasMore = offset + searchResult.items.length < totalCount;
 
   // Build response with inquiry/offer counts for each provider
@@ -107,6 +114,14 @@ Future<Response> onRequest(RequestContext context) async {
     );
 
     final json = provider.toJson();
+    json['branchAssignments'] =
+        (branchAssignments[provider.companyId] ?? const [])
+            .map((a) => a.toJson())
+            .toList();
+    json['categoryAssignments'] =
+        (categoryAssignments[provider.companyId] ?? const [])
+            .map((a) => a.toJson())
+            .toList();
     json['receivedInquiries'] = received;
     json['sentOffers'] = sentOffers;
     json['acceptedOffers'] = acceptedOffers;

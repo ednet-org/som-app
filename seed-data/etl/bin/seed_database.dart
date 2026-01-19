@@ -48,6 +48,11 @@ Future<void> main(List<String> arguments) async {
       negatable: false,
     )
     ..addFlag(
+      'skip-taxonomy',
+      help: 'Skip seeding branches/categories and company taxonomy tables',
+      negatable: false,
+    )
+    ..addFlag(
       'help',
       abbr: 'h',
       help: 'Show this help message',
@@ -77,6 +82,7 @@ Future<void> main(List<String> arguments) async {
   final batchSize = int.tryParse(args['batch-size'] as String) ?? 500;
   final dryRun = args['dry-run'] as bool;
   final verifyOnly = args['verify-only'] as bool;
+  final skipTaxonomy = args['skip-taxonomy'] as bool;
 
   // Production safety check
   if (environment == SeedEnvironment.production && !dryRun && !verifyOnly) {
@@ -101,6 +107,7 @@ Future<void> main(List<String> arguments) async {
   print('Batch size: $batchSize');
   print('Dry run: $dryRun');
   print('Verify only: $verifyOnly');
+  print('Skip taxonomy: $skipTaxonomy');
   print('=' * 60);
   print('');
 
@@ -110,6 +117,7 @@ Future<void> main(List<String> arguments) async {
       batchSize: batchSize,
       dryRun: dryRun,
       verifyOnly: verifyOnly,
+      skipTaxonomy: skipTaxonomy,
     );
 
     final seeder = await DatabaseSeeder.create(config);
@@ -167,6 +175,9 @@ void _printUsage(ArgParser parser) {
   print('');
   print('  # Verify existing data');
   print('  dart run bin/seed_database.dart --verify-only');
+  print('');
+  print('  # Seed without taxonomy (for enrichment migration)');
+  print('  dart run bin/seed_database.dart --skip-taxonomy');
   print('');
   print('  # Production (requires confirmation)');
   print('  dart run bin/seed_database.dart --env production');

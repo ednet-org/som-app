@@ -27,13 +27,16 @@ class SomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final uppercaseText = text.toUpperCase();
+    final theme = Theme.of(context);
     
     Widget label = Text(uppercaseText);
     if (isLoading) {
-      label = const SizedBox(
+      final loaderColor =
+          type == SomButtonType.primary ? Colors.white : theme.colorScheme.primary;
+      label = SizedBox(
         width: 20,
         height: 20,
-        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+        child: CircularProgressIndicator(strokeWidth: 2, color: loaderColor),
       );
     } else {
       Widget? iconWidget;
@@ -63,7 +66,7 @@ class SomButton extends StatelessWidget {
 
     switch (type) {
       case SomButtonType.primary:
-        return Container(
+        return Ink(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [Color(0xFF38BDF8), Color(0xFF818CF8)], // accent-gradient
@@ -72,12 +75,14 @@ class SomButton extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: ElevatedButton(
+          child: FilledButton(
             onPressed: isLoading ? null : onPressed,
-            style: ElevatedButton.styleFrom(
+            style: FilledButton.styleFrom(
               backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
               shadowColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             child: label,
           ),

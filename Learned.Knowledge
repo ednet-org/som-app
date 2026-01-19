@@ -6,4 +6,5 @@
 - 2026-01-19: Local Docker engine is Rancher Desktop (moby); set Docker context to `rancher-desktop` for local development instead of Docker Desktop.
 - 2026-01-19: Provider taxonomy assignments now surface in API/UI via `branchAssignments`/`categoryAssignments` and `GET/PUT /providers/{companyId}/taxonomy`; manual edits replace AI rows (source `manual`, status `active`), AI rows use `source=openai` with confidence.
 - 2026-01-19: Enrichment migration requires companies to exist; seed local DB (seed_database) before `supabase migration up` to avoid FK errors. Use `--include-existing` when generating enrichment SQL to insert branches/categories even if in reference files.
+- 2026-01-19: `seed_database.dart` supports `--skip-taxonomy` to leave taxonomy tables empty so the enrichment migration is the sole source of branch/category data.
 - 2026-01-19: Taxonomy normalization now folds diacritics for branch/category names; cleanup pipeline uses `seed-data/etl/bin/cleanup_taxonomy.dart` to merge duplicates and regenerate enrichment data with new IDs.

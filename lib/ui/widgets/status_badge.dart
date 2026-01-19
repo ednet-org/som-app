@@ -55,17 +55,39 @@ class StatusBadge extends StatelessWidget {
     this.compact = false,
   }) : type = StatusType.provider;
 
+  /// Create a badge for company status
+  const StatusBadge.company({
+    super.key,
+    required this.status,
+    this.showIcon = true,
+    this.compact = false,
+  }) : type = StatusType.company;
+
+  /// Create a badge for branch status
+  const StatusBadge.branch({
+    super.key,
+    required this.status,
+    this.showIcon = true,
+    this.compact = false,
+  }) : type = StatusType.branch;
+
   Color get _color => switch (type) {
         StatusType.inquiry => SomSemanticColors.forInquiryStatus(status),
         StatusType.offer => SomSemanticColors.forOfferStatus(status),
         StatusType.ad => SomSemanticColors.forAdStatus(status),
         StatusType.provider => SomSemanticColors.forProviderStatus(status),
+        StatusType.company => SomSemanticColors.forCompanyStatus(status),
+        StatusType.branch => SomSemanticColors.forBranchStatus(status),
       };
 
-  Color get _backgroundColor => switch (type) {
-        StatusType.inquiry => SomSemanticColors.forInquiryStatusBackground(status),
-        _ => _color.withValues(alpha: 0.1),
-      };
+  Color _backgroundColor(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return switch (type) {
+      StatusType.inquiry =>
+        SomSemanticColors.backgroundFor(_color, scheme),
+      _ => SomSemanticColors.backgroundFor(_color, scheme),
+    };
+  }
 
   String get _iconAsset => SomSemanticColors.iconAssetForStatus(status);
 
@@ -86,7 +108,7 @@ class StatusBadge extends StatelessWidget {
         vertical: SomSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: _backgroundColor,
+        color: _backgroundColor(context),
         borderRadius: BorderRadius.circular(SomRadius.full),
       ),
       child: Row(
@@ -145,6 +167,8 @@ class StatusDot extends StatelessWidget {
         StatusType.offer => SomSemanticColors.forOfferStatus(status),
         StatusType.ad => SomSemanticColors.forAdStatus(status),
         StatusType.provider => SomSemanticColors.forProviderStatus(status),
+        StatusType.company => SomSemanticColors.forCompanyStatus(status),
+        StatusType.branch => SomSemanticColors.forBranchStatus(status),
       };
 
   @override
@@ -168,4 +192,6 @@ enum StatusType {
   offer,
   ad,
   provider,
+  company,
+  branch,
 }

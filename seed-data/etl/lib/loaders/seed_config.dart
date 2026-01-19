@@ -23,6 +23,7 @@ class SeedConfig {
     required this.batchSize,
     required this.dryRun,
     required this.verifyOnly,
+    required this.skipTaxonomy,
   });
 
   /// Load configuration from environment file.
@@ -31,6 +32,7 @@ class SeedConfig {
     int batchSize = 500,
     bool dryRun = false,
     bool verifyOnly = false,
+    bool skipTaxonomy = false,
     String? inputPath,
   }) {
     final envFile = File('${inputPath ?? '.'}/${environment.envFileName}');
@@ -62,6 +64,7 @@ class SeedConfig {
       batchSize: batchSize,
       dryRun: dryRun,
       verifyOnly: verifyOnly,
+      skipTaxonomy: skipTaxonomy,
     );
   }
 
@@ -83,6 +86,9 @@ class SeedConfig {
   /// If true, only verify existing data counts.
   final bool verifyOnly;
 
+  /// If true, skip seeding taxonomy tables.
+  final bool skipTaxonomy;
+
   /// Whether this is a production environment.
   bool get isProduction => environment == SeedEnvironment.production;
 
@@ -92,7 +98,8 @@ class SeedConfig {
         'env: ${environment.name}, '
         'batchSize: $batchSize, '
         'dryRun: $dryRun, '
-        'verifyOnly: $verifyOnly)';
+        'verifyOnly: $verifyOnly, '
+        'skipTaxonomy: $skipTaxonomy)';
   }
 }
 

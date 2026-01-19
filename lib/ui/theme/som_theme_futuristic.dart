@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'tokens.dart';
+
 /// Returns the "Corporate Futuristic" ThemeData for the SOM App.
 /// Adheres to the "Slick" and "Minimalist" design language using strict Material 3.
 ThemeData somFuturisticTheme({
@@ -16,24 +18,102 @@ ThemeData somFuturisticTheme({
   final background =
       isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
   final surface = isDark ? const Color(0xFF1E293B) : Colors.white;
-  final surfaceVariant =
+  final surfaceContainer =
       isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+  final surfaceContainerHigh =
+      isDark ? const Color(0xFF475569) : const Color(0xFFE5E7EB);
   final onBackground =
       isDark ? const Color(0xFFF8FAFC) : const Color(0xFF0F172A);
   final onSurfaceVariant =
       isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569);
+  final outline = isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1);
 
   // Generate M3 ColorScheme from seed, then override specific roles
   final colorScheme = ColorScheme.fromSeed(
     seedColor: seedColor,
     brightness: brightness,
+  ).copyWith(
     primary: seedColor,
     secondary: secondary,
-    surface: surface,
     error: error,
+    surface: surface,
+    background: background,
     onSurface: onBackground,
     onSurfaceVariant: onSurfaceVariant,
-    tertiary: surfaceVariant,
+    surfaceContainerLowest: surface,
+    surfaceContainerLow: surface,
+    surfaceContainer: surfaceContainer,
+    surfaceContainerHigh: surfaceContainerHigh,
+    surfaceContainerHighest: surfaceContainerHigh,
+    outline: outline,
+    outlineVariant: outline.withValues(alpha: 0.7),
+  );
+
+  final baseTextTheme = (isDark
+          ? Typography.material2021().white
+          : Typography.material2021().black)
+      .apply(fontFamily: 'Roboto');
+  final textTheme = baseTextTheme.copyWith(
+    displayLarge: baseTextTheme.displayLarge?.copyWith(
+      fontSize: SomTypeScale.display,
+      letterSpacing: -1.0,
+      fontWeight: FontWeight.bold,
+    ),
+    displayMedium: baseTextTheme.displayMedium?.copyWith(
+      fontSize: SomTypeScale.display,
+      letterSpacing: -0.5,
+      fontWeight: FontWeight.bold,
+    ),
+    displaySmall: baseTextTheme.displaySmall?.copyWith(
+      fontSize: SomTypeScale.headline,
+      letterSpacing: -0.3,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineLarge: baseTextTheme.headlineLarge?.copyWith(
+      fontSize: SomTypeScale.headline,
+      letterSpacing: -0.4,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineMedium: baseTextTheme.headlineMedium?.copyWith(
+      fontSize: SomTypeScale.headline,
+      letterSpacing: -0.2,
+      fontWeight: FontWeight.w600,
+    ),
+    headlineSmall: baseTextTheme.headlineSmall?.copyWith(
+      fontSize: SomTypeScale.title,
+      fontWeight: FontWeight.w600,
+    ),
+    titleLarge: baseTextTheme.titleLarge?.copyWith(
+      fontSize: SomTypeScale.title,
+      fontWeight: FontWeight.w600,
+    ),
+    titleMedium: baseTextTheme.titleMedium?.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    ),
+    bodyLarge: baseTextTheme.bodyLarge?.copyWith(
+      fontSize: SomTypeScale.body,
+      height: 1.5,
+      letterSpacing: 0.15,
+    ),
+    bodyMedium: baseTextTheme.bodyMedium?.copyWith(
+      fontSize: SomTypeScale.body,
+      height: 1.5,
+      letterSpacing: 0.2,
+    ),
+    bodySmall: baseTextTheme.bodySmall?.copyWith(
+      fontSize: SomTypeScale.label,
+      height: 1.4,
+    ),
+    labelLarge: baseTextTheme.labelLarge?.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.6,
+    ),
+    labelSmall: baseTextTheme.labelSmall?.copyWith(
+      fontSize: SomTypeScale.label,
+      letterSpacing: 0.3,
+    ),
   );
 
   return ThemeData(
@@ -44,51 +124,28 @@ ThemeData somFuturisticTheme({
     fontFamily: 'Roboto',
     visualDensity: visualDensity,
 
-    // Typography: Tight tracking for headings
-    textTheme: (isDark
-            ? Typography.material2021().white
-            : Typography.material2021().black)
-        .apply(fontFamily: 'Roboto')
-        .copyWith(
-          displayLarge: const TextStyle(
-              letterSpacing: -1.0, fontWeight: FontWeight.bold),
-          displayMedium: const TextStyle(
-              letterSpacing: -1.0, fontWeight: FontWeight.bold),
-          displaySmall: const TextStyle(
-              letterSpacing: -0.5, fontWeight: FontWeight.bold),
-          headlineLarge: const TextStyle(
-              letterSpacing: -0.5, fontWeight: FontWeight.bold),
-          headlineMedium: const TextStyle(
-              letterSpacing: -0.5, fontWeight: FontWeight.w600),
-          headlineSmall: const TextStyle(fontWeight: FontWeight.w600),
-          titleLarge: const TextStyle(fontWeight: FontWeight.w600),
-          titleMedium: const TextStyle(fontWeight: FontWeight.w500),
-          bodyLarge: const TextStyle(height: 1.5, letterSpacing: 0.15),
-          bodyMedium: const TextStyle(height: 1.5, letterSpacing: 0.25),
-          labelLarge: const TextStyle(
-              fontWeight: FontWeight.w600, letterSpacing: 1.0), // Buttons
-        ),
+    textTheme: textTheme,
 
     // App Bar
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.transparent,
+      backgroundColor: colorScheme.surface,
+      foregroundColor: colorScheme.onSurface,
+      surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
       systemOverlayStyle:
           isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
-      iconTheme: IconThemeData(color: onBackground),
-      titleTextStyle: TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 20,
+      iconTheme: IconThemeData(color: colorScheme.onSurface),
+      titleTextStyle: textTheme.titleMedium?.copyWith(
+        color: colorScheme.onSurface,
         fontWeight: FontWeight.w600,
-        color: onBackground,
       ),
     ),
 
     // Navigation Bar (Bottom)
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: surface.withValues(alpha: 0.8), // Glass-like
+      backgroundColor: colorScheme.surfaceContainer,
       indicatorColor: seedColor.withValues(alpha: 0.2),
       labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
       iconTheme: WidgetStateProperty.resolveWith((states) {
@@ -101,7 +158,7 @@ ThemeData somFuturisticTheme({
 
     // Navigation Rail (Sidebar)
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: background,
+      backgroundColor: colorScheme.surfaceContainer,
       indicatorColor: seedColor.withValues(alpha: 0.2),
       selectedIconTheme: const IconThemeData(color: seedColor),
       unselectedIconTheme: IconThemeData(color: onSurfaceVariant),
@@ -111,15 +168,18 @@ ThemeData somFuturisticTheme({
 
     // Cards
     cardTheme: CardThemeData(
-      color: surface,
-      elevation: 0, // M3 style often uses tonal elevation or outline
-      margin: EdgeInsets.zero,
+      color: colorScheme.surfaceContainerLow,
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(
+        horizontal: SomSpacing.sm,
+        vertical: SomSpacing.xs,
+      ),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(SomRadius.lg),
         side: BorderSide(
-          color: isDark ? Colors.white10 : Colors.black12,
-          width: 0.5,
+          color: colorScheme.outlineVariant,
+          width: 0.6,
         ),
       ),
     ),
@@ -127,37 +187,61 @@ ThemeData somFuturisticTheme({
     // Inputs
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: surfaceVariant.withValues(alpha: isDark ? 0.3 : 0.6),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      fillColor: colorScheme.surfaceContainerLowest,
+      contentPadding: SomDensityTokens.inputPadding(visualDensity),
       floatingLabelBehavior: FloatingLabelBehavior.auto,
-      border: const UnderlineInputBorder(
-        borderSide: BorderSide.none,
-        borderRadius:
-            BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
       ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide:
-            BorderSide(color: isDark ? Colors.white10 : Colors.black12),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+        borderSide: BorderSide(color: colorScheme.outlineVariant),
       ),
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: seedColor, width: 1.5),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+        borderSide: const BorderSide(color: seedColor, width: 1.5),
       ),
-      errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: error),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+        borderSide: const BorderSide(color: error),
       ),
       labelStyle: TextStyle(color: onSurfaceVariant),
-      hintStyle: TextStyle(color: onSurfaceVariant.withValues(alpha: 0.5)),
+      hintStyle: TextStyle(color: onSurfaceVariant.withValues(alpha: 0.6)),
       prefixIconColor: onSurfaceVariant,
       suffixIconColor: onSurfaceVariant,
     ),
+    listTileTheme: ListTileThemeData(
+      contentPadding: SomDensityTokens.listTilePadding(visualDensity),
+      minVerticalPadding: SomSpacing.xs,
+      iconColor: onSurfaceVariant,
+      textColor: onBackground,
+      selectedColor: colorScheme.onPrimaryContainer,
+      selectedTileColor:
+          colorScheme.primaryContainer.withValues(alpha: 0.35),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+      ),
+    ),
 
     // Buttons
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: seedColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        minimumSize: const Size(0, SomSize.buttonHeight),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: seedColor,
         foregroundColor: Colors.white,
         elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        minimumSize: const Size(0, SomSize.buttonHeight),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         textStyle: const TextStyle(fontWeight: FontWeight.w600),
       ),
@@ -166,14 +250,22 @@ ThemeData somFuturisticTheme({
       style: OutlinedButton.styleFrom(
         foregroundColor: seedColor,
         side: const BorderSide(color: seedColor, width: 1),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        minimumSize: const Size(0, SomSize.buttonHeight),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: seedColor,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        minimumSize: const Size(0, SomSize.buttonHeight),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      ),
+    ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        minimumSize:
+            const Size(SomSize.minTouchTarget, SomSize.minTouchTarget),
       ),
     ),
 
@@ -187,40 +279,112 @@ ThemeData somFuturisticTheme({
 
     // Dialogs
     dialogTheme: DialogThemeData(
-      backgroundColor: surface,
+      backgroundColor: colorScheme.surfaceContainerLow,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(SomRadius.lg),
         side: BorderSide(
-          color: isDark ? Colors.white10 : Colors.black12,
-          width: 0.5,
+          color: colorScheme.outlineVariant,
+          width: 0.6,
         ),
       ),
-      titleTextStyle: TextStyle(
-          fontSize: 24, fontWeight: FontWeight.bold, color: onBackground),
+      titleTextStyle: textTheme.titleLarge?.copyWith(
+        color: onBackground,
+        fontWeight: FontWeight.w600,
+      ),
+      contentTextStyle: textTheme.bodyMedium,
     ),
 
     // Bottom Sheet
     bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: surface,
+      backgroundColor: colorScheme.surfaceContainerLow,
       surfaceTintColor: Colors.transparent,
-      modalBackgroundColor: surface,
+      modalBackgroundColor: colorScheme.surfaceContainerLow,
       shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius:
+            const BorderRadius.vertical(top: Radius.circular(SomRadius.lg)),
         side: BorderSide(
-          color: isDark ? Colors.white10 : Colors.black12,
-          width: 0.5,
+          color: colorScheme.outlineVariant,
+          width: 0.6,
         ),
       ),
     ),
 
     // Divider
     dividerTheme: DividerThemeData(
-      thickness: 0.5,
-      color: isDark ? Colors.white10 : Colors.black12,
+      thickness: 1,
+      color: colorScheme.outlineVariant,
       space: 1,
     ),
-
+    chipTheme: ChipThemeData(
+      backgroundColor: colorScheme.surfaceContainer,
+      selectedColor: colorScheme.primaryContainer,
+      labelStyle: textTheme.labelMedium,
+      secondaryLabelStyle: textTheme.labelMedium,
+      padding: const EdgeInsets.symmetric(horizontal: SomSpacing.sm),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(SomRadius.full),
+        side: BorderSide(color: colorScheme.outlineVariant),
+      ),
+    ),
+    tooltipTheme: TooltipThemeData(
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+        border: BorderSide(color: colorScheme.outlineVariant),
+      ),
+      textStyle: textTheme.bodySmall?.copyWith(
+        color: colorScheme.onSurface,
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: colorScheme.surfaceContainerHigh,
+      contentTextStyle: textTheme.bodyMedium?.copyWith(
+        color: colorScheme.onSurface,
+      ),
+    ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? colorScheme.primary
+            : colorScheme.surfaceContainerHighest,
+      ),
+      checkColor: WidgetStateProperty.all(colorScheme.onPrimary),
+      visualDensity: visualDensity,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(SomRadius.sm),
+      ),
+    ),
+    radioTheme: RadioThemeData(
+      fillColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? colorScheme.primary
+            : colorScheme.outline,
+      ),
+      visualDensity: visualDensity,
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? colorScheme.primary
+            : colorScheme.outline,
+      ),
+      trackColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? colorScheme.primary.withValues(alpha: 0.4)
+            : colorScheme.surfaceContainerHighest,
+      ),
+      visualDensity: visualDensity,
+    ),
+    dataTableTheme: DataTableThemeData(
+      headingRowColor:
+          WidgetStateProperty.all(colorScheme.surfaceContainerHigh),
+      dataRowColor: WidgetStateProperty.all(colorScheme.surface),
+      headingTextStyle: textTheme.labelLarge,
+      dataTextStyle: textTheme.bodySmall,
+      dividerThickness: 1,
+    ),
     // Icon Theme
     iconTheme: IconThemeData(
       color: onSurfaceVariant,

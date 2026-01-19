@@ -157,6 +157,7 @@ class TaxonomyLoader {
       companyBranches: companyBranchRecords.length,
       companyCategories: companyCategoryRecords.length,
       dryRun: _config.dryRun,
+      skipped: false,
     );
   }
 
@@ -178,7 +179,33 @@ class TaxonomyLoadResult {
     required this.companyBranches,
     required this.companyCategories,
     required this.dryRun,
+    required this.skipped,
   });
+
+  factory TaxonomyLoadResult.skipped({required bool dryRun}) {
+    BatchUpsertResult empty() {
+      return BatchUpsertResult(
+        inserted: 0,
+        updated: 0,
+        errors: const <BatchError>[],
+        dryRun: dryRun,
+        total: 0,
+      );
+    }
+
+    return TaxonomyLoadResult(
+      branchResult: empty(),
+      categoryResult: empty(),
+      companyBranchResult: empty(),
+      companyCategoryResult: empty(),
+      branches: 0,
+      categories: 0,
+      companyBranches: 0,
+      companyCategories: 0,
+      dryRun: dryRun,
+      skipped: true,
+    );
+  }
 
   final BatchUpsertResult branchResult;
   final BatchUpsertResult categoryResult;
@@ -189,8 +216,10 @@ class TaxonomyLoadResult {
   final int companyBranches;
   final int companyCategories;
   final bool dryRun;
+  final bool skipped;
 
   bool get success =>
+      skipped ||
       !branchResult.hasErrors &&
       !categoryResult.hasErrors &&
       !companyBranchResult.hasErrors &&
@@ -198,6 +227,11 @@ class TaxonomyLoadResult {
 
   @override
   String toString() {
+    if (skipped) {
+      return 'TaxonomyLoadResult (skipped): '
+          'branches=$branches, categories=$categories, '
+          'companyBranches=$companyBranches, companyCategories=$companyCategories';
+    }
     if (dryRun) {
       return 'TaxonomyLoadResult (dry run): '
           'branches=$branches, categories=$categories, '

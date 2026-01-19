@@ -12,6 +12,7 @@ import '../routes/stats/buyer.dart' as stats_buyer;
 import '../routes/roles/index.dart' as roles_index;
 import '../routes/roles/[roleId]/index.dart' as roles_$role_id_index;
 import '../routes/providers/index.dart' as providers_index;
+import '../routes/providers/[companyId]/taxonomy.dart' as providers_$company_id_taxonomy;
 import '../routes/providers/[companyId]/paymentDetails.dart' as providers_$company_id_payment_details;
 import '../routes/providers/[companyId]/index.dart' as providers_$company_id_index;
 import '../routes/providers/[companyId]/decline.dart' as providers_$company_id_decline;
@@ -314,7 +315,7 @@ Handler buildProviders$companyIdProductsHandler(String companyId,) {
 Handler buildProviders$companyIdHandler(String companyId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/paymentDetails', (context) => providers_$company_id_payment_details.onRequest(context,companyId,))..all('/', (context) => providers_$company_id_index.onRequest(context,companyId,))..all('/decline', (context) => providers_$company_id_decline.onRequest(context,companyId,))..all('/approve', (context) => providers_$company_id_approve.onRequest(context,companyId,));
+    ..all('/taxonomy', (context) => providers_$company_id_taxonomy.onRequest(context,companyId,))..all('/paymentDetails', (context) => providers_$company_id_payment_details.onRequest(context,companyId,))..all('/', (context) => providers_$company_id_index.onRequest(context,companyId,))..all('/decline', (context) => providers_$company_id_decline.onRequest(context,companyId,))..all('/approve', (context) => providers_$company_id_approve.onRequest(context,companyId,));
   return pipeline.addHandler(router);
 }
 

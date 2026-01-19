@@ -151,10 +151,26 @@ dart run bin/generate_enrichment_sql.dart \
 ## 6) Apply migration locally (requires companies)
 ```bash
 cd /Users/slavisam/projects/som-app/seed-data/etl
-dart run bin/seed_database.dart --env local --batch-size 100
+dart run bin/seed_database.dart --env local --batch-size 100 --skip-taxonomy
 
 cd /Users/slavisam/projects/som-app
 supabase migration up
+```
+
+## 6a) Optional: dump curated taxonomy data (after migration)
+```bash
+cd /Users/slavisam/projects/som-app
+# Set DB_URL from `supabase status --output json`
+export DB_URL="postgresql://postgres:postgres@127.0.0.1:<port>/postgres"
+
+pg_dump "$DB_URL" \
+  --data-only \
+  --column-inserts \
+  --table branches \
+  --table categories \
+  --table company_branches \
+  --table company_categories \
+  > supabase/seed/curated_taxonomy.sql
 ```
 
 ## 7) Apply SQL seed in production

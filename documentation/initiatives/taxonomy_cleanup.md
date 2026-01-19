@@ -35,13 +35,14 @@ source of truth for initial seeding and the enrichment migration.
    - `dart run seed-data/etl/bin/generate_enrichment_sql.dart ../out/enrichment_gpt41_merged_clean.jsonl --branches-file ../out/taxonomy/branches_clean.json --categories-file ../out/taxonomy/categories_clean.json --migration --include-existing`
 4) Reinitialize local DB (companies/providers first, taxonomy later):
    - `supabase db reset --version 20260118002000 --no-seed`
-   - `cd seed-data/etl && dart run bin/seed_database.dart --env local --batch-size 100`
-   - `psql "$DB_URL" -c "TRUNCATE TABLE company_categories, company_branches, categories, branches RESTART IDENTITY CASCADE;"`
+   - `cd seed-data/etl && dart run bin/seed_database.dart --env local --batch-size 100 --skip-taxonomy`
    - `supabase migration up`
 
 ## Notes
 - Added migration `20260118002000_fix_categories_external_id_unique.sql` to make
   `ON CONFLICT (branch_id, external_id)` valid for category upserts.
+- `--skip-taxonomy` keeps taxonomy tables empty so the enrichment migration is
+  the single source of truth for branches/categories/assignments.
 - `merge_plan.json` contains old->new ID mappings for branches and categories.
 - AI provenance remains in `company_branches` and `company_categories` via `source=openai`.
 - After cleanup, add unique indexes on `branches.normalized_name` and `categories(branch_id, normalized_name)`.

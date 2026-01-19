@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/company_taxonomy_repository.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
@@ -19,6 +20,7 @@ void main() {
     late InMemoryCompanyRepository companies;
     late InMemoryUserRepository users;
     late InMemoryProviderRepository providers;
+    late InMemoryCompanyTaxonomyRepository taxonomy;
     late InMemoryInquiryRepository inquiries;
     late InMemoryOfferRepository offers;
     late String consultantToken;
@@ -71,6 +73,7 @@ void main() {
       companies = InMemoryCompanyRepository();
       users = InMemoryUserRepository();
       providers = InMemoryProviderRepository();
+      taxonomy = InMemoryCompanyTaxonomyRepository();
       inquiries = InMemoryInquiryRepository();
       offers = InMemoryOfferRepository();
 
@@ -99,6 +102,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 
@@ -125,6 +129,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 
@@ -148,6 +153,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 
@@ -174,6 +180,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 
@@ -199,6 +206,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 
@@ -224,6 +232,7 @@ void main() {
       context.provide<CompanyRepository>(companies);
       context.provide<UserRepository>(users);
       context.provide<ProviderRepository>(providers);
+      context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
 

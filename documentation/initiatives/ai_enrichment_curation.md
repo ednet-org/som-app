@@ -101,7 +101,7 @@ Updated: 2026-01-19
 - UI: providers page shows classification section with AI badges + confidence; edit dialog replaces assignments as manual.
 - UI: provider selection dialog shows classification labels and AI badge summary.
 - Tests: API tests passed (`api/test/provider_taxonomy_test.dart`, `api/test/providers_pagination_test.dart`); provider selection dialog AI badge test passed (`test/provider_selection_dialog_test.dart`). Provider details UI test still pending.
-- Seed/migrations: merged enrichment outputs, generated migration, seeded local DB (batch size 100), applied enrichment migration with `--include-existing`.
+- Seed/migrations: merged enrichment outputs, generated migration, seeded local DB with `--skip-taxonomy` (batch size 100), applied enrichment migration with `--include-existing`.
 - Seeder logging: BatchUpsertResult now prints sample errors to surface failed batches on future runs.
 
 ## Notes / Open Questions

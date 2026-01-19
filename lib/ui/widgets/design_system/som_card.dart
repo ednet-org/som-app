@@ -18,8 +18,10 @@ class SomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cardColor =
+        theme.cardTheme.color ?? theme.colorScheme.surfaceContainerLow;
     return Card(
-      color: theme.cardTheme.color,
+      color: cardColor,
       shape: theme.cardTheme.shape,
       clipBehavior: theme.cardTheme.clipBehavior,
       margin: theme.cardTheme.margin,

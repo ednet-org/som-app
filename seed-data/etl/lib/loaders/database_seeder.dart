@@ -73,16 +73,24 @@ class DatabaseSeeder {
     final companyTime = stopwatch.elapsedMilliseconds;
     stopwatch.reset();
 
-    onProgress?.call('taxonomy', 0, entities.length, 'Seeding taxonomy...');
-
-    final taxonomyResult = await _taxonomyLoader.load(
-      entities: entities,
-      onProgress: (processed, total, message) {
-        onProgress?.call('taxonomy', processed, total, message);
-      },
-    );
-    final taxonomyTime = stopwatch.elapsedMilliseconds;
-    stopwatch.reset();
+    TaxonomyLoadResult taxonomyResult;
+    var taxonomyTime = 0;
+    if (_config.skipTaxonomy) {
+      onProgress?.call(
+          'taxonomy', 0, entities.length, 'Skipping taxonomy (--skip-taxonomy)...');
+      taxonomyResult = TaxonomyLoadResult.skipped(dryRun: _config.dryRun);
+      stopwatch.reset();
+    } else {
+      onProgress?.call('taxonomy', 0, entities.length, 'Seeding taxonomy...');
+      taxonomyResult = await _taxonomyLoader.load(
+        entities: entities,
+        onProgress: (processed, total, message) {
+          onProgress?.call('taxonomy', processed, total, message);
+        },
+      );
+      taxonomyTime = stopwatch.elapsedMilliseconds;
+      stopwatch.reset();
+    }
 
     onProgress?.call(
         'providers', 0, entities.length, 'Seeding provider profiles...');
@@ -212,7 +220,9 @@ class SeedResult {
       ..writeln('Timing:')
       ..writeln('  Load entities: ${_formatMs(loadTimeMs)}')
       ..writeln('  Seed companies: ${_formatMs(companyTimeMs)}')
-      ..writeln('  Seed taxonomy: ${_formatMs(taxonomyTimeMs)}')
+      ..writeln(taxonomyResult.skipped
+          ? '  Seed taxonomy: skipped'
+          : '  Seed taxonomy: ${_formatMs(taxonomyTimeMs)}')
       ..writeln('  Seed providers: ${_formatMs(providerTimeMs)}')
       ..writeln('  Total: ${_formatMs(totalTimeMs)}')
       ..writeln()
