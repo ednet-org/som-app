@@ -10,6 +10,7 @@ import '../../../utils/formatters.dart';
 import '../../../widgets/design_system/som_button.dart';
 import '../../../widgets/detail_section.dart';
 import '../../../widgets/empty_state.dart';
+import '../../../widgets/meta_text.dart';
 import '../../../widgets/status_badge.dart';
 import 'offer_list.dart';
 
@@ -94,12 +95,7 @@ class InquiryDetail extends StatelessWidget {
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: SomSpacing.xs),
-              Text(
-                SomFormatters.shortId(inquiry.id),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.outline,
-                ),
-              ),
+              SomMetaText(SomFormatters.shortId(inquiry.id)),
             ],
           ),
         ),
@@ -132,38 +128,38 @@ class InquiryDetail extends StatelessWidget {
     return DetailSection(
       title: 'Details',
       iconAsset: SomAssets.iconInfo,
-      child: Column(
-        children: [
-          DetailRow(
+      child: DetailGrid(
+        items: [
+          DetailItem(
             label: 'Branch',
             value: inquiry.branchId != null
                 ? SomFormatters.shortId(inquiry.branchId)
                 : null,
-            labelWidth: 80,
+            isMeta: true,
           ),
-          DetailRow(
+          DetailItem(
             label: 'Category',
             value: inquiry.categoryId != null
                 ? SomFormatters.shortId(inquiry.categoryId)
                 : null,
-            labelWidth: 80,
+            isMeta: true,
           ),
-          DetailRow(
+          DetailItem(
             label: 'Created',
             value: SomFormatters.dateTime(inquiry.createdAt),
-            labelWidth: 80,
+            isMeta: true,
           ),
           if (inquiry.assignedAt != null)
-            DetailRow(
+            DetailItem(
               label: 'Assigned',
               value: SomFormatters.dateTime(inquiry.assignedAt),
-              labelWidth: 80,
+              isMeta: true,
             ),
           if (inquiry.closedAt != null)
-            DetailRow(
+            DetailItem(
               label: 'Closed',
               value: SomFormatters.dateTime(inquiry.closedAt),
-              labelWidth: 80,
+              isMeta: true,
             ),
         ],
       ),

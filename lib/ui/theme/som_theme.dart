@@ -69,7 +69,7 @@ class SomTheme {
         thickness: 1,
       ),
       cardTheme: CardThemeData(
-        color: colorScheme.surface,
+        color: colorScheme.surfaceContainerLow,
         surfaceTintColor: colorScheme.surfaceTint,
         elevation: 0,
         margin: const EdgeInsets.symmetric(
@@ -85,16 +85,21 @@ class SomTheme {
       ),
       listTileTheme: ListTileThemeData(
         dense: false,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: SomSpacing.md,
-          vertical: SomSpacing.xs,
-        ),
+        contentPadding: SomDensityTokens.listTilePadding(visualDensity),
+        minVerticalPadding: SomSpacing.xs,
         iconColor: colorScheme.onSurfaceVariant,
         textColor: colorScheme.onSurface,
+        selectedTileColor:
+            colorScheme.primaryContainer.withValues(alpha: 0.3),
+        hoverColor: colorScheme.surfaceContainerHigh,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SomRadius.sm),
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: colorScheme.surfaceContainerLowest,
+        contentPadding: SomDensityTokens.inputPadding(visualDensity),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SomRadius.sm),
         ),
@@ -140,10 +145,61 @@ class SomTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: colorScheme.inverseSurface,
+        backgroundColor: colorScheme.surfaceContainerHigh,
         contentTextStyle: textTheme.bodyMedium?.copyWith(
-          color: colorScheme.onInverseSurface,
+          color: colorScheme.onSurface,
         ),
+      ),
+      tooltipTheme: TooltipThemeData(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(SomRadius.sm),
+          border: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        textStyle: textTheme.bodySmall?.copyWith(
+          color: colorScheme.onSurface,
+        ),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.primary
+              : colorScheme.surfaceContainerHighest,
+        ),
+        checkColor: WidgetStateProperty.all(colorScheme.onPrimary),
+        visualDensity: visualDensity,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SomRadius.sm),
+        ),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.primary
+              : colorScheme.outline,
+        ),
+        visualDensity: visualDensity,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.primary
+              : colorScheme.outline,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.primary.withValues(alpha: 0.4)
+              : colorScheme.surfaceContainerHighest,
+        ),
+        visualDensity: visualDensity,
+      ),
+      dataTableTheme: DataTableThemeData(
+        headingRowColor:
+            WidgetStateProperty.all(colorScheme.surfaceContainerHigh),
+        dataRowColor: WidgetStateProperty.all(colorScheme.surface),
+        headingTextStyle: textTheme.labelLarge,
+        dataTextStyle: textTheme.bodySmall,
+        dividerThickness: 1,
       ),
     );
   }

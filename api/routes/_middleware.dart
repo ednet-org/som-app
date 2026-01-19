@@ -30,10 +30,12 @@ import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
+import 'package:som_api/services/rate_limit_middleware.dart';
 import 'package:som_api/services/registration_service.dart';
 import 'package:som_api/services/role_seed.dart';
 import 'package:som_api/services/scheduler.dart';
 import 'package:som_api/services/schema_version_service.dart';
+import 'package:som_api/services/security_headers.dart';
 import 'package:som_api/services/statistics_service.dart';
 import 'package:som_api/services/subscription_seed.dart';
 import 'package:som_api/services/system_bootstrap.dart';
@@ -107,6 +109,8 @@ final _scheduler = Scheduler(
   notifications: _notifications,
   clock: _clock,
 );
+final _rateLimiter = RateLimiter(clock: _clock);
+final _rateLimitPolicy = RateLimitPolicy.fromEnvironment();
 final _subscriptionSeeder = SubscriptionSeeder(
   repository: _subscriptions,
   clock: _clock,
@@ -139,12 +143,11 @@ Future<void> _bootstrap() async {
 }
 
 Handler middleware(Handler handler) {
-  return ((context) async {
+  final baseHandler = ((context) async {
     await _bootstrapFuture;
     await _schemaVersionService.ensureVersion();
     return handler(context);
   })
-      .use(corsHeaders())
       .use(provider<SupabaseService>((_) => _supabase))
       .use(provider<Clock>((_) => _clock))
       .use(provider<EmailService>((_) => _email))
@@ -175,4 +178,12 @@ Handler middleware(Handler handler) {
       .use(provider<RegistrationService>((_) => _registration))
       .use(provider<SomDomainModel>((_) => _domain))
       .use(provider<StatisticsService>((_) => _statistics));
+
+  return baseHandler
+      .use(rateLimitMiddleware(
+        limiter: _rateLimiter,
+        policy: _rateLimitPolicy,
+      ))
+      .use(securityHeaders())
+      .use(corsHeaders());
 }

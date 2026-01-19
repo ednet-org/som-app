@@ -10,9 +10,13 @@ import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
-import '../../widgets/app_toolbar.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
+import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/responsive_filter_panel.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -149,10 +153,14 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null) {
-      return const AppBody(
-        contextMenu: Text('Login required'),
-        leftSplit: Center(child: Text('Please log in to view statistics.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Statistics')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Login required',
+          message: 'Please log in to view statistics.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -160,31 +168,25 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
       future: _statsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildContextMenu(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
-            leftSplit: EmptyState(
-              asset: SomAssets.illustrationStateNoConnection,
-              title: 'Failed to load stats',
-              message: '${snapshot.error}',
+            contextMenu: _buildContextMenu(),
+            leftSplit: InlineMessage(
+              message: 'Failed to load stats: ${snapshot.error}',
+              type: InlineMessageType.error,
             ),
             rightSplit: const SizedBox.shrink(),
           );
         }
         final data = snapshot.data ?? _StatsResult();
         return AppBody(
-          contextMenu: AppToolbar(
-      title: const Text('Statistics'),
-      actions: [
-        TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
-      ],
-          ),
+          contextMenu: _buildContextMenu(),
           leftSplit: ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -213,14 +215,25 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
     );
   }
 
+  Widget _buildContextMenu() {
+    return AppToolbar(
+      title: const Text('Statistics'),
+      actions: [
+        FilledButton.tonal(
+          onPressed: _exportCsv,
+          child: const Text('Export CSV'),
+        ),
+      ],
+    );
+  }
+
   Widget _buildFilters(Application appStore) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
+    return ResponsiveFilterPanel(
+      title: 'Filters',
+      child: Wrap(
+        spacing: SomSpacing.sm,
+        runSpacing: SomSpacing.sm,
+        children: [
             _datePickerButton(
               label: 'From',
               value: _from,
@@ -268,8 +281,11 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
               },
               child: const Text('Clear'),
             ),
-          ],
-        ),
+          FilledButton.tonal(
+            onPressed: _refresh,
+            child: const Text('Apply'),
+          ),
+        ],
       ),
     );
   }
@@ -291,9 +307,8 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
           onSelected(picked);
         }
       },
-      child: Text(value == null
-          ? label
-          : '$label: ${value.toIso8601String().split('T').first}'),
+      child:
+          Text(value == null ? label : '$label: ${SomFormatters.date(value)}'),
     );
   }
 
@@ -332,7 +347,7 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
                     ),
                     const SizedBox(width: 8),
                     Text(title,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.titleSmall),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -389,7 +404,7 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
                     ),
                     const SizedBox(width: 8),
                     Text('Consultant stats',
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.titleSmall),
                   ],
                 ),
                 const SizedBox(height: 8),

@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/cancellation_repository.dart
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -44,6 +45,16 @@ Future<Response> onRequest(RequestContext context) async {
     resolvedAt: null,
   );
   await context.read<CancellationRepository>().create(record);
+  await context.read<AuditService>().log(
+        action: 'subscription.cancellation.requested',
+        entityType: 'subscription_cancellation',
+        entityId: record.id,
+        actorId: auth.userId,
+        metadata: {
+          'companyId': auth.companyId,
+          'reason': reason,
+        },
+      );
   final consultants =
       await context.read<UserRepository>().listByRole('consultant');
   final email = context.read<EmailService>();

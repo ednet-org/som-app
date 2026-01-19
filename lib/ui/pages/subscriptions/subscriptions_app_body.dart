@@ -12,9 +12,16 @@ import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
+import '../../widgets/snackbars.dart';
 
 class SubscriptionsAppBody extends StatefulWidget {
   const SubscriptionsAppBody({super.key});
@@ -197,7 +204,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
                 onPressed: () => Navigator.of(context).pop(false),
                 child: const Text('Cancel'),
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: const Text('Confirm'),
               ),
@@ -263,11 +270,15 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
         (auth?.isProvider ?? false) && (auth?.isAdmin ?? false);
 
     if (!isConsultantAdmin && !isProviderAdmin) {
-      return const AppBody(
-        contextMenu: Text('Access required'),
-        leftSplit: Center(
-            child: Text('Only consultant admins or provider admins can manage subscriptions.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Subscriptions')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Access required',
+          message:
+              'Only consultant admins or provider admins can manage subscriptions.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -275,17 +286,20 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       future: _plansFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(isConsultantAdmin, isProviderAdmin),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildToolbar(isConsultantAdmin, isProviderAdmin),
             leftSplit: Center(
-              child: Text('Failed to load plans: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load plans: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -293,16 +307,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
         final plans = snapshot.data ?? const [];
         if (plans.isEmpty) {
           return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Subscriptions'),
-              actions: [
-                if (isConsultantAdmin)
-                  FilledButton.tonal(
-                    onPressed: _createPlan,
-                    child: const Text('Create'),
-                  ),
-              ],
-            ),
+            contextMenu: _buildToolbar(isConsultantAdmin, isProviderAdmin),
             leftSplit: const EmptyState(
               asset: SomAssets.emptySearchResults,
               title: 'No subscription plans',
@@ -312,140 +317,196 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
           );
         }
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Subscriptions'),
-            actions: [
-              if (isConsultantAdmin)
-                FilledButton.tonal(
-                  onPressed: _createPlan,
-                  child: const Text('Create'),
-                ),
-              if (isConsultantAdmin)
-                TextButton(onPressed: _updatePlan, child: const Text('Save')),
-              if (isConsultantAdmin)
-                TextButton(onPressed: _deletePlan, child: const Text('Delete')),
-              if (isProviderAdmin)
-                FilledButton.tonal(
-                  onPressed: _upgradePlan,
-                  child: const Text('Upgrade'),
-                ),
-              if (isProviderAdmin)
-                TextButton(
-                  onPressed: _downgradePlan,
-                  child: const Text('Downgrade'),
-                ),
-            ],
-          ),
-          leftSplit: ListView.builder(
-            itemCount: plans.length,
-            itemBuilder: (context, index) {
-              final plan = plans[index];
+          contextMenu: _buildToolbar(isConsultantAdmin, isProviderAdmin),
+          leftSplit: SelectableListView<SubscriptionPlan>(
+            items: plans,
+            selectedIndex: () {
+              final index =
+                  plans.indexWhere((plan) => plan.id == _selected?.id);
+              return index < 0 ? null : index;
+            }(),
+            onSelectedIndex: (index) => _selectPlan(plans[index]),
+            itemBuilder: (context, plan, isSelected) {
+              final index = plans.indexOf(plan);
               final isCurrent = _current?.plan?.id == plan.id;
-              return ListTile(
-                title: Text(plan.title ?? plan.id ?? 'Plan'),
-                subtitle: Text(
-                  'Price: ${(plan.priceInSubunit ?? 0) / 100} | '
-                  'Active: ${plan.isActive ?? false}',
-                ),
-                trailing: isCurrent
-                    ? SomSvgIcon(
-                        SomAssets.offerStatusAccepted,
-                        size: SomIconSize.sm,
-                        color: Theme.of(context).colorScheme.primary,
-                      )
-                    : null,
-                selected: _selected?.id == plan.id,
-                onTap: () => _selectPlan(plan),
+              return Column(
+                children: [
+                  SomListTile(
+                    selected: isSelected,
+                    onTap: () => _selectPlan(plan),
+                    title: Text(plan.title ?? plan.id ?? 'Plan'),
+                    subtitle: Text(
+                      'Price: ${(plan.priceInSubunit ?? 0) / 100} • '
+                      '${plan.isActive == true ? 'Active' : 'Inactive'}',
+                    ),
+                    trailing: isCurrent
+                        ? SomSvgIcon(
+                            SomAssets.offerStatusAccepted,
+                            size: SomIconSize.sm,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                        : null,
+                  ),
+                  if (index != plans.length - 1) const Divider(height: 1),
+                ],
               );
             },
           ),
           rightSplit: _selected == null
-              ? const Center(child: Text('Select a plan.'))
+              ? const EmptyState(
+                  asset: SomAssets.emptySearchResults,
+                  title: 'Select a plan',
+                  message: 'Choose a subscription plan to edit details.',
+                )
               : Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(SomSpacing.md),
                   child: ListView(
                     children: [
-                      TextField(
-                        controller: _titleController,
-                        decoration: const InputDecoration(labelText: 'Title'),
+                      Text(
+                        _selected!.title ?? 'Plan',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _sortController,
-                        decoration:
-                            const InputDecoration(labelText: 'Sort priority'),
-                        keyboardType: TextInputType.number,
+                      const SizedBox(height: SomSpacing.xs),
+                      SomMetaText(
+                        'Plan ID ${SomFormatters.shortId(_selected!.id)}',
                       ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _priceController,
-                        decoration:
-                            const InputDecoration(labelText: 'Price (subunit)'),
-                        keyboardType: TextInputType.number,
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Plan details',
+                        iconAsset: SomAssets.iconInfo,
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _titleController,
+                              decoration:
+                                  const InputDecoration(labelText: 'Title'),
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _sortController,
+                              decoration: const InputDecoration(
+                                labelText: 'Sort priority',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _priceController,
+                              decoration: const InputDecoration(
+                                labelText: 'Price (subunit)',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            SwitchListTile(
+                              value: _isActive,
+                              onChanged: (value) =>
+                                  setState(() => _isActive = value),
+                              title: const Text('Active'),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _maxUsersController,
-                        decoration:
-                            const InputDecoration(labelText: 'Max users'),
-                        keyboardType: TextInputType.number,
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Limits',
+                        iconAsset: SomAssets.iconStatistics,
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _maxUsersController,
+                              decoration:
+                                  const InputDecoration(labelText: 'Max users'),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _setupFeeController,
+                              decoration: const InputDecoration(
+                                labelText: 'Setup fee (subunit)',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _freeMonthsController,
+                              decoration:
+                                  const InputDecoration(labelText: 'Free months'),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _commitmentController,
+                              decoration: const InputDecoration(
+                                labelText: 'Commitment (months)',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _setupFeeController,
-                        decoration:
-                            const InputDecoration(labelText: 'Setup fee (subunit)'),
-                        keyboardType: TextInputType.number,
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Ads',
+                        iconAsset: SomAssets.iconOffers,
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _bannerAdsController,
+                              decoration: const InputDecoration(
+                                labelText: 'Banner ads per month',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: SomSpacing.sm),
+                            TextField(
+                              controller: _normalAdsController,
+                              decoration: const InputDecoration(
+                                labelText: 'Normal ads per month',
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _bannerAdsController,
-                        decoration:
-                            const InputDecoration(labelText: 'Banner ads per month'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _normalAdsController,
-                        decoration:
-                            const InputDecoration(labelText: 'Normal ads per month'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _freeMonthsController,
-                        decoration:
-                            const InputDecoration(labelText: 'Free months'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _commitmentController,
-                        decoration:
-                            const InputDecoration(labelText: 'Commitment (months)'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      const SizedBox(height: 12),
-                      SwitchListTile(
-                        value: _isActive,
-                        onChanged: (value) => setState(() => _isActive = value),
-                        title: const Text('Active'),
-                      ),
-                      TextField(
-                        controller: _rulesController,
-                        decoration:
-                            const InputDecoration(labelText: 'Rules (JSON array)'),
-                        maxLines: 6,
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Rules',
+                        iconAsset: SomAssets.iconSettings,
+                        child: TextField(
+                          controller: _rulesController,
+                          decoration: const InputDecoration(
+                            labelText: 'Rules (JSON array)',
+                          ),
+                          maxLines: 6,
+                        ),
                       ),
                       if (_current != null) ...[
-                        const Divider(height: 24),
-                        Text('Current subscription',
-                            style: Theme.of(context).textTheme.titleSmall),
-                        Text('Plan: ${_current?.plan?.title ?? '-'}'),
-                        Text(
-                            'Status: ${_current?.subscription?.status ?? '-'}'),
-                        Text(
-                            'Interval: ${_current?.subscription?.paymentInterval ?? '-'}'),
+                        const SizedBox(height: SomSpacing.md),
+                        DetailSection(
+                          title: 'Current subscription',
+                          iconAsset: SomAssets.iconStatistics,
+                          child: DetailGrid(
+                            items: [
+                              DetailItem(
+                                label: 'Plan',
+                                value: _current?.plan?.title ?? '-',
+                              ),
+                              DetailItem(
+                                label: 'Status',
+                                value:
+                                    _current?.subscription?.status ?? '-',
+                              ),
+                              DetailItem(
+                                label: 'Interval',
+                                value: _current
+                                        ?.subscription
+                                        ?.paymentInterval ??
+                                    '-',
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ],
                   ),
@@ -455,11 +516,43 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     );
   }
 
+  Widget _buildToolbar(bool isConsultantAdmin, bool isProviderAdmin) {
+    return AppToolbar(
+      title: const Text('Subscriptions'),
+      actions: [
+        if (isConsultantAdmin)
+          FilledButton.tonal(
+            onPressed: _createPlan,
+            child: const Text('Create'),
+          ),
+        if (isConsultantAdmin)
+          FilledButton.tonal(
+            onPressed: _updatePlan,
+            child: const Text('Save'),
+          ),
+        if (isConsultantAdmin)
+          OutlinedButton(onPressed: _deletePlan, child: const Text('Delete')),
+        if (isProviderAdmin)
+          FilledButton.tonal(
+            onPressed: _upgradePlan,
+            child: const Text('Upgrade'),
+          ),
+        if (isProviderAdmin)
+          TextButton(
+            onPressed: _downgradePlan,
+            child: const Text('Downgrade'),
+          ),
+      ],
+    );
+  }
+
   void _showSnack(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    if (message.toLowerCase().contains('failed')) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 
   int? _parseOptionalInt(TextEditingController controller) {

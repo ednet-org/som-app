@@ -13,9 +13,16 @@ import '../../theme/tokens.dart';
 import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/debounced_search_field.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
 import '../../widgets/design_system/som_badge.dart';
 import '../../widgets/status_badge.dart';
+import '../../widgets/status_legend.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -293,11 +300,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             child: const Text('Decline'),
           ),
@@ -457,7 +464,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 onPressed: () => Navigator.pop(context, false),
                 child: const Text('Cancel'),
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () => Navigator.pop(context, true),
                 child: const Text('Save'),
               ),
@@ -509,9 +516,14 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
 
   void _showSnackbar(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    final lower = message.toLowerCase();
+    if (lower.contains('failed')) {
+      SomSnackBars.error(context, message);
+    } else if (lower.contains('not loaded')) {
+      SomSnackBars.warning(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 
   String _extractError(Object error) {
@@ -592,33 +604,41 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     if (appStore.authorization == null ||
         appStore.authorization?.isConsultant != true ||
         appStore.authorization?.isAdmin != true) {
-      return const AppBody(
-        contextMenu: Text('Consultant admin access required'),
-        leftSplit: Center(
-          child: Text('Only consultant admins can manage providers.'),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Providers')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Consultant admin access required',
+          message: 'Only consultant admins can manage providers.',
         ),
-        rightSplit: SizedBox.shrink(),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
     if (_isLoading && _providers.isEmpty) {
-      return const AppBody(
-        contextMenu: Text('Loading'),
-        leftSplit: Center(child: CircularProgressIndicator()),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: _buildToolbar(),
+        leftSplit: const Center(child: CircularProgressIndicator()),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
     if (_error != null && _providers.isEmpty) {
       return AppBody(
-        contextMenu: const Text('Error'),
+        contextMenu: _buildToolbar(),
         leftSplit: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Failed to load providers: $_error'),
+              InlineMessage(
+                message: 'Failed to load providers: $_error',
+                type: InlineMessageType.error,
+              ),
               const SizedBox(height: 16),
-              ElevatedButton(onPressed: _refresh, child: const Text('Retry')),
+              FilledButton.tonal(
+                onPressed: _refresh,
+                child: const Text('Retry'),
+              ),
             ],
           ),
         ),
@@ -627,16 +647,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     }
 
     return AppBody(
-      contextMenu: AppToolbar(
-        title: Text('Providers ($_totalCount total)'),
-        actions: [
-          TextButton(
-            onPressed: _filterPendingOnly,
-            child: const Text('Pending Approval'),
-          ),
-          TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
-        ],
-      ),
+      contextMenu: _buildToolbar(),
       leftSplit: Column(
         children: [
           _buildSearchBar(),
@@ -652,33 +663,44 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
             )
           else
             Expanded(
-              child: ListView.builder(
+              child: SelectableListView<ProviderSummary>(
                 controller: _scrollController,
-                itemCount: _providers.length + (_hasMore ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index >= _providers.length) {
-                    return _buildLoadingIndicator();
-                  }
-                  final provider = _providers[index];
-                  return ListTile(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: SomSpacing.md,
-                      vertical: SomSpacing.xs,
-                    ),
-                    title: Text(
-                      provider.companyName ?? provider.companyId ?? 'Provider',
-                    ),
-                    subtitle: Text(
-                      'Type: ${provider.providerType ?? '-'} | '
-                      'Size: ${provider.companySize ?? '-'}',
-                    ),
-                    selected: _selected?.companyId == provider.companyId,
-                    onTap: () => setState(() => _selected = provider),
-                    trailing: StatusBadge.provider(
-                      status: provider.status ?? 'pending',
-                      compact: false,
-                      showIcon: false,
-                    ),
+                items: _providers,
+                selectedIndex: () {
+                  final index = _providers.indexWhere(
+                    (provider) => provider.companyId == _selected?.companyId,
+                  );
+                  return index < 0 ? null : index;
+                }(),
+                onSelectedIndex: (index) =>
+                    setState(() => _selected = _providers[index]),
+                itemBuilder: (context, provider, isSelected) {
+                  final index = _providers.indexOf(provider);
+                  return Column(
+                    children: [
+                      SomListTile(
+                        selected: isSelected,
+                        onTap: () => setState(() => _selected = provider),
+                        title: Text(
+                          provider.companyName ??
+                              provider.companyId ??
+                              'Provider',
+                        ),
+                        subtitle: Text(
+                          'Type: ${provider.providerType ?? '-'} | '
+                          'Size: ${provider.companySize ?? '-'}',
+                        ),
+                        trailing: StatusBadge.provider(
+                          status: provider.status ?? 'pending',
+                          compact: false,
+                          showIcon: false,
+                        ),
+                      ),
+                      if (index != _providers.length - 1)
+                        const Divider(height: 1),
+                      if (index == _providers.length - 1 && _hasMore)
+                        _buildLoadingIndicator(),
+                    ],
                   );
                 },
               ),
@@ -698,35 +720,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.all(SomSpacing.sm),
-      child: TextField(
+      child: DebouncedSearchField(
         controller: _searchController,
-        decoration: InputDecoration(
-          hintText: 'Search by company name...',
-          prefixIcon: SomSvgIcon(
-            SomAssets.iconSearch,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-          suffixIcon: _searchController.text.isNotEmpty
-              ? IconButton(
-                  icon: SomSvgIcon(
-                    SomAssets.iconClearCircle,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  onPressed: () {
-                    _searchController.clear();
-                    _onSearchSubmitted('');
-                  },
-                )
-              : null,
-          border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: SomSpacing.sm,
-            vertical: SomSpacing.xs,
-          ),
-        ),
-        onSubmitted: _onSearchSubmitted,
-        onChanged: (value) {
-          setState(() {}); // Update UI for clear button visibility
+        hintText: 'Search by company name...',
+        onSearch: (value) {
+          _onSearchSubmitted(value);
         },
       ),
     );
@@ -739,109 +737,202 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     );
   }
 
+  Widget _buildToolbar() {
+    return AppToolbar(
+      title: Text('Providers ($_totalCount total)'),
+      actions: [
+        TextButton(
+          onPressed: _filterPendingOnly,
+          child: const Text('Pending Approval'),
+        ),
+        FilledButton.tonal(
+          onPressed: _exportCsv,
+          child: const Text('Export CSV'),
+        ),
+        StatusLegendButton(
+          title: 'Provider status',
+          items: const [
+            StatusLegendItem(
+              label: 'Active',
+              status: 'active',
+              type: StatusType.provider,
+            ),
+            StatusLegendItem(
+              label: 'Pending',
+              status: 'pending',
+              type: StatusType.provider,
+            ),
+            StatusLegendItem(
+              label: 'Declined',
+              status: 'declined',
+              type: StatusType.provider,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildProviderDetails() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(SomSpacing.md),
       child: ListView(
         children: [
-          Text(
-            _selected!.companyName ?? 'Provider',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: SomSpacing.xs),
-          StatusBadge.provider(status: _selected!.status ?? 'pending'),
-          const SizedBox(height: 8),
-          Text('Company ID: ${SomFormatters.shortId(_selected!.companyId)}'),
-          Text('Size: ${_selected!.companySize ?? '-'}'),
-          Text('Type: ${SomFormatters.capitalize(_selected!.providerType)}'),
-          Text('Postcode: ${_selected!.postcode ?? '-'}'),
-          Text(
-            'Branches: ${SomFormatters.list(_selected!.branchIds?.toList())}',
-          ),
-          Text(
-            'Pending branches: '
-            '${SomFormatters.list(_selected!.pendingBranchIds?.toList())}',
-          ),
-          Text('Status: ${_selected!.status ?? '-'}'),
-          if (_selected!.rejectionReason != null)
-            Text(
-              'Rejection reason: '
-              '${_selected!.rejectionReason ?? '-'}',
-            ),
-          if (_selected!.rejectedAt != null)
-            Text(
-              'Rejected at: '
-              '${SomFormatters.dateTime(_selected!.rejectedAt)}',
-            ),
-          const Divider(height: 24),
           Row(
             children: [
-              Text(
-                'Classification',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const Spacer(),
-              if (_hasAiAssignments) ...[
-                SomBadge(
-                  text: _formatConfidence(_aiSummaryConfidence),
-                  type: SomBadgeType.info,
+              Expanded(
+                child: Text(
+                  _selected!.companyName ?? 'Provider',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(width: 8),
-              ],
-              TextButton.icon(
-                onPressed: _showEditTaxonomyDialog,
-                icon: const Icon(Icons.edit, size: 16),
-                label: const Text('Edit'),
               ),
+              StatusBadge.provider(status: _selected!.status ?? 'pending'),
             ],
           ),
-          const SizedBox(height: 8),
-          _buildClassificationSection(),
-          const Divider(height: 24),
-          Text('Subscription: ${_selected!.subscriptionPlanId ?? '-'}'),
-          Text('Payment interval: ${_selected!.paymentInterval ?? '-'}'),
-          const Divider(height: 24),
-          Text('IBAN: ${_selected!.iban ?? '-'}'),
-          Text('BIC: ${_selected!.bic ?? '-'}'),
-          Text('Account owner: ${_selected!.accountOwner ?? '-'}'),
-          Text(
-            'Registration date: ${SomFormatters.dateTime(_selected!.registrationDate)}',
+          const SizedBox(height: SomSpacing.xs),
+          SomMetaText('Company ID ${SomFormatters.shortId(_selected!.companyId)}'),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Overview',
+            iconAsset: SomAssets.iconInfo,
+            child: DetailGrid(
+              items: [
+                DetailItem(
+                  label: 'Status',
+                  value: SomFormatters.capitalize(_selected!.status ?? '-'),
+                ),
+                DetailItem(label: 'Size', value: _selected!.companySize ?? '-'),
+                DetailItem(
+                  label: 'Type',
+                  value: SomFormatters.capitalize(_selected!.providerType),
+                ),
+                DetailItem(label: 'Postcode', value: _selected!.postcode ?? '-'),
+                DetailItem(
+                  label: 'Branches',
+                  value:
+                      SomFormatters.list(_selected!.branchIds?.toList()),
+                ),
+                DetailItem(
+                  label: 'Pending branches',
+                  value: SomFormatters.list(
+                    _selected!.pendingBranchIds?.toList(),
+                  ),
+                ),
+                if (_selected!.rejectionReason != null)
+                  DetailItem(
+                    label: 'Rejection reason',
+                    value: _selected!.rejectionReason ?? '-',
+                  ),
+                if (_selected!.rejectedAt != null)
+                  DetailItem(
+                    label: 'Rejected at',
+                    value: SomFormatters.dateTime(_selected!.rejectedAt),
+                    isMeta: true,
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Classification',
+            iconAsset: SomAssets.iconSettings,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (_hasAiAssignments) ...[
+                      SomBadge(
+                        text: _formatConfidence(_aiSummaryConfidence),
+                        type: SomBadgeType.info,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    TextButton.icon(
+                      onPressed: _showEditTaxonomyDialog,
+                      icon: SomSvgIcon(
+                        SomAssets.iconEdit,
+                        size: SomIconSize.sm,
+                        color:
+                            Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      label: const Text('Edit'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: SomSpacing.sm),
+                _buildClassificationSection(),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Subscription',
+            iconAsset: SomAssets.iconStatistics,
+            child: DetailGrid(
+              items: [
+                DetailItem(
+                  label: 'Plan',
+                  value: _selected!.subscriptionPlanId ?? '-',
+                  isMeta: true,
+                ),
+                DetailItem(
+                  label: 'Payment interval',
+                  value: _selected!.paymentInterval ?? '-',
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Banking',
+            iconAsset: SomAssets.iconSettings,
+            child: DetailGrid(
+              items: [
+                DetailItem(label: 'IBAN', value: _selected!.iban ?? '-'),
+                DetailItem(label: 'BIC', value: _selected!.bic ?? '-'),
+                DetailItem(
+                  label: 'Account owner',
+                  value: _selected!.accountOwner ?? '-',
+                ),
+                DetailItem(
+                  label: 'Registration date',
+                  value: SomFormatters.dateTime(_selected!.registrationDate),
+                  isMeta: true,
+                ),
+              ],
+            ),
           ),
           if (_selected!.status == 'pending' ||
               (_selected!.pendingBranchIds?.isNotEmpty ?? false)) ...[
-            const Divider(height: 24),
-            Text(
-              'Approval Actions',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () => _approveProvider(_selected!),
-                  icon: SomSvgIcon(
-                    SomAssets.offerStatusAccepted,
-                    size: SomIconSize.sm,
-                    color: Colors.white,
+            const SizedBox(height: SomSpacing.md),
+            DetailSection(
+              title: 'Approval actions',
+              iconAsset: SomAssets.iconWarning,
+              child: Wrap(
+                spacing: SomSpacing.sm,
+                runSpacing: SomSpacing.sm,
+                children: [
+                  FilledButton.icon(
+                    onPressed: () => _approveProvider(_selected!),
+                    icon: SomSvgIcon(
+                      SomAssets.offerStatusAccepted,
+                      size: SomIconSize.sm,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    label: const Text('Approve'),
                   ),
-                  label: const Text('Approve'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
+                  OutlinedButton.icon(
+                    onPressed: () => _showDeclineDialog(_selected!),
+                    icon: SomSvgIcon(
+                      SomAssets.offerStatusRejected,
+                      size: SomIconSize.sm,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    label: const Text('Decline'),
                   ),
-                ),
-                const SizedBox(width: 12),
-                OutlinedButton.icon(
-                  onPressed: () => _showDeclineDialog(_selected!),
-                  icon: SomSvgIcon(
-                    SomAssets.offerStatusRejected,
-                    size: SomIconSize.sm,
-                    color: Colors.red,
-                  ),
-                  label: const Text('Decline'),
-                  style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ],
@@ -1018,7 +1109,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 },
                 child: const Text('Clear'),
               ),
-              ElevatedButton(
+              FilledButton.tonal(
                 onPressed: _loadInitialProviders,
                 child: const Text('Apply'),
               ),

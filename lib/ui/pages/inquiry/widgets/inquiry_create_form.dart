@@ -580,7 +580,7 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     return SomButton(
       text: _deadline == null
           ? 'Select deadline'
-          : 'Deadline: ${_deadline!.toIso8601String().split('T').first}',
+          : 'Deadline: ${SomFormatters.date(_deadline)}',
       icon: SomAssets.iconCalendar,
       type: SomButtonType.secondary,
       onPressed: () async {

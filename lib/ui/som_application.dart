@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:som/ui/theme/tokens.dart';
 
 import 'domain/application/application.dart';
 import 'domain/infrastructure/supabase_realtime.dart';
@@ -52,134 +53,43 @@ class SomApplication extends StatelessWidget {
     final isConsultant = auth?.isConsultant ?? false;
     final isAdmin = auth?.isAdmin ?? false;
     final beamer = Provider.of<BeamerProvidedKey>(context);
-    final actionMaxWidth = MediaQuery.of(context).size.width - 200;
+    final width = MediaQuery.of(context).size.width;
+    final useNavigationRail = width >= SomBreakpoints.navigationRail;
+    final useNavigationBar = width < SomBreakpoints.navigationBar;
+    final navItems = _buildNavItems(
+      isBuyer: isBuyer,
+      isProvider: isProvider,
+      isConsultant: isConsultant,
+      isAdmin: isAdmin,
+    );
+    final selectedIndex =
+        _selectedIndex(navItems, _currentPath(beamer));
+    final beamerWidget = Beamer(
+      key: beamer,
+      routerDelegate: authenticatedPagesDelegate,
+    );
+    final actionMaxWidth = width - 200;
     final constrainedActionWidth =
-        actionMaxWidth > 200 ? actionMaxWidth : MediaQuery.of(context).size.width;
+        actionMaxWidth > 200 ? actionMaxWidth : width;
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Smart Offer Management'),
           actions: [
-            SizedBox(
-              width: constrainedActionWidth,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      if (isBuyer || isProvider || isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('InquiriesManagementMenuItem'),
-                          title: 'Inquiries',
-                          child: AppBarIcons.inquiry.value,
-                          beamer: beamer,
-                          uri: '/inquiries',
-                        ),
-                      if (isBuyer || isProvider || isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('OffersManagementMenuItem'),
-                          title: 'Offers',
-                          child: AppBarIcons.inquiry.value,
-                          beamer: beamer,
-                          uri: '/offers',
-                        ),
-                      if (isBuyer || isProvider || isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('StatisticsMenuItem'),
-                          title: 'Statistics',
-                          child: AppBarIcons.statistics.value,
-                          beamer: beamer,
-                          uri: '/statistics',
-                        ),
-                      if (isBuyer || isConsultant || (isProvider && isAdmin))
-                        AppBarButton(
-                          key: const ValueKey('AdsManagementMenuItem'),
-                          title: 'Ads',
-                          child: AppBarIcons.ads.value,
-                          beamer: beamer,
-                          uri: '/ads',
-                        ),
-                      if (isAdmin && (isBuyer || isProvider))
-                        AppBarButton(
-                          key: const ValueKey('UserManagementMenuItem'),
-                          title: 'User',
-                          child: AppBarIcons.user.value,
-                          beamer: beamer,
-                          uri: '/user',
-                        ),
-                      if (isAdmin && (isBuyer || isProvider))
-                        AppBarButton(
-                          key: const ValueKey('CompanyManagementMenuItem'),
-                          title: 'Company',
-                          child: AppBarIcons.company.value,
-                          beamer: beamer,
-                          uri: '/company',
-                        ),
-                      if (isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('BranchManagementMenuItem'),
-                          title: 'Branches',
-                          child: AppBarIcons.company.value,
-                          beamer: beamer,
-                          uri: '/branches',
-                        ),
-                      if (isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('ConsultantUsersMenuItem'),
-                          title: 'User Mgmt',
-                          child: AppBarIcons.user.value,
-                          beamer: beamer,
-                          uri: '/consultants',
-                        ),
-                      if (isConsultant)
-                        AppBarButton(
-                          key: const ValueKey('RegisteredCompaniesMenuItem'),
-                          title: 'Companies',
-                          child: AppBarIcons.company.value,
-                          beamer: beamer,
-                          uri: '/companies',
-                        ),
-                      if (isConsultant && isAdmin)
-                        AppBarButton(
-                          key: const ValueKey('ProvidersManagementMenuItem'),
-                          title: 'Providers',
-                          child: AppBarIcons.company.value,
-                          beamer: beamer,
-                          uri: '/providers',
-                        ),
-                      if (isConsultant && isAdmin)
-                        AppBarButton(
-                          key: const ValueKey('SubscriptionManagementMenuItem'),
-                          title: 'Subscriptions',
-                          child: AppBarIcons.statistics.value,
-                          beamer: beamer,
-                          uri: '/subscriptions',
-                        ),
-                      if (isConsultant && isAdmin)
-                        AppBarButton(
-                          key: const ValueKey('RoleManagementMenuItem'),
-                          title: 'Roles',
-                          child: AppBarIcons.user.value,
-                          beamer: beamer,
-                          uri: '/roles',
-                        ),
-                      if (isConsultant && isAdmin)
-                        AppBarButton(
-                          key: const ValueKey('AuditMenuItem'),
-                          title: 'Audit',
-                          child: AppBarIcons.statistics.value,
-                          beamer: beamer,
-                          uri: '/audit',
-                        ),
-                      buildPopupMenuButton(context, appStore),
-                    ],
-                  ),
+            if (!useNavigationRail && !useNavigationBar)
+              SizedBox(
+                width: constrainedActionWidth,
+                child: _buildTopNavActions(
+                  context,
+                  appStore,
+                  beamer,
+                  navItems,
+                  selectedIndex,
                 ),
-              ),
-            ),
+              )
+            else
+              buildPopupMenuButton(context, appStore),
           ],
           automaticallyImplyLeading: false,
           flexibleSpace: Stack(
@@ -205,10 +115,24 @@ class SomApplication extends StatelessWidget {
             ],
           ),
         ),
-        body: Beamer(
-          key: beamer,
-          routerDelegate: authenticatedPagesDelegate,
-        ),
+        body: useNavigationRail
+            ? Row(
+                children: [
+                  _buildNavigationRail(
+                    context,
+                    beamer,
+                    navItems,
+                    selectedIndex,
+                    width,
+                  ),
+                  const VerticalDivider(width: 1),
+                  Expanded(child: beamerWidget),
+                ],
+              )
+            : beamerWidget,
+        bottomNavigationBar: useNavigationBar
+            ? _buildNavigationBar(context, beamer, navItems, selectedIndex)
+            : null,
       ),
     );
   }
@@ -233,6 +157,17 @@ class SomApplication extends StatelessWidget {
   PopupMenuButton<dynamic> buildPopupMenuButton(
       BuildContext context, Application appStore) {
     final auth = appStore.authorization;
+    final themeLabel = switch (appStore.themeMode) {
+      ThemeMode.dark => 'Dark',
+      ThemeMode.light => 'Light',
+      ThemeMode.system => 'System',
+    };
+    final densityLabel = switch (appStore.density) {
+      UiDensity.compact => 'Compact',
+      UiDensity.standard => 'Standard',
+      UiDensity.comfortable => 'Comfortable',
+    };
+    final appearanceSummary = '$themeLabel • $densityLabel';
     return PopupMenuButton(
       child: userMenuItem(context, appStore),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -303,6 +238,13 @@ class SomApplication extends StatelessWidget {
             ),
             title: Text('Appearance',
                 style: Theme.of(context).textTheme.titleSmall),
+            subtitle: Text(
+              appearanceSummary,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
             onTap: () {
               Navigator.of(context).pop();
               _showAppearanceDialog(context, appStore);

@@ -6,8 +6,13 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
+import '../../widgets/som_list_tile.dart';
 
 class AuditAppBody extends StatefulWidget {
   const AuditAppBody({super.key});
@@ -63,17 +68,20 @@ class _AuditAppBodyState extends State<AuditAppBody> {
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Audit'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: AppToolbar(title: const Text('Audit Log')),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Audit'),
+            contextMenu: AppToolbar(title: const Text('Audit Log')),
             leftSplit: Center(
-              child: Text('Failed to load audit log: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load audit log: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -98,13 +106,21 @@ class _AuditAppBodyState extends State<AuditAppBody> {
                     final entry = items[index];
                     final action = entry.action ?? 'unknown';
                     final entity = entry.entityType ?? '-';
-                    final entityId = entry.entityId ?? '-';
+                    final entityId = SomFormatters.shortId(entry.entityId);
                     final actor = entry.actorId ?? 'system';
-                    final createdAt = entry.createdAt?.toLocal().toString() ?? '';
-                    return ListTile(
+                    final createdAt =
+                        SomFormatters.dateTime(entry.createdAt);
+                    return SomListTile(
                       title: Text(action),
-                      subtitle: Text('$entity • $entityId\n$createdAt'),
-                      trailing: Text(actor),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('$entity • $entityId'),
+                          const SizedBox(height: SomSpacing.xs),
+                          SomMetaText(createdAt),
+                        ],
+                      ),
+                      trailing: SomMetaText(actor),
                       isThreeLine: true,
                     );
                   },

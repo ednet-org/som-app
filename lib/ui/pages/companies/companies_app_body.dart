@@ -8,10 +8,19 @@ import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/debounced_search_field.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
+import '../../widgets/responsive_filter_panel.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
 import '../../widgets/status_badge.dart';
+import '../../widgets/status_legend.dart';
 
 class CompaniesAppBody extends StatefulWidget {
   const CompaniesAppBody({super.key});
@@ -251,7 +260,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
               onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancel'),
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
               child: const Text('Register'),
             ),
@@ -339,11 +348,14 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null ||
         appStore.authorization?.isConsultant != true) {
-      return const AppBody(
-        contextMenu: Text('Consultant access required'),
-        leftSplit:
-            Center(child: Text('Only consultants can manage companies.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Companies')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Consultant access required',
+          message: 'Only consultants can manage companies.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -351,17 +363,20 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
       future: _companiesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildToolbar(),
             leftSplit: Center(
-              child: Text('Failed to load companies: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load companies: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -381,15 +396,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
             .toList();
         if (companies.isEmpty) {
           return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Companies'),
-              actions: [
-                FilledButton.tonal(
-                  onPressed: _registerCompany,
-                  child: const Text('Register'),
-                ),
-              ],
-            ),
+            contextMenu: _buildToolbar(),
             leftSplit: const EmptyState(
               asset: SomAssets.emptySearchResults,
               title: 'No companies found',
@@ -399,38 +406,38 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
           );
         }
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Companies'),
-            actions: [
-              FilledButton.tonal(
-                onPressed: _registerCompany,
-                child: const Text('Register'),
-              ),
-            ],
-          ),
+          contextMenu: _buildToolbar(),
           leftSplit: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(SomSpacing.sm),
+                child: DebouncedSearchField(
+                  hintText: 'Search companies',
+                  onSearch: (value) => setState(() => _search = value),
+                ),
+              ),
+              ResponsiveFilterPanel(
+                title: 'Filters',
                 child: Wrap(
-                  spacing: 12,
+                  spacing: SomSpacing.sm,
+                  runSpacing: SomSpacing.sm,
                   children: [
-                    SizedBox(
-                      width: 180,
-                      child: TextField(
-                        decoration: const InputDecoration(labelText: 'Search'),
-                        onChanged: (value) => setState(() => _search = value),
-                      ),
-                    ),
                     DropdownButton<String>(
                       hint: const Text('Type'),
                       value: _typeFilter,
                       items: const [
                         DropdownMenuItem(value: 'buyer', child: Text('Buyer')),
-                        DropdownMenuItem(value: 'provider', child: Text('Provider')),
-                        DropdownMenuItem(value: 'buyer_provider', child: Text('Buyer+Provider')),
+                        DropdownMenuItem(
+                          value: 'provider',
+                          child: Text('Provider'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'buyer_provider',
+                          child: Text('Buyer+Provider'),
+                        ),
                       ],
-                      onChanged: (value) => setState(() => _typeFilter = value),
+                      onChanged: (value) =>
+                          setState(() => _typeFilter = value),
                     ),
                     TextButton(
                       onPressed: () => setState(() {
@@ -444,25 +451,37 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
               ),
               const Divider(height: 1),
               Expanded(
-                child: ListView.builder(
-                  itemCount: companies.length,
-                  itemBuilder: (context, index) {
-                    final company = companies[index];
+                child: SelectableListView<CompanyDto>(
+                  items: companies,
+                  selectedIndex: () {
+                    final index = companies.indexWhere(
+                      (company) => company.id == _selected?.id,
+                    );
+                    return index < 0 ? null : index;
+                  }(),
+                  onSelectedIndex: (index) =>
+                      _selectCompany(companies[index]),
+                  itemBuilder: (context, company, isSelected) {
+                    final index = companies.indexOf(company);
                     final status = company.status ?? 'unknown';
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: SomSpacing.md,
-                        vertical: SomSpacing.xs,
-                      ),
-                      title: Text(company.name ?? 'Company'),
-                      subtitle: Text('Type: ${_companyTypeLabel(company)} • $status'),
-                      selected: _selected?.id == company.id,
-                      onTap: () => _selectCompany(company),
-                      trailing: StatusBadge.provider(
-                        status: status,
-                        compact: false,
-                        showIcon: false,
-                      ),
+                    return Column(
+                      children: [
+                        SomListTile(
+                          selected: isSelected,
+                          onTap: () => _selectCompany(company),
+                          title: Text(company.name ?? 'Company'),
+                          subtitle: Text(
+                            'Type: ${_companyTypeLabel(company)} • ${SomFormatters.capitalize(status)}',
+                          ),
+                          trailing: StatusBadge.company(
+                            status: status,
+                            compact: false,
+                            showIcon: false,
+                          ),
+                        ),
+                        if (index != companies.length - 1)
+                          const Divider(height: 1),
+                      ],
                     );
                   },
                 ),
@@ -475,92 +494,177 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                   title: 'Select a company',
                   message: 'Choose a company from the list to view details',
                 )
-              : Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListView(
-                    children: [
-                      Text(_selected!.name ?? 'Company',
-                          style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Text('Status: ${_selected?.status ?? 'unknown'}'),
-                          const SizedBox(width: SomSpacing.sm),
-                          StatusBadge.provider(
-                            status: _selected?.status ?? 'unknown',
-                            compact: false,
-                            showIcon: false,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      TextField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(labelText: 'Name'),
-                      ),
-                      TextField(
-                        controller: _websiteController,
-                        decoration: const InputDecoration(labelText: 'Website'),
-                      ),
-                      DropdownButton<int>(
-                        value: _companySize,
-                        items: const [
-                          DropdownMenuItem(value: 0, child: Text('0-10')),
-                          DropdownMenuItem(value: 1, child: Text('11-50')),
-                          DropdownMenuItem(value: 2, child: Text('51-100')),
-                          DropdownMenuItem(value: 3, child: Text('101-250')),
-                          DropdownMenuItem(value: 4, child: Text('251-500')),
-                          DropdownMenuItem(value: 5, child: Text('500+')),
-                        ],
-                        onChanged: (value) => setState(() => _companySize = value ?? 0),
-                      ),
-                      TextField(
-                        controller: _streetController,
-                        decoration: const InputDecoration(labelText: 'Street'),
-                      ),
-                      TextField(
-                        controller: _numberController,
-                        decoration: const InputDecoration(labelText: 'Number'),
-                      ),
-                      TextField(
-                        controller: _zipController,
-                        decoration: const InputDecoration(labelText: 'ZIP'),
-                      ),
-                      TextField(
-                        controller: _cityController,
-                        decoration: const InputDecoration(labelText: 'City'),
-                      ),
-                      TextField(
-                        controller: _countryController,
-                        decoration: const InputDecoration(labelText: 'Country'),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: _saveCompany,
-                            child: const Text('Save'),
-                          ),
-                          const SizedBox(width: 12),
-                          if ((_selected?.id != null &&
-                                  (_selected?.status ?? 'active') ==
-                                      'inactive'))
-                            TextButton(
-                              onPressed: _activateCompany,
-                              child: const Text('Activate'),
-                            )
-                          else
-                            TextButton(
-                              onPressed: _deactivateCompany,
-                              child: const Text('Deactivate'),
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+              : _buildCompanyDetails(),
         );
       },
     );
+  }
+
+  Widget _buildToolbar() {
+    return AppToolbar(
+      title: const Text('Companies'),
+      actions: [
+        FilledButton.tonal(
+          onPressed: _registerCompany,
+          child: const Text('Register'),
+        ),
+        StatusLegendButton(
+          title: 'Company status',
+          items: const [
+            StatusLegendItem(
+              label: 'Active',
+              status: 'active',
+              type: StatusType.company,
+            ),
+            StatusLegendItem(
+              label: 'Pending',
+              status: 'pending',
+              type: StatusType.company,
+            ),
+            StatusLegendItem(
+              label: 'Inactive',
+              status: 'inactive',
+              type: StatusType.company,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCompanyDetails() {
+    final company = _selected!;
+    final status = company.status ?? 'unknown';
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.md),
+      child: ListView(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  company.name ?? 'Company',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              StatusBadge.company(status: status),
+            ],
+          ),
+          const SizedBox(height: SomSpacing.sm),
+          SomMetaText('ID ${SomFormatters.shortId(company.id)}'),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Company details',
+            iconAsset: SomAssets.iconInfo,
+            child: DetailGrid(
+              items: [
+                DetailItem(label: 'Status', value: SomFormatters.capitalize(status)),
+                DetailItem(label: 'Type', value: _companyTypeLabel(company)),
+                DetailItem(
+                  label: 'Website',
+                  value: company.websiteUrl,
+                ),
+                DetailItem(
+                  label: 'Size',
+                  value: _companySizeLabel(_companySize),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Edit company',
+            iconAsset: SomAssets.iconEdit,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Name'),
+                ),
+                TextField(
+                  controller: _websiteController,
+                  decoration: const InputDecoration(labelText: 'Website'),
+                ),
+                DropdownButton<int>(
+                  value: _companySize,
+                  items: const [
+                    DropdownMenuItem(value: 0, child: Text('0-10')),
+                    DropdownMenuItem(value: 1, child: Text('11-50')),
+                    DropdownMenuItem(value: 2, child: Text('51-100')),
+                    DropdownMenuItem(value: 3, child: Text('101-250')),
+                    DropdownMenuItem(value: 4, child: Text('251-500')),
+                    DropdownMenuItem(value: 5, child: Text('500+')),
+                  ],
+                  onChanged: (value) =>
+                      setState(() => _companySize = value ?? 0),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Address',
+            iconAsset: SomAssets.iconSettings,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _streetController,
+                  decoration: const InputDecoration(labelText: 'Street'),
+                ),
+                TextField(
+                  controller: _numberController,
+                  decoration: const InputDecoration(labelText: 'Number'),
+                ),
+                TextField(
+                  controller: _zipController,
+                  decoration: const InputDecoration(labelText: 'ZIP'),
+                ),
+                TextField(
+                  controller: _cityController,
+                  decoration: const InputDecoration(labelText: 'City'),
+                ),
+                TextField(
+                  controller: _countryController,
+                  decoration: const InputDecoration(labelText: 'Country'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          Wrap(
+            spacing: SomSpacing.sm,
+            runSpacing: SomSpacing.sm,
+            children: [
+              FilledButton(
+                onPressed: _saveCompany,
+                child: const Text('Save'),
+              ),
+              if ((company.id != null && (company.status ?? 'active') == 'inactive'))
+                FilledButton.tonal(
+                  onPressed: _activateCompany,
+                  child: const Text('Activate'),
+                )
+              else
+                OutlinedButton(
+                  onPressed: _deactivateCompany,
+                  child: const Text('Deactivate'),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _companySizeLabel(int size) {
+    return switch (size) {
+      0 => '0-10',
+      1 => '11-50',
+      2 => '51-100',
+      3 => '101-250',
+      4 => '251-500',
+      5 => '500+',
+      _ => 'Unknown',
+    };
   }
 }

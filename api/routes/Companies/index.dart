@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
+import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/registration_service.dart';
+import 'package:som_api/services/access_control.dart';
+import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
@@ -16,6 +19,15 @@ Future<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _listCompanies(RequestContext context) async {
+  final auth = await parseAuth(
+    context,
+    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+        defaultValue: 'som_dev_secret'),
+    users: context.read<UserRepository>(),
+  );
+  if (auth == null) {
+    return Response(statusCode: 401);
+  }
   final companies = await context.read<CompanyRepository>().listAll();
   final filterType = context.request.uri.queryParameters['type'];
   String? normalizedType = filterType;
@@ -25,7 +37,10 @@ Future<Response> _listCompanies(RequestContext context) async {
       normalizedType = companyTypeFromWire(parsed);
     }
   }
-  final body = companies
+  final scopedCompanies = isConsultant(auth)
+      ? companies
+      : companies.where((company) => company.id == auth.companyId).toList();
+  final body = scopedCompanies
       .where(
           (company) => normalizedType == null || company.type == normalizedType)
       .map((company) => {

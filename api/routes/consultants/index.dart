@@ -5,6 +5,7 @@ import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/auth_service.dart';
+import 'package:som_api/services/access_control.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -25,6 +26,9 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   if (context.request.method == HttpMethod.post) {
+    if (!isConsultantAdmin(auth)) {
+      return Response(statusCode: 403);
+    }
     final body =
         jsonDecode(await context.request.body()) as Map<String, dynamic>;
     final email = (body['email'] as String? ?? '').toLowerCase();

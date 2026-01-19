@@ -6,6 +6,8 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
 import '../../../widgets/empty_state.dart';
+import '../../../widgets/selectable_list_view.dart';
+import '../../../widgets/som_list_tile.dart';
 import '../../../widgets/status_badge.dart';
 
 /// Widget for displaying a list of ads.
@@ -35,18 +37,27 @@ class AdsList extends StatelessWidget {
       );
     }
 
-    return ListView.builder(
-      itemCount: ads.length,
-      itemBuilder: (context, index) {
-        final ad = ads[index];
-        if (typeFilter != null && ad.type != typeFilter) {
-          return const SizedBox.shrink();
-        }
-        return AdsListTile(
-          ad: ad,
-          isSelected: selectedAdId == ad.id,
-          isBuyer: isBuyer,
-          onTap: () => onAdSelected(ad),
+    final filtered = ads
+        .where((ad) => typeFilter == null || ad.type == typeFilter)
+        .toList();
+    final selectedIndex =
+        filtered.indexWhere((ad) => ad.id == selectedAdId);
+    return SelectableListView<Ad>(
+      items: filtered,
+      selectedIndex: selectedIndex < 0 ? null : selectedIndex,
+      onSelectedIndex: (index) => onAdSelected(filtered[index]),
+      itemBuilder: (context, ad, isSelected) {
+        final index = filtered.indexOf(ad);
+        return Column(
+          children: [
+            AdsListTile(
+              ad: ad,
+              isSelected: isSelected,
+              isBuyer: isBuyer,
+              onTap: () => onAdSelected(ad),
+            ),
+            if (index != filtered.length - 1) const Divider(height: 1),
+          ],
         );
       },
     );
@@ -70,16 +81,7 @@ class AdsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: SomSpacing.md,
-        vertical: SomSpacing.xs,
-      ),
-      title: Text(ad.headline ?? 'Ad ${SomFormatters.shortId(ad.id)}'),
-      subtitle: Text(
-        '${SomFormatters.capitalize(ad.type ?? 'unknown')} • '
-        '${SomFormatters.capitalize(ad.status ?? 'draft')}',
-      ),
+    return SomListTile(
       selected: isSelected,
       onTap: onTap,
       onLongPress: isBuyer
@@ -92,6 +94,11 @@ class AdsListTile extends StatelessWidget {
               }
             }
           : null,
+      title: Text(ad.headline ?? 'Ad ${SomFormatters.shortId(ad.id)}'),
+      subtitle: Text(
+        '${SomFormatters.capitalize(ad.type ?? 'unknown')} • '
+        '${SomFormatters.capitalize(ad.status ?? 'draft')}',
+      ),
       trailing: StatusBadge.ad(
         status: ad.status ?? 'draft',
         compact: false,

@@ -7,11 +7,24 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/domain_event_service.dart';
+import 'package:som_api/services/access_control.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
   final repo = context.read<CompanyRepository>();
   if (context.request.method == HttpMethod.get) {
+    final authResult = await parseAuth(
+      context,
+      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
+          defaultValue: 'som_dev_secret'),
+      users: context.read<UserRepository>(),
+    );
+    if (authResult == null) {
+      return Response(statusCode: 401);
+    }
+    if (!canAccessCompany(authResult, companyId)) {
+      return Response(statusCode: 403);
+    }
     final company = await repo.findById(companyId);
     if (company == null) {
       return Response(statusCode: 404);

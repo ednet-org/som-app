@@ -8,6 +8,7 @@ import '../../../widgets/design_system/som_button.dart';
 import '../../../widgets/design_system/som_card.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
+import '../../../widgets/inline_message.dart';
 
 /// Widget for displaying a list of offers for an inquiry.
 ///
@@ -39,9 +40,9 @@ class OfferList extends StatelessWidget {
         if (error != null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: SomSpacing.sm),
-            child: Text(
-              'Failed to load offers: $error',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            child: InlineMessage(
+              message: 'Failed to load offers: $error',
+              type: InlineMessageType.error,
             ),
           ),
         if (offers.isEmpty && !isLoading)

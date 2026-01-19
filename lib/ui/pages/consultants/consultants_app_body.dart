@@ -6,8 +6,12 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
 
 class ConsultantsAppBody extends StatefulWidget {
   const ConsultantsAppBody({super.key});
@@ -110,7 +114,7 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Create'),
           ),
@@ -140,11 +144,14 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null ||
         appStore.authorization?.isConsultant != true) {
-      return const AppBody(
-        contextMenu: Text('Consultant access required'),
-        leftSplit:
-            Center(child: Text('Only consultants can manage consultants.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Consultants')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Consultant access required',
+          message: 'Only consultants can manage consultants.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -152,17 +159,20 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
       future: _consultantsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildToolbar(),
             leftSplit: Center(
-              child: Text('Failed to load consultants: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load consultants: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -170,15 +180,7 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
         final consultants = snapshot.data ?? const [];
         if (consultants.isEmpty) {
           return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Consultants'),
-              actions: [
-                FilledButton.tonal(
-                  onPressed: _createConsultant,
-                  child: const Text('Add consultant'),
-                ),
-              ],
-            ),
+            contextMenu: _buildToolbar(),
             leftSplit: const EmptyState(
               asset: SomAssets.emptySearchResults,
               title: 'No consultants found',
@@ -188,32 +190,43 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
           );
         }
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Consultants'),
-            actions: [
-              FilledButton.tonal(
-                onPressed: _createConsultant,
-                child: const Text('Add consultant'),
-              ),
-            ],
-          ),
-          leftSplit: ListView.builder(
-            itemCount: consultants.length,
-            itemBuilder: (context, index) {
-              final consultant = consultants[index];
-              return ListTile(
-                title: Text(consultant.email ?? 'Consultant'),
-                subtitle: Text(
-                    '${consultant.firstName ?? ''} ${consultant.lastName ?? ''}'.trim()),
-                selected: _selected?.id == consultant.id,
-                onTap: () => setState(() => _selected = consultant),
+          contextMenu: _buildToolbar(),
+          leftSplit: SelectableListView<UserDto>(
+            items: consultants,
+            selectedIndex: () {
+              final index =
+                  consultants.indexWhere((user) => user.id == _selected?.id);
+              return index < 0 ? null : index;
+            }(),
+            onSelectedIndex: (index) =>
+                setState(() => _selected = consultants[index]),
+            itemBuilder: (context, consultant, isSelected) {
+              final index = consultants.indexOf(consultant);
+              return Column(
+                children: [
+                  SomListTile(
+                    selected: isSelected,
+                    onTap: () => setState(() => _selected = consultant),
+                    title: Text(consultant.email ?? 'Consultant'),
+                    subtitle: Text(
+                      '${consultant.firstName ?? ''} ${consultant.lastName ?? ''}'
+                          .trim(),
+                    ),
+                  ),
+                  if (index != consultants.length - 1)
+                    const Divider(height: 1),
+                ],
               );
             },
           ),
           rightSplit: _selected == null
-              ? const Center(child: Text('Select a consultant.'))
+              ? const EmptyState(
+                  asset: SomAssets.emptySearchResults,
+                  title: 'Select a consultant',
+                  message: 'Choose a consultant from the list to view details.',
+                )
               : Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(SomSpacing.md),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -228,6 +241,18 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
                 ),
         );
       },
+    );
+  }
+
+  Widget _buildToolbar() {
+    return AppToolbar(
+      title: const Text('Consultants'),
+      actions: [
+        FilledButton.tonal(
+          onPressed: _createConsultant,
+          child: const Text('Add consultant'),
+        ),
+      ],
     );
   }
 }

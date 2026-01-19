@@ -7,6 +7,7 @@ import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/access_control.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -19,7 +20,7 @@ Future<Response> onRequest(RequestContext context) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('consultant')) {
+  if (auth == null || !isConsultantAdmin(auth)) {
     return Response(statusCode: 403);
   }
   final queryParams = context.request.uri.queryParameters;

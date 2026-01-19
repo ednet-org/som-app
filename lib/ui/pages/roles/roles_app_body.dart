@@ -7,8 +7,13 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
 
 class RolesAppBody extends StatefulWidget {
   const RolesAppBody({super.key});
@@ -157,79 +162,96 @@ class _RolesAppBodyState extends State<RolesAppBody> {
       future: _rolesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Roles'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Roles'),
+            contextMenu: _buildToolbar(),
             leftSplit: Center(
-              child: Text('Failed to load roles: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load roles: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
         }
         final roles = snapshot.data ?? const [];
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Roles'),
-            actions: [
-              FilledButton.tonal(
-                onPressed: _clearForm,
-                child: const Text('New'),
-              ),
-            ],
-          ),
+          contextMenu: _buildToolbar(),
           leftSplit: roles.isEmpty
               ? const EmptyState(
                   asset: SomAssets.emptySearchResults,
                   title: 'No roles yet',
                   message: 'Create a role to get started',
                 )
-              : ListView(
-                  children: roles
-                      .map(
-                        (role) => ListTile(
+              : SelectableListView<Role>(
+                  items: roles,
+                  selectedIndex: () {
+                    final index =
+                        roles.indexWhere((role) => role.id == _selected?.id);
+                    return index < 0 ? null : index;
+                  }(),
+                  onSelectedIndex: (index) => _selectRole(roles[index]),
+                  itemBuilder: (context, role, isSelected) {
+                    final index = roles.indexOf(role);
+                    return Column(
+                      children: [
+                        SomListTile(
+                          selected: isSelected,
+                          onTap: () => _selectRole(role),
                           title: Text(role.name),
                           subtitle: Text(role.description ?? ''),
-                          selected: _selected?.id == role.id,
-                          onTap: () => _selectRole(role),
                         ),
-                      )
-                      .toList(),
+                        if (index != roles.length - 1)
+                          const Divider(height: 1),
+                      ],
+                    );
+                  },
                 ),
           rightSplit: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(SomSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (_error != null)
-                  Text(
-                    _error!,
-                    style: const TextStyle(color: Colors.redAccent),
+                  InlineMessage(
+                    message: _error!,
+                    type: InlineMessageType.error,
                   ),
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Role name'),
+                DetailSection(
+                  title: 'Role details',
+                  iconAsset: SomAssets.iconUser,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration:
+                            const InputDecoration(labelText: 'Role name'),
+                      ),
+                      const SizedBox(height: SomSpacing.sm),
+                      TextField(
+                        controller: _descriptionController,
+                        decoration:
+                            const InputDecoration(labelText: 'Description'),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
-                ),
-                const SizedBox(height: 16),
-                Row(
+                const SizedBox(height: SomSpacing.md),
+                Wrap(
+                  spacing: SomSpacing.sm,
                   children: [
-                    ElevatedButton(
+                    FilledButton(
                       onPressed: _selected == null ? _createRole : _updateRole,
                       child: Text(_selected == null ? 'Create' : 'Update'),
                     ),
-                    const SizedBox(width: 12),
                     if (_selected != null)
-                      TextButton(
+                      OutlinedButton(
                         onPressed: _deleteRole,
                         child: const Text('Delete'),
                       ),
@@ -240,6 +262,18 @@ class _RolesAppBodyState extends State<RolesAppBody> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildToolbar() {
+    return AppToolbar(
+      title: const Text('Roles'),
+      actions: [
+        FilledButton.tonal(
+          onPressed: _clearForm,
+          child: const Text('New'),
+        ),
+      ],
     );
   }
 }

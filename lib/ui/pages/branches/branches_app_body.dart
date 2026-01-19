@@ -7,9 +7,17 @@ import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/snackbars.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
+import '../../widgets/status_badge.dart';
+import '../../widgets/status_legend.dart';
 
 class BranchesAppBody extends StatefulWidget {
   const BranchesAppBody({super.key});
@@ -132,7 +140,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Decline'),
           ),
@@ -169,7 +177,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Create'),
           ),
@@ -207,7 +215,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Save'),
           ),
@@ -286,7 +294,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Create'),
           ),
@@ -327,7 +335,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Save'),
           ),
@@ -363,10 +371,14 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null ||
         appStore.authorization?.isConsultant != true) {
-      return const AppBody(
-        contextMenu: Text('Consultant access required'),
-        leftSplit: Center(child: Text('Only consultants can manage branches.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Branches')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Consultant access required',
+          message: 'Only consultants can manage branches.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -374,17 +386,20 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
       future: _branchesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildToolbar(),
             leftSplit: Center(
-              child: Text('Failed to load branches: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load branches: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -392,15 +407,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         final branches = snapshot.data ?? const [];
         if (branches.isEmpty) {
           return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Branches'),
-              actions: [
-                FilledButton.tonal(
-                  onPressed: _createBranch,
-                  child: const Text('Add branch'),
-                ),
-              ],
-            ),
+            contextMenu: _buildToolbar(),
             leftSplit: const EmptyState(
               asset: SomAssets.emptySearchResults,
               title: 'No branches yet',
@@ -410,54 +417,50 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
           );
         }
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Branches'),
-            actions: [
-              FilledButton.tonal(
-                onPressed: _createBranch,
-                child: const Text('Add branch'),
-              ),
-              TextButton(
-                onPressed: _renameBranch,
-                child: const Text('Rename branch'),
-              ),
-              TextButton(
-                onPressed: _createCategory,
-                child: const Text('Add category'),
-              ),
-              TextButton(
-                onPressed: _renameCategory,
-                child: const Text('Rename category'),
-              ),
-              TextButton(
-                onPressed: _deleteBranch,
-                child: const Text('Delete branch'),
-              ),
-            ],
-          ),
-          leftSplit: ListView.builder(
-            itemCount: branches.length,
-            itemBuilder: (context, index) {
-              final branch = branches[index];
+          contextMenu: _buildToolbar(),
+          leftSplit: SelectableListView<Branch>(
+            items: branches,
+            selectedIndex: () {
+              final index = branches
+                  .indexWhere((branch) => branch.id == _selectedBranch?.id);
+              return index < 0 ? null : index;
+            }(),
+            onSelectedIndex: (index) {
+              setState(() {
+                _selectedBranch = branches[index];
+                _selectedCategory = null;
+              });
+            },
+            itemBuilder: (context, branch, isSelected) {
+              final index = branches.indexOf(branch);
               final statusLabel = branch.status ?? 'active';
-              return ListTile(
-                title: Text(branch.name ?? branch.id ?? 'Branch'),
-                subtitle: Text(
-                  '${branch.categories?.length ?? 0} categories • $statusLabel',
-                ),
-                selected: _selectedBranch?.id == branch.id,
-                onTap: () {
-                  setState(() {
-                    _selectedBranch = branch;
-                    _selectedCategory = null;
-                  });
-                },
-                trailing: statusLabel == 'pending'
-                    ? Wrap(
-                        spacing: 8,
-                        children: [
+              return Column(
+                children: [
+                  SomListTile(
+                    selected: isSelected,
+                    onTap: () {
+                      setState(() {
+                        _selectedBranch = branch;
+                        _selectedCategory = null;
+                      });
+                    },
+                    title: Text(branch.name ?? branch.id ?? 'Branch'),
+                    subtitle: Text(
+                      '${branch.categories?.length ?? 0} categories • ${SomFormatters.capitalize(statusLabel)}',
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        StatusBadge.branch(
+                          status: statusLabel,
+                          compact: false,
+                          showIcon: false,
+                        ),
+                        if (statusLabel == 'pending') ...[
+                          const SizedBox(width: 8),
                           TextButton(
-                            onPressed: () => _setBranchStatus(branch, 'active'),
+                            onPressed: () =>
+                                _setBranchStatus(branch, 'active'),
                             child: const Text('Approve'),
                           ),
                           TextButton(
@@ -466,15 +469,23 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                             child: const Text('Decline'),
                           ),
                         ],
-                      )
-                    : null,
+                      ],
+                    ),
+                  ),
+                  if (index != branches.length - 1)
+                    const Divider(height: 1),
+                ],
               );
             },
           ),
           rightSplit: _selectedBranch == null
-              ? const Center(child: Text('Select a branch to view categories.'))
+              ? const EmptyState(
+                  asset: SomAssets.emptySearchResults,
+                  title: 'Select a branch',
+                  message: 'Choose a branch to view its categories.',
+                )
               : Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(SomSpacing.md),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -490,47 +501,68 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                             final category =
                                 _selectedBranch!.categories![index];
                             final statusLabel = category.status ?? 'active';
-                            return ListTile(
-                              title: Text(
-                                category.name ?? category.id ?? 'Category',
-                              ),
-                              subtitle: Text(statusLabel),
-                              selected: _selectedCategory?.id == category.id,
-                              onTap: () =>
-                                  setState(() => _selectedCategory = category),
-                              trailing: Wrap(
-                                spacing: 8,
-                                children: [
-                                  if (statusLabel == 'pending')
-                                    TextButton(
-                                      onPressed: () => _setCategoryStatus(
-                                        category,
-                                        'active',
-                                      ),
-                                      child: const Text('Approve'),
-                                    ),
-                                  if (statusLabel == 'pending')
-                                    TextButton(
-                                      onPressed: () => _setCategoryStatus(
-                                        category,
-                                        'declined',
-                                      ),
-                                      child: const Text('Decline'),
-                                    ),
-                                  IconButton(
-                                    icon: SomSvgIcon(
-                                      SomAssets.iconDelete,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
-                                    ),
-                                    onPressed: () {
-                                      _selectedCategory = category;
-                                      _deleteCategory();
-                                    },
+                            return Column(
+                              children: [
+                                SomListTile(
+                                  selected:
+                                      _selectedCategory?.id == category.id,
+                                  onTap: () => setState(
+                                    () => _selectedCategory = category,
                                   ),
-                                ],
-                              ),
+                                  title: Text(
+                                    category.name ?? category.id ?? 'Category',
+                                  ),
+                                  subtitle: Text(
+                                    SomFormatters.capitalize(statusLabel),
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      StatusBadge.branch(
+                                        status: statusLabel,
+                                        compact: false,
+                                        showIcon: false,
+                                      ),
+                                      if (statusLabel == 'pending') ...[
+                                        const SizedBox(width: 8),
+                                        TextButton(
+                                          onPressed: () =>
+                                              _setCategoryStatus(
+                                            category,
+                                            'active',
+                                          ),
+                                          child: const Text('Approve'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              _setCategoryStatus(
+                                            category,
+                                            'declined',
+                                          ),
+                                          child: const Text('Decline'),
+                                        ),
+                                      ],
+                                      IconButton(
+                                        tooltip: 'Delete category',
+                                        icon: SomSvgIcon(
+                                          SomAssets.iconDelete,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurfaceVariant,
+                                        ),
+                                        onPressed: () {
+                                          _selectedCategory = category;
+                                          _deleteCategory();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                if (index !=
+                                    (_selectedBranch!.categories?.length ?? 1) -
+                                        1)
+                                  const Divider(height: 1),
+                              ],
                             );
                           },
                         ),
@@ -586,9 +618,61 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     );
   }
 
+  Widget _buildToolbar() {
+    return AppToolbar(
+      title: const Text('Branches'),
+      actions: [
+        FilledButton.tonal(
+          onPressed: _createBranch,
+          child: const Text('Add branch'),
+        ),
+        TextButton(
+          onPressed: _renameBranch,
+          child: const Text('Rename branch'),
+        ),
+        TextButton(
+          onPressed: _createCategory,
+          child: const Text('Add category'),
+        ),
+        TextButton(
+          onPressed: _renameCategory,
+          child: const Text('Rename category'),
+        ),
+        TextButton(
+          onPressed: _deleteBranch,
+          child: const Text('Delete branch'),
+        ),
+        StatusLegendButton(
+          title: 'Branch status',
+          items: const [
+            StatusLegendItem(
+              label: 'Active',
+              status: 'active',
+              type: StatusType.branch,
+            ),
+            StatusLegendItem(
+              label: 'Pending',
+              status: 'pending',
+              type: StatusType.branch,
+            ),
+            StatusLegendItem(
+              label: 'Declined',
+              status: 'declined',
+              type: StatusType.branch,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   void _showSnack(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    if (message.toLowerCase().contains('failed') ||
+        message.toLowerCase().contains('error')) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 }

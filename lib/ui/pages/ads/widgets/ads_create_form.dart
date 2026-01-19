@@ -2,7 +2,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/utils/formatters.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
+import 'package:som/ui/widgets/snackbars.dart';
 
 /// Form widget for creating a new ad.
 class AdsCreateForm extends StatefulWidget {
@@ -99,9 +101,7 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    SomSnackBars.warning(context, message);
   }
 
   @override
@@ -204,7 +204,7 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
           ),
         ),
         const SizedBox(width: 12),
-        ElevatedButton(
+        FilledButton(
           onPressed: _isSubmitting ? null : _submit,
           child: _isSubmitting
               ? const SizedBox(
@@ -275,7 +275,7 @@ class DatePickerRow extends StatelessWidget {
           },
           child: Text(value == null
               ? label
-              : '$label: ${value!.toIso8601String().split('T').first}'),
+              : '$label: ${SomFormatters.date(value)}'),
         ),
       ],
     );

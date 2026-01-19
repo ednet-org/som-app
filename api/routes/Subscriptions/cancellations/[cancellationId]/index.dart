@@ -5,6 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/cancellation_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -41,6 +42,16 @@ Future<Response> onRequest(
     resolvedAt: resolvedAt,
   );
   await repo.update(updated);
+  await context.read<AuditService>().log(
+        action: 'subscription.cancellation.updated',
+        entityType: 'subscription_cancellation',
+        entityId: updated.id,
+        actorId: auth.userId,
+        metadata: {
+          'companyId': updated.companyId,
+          'status': updated.status,
+        },
+      );
   final admins = await context
       .read<UserRepository>()
       .listAdminsByCompany(existing.companyId);

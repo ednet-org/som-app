@@ -3,6 +3,8 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
+import 'package:som_api/services/file_validation.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -61,6 +63,13 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     if (signedUrl.isEmpty) {
       return Response(statusCode: 404);
     }
+    await context.read<AuditService>().log(
+          action: 'inquiry.pdf.downloaded',
+          entityType: 'inquiry',
+          entityId: inquiryId,
+          actorId: auth.userId,
+          metadata: {'companyId': auth.companyId},
+        );
     return Response.json(body: {'signedUrl': signedUrl});
   }
   if (context.request.method == HttpMethod.delete) {
@@ -100,6 +109,10 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     return Response.json(statusCode: 400, body: 'file is required');
   }
   final bytes = await file.readAsBytes();
+  final validationError = validatePdfUpload(fileName: file.name, bytes: bytes);
+  if (validationError != null) {
+    return Response.json(statusCode: 400, body: validationError);
+  }
   final storage = context.read<FileStorage>();
   final pdfPath = await storage.saveFile(
     category: 'inquiries',

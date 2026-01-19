@@ -8,6 +8,8 @@ import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/status_badge.dart';
+import '../../../widgets/selectable_list_view.dart';
+import '../../../widgets/som_list_tile.dart';
 
 /// Widget for displaying a list of inquiries.
 ///
@@ -30,15 +32,23 @@ class InquiryList extends StatelessWidget {
       return _buildEmptyState(context);
     }
 
-    return ListView.separated(
-      itemCount: inquiries.length,
-      separatorBuilder: (context, index) => const Divider(height: 1),
-      itemBuilder: (context, index) {
-        final inquiry = inquiries[index];
-        return InquiryListTile(
-          inquiry: inquiry,
-          isSelected: selectedInquiryId == inquiry.id,
-          onTap: () => onInquirySelected(inquiry),
+    final selectedIndex =
+        inquiries.indexWhere((inquiry) => inquiry.id == selectedInquiryId);
+    return SelectableListView<Inquiry>(
+      items: inquiries,
+      selectedIndex: selectedIndex < 0 ? null : selectedIndex,
+      onSelectedIndex: (index) => onInquirySelected(inquiries[index]),
+      itemBuilder: (context, inquiry, isSelected) {
+        final index = inquiries.indexOf(inquiry);
+        return Column(
+          children: [
+            InquiryListTile(
+              inquiry: inquiry,
+              isSelected: isSelected,
+              onTap: () => onInquirySelected(inquiry),
+            ),
+            if (index != inquiries.length - 1) const Divider(height: 1),
+          ],
         );
       },
     );
@@ -80,13 +90,9 @@ class InquiryListTile extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final statusColor = SomSemanticColors.forInquiryStatus(inquiry.status);
 
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: SomSpacing.md,
-        vertical: SomSpacing.xs,
-      ),
+    return SomListTile(
       selected: isSelected,
-      selectedTileColor: colorScheme.primaryContainer.withValues(alpha: 0.3),
+      onTap: onTap,
       leading: CircleAvatar(
         backgroundColor: statusColor.withValues(alpha: 0.15),
         foregroundColor: statusColor,
@@ -134,7 +140,6 @@ class InquiryListTile extends StatelessWidget {
               color: colorScheme.primary,
             )
           : null,
-      onTap: onTap,
     );
   }
 }

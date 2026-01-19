@@ -8,6 +8,7 @@ import 'package:som_api/infrastructure/repositories/cancellation_repository.dart
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
 import '../routes/Subscriptions/cancel.dart' as cancel_route;
 import '../routes/Subscriptions/cancellations/index.dart' as list_route;
@@ -64,12 +65,15 @@ void main() {
         },
         body: jsonEncode({'reason': 'End of contract'}),
       );
+      final auditRepo = InMemoryAuditLogRepository();
+      final audit = AuditService(repository: auditRepo);
       cancelContext.provide<CancellationRepository>(cancellations);
       cancelContext.provide<SubscriptionRepository>(subscriptions);
       cancelContext.provide<UserRepository>(users);
       cancelContext.provide<EmailService>(
         EmailService(outboxPath: 'storage/test_outbox'),
       );
+      cancelContext.provide<AuditService>(audit);
 
       final cancelResponse =
           await cancel_route.onRequest(cancelContext.context);
@@ -105,10 +109,20 @@ void main() {
       updateContext.provide<EmailService>(
         EmailService(outboxPath: 'storage/test_outbox'),
       );
+      updateContext.provide<AuditService>(audit);
 
       final updateResponse =
           await update_route.onRequest(updateContext.context, cancellationId);
       expect(updateResponse.statusCode, 200);
+
+      final entries = await auditRepo.listRecent();
+      expect(
+        entries.map((entry) => entry.action),
+        containsAll([
+          'subscription.cancellation.requested',
+          'subscription.cancellation.updated',
+        ]),
+      );
     });
   });
 }

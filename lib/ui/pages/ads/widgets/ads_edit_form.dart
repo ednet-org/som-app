@@ -2,6 +2,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/utils/formatters.dart';
+import 'package:som/ui/widgets/empty_state.dart';
+import 'package:som/ui/widgets/meta_text.dart';
+import 'package:som/ui/widgets/status_badge.dart';
+
 import 'ads_create_form.dart';
 
 /// Form widget for editing an existing ad.
@@ -108,12 +114,23 @@ class _AdsEditFormState extends State<AdsEditForm> {
   }
 
   Widget _buildAdInfo() {
+    final status = widget.ad.status ?? 'draft';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('ID: ${widget.ad.id}'),
-        Text('Status: ${widget.ad.status ?? '-'}'),
-        Text('Type: ${widget.ad.type ?? '-'}'),
+        Row(
+          children: [
+            StatusBadge.ad(status: status, showIcon: false),
+            const SizedBox(width: 8),
+            Text(
+              SomFormatters.capitalize(status),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        SomMetaText('ID ${SomFormatters.shortId(widget.ad.id)}'),
+        SomMetaText('Type ${SomFormatters.capitalize(widget.ad.type ?? '-')}'),
       ],
     );
   }
@@ -161,26 +178,25 @@ class _AdsEditFormState extends State<AdsEditForm> {
 
   Widget _buildActions() {
     final isActive = widget.ad.status == 'active';
-    return Row(
+    return Wrap(
+      spacing: 12,
+      runSpacing: 8,
       children: [
-        TextButton(
+        OutlinedButton(
           onPressed: _pickImage,
-          child: Text(_image == null ? 'Upload new image' : 'Image: ${_image!.name}'),
+          child: Text(_image == null ? 'Upload image' : 'Image: ${_image!.name}'),
         ),
-        const SizedBox(width: 12),
-        ElevatedButton(onPressed: _update, child: const Text('Save')),
-        const SizedBox(width: 12),
+        FilledButton(onPressed: _update, child: const Text('Save')),
         if (!isActive)
-          ElevatedButton(
+          FilledButton.tonal(
             onPressed: widget.onActivate,
             child: const Text('Activate'),
           ),
         if (isActive)
-          TextButton(
+          OutlinedButton(
             onPressed: widget.onDeactivate,
             child: const Text('Deactivate'),
           ),
-        const SizedBox(width: 12),
         TextButton(
           onPressed: widget.onDelete,
           child: const Text('Delete'),
@@ -217,6 +233,10 @@ class NoAdSelected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Select an ad to view details.'));
+    return const EmptyState(
+      asset: SomAssets.emptyAds,
+      title: 'Select an ad',
+      message: 'Choose an ad from the list to view details',
+    );
   }
 }

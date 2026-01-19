@@ -8,8 +8,16 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
+import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
+import '../../widgets/snackbars.dart';
 
 class UserAppBody extends StatefulWidget {
   const UserAppBody({super.key});
@@ -179,7 +187,7 @@ class _UserAppBodyState extends State<UserAppBody> {
               onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancel'),
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
               child: const Text('Create'),
             ),
@@ -297,7 +305,7 @@ class _UserAppBodyState extends State<UserAppBody> {
               onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancel'),
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
               child: const Text('Update'),
             ),
@@ -352,13 +360,11 @@ class _UserAppBodyState extends State<UserAppBody> {
 
   void _showSnack(String message, {bool success = true}) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor:
-            success ? null : Theme.of(context).colorScheme.error,
-      ),
-    );
+    if (success) {
+      SomSnackBars.success(context, message);
+    } else {
+      SomSnackBars.error(context, message);
+    }
   }
 
   Future<void> _deleteUser() async {
@@ -391,7 +397,7 @@ class _UserAppBodyState extends State<UserAppBody> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Remove'),
           ),
@@ -413,10 +419,14 @@ class _UserAppBodyState extends State<UserAppBody> {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null) {
-      return const AppBody(
-        contextMenu: Text('Login required'),
-        leftSplit: Center(child: Text('Please log in to view users.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Users')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Login required',
+          message: 'Please log in to view users.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -424,17 +434,20 @@ class _UserAppBodyState extends State<UserAppBody> {
       future: _usersFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildToolbar(appStore),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildToolbar(appStore),
             leftSplit: Center(
-              child: Text('Failed to load users: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load users: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -442,16 +455,7 @@ class _UserAppBodyState extends State<UserAppBody> {
         final users = snapshot.data ?? const [];
         if (users.isEmpty) {
           return AppBody(
-            contextMenu: AppToolbar(
-              title: const Text('Users'),
-              actions: [
-                if (appStore.authorization?.isAdmin == true)
-                  FilledButton.tonal(
-                    onPressed: _createUser,
-                    child: const Text('Add user'),
-                  ),
-              ],
-            ),
+            contextMenu: _buildToolbar(appStore),
             leftSplit: const EmptyState(
               asset: SomAssets.emptySearchResults,
               title: 'No users found',
@@ -461,77 +465,115 @@ class _UserAppBodyState extends State<UserAppBody> {
           );
         }
         return AppBody(
-          contextMenu: AppToolbar(
-            title: const Text('Users'),
-            actions: [
-              if (appStore.authorization?.isAdmin == true)
-                FilledButton.tonal(
-                  onPressed: _createUser,
-                  child: const Text('Add user'),
-                ),
-            ],
-          ),
-          leftSplit: ListView.builder(
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              final user = users[index];
-              return ListTile(
-                title: Text(user.email ?? 'User'),
-                subtitle: Text(
-                  '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim(),
-                ),
-                selected: _selectedUser?.id == user.id,
-                onTap: () => _selectUser(user),
+          contextMenu: _buildToolbar(appStore),
+          leftSplit: SelectableListView<UserDto>(
+            items: users,
+            selectedIndex: () {
+              final index =
+                  users.indexWhere((user) => user.id == _selectedUser?.id);
+              return index < 0 ? null : index;
+            }(),
+            onSelectedIndex: (index) => _selectUser(users[index]),
+            itemBuilder: (context, user, isSelected) {
+              final index = users.indexOf(user);
+              return Column(
+                children: [
+                  SomListTile(
+                    selected: isSelected,
+                    onTap: () => _selectUser(user),
+                    title: Text(user.email ?? 'User'),
+                    subtitle: Text(
+                      '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim(),
+                    ),
+                  ),
+                  if (index != users.length - 1) const Divider(height: 1),
+                ],
               );
             },
           ),
           rightSplit: _selectedUser == null
-              ? const Center(child: Text('Select a user to edit.'))
+              ? const EmptyState(
+                  asset: SomAssets.emptySearchResults,
+                  title: 'Select a user',
+                  message: 'Choose a user from the list to edit details.',
+                )
               : _buildDetails(appStore),
         );
       },
     );
   }
 
+  Widget _buildToolbar(Application appStore) {
+    return AppToolbar(
+      title: const Text('Users'),
+      actions: [
+        if (appStore.authorization?.isAdmin == true)
+          FilledButton.tonal(
+            onPressed: _createUser,
+            child: const Text('Add user'),
+          ),
+      ],
+    );
+  }
+
   Widget _buildDetails(Application appStore) {
     final user = _selectedUser!;
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(SomSpacing.md),
       child: ListView(
         children: [
-          Text(user.email ?? 'User', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _firstNameController,
-            decoration: const InputDecoration(labelText: 'First name'),
+          Text(
+            user.email ?? 'User',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-          TextField(
-            controller: _lastNameController,
-            decoration: const InputDecoration(labelText: 'Last name'),
-          ),
-          TextField(
-            controller: _salutationController,
-            decoration: const InputDecoration(labelText: 'Salutation'),
-          ),
-          TextField(
-            controller: _titleController,
-            decoration: const InputDecoration(labelText: 'Title'),
-          ),
-          TextField(
-            controller: _telephoneController,
-            decoration: const InputDecoration(labelText: 'Telephone'),
-          ),
-          const SizedBox(height: 12),
-          if (appStore.authorization?.isAdmin == true)
-            Wrap(
-              spacing: 12,
-              runSpacing: 4,
-              children: _roleCheckboxes(appStore),
+          const SizedBox(height: SomSpacing.xs),
+          SomMetaText('ID ${SomFormatters.shortId(user.id)}'),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Profile',
+            iconAsset: SomAssets.iconUser,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _firstNameController,
+                  decoration: const InputDecoration(labelText: 'First name'),
+                ),
+                TextField(
+                  controller: _lastNameController,
+                  decoration: const InputDecoration(labelText: 'Last name'),
+                ),
+                TextField(
+                  controller: _salutationController,
+                  decoration: const InputDecoration(labelText: 'Salutation'),
+                ),
+                TextField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                TextField(
+                  controller: _telephoneController,
+                  decoration: const InputDecoration(labelText: 'Telephone'),
+                ),
+              ],
             ),
-          const SizedBox(height: 12),
-          Row(
+          ),
+          const SizedBox(height: SomSpacing.md),
+          if (appStore.authorization?.isAdmin == true)
+            DetailSection(
+              title: 'Roles',
+              iconAsset: SomAssets.iconSettings,
+              child: Wrap(
+                spacing: SomSpacing.sm,
+                runSpacing: SomSpacing.xs,
+                children: _roleCheckboxes(appStore),
+              ),
+            ),
+          const SizedBox(height: SomSpacing.md),
+          Wrap(
+            spacing: SomSpacing.sm,
+            runSpacing: SomSpacing.sm,
             children: [
-              ElevatedButton(
+              FilledButton(
                 onPressed: _isSaving ? null : _saveUser,
                 child: _isSaving
                     ? const SizedBox(
@@ -541,19 +583,16 @@ class _UserAppBodyState extends State<UserAppBody> {
                       )
                     : const Text('Save'),
               ),
-              const SizedBox(width: 12),
-              if (appStore.authorization?.isAdmin == true)
-                ...[
-                  TextButton(
-                    onPressed: _deleteUser,
-                    child: const Text('Deactivate'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton(
-                    onPressed: _removeUser,
-                    child: const Text('Remove'),
-                  ),
-                ],
+              if (appStore.authorization?.isAdmin == true) ...[
+                OutlinedButton(
+                  onPressed: _deleteUser,
+                  child: const Text('Deactivate'),
+                ),
+                TextButton(
+                  onPressed: _removeUser,
+                  child: const Text('Remove'),
+                ),
+              ],
               if (appStore.authorization?.userId == user.id)
                 TextButton(
                   onPressed: _showChangePasswordDialog,

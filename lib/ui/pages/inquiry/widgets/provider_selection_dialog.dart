@@ -3,9 +3,10 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
-import '../../../domain/model/forms/som_text_input.dart';
+import '../../../widgets/debounced_search_field.dart';
 import '../../../widgets/design_system/som_button.dart';
 import '../../../widgets/design_system/som_badge.dart';
+import '../../../widgets/snackbars.dart';
 
 /// Result of a paginated provider search.
 class ProviderSearchResult {
@@ -317,9 +318,7 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
   void _toggleSelection(ProviderSummary provider) {
     final id = provider.companyId;
     if (id == null || id.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Provider is missing a company ID.')),
-      );
+      SomSnackBars.warning(context, 'Provider is missing a company ID.');
       return;
     }
     setState(() {
@@ -398,14 +397,10 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
   }
 
   Widget _buildSearchBar() {
-    return SomTextInput(
+    return DebouncedSearchField(
       controller: _searchController,
-      hint: 'Search by company name...',
-      iconAsset: SomAssets.iconSearch,
-      onFieldSubmitted: _onSearchSubmitted,
-      onChanged: (value) {
-        setState(() {}); // Update UI for clear button visibility
-      },
+      hintText: 'Search by company name...',
+      onSearch: _onSearchSubmitted,
     );
   }
 

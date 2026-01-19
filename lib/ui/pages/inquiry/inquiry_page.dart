@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/snackbars.dart';
+import '../../widgets/status_legend.dart';
 import 'widgets/inquiry_create_form.dart';
 import 'widgets/inquiry_detail.dart';
 import 'widgets/inquiry_filters.dart';
@@ -610,19 +615,26 @@ class _InquiryPageState extends State<InquiryPage> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    if (!mounted) return;
+    if (message.toLowerCase().contains('failed')) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null) {
-      return const AppBody(
-        contextMenu: Text('Login required'),
-        leftSplit: Center(child: Text('Please log in to view inquiries.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Inquiries')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Login required',
+          message: 'Please log in to view inquiries.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -630,24 +642,32 @@ class _InquiryPageState extends State<InquiryPage> {
       future: _inquiriesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildContextMenu(appStore),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (_inquiriesError != null) {
           return AppBody(
-            contextMenu: const Text('Inquiries'),
-            leftSplit: Center(child: Text(_inquiriesError!)),
+            contextMenu: _buildContextMenu(appStore),
+            leftSplit: Center(
+              child: InlineMessage(
+                message: _inquiriesError!,
+                type: InlineMessageType.error,
+              ),
+            ),
             rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: _buildContextMenu(appStore),
             leftSplit: Center(
-              child: Text('Failed to load inquiries: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load inquiries: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -745,6 +765,31 @@ class _InquiryPageState extends State<InquiryPage> {
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),
             child: Text(_showCreateForm ? 'Close form' : 'New inquiry'),
           ),
+        StatusLegendButton(
+          title: 'Inquiry status',
+          items: const [
+            StatusLegendItem(
+              label: 'Open',
+              status: 'open',
+              type: StatusType.inquiry,
+            ),
+            StatusLegendItem(
+              label: 'Closed',
+              status: 'closed',
+              type: StatusType.inquiry,
+            ),
+            StatusLegendItem(
+              label: 'Draft',
+              status: 'draft',
+              type: StatusType.inquiry,
+            ),
+            StatusLegendItem(
+              label: 'Expired',
+              status: 'expired',
+              type: StatusType.inquiry,
+            ),
+          ],
+        ),
       ],
     );
   }

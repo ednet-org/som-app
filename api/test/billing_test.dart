@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
 import '../routes/billing/index.dart' as route;
 import 'test_utils.dart';
@@ -56,14 +57,19 @@ void main() {
               .toIso8601String(),
         }),
       );
+      final auditRepo = InMemoryAuditLogRepository();
+      final audit = AuditService(repository: auditRepo);
       createContext.provide<BillingRepository>(billing);
       createContext.provide<UserRepository>(users);
       createContext.provide<EmailService>(
         EmailService(outboxPath: 'storage/test_outbox'),
       );
+      createContext.provide<AuditService>(audit);
 
       final createResponse = await route.onRequest(createContext.context);
       expect(createResponse.statusCode, 200);
+      final entries = await auditRepo.listRecent();
+      expect(entries.first.action, 'billing.created');
 
       final listContext = TestRequestContext(
         path: '/billing',

@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/auth_service.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -99,6 +100,16 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   );
   await repo.create(user);
   await auth.createRegistrationToken(user);
+  await context.read<AuditService>().log(
+        action: 'user.created',
+        entityType: 'user',
+        entityId: user.id,
+        actorId: authResult.userId,
+        metadata: {
+          'companyId': companyId,
+          'email': user.email,
+        },
+      );
   return Response(statusCode: 200);
 }
 

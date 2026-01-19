@@ -15,7 +15,11 @@ import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/selectable_list_view.dart';
+import '../../widgets/som_list_tile.dart';
 import '../../widgets/status_badge.dart';
+import '../../widgets/status_legend.dart';
 
 class OffersAppBody extends StatefulWidget {
   const OffersAppBody({super.key});
@@ -168,17 +172,20 @@ class _OffersAppBodyState extends State<OffersAppBody> {
       future: _offersFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Offers'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildContextMenu(),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Offers'),
+            contextMenu: _buildContextMenu(),
             leftSplit: Center(
-              child: Text('Failed to load offers: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load offers: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -208,6 +215,26 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           ],
           onChanged: _applyFilter,
         ),
+        StatusLegendButton(
+          title: 'Offer status',
+          items: const [
+            StatusLegendItem(
+              label: 'Pending',
+              status: 'pending',
+              type: StatusType.offer,
+            ),
+            StatusLegendItem(
+              label: 'Accepted',
+              status: 'accepted',
+              type: StatusType.offer,
+            ),
+            StatusLegendItem(
+              label: 'Rejected',
+              status: 'rejected',
+              type: StatusType.offer,
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -220,28 +247,33 @@ class _OffersAppBodyState extends State<OffersAppBody> {
         message: 'Offers will appear here once they are submitted',
       );
     }
-    return ListView.builder(
-      itemCount: offers.length,
-      itemBuilder: (context, index) {
-        final item = offers[index];
-        return ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: SomSpacing.md,
-            vertical: SomSpacing.xs,
-          ),
-          title: Text(item.inquiryTitle),
-          subtitle: Text(
-            item.offer.resolvedAt != null
-                ? 'Resolved ${SomFormatters.relative(item.offer.resolvedAt)}'
-                : 'Forwarded ${SomFormatters.relative(item.offer.forwardedAt)}',
-          ),
-          selected: _selected?.offer.id == item.offer.id,
-          onTap: () => _selectOffer(item),
-          trailing: StatusBadge.offer(
-            status: item.offer.status ?? 'pending',
-            compact: false,
-            showIcon: false,
-          ),
+    final selectedIndex = offers
+        .indexWhere((item) => item.offer.id == _selected?.offer.id);
+    return SelectableListView<_OfferWithInquiry>(
+      items: offers,
+      selectedIndex: selectedIndex < 0 ? null : selectedIndex,
+      onSelectedIndex: (index) => _selectOffer(offers[index]),
+      itemBuilder: (context, item, isSelected) {
+        final index = offers.indexOf(item);
+        return Column(
+          children: [
+            SomListTile(
+              selected: isSelected,
+              onTap: () => _selectOffer(item),
+              title: Text(item.inquiryTitle),
+              subtitle: Text(
+                item.offer.resolvedAt != null
+                    ? 'Resolved ${SomFormatters.relative(item.offer.resolvedAt)}'
+                    : 'Forwarded ${SomFormatters.relative(item.offer.forwardedAt)}',
+              ),
+              trailing: StatusBadge.offer(
+                status: item.offer.status ?? 'pending',
+                compact: false,
+                showIcon: false,
+              ),
+            ),
+            if (index != offers.length - 1) const Divider(height: 1),
+          ],
         );
       },
     );
@@ -263,9 +295,9 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           if (_error != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                _error!,
-                style: const TextStyle(color: Colors.redAccent),
+              child: InlineMessage(
+                message: _error!,
+                type: InlineMessageType.error,
               ),
             ),
           Row(
@@ -283,27 +315,31 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           DetailSection(
             title: 'Summary',
             iconAsset: SomAssets.iconInfo,
-            child: Column(
-              children: [
-                DetailRow(
+            child: DetailGrid(
+              items: [
+                DetailItem(
                   label: 'Offer ID',
                   value: SomFormatters.shortId(offer.id),
+                  isMeta: true,
                 ),
-                DetailRow(
+                DetailItem(
                   label: 'Inquiry',
                   value: _selected!.inquiryTitle,
                 ),
-                DetailRow(
+                DetailItem(
                   label: 'Provider',
                   value: SomFormatters.shortId(offer.providerCompanyId),
+                  isMeta: true,
                 ),
-                DetailRow(
+                DetailItem(
                   label: 'Forwarded',
                   value: SomFormatters.dateTime(offer.forwardedAt),
+                  isMeta: true,
                 ),
-                DetailRow(
+                DetailItem(
                   label: 'Resolved',
                   value: SomFormatters.dateTime(offer.resolvedAt),
+                  isMeta: true,
                 ),
               ],
             ),
@@ -312,13 +348,13 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           DetailSection(
             title: 'Decisions',
             iconAsset: SomAssets.iconWarning,
-            child: Column(
-              children: [
-                DetailRow(
+            child: DetailGrid(
+              items: [
+                DetailItem(
                   label: 'Buyer',
                   value: offer.buyerDecision ?? '-',
                 ),
-                DetailRow(
+                DetailItem(
                   label: 'Provider',
                   value: offer.providerDecision ?? '-',
                 ),

@@ -11,12 +11,14 @@ class DetailSection extends StatelessWidget {
     this.icon,
     this.iconAsset,
     required this.child,
+    this.subtitle,
   });
 
   final String title;
   final IconData? icon;
   final String? iconAsset;
   final Widget child;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,15 @@ class DetailSection extends StatelessWidget {
               ),
             ],
           ),
+          if (subtitle != null) ...[
+            const SizedBox(height: SomSpacing.xs),
+            Text(
+              subtitle!,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
           const SizedBox(height: SomSpacing.sm),
           child,
         ],
@@ -74,11 +85,13 @@ class DetailRow extends StatelessWidget {
     required this.label,
     required this.value,
     this.labelWidth = 120,
+    this.valueStyle,
   });
 
   final String label;
   final String? value;
   final double labelWidth;
+  final TextStyle? valueStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +114,95 @@ class DetailRow extends StatelessWidget {
           Expanded(
             child: Text(
               value ?? '-',
-              style: theme.textTheme.bodyMedium,
+              style: valueStyle ?? theme.textTheme.bodyMedium,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class DetailItem {
+  const DetailItem({
+    required this.label,
+    required this.value,
+    this.isMeta = false,
+  });
+
+  final String label;
+  final String? value;
+  final bool isMeta;
+}
+
+/// Responsive grid of key/value items.
+class DetailGrid extends StatelessWidget {
+  const DetailGrid({
+    super.key,
+    required this.items,
+    this.columnSpacing = SomSpacing.lg,
+    this.rowSpacing = SomSpacing.sm,
+    this.minColumnWidth = 240,
+  });
+
+  final List<DetailItem> items;
+  final double columnSpacing;
+  final double rowSpacing;
+  final double minColumnWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final columns = constraints.maxWidth >= minColumnWidth * 2
+            ? 2
+            : 1;
+        final itemWidth = columns == 2
+            ? (constraints.maxWidth - columnSpacing) / 2
+            : constraints.maxWidth;
+
+        return Wrap(
+          spacing: columnSpacing,
+          runSpacing: rowSpacing,
+          children: items
+              .map(
+                (item) => SizedBox(
+                  width: itemWidth,
+                  child: _DetailItemView(item: item),
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
+}
+
+class _DetailItemView extends StatelessWidget {
+  const _DetailItemView({required this.item});
+
+  final DetailItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final valueStyle = item.isMeta
+        ? theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.outline,
+          )
+        : theme.textTheme.bodyMedium;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          item.label,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: SomSpacing.xs),
+        Text(item.value ?? '-', style: valueStyle),
+      ],
     );
   }
 }

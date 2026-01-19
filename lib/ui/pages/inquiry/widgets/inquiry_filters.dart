@@ -4,6 +4,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
 import '../../../widgets/design_system/som_button.dart';
+import '../../../utils/formatters.dart';
 
 /// Widget for filtering inquiries by various criteria.
 ///
@@ -216,7 +217,7 @@ class _DateFilterButton extends StatelessWidget {
       },
       text: value == null
           ? label
-          : '$label: ${value!.toIso8601String().split('T').first}',
+          : '$label: ${SomFormatters.date(value)}',
       type: SomButtonType.secondary,
       icon: SomAssets.iconCalendar,
     );

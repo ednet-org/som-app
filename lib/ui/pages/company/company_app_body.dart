@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/theme/tokens.dart';
+import 'package:som/ui/utils/formatters.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:som/ui/domain/application/application.dart';
 
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/model.dart' hide BankDetails;
+import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
+import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
 
 class CompanyAppBody extends StatefulWidget {
   const CompanyAppBody({super.key});
@@ -206,10 +213,14 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null) {
-      return const AppBody(
-        contextMenu: Text('Login required'),
-        leftSplit: Center(child: Text('Please log in to view company data.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Company')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Login required',
+          message: 'Please log in to view company data.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -217,27 +228,34 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
       future: _companyFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: AppToolbar(title: const Text('Company')),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
+            contextMenu: AppToolbar(title: const Text('Company')),
             leftSplit: Center(
-              child: Text('Failed to load company: ${snapshot.error}'),
+              child: InlineMessage(
+                message: 'Failed to load company: ${snapshot.error}',
+                type: InlineMessageType.error,
+              ),
             ),
             rightSplit: const SizedBox.shrink(),
           );
         }
         final company = snapshot.data;
         if (company == null) {
-          return const AppBody(
-            contextMenu: Text('Company'),
-            leftSplit: Center(child: Text('No company data available.')),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: AppToolbar(title: const Text('Company')),
+            leftSplit: const EmptyState(
+              asset: SomAssets.emptySearchResults,
+              title: 'No company data',
+              message: 'No company details are available yet.',
+            ),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         return AppBody(
@@ -248,61 +266,108 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                 onPressed: _updateCompany,
                 child: const Text('Save'),
               ),
-              TextButton(
+              OutlinedButton(
                 onPressed: _deactivateCompany,
                 child: const Text('Deactivate'),
               ),
             ],
           ),
-          leftSplit: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(company.name ?? 'Company'),
-                const SizedBox(height: 8),
-                Text('UID: ${company.uidNr ?? '-'}'),
-                Text('Registration: ${company.registrationNr ?? '-'}'),
-                Text('Website: ${company.websiteUrl ?? '-'}'),
-                Text('Company size: ${company.companySize ?? '-'}'),
-                Text('Type: ${company.type ?? '-'}'),
-                if (company.address != null) ...[
-                  const SizedBox(height: 8),
-                  Text('Address: ${company.address!.street} '
-                      '${company.address!.number}, '
-                      '${company.address!.zip} '
-                      '${company.address!.city}'),
-                ],
+          leftSplit: _buildCompanySummary(company),
+          rightSplit: _buildCompanyEditor(company),
+        );
+      },
+    );
+  }
+
+  Widget _buildCompanySummary(CompanyDto company) {
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.md),
+      child: ListView(
+        children: [
+          Text(
+            company.name ?? 'Company',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: SomSpacing.xs),
+          SomMetaText('ID ${SomFormatters.shortId(company.id)}'),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Overview',
+            iconAsset: SomAssets.iconInfo,
+            child: DetailGrid(
+              items: [
+                DetailItem(label: 'UID', value: company.uidNr),
+                DetailItem(label: 'Registration', value: company.registrationNr),
+                DetailItem(label: 'Website', value: company.websiteUrl),
+                DetailItem(
+                  label: 'Company size',
+                  value: company.companySize?.toString(),
+                ),
+                DetailItem(label: 'Type', value: company.type?.toString()),
               ],
             ),
           ),
-          rightSplit: Padding(
-            padding: const EdgeInsets.all(16),
-            child: ListView(
+          if (company.address != null) ...[
+            const SizedBox(height: SomSpacing.md),
+            DetailSection(
+              title: 'Address',
+              iconAsset: SomAssets.iconSettings,
+              child: DetailGrid(
+                items: [
+                  DetailItem(
+                    label: 'Street',
+                    value:
+                        '${company.address!.street} ${company.address!.number}',
+                  ),
+                  DetailItem(label: 'ZIP', value: company.address!.zip),
+                  DetailItem(label: 'City', value: company.address!.city),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCompanyEditor(CompanyDto company) {
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.md),
+      child: ListView(
+        children: [
+          DetailSection(
+            title: 'Company profile',
+            iconAsset: SomAssets.iconEdit,
+            child: Column(
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Company name'),
+                  decoration:
+                      const InputDecoration(labelText: 'Company name'),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: SomSpacing.sm),
                 TextField(
                   controller: _websiteController,
                   decoration: const InputDecoration(labelText: 'Website'),
                 ),
-                const SizedBox(height: 12),
-                Text('Company ID: ${company.id ?? '-'}'),
-                if (_isProviderType(company)) ...[
-                  const Divider(height: 32),
-                  Text(
-                    'Payment details',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          SomMetaText('Company ID ${SomFormatters.shortId(company.id)}'),
+          if (_isProviderType(company)) ...[
+            const SizedBox(height: SomSpacing.md),
+            DetailSection(
+              title: 'Payment details',
+              iconAsset: SomAssets.iconSettings,
+              child: Column(
+                children: [
                   if (_providerError != null)
-                    Text(
-                      _providerError!,
-                      style:
-                          const TextStyle(color: Colors.redAccent),
+                    InlineMessage(
+                      message: _providerError!,
+                      type: InlineMessageType.error,
                     ),
+                  const SizedBox(height: SomSpacing.sm),
                   TextField(
                     controller: _ibanController,
                     decoration: const InputDecoration(labelText: 'IBAN'),
@@ -316,33 +381,37 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                     decoration:
                         const InputDecoration(labelText: 'Account owner'),
                   ),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
+                  const SizedBox(height: SomSpacing.sm),
+                  FilledButton.tonal(
                     onPressed: _updatePaymentDetails,
                     child: const Text('Update payment details'),
                   ),
-                  const Divider(height: 32),
-                  Text(
-                    'Products',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: SomSpacing.md),
+            DetailSection(
+              title: 'Products',
+              iconAsset: SomAssets.iconOffers,
+              child: Column(
+                children: [
                   Row(
                     children: [
                       Expanded(
                         child: TextField(
                           controller: _productController,
-                          decoration: const InputDecoration(
-                              labelText: 'New product'),
+                          decoration:
+                              const InputDecoration(labelText: 'New product'),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      ElevatedButton(
+                      const SizedBox(width: SomSpacing.sm),
+                      FilledButton.tonal(
                         onPressed: _addProduct,
                         child: const Text('Add'),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: SomSpacing.sm),
                   ..._products.map(
                     (product) => ListTile(
                       title: Text(product.name),
@@ -350,10 +419,12 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
+                            tooltip: 'Edit product',
                             icon: SomSvgIcon(
                               SomAssets.iconEdit,
-                              color:
-                                  Theme.of(context).colorScheme.onSurfaceVariant,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                             onPressed: () async {
                               final controller = TextEditingController(
@@ -370,7 +441,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                                           Navigator.of(context).pop(false),
                                       child: const Text('Cancel'),
                                     ),
-                                    ElevatedButton(
+                                    FilledButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(true),
                                       child: const Text('Save'),
@@ -388,10 +459,12 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                             },
                           ),
                           IconButton(
+                            tooltip: 'Delete product',
                             icon: SomSvgIcon(
                               SomAssets.iconDelete,
-                              color:
-                                  Theme.of(context).colorScheme.onSurfaceVariant,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                             onPressed: () => _deleteProduct(product.id),
                           ),
@@ -400,11 +473,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                     ),
                   ),
                 ],
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ],
+      ),
     );
   }
 

@@ -10,6 +10,9 @@ import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/inline_message.dart';
+import '../../widgets/snackbars.dart';
+import '../../widgets/status_legend.dart';
 import 'widgets/ads_buyer_view.dart';
 import 'widgets/ads_create_form.dart';
 import 'widgets/ads_edit_form.dart';
@@ -223,19 +226,26 @@ class _AdsPageState extends State<AdsPage> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    if (!mounted) return;
+    if (message.toLowerCase().contains('failed')) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
     if (appStore.authorization == null) {
-      return const AppBody(
-        contextMenu: Text('Login required'),
-        leftSplit: Center(child: Text('Please log in to view ads.')),
-        rightSplit: SizedBox.shrink(),
+      return AppBody(
+        contextMenu: AppToolbar(title: const Text('Ads')),
+        leftSplit: const EmptyState(
+          asset: SomAssets.illustrationStateNoConnection,
+          title: 'Login required',
+          message: 'Please log in to view ads.',
+        ),
+        rightSplit: const SizedBox.shrink(),
       );
     }
 
@@ -243,19 +253,18 @@ class _AdsPageState extends State<AdsPage> {
       future: _adsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const AppBody(
-            contextMenu: Text('Loading'),
-            leftSplit: Center(child: CircularProgressIndicator()),
-            rightSplit: SizedBox.shrink(),
+          return AppBody(
+            contextMenu: _buildContextMenu(appStore),
+            leftSplit: const Center(child: CircularProgressIndicator()),
+            rightSplit: const SizedBox.shrink(),
           );
         }
         if (snapshot.hasError) {
           return AppBody(
-            contextMenu: const Text('Error'),
-            leftSplit: EmptyState(
-              asset: SomAssets.illustrationStateServerError,
-              title: 'Failed to load ads',
-              message: '${snapshot.error}',
+            contextMenu: _buildContextMenu(appStore),
+            leftSplit: InlineMessage(
+              message: 'Failed to load ads: ${snapshot.error}',
+              type: InlineMessageType.error,
             ),
             rightSplit: const SizedBox.shrink(),
           );
@@ -318,6 +327,26 @@ class _AdsPageState extends State<AdsPage> {
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),
             child: Text(_showCreateForm ? 'Close form' : 'Create ad'),
           ),
+        StatusLegendButton(
+          title: 'Ad status',
+          items: const [
+            StatusLegendItem(
+              label: 'Active',
+              status: 'active',
+              type: StatusType.ad,
+            ),
+            StatusLegendItem(
+              label: 'Draft',
+              status: 'draft',
+              type: StatusType.ad,
+            ),
+            StatusLegendItem(
+              label: 'Expired',
+              status: 'expired',
+              type: StatusType.ad,
+            ),
+          ],
+        ),
       ],
     );
   }
