@@ -1,5 +1,3 @@
-library routes;
-
 export 'beamer_provided_key.dart';
 export 'authenticated_pages_delegate.dart';
 

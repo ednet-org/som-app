@@ -52,7 +52,7 @@ class _SomLocalizationsDelegate
   @override
   Future<SomLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    SomLocalizations localizations = new SomLocalizations(locale);
+    final localizations = SomLocalizations(locale);
     await localizations.load();
     return localizations;
   }

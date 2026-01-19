@@ -5,6 +5,7 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 
 import 'domain/application/application.dart';
+import 'domain/infrastructure/supabase_realtime.dart';
 import 'domain/model/model.dart';
 import 'routes/authenticated_pages_delegate.dart';
 import 'routes/beamer_provided_key.dart';
@@ -18,9 +19,9 @@ import 'utils/ui_logger.dart';
 class SomApplication extends StatelessWidget {
   static String tag = '/SmartOfferManagement';
 
-  const SomApplication({Key? key}) : super(key: key);
+  const SomApplication({super.key});
 
-  userMenuItem(context, Application appStore) {
+  Widget userMenuItem(BuildContext context, Application appStore) {
     final label = appStore.authorization?.emailAddress ??
         appStore.authorization?.companyName ??
         'User';
@@ -173,16 +174,6 @@ class SomApplication extends StatelessWidget {
                           beamer: beamer,
                           uri: '/audit',
                         ),
-                      if (isBuyer)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: ElevatedButton(
-                            key: const ValueKey('NewInquiryButton'),
-                            onPressed: () => beamer.currentState?.routerDelegate
-                                .beamToNamed('/inquiries?create=true'),
-                            child: const Text('New Inquiry'),
-                          ),
-                        ),
                       buildPopupMenuButton(context, appStore),
                     ],
                   ),
@@ -258,7 +249,9 @@ class SomApplication extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-              Future.microtask(() => _showNotificationsDialog(context));
+              if (context.mounted) {
+                _showNotificationsDialog(context);
+              }
             },
           ),
         ),
@@ -352,29 +345,28 @@ class SomApplication extends StatelessWidget {
             children: [
               Text('Theme', style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 8),
-              RadioListTile<ThemeMode>(
-                value: ThemeMode.system,
+              RadioGroup<ThemeMode>(
                 groupValue: selectedTheme,
-                title: const Text('System'),
                 onChanged: (value) => setState(() {
                   selectedTheme = value ?? ThemeMode.system;
                 }),
-              ),
-              RadioListTile<ThemeMode>(
-                value: ThemeMode.light,
-                groupValue: selectedTheme,
-                title: const Text('Light'),
-                onChanged: (value) => setState(() {
-                  selectedTheme = value ?? ThemeMode.light;
-                }),
-              ),
-              RadioListTile<ThemeMode>(
-                value: ThemeMode.dark,
-                groupValue: selectedTheme,
-                title: const Text('Dark'),
-                onChanged: (value) => setState(() {
-                  selectedTheme = value ?? ThemeMode.dark;
-                }),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.system,
+                      title: Text('System'),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.light,
+                      title: Text('Light'),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.dark,
+                      title: Text('Dark'),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 12),
               Text('Density', style: Theme.of(context).textTheme.titleSmall),
@@ -472,6 +464,7 @@ class SomApplication extends StatelessWidget {
       if (token != null) {
         appStore.authorization!.token = token;
         appStore.setActiveRole(role);
+        SupabaseRealtime.setAuth(token);
       }
     } catch (error, stackTrace) {
       UILogger.silentError('SomApplication._switchRole', error, stackTrace);

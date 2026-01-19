@@ -1,5 +1,5 @@
 enum Roles {
-  Buyer,
-  Provider,
-  ProviderAndBuyer,
+  buyer,
+  provider,
+  providerAndBuyer,
 }

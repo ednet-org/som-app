@@ -22,10 +22,12 @@ Future<void> openInquiryPdf(
       mode: LaunchMode.externalApplication,
     );
   } on DioException {
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Failed to download PDF.')),
     );
   } catch (_) {
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Failed to download PDF.')),
     );
@@ -49,10 +51,12 @@ Future<void> openOfferPdf(
       mode: LaunchMode.externalApplication,
     );
   } on DioException {
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Failed to download PDF.')),
     );
   } catch (_) {
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Failed to download PDF.')),
     );

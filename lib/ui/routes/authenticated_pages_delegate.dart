@@ -23,5 +23,5 @@ final authenticatedPagesDelegate = BeamerDelegate(
       StatisticsBeamLocation(),
       UserBeamLocation(),
     ],
-  ),
+  ).call,
 );

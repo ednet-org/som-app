@@ -14,14 +14,14 @@ import '../../../widgets/status_badge.dart';
 /// Shows offer details with accept/reject actions for buyers.
 class OfferList extends StatelessWidget {
   const OfferList({
-    Key? key,
+    super.key,
     required this.offers,
     required this.isLoading,
     required this.error,
     required this.isBuyer,
     required this.onAccept,
     required this.onReject,
-  }) : super(key: key);
+  });
 
   final List<Offer> offers;
   final bool isLoading;
@@ -64,12 +64,12 @@ class OfferList extends StatelessWidget {
 /// Card widget for displaying a single offer.
 class OfferCard extends StatelessWidget {
   const OfferCard({
-    Key? key,
+    super.key,
     required this.offer,
     required this.isBuyer,
     required this.onAccept,
     required this.onReject,
-  }) : super(key: key);
+  });
 
   final Offer offer;
   final bool isBuyer;

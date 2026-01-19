@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 
 part 'branch.g.dart';
 
+// ignore: library_private_types_in_public_api
 class Branch = _Branch with _$Branch;
 
 abstract class _Branch with Store {

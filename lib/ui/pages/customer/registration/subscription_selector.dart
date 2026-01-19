@@ -11,7 +11,7 @@ import '../../../domain/model/shared/som.dart';
 import '../../../domain/model/customer_management/registration_request.dart';
 
 class SubscriptionSelector extends StatefulWidget {
-  const SubscriptionSelector({Key? key}) : super(key: key);
+  const SubscriptionSelector({super.key});
 
   @override
   State<SubscriptionSelector> createState() => _SubscriptionSelectorState();
@@ -159,7 +159,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: value
-                          ? context.cardColor.withOpacity(0.3)
+                          ? context.cardColor.withValues(alpha: 0.3)
                           : context.cardColor,
                     ),
                     child: Column(

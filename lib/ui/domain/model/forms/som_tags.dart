@@ -9,18 +9,19 @@ import '../../../domain/model/shared/som.dart';
 
 class SomTags extends StatefulWidget {
   const SomTags({
+    super.key,
     required this.tags,
     this.selectedTags,
     this.onAdd,
     this.onRemove,
-  }) : super();
+  });
   final List<TagModel> tags;
   final List<TagModel>? selectedTags;
   final void Function(TagModel tag)? onAdd;
   final void Function(TagModel tag)? onRemove;
 
   @override
-  _SomTagsState createState() => _SomTagsState();
+  State<SomTags> createState() => _SomTagsState();
 }
 
 class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
@@ -31,7 +32,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
 
   String get _searchText => _searchTextEditingController.text.trim();
 
-  refreshState(VoidCallback fn) {
+  void refreshState(VoidCallback fn) {
     if (mounted) setState(fn);
   }
 
@@ -64,35 +65,35 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   List<TagModel> _filterSearchResultList() {
     if (_searchText.isEmpty) return _suggestions;
 
-    List<TagModel> _tempList = [];
+    final tempList = <TagModel>[];
     for (int index = 0; index < _suggestions.length; index++) {
-      TagModel tagModel = _suggestions[index];
+      final tagModel = _suggestions[index];
       if (tagModel.title
           .toLowerCase()
           .trim()
           .contains(_searchText.toLowerCase())) {
-        _tempList.add(tagModel);
+        tempList.add(tagModel);
       }
     }
 
-    return _tempList;
+    return tempList;
   }
 
-  _addTags(tagModel) async {
+  void _addTags(TagModel tagModel) {
     if (!_tags.contains(tagModel)) {
       setState(() {
         _tags.add(tagModel);
       });
-      widget.onAdd?.call(tagModel as TagModel);
+      widget.onAdd?.call(tagModel);
     }
   }
 
-  _removeTag(tagModel) async {
+  void _removeTag(TagModel tagModel) {
     if (_tags.contains(tagModel)) {
       setState(() {
         _tags.remove(tagModel);
       });
-      widget.onRemove?.call(tagModel as TagModel);
+      widget.onRemove?.call(tagModel);
     }
   }
 
@@ -117,7 +118,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
     );
   }
 
-  _displayTagWidget() {
+  Widget _displayTagWidget() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: _filterSearchResultList().isNotEmpty
@@ -164,10 +165,10 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
   }
 
   Widget tagChip({
-    tagModel,
-    onTap,
-    action,
-    showCloseIcon,
+    required TagModel tagModel,
+    required VoidCallback onTap,
+    required String action,
+    required bool showCloseIcon,
   }) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -183,7 +184,7 @@ class _SomTagsState extends State<SomTags> with SingleTickerProviderStateMixin {
                       horizontal: 15.0,
                     ),
                     child: Text(
-                      '${tagModel.title}',
+                      tagModel.title,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),

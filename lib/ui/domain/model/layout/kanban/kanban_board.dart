@@ -17,7 +17,7 @@ class AdaptiveLayout extends StatefulWidget {
   });
 
   @override
-  _AdaptiveLayoutState createState() => _AdaptiveLayoutState();
+  State<AdaptiveLayout> createState() => _AdaptiveLayoutState();
 }
 
 class _AdaptiveLayoutState extends State<AdaptiveLayout> {
@@ -69,7 +69,7 @@ class _AdaptiveLayoutState extends State<AdaptiveLayout> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget.header ?? Container(),
+        widget.header ?? const SizedBox.shrink(),
         Expanded(
           child: _bodyWidgets.isEmpty
               ? Container()
@@ -88,17 +88,19 @@ class _AdaptiveLayoutState extends State<AdaptiveLayout> {
                   ),
                 ),
         ),
-        widget.footer ?? Container()
+        widget.footer ?? const SizedBox.shrink()
       ],
     );
   }
 }
 
 class KanbanBoard extends StatelessWidget {
+  const KanbanBoard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AdaptiveLayout(
-      header: Container(
+      header: SizedBox(
         height: 50,
         width: double.infinity,
         child: Row(
@@ -114,8 +116,8 @@ class KanbanBoard extends StatelessWidget {
           ],
         ),
       ),
-      mainMenu: Container(),
-      footer: Container(
+      mainMenu: const SizedBox.shrink(),
+      footer: SizedBox(
         height: 50,
         width: double.infinity,
         child: Row(

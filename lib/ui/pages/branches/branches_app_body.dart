@@ -5,13 +5,14 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 
 class BranchesAppBody extends StatefulWidget {
-  const BranchesAppBody({Key? key}) : super(key: key);
+  const BranchesAppBody({super.key});
 
   @override
   State<BranchesAppBody> createState() => _BranchesAppBodyState();
@@ -19,23 +20,47 @@ class BranchesAppBody extends StatefulWidget {
 
 class _BranchesAppBodyState extends State<BranchesAppBody> {
   Future<List<Branch>>? _branchesFuture;
-  List<Branch> _branches = const [];
   Branch? _selectedBranch;
   Category? _selectedCategory;
   List<ProviderSummary> _pendingProviders = const [];
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _branchesFuture ??= _loadBranches();
     _loadPendingProviders();
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['branches', 'categories', 'provider_profiles'],
+      channelName: 'branches-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<Branch>> _loadBranches() async {
     final api = Provider.of<Openapi>(context, listen: false);
     final response = await api.getBranchesApi().branchesGet();
     final list = response.data?.toList() ?? const [];
-    _branches = list;
     if (_selectedBranch != null) {
       _selectedBranch = list.firstWhere(
         (branch) => branch.id == _selectedBranch!.id,
@@ -114,6 +139,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         ],
       ),
     );
+    if (!mounted) return;
     if (confirmed != true) return;
     try {
       await api.getProvidersApi().providersCompanyIdDeclinePost(
@@ -150,6 +176,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         ],
       ),
     );
+    if (!mounted) return;
     if (created != true) return;
     final name = controller.text.trim();
     if (name.isEmpty) return;
@@ -187,6 +214,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         ],
       ),
     );
+    if (!mounted) return;
     if (renamed != true) return;
     final name = controller.text.trim();
     if (name.isEmpty) return;
@@ -265,6 +293,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         ],
       ),
     );
+    if (!mounted) return;
     if (created != true) return;
     final name = controller.text.trim();
     if (name.isEmpty) return;
@@ -305,6 +334,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
         ],
       ),
     );
+    if (!mounted) return;
     if (renamed != true) return;
     final name = controller.text.trim();
     if (name.isEmpty) return;
@@ -365,7 +395,6 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
             contextMenu: AppToolbar(
               title: const Text('Branches'),
               actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
                 FilledButton.tonal(
                   onPressed: _createBranch,
                   child: const Text('Add branch'),
@@ -384,7 +413,6 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Branches'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               FilledButton.tonal(
                 onPressed: _createBranch,
                 child: const Text('Add branch'),
@@ -559,8 +587,8 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 }

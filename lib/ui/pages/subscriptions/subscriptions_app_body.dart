@@ -9,6 +9,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
 import '../../utils/ui_logger.dart';
@@ -16,7 +17,7 @@ import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 
 class SubscriptionsAppBody extends StatefulWidget {
-  const SubscriptionsAppBody({Key? key}) : super(key: key);
+  const SubscriptionsAppBody({super.key});
 
   @override
   State<SubscriptionsAppBody> createState() => _SubscriptionsAppBodyState();
@@ -39,16 +40,21 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   final _commitmentController = TextEditingController();
   final _rulesController = TextEditingController(text: '[]');
   bool _isActive = true;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _plansFuture ??= _loadPlans();
     _loadCurrent();
+    _setupRealtime();
   }
 
   @override
   void dispose() {
+    _realtimeRefresh.dispose();
     _titleController.dispose();
     _sortController.dispose();
     _priceController.dispose();
@@ -60,6 +66,26 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     _commitmentController.dispose();
     _rulesController.dispose();
     super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const [
+        'subscription_plans',
+        'subscriptions',
+        'subscription_cancellations',
+      ],
+      channelName: 'subscriptions-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<SubscriptionPlan>> _loadPlans() async {
@@ -159,6 +185,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     } on DioException catch (error) {
       final message = error.response?.data?.toString() ?? '';
       if (message.contains('Confirmation required')) {
+        if (!mounted) return;
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
@@ -269,7 +296,6 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
             contextMenu: AppToolbar(
               title: const Text('Subscriptions'),
               actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
                 if (isConsultantAdmin)
                   FilledButton.tonal(
                     onPressed: _createPlan,
@@ -289,7 +315,6 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Subscriptions'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               if (isConsultantAdmin)
                 FilledButton.tonal(
                   onPressed: _createPlan,
@@ -431,6 +456,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   }
 
   void _showSnack(String message) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );

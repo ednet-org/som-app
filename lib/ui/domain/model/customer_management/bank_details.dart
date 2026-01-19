@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 
 part 'bank_details.g.dart';
 
+// ignore: library_private_types_in_public_api
 class BankDetails = _BankDetails with _$BankDetails;
 
 abstract class _BankDetails with Store {

@@ -14,10 +14,10 @@ import '../routes/routes.dart';
 class SplashPage extends StatefulWidget {
   static String tag = '/SplashScreen';
 
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage>
@@ -28,11 +28,12 @@ class _SplashPageState extends State<SplashPage>
     navigationPage();
   }
 
-  void navigationPage() async {
+  Future<void> navigationPage() async {
     if (!await isNetworkAvailable()) {
       toastLong(errorInternetNotAvailable);
     }
 
+    if (!mounted) return;
     final appStore = Provider.of<Application>(context, listen: false);
     if (appStore.isAuthenticated) {
       context.beamTo(SmartOfferManagementPageLocation());

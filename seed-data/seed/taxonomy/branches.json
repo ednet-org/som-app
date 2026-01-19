@@ -1,0 +1,107 @@
+[
+  {
+    "id": "c1ba2e00-2e17-5d72-86c6-d021ccb565ec",
+    "name": "Handel",
+    "normalized_name": "handel",
+    "external_id": "handel",
+    "status": "active"
+  },
+  {
+    "id": "8b9b7314-7dc6-5470-a49b-59d2d0ae8d2c",
+    "name": "Industrie",
+    "normalized_name": "industrie",
+    "external_id": "industrie",
+    "status": "active"
+  },
+  {
+    "id": "bd23d516-f55a-5e4a-bec5-b892ba5fe1b0",
+    "name": "Dienstleistung",
+    "normalized_name": "dienstleistung",
+    "external_id": "dienstleistung",
+    "status": "active"
+  },
+  {
+    "id": "0f73aff2-2823-58a4-b136-f7997cd831df",
+    "name": "Gastronomie",
+    "normalized_name": "gastronomie",
+    "external_id": "gastronomie",
+    "status": "active"
+  },
+  {
+    "id": "2b4673c4-9f00-55a8-bd86-b002e8a6d4a0",
+    "name": "Gesundheit",
+    "normalized_name": "gesundheit",
+    "external_id": "gesundheit",
+    "status": "active"
+  },
+  {
+    "id": "ce539bd8-c6c8-58bb-ad6f-7ef72d9adbb2",
+    "name": "Handwerk",
+    "normalized_name": "handwerk",
+    "external_id": "handwerk",
+    "status": "active"
+  },
+  {
+    "id": "20e97c1e-9743-5b64-8c30-e8f34a6f7df0",
+    "name": "Tourismus",
+    "normalized_name": "tourismus",
+    "external_id": "tourismus",
+    "status": "active"
+  },
+  {
+    "id": "40a8901b-5aab-5a21-8fdf-f33718082c33",
+    "name": "Großhandel",
+    "normalized_name": "großhandel",
+    "external_id": "grosshandel",
+    "status": "active"
+  },
+  {
+    "id": "aa3e8aba-b75d-5d82-a31e-903163cd53e9",
+    "name": "null",
+    "normalized_name": "null",
+    "external_id": "name:null",
+    "status": "pending"
+  },
+  {
+    "id": "b4b31a44-b7ee-4247-bc1d-3caebe59a3c8",
+    "name": "IT",
+    "normalized_name": "it",
+    "external_id": null,
+    "status": "active"
+  },
+  {
+    "id": "e4b80cc5-4b84-4110-967d-0f71cf837f1d",
+    "name": "Print",
+    "normalized_name": "print",
+    "external_id": null,
+    "status": "active"
+  },
+  {
+    "id": "3303380f-9104-4144-bf65-b19baee05d3a",
+    "name": "Facilities",
+    "normalized_name": "facilities",
+    "external_id": null,
+    "status": "active"
+  },
+  {
+    "id": "f351838c-49bd-4aa6-9365-02a52aff5284",
+    "name": "Marketing",
+    "normalized_name": "marketing",
+    "external_id": null,
+    "status": "active"
+  },
+  {
+    "id": "f25dfb84-76c0-4d3f-89dc-baf5b7d18ab0",
+    "name": "Telecom",
+    "normalized_name": "telecom",
+    "external_id": null,
+    "status": "active"
+  },
+  {
+    "id": "19643282-cc0f-587b-97f4-4370bb38bf34",
+    "name": "Hersteller",
+    "normalized_name": "hersteller",
+    "external_id": "name:hersteller",
+    "status": "pending"
+  }
+]

@@ -1,4 +1,4 @@
-import 'package:built_collection/src/list.dart' show ListBuilder;
+import 'package:built_collection/built_collection.dart' show ListBuilder;
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
@@ -8,17 +8,18 @@ import '../shared/som.dart';
 import 'company.dart';
 import 'roles.dart';
 import 'registration_user.dart';
-import 'payment-interval.dart';
+import 'payment_interval.dart';
 
 part 'registration_request.g.dart';
 
+// ignore: library_private_types_in_public_api
 class RegistrationRequest = _RegistrationRequest with _$RegistrationRequest;
 
 abstract class _RegistrationRequest with Store {
   Som som;
   CompaniesApi api;
   Application appStore;
-  final sharedPrefs;
+  final Object sharedPrefs;
 
   _RegistrationRequest(this.som, this.api, this.appStore, this.sharedPrefs)
     : company = Company(appStore, sharedPrefs);
@@ -96,7 +97,7 @@ abstract class _RegistrationRequest with Store {
       providerData = ProviderRegistrationDataBuilder()
         ..bankDetails = bankDetails
         ..paymentInterval =
-            company.providerData.paymentInterval == PaymentInterval.Monthly
+            company.providerData.paymentInterval == PaymentInterval.monthly
             ? ProviderRegistrationDataPaymentIntervalEnum.number0
             : ProviderRegistrationDataPaymentIntervalEnum.number1
         ..subscriptionPlanId = selectedPlanId?.trim()
@@ -106,7 +107,7 @@ abstract class _RegistrationRequest with Store {
 
     final size = _mapCompanySize(company.companySize);
     final companyRequest = CompanyRegistrationBuilder()
-      ..type = company.role == Roles.ProviderAndBuyer
+      ..type = company.role == Roles.providerAndBuyer
           ? CompanyRegistrationTypeEnum.number2
           : company.isProvider
           ? CompanyRegistrationTypeEnum.number1
@@ -138,7 +139,6 @@ abstract class _RegistrationRequest with Store {
         case CompanyRole.provider:
           return [UserRegistrationRolesEnum.number1];
         case CompanyRole.buyer:
-        default:
           return [UserRegistrationRolesEnum.number0];
       }
     }

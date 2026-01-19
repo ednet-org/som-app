@@ -100,8 +100,6 @@ abstract class ResponsiveWidget extends StatelessWidget {
         return projector(context);
       case DisplaySize.billboard:
         return billboard(context);
-      default:
-        return mobile(context);
     }
   }
 
@@ -311,7 +309,7 @@ class LayoutConstraints {
     this.maxHeight,
   });
 
-  get width {
+  double get width {
     if (maxWidth != null && minWidth != null) {
       return maxWidth! + (maxWidth! - minWidth!) / 2;
     } else if (maxWidth != null) {
@@ -320,11 +318,11 @@ class LayoutConstraints {
       return minWidth!;
     } else {
       // Icon size, minimal element size
-      return 40;
+      return 40.0;
     }
   }
 
-  get height {
+  double get height {
     if (maxHeight != null && minHeight != null) {
       return maxHeight! + (maxHeight! - minHeight!) / 2;
     } else if (maxHeight != null) {
@@ -333,26 +331,28 @@ class LayoutConstraints {
       return minHeight!;
     } else {
       // Icon size, minimal element size
-      return 40;
+      return 40.0;
     }
   }
 
-  const LayoutConstraints.icon({parentWidth, parentHeight})
-      : this(
+  const LayoutConstraints.icon({
+    required double parentWidth,
+    required double parentHeight,
+  }) : this(
             minWidth: parentWidth + 40,
             maxWidth: parentWidth + 40,
             minHeight: parentHeight + 40,
             maxHeight: parentHeight + 40);
 
-  get size {
+  Size get size {
     return Size(width, height);
   }
 
-  get rect {
+  Rect get rect {
     return Rect.fromLTWH(0, 0, width, height);
   }
 
-  get boxConstraints {
+  BoxConstraints get boxConstraints {
     return BoxConstraints(
       minWidth: minWidth ?? width,
       maxWidth: maxWidth ?? width,
@@ -402,7 +402,7 @@ class AppContainer {
     required this.mainMenuButtonPosition,
   });
 
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Column(children: [
       Expanded(
         child: ListView.builder(

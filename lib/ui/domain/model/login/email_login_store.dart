@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
@@ -9,6 +10,7 @@ import 'login_error_parser.dart';
 
 part 'email_login_store.g.dart';
 
+// ignore: library_private_types_in_public_api
 class EmailLoginStore = _EmailLoginStoreBase with _$EmailLoginStore;
 
 abstract class _EmailLoginStoreBase with Store {
@@ -40,7 +42,9 @@ abstract class _EmailLoginStoreBase with Store {
   Future login() async {
     errorMessage = '';
     loggingInMessage = '';
-    print(email);
+    if (kDebugMode) {
+      debugPrint(email);
+    }
     isLoading = true;
     final authReq = AuthLoginPostRequestBuilder()
       ..password = password
@@ -102,7 +106,9 @@ abstract class _EmailLoginStoreBase with Store {
       if (response.statusCode != 200) {
         errorMessage = response.statusMessage ?? 'Something went wrong';
         isInvalidCredentials = true;
-        print(response.statusMessage);
+        if (kDebugMode) {
+          debugPrint(response.statusMessage);
+        }
       }
     }).catchError((error) {
       final data = error is DioException ? error.response?.data : null;
@@ -158,5 +164,6 @@ abstract class _EmailLoginStoreBase with Store {
       case null:
         return null;
     }
+    return null;
   }
 }

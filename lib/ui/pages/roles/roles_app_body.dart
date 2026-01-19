@@ -4,12 +4,14 @@ import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
+import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 
 class RolesAppBody extends StatefulWidget {
-  const RolesAppBody({Key? key}) : super(key: key);
+  const RolesAppBody({super.key});
 
   @override
   State<RolesAppBody> createState() => _RolesAppBodyState();
@@ -22,18 +24,39 @@ class _RolesAppBodyState extends State<RolesAppBody> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   String? _error;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _rolesFuture ??= _loadRoles();
+    _setupRealtime();
   }
 
   @override
   void dispose() {
+    _realtimeRefresh.dispose();
     _nameController.dispose();
     _descriptionController.dispose();
     super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['roles'],
+      channelName: 'roles-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<Role>> _loadRoles() async {
@@ -154,7 +177,6 @@ class _RolesAppBodyState extends State<RolesAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Roles'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               FilledButton.tonal(
                 onPressed: _clearForm,
                 child: const Text('New'),

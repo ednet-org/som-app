@@ -98,7 +98,7 @@ class _AdminUserSection extends StatelessWidget {
             SizedBox(
               width: 350,
               child: DropdownButtonFormField<CompanyRole>(
-                value: CompanyRole.admin,
+                initialValue: CompanyRole.admin,
                 items: const [
                   DropdownMenuItem(
                     value: CompanyRole.admin,
@@ -211,7 +211,7 @@ class _AdditionalUserItem extends StatelessWidget {
             SizedBox(
               width: 350,
               child: DropdownButtonFormField<CompanyRole>(
-                value: user.role,
+                initialValue: user.role,
                 items: _allowedUserRoles(request.company)
                     .map(
                       (role) => DropdownMenuItem(

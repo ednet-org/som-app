@@ -7,13 +7,12 @@ import 'package:som/main.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_button.dart';
 import 'package:som/ui/widgets/design_system/som_card.dart';
-import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../../domain/model/customer_management/registration_request.dart';
 import '../../../domain/model/customer_management/roles.dart';
 
 class RoleSelection extends StatefulWidget {
-  const RoleSelection({Key? key}) : super(key: key);
+  const RoleSelection({super.key});
 
   @override
   State<RoleSelection> createState() => _RoleSelectionState();
@@ -127,7 +126,7 @@ class _RoleSelectionState extends State<RoleSelection> {
             subtitle: 'Source products & services.',
             iconAsset: SomAssets.authRoleBuyer,
             selected: registrationRequest.company.isBuyer,
-            onTap: () => registrationRequest.company.setRole(Roles.Buyer),
+            onTap: () => registrationRequest.company.setRole(Roles.buyer),
             buttonText: 'Register as Buyer',
           ),
         ),
@@ -141,7 +140,7 @@ class _RoleSelectionState extends State<RoleSelection> {
             subtitle: 'Grow your business.',
             iconAsset: SomAssets.authRoleProvider,
             selected: registrationRequest.company.isProvider,
-            onTap: () => registrationRequest.company.setRole(Roles.Provider),
+            onTap: () => registrationRequest.company.setRole(Roles.provider),
             buttonText: 'Register as Provider',
           ),
         ),
@@ -159,7 +158,7 @@ class _RoleSelectionState extends State<RoleSelection> {
           subtitle: 'Source products & services.',
           iconAsset: SomAssets.authRoleBuyer,
           selected: registrationRequest.company.isBuyer,
-          onTap: () => registrationRequest.company.setRole(Roles.Buyer),
+          onTap: () => registrationRequest.company.setRole(Roles.buyer),
           buttonText: 'Register as Buyer',
         ),
         10.height,
@@ -170,7 +169,7 @@ class _RoleSelectionState extends State<RoleSelection> {
           subtitle: 'Grow your business.',
           iconAsset: SomAssets.authRoleProvider,
           selected: registrationRequest.company.isProvider,
-          onTap: () => registrationRequest.company.setRole(Roles.Provider),
+          onTap: () => registrationRequest.company.setRole(Roles.provider),
           buttonText: 'Register as Provider',
         ),
       ],

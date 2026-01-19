@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
 import '../../utils/ui_logger.dart';
@@ -13,7 +14,7 @@ import '../../widgets/empty_state.dart';
 import '../../widgets/status_badge.dart';
 
 class CompaniesAppBody extends StatefulWidget {
-  const CompaniesAppBody({Key? key}) : super(key: key);
+  const CompaniesAppBody({super.key});
 
   @override
   State<CompaniesAppBody> createState() => _CompaniesAppBodyState();
@@ -26,6 +27,9 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
 
   String _search = '';
   String? _typeFilter;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   final _nameController = TextEditingController();
   final _websiteController = TextEditingController();
@@ -44,6 +48,36 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     super.didChangeDependencies();
     _companiesFuture ??= _loadCompanies();
     _bootstrap();
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    _nameController.dispose();
+    _websiteController.dispose();
+    _streetController.dispose();
+    _numberController.dispose();
+    _zipController.dispose();
+    _cityController.dispose();
+    _countryController.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['companies'],
+      channelName: 'companies-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<void> _bootstrap() async {
@@ -227,6 +261,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
     );
 
     if (created != true) return;
+    if (!mounted) return;
     final stamp = DateTime.now().millisecondsSinceEpoch;
     final api = Provider.of<Openapi>(context, listen: false);
     ProviderRegistrationData? providerData;
@@ -264,7 +299,7 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
           ..termsAccepted = true
           ..privacyAccepted = true;
         if (providerData != null) {
-          c.providerData.replace(providerData!);
+          c.providerData.replace(providerData);
         }
       }))
       ..users.add(UserRegistration((u) => u
@@ -349,7 +384,6 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
             contextMenu: AppToolbar(
               title: const Text('Companies'),
               actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
                 FilledButton.tonal(
                   onPressed: _registerCompany,
                   child: const Text('Register'),
@@ -368,7 +402,6 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Companies'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               FilledButton.tonal(
                 onPressed: _registerCompany,
                 child: const Text('Register'),

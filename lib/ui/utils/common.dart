@@ -3,26 +3,33 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 Future<List<dynamic>?> loadDataFromJson(BuildContext context) async {
-  final fakeData = await DefaultAssetBundle.of(context).loadString('assets/integrations/map_point.json');
+  final fakeData = await DefaultAssetBundle.of(context)
+      .loadString('assets/integrations/map_point.json');
   return json.decode(fakeData.toString());
 }
 
 String intToHex(int i) {
   var s = i.toRadixString(16);
   if (s.length == 8) {
-    return '#' + s.substring(2).toUpperCase();
+    return '#${s.substring(2).toUpperCase()}';
   } else {
-    return '#' + s.toUpperCase();
+    return '#${s.toUpperCase()}';
   }
 }
 
-Widget networkImage(String? image, {String aPlaceholder = "images/integrations/img/placeholder.png", double? aWidth, double? aHeight, var fit = BoxFit.fill}) {
+Widget networkImage(
+  String? image, {
+  String aPlaceholder = 'images/integrations/img/placeholder.png',
+  double? aWidth,
+  double? aHeight,
+  BoxFit fit = BoxFit.fill,
+}) {
   return image != null && image.isNotEmpty
       ? FadeInImage(
           placeholder: AssetImage(aPlaceholder),
           image: NetworkImage(image),
-          width: aWidth != null ? aWidth : null,
-          height: aHeight != null ? aHeight : null,
+          width: aWidth,
+          height: aHeight,
           fit: fit,
         )
       : Image.asset(

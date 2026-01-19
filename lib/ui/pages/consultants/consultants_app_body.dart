@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 
 class ConsultantsAppBody extends StatefulWidget {
-  const ConsultantsAppBody({Key? key}) : super(key: key);
+  const ConsultantsAppBody({super.key});
 
   @override
   State<ConsultantsAppBody> createState() => _ConsultantsAppBodyState();
@@ -19,11 +20,37 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
   Future<List<UserDto>>? _consultantsFuture;
   List<UserDto> _consultants = const [];
   UserDto? _selected;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _consultantsFuture ??= _loadConsultants();
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['users'],
+      channelName: 'consultants-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<UserDto>> _loadConsultants() async {
@@ -92,6 +119,7 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
     );
 
     if (created != true) return;
+    if (!mounted) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getConsultantsApi().consultantsPost(
           userRegistration: UserRegistration((b) => b
@@ -145,7 +173,6 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
             contextMenu: AppToolbar(
               title: const Text('Consultants'),
               actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
                 FilledButton.tonal(
                   onPressed: _createConsultant,
                   child: const Text('Add consultant'),
@@ -164,7 +191,6 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Consultants'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               FilledButton.tonal(
                 onPressed: _createConsultant,
                 child: const Text('Add consultant'),

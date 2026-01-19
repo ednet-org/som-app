@@ -39,13 +39,13 @@ mixin _$FutureStore<T> on FutureBase<T>, Store {
   late final _$futureAtom = Atom(name: 'FutureBase.future', context: context);
 
   @override
-  ObservableFuture<dynamic>? get future {
+  ObservableFuture<T?>? get future {
     _$futureAtom.reportRead();
     return super.future;
   }
 
   @override
-  set future(ObservableFuture<dynamic>? value) {
+  set future(ObservableFuture<T?>? value) {
     _$futureAtom.reportWrite(value, super.future, () {
       super.future = value;
     });

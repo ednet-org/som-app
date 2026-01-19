@@ -1,7 +1,10 @@
+import 'dart:ui' show FlutterView;
+
 import 'package:flutter/material.dart';
 
-Size size = WidgetsBinding.instance.window.physicalSize /
-    WidgetsBinding.instance.window.devicePixelRatio;
+FlutterView get _view => WidgetsBinding.instance.platformDispatcher.views.first;
+
+Size get size => _view.physicalSize / _view.devicePixelRatio;
 
 ///This method is used to set padding/margin (for the left and Right side) & width of the screen or widget according to the Viewport width.
 double getHorizontalSize(double px) {
@@ -10,8 +13,7 @@ double getHorizontalSize(double px) {
 
 ///This method is used to set padding/margin (for the top and bottom side) & height of the screen or widget according to the Viewport height.
 double getVerticalSize(double px) {
-  num statusBar =
-      MediaQueryData.fromWindow(WidgetsBinding.instance.window).viewPadding.top;
+  final statusBar = MediaQueryData.fromView(_view).viewPadding.top;
   num screenHeight = size.height - statusBar;
   return px * (screenHeight / 667);
 }

@@ -6,12 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 
 class UserAppBody extends StatefulWidget {
-  const UserAppBody({Key? key}) : super(key: key);
+  const UserAppBody({super.key});
 
   @override
   State<UserAppBody> createState() => _UserAppBodyState();
@@ -30,9 +31,13 @@ class _UserAppBodyState extends State<UserAppBody> {
   final _telephoneController = TextEditingController();
 
   bool _isSaving = false;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void dispose() {
+    _realtimeRefresh.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
     _salutationController.dispose();
@@ -45,6 +50,23 @@ class _UserAppBodyState extends State<UserAppBody> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _usersFuture ??= _loadUsers(context);
+    _setupRealtime();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['users'],
+      channelName: 'users-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<UserDto>> _loadUsers(BuildContext context) async {
@@ -167,6 +189,7 @@ class _UserAppBodyState extends State<UserAppBody> {
     );
 
     if (created != true) return;
+    if (!mounted) return;
 
     final roles = <UserRegistrationRolesEnum>[];
     if (role == 'buyer') {
@@ -239,8 +262,6 @@ class _UserAppBodyState extends State<UserAppBody> {
     final currentController = TextEditingController();
     final newController = TextEditingController();
     final confirmController = TextEditingController();
-    bool isSubmitting = false;
-
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -273,22 +294,12 @@ class _UserAppBodyState extends State<UserAppBody> {
           ),
           actions: [
             TextButton(
-              onPressed: isSubmitting
-                  ? null
-                  : () => Navigator.of(context).pop(false),
+              onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: isSubmitting
-                  ? null
-                  : () => Navigator.of(context).pop(true),
-              child: isSubmitting
-                  ? const SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Text('Update'),
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Update'),
             ),
           ],
         ),
@@ -296,6 +307,12 @@ class _UserAppBodyState extends State<UserAppBody> {
     );
 
     if (confirmed != true) {
+      currentController.dispose();
+      newController.dispose();
+      confirmController.dispose();
+      return;
+    }
+    if (!mounted) {
       currentController.dispose();
       newController.dispose();
       confirmController.dispose();
@@ -334,6 +351,7 @@ class _UserAppBodyState extends State<UserAppBody> {
   }
 
   void _showSnack(String message, {bool success = true}) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -381,6 +399,7 @@ class _UserAppBodyState extends State<UserAppBody> {
       ),
     );
     if (confirmed != true) return;
+    if (!mounted) return;
     final api = Provider.of<Openapi>(context, listen: false);
     await api.getUsersApi().companiesCompanyIdUsersUserIdRemovePost(
           companyId: companyId,
@@ -426,7 +445,6 @@ class _UserAppBodyState extends State<UserAppBody> {
             contextMenu: AppToolbar(
               title: const Text('Users'),
               actions: [
-                TextButton(onPressed: _refresh, child: const Text('Refresh')),
                 if (appStore.authorization?.isAdmin == true)
                   FilledButton.tonal(
                     onPressed: _createUser,
@@ -446,7 +464,6 @@ class _UserAppBodyState extends State<UserAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Users'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               if (appStore.authorization?.isAdmin == true)
                 FilledButton.tonal(
                   onPressed: _createUser,

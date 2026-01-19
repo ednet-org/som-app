@@ -7,7 +7,7 @@ import '../../domain/model/layout/main_body.dart';
 class CustomerRegisterPage extends StatefulWidget {
   static String tag = '/CustomerRegistrationPage';
 
-  const CustomerRegisterPage({Key? key}) : super(key: key);
+  const CustomerRegisterPage({super.key});
 
   @override
   State<CustomerRegisterPage> createState() => _CustomerRegisterPageState();

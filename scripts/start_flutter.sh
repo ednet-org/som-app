@@ -12,6 +12,8 @@ DEV_QUICK_LOGIN="${DEV_QUICK_LOGIN:-true}"
 DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"
 SYSTEM_ADMIN_PASSWORD="${SYSTEM_ADMIN_PASSWORD:-ChangeMe123!}"
 SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
+SUPABASE_URL="${SUPABASE_URL:-}"
+SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
 TARGET="${TARGET:-chrome}"
 FLUTTER_WEB_MODE="${FLUTTER_WEB_MODE:-debug}"
 START_DEPENDENCIES="${START_DEPENDENCIES:-true}"
@@ -63,6 +65,34 @@ ensure_supabase() {
   "$ROOT/scripts/start_supabase.sh"
 }
 
+load_supabase_env() {
+  if [[ -n "$SUPABASE_URL" && -n "$SUPABASE_ANON_KEY" ]]; then
+    return 0
+  fi
+  if ! command -v supabase >/dev/null 2>&1; then
+    return 0
+  fi
+  if ! command -v python3 >/dev/null 2>&1; then
+    return 0
+  fi
+  local status_json
+  status_json="$(supabase status --output json 2>/dev/null || true)"
+  if [[ -z "$status_json" ]]; then
+    return 0
+  fi
+  read -r SUPABASE_URL SUPABASE_ANON_KEY <<<"$(SUPA_JSON="$status_json" python3 - <<'PY'
+import json
+import os
+
+try:
+    info = json.loads(os.environ["SUPA_JSON"])
+except Exception:
+    info = {}
+print(info.get("API_URL", ""), info.get("ANON_KEY", ""))
+PY
+)"
+}
+
 ensure_api() {
   if is_api_running; then
     echo "API already running on ${API_HOST}:${API_PORT}"
@@ -85,6 +115,7 @@ if [[ "$START_DEPENDENCIES" == "true" ]]; then
   if is_local_api_host; then
     if [[ "$START_SUPABASE" == "true" ]]; then
       ensure_supabase
+      load_supabase_env
     fi
     if [[ "$START_API" == "true" ]]; then
       ensure_api
@@ -92,6 +123,20 @@ if [[ "$START_DEPENDENCIES" == "true" ]]; then
   else
     echo "API_BASE_URL is remote ($API_HOST). Skipping local dependency startup."
   fi
+fi
+
+DART_DEFINES=(
+  --dart-define=API_BASE_URL="$API_BASE_URL"
+  --dart-define=DEV_QUICK_LOGIN="$DEV_QUICK_LOGIN"
+  --dart-define=DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD"
+  --dart-define=SYSTEM_ADMIN_PASSWORD="$SYSTEM_ADMIN_PASSWORD"
+  --dart-define=SYSTEM_ADMIN_EMAIL="$SYSTEM_ADMIN_EMAIL"
+)
+if [[ -n "${SUPABASE_URL:-}" ]]; then
+  DART_DEFINES+=(--dart-define=SUPABASE_URL="$SUPABASE_URL")
+fi
+if [[ -n "${SUPABASE_ANON_KEY:-}" ]]; then
+  DART_DEFINES+=(--dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY")
 fi
 
 if [[ "$TARGET" == "macos" ]]; then
@@ -108,25 +153,13 @@ if [[ "$TARGET" == "chrome" || "$TARGET" == "web-server" ]]; then
   WEB_PORT="${WEB_PORT:-8090}"
   if [[ "$FLUTTER_WEB_MODE" == "release" ]]; then
     flutter build web --release \
-      --dart-define=API_BASE_URL="$API_BASE_URL" \
-      --dart-define=DEV_QUICK_LOGIN="$DEV_QUICK_LOGIN" \
-      --dart-define=DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD" \
-      --dart-define=SYSTEM_ADMIN_PASSWORD="$SYSTEM_ADMIN_PASSWORD" \
-      --dart-define=SYSTEM_ADMIN_EMAIL="$SYSTEM_ADMIN_EMAIL"
+      "${DART_DEFINES[@]}"
     exec python3 -m http.server "$WEB_PORT" -d build/web
   else
     exec flutter run -d "$TARGET" --web-port "$WEB_PORT" \
-      --dart-define=API_BASE_URL="$API_BASE_URL" \
-      --dart-define=DEV_QUICK_LOGIN="$DEV_QUICK_LOGIN" \
-      --dart-define=DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD" \
-      --dart-define=SYSTEM_ADMIN_PASSWORD="$SYSTEM_ADMIN_PASSWORD" \
-      --dart-define=SYSTEM_ADMIN_EMAIL="$SYSTEM_ADMIN_EMAIL"
+      "${DART_DEFINES[@]}"
   fi
 else
   exec flutter run -d "$TARGET" \
-    --dart-define=API_BASE_URL="$API_BASE_URL" \
-    --dart-define=DEV_QUICK_LOGIN="$DEV_QUICK_LOGIN" \
-    --dart-define=DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD" \
-    --dart-define=SYSTEM_ADMIN_PASSWORD="$SYSTEM_ADMIN_PASSWORD" \
-    --dart-define=SYSTEM_ADMIN_EMAIL="$SYSTEM_ADMIN_EMAIL"
+    "${DART_DEFINES[@]}"
 fi

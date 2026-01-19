@@ -18,7 +18,7 @@ class AppBarButton extends StatefulWidget {
   final String child;
 
   @override
-  _AppBarButtonState createState() => _AppBarButtonState();
+  State<AppBarButton> createState() => _AppBarButtonState();
 }
 
 class _AppBarButtonState extends State<AppBarButton> {
@@ -94,24 +94,16 @@ extension AppBarIconsExtension on AppBarIcons {
     switch (this) {
       case AppBarIcons.company:
         return SomAssets.iconSettings;
-
       case AppBarIcons.ads:
         return SomAssets.iconOffers;
-
       case AppBarIcons.inquiry:
         return SomAssets.iconInquiries;
-
       case AppBarIcons.offer:
         return SomAssets.iconOffers;
-
       case AppBarIcons.statistics:
         return SomAssets.iconStatistics;
-
       case AppBarIcons.user:
         return SomAssets.iconUser;
-
-      default:
-        return SomAssets.logoMark;
     }
   }
 }

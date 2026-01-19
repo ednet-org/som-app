@@ -73,48 +73,38 @@ class _PaymentIntervalSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      alignment: WrapAlignment.start,
-      direction: Axis.horizontal,
-      children: [
-        Radio(
-          value: PaymentInterval.Monthly,
-          groupValue: request.company.providerData.paymentInterval,
-          onChanged: (dynamic value) {
-            toast('$value Selected');
-            request.company.providerData.setPaymentInterval(
-              PaymentInterval.Monthly,
-            );
-          },
-        ),
-        GestureDetector(
-          onTap: () {
-            request.company.providerData.setPaymentInterval(
-              PaymentInterval.Monthly,
-            );
-          },
-          child: Text(PaymentInterval.Monthly.name),
-        ),
-        Radio(
-          value: PaymentInterval.Yearly,
-          groupValue: request.company.providerData.paymentInterval,
-          onChanged: (dynamic value) {
-            toast('$value Selected');
-            request.company.providerData.setPaymentInterval(
-              PaymentInterval.Yearly,
-            );
-          },
-        ),
-        GestureDetector(
-          onTap: () {
-            request.company.providerData.setPaymentInterval(
-              PaymentInterval.Yearly,
-            );
-          },
-          child: Text(PaymentInterval.Yearly.name),
-        ),
-      ],
+    return RadioGroup<PaymentInterval>(
+      groupValue: request.company.providerData.paymentInterval,
+      onChanged: (value) {
+        if (value == null) return;
+        toast('$value Selected');
+        request.company.providerData.setPaymentInterval(value);
+      },
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        alignment: WrapAlignment.start,
+        direction: Axis.horizontal,
+        children: [
+          const Radio(value: PaymentInterval.monthly),
+          GestureDetector(
+            onTap: () {
+              request.company.providerData.setPaymentInterval(
+                PaymentInterval.monthly,
+              );
+            },
+            child: Text(PaymentInterval.monthly.name),
+          ),
+          const Radio(value: PaymentInterval.yearly),
+          GestureDetector(
+            onTap: () {
+              request.company.providerData.setPaymentInterval(
+                PaymentInterval.yearly,
+              );
+            },
+            child: Text(PaymentInterval.yearly.name),
+          ),
+        ],
+      ),
     );
   }
 }

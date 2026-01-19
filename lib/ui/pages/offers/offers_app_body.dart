@@ -6,6 +6,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
 import '../../utils/formatters.dart';
@@ -17,7 +18,7 @@ import '../../widgets/empty_state.dart';
 import '../../widgets/status_badge.dart';
 
 class OffersAppBody extends StatefulWidget {
-  const OffersAppBody({Key? key}) : super(key: key);
+  const OffersAppBody({super.key});
 
   @override
   State<OffersAppBody> createState() => _OffersAppBodyState();
@@ -25,20 +26,44 @@ class OffersAppBody extends StatefulWidget {
 
 class _OffersAppBodyState extends State<OffersAppBody> {
   Future<List<_OfferWithInquiry>>? _offersFuture;
-  List<_OfferWithInquiry> _offers = const [];
   _OfferWithInquiry? _selected;
   String? _statusFilter;
   String? _error;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _offersFuture ??= _loadOffers();
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['offers', 'inquiries'],
+      channelName: 'offers-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<List<_OfferWithInquiry>> _loadOffers() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final appStore = Provider.of<Application>(context, listen: false);
 
     final allOffers = <_OfferWithInquiry>[];
 
@@ -72,7 +97,6 @@ class _OffersAppBodyState extends State<OffersAppBody> {
       UILogger.silentError('OffersAppBody._loadOffers.inquiries', error, stackTrace);
     }
 
-    _offers = allOffers;
     return allOffers;
   }
 
@@ -173,7 +197,6 @@ class _OffersAppBodyState extends State<OffersAppBody> {
     return AppToolbar(
       title: const Text('Offers'),
       actions: [
-        TextButton(onPressed: _refresh, child: const Text('Refresh')),
         DropdownButton<String?>(
           value: _statusFilter,
           hint: const Text('All Status'),

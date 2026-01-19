@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
@@ -6,6 +7,7 @@ import '../../infrastructure/i_repository.dart';
 
 part 'som.g.dart';
 
+// ignore: library_private_types_in_public_api
 class Som = _Som with _$Som;
 
 abstract class _Som with Store {
@@ -30,12 +32,12 @@ abstract class _Som with Store {
   List<TagModel> requestedBranches = [];
 
   @action
-  void requestBranch(branch) {
+  void requestBranch(TagModel branch) {
     requestedBranches.add(branch);
   }
 
   @action
-  void removeRequestedBranch(branch) {
+  void removeRequestedBranch(TagModel branch) {
     requestedBranches.remove(branch);
   }
 
@@ -93,7 +95,9 @@ abstract class _Som with Store {
           ObservableFuture(apiSubscriptionRepository.getAll());
 
       availableSubscriptions.data = await availableSubscriptions.future;
-      print(availableSubscriptions.data);
+      if (kDebugMode) {
+        debugPrint('${availableSubscriptions.data}');
+      }
       isLoadingData = false;
     } catch (e) {
       isLoadingData = false;

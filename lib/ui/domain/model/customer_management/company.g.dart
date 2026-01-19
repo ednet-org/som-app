@@ -9,33 +9,33 @@ part of 'company.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Company on _Company, Store {
-  Computed<dynamic>? _$isProviderComputed;
+  Computed<bool>? _$isProviderComputed;
 
   @override
-  dynamic get isProvider => (_$isProviderComputed ??= Computed<dynamic>(
+  bool get isProvider => (_$isProviderComputed ??= Computed<bool>(
     () => super.isProvider,
     name: '_Company.isProvider',
   )).value;
-  Computed<dynamic>? _$isBuyerComputed;
+  Computed<bool>? _$isBuyerComputed;
 
   @override
-  dynamic get isBuyer => (_$isBuyerComputed ??= Computed<dynamic>(
+  bool get isBuyer => (_$isBuyerComputed ??= Computed<bool>(
     () => super.isBuyer,
     name: '_Company.isBuyer',
   )).value;
-  Computed<dynamic>? _$numberOfAllowedUsersComputed;
+  Computed<int>? _$numberOfAllowedUsersComputed;
 
   @override
-  dynamic get numberOfAllowedUsers =>
-      (_$numberOfAllowedUsersComputed ??= Computed<dynamic>(
+  int get numberOfAllowedUsers =>
+      (_$numberOfAllowedUsersComputed ??= Computed<int>(
         () => super.numberOfAllowedUsers,
         name: '_Company.numberOfAllowedUsers',
       )).value;
-  Computed<dynamic>? _$canCreateMoreUsersComputed;
+  Computed<bool>? _$canCreateMoreUsersComputed;
 
   @override
-  dynamic get canCreateMoreUsers =>
-      (_$canCreateMoreUsersComputed ??= Computed<dynamic>(
+  bool get canCreateMoreUsers =>
+      (_$canCreateMoreUsersComputed ??= Computed<bool>(
         () => super.canCreateMoreUsers,
         name: '_Company.canCreateMoreUsers',
       )).value;
@@ -292,7 +292,7 @@ mixin _$Company on _Company, Store {
   );
 
   @override
-  void setAdmin(dynamic value) {
+  void setAdmin(RegistrationUser value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.setAdmin',
     );
@@ -316,7 +316,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void removeUser(dynamic position) {
+  void removeUser(int position) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.removeUser',
     );
@@ -376,7 +376,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void setPhoneNumber(dynamic value) {
+  void setPhoneNumber(String value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.setPhoneNumber',
     );
@@ -388,7 +388,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void setEmail(dynamic value) {
+  void setEmail(String value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.setEmail',
     );
@@ -400,7 +400,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void setUrl(dynamic value) {
+  void setUrl(String value) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.setUrl',
     );
@@ -424,7 +424,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void setRole(dynamic selectedRole) {
+  void setRole(Roles selectedRole) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.setRole',
     );
@@ -448,7 +448,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void activateBuyer(dynamic selectBuyer) {
+  void activateBuyer(bool selectBuyer) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.activateBuyer',
     );
@@ -460,7 +460,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void activateProvider(dynamic selectProvider) {
+  void activateProvider(bool selectProvider) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.activateProvider',
     );
@@ -472,7 +472,7 @@ mixin _$Company on _Company, Store {
   }
 
   @override
-  void switchRole(dynamic selectedRole) {
+  void switchRole(Roles selectedRole) {
     final _$actionInfo = _$_CompanyActionController.startAction(
       name: '_Company.switchRole',
     );

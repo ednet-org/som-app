@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
 
@@ -6,6 +7,7 @@ import '../login/email_login_store.dart';
 
 part 'user_account_confirmation.g.dart';
 
+// ignore: library_private_types_in_public_api
 class UserAccountConfirmation = _UserAccountConfirmationBase
     with _$UserAccountConfirmation;
 
@@ -61,7 +63,7 @@ abstract class _UserAccountConfirmationBase with Store {
   }
 
   @action
-  Future<dynamic> setUserPassword(contextCallback) async {
+  Future<void> setUserPassword(VoidCallback contextCallback) async {
     errorMessage = '';
 
     if (!isConfirmed || isConfirming || resetPasswordToken.isEmpty) {
@@ -123,7 +125,7 @@ abstract class _UserAccountConfirmationBase with Store {
   }
 
   @action
-  Future<dynamic> confirmEmail() async {
+  Future<void> confirmEmail() async {
     errorMessage = '';
     if (isConfirmed || isConfirming) {
       return;
@@ -131,8 +133,10 @@ abstract class _UserAccountConfirmationBase with Store {
 
     isConfirming = true;
 
-    print(token);
-    print(email);
+    if (kDebugMode) {
+      debugPrint(token);
+      debugPrint(email);
+    }
     if (token.isNotEmpty && email.isNotEmpty) {
       authService
           .authConfirmEmailGet(token: token, email: email)
@@ -145,7 +149,9 @@ abstract class _UserAccountConfirmationBase with Store {
       }).catchError((error) {
         errorMessage = 'Some error occurred: ${error.response.data['message']}';
         isConfirming = false;
-        print(error.response.data);
+        if (kDebugMode) {
+          debugPrint('${error.response.data}');
+        }
       });
     } else {
       errorMessage = 'ERROR in Confirming e-mail token:$token email:$email';

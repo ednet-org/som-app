@@ -9,11 +9,11 @@ class SomCard extends StatelessWidget {
   final bool isFeatured;
 
   const SomCard({
-    Key? key,
+    super.key,
     required this.child,
     this.padding = const EdgeInsets.all(24.0),
     this.isFeatured = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SomCard extends StatelessWidget {
               opacity: 0.08,
               child: kIsWeb
                   ? Container(
-                      color: theme.colorScheme.onSurface.withOpacity(0.04),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.04),
                     )
                   : SvgPicture.asset(
                       SomAssets.patternDotNoise,

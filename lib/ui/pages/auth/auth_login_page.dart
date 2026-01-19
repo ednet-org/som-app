@@ -14,7 +14,7 @@ import '../../domain/model/login.dart';
 class AuthLoginPage extends StatelessWidget {
   static String tag = '/DTLogin';
 
-  const AuthLoginPage({Key? key}) : super(key: key);
+  const AuthLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class AuthLoginPage extends StatelessWidget {
     bool is4K,
     BuildContext context,
     Application emailLoginStore,
-    constraints,
+    BoxConstraints constraints,
   ) {
     final logo = splitWithLogo(context, emailLoginStore, is4K, constraints);
     final login = splitWithLogin(context, is4K, constraints);
@@ -91,7 +91,12 @@ class AuthLoginPage extends StatelessWidget {
     return [Expanded(flex: 5, child: logo), Expanded(flex: 7, child: login)];
   }
 
-  splitWithLogo(context, emailLoginStore, is4K, BoxConstraints constraints) {
+  Widget splitWithLogo(
+    BuildContext context,
+    Application emailLoginStore,
+    bool is4K,
+    BoxConstraints constraints,
+  ) {
     final double maxLogoHeight = constraints.maxHeight.isFinite
         ? (constraints.maxHeight * 0.6).clamp(360.0, 640.0)
         : 520.0;
@@ -226,9 +231,11 @@ class AuthLoginPage extends StatelessWidget {
       width: 140,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withOpacity(0.06),
+        color: theme.colorScheme.primary.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.18)),
+        border: Border.all(
+          color: theme.colorScheme.primary.withValues(alpha: 0.18),
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -245,7 +252,11 @@ class AuthLoginPage extends StatelessWidget {
     );
   }
 
-  splitWithLogin(context, is4K, constraints) {
+  Widget splitWithLogin(
+    BuildContext context,
+    bool is4K,
+    BoxConstraints constraints,
+  ) {
     return Container(
       padding: const EdgeInsets.all(50.0),
       color: Theme.of(context).colorScheme.surface,

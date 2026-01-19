@@ -71,9 +71,46 @@ Future<void> main(List<String> arguments) async {
       defaultsTo: 'minimal',
     )
     ..addOption(
+      'dump-openai-request',
+      help: 'Write the first OpenAI request payload to this file',
+    )
+    ..addFlag(
+      'dump-openai-request-only',
+      help: 'Write the first OpenAI request payload and exit',
+      negatable: false,
+    )
+    ..addOption(
       'temperature',
       help: 'Sampling temperature (model-dependent)',
       defaultsTo: '0.2',
+    )
+    ..addOption(
+      'companies-file',
+      help:
+          'Path to JSON file with provider records (companyId/name/website/providerType)',
+    )
+    ..addOption(
+      'company-ids-file',
+      help:
+          'Path to JSON file with company IDs to enrich (strings or {companyId} objects)',
+    )
+    ..addOption(
+      'branches-file',
+      help: 'Path to JSON file with branch records',
+    )
+    ..addOption(
+      'categories-file',
+      help: 'Path to JSON file with category records',
+    )
+    ..addFlag(
+      'skip-mappings',
+      help: 'Skip loading company mappings (treat as empty)',
+      negatable: false,
+    )
+    ..addFlag(
+      'omit-branches',
+      help: 'Do not send branch list to the model (free-form branch names)',
+      negatable: false,
     )
     ..addOption(
       'output',
@@ -151,8 +188,16 @@ Future<void> main(List<String> arguments) async {
   final maxCompanies = int.tryParse(args['max-companies'] as String) ?? 200;
   final offset = int.tryParse(args['offset'] as String) ?? 0;
   final model = args['model'] as String;
+  final companiesFile = args['companies-file'] as String?;
+  final companyIdsFile = args['company-ids-file'] as String?;
+  final branchesFile = args['branches-file'] as String?;
+  final categoriesFile = args['categories-file'] as String?;
+  final skipMappings = args['skip-mappings'] as bool;
+  final omitBranches = args['omit-branches'] as bool;
   final openaiApi = args['openai-api'] as String;
   final reasoningEffort = args['openai-reasoning-effort'] as String;
+  final dumpRequestPath = args['dump-openai-request'] as String?;
+  final dumpRequestOnly = args['dump-openai-request-only'] as bool;
   final sleepMs = int.tryParse(args['sleep-ms'] as String) ?? 250;
   var temperature = double.tryParse(args['temperature'] as String) ?? 0.2;
   if (model.startsWith('gpt-5') && temperature != 1.0) {
@@ -198,8 +243,15 @@ Future<void> main(List<String> arguments) async {
   print('=' * 60);
   print('');
 
-  final config = SeedConfig.fromEnvironment(environment: environment);
-  final supabase = await SeedSupabaseClient.initialize(config);
+  final useSupabase = companiesFile == null ||
+      branchesFile == null ||
+      categoriesFile == null ||
+      (!skipMappings && companyIdsFile == null);
+  SeedSupabaseClient? supabase;
+  if (useSupabase) {
+    final config = SeedConfig.fromEnvironment(environment: environment);
+    supabase = await SeedSupabaseClient.initialize(config);
+  }
   final mapper = EntityToRecordMapper();
   final failOnUnsupported = args['fail-on-unsupported'] as bool;
   final openai = _OpenAiClient(
@@ -211,28 +263,52 @@ Future<void> main(List<String> arguments) async {
     useResponsesApi: useResponsesApi,
     reasoningEffort: reasoningEffort,
     compactMode: compactMode,
+    dumpRequestPath: dumpRequestPath,
+    dumpRequestOnly: dumpRequestOnly,
   );
   final writer = _SuggestionWriter(
     File(outputPath),
   );
 
   try {
-    final branches = await _loadBranches(supabase);
-    final categories = await _loadCategories(supabase);
+    final branches = branchesFile == null
+        ? (supabase == null
+            ? <String, _BranchInfo>{}
+            : await _loadBranches(supabase))
+        : _loadBranchesFromFile(branchesFile);
+    final categories = categoriesFile == null
+        ? (supabase == null
+            ? <String, _CategoryInfo>{}
+            : await _loadCategories(supabase))
+        : _loadCategoriesFromFile(categoriesFile);
 
-    final providers = await _loadProviders(
-      supabase,
-      offset: offset,
-      limit: maxCompanies,
-    );
+    final companyIdsFromFile =
+        companyIdsFile == null ? null : _loadCompanyIds(companyIdsFile);
+    var providers = companiesFile == null
+        ? await _loadProviders(
+            supabase!,
+            offset: offset,
+            limit: maxCompanies,
+            companyIds: companyIdsFromFile,
+          )
+        : _loadProvidersFromFile(companiesFile);
+    if (companyIdsFromFile != null && providers.isNotEmpty) {
+      final allowed = companyIdsFromFile.toSet();
+      providers = providers
+          .where((row) =>
+              row.companyId != null && allowed.contains(row.companyId))
+          .toList();
+    }
     if (providers.isEmpty) {
       print('No providers found for enrichment.');
       return;
     }
 
-    final companyIds =
+    final providerCompanyIds =
         providers.map((row) => row.companyId).whereType<String>().toList();
-    final mappings = await _loadMappings(supabase, companyIds);
+    final mappings = skipMappings || supabase == null
+        ? _emptyMappings(providerCompanyIds)
+        : await _loadMappings(supabase, providerCompanyIds);
 
     var processed = 0;
     var applied = 0;
@@ -259,6 +335,7 @@ Future<void> main(List<String> arguments) async {
         categories: categories.values.toList(),
         mappings: mappings,
         compactMode: compactMode,
+        omitBranches: omitBranches,
       );
 
       List<_ClassificationResult>? results;
@@ -348,9 +425,11 @@ Future<void> main(List<String> arguments) async {
     print('Processed: $processed');
     print('Suggestions applied: $applied');
     print('Output: ${writer.file.path}');
+  } on _DumpOnlyException {
+    print('OpenAI request dumped to ${dumpRequestPath ?? 'unknown path'}');
   } finally {
     await writer.close();
-    await supabase.close();
+    await supabase?.close();
   }
 }
 
@@ -373,6 +452,31 @@ Future<Map<String, _BranchInfo>> _loadBranches(
       externalId: row['external_id'] as String?,
     );
     map[normalized] = info;
+  }
+  return map;
+}
+
+Map<String, _BranchInfo> _loadBranchesFromFile(String path) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    throw StateError('Branches file not found: $path');
+  }
+  final raw = jsonDecode(file.readAsStringSync());
+  final map = <String, _BranchInfo>{};
+  if (raw is List) {
+    for (final entry in raw) {
+      if (entry is! Map<String, dynamic>) continue;
+      final name = entry['name'] as String? ?? '';
+      if (name.isEmpty) continue;
+      final normalized = entry['normalized_name'] as String? ?? _normalize(name);
+      map[normalized] = _BranchInfo(
+        id: entry['id'] as String? ?? '',
+        name: name,
+        status: entry['status'] as String? ?? 'active',
+        normalizedName: normalized,
+        externalId: entry['external_id'] as String?,
+      );
+    }
   }
   return map;
 }
@@ -401,11 +505,61 @@ Future<Map<String, _CategoryInfo>> _loadCategories(
   return map;
 }
 
+Map<String, _CategoryInfo> _loadCategoriesFromFile(String path) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    throw StateError('Categories file not found: $path');
+  }
+  final raw = jsonDecode(file.readAsStringSync());
+  final map = <String, _CategoryInfo>{};
+  if (raw is List) {
+    for (final entry in raw) {
+      if (entry is! Map<String, dynamic>) continue;
+      final name = entry['name'] as String? ?? '';
+      final branchId = entry['branch_id'] as String? ?? '';
+      if (name.isEmpty || branchId.isEmpty) continue;
+      final normalized = entry['normalized_name'] as String? ?? _normalize(name);
+      final key = '$branchId|$normalized';
+      map[key] = _CategoryInfo(
+        id: entry['id'] as String? ?? '',
+        branchId: branchId,
+        name: name,
+        status: entry['status'] as String? ?? 'active',
+        normalizedName: normalized,
+        externalId: entry['external_id'] as String?,
+      );
+    }
+  }
+  return map;
+}
+
 Future<List<_ProviderRow>> _loadProviders(
   SeedSupabaseClient supabase, {
   required int offset,
   required int limit,
+  List<String>? companyIds,
 }) async {
+  if (companyIds != null && companyIds.isNotEmpty) {
+    final results = <_ProviderRow>[];
+    const chunkSize = 50;
+    final sliced =
+        companyIds.length > limit ? companyIds.take(limit).toList() : companyIds;
+    for (var i = 0; i < sliced.length; i += chunkSize) {
+      final end = min(i + chunkSize, sliced.length);
+      final chunk = sliced.sublist(i, end);
+      final rows = await supabase.client
+          .from('provider_profiles')
+          .select(
+              'company_id,provider_type,companies!inner(id,name,website_url,address_json)')
+          .inFilter('provider_type', _materialProviderTypes)
+          .inFilter('company_id', chunk) as List<dynamic>;
+      results.addAll(rows
+          .cast<Map<String, dynamic>>()
+          .map((row) => _ProviderRow.fromJson(row)));
+    }
+    return results;
+  }
+
   final rows = await supabase.client
       .from('provider_profiles')
       .select(
@@ -417,6 +571,29 @@ Future<List<_ProviderRow>> _loadProviders(
       .cast<Map<String, dynamic>>()
       .map((row) => _ProviderRow.fromJson(row))
       .toList();
+}
+
+List<_ProviderRow> _loadProvidersFromFile(String path) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    throw StateError('Companies file not found: $path');
+  }
+  final raw = jsonDecode(file.readAsStringSync());
+  final rows = <_ProviderRow>[];
+  if (raw is List) {
+    for (final entry in raw) {
+      if (entry is! Map<String, dynamic>) continue;
+      rows.add(_ProviderRow(
+        companyId: entry['companyId'] as String?,
+        providerType: entry['providerType'] as String?,
+        companyName: entry['name'] as String?,
+        websiteUrl: entry['websiteUrl'] as String?,
+        city: null,
+        zip: null,
+      ));
+    }
+  }
+  return rows;
 }
 
 Future<Map<String, _CompanyMappings>> _loadMappings(
@@ -465,8 +642,16 @@ Future<Map<String, _CompanyMappings>> _loadMappings(
   return result;
 }
 
+Map<String, _CompanyMappings> _emptyMappings(List<String> companyIds) {
+  final map = <String, _CompanyMappings>{};
+  for (final id in companyIds) {
+    map[id] = _CompanyMappings.empty();
+  }
+  return map;
+}
+
 Future<_Suggestion?> _applySuggestion({
-  required SeedSupabaseClient supabase,
+  required SeedSupabaseClient? supabase,
   required EntityToRecordMapper mapper,
   required _ProviderRow provider,
   required Map<String, _BranchInfo> branches,
@@ -503,7 +688,7 @@ Future<_Suggestion?> _applySuggestion({
   if (mapping.activeBranchIds.contains(branchInfo.id) ||
       mapping.pendingBranchIds.contains(branchInfo.id)) {
     // Already mapped to this branch.
-  } else if (!dryRun) {
+  } else if (!dryRun && supabase != null) {
     await supabase.client.from('company_branches').upsert(
       {
         'company_id': companyId,
@@ -559,7 +744,7 @@ Future<_Suggestion?> _applySuggestion({
     } else {
       newCategoryCount += 1;
     }
-    if (!dryRun) {
+    if (!dryRun && supabase != null) {
       await supabase.client.from('company_categories').upsert(
         {
           'company_id': companyId,
@@ -598,7 +783,7 @@ Future<_Suggestion?> _applySuggestion({
 }
 
 Future<_BranchInfo?> _createBranch({
-  required SeedSupabaseClient supabase,
+  required SeedSupabaseClient? supabase,
   required EntityToRecordMapper mapper,
   required Map<String, _BranchInfo> branches,
   required String name,
@@ -607,7 +792,7 @@ Future<_BranchInfo?> _createBranch({
 }) async {
   final externalId = 'name:$normalized';
   final branchId = mapper.generateBranchId(externalId);
-  if (!dryRun) {
+  if (!dryRun && supabase != null) {
     await supabase.client.from('branches').upsert(
       {
         'id': branchId,
@@ -631,7 +816,7 @@ Future<_BranchInfo?> _createBranch({
 }
 
 Future<_CategoryInfo?> _createCategory({
-  required SeedSupabaseClient supabase,
+  required SeedSupabaseClient? supabase,
   required EntityToRecordMapper mapper,
   required Map<String, _CategoryInfo> categories,
   required _BranchInfo branch,
@@ -641,7 +826,7 @@ Future<_CategoryInfo?> _createCategory({
 }) async {
   final externalId = 'name:${branch.externalId ?? branch.id}:$normalized';
   final categoryId = mapper.generateCategoryId(externalId);
-  if (!dryRun) {
+  if (!dryRun && supabase != null) {
     await supabase.client.from('categories').upsert(
       {
         'id': categoryId,
@@ -672,9 +857,11 @@ String _buildBatchPrompt({
   required List<_CategoryInfo> categories,
   required Map<String, _CompanyMappings> mappings,
   required bool compactMode,
+  required bool omitBranches,
 }) {
   // Keep prompt compact to avoid timeouts for large batches.
-  final branchNames = branches.map((b) => b.name).toList();
+  final branchNames =
+      omitBranches ? <String>[] : branches.map((b) => b.name).toList();
 
   final companies = <Map<String, dynamic>>[];
   for (final provider in providers) {
@@ -702,9 +889,12 @@ String _buildBatchPrompt({
   if (compactMode) {
     return jsonEncode({
       'c': companies,
-      'b': branchNames,
-      'i':
-          'For each company in c, choose the best branch from b and up to 3 categories. '
+      if (!omitBranches) 'b': branchNames,
+      'i': omitBranches
+          ? 'For each company in c, propose a branch name and up to 3 categories. '
+              'If service-only or unclear, set branch to null and categories empty. '
+              'Return JSON only.'
+          : 'For each company in c, choose the best branch from b and up to 3 categories. '
               'If service-only or unclear, set branch to null and categories empty. '
               'Return JSON only.',
     });
@@ -712,9 +902,12 @@ String _buildBatchPrompt({
 
   return jsonEncode({
     'companies': companies,
-    'availableBranches': branchNames,
-    'instructions':
-        'For each company, pick the best branch and up to 3 categories for a MATERIAL-GOODS provider. '
+    if (!omitBranches) 'availableBranches': branchNames,
+    'instructions': omitBranches
+        ? 'For each company, propose a branch name and up to 3 categories for a MATERIAL-GOODS provider. '
+            'If service-only or unclear, set branch to null and categories to empty. '
+            'Return results in the same order as provided.'
+        : 'For each company, pick the best branch and up to 3 categories for a MATERIAL-GOODS provider. '
             'If service-only or unclear, set branch to null and categories to empty. '
             'Return results in the same order as provided.',
   });
@@ -726,6 +919,30 @@ String _normalize(String value) {
       .replaceAll(RegExp(r'[,_]+'), ' ')
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
+}
+
+List<String> _loadCompanyIds(String path) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    throw StateError('Company IDs file not found: $path');
+  }
+  final raw = jsonDecode(file.readAsStringSync());
+  final ids = <String>[];
+  if (raw is List) {
+    for (final entry in raw) {
+      if (entry is String) {
+        if (entry.trim().isNotEmpty) {
+          ids.add(entry.trim());
+        }
+      } else if (entry is Map<String, dynamic>) {
+        final id = entry['companyId'] as String?;
+        if (id != null && id.trim().isNotEmpty) {
+          ids.add(id.trim());
+        }
+      }
+    }
+  }
+  return ids;
 }
 
 void _printUsage(ArgParser parser) {
@@ -748,6 +965,8 @@ class _OpenAiClient {
     required this.useResponsesApi,
     required this.reasoningEffort,
     required this.compactMode,
+    required this.dumpRequestPath,
+    required this.dumpRequestOnly,
   });
 
   final String apiKey;
@@ -758,6 +977,9 @@ class _OpenAiClient {
   final bool useResponsesApi;
   final String reasoningEffort;
   final bool compactMode;
+  final String? dumpRequestPath;
+  final bool dumpRequestOnly;
+  bool _dumped = false;
 
   Future<_Classification?> classify(String prompt) async {
     if (useResponsesApi) {
@@ -767,7 +989,7 @@ class _OpenAiClient {
   }
 
   Future<_Classification?> _classifyChat(String prompt) async {
-    final body = jsonEncode({
+    final payload = {
       'model': model,
       'messages': [
         {
@@ -820,7 +1042,9 @@ class _OpenAiClient {
           },
         },
       },
-    });
+    };
+    _maybeDump(payload);
+    final body = jsonEncode(payload);
 
     http.Response response;
     try {
@@ -888,7 +1112,7 @@ class _OpenAiClient {
   }
 
   Future<List<_ClassificationResult>?> _classifyBatchChat(String prompt) async {
-    final body = jsonEncode({
+    final payload = {
       'model': model,
       'messages': [
         {
@@ -946,7 +1170,9 @@ class _OpenAiClient {
           },
         },
       },
-    });
+    };
+    _maybeDump(payload);
+    final body = jsonEncode(payload);
 
     http.Response response;
     try {
@@ -1134,7 +1360,7 @@ class _OpenAiClient {
   }
 
   Future<_Classification?> _classifyResponses(String prompt) async {
-    final body = jsonEncode({
+    final payload = {
       'model': model,
       'instructions':
           'You are a taxonomy classifier for B2B material goods providers. '
@@ -1153,7 +1379,9 @@ class _OpenAiClient {
           'schema': _singleSchema(),
         },
       },
-    });
+    };
+    _maybeDump(payload);
+    final body = jsonEncode(payload);
 
     http.Response response;
     try {
@@ -1197,7 +1425,7 @@ class _OpenAiClient {
   Future<List<_ClassificationResult>?> _classifyBatchResponses(
     String prompt,
   ) async {
-    final body = jsonEncode({
+    final payload = {
       'model': model,
       'instructions':
           'You are a taxonomy classifier for B2B material goods providers. '
@@ -1216,7 +1444,9 @@ class _OpenAiClient {
           'schema': _batchSchema(),
         },
       },
-    });
+    };
+    _maybeDump(payload);
+    final body = jsonEncode(payload);
 
     http.Response response;
     try {
@@ -1324,7 +1554,22 @@ class _OpenAiClient {
     final fallback = decoded['output_text'];
     return fallback is String ? fallback : null;
   }
+
+  void _maybeDump(Map<String, dynamic> payload) {
+    if (_dumped || dumpRequestPath == null) return;
+    final file = File(dumpRequestPath!);
+    file.parent.createSync(recursive: true);
+    file.writeAsStringSync(
+      const JsonEncoder.withIndent('  ').convert(payload),
+    );
+    _dumped = true;
+    if (dumpRequestOnly) {
+      throw _DumpOnlyException();
+    }
+  }
 }
+
+class _DumpOnlyException implements Exception {}
 
 class _ClassificationResult {
   _ClassificationResult({

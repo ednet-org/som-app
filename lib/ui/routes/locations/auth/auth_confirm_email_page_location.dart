@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/pages/auth/auth_confirm-email_page.dart';
+import 'package:som/ui/pages/auth/auth_confirm_email_page.dart';
 
 class AuthConfirmEmailPageNotifier extends ChangeNotifier
     with RouteInformationSerializable {
@@ -30,8 +30,10 @@ class AuthConfirmEmailPageNotifier extends ChangeNotifier
   }
 
   @override
-  fromRouteInformation(RouteInformation routeInformation) {
-    final uri = Uri.parse(routeInformation.location ?? '/');
+  AuthConfirmEmailPageNotifier fromRouteInformation(
+    RouteInformation routeInformation,
+  ) {
+    final uri = routeInformation.uri;
     if (uri.pathSegments.isNotEmpty) {
       _token = uri.queryParameters['token'];
       _email = uri.queryParameters['email'];
@@ -41,19 +43,27 @@ class AuthConfirmEmailPageNotifier extends ChangeNotifier
 
   @override
   RouteInformation toRouteInformation() {
-    String uriString = 'auth/confirmEmail';
+    final params = <String, String>{};
     if (_token != null) {
-      uriString += '?token=$_token';
+      params['token'] = _token!;
     }
     if (_email != null) {
-      uriString += '&?email=$_email';
+      params['email'] = _email!;
     }
-    return RouteInformation(location: uriString.isEmpty ? '/' : uriString);
+    final uri = Uri(
+      path: '/auth/confirmEmail',
+      queryParameters: params.isEmpty ? null : params,
+    );
+    return RouteInformation(uri: uri);
   }
 
-  void updateWith(String token, String email) {
-    _token = token;
-    _email = email;
+  void updateWith(String? token, String? email) {
+    if (token != null) {
+      _token = token;
+    }
+    if (email != null) {
+      _email = email;
+    }
     notifyListeners();
   }
 }
@@ -74,7 +84,7 @@ class AuthConfirmEmailPageLocation
   void updateState(RouteInformation routeInformation) {
     final data =
         AuthConfirmEmailPageNotifier().fromRouteInformation(routeInformation);
-    state.updateWith(data.email, data.token);
+    state.updateWith(data.token, data.email);
   }
 
   @override
@@ -90,8 +100,7 @@ class AuthConfirmEmailPageLocation
   @override
   List<BeamPage> buildPages(
       BuildContext context, AuthConfirmEmailPageNotifier state) {
-    final hasError =
-        state.routeInformation.location?.contains('error') ?? false;
+    final hasError = state.routeInformation.uri.path.contains('error');
     return [
       BeamPage(
         key: const ValueKey('confirm-email'),

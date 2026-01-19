@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/customer_management/roles.dart';
+import '../infrastructure/supabase_realtime.dart';
 
 part 'application.g.dart';
 
+// ignore: library_private_types_in_public_api
 class Application = _Application with _$Application;
 
 abstract class _Application with Store {
@@ -40,7 +41,7 @@ abstract class _Application with Store {
   String selectedLanguage = 'de';
 
   @observable
-  var selectedDrawerItem = -1;
+  int selectedDrawerItem = -1;
 
   @computed
   VisualDensity get visualDensity => density.visualDensity;
@@ -114,16 +115,18 @@ abstract class _Application with Store {
   }
 
   @computed
-  get isAuthenticated => authorization != null;
+  bool get isAuthenticated => authorization != null;
 
   @action
-  logout() {
+  void logout() {
     authorization = null;
+    SupabaseRealtime.setAuth(null);
   }
 
   @action
-  login(Authorization aAuthorization) async {
+  void login(Authorization aAuthorization) {
     authorization = aAuthorization;
+    SupabaseRealtime.setAuth(aAuthorization.token);
   }
 
   @action
@@ -161,7 +164,7 @@ class Authorization {
   String? companyId;
   String? companyName;
   String? emailAddress;
-  var user;
+  Object? user;
 
   Authorization({
     this.companyRole,
@@ -190,7 +193,7 @@ class Authorization {
     String? companyId,
     String? companyName,
     String? emailAddress,
-    dynamic user,
+    Object? user,
   }) {
     return Authorization(
       companyRole: companyRole ?? this.companyRole,
@@ -412,7 +415,7 @@ class CurrentLayoutAndUIConstraints {
     );
   }
 
-  static _getDeviceType(BoxConstraints constraints) {
+  static DeviceType _getDeviceType(BoxConstraints constraints) {
     /// How to get from Flutter environment deviceType?
     if (constraints.maxWidth < 500.0) {
       return DeviceType.mobile;
@@ -425,7 +428,7 @@ class CurrentLayoutAndUIConstraints {
     }
   }
 
-  static _getDisplayResolution(BoxConstraints constraints) {
+  static DisplayResolution _getDisplayResolution(BoxConstraints constraints) {
     if (constraints.maxWidth < DisplayResolution.upTo240p.maxWidth) {
       return DisplayResolution.upTo240p;
     } else if (constraints.maxWidth < DisplayResolution.upTo360p.maxWidth) {
@@ -448,7 +451,9 @@ class CurrentLayoutAndUIConstraints {
   }
 
   // TODO: not good, just WIP
-  static _getUIDensity(BoxConstraints constraints) {
+  static UIDensityFromBoxConstraints _getUIDensity(
+    BoxConstraints constraints,
+  ) {
     if (constraints.maxWidth < UIDensityFromBoxConstraints.upToLDPI.max) {
       return UIDensityFromBoxConstraints.upToLDPI;
     } else if (constraints.maxWidth <
@@ -471,7 +476,7 @@ class CurrentLayoutAndUIConstraints {
     }
   }
 
-  static _getDeviceOrientation(BoxConstraints constraints) {
+  static DeviceOrientation _getDeviceOrientation(BoxConstraints constraints) {
     if (constraints.maxHeight > constraints.maxWidth) {
       return DeviceOrientation.portraitUp;
     } else {

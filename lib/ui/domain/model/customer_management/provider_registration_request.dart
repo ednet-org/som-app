@@ -2,10 +2,11 @@ import 'package:mobx/mobx.dart';
 
 import 'bank_details.dart';
 import 'branch.dart';
-import 'payment-interval.dart';
+import 'payment_interval.dart';
 
 part 'provider_registration_request.g.dart';
 
+// ignore: library_private_types_in_public_api
 class ProviderRegistrationRequest = _ProviderRegistrationRequest
     with _$ProviderRegistrationRequest;
 
@@ -23,7 +24,7 @@ abstract class _ProviderRegistrationRequest with Store {
   void addBranch(Branch value) => branches.add(value);
 
   @observable
-  PaymentInterval? paymentInterval = PaymentInterval.Yearly;
+  PaymentInterval? paymentInterval = PaymentInterval.yearly;
 
   @action
   void setPaymentInterval(PaymentInterval value) => paymentInterval = value;

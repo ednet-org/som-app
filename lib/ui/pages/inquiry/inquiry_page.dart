@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
@@ -24,7 +25,7 @@ const _apiBaseUrl = String.fromEnvironment(
 ///
 /// Orchestrates the inquiry list, detail view, create form, and filters.
 class InquiryPage extends StatefulWidget {
-  const InquiryPage({Key? key}) : super(key: key);
+  const InquiryPage({super.key});
 
   @override
   State<InquiryPage> createState() => _InquiryPageState();
@@ -37,6 +38,9 @@ class _InquiryPageState extends State<InquiryPage> {
   bool _loadingOffers = false;
   String? _offersError;
   String? _inquiriesError;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   bool _bootstrapped = false;
   List<Branch> _branches = const [];
@@ -72,10 +76,40 @@ class _InquiryPageState extends State<InquiryPage> {
       _bootstrapped = true;
       _bootstrap();
     }
+    _setupRealtime();
     final createParam = Uri.base.queryParameters['create'];
     if (createParam == 'true') {
       _showCreateForm = true;
     }
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+    if (_selectedInquiry?.id != null) {
+      _loadOffers(_selectedInquiry!.id);
+    }
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const [
+        'inquiries',
+        'offers',
+        'inquiry_assignments',
+      ],
+      channelName: 'inquiries-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<void> _bootstrap() async {
@@ -225,9 +259,8 @@ class _InquiryPageState extends State<InquiryPage> {
         ..deadline = data.deadline.toUtc()
         ..deliveryZips.replace(data.deliveryZips)
         ..numberOfProviders = data.numberOfProviders
-        ..description = data.description?.isEmpty == true
-            ? null
-            : data.description
+        ..description =
+            data.description?.isEmpty == true ? null : data.description
         ..productTags.replace(data.productTags)
         ..providerZip = data.providerZip?.isEmpty == true
             ? null
@@ -242,33 +275,55 @@ class _InquiryPageState extends State<InquiryPage> {
         ..firstName = data.contactFirstName?.isEmpty == true
             ? null
             : data.contactFirstName
-        ..lastName = data.contactLastName?.isEmpty == true
-            ? null
-            : data.contactLastName
+        ..lastName =
+            data.contactLastName?.isEmpty == true ? null : data.contactLastName
         ..telephone = data.contactTelephone?.isEmpty == true
             ? null
             : data.contactTelephone
         ..email = data.contactEmail?.isEmpty == true ? null : data.contactEmail,
     );
 
-    final response = await api.getInquiriesApi().createInquiry(
-      createInquiryRequest: request,
-    );
-    final inquiry = response.data;
+    try {
+      final response = await api.getInquiriesApi().createInquiry(
+        createInquiryRequest: request,
+      );
+      final inquiry = response.data;
 
-    if (inquiry?.id != null && data.pdfFile?.bytes != null) {
-      await api.getInquiriesApi().inquiriesInquiryIdPdfPost(
-        inquiryId: inquiry!.id!,
-        file: MultipartFile.fromBytes(
-          data.pdfFile!.bytes!,
-          filename: data.pdfFile!.name,
-        ),
+      if (inquiry?.id == null) {
+        throw Exception('Inquiry created without an id.');
+      }
+
+      if (data.pdfFile?.bytes != null) {
+        try {
+          await api.getInquiriesApi().inquiriesInquiryIdPdfPost(
+            inquiryId: inquiry!.id!,
+            file: MultipartFile.fromBytes(
+              data.pdfFile!.bytes!,
+              filename: data.pdfFile!.name,
+            ),
+          );
+        } on DioException catch (error) {
+          final message =
+              error.response?.data?.toString() ?? error.message ?? '';
+          _showSnack(message.isEmpty
+              ? 'Inquiry created, but PDF upload failed.'
+              : 'Inquiry created, but PDF upload failed: $message');
+        } catch (_) {
+          _showSnack('Inquiry created, but PDF upload failed.');
+        }
+      }
+
+      _showSnack('Inquiry created.');
+      if (mounted) {
+        setState(() => _showCreateForm = false);
+      }
+      await _refresh();
+    } on DioException catch (error) {
+      final message = error.response?.data?.toString() ?? error.message ?? '';
+      throw Exception(
+        message.isEmpty ? 'Failed to create inquiry.' : message,
       );
     }
-
-    _showSnack('Inquiry created.');
-    setState(() => _showCreateForm = false);
-    await _refresh();
   }
 
   Future<Branch> _ensureBranch(String name) async {
@@ -684,7 +739,6 @@ class _InquiryPageState extends State<InquiryPage> {
     return AppToolbar(
       title: const Text('Inquiries'),
       actions: [
-        TextButton(onPressed: _refresh, child: const Text('Refresh')),
         TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
         if (appStore.authorization?.isBuyer == true)
           FilledButton.tonal(

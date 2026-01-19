@@ -1,5 +1,5 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:som/ui/pages/customer/customer_register_page.dart';
 
 class CustomerRegisterPageLocation extends BeamLocation<BeamState> {

@@ -8,6 +8,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../utils/ui_logger.dart';
@@ -19,7 +20,7 @@ const _apiBaseUrl = String.fromEnvironment(
 );
 
 class StatisticsAppBody extends StatefulWidget {
-  const StatisticsAppBody({Key? key}) : super(key: key);
+  const StatisticsAppBody({super.key});
 
   @override
   State<StatisticsAppBody> createState() => _StatisticsAppBodyState();
@@ -32,12 +33,39 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
   String? _userIdFilter;
   String _consultantType = 'status';
   List<UserDto> _companyUsers = const [];
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _statsFuture ??= _loadStats();
     _loadCompanyUsers();
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+    _loadCompanyUsers();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['inquiries', 'offers', 'inquiry_assignments', 'users'],
+      channelName: 'statistics-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<void> _loadCompanyUsers() async {
@@ -152,11 +180,10 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
         final data = snapshot.data ?? _StatsResult();
         return AppBody(
           contextMenu: AppToolbar(
-            title: const Text('Statistics'),
-            actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
-              TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
-            ],
+      title: const Text('Statistics'),
+      actions: [
+        TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
+      ],
           ),
           leftSplit: ListView(
             padding: const EdgeInsets.all(16),

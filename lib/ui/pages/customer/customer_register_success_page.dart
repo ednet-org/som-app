@@ -9,7 +9,7 @@ import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 import '../../domain/model/customer_management/registration_request.dart';
 
 class CustomerRegisterSuccessPage extends StatelessWidget {
-  const CustomerRegisterSuccessPage({Key? key}) : super(key: key);
+  const CustomerRegisterSuccessPage({super.key});
 
   @override
   Widget build(BuildContext context) {

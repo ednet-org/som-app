@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../utils/ui_logger.dart';
 import '../../widgets/app_toolbar.dart';
@@ -36,6 +37,9 @@ class _AdsPageState extends State<AdsPage> {
 
   bool _showCreateForm = false;
   bool _bootstrapped = false;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
@@ -45,6 +49,29 @@ class _AdsPageState extends State<AdsPage> {
       _bootstrapped = true;
       _bootstrap();
     }
+    _setupRealtime();
+  }
+
+  @override
+  void dispose() {
+    _realtimeRefresh.dispose();
+    super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['ads'],
+      channelName: 'ads-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<void> _bootstrap() async {
@@ -286,7 +313,6 @@ class _AdsPageState extends State<AdsPage> {
     return AppToolbar(
       title: const Text('SOM Ads'),
       actions: [
-        TextButton(onPressed: _refresh, child: const Text('Refresh')),
         if (appStore.authorization?.isBuyer != true)
           FilledButton.tonal(
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),

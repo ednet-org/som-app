@@ -5,11 +5,12 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:som/ui/domain/application/application.dart';
 
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/model.dart' hide BankDetails;
 import '../../widgets/app_toolbar.dart';
 
 class CompanyAppBody extends StatefulWidget {
-  const CompanyAppBody({Key? key}) : super(key: key);
+  const CompanyAppBody({super.key});
 
   @override
   State<CompanyAppBody> createState() => _CompanyAppBodyState();
@@ -28,15 +29,20 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
   ProviderProfile? _providerProfile;
   List<Product> _products = const [];
   String? _providerError;
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _companyFuture ??= _loadCompany(context);
+    _setupRealtime();
   }
 
   @override
   void dispose() {
+    _realtimeRefresh.dispose();
     _nameController.dispose();
     _websiteController.dispose();
     _ibanController.dispose();
@@ -44,6 +50,22 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     _ownerController.dispose();
     _productController.dispose();
     super.dispose();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _refresh();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['companies', 'provider_profiles', 'products'],
+      channelName: 'company-page',
+    );
+    _realtimeReady = true;
   }
 
   Future<CompanyDto?> _loadCompany(BuildContext context) async {
@@ -222,7 +244,6 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
           contextMenu: AppToolbar(
             title: const Text('Company'),
             actions: [
-              TextButton(onPressed: _refresh, child: const Text('Refresh')),
               FilledButton.tonal(
                 onPressed: _updateCompany,
                 child: const Text('Save'),
@@ -247,10 +268,10 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                 Text('Type: ${company.type ?? '-'}'),
                 if (company.address != null) ...[
                   const SizedBox(height: 8),
-                  Text('Address: ${company.address!.street ?? ''} '
-                      '${company.address!.number ?? ''}, '
-                      '${company.address!.zip ?? ''} '
-                      '${company.address!.city ?? ''}'),
+                  Text('Address: ${company.address!.street} '
+                      '${company.address!.number}, '
+                      '${company.address!.zip} '
+                      '${company.address!.city}'),
                 ],
               ],
             ),

@@ -15,6 +15,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:som/domain/infrastructure/repository/api/lib/api_subscription_repository.dart';
 import 'package:som/ui/pages/not_found_page.dart';
 import 'package:som/ui/routes/routes.dart';
+import 'package:som/ui/domain/infrastructure/supabase_realtime.dart';
 
 import 'ui/domain/application/application.dart';
 import 'ui/domain/application/som_localizations.dart';
@@ -28,6 +29,16 @@ import 'ui/theme/som_theme_futuristic.dart';
 const apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
   defaultValue: 'http://localhost:8081',
+);
+
+const supabaseUrl = String.fromEnvironment(
+  'SUPABASE_URL',
+  defaultValue: '',
+);
+
+const supabaseAnonKey = String.fromEnvironment(
+  'SUPABASE_ANON_KEY',
+  defaultValue: '',
 );
 
 final apiInstance = Openapi(
@@ -50,6 +61,10 @@ const env = String.fromEnvironment('env', defaultValue: 'dev');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseRealtime.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
+  );
   initDomainModel();
   // nb_utils - Must be initialize before using shared preference
   await initialize();

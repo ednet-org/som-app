@@ -9,7 +9,7 @@ abstract class FutureBase<T> with Store {
   String? errorMessage;
 
   @observable
-  ObservableFuture? future;
+  ObservableFuture<T?>? future;
 
   @observable
   T? data;
@@ -17,7 +17,7 @@ abstract class FutureBase<T> with Store {
   @computed
   FutureState? get futureState => _computeFutureState(future);
 
-  _computeFutureState(ObservableFuture? future) {
+  FutureState _computeFutureState(ObservableFuture<T?>? future) {
     if (future == null || future.status == FutureStatus.rejected) {
       return FutureState.initial;
     }

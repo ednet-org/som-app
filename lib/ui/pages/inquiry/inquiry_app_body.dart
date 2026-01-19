@@ -8,7 +8,7 @@ export 'inquiry_page.dart' show InquiryPage;
 
 /// @deprecated Use [InquiryPage] instead.
 class InquiryAppBody extends StatelessWidget {
-  const InquiryAppBody({Key? key}) : super(key: key);
+  const InquiryAppBody({super.key});
 
   @override
   Widget build(BuildContext context) {

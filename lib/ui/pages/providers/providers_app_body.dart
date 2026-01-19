@@ -7,6 +7,7 @@ import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/application/application.dart';
+import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
 import '../../utils/formatters.dart';
@@ -23,7 +24,7 @@ const _apiBaseUrl = String.fromEnvironment(
 const _pageSize = 50;
 
 class ProvidersAppBody extends StatefulWidget {
-  const ProvidersAppBody({Key? key}) : super(key: key);
+  const ProvidersAppBody({super.key});
 
   @override
   State<ProvidersAppBody> createState() => _ProvidersAppBodyState();
@@ -54,6 +55,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
   String? _search;
 
   List<Branch> _branches = const [];
+  bool _realtimeReady = false;
+  late final RealtimeRefreshHandle _realtimeRefresh =
+      RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
   void initState() {
@@ -63,6 +67,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
 
   @override
   void dispose() {
+    _realtimeRefresh.dispose();
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _searchController.dispose();
@@ -76,6 +81,24 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       _loadInitialProviders();
       _loadBranches();
     }
+    _setupRealtime();
+  }
+
+  void _handleRealtimeRefresh() {
+    if (!mounted) return;
+    _loadInitialProviders();
+    _loadBranches();
+  }
+
+  void _setupRealtime() {
+    if (_realtimeReady) return;
+    final appStore = Provider.of<Application>(context, listen: false);
+    SupabaseRealtime.setAuth(appStore.authorization?.token);
+    _realtimeRefresh.subscribe(
+      tables: const ['provider_profiles', 'branches', 'categories'],
+      channelName: 'providers-page',
+    );
+    _realtimeReady = true;
   }
 
   void _onScroll() {
@@ -272,6 +295,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     );
 
     if (confirmed != true) return;
+    if (!mounted) return;
 
     final api = Provider.of<Openapi>(context, listen: false);
     try {
@@ -289,6 +313,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
   }
 
   void _showSnackbar(String message) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
@@ -358,7 +383,6 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       contextMenu: AppToolbar(
         title: Text('Providers ($_totalCount total)'),
         actions: [
-          TextButton(onPressed: _refresh, child: const Text('Refresh')),
           TextButton(
             onPressed: _filterPendingOnly,
             child: const Text('Pending Approval'),

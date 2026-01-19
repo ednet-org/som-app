@@ -9,11 +9,11 @@ part of 'registration_user.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RegistrationUser on _RegistrationUser, Store {
-  Computed<dynamic>? _$hasAcceptedTermsAndPoliciesComputed;
+  Computed<bool>? _$hasAcceptedTermsAndPoliciesComputed;
 
   @override
-  dynamic get hasAcceptedTermsAndPolicies =>
-      (_$hasAcceptedTermsAndPoliciesComputed ??= Computed<dynamic>(
+  bool get hasAcceptedTermsAndPolicies =>
+      (_$hasAcceptedTermsAndPoliciesComputed ??= Computed<bool>(
         () => super.hasAcceptedTermsAndPolicies,
         name: '_RegistrationUser.hasAcceptedTermsAndPolicies',
       )).value;

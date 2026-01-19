@@ -2,3 +2,7 @@
 #include "../../Flutter/Flutter-Debug.xcconfig"
 #include "Warnings.xcconfig"
 #include "AppInfo.xcconfig"
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = Apple Development
+DEVELOPMENT_TEAM = C59QKN5ZRS
+ENABLE_HARDENED_RUNTIME = NO

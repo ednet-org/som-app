@@ -1,5 +1,3 @@
-library ui_model;
-
 export './app_bar/app_bar_button.dart';
 export './auth/authenticated_application.dart';
 export './buttons/action_button.dart';
@@ -8,9 +6,8 @@ export './customer_management/address.dart';
 export './customer_management/auth_forgot_password_page_state.dart';
 export './customer_management/bank_details.dart';
 export './customer_management/branch.dart';
-export './customer_management/buyer-registration-request.dart';
 export './customer_management/company.dart';
-export './customer_management/payment-interval.dart';
+export './customer_management/payment_interval.dart';
 export './customer_management/provider_registration_request.dart';
 export './customer_management/registration_request.dart';
 export './customer_management/registration_user.dart';

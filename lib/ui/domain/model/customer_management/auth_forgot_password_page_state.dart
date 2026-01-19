@@ -3,6 +3,7 @@ import 'package:openapi/openapi.dart';
 
 part 'auth_forgot_password_page_state.g.dart';
 
+// ignore: library_private_types_in_public_api
 class AuthForgotPasswordPageState = _AuthForgotPasswordPageState
     with _$AuthForgotPasswordPageState;
 

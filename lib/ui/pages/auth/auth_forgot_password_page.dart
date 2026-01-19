@@ -9,7 +9,7 @@ import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import '../../domain/model/model.dart';
 
 class AuthForgotPasswordPage extends StatelessWidget {
-  const AuthForgotPasswordPage({Key? key}) : super(key: key);
+  const AuthForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {

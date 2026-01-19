@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:som/ui/domain/application/application.dart';
 import 'package:som/ui/domain/model/customer_management/roles.dart';
 
 import 'address.dart';
@@ -7,11 +8,12 @@ import 'registration_user.dart';
 
 part 'company.g.dart';
 
+// ignore: library_private_types_in_public_api
 class Company = _Company with _$Company;
 
 abstract class _Company with Store {
-  final appStore;
-  final sharedPrefs;
+  final Application appStore;
+  final Object sharedPrefs;
 
   _Company(this.appStore, this.sharedPrefs);
 
@@ -41,7 +43,7 @@ abstract class _Company with Store {
   Address address = Address();
 
   @observable
-  Roles role = Roles.Buyer;
+  Roles role = Roles.buyer;
 
   @observable
   ProviderRegistrationRequest providerData = ProviderRegistrationRequest();
@@ -59,25 +61,22 @@ abstract class _Company with Store {
   bool privacyAccepted = false;
 
   @action
-  void setAdmin(value) => admin = value;
+  void setAdmin(RegistrationUser value) => admin = value;
 
   @computed
-  get isProvider => role == Roles.Provider || role == Roles.ProviderAndBuyer;
+  bool get isProvider =>
+      role == Roles.provider || role == Roles.providerAndBuyer;
 
   @computed
-  get isBuyer => role == Roles.Buyer || role == Roles.ProviderAndBuyer;
+  bool get isBuyer => role == Roles.buyer || role == Roles.providerAndBuyer;
 
   @computed
-  get numberOfAllowedUsers {
+  int get numberOfAllowedUsers {
     if (isBuyer) {
       return 50;
     }
 
-    if (providerData.maxUsers != null) {
-      return providerData.maxUsers;
-    }
-
-    return 5;
+    return providerData.maxUsers ?? 5;
   }
 
   @observable
@@ -102,13 +101,13 @@ abstract class _Company with Store {
   }
 
   @action
-  void removeUser(position) {
+  void removeUser(int position) {
     users.removeAt(position);
     numberOfUsers--;
   }
 
   @computed
-  get canCreateMoreUsers => users.length < numberOfAllowedUsers;
+  bool get canCreateMoreUsers => users.length < numberOfAllowedUsers;
 
   /// Mutations
   @action
@@ -124,17 +123,17 @@ abstract class _Company with Store {
   void setName(String value) => name = value;
 
   @action
-  void setPhoneNumber(value) {
+  void setPhoneNumber(String value) {
     phoneNumber = value;
   }
 
   @action
-  void setEmail(value) {
+  void setEmail(String value) {
     email = value;
   }
 
   @action
-  void setUrl(value) {
+  void setUrl(String value) {
     url = value;
   }
 
@@ -142,7 +141,7 @@ abstract class _Company with Store {
   void setAddress(Address value) => address = value;
 
   @action
-  void setRole(selectedRole) {
+  void setRole(Roles selectedRole) {
     role = selectedRole;
   }
 
@@ -151,50 +150,50 @@ abstract class _Company with Store {
       providerData = value;
 
   @action
-  void activateBuyer(selectBuyer) {
+  void activateBuyer(bool selectBuyer) {
     if (selectBuyer) {
-      if (role == Roles.Provider) {
-        role = Roles.ProviderAndBuyer;
+      if (role == Roles.provider) {
+        role = Roles.providerAndBuyer;
       } else {
-        role = Roles.Buyer;
+        role = Roles.buyer;
       }
     } else {
-      if (role == Roles.Buyer || role == Roles.ProviderAndBuyer) {
-        role = Roles.Provider;
+      if (role == Roles.buyer || role == Roles.providerAndBuyer) {
+        role = Roles.provider;
       }
     }
   }
 
   @action
-  void activateProvider(selectProvider) {
+  void activateProvider(bool selectProvider) {
     if (selectProvider) {
-      if (role == Roles.Buyer) {
-        role = Roles.ProviderAndBuyer;
+      if (role == Roles.buyer) {
+        role = Roles.providerAndBuyer;
       } else {
-        role = Roles.Provider;
+        role = Roles.provider;
       }
     } else {
-      if (role == Roles.Provider || role == Roles.ProviderAndBuyer) {
-        role = Roles.Buyer;
+      if (role == Roles.provider || role == Roles.providerAndBuyer) {
+        role = Roles.buyer;
       }
     }
   }
 
   @action
-  void switchRole(selectedRole) {
+  void switchRole(Roles selectedRole) {
     switch (selectedRole) {
-      case Roles.Buyer:
-        if (role == Roles.Buyer || role == Roles.ProviderAndBuyer) {
-          role = Roles.Provider;
+      case Roles.buyer:
+        if (role == Roles.buyer || role == Roles.providerAndBuyer) {
+          role = Roles.provider;
         } else {
-          role = Roles.ProviderAndBuyer;
+          role = Roles.providerAndBuyer;
         }
         break;
-      case Roles.Provider:
-        if (role == Roles.Provider || role == Roles.ProviderAndBuyer) {
-          role = Roles.Buyer;
+      case Roles.provider:
+        if (role == Roles.provider || role == Roles.providerAndBuyer) {
+          role = Roles.buyer;
         } else {
-          role = Roles.ProviderAndBuyer;
+          role = Roles.providerAndBuyer;
         }
         break;
       default:

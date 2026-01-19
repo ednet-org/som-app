@@ -81,7 +81,7 @@ class CompanyDTO {
     };
   }
 
-  copyWith({
+  CompanyDTO copyWith({
     String? id,
     String? name,
     String? branch,
@@ -127,7 +127,7 @@ class EditCompanyForm extends StatefulWidget {
   const EditCompanyForm({super.key, required this.company});
 
   @override
-  _EditCompanyFormState createState() => _EditCompanyFormState();
+  State<EditCompanyForm> createState() => _EditCompanyFormState();
 }
 
 class _EditCompanyFormState extends State<EditCompanyForm> {
@@ -532,8 +532,7 @@ class _EditCompanyFormState extends State<EditCompanyForm> {
 //
 
 class CompanyFormWithSomTextInputs extends StatelessWidget {
-  CompanyFormWithSomTextInputs({Key? key, required this.company})
-      : super(key: key);
+  CompanyFormWithSomTextInputs({super.key, required this.company});
 
   final CompanyDTO company;
   final _formKey = GlobalKey<FormState>();

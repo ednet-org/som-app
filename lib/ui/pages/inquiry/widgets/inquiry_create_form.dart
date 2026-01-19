@@ -15,7 +15,7 @@ import '../../../widgets/design_system/som_button.dart';
 /// delivery details, provider criteria, and contact information.
 class InquiryCreateForm extends StatefulWidget {
   const InquiryCreateForm({
-    Key? key,
+    super.key,
     required this.branches,
     required this.onSubmit,
     required this.onEnsureBranch,
@@ -26,7 +26,7 @@ class InquiryCreateForm extends StatefulWidget {
     this.initialContactLastName,
     this.initialContactTelephone,
     this.initialContactEmail,
-  }) : super(key: key);
+  });
 
   final List<Branch> branches;
   final Future<void> Function(InquiryFormData data) onSubmit;
@@ -216,13 +216,16 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     final text = _branchController.text.trim();
     if (text.isEmpty) return null;
     final match = _findBranchByText(text);
-    if (match?.id != null) {
-      setState(() {
-        _selectedBranchId = match!.id;
-        _selectedCategoryId = null;
-        _categoryController.clear();
-      });
-      return match.id!;
+    final matchId = match?.id;
+    if (matchId != null) {
+      if (_selectedBranchId != matchId) {
+        setState(() {
+          _selectedBranchId = matchId;
+          _selectedCategoryId = null;
+          _categoryController.clear();
+        });
+      }
+      return matchId;
     }
     try {
       final created = await widget.onEnsureBranch(text);
@@ -245,9 +248,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
     final text = _categoryController.text.trim();
     if (text.isEmpty) return null;
     final match = _findCategoryByText(text);
-    if (match?.id != null) {
-      setState(() => _selectedCategoryId = match!.id);
-      return match.id!;
+    final matchId = match?.id;
+    if (matchId != null) {
+      setState(() => _selectedCategoryId = matchId);
+      return matchId;
     }
     try {
       final created = await widget.onEnsureCategory(_selectedBranchId!, text);
@@ -312,6 +316,8 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
         ),
       );
       _clearForm();
+    } catch (error) {
+      _showSnack(_formatError(error));
     } finally {
       setState(() => _isSubmitting = false);
     }
@@ -332,9 +338,17 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
   }
 
   void _showSnack(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  String _formatError(Object error) {
+    final message = error.toString();
+    if (message.startsWith('Exception: ')) {
+      return message.substring('Exception: '.length);
+    }
+    return message;
   }
 
   @override

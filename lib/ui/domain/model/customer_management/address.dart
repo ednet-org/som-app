@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 
 part 'address.g.dart';
 
+// ignore: library_private_types_in_public_api
 class Address = _Address with _$Address;
 
 abstract class _Address with Store {

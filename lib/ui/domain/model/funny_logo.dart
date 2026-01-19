@@ -11,8 +11,7 @@ class FunnyLogo extends StatelessWidget {
 
   final Color? color;
 
-  const FunnyLogo({Key? key, this.height = 300.0, this.color})
-      : super(key: key);
+  const FunnyLogo({super.key, this.height = 300.0, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +28,7 @@ class FunnyLogo extends StatelessWidget {
               padding: EdgeInsets.all(height / 4),
               child: ImageIcon(
                 size: height,
+                color: iconColor,
                 const AssetImage(SomAssets.logoPng),
               ),
             ),

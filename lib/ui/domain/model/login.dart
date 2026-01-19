@@ -27,7 +27,7 @@ const _systemAdminEmail = String.fromEnvironment(
 class Login extends StatelessWidget {
   static String tag = '/Login';
 
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +224,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  welcomeMessage(context) {
+  Widget welcomeMessage(BuildContext context) {
     return Column(
       children: [
         AutoSizeText.rich(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ExpandedSplit extends StatelessWidget {
-  final child;
+  final Widget? child;
 
-  const ExpandedSplit({Key? key, this.child}) : super(key: key);
+  const ExpandedSplit({super.key, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class ExpandedSplit extends StatelessWidget {
       flex: 9,
       child: Padding(
         padding: const EdgeInsets.all(5),
-        child: child,
+        child: child ?? const SizedBox.shrink(),
       ),
     );
   }

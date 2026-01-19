@@ -4,12 +4,13 @@ part 'registration_user.g.dart';
 
 /// Model of registering customer,
 /// it can have state - be invited and prepopulated
+// ignore: library_private_types_in_public_api
 class RegistrationUser = _RegistrationUser with _$RegistrationUser;
 
 enum CompanyRole { buyer, provider, admin }
 
 abstract class _RegistrationUser with Store {
-  _RegistrationUser({this.email});
+  _RegistrationUser();
   @observable
   String? firstName;
 
@@ -65,5 +66,5 @@ abstract class _RegistrationUser with Store {
   void setRole(CompanyRole value) => role = value;
 
   @computed
-  get hasAcceptedTermsAndPolicies => terms != null && policies != null;
+  bool get hasAcceptedTermsAndPolicies => terms != null && policies != null;
 }

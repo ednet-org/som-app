@@ -1,11 +1,10 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:som/ui/domain/model/funny_logo.dart';
 
 import '../domain/model/model.dart';
 
 class NotFoundPage extends StatelessWidget {
-  const NotFoundPage({Key? key}) : super(key: key);
+  const NotFoundPage({super.key});
 
   @override
   Widget build(BuildContext context) {

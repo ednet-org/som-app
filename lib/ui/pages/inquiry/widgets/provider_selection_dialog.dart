@@ -37,11 +37,11 @@ typedef LoadProvidersCallback =
 /// Supports pagination and search for handling large provider datasets (125k+).
 class ProviderSelectionDialog extends StatefulWidget {
   const ProviderSelectionDialog({
-    Key? key,
+    super.key,
     required this.branches,
     required this.maxProviders,
     required this.loadProviders,
-  }) : super(key: key);
+  });
 
   final List<Branch> branches;
   final int maxProviders;

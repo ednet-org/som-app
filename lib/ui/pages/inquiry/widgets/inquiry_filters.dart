@@ -10,7 +10,7 @@ import '../../../widgets/design_system/som_button.dart';
 /// Displays expandable filter panel with dropdowns and date pickers.
 class InquiryFilters extends StatelessWidget {
   const InquiryFilters({
-    Key? key,
+    super.key,
     required this.branches,
     required this.companyUsers,
     required this.statusFilter,
@@ -37,7 +37,7 @@ class InquiryFilters extends StatelessWidget {
     required this.onEditorChanged,
     required this.onClear,
     required this.onApply,
-  }) : super(key: key);
+  });
 
   final List<Branch> branches;
   final List<UserDto> companyUsers;

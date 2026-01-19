@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 class FormSectionHeader extends StatelessWidget {
   final String label;
 
-  const FormSectionHeader({Key? key, required this.label}) : super(key: key);
+  const FormSectionHeader({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {

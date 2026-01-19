@@ -64,11 +64,11 @@ class SomTheme {
         ),
       ),
       dividerTheme: DividerThemeData(
-        color: colorScheme.outlineVariant.withOpacity(0.6),
+        color: colorScheme.outlineVariant.withValues(alpha: 0.6),
         space: 1,
         thickness: 1,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: colorScheme.surface,
         surfaceTintColor: colorScheme.surfaceTint,
         elevation: 0,
@@ -79,7 +79,7 @@ class SomTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SomRadius.md),
           side: BorderSide(
-            color: colorScheme.outlineVariant.withOpacity(0.4),
+            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
           ),
         ),
       ),
@@ -101,7 +101,7 @@ class SomTheme {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(SomRadius.sm),
           borderSide: BorderSide(
-            color: colorScheme.outlineVariant.withOpacity(0.5),
+            color: colorScheme.outlineVariant.withValues(alpha: 0.5),
           ),
         ),
         focusedBorder: OutlineInputBorder(

@@ -3,7 +3,7 @@ import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 class TestHorizontalListView extends StatefulWidget {
-  TestHorizontalListView({Key? key}) : super(key: key);
+  const TestHorizontalListView({super.key});
 
   @override
   State<TestHorizontalListView> createState() => _TestHorizontalListViewState();
@@ -31,9 +31,10 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
     'W'
   ];
 
-  final ScrollController _horizontal_scrollcontroller = ScrollController();
+  final ScrollController _horizontalScrollController = ScrollController();
 
-  _buildCard(String value) {
+  // ignore: unused_element
+  Widget _buildCard(String value) {
     return Expanded(
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 20.0),
@@ -43,20 +44,20 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
               child: Expanded(
                   child: Text(value,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30))),
+                      style: const TextStyle(fontSize: 30))),
             )));
   }
 
   void _scrollRight() {
-    _horizontal_scrollcontroller.animateTo(
-      _horizontal_scrollcontroller.position.maxScrollExtent,
+    _horizontalScrollController.animateTo(
+      _horizontalScrollController.position.maxScrollExtent,
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
   }
 
   void _scrollLeft() {
-    _horizontal_scrollcontroller.animateTo(
+    _horizontalScrollController.animateTo(
       0,
       duration: Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
@@ -74,7 +75,7 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
     return Expanded(
         flex: 1,
         child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
                 height: 500,
                 width: MediaQuery.of(context).size.width,
                 child: Row(children: [
@@ -89,7 +90,7 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
                     child: Scrollbar(
                       child: ListView.builder(
                           itemCount: lstData.length,
-                          controller: _horizontal_scrollcontroller,
+                          controller: _horizontalScrollController,
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             return Container(
@@ -164,7 +165,8 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
   //   );
   // }
 
-  _buildCardB(String value) {
+  // ignore: unused_element
+  Widget _buildCardB(String value) {
     return Expanded(
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 20.0),
@@ -174,7 +176,7 @@ class _TestHorizontalListViewState extends State<TestHorizontalListView> {
               child: Expanded(
                   child: Text(value,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30))),
+                      style: const TextStyle(fontSize: 30))),
             )));
   }
 }

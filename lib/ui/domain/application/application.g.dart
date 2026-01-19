@@ -24,14 +24,13 @@ mixin _$Application on _Application, Store {
         () => super.visualDensity,
         name: '_Application.visualDensity',
       )).value;
-  Computed<dynamic>? _$isAuthenticatedComputed;
+  Computed<bool>? _$isAuthenticatedComputed;
 
   @override
-  dynamic get isAuthenticated =>
-      (_$isAuthenticatedComputed ??= Computed<dynamic>(
-        () => super.isAuthenticated,
-        name: '_Application.isAuthenticated',
-      )).value;
+  bool get isAuthenticated => (_$isAuthenticatedComputed ??= Computed<bool>(
+    () => super.isAuthenticated,
+    name: '_Application.isAuthenticated',
+  )).value;
   Computed<CurrentLayoutAndUIConstraints>? _$layoutComputed;
 
   @override
@@ -213,16 +212,6 @@ mixin _$Application on _Application, Store {
     return _$loadPreferencesAsyncAction.run(() => super.loadPreferences());
   }
 
-  late final _$loginAsyncAction = AsyncAction(
-    '_Application.login',
-    context: context,
-  );
-
-  @override
-  Future login(Authorization aAuthorization) {
-    return _$loginAsyncAction.run(() => super.login(aAuthorization));
-  }
-
   late final _$_ApplicationActionController = ActionController(
     name: '_Application',
     context: context,
@@ -313,12 +302,24 @@ mixin _$Application on _Application, Store {
   }
 
   @override
-  dynamic logout() {
+  void logout() {
     final _$actionInfo = _$_ApplicationActionController.startAction(
       name: '_Application.logout',
     );
     try {
       return super.logout();
+    } finally {
+      _$_ApplicationActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void login(Authorization aAuthorization) {
+    final _$actionInfo = _$_ApplicationActionController.startAction(
+      name: '_Application.login',
+    );
+    try {
+      return super.login(aAuthorization);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }

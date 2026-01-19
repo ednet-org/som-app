@@ -9,10 +9,10 @@ class SomBadge extends StatelessWidget {
   final SomBadgeType type;
 
   const SomBadge({
-    Key? key,
+    super.key,
     required this.text,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

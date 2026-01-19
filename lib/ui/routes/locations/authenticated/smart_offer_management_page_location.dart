@@ -8,8 +8,6 @@ class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    final isCompanyLocation =
-        state.routeInformation.location?.contains('company') ?? false;
     return [
       const BeamPage(
         key: ValueKey('smart offer management page'),

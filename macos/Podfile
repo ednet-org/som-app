@@ -40,6 +40,12 @@ post_install do |installer|
     flutter_additional_macos_build_settings(target)
     target.build_configurations.each do |config|
       config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.15'
+      next unless config.name == 'Debug'
+      config.build_settings['CODE_SIGN_STYLE'] = 'Automatic'
+      config.build_settings['CODE_SIGN_IDENTITY'] = 'Apple Development'
+      config.build_settings['DEVELOPMENT_TEAM'] = 'C59QKN5ZRS'
+      config.build_settings['ENABLE_HARDENED_RUNTIME'] = 'NO'
+      config.build_settings.delete('OTHER_CODE_SIGN_FLAGS')
     end
   end
 end

@@ -17,6 +17,16 @@ analyzer:
     - lib/domain/model/**/ednet_core/**
     - lib/generated/**
     - lib/playground/**
+    - seed-data/**
+    - lib/ui/utils/auto_size_text/**
+    - lib/ui/utils/clusteringGoogleMaps/**
+    - lib/ui/utils/AppModel.dart
+    - lib/ui/utils/AppStrings.dart
+    - lib/ui/utils/AppImages.dart
+    - lib/ui/utils/ListModels.dart
+    - lib/ui/domain/model/cards/inquiry/positioned _info.dart
+    - lib/ui/domain/model/cards/**
+    - lib/ui/domain/model/inquiry_view_model.dart
     # UI layer now analyzed - removed lib/ui/** exclusion
 
 linter:

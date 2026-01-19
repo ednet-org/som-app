@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class SpacedContainer extends StatelessWidget {
   final Widget horizontalBody;
 
-  const SpacedContainer({Key? key, required this.horizontalBody})
-      : super(key: key);
+  const SpacedContainer({super.key, required this.horizontalBody});
 
   @override
   Widget build(BuildContext context) {

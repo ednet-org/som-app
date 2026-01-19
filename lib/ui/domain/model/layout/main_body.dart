@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MainBody extends StatelessWidget {
-  final child;
+  final Widget? child;
 
-  const MainBody({Key? key, this.child}) : super(key: key);
+  const MainBody({super.key, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class MainBody extends StatelessWidget {
             width: 800,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: child,
+              child: child ?? const SizedBox.shrink(),
             ),
           ),
         ),
