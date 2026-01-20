@@ -1,5 +1,4 @@
 import 'package:beamer/beamer.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
@@ -605,9 +604,7 @@ class SomApplication extends StatelessWidget {
     try {
       final response = await api.getAuthApi().authSwitchRolePost(
             authSwitchRolePostRequest:
-                AuthSwitchRolePostRequest((b) => b
-                  ..role = role
-                  ..companyId = companyId),
+                AuthSwitchRolePostRequest((b) => b..role = role),
           );
       final token = response.data?.token;
       if (token != null) {
@@ -619,7 +616,7 @@ class SomApplication extends StatelessWidget {
                   headers: {'Authorization': 'Bearer $token'},
                 );
         final profileData = profile?.data;
-        final companyOptions = _mapCompanyOptions(profileData?.companyOptions);
+        final companyOptions = _mapCompanyOptions(profileData);
         appStore.login(
           appStore.authorization!.copyWith(
             token: token,
@@ -627,7 +624,7 @@ class SomApplication extends StatelessWidget {
                 appStore.authorization?.roles,
             activeRole: profileData?.activeRole ?? role,
             companyId: profileData?.companyId ?? companyId,
-            activeCompanyId: profileData?.activeCompanyId ?? companyId,
+            activeCompanyId: profileData?.companyId ?? companyId,
             companyName: profileData?.companyName ??
                 appStore.authorization?.companyName,
             companyType: _companyTypeFromApi(profileData?.companyType) ??
@@ -645,21 +642,19 @@ class SomApplication extends StatelessWidget {
   }
 
   List<CompanyContext> _mapCompanyOptions(
-    BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>? value,
+    UsersLoadUserWithCompanyGet200Response? data,
   ) {
-    if (value == null) return const [];
-    return value
-        .map(
-          (option) => CompanyContext(
-            companyId: option.companyId ?? '',
-            companyName: option.companyName ?? '',
-            companyType: _companyTypeFromApi(option.companyType) ?? 0,
-            roles: option.roles?.toList() ?? const [],
-            activeRole: option.activeRole ?? '',
-          ),
-        )
-        .where((option) => option.companyId.isNotEmpty)
-        .toList();
+    final companyId = data?.companyId ?? '';
+    if (companyId.isEmpty) return const [];
+    return [
+      CompanyContext(
+        companyId: companyId,
+        companyName: data?.companyName ?? '',
+        companyType: _companyTypeFromApi(data?.companyType) ?? 0,
+        roles: data?.roles?.toList() ?? const [],
+        activeRole: data?.activeRole ?? '',
+      ),
+    ];
   }
 
   int? _companyTypeFromApi(

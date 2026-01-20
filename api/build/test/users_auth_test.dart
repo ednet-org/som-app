@@ -4,7 +4,9 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_test/dart_frog_test.dart';
 import 'package:test/test.dart';
 
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
+import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import '../routes/Companies/[companyId]/registerUser.dart' as register_route;
 import '../routes/Companies/[companyId]/users/index.dart' as list_route;
@@ -42,10 +44,53 @@ void main() {
       );
       context.provide<UserRepository>(users);
       context.provide<AuthService>(auth);
+      context.provide<CompanyRepository>(companies);
 
       final response =
           await register_route.onRequest(context.context, company.id);
       expect(response.statusCode, 403);
+    });
+
+    test('register user logs audit entry', () async {
+      final companies = InMemoryCompanyRepository();
+      final users = InMemoryUserRepository();
+      final auth = createAuthService(users);
+      final auditRepo = InMemoryAuditLogRepository();
+      final audit = AuditService(repository: auditRepo);
+      final company = await seedCompany(companies);
+      final admin = await seedUser(
+        users,
+        company,
+        email: 'admin@acme.test',
+        roles: const ['admin'],
+      );
+      final token = buildTestJwt(userId: admin.id);
+
+      final context = TestRequestContext(
+        path: '/Companies/${company.id}/registerUser',
+        method: HttpMethod.post,
+        headers: {
+          'content-type': 'application/json',
+          'authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'email': 'new@acme.test',
+          'firstName': 'New',
+          'lastName': 'User',
+          'salutation': 'Mr',
+          'roles': [2],
+        }),
+      );
+      context.provide<UserRepository>(users);
+      context.provide<AuthService>(auth);
+      context.provide<AuditService>(audit);
+      context.provide<CompanyRepository>(companies);
+
+      final response =
+          await register_route.onRequest(context.context, company.id);
+      expect(response.statusCode, 200);
+      final entries = await auditRepo.listRecent();
+      expect(entries.first.action, 'user.created');
     });
 
     test('list users returns only self for non-admin', () async {

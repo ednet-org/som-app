@@ -31,6 +31,32 @@ Future<void> openInquiryPdf(
   }
 }
 
+Future<void> generateInquirySummaryPdf(
+  BuildContext context, {
+  required String inquiryId,
+}) async {
+  final api = Provider.of<Openapi>(context, listen: false);
+  try {
+    final response = await api.dio.post('/inquiries/$inquiryId/pdf/generate');
+    final signedUrl = _extractSignedUrl(response.data);
+    if (signedUrl == null || signedUrl.isEmpty) {
+      throw StateError('Missing signed URL');
+    }
+    await launchUrl(
+      Uri.parse(signedUrl),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!context.mounted) return;
+    SomSnackBars.success(context, 'Summary PDF generated.');
+  } on DioException {
+    if (!context.mounted) return;
+    SomSnackBars.error(context, 'Failed to generate summary PDF.');
+  } catch (_) {
+    if (!context.mounted) return;
+    SomSnackBars.error(context, 'Failed to generate summary PDF.');
+  }
+}
+
 Future<void> openOfferPdf(
   BuildContext context, {
   required String offerId,
@@ -54,4 +80,41 @@ Future<void> openOfferPdf(
     if (!context.mounted) return;
     SomSnackBars.error(context, 'Failed to download PDF.');
   }
+}
+
+Future<void> generateOfferSummaryPdf(
+  BuildContext context, {
+  required String offerId,
+}) async {
+  final api = Provider.of<Openapi>(context, listen: false);
+  try {
+    final response = await api.dio.post('/offers/$offerId/pdf/generate');
+    final signedUrl = _extractSignedUrl(response.data);
+    if (signedUrl == null || signedUrl.isEmpty) {
+      throw StateError('Missing signed URL');
+    }
+    await launchUrl(
+      Uri.parse(signedUrl),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!context.mounted) return;
+    SomSnackBars.success(context, 'Summary PDF generated.');
+  } on DioException {
+    if (!context.mounted) return;
+    SomSnackBars.error(context, 'Failed to generate summary PDF.');
+  } catch (_) {
+    if (!context.mounted) return;
+    SomSnackBars.error(context, 'Failed to generate summary PDF.');
+  }
+}
+
+String? _extractSignedUrl(dynamic data) {
+  if (data is Map<String, dynamic>) {
+    return data['signedUrl'] as String?;
+  }
+  if (data is Map) {
+    final value = data['signedUrl'];
+    return value is String ? value : null;
+  }
+  return null;
 }

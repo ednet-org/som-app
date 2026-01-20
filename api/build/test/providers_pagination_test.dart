@@ -12,6 +12,7 @@ import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import '../routes/providers/index.dart' as route;
 import 'test_utils.dart';
 
@@ -105,6 +106,9 @@ void main() {
       context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await route.onRequest(context.context);
 
@@ -132,6 +136,9 @@ void main() {
       context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await route.onRequest(context.context);
 
@@ -235,6 +242,9 @@ void main() {
       context.provide<CompanyTaxonomyRepository>(taxonomy);
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
+      context.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final response = await route.onRequest(context.context);
 

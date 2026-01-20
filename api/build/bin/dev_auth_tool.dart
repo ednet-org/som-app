@@ -29,7 +29,7 @@ Future<void> main(List<String> args) async {
   final auth = AuthService(
     users: users,
     tokens: tokens,
-    email: EmailService(),
+    email: EmailService.fromEnvironment(),
     emailEvents: emailEvents,
     clock: Clock(),
     adminClient: supabase.adminClient,

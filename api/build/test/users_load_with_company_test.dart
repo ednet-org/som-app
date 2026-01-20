@@ -35,6 +35,8 @@ void main() {
       expect(body['roles'], containsAll(user.roles));
       expect(body['companyType'], isNotNull);
       expect(body['activeRole'], user.lastLoginRole);
+      expect(body['activeCompanyId'], company.id);
+      expect(body['companyOptions'], isA<List>());
     });
   });
 }

@@ -22,6 +22,8 @@ dependencies:
     path: ../lib/generated
   ednet_core:
     path: /Users/slavisam/projects/cms/packages/core
+  mailer: ^6.6.0
+  pdf: ^3.11.3
 
 dev_dependencies:
   dart_frog_test: ^0.1.2

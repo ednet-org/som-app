@@ -191,6 +191,7 @@ class UserRecord {
     required this.isActive,
     required this.emailConfirmed,
     required this.lastLoginRole,
+    this.lastLoginCompanyId,
     required this.createdAt,
     required this.updatedAt,
     this.passwordHash,
@@ -214,6 +215,7 @@ class UserRecord {
   final bool isActive;
   final bool emailConfirmed;
   final String? lastLoginRole;
+  final String? lastLoginCompanyId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? passwordHash;
@@ -235,6 +237,8 @@ class UserRecord {
     bool? isActive,
     bool? emailConfirmed,
     String? lastLoginRole,
+    String? lastLoginCompanyId,
+    String? companyId,
     DateTime? updatedAt,
     int? failedLoginAttempts,
     Object? lastFailedLoginAt = _unset,
@@ -245,7 +249,7 @@ class UserRecord {
   }) {
     return UserRecord(
       id: id,
-      companyId: companyId,
+      companyId: companyId ?? this.companyId,
       email: email ?? this.email,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -256,6 +260,7 @@ class UserRecord {
       isActive: isActive ?? this.isActive,
       emailConfirmed: emailConfirmed ?? this.emailConfirmed,
       lastLoginRole: lastLoginRole ?? this.lastLoginRole,
+      lastLoginCompanyId: lastLoginCompanyId ?? this.lastLoginCompanyId,
       createdAt: createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       passwordHash: passwordHash,
@@ -288,6 +293,22 @@ class UserRecord {
         'telephoneNr': telephoneNr,
         'roles': roles.map(roleToWire).toList(),
       };
+}
+
+class UserCompanyRoleRecord {
+  UserCompanyRoleRecord({
+    required this.userId,
+    required this.companyId,
+    required this.roles,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  final String userId;
+  final String companyId;
+  final List<String> roles;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 }
 
 class EmailEventRecord {
@@ -517,6 +538,7 @@ class InquiryRecord {
     required this.numberOfProviders,
     required this.description,
     required this.pdfPath,
+    this.summaryPdfPath,
     required this.providerCriteria,
     required this.contactInfo,
     required this.notifiedAt,
@@ -538,6 +560,7 @@ class InquiryRecord {
   final int numberOfProviders;
   final String? description;
   final String? pdfPath;
+  final String? summaryPdfPath;
   final ProviderCriteria providerCriteria;
   final ContactInfo contactInfo;
   final DateTime? notifiedAt;
@@ -559,6 +582,7 @@ class InquiryRecord {
         'numberOfProviders': numberOfProviders,
         'description': description,
         'pdfPath': pdfPath,
+        'summaryPdfPath': summaryPdfPath,
         'providerCriteria': providerCriteria.toJson(),
         'contactInfo': contactInfo.toJson(),
         'notifiedAt': notifiedAt?.toIso8601String(),
@@ -595,6 +619,7 @@ class OfferRecord {
     required this.providerUserId,
     required this.status,
     required this.pdfPath,
+    this.summaryPdfPath,
     required this.forwardedAt,
     required this.resolvedAt,
     required this.buyerDecision,
@@ -608,6 +633,7 @@ class OfferRecord {
   final String? providerUserId;
   final String status;
   final String? pdfPath;
+  final String? summaryPdfPath;
   final DateTime? forwardedAt;
   final DateTime? resolvedAt;
   final String? buyerDecision;
@@ -655,6 +681,22 @@ class AuditLogRecord {
   final String entityId;
   final Map<String, dynamic>? metadata;
   final DateTime createdAt;
+}
+
+class SchedulerStatusRecord {
+  SchedulerStatusRecord({
+    required this.jobName,
+    required this.lastRunAt,
+    required this.lastSuccessAt,
+    required this.lastError,
+    required this.updatedAt,
+  });
+
+  final String jobName;
+  final DateTime? lastRunAt;
+  final DateTime? lastSuccessAt;
+  final String? lastError;
+  final DateTime updatedAt;
 }
 
 class AdRecord {

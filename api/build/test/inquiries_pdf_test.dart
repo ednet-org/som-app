@@ -90,5 +90,78 @@ void main() {
       final updated = await inquiries.findById(inquiry.id);
       expect(updated?.pdfPath, 'inquiries/test.pdf');
     });
+
+    test('rejects non-pdf uploads', () async {
+      final companies = InMemoryCompanyRepository();
+      final users = InMemoryUserRepository();
+      final inquiries = InMemoryInquiryRepository();
+      final company = await seedCompany(companies);
+      final user = await seedUser(
+        users,
+        company,
+        email: 'buyer@acme.test',
+        roles: const ['buyer'],
+      );
+      final token = buildTestJwt(userId: user.id);
+      final now = DateTime.now().toUtc();
+      final inquiry = InquiryRecord(
+        id: 'inq-2',
+        buyerCompanyId: company.id,
+        createdByUserId: user.id,
+        status: 'open',
+        branchId: 'branch-1',
+        categoryId: 'cat-1',
+        productTags: const ['tag'],
+        deadline: now.add(const Duration(days: 3)),
+        deliveryZips: const ['1010'],
+        numberOfProviders: 1,
+        description: 'Test',
+        pdfPath: null,
+        providerCriteria: ProviderCriteria(),
+        contactInfo: ContactInfo(
+          companyName: company.name,
+          salutation: user.salutation,
+          title: user.title ?? '',
+          firstName: user.firstName,
+          lastName: user.lastName,
+          telephone: user.telephoneNr ?? '',
+          email: user.email,
+        ),
+        notifiedAt: null,
+        assignedAt: null,
+        closedAt: null,
+        createdAt: now,
+        updatedAt: now,
+      );
+      await inquiries.create(inquiry);
+
+      const boundary = 'dartfrog';
+      final body = StringBuffer()
+        ..write('--$boundary\r\n')
+        ..write(
+          'Content-Disposition: form-data; name="file"; filename="test.txt"\r\n',
+        )
+        ..write('Content-Type: text/plain\r\n\r\n')
+        ..write('hello')
+        ..write('\r\n')
+        ..write('--$boundary--\r\n');
+
+      final context = TestRequestContext(
+        path: '/inquiries/${inquiry.id}/pdf',
+        method: HttpMethod.post,
+        headers: {
+          'content-type': 'multipart/form-data; boundary=$boundary',
+          'authorization': 'Bearer $token',
+        },
+        body: body.toString(),
+      );
+      context.provide<UserRepository>(users);
+      context.provide<CompanyRepository>(companies);
+      context.provide<InquiryRepository>(inquiries);
+      context.provide<FileStorage>(TestFileStorage());
+
+      final response = await route.onRequest(context.context, inquiry.id);
+      expect(response.statusCode, 400);
+    });
   });
 }

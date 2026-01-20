@@ -7,6 +7,9 @@ import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/access_control.dart';
+import 'package:som_api/services/audit_service.dart';
+import 'package:som_api/services/csv_writer.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -19,7 +22,7 @@ Future<Response> onRequest(RequestContext context) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('consultant')) {
+  if (auth == null || !isConsultantAdmin(auth)) {
     return Response(statusCode: 403);
   }
   final queryParams = context.request.uri.queryParameters;
@@ -134,16 +137,37 @@ Future<Response> onRequest(RequestContext context) async {
   };
 
   if (format == 'csv') {
-    final buffer = StringBuffer();
-    buffer.writeln(
-        'companyName,subscriptionPlanId,registrationDate,iban,bic,accountOwner,paymentInterval');
+    final writer = CsvWriter();
+    writer.writeRow([
+      'companyName',
+      'subscriptionPlanId',
+      'registrationDate',
+      'iban',
+      'bic',
+      'accountOwner',
+      'paymentInterval'
+    ]);
     for (final row in results) {
-      buffer.writeln(
-          '${row['companyName']},${row['subscriptionPlanId']},${row['registrationDate']},${row['iban']},${row['bic']},${row['accountOwner']},${row['paymentInterval']}');
+      writer.writeRow([
+        row['companyName'],
+        row['subscriptionPlanId'],
+        row['registrationDate'],
+        row['iban'],
+        row['bic'],
+        row['accountOwner'],
+        row['paymentInterval'],
+      ]);
     }
+    await context.read<AuditService>().log(
+          action: 'providers.exported',
+          entityType: 'provider',
+          entityId: auth.userId,
+          actorId: auth.userId,
+          metadata: {'format': 'csv', 'count': results.length},
+        );
     return Response(
       headers: {'content-type': 'text/csv', ...paginationHeaders},
-      body: buffer.toString(),
+      body: writer.toString(),
     );
   }
 

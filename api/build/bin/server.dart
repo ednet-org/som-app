@@ -22,13 +22,16 @@ import '../routes/providers/[companyId]/products/[productId]/index.dart' as prov
 import '../routes/offers/[offerId]/reject.dart' as offers_$offer_id_reject;
 import '../routes/offers/[offerId]/pdf.dart' as offers_$offer_id_pdf;
 import '../routes/offers/[offerId]/accept.dart' as offers_$offer_id_accept;
+import '../routes/offers/[offerId]/pdf/generate.dart' as offers_$offer_id_pdf_generate;
 import '../routes/inquiries/index.dart' as inquiries_index;
 import '../routes/inquiries/[inquiryId]/pdf.dart' as inquiries_$inquiry_id_pdf;
 import '../routes/inquiries/[inquiryId]/index.dart' as inquiries_$inquiry_id_index;
 import '../routes/inquiries/[inquiryId]/ignore.dart' as inquiries_$inquiry_id_ignore;
 import '../routes/inquiries/[inquiryId]/close.dart' as inquiries_$inquiry_id_close;
 import '../routes/inquiries/[inquiryId]/assign.dart' as inquiries_$inquiry_id_assign;
+import '../routes/inquiries/[inquiryId]/pdf/generate.dart' as inquiries_$inquiry_id_pdf_generate;
 import '../routes/inquiries/[inquiryId]/offers/index.dart' as inquiries_$inquiry_id_offers_index;
+import '../routes/health/scheduler.dart' as health_scheduler;
 import '../routes/dev/auth/token.dart' as dev_auth_token;
 import '../routes/consultants/registerCompany.dart' as consultants_register_company;
 import '../routes/consultants/index.dart' as consultants_index;
@@ -109,9 +112,12 @@ Handler buildRootHandler() {
     ..mount('/categories/<categoryId>', (context,categoryId,) => buildCategories$categoryIdHandler(categoryId,)(context))
     ..mount('/consultants', (context) => buildConsultantsHandler()(context))
     ..mount('/dev/auth', (context) => buildDevAuthHandler()(context))
+    ..mount('/health', (context) => buildHealthHandler()(context))
     ..mount('/inquiries/<inquiryId>/offers', (context,inquiryId,) => buildInquiries$inquiryIdOffersHandler(inquiryId,)(context))
+    ..mount('/inquiries/<inquiryId>/pdf', (context,inquiryId,) => buildInquiries$inquiryIdPdfHandler(inquiryId,)(context))
     ..mount('/inquiries/<inquiryId>', (context,inquiryId,) => buildInquiries$inquiryIdHandler(inquiryId,)(context))
     ..mount('/inquiries', (context) => buildInquiriesHandler()(context))
+    ..mount('/offers/<offerId>/pdf', (context,offerId,) => buildOffers$offerIdPdfHandler(offerId,)(context))
     ..mount('/offers/<offerId>', (context,offerId,) => buildOffers$offerIdHandler(offerId,)(context))
     ..mount('/providers/<companyId>/products/<productId>', (context,companyId,productId,) => buildProviders$companyIdProducts$productIdHandler(companyId,productId,)(context))
     ..mount('/providers/<companyId>/products', (context,companyId,) => buildProviders$companyIdProductsHandler(companyId,)(context))
@@ -270,10 +276,24 @@ Handler buildDevAuthHandler() {
   return pipeline.addHandler(router);
 }
 
+Handler buildHealthHandler() {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/scheduler', (context) => health_scheduler.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
 Handler buildInquiries$inquiryIdOffersHandler(String inquiryId,) {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/', (context) => inquiries_$inquiry_id_offers_index.onRequest(context,inquiryId,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildInquiries$inquiryIdPdfHandler(String inquiryId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/generate', (context) => inquiries_$inquiry_id_pdf_generate.onRequest(context,inquiryId,));
   return pipeline.addHandler(router);
 }
 
@@ -288,6 +308,13 @@ Handler buildInquiriesHandler() {
   final pipeline = const Pipeline();
   final router = Router()
     ..all('/', (context) => inquiries_index.onRequest(context,));
+  return pipeline.addHandler(router);
+}
+
+Handler buildOffers$offerIdPdfHandler(String offerId,) {
+  final pipeline = const Pipeline();
+  final router = Router()
+    ..all('/generate', (context) => offers_$offer_id_pdf_generate.onRequest(context,offerId,));
   return pipeline.addHandler(router);
 }
 
