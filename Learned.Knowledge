@@ -8,3 +8,5 @@
 - 2026-01-19: Enrichment migration requires companies to exist; seed local DB (seed_database) before `supabase migration up` to avoid FK errors. Use `--include-existing` when generating enrichment SQL to insert branches/categories even if in reference files.
 - 2026-01-19: `seed_database.dart` supports `--skip-taxonomy` to leave taxonomy tables empty so the enrichment migration is the sole source of branch/category data.
 - 2026-01-19: Taxonomy normalization now folds diacritics for branch/category names; cleanup pipeline uses `seed-data/etl/bin/cleanup_taxonomy.dart` to merge duplicates and regenerate enrichment data with new IDs.
+- 2026-01-20: Multi-company access is modeled via `user_company_roles` with `users.last_login_company_id` for active context; role switching now accepts `companyId` and `/Users/loadUserWithCompany` returns company options for the UI switcher.
+- 2026-01-20: Summary PDFs are generated via `POST /inquiries/{id}/pdf/generate` and `/offers/{id}/pdf/generate`, stored in Supabase storage with `summary_pdf_path`, and the UI can generate/open signed URLs on demand.

@@ -82,7 +82,8 @@ abstract class _EmailLoginStoreBase with Store {
               headers: {'Authorization': 'Bearer $token'},
             );
             companyId = profileResponse.data?.companyId;
-            activeCompanyId = profileResponse.data?.companyId;
+            activeCompanyId = profileResponse.data?.activeCompanyId ??
+                profileResponse.data?.companyId;
             companyName = profileResponse.data?.companyName;
             emailAddress = profileResponse.data?.emailAddress;
             roles = profileResponse.data?.roles?.toList() ?? const [];
@@ -176,6 +177,22 @@ abstract class _EmailLoginStoreBase with Store {
   List<CompanyContext> _companyOptionsFromProfile(
     UsersLoadUserWithCompanyGet200Response? data,
   ) {
+    final options = data?.companyOptions;
+    if (options != null && options.isNotEmpty) {
+      return options
+          .map(
+            (option) => CompanyContext(
+              companyId: option.companyId ?? '',
+              companyName: option.companyName ?? '',
+              companyType:
+                  _companyTypeFromOption(option.companyType) ?? 0,
+              roles: option.roles?.toList() ?? const [],
+              activeRole: option.activeRole ?? '',
+            ),
+          )
+          .where((option) => option.companyId.isNotEmpty)
+          .toList();
+    }
     final companyId = data?.companyId ?? '';
     if (companyId.isEmpty) return const [];
     return [
@@ -187,5 +204,25 @@ abstract class _EmailLoginStoreBase with Store {
         activeRole: data?.activeRole ?? '',
       ),
     ];
+  }
+
+  int? _companyTypeFromOption(
+    UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum?
+        value,
+  ) {
+    switch (value) {
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number0:
+        return 0;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number1:
+        return 1;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number2:
+        return 2;
+      case null:
+        return null;
+    }
+    return null;
   }
 }

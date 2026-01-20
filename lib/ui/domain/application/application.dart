@@ -236,7 +236,8 @@ class Authorization {
   List<CompanyContext> get switchableContexts {
     return companyOptions
         .where((option) =>
-            option.companyId != companyId || option.activeRole != activeRole)
+            option.companyId != activeCompanyId ||
+            option.activeRole != activeRole)
         .toList();
   }
 }

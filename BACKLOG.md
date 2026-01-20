@@ -173,33 +173,33 @@
 
 ## Infrastructure & Platform
 ### Epic: Email Delivery & Templates
-- [ ] API: replace file-based `EmailService` with a provider-backed implementation (SMTP/SendGrid) selected by env.
-- [ ] API: introduce HTML/text templates (EN/DE) for registration, reminders, offers, ads, and admin actions.
-- [ ] Docs: document local Inbucket workflow + production SMTP configuration + `APP_BASE_URL` behavior.
-- [ ] Tests: template rendering and provider selection for local vs prod.
+- [x] API: replace file-based `EmailService` with a provider-backed implementation (SMTP/SendGrid) selected by env.
+- [x] API: introduce HTML/text templates (EN/DE) for registration, reminders, offers, ads, and admin actions.
+- [x] Docs: document local Inbucket workflow + production SMTP configuration + `APP_BASE_URL` behavior.
+- [x] Tests: template rendering and provider selection for local vs prod.
 
 ### Epic: Background Jobs & Reliability
-- [ ] Infra: move `Scheduler` jobs (expiry reminders, offer deadline checks, ad expiry) to a dedicated worker or Supabase cron/edge job.
-- [ ] API: add health/status endpoint exposing last-run timestamps for scheduled tasks.
-- [ ] Tests: job idempotency and failure recovery.
+- [x] Infra: move `Scheduler` jobs (expiry reminders, offer deadline checks, ad expiry) to a dedicated worker or Supabase cron/edge job.
+- [x] API: add health/status endpoint exposing last-run timestamps for scheduled tasks.
+- [x] Tests: job idempotency and failure recovery.
 
 ### Epic: CSV Export Completeness
-- [ ] API: align inquiry CSV export with user story fields (full list columns + offer details, exclude PDFs).
-- [ ] API: add per-user stats CSVs for buyer/provider as specified in user stories.
-- [ ] UI: wire export buttons to include active filters and provide download feedback.
-- [ ] Tests: CSV content, headers, and escaping for commas/newlines.
+- [x] API: align inquiry CSV export with user story fields (full list columns + offer details, exclude PDFs).
+- [x] API: add per-user stats CSVs for buyer/provider as specified in user stories.
+- [x] UI: wire export buttons to include active filters and provide download feedback.
+- [x] Tests: CSV content, headers, and escaping for commas/newlines.
 
 ### Epic: PDF Generation (Optional/If Required)
-- [ ] API: add PDF generation for inquiry/offer summaries and store via Supabase Storage.
-- [ ] UI: add “Generate PDF” actions alongside upload/download.
-- [ ] Tests: PDF generation with representative data.
+- [x] API: add PDF generation for inquiry/offer summaries and store via Supabase Storage.
+- [x] UI: add “Generate PDF” actions alongside upload/download.
+- [x] Tests: PDF generation with representative data.
 
 ### Epic: Multi‑Role / Multi‑Company Accounts
-- [ ] Data: support a single email having both buyer and provider roles (same or multiple companies).
-- [ ] API: update role switching to include company context and validate access.
-- [ ] UI: add role/company switcher and persist last context.
-- [ ] Tests: cross‑role session switching and access checks.
+- [x] Data: support a single email having both buyer and provider roles (same or multiple companies).
+- [x] API: update role switching to include company context and validate access.
+- [x] UI: add role/company switcher and persist last context.
+- [x] Tests: cross‑role session switching and access checks.
 
 ### Epic: Local Provisioning & Domains
-- [ ] Scripts/Docs: add local domain mapping guidance (e.g., `som.localhost`, `tenant.localhost`) and align Supabase auth redirects.
-- [ ] Config: add `.env.example` with `APP_BASE_URL`, `API_BASE_URL`, and Supabase keys for local/prod.
+- [x] Scripts/Docs: add local domain mapping guidance (e.g., `som.localhost`, `tenant.localhost`) and align Supabase auth redirects.
+- [x] Config: add `.env.example` with `APP_BASE_URL`, `API_BASE_URL`, and Supabase keys for local/prod.

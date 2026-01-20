@@ -604,7 +604,9 @@ class SomApplication extends StatelessWidget {
     try {
       final response = await api.getAuthApi().authSwitchRolePost(
             authSwitchRolePostRequest:
-                AuthSwitchRolePostRequest((b) => b..role = role),
+                AuthSwitchRolePostRequest((b) => b
+                  ..role = role
+                  ..companyId = companyId),
           );
       final token = response.data?.token;
       if (token != null) {
@@ -624,7 +626,7 @@ class SomApplication extends StatelessWidget {
                 appStore.authorization?.roles,
             activeRole: profileData?.activeRole ?? role,
             companyId: profileData?.companyId ?? companyId,
-            activeCompanyId: profileData?.companyId ?? companyId,
+            activeCompanyId: profileData?.activeCompanyId ?? companyId,
             companyName: profileData?.companyName ??
                 appStore.authorization?.companyName,
             companyType: _companyTypeFromApi(profileData?.companyType) ??
@@ -644,6 +646,22 @@ class SomApplication extends StatelessWidget {
   List<CompanyContext> _mapCompanyOptions(
     UsersLoadUserWithCompanyGet200Response? data,
   ) {
+    final options = data?.companyOptions;
+    if (options != null && options.isNotEmpty) {
+      return options
+          .map(
+            (option) => CompanyContext(
+              companyId: option.companyId ?? '',
+              companyName: option.companyName ?? '',
+              companyType:
+                  _companyTypeFromOption(option.companyType) ?? 0,
+              roles: option.roles?.toList() ?? const [],
+              activeRole: option.activeRole ?? '',
+            ),
+          )
+          .where((option) => option.companyId.isNotEmpty)
+          .toList();
+    }
     final companyId = data?.companyId ?? '';
     if (companyId.isEmpty) return const [];
     return [
@@ -655,6 +673,26 @@ class SomApplication extends StatelessWidget {
         activeRole: data?.activeRole ?? '',
       ),
     ];
+  }
+
+  int? _companyTypeFromOption(
+    UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum?
+        value,
+  ) {
+    switch (value) {
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number0:
+        return 0;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number1:
+        return 1;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+            .number2:
+        return 2;
+      case null:
+        return null;
+    }
+    return null;
   }
 
   int? _companyTypeFromApi(

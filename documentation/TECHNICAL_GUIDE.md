@@ -40,6 +40,9 @@ scripts/start_supabase.sh
 ```
 This wrapper excludes the `vector` container (avoids Docker name conflicts).
 
+Environment template:
+- Copy `.env.example` to `.env` and update keys if you want to run without the helper scripts.
+
 If the schema changes, reset the local DB:
 ```
 supabase db reset --yes
