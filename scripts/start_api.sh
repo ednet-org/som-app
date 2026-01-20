@@ -6,6 +6,7 @@ cd "$ROOT"
 
 export PORT="${PORT:-8081}"
 API_URL="http://127.0.0.1:${PORT}"
+SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
 
 # Idempotent: Check if API is already running
 if curl -s "$API_URL" >/dev/null 2>&1; then
@@ -19,36 +20,85 @@ ensure_supabase() {
     exit 1
   fi
 
+  local status_raw=""
   local status_json=""
-  if status_json="$(supabase status --output json 2>/dev/null)"; then
-    if ! python3 - "$status_json" <<'PY' >/dev/null 2>&1; then
-import json, sys
-data = json.loads(sys.argv[1])
-services = data.get("services", {})
-stopped = [name for name, info in services.items() if info.get("status") != "running"]
-sys.exit(1 if stopped else 0)
-PY
-      echo "Supabase not healthy. Starting..."
-      supabase start
-      status_json="$(supabase status --output json)"
-    fi
-  else
+  status_raw="$(supabase_status 2>/dev/null || true)"
+  status_json="$(sanitize_supabase_json "$status_raw")"
+  if [[ -z "$status_json" ]]; then
     echo "Supabase not running. Starting..."
-    supabase start
-    status_json="$(supabase status --output json)"
+    supabase_start
+    status_raw="$(supabase_status 2>/dev/null || true)"
+    status_json="$(sanitize_supabase_json "$status_raw")"
   fi
 
   echo "$status_json"
 }
 
-SUPA_JSON="$(ensure_supabase)"
+apply_migrations() {
+  if [[ "${SUPABASE_APPLY_MIGRATIONS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  echo "Applying Supabase migrations..." >&2
+  supabase_migration_up >&2
+}
+
+supabase_status() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase status --output json --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase status --output json
+  fi
+}
+
+supabase_start() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase start --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase start
+  fi
+}
+
+supabase_migration_up() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase migration up --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase migration up
+  fi
+}
+
+sanitize_supabase_json() {
+  python3 - <<'PY'
+import os
+raw = os.environ.get("RAW", "")
+start = raw.find("{")
+end = raw.rfind("}")
+if start == -1 or end == -1 or end < start:
+    print("")
+    raise SystemExit(0)
+print(raw[start : end + 1])
+PY
+}
+
+apply_storage_rls() {
+  if [[ "${SUPABASE_APPLY_STORAGE_RLS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  bash "$ROOT/scripts/apply_storage_rls.sh"
+}
+
+SUPA_JSON="$(RAW="$(ensure_supabase)" sanitize_supabase_json)"
+apply_migrations
+apply_storage_rls
 export DEV_FIXTURES="${DEV_FIXTURES:-true}"
 export DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"
 export SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
 export SYSTEM_ADMIN_PASSWORD="${SYSTEM_ADMIN_PASSWORD:-ChangeMe123!}"
 export SUPABASE_STORAGE_BUCKET="${SUPABASE_STORAGE_BUCKET:-som-assets}"
+export SUPABASE_SCHEMA="${SUPABASE_SCHEMA:-som}"
 export APP_BASE_URL="${APP_BASE_URL:-http://localhost:8090}"
-export EMAIL_PROVIDER="${EMAIL_PROVIDER:-smtp}"
+export EMAIL_PROVIDER="${EMAIL_PROVIDER:-outbox}"
 export EMAIL_FROM="${EMAIL_FROM:-no-reply@som.local}"
 export EMAIL_FROM_NAME="${EMAIL_FROM_NAME:-SOM}"
 export EMAIL_DEFAULT_LOCALE="${EMAIL_DEFAULT_LOCALE:-en}"
@@ -65,6 +115,10 @@ export CORS_ALLOW_CREDENTIALS="${CORS_ALLOW_CREDENTIALS:-false}"
 export ENABLE_HSTS="${ENABLE_HSTS:-false}"
 export HSTS_MAX_AGE_SECONDS="${HSTS_MAX_AGE_SECONDS:-31536000}"
 export CSP="${CSP:-}"
+export RATE_LIMIT_LOGIN="${RATE_LIMIT_LOGIN:-0}"
+export RATE_LIMIT_RESET="${RATE_LIMIT_RESET:-0}"
+export RATE_LIMIT_PDF="${RATE_LIMIT_PDF:-0}"
+export RATE_LIMIT_EXPORT="${RATE_LIMIT_EXPORT:-0}"
 
 DART_DEFINES="$(SUPA_JSON="$SUPA_JSON" DEV_FIXTURES="$DEV_FIXTURES" \
   DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD" \
@@ -100,6 +154,7 @@ defines = [
     f"-DSUPABASE_SERVICE_ROLE_KEY={info['SERVICE_ROLE_KEY']}",
     f"-DSUPABASE_JWT_SECRET={info['JWT_SECRET']}",
     f"-DSUPABASE_STORAGE_BUCKET={os.environ['SUPABASE_STORAGE_BUCKET']}",
+    f"-DSUPABASE_SCHEMA={os.environ['SUPABASE_SCHEMA']}",
     f"-DDEV_FIXTURES={os.environ['DEV_FIXTURES']}",
     f"-DDEV_FIXTURES_PASSWORD={os.environ['DEV_FIXTURES_PASSWORD']}",
     f"-DSYSTEM_ADMIN_EMAIL={os.environ['SYSTEM_ADMIN_EMAIL']}",

@@ -1,5 +1,7 @@
 [api]
 port = 55511
+schemas = ["som", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
 
 [db]
 port = 55512

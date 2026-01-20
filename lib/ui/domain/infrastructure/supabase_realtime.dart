@@ -9,6 +9,7 @@ class SupabaseRealtime {
   static Future<void> initialize({
     required String url,
     required String anonKey,
+    String schema = 'som',
   }) async {
     if (url.isEmpty || anonKey.isEmpty) {
       return;
@@ -16,6 +17,7 @@ class SupabaseRealtime {
     await Supabase.initialize(
       url: url,
       anonKey: anonKey,
+      postgrestOptions: PostgrestClientOptions(schema: schema),
     );
     _client = Supabase.instance.client;
   }
@@ -32,7 +34,7 @@ class SupabaseRealtime {
   static RealtimeChannel? subscribeToTables({
     required List<String> tables,
     required VoidCallback onChange,
-    String schema = 'public',
+    String schema = 'som',
     String? channelName,
   }) {
     final client = _client;
@@ -68,7 +70,7 @@ class RealtimeRefreshHandle {
 
   void subscribe({
     required List<String> tables,
-    String schema = 'public',
+    String schema = 'som',
     String? channelName,
   }) {
     dispose();

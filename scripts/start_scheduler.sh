@@ -32,8 +32,28 @@ PY
   echo "$status_json"
 }
 
+apply_migrations() {
+  if [[ "${SUPABASE_APPLY_MIGRATIONS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  echo "Applying Supabase migrations..." >&2
+  supabase migration up >&2
+}
+
+apply_storage_rls() {
+  if [[ "${SUPABASE_APPLY_STORAGE_RLS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  "$ROOT/scripts/apply_storage_rls.sh"
+}
+
 SUPA_JSON="$(ensure_supabase)"
+apply_migrations
+apply_storage_rls
 APP_BASE_URL="${APP_BASE_URL:-http://localhost:8090}"
+SUPABASE_SCHEMA="${SUPABASE_SCHEMA:-som}"
 
 DART_DEFINES="$(SUPA_JSON="$SUPA_JSON" APP_BASE_URL="$APP_BASE_URL" \
   EMAIL_PROVIDER="${EMAIL_PROVIDER:-}" \
@@ -61,6 +81,7 @@ defines = [
     f"-DSUPABASE_SERVICE_ROLE_KEY={info['SERVICE_ROLE_KEY']}",
     f"-DSUPABASE_JWT_SECRET={info['JWT_SECRET']}",
     f"-DSUPABASE_STORAGE_BUCKET={os.environ.get('SUPABASE_STORAGE_BUCKET', 'som-assets')}",
+    f"-DSUPABASE_SCHEMA={os.environ.get('SUPABASE_SCHEMA', 'som')}",
     f"-DAPP_BASE_URL={os.environ['APP_BASE_URL']}",
 ]
 

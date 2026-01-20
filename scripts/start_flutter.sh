@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# Optional hostnames for tenant-style URLs.
+"$ROOT/scripts/ensure_hosts.sh"
+
 # Idempotent: Kill existing Flutter process for this project before starting
 pkill -f "flutter.*som-app.*run" 2>/dev/null || true
 
@@ -14,6 +17,7 @@ SYSTEM_ADMIN_PASSWORD="${SYSTEM_ADMIN_PASSWORD:-ChangeMe123!}"
 SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
 SUPABASE_URL="${SUPABASE_URL:-}"
 SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
+SUPABASE_SCHEMA="${SUPABASE_SCHEMA:-som}"
 TARGET="${TARGET:-chrome}"
 FLUTTER_WEB_MODE="${FLUTTER_WEB_MODE:-debug}"
 START_DEPENDENCIES="${START_DEPENDENCIES:-true}"
@@ -137,6 +141,9 @@ if [[ -n "${SUPABASE_URL:-}" ]]; then
 fi
 if [[ -n "${SUPABASE_ANON_KEY:-}" ]]; then
   DART_DEFINES+=(--dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY")
+fi
+if [[ -n "${SUPABASE_SCHEMA:-}" ]]; then
+  DART_DEFINES+=(--dart-define=SUPABASE_SCHEMA="$SUPABASE_SCHEMA")
 fi
 
 if [[ "$TARGET" == "macos" ]]; then

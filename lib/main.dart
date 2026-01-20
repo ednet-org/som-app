@@ -40,6 +40,10 @@ const supabaseAnonKey = String.fromEnvironment(
   'SUPABASE_ANON_KEY',
   defaultValue: '',
 );
+const supabaseSchema = String.fromEnvironment(
+  'SUPABASE_SCHEMA',
+  defaultValue: 'som',
+);
 
 final apiInstance = Openapi(
   dio: Dio(BaseOptions(baseUrl: apiBaseUrl))
@@ -64,6 +68,7 @@ void main() async {
   await SupabaseRealtime.initialize(
     url: supabaseUrl,
     anonKey: supabaseAnonKey,
+    schema: supabaseSchema,
   );
   initDomainModel();
   // nb_utils - Must be initialize before using shared preference

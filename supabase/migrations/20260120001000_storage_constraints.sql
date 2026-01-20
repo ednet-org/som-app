@@ -4,7 +4,7 @@ values (
   'som-assets',
   false,
   array['application/pdf', 'image/png', 'image/jpeg', 'image/webp'],
-  '10MB'
+  10485760
 )
 on conflict (id) do update
 set public = excluded.public,

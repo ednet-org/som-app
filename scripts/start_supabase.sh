@@ -14,6 +14,19 @@ ensure_docker() {
     return 0
   fi
 
+  if docker context ls --format '{{.Name}}' 2>/dev/null | grep -q '^rancher-desktop$'; then
+    docker context use rancher-desktop >/dev/null 2>&1 || true
+    if docker info >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+  if docker context ls --format '{{.Name}}' 2>/dev/null | grep -q '^desktop-linux$'; then
+    docker context use desktop-linux >/dev/null 2>&1 || true
+    if docker info >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
   local rdctl_bin=""
   if command -v rdctl >/dev/null 2>&1; then
     rdctl_bin="$(command -v rdctl)"
@@ -46,5 +59,24 @@ ensure_docker() {
   fi
 }
 
+apply_migrations() {
+  if [[ "${SUPABASE_APPLY_MIGRATIONS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  echo "Applying Supabase migrations..." >&2
+  supabase migration up >&2
+}
+
+apply_storage_rls() {
+  if [[ "${SUPABASE_APPLY_STORAGE_RLS:-true}" != "true" ]]; then
+    return 0
+  fi
+
+  "$ROOT/scripts/apply_storage_rls.sh"
+}
+
 ensure_docker
 supabase start --exclude vector "$@"
+apply_migrations
+apply_storage_rls

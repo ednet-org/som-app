@@ -198,6 +198,14 @@
 - [x] Data: support a single email having both buyer and provider roles (same or multiple companies).
 - [x] API: update role switching to include company context and validate access.
 - [x] UI: add role/company switcher and persist last context.
+
+### Epic: Supabase Local/CI Hardening
+- [x] Infra: add privileged storage RLS SQL and docker-based apply script for local/CI runs.
+- [x] Scripts: apply privileged storage RLS during local startup and integration test runs.
+
+### Epic: E2E Harness & Fixtures
+- [x] Tests: add shared integration test env helpers and UI harness utilities.
+- [x] Scripts: propagate fixture credentials and schema defines for integration tests.
 - [x] Tests: cross‑role session switching and access checks.
 
 ### Epic: Local Provisioning & Domains

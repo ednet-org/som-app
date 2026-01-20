@@ -1,26 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/main.dart' as app;
+import 'package:som/ui/pages/inquiry/widgets/inquiry_create_form.dart';
+import 'package:som/ui/widgets/design_system/som_button.dart';
 
-const _apiBaseUrl = String.fromEnvironment(
-  'API_BASE_URL',
-  defaultValue: 'http://127.0.0.1:8081',
-);
-const _buyerEmail = String.fromEnvironment(
-  'BUYER_ADMIN_EMAIL',
-  defaultValue: 'buyer-admin@som.local',
-);
-const _consultantEmail = String.fromEnvironment(
-  'CONSULTANT_ADMIN_EMAIL',
-  defaultValue: 'consultant-admin@som.local',
-);
-const _password = String.fromEnvironment(
-  'DEV_FIXTURES_PASSWORD',
-  defaultValue: 'DevPass123!',
-);
+import 'support/test_env.dart';
+import 'support/ui_harness.dart';
+
+const _apiBaseUrl = TestEnv.apiBaseUrl;
+const _buyerEmail = TestEnv.buyerAdminEmail;
+const _consultantEmail = TestEnv.consultantAdminEmail;
+const _password = TestEnv.devFixturesPassword;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -32,105 +24,151 @@ void main() {
     );
 
     final consultantToken = await _login(api, _consultantEmail, _password);
-    final stamp = DateTime.now().millisecondsSinceEpoch;
-    final branchName = 'E2E Branch $stamp';
-    final categoryName = 'E2E Category $stamp';
-    final branch = await _ensureBranch(api, consultantToken, branchName);
-    final category = await _ensureCategory(
-      api,
-      consultantToken,
-      branch.id!,
-      categoryName,
+    final branchesResponse = await api.getBranchesApi().branchesGet();
+    final branches = branchesResponse.data?.toList() ?? const [];
+    final asciiName = RegExp(r'^[a-zA-Z0-9\\s]+$');
+    Branch branch = branches.firstWhere(
+      (b) =>
+          b.id != null &&
+          b.name != null &&
+          asciiName.hasMatch(b.name!) &&
+          b.categories?.isNotEmpty == true,
+      orElse: () => Branch(),
     );
+    Category category = Category();
+    if (branch.id == null) {
+      final stamp = DateTime.now().millisecondsSinceEpoch;
+      branch = await _ensureBranch(api, consultantToken, 'E2E Branch $stamp');
+      category = await _ensureCategory(
+        api,
+        consultantToken,
+        branch.id!,
+        'E2E Category $stamp',
+      );
+    } else {
+      final activeCategory = branch.categories?.firstWhere(
+        (c) =>
+            c.status == 'active' &&
+            c.name != null &&
+            asciiName.hasMatch(c.name!),
+        orElse: () => Category(),
+      );
+      category = activeCategory ?? branch.categories!.first;
+      if (category.id == null) {
+        final stamp = DateTime.now().millisecondsSinceEpoch;
+        category = await _ensureCategory(
+          api,
+          consultantToken,
+          branch.id!,
+          'E2E Category $stamp',
+        );
+      }
+    }
 
     app.main();
-    await _pumpUntil(tester, () => _findLoginFields().evaluate().length >= 2);
+    await pumpUntil(tester, () => findLoginFields().evaluate().length >= 2);
 
-    await _loginUi(tester, _buyerEmail, _password);
-    await _pumpUntil(
+    await loginUi(tester, email: _buyerEmail, password: _password);
+    await pumpUntil(
       tester,
       () => find.text('Inquiries').evaluate().isNotEmpty,
     );
 
     final newInquiryButton = find.text('New inquiry');
+    await pumpUntil(tester, () => newInquiryButton.evaluate().isNotEmpty);
+    await tester.ensureVisible(newInquiryButton);
     await tester.tap(newInquiryButton);
     await tester.pumpAndSettle();
-
-    await tester.enterText(
-      _findTextFormField('Branch *'),
-      branch.name ?? branch.id!,
+    await pumpUntil(
+      tester,
+      () => find.text('Close form').evaluate().isNotEmpty,
     );
+
+    final branchName = branch.name ?? branch.id!;
+    final branchField = findTextFormField('Branch *');
+    await tester.tap(branchField);
+    await tester.pumpAndSettle();
+    await tester.enterText(branchField, branchName);
+    await tester.pumpAndSettle();
+    final categoryGate = find
+        .descendant(
+          of: find.byType(InquiryCreateForm),
+          matching: find.byType(IgnorePointer),
+        )
+        .first;
+    await pumpUntil(
+      tester,
+      () => !tester.widget<IgnorePointer>(categoryGate).ignoring,
+    );
+
+    final categoryName = category.name ?? category.id!;
+    final categoryField = findTextFormField('Category *');
+    await tester.tap(categoryField);
+    await tester.pumpAndSettle();
+    await tester.enterText(categoryField, categoryName);
     await tester.pumpAndSettle();
 
-    await tester.enterText(
-      _findTextFormField('Category *'),
-      category.name ?? category.id!,
+    final deadlineButton = find.byWidgetPredicate(
+      (widget) => widget is SomButton && widget.text == 'Select deadline',
     );
+    await tester.tap(deadlineButton);
     await tester.pumpAndSettle();
-
-    await tester.tap(find.text('SELECT DEADLINE'));
+    final now = DateTime.now();
+    final targetDate = now.add(const Duration(days: 7));
+    if (targetDate.month != now.month || targetDate.year != now.year) {
+      final nextMonth = find.byTooltip('Next month');
+      if (nextMonth.evaluate().isNotEmpty) {
+        await tester.tap(nextMonth);
+        await tester.pumpAndSettle();
+      }
+    }
+    await tester.tap(find.text('${targetDate.day}').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
     await tester.enterText(
-      _findTextFormField('Delivery ZIPs (comma separated) *'),
+      findTextFormField('Delivery ZIPs (comma separated) *'),
       '1010',
     );
     await tester.enterText(
-      _findTextFormField('Description'),
-      'E2E inquiry $stamp',
+      findTextFormField('Description'),
+      'E2E inquiry ${DateTime.now().millisecondsSinceEpoch}',
     );
 
-    await tester.tap(find.text('CREATE INQUIRY'));
+    final createInquiryButton = find.byWidgetPredicate(
+      (widget) => widget is SomButton && widget.text == 'Create inquiry',
+    );
+    final formScrollable = find
+        .descendant(
+          of: find.byType(InquiryCreateForm),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    await tester.scrollUntilVisible(
+      createInquiryButton,
+      240,
+      scrollable: formScrollable,
+    );
+    await tester.tap(createInquiryButton);
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    expect(find.text('Inquiry created.'), findsOneWidget);
-  });
-}
-
-Finder _findTextFormField(String labelText) {
-  return find.ancestor(
-    of: find.text(labelText),
-    matching: find.byType(TextFormField),
-  );
-}
-
-Finder _findLoginFields() => find.byType(TextFormField);
-
-Future<void> _loginUi(
-  WidgetTester tester,
-  String email,
-  String password,
-) async {
-  final fieldsFinder = _findLoginFields();
-  await _pumpUntil(tester, () => fieldsFinder.evaluate().length >= 2);
-  final emailField = fieldsFinder.at(0);
-  final passwordField = fieldsFinder.at(1);
-
-  await tester.enterText(emailField, email);
-  await tester.enterText(passwordField, password);
-
-  final loginButton = find.text('Login');
-  await _pumpUntil(tester, () => loginButton.evaluate().isNotEmpty);
-  await tester.ensureVisible(loginButton);
-  await tester.tap(loginButton);
-  await tester.pump(const Duration(milliseconds: 200));
-}
-
-Future<void> _pumpUntil(
-  WidgetTester tester,
-  bool Function() condition, {
-  Duration timeout = const Duration(seconds: 30),
-}) async {
-  final endTime = DateTime.now().add(timeout);
-  while (DateTime.now().isBefore(endTime)) {
-    await tester.pump(const Duration(milliseconds: 200));
-    if (condition()) {
-      return;
+    final submitDeadline = DateTime.now().add(const Duration(seconds: 45));
+    while (DateTime.now().isBefore(submitDeadline)) {
+      await tester.pump(const Duration(milliseconds: 200));
+      if (find.text('New inquiry').evaluate().isNotEmpty) {
+        expect(find.text('Close form'), findsNothing);
+        return;
+      }
+      final snack = snackMessage(tester);
+      if (snack != null &&
+          snack.isNotEmpty &&
+          !snack.toLowerCase().contains('created')) {
+        fail('Inquiry submit failed: $snack');
+      }
     }
-  }
-  throw TestFailure('Timed out waiting for condition');
+    fail('Timed out waiting for inquiry submission to finish.');
+  });
 }
 
 Future<String> _login(Openapi api, String email, String password) async {
