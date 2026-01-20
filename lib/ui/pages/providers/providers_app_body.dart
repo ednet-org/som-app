@@ -387,7 +387,14 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
         'format': 'csv',
       },
     );
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!mounted) return;
+    _showSnackbar(
+      launched ? 'CSV export started.' : 'Failed to start CSV export.',
+    );
   }
 
   Future<bool> _approveProvider(

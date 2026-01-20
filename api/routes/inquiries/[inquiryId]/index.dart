@@ -29,7 +29,8 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       final provider = await context
           .read<ProviderRepository>()
           .findByCompany(auth.companyId);
-      if (provider == null || provider.status != 'active') {
+      final isActive = provider != null && provider.status == 'active';
+      if (!isActive) {
         return Response.json(
           statusCode: 403,
           body: 'Provider registration is pending.',
@@ -39,14 +40,18 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
         inquiryId,
         auth.companyId,
       );
-      if (!assigned) {
+      if (!canAccessInquiryAsProvider(
+        auth: auth,
+        isAssignedProvider: assigned,
+        isProviderActive: isActive,
+      )) {
         return Response.json(
           statusCode: 403,
           body: 'Inquiry not assigned to provider.',
         );
       }
     } else if (auth.activeRole == 'buyer') {
-      if (inquiry.buyerCompanyId != auth.companyId) {
+      if (!canAccessInquiryAsBuyer(auth, inquiry)) {
         return Response(statusCode: 403);
       }
     } else {

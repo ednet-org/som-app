@@ -17,6 +17,7 @@ import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/inline_message.dart';
 import '../../widgets/responsive_filter_panel.dart';
+import '../../widgets/snackbars.dart';
 
 const _apiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
@@ -146,7 +147,15 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
     params['format'] = 'csv';
     final uri = Uri.parse(_apiBaseUrl)
         .replace(path: path, queryParameters: params);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!mounted) return;
+    SomSnackBars.info(
+      context,
+      launched ? 'CSV export started.' : 'Failed to start CSV export.',
+    );
   }
 
   @override

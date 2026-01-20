@@ -364,18 +364,35 @@ class _OffersAppBodyState extends State<OffersAppBody> {
               ],
             ),
           ),
-          if (offer.pdfPath != null) ...[
+          if (offer.id != null) ...[
             const SizedBox(height: SomSpacing.md),
-            FilledButton.tonalIcon(
-              onPressed: offer.id == null
-                  ? null
-                  : () => _openOfferPdf(offer.id!),
-              icon: SomSvgIcon(
-                SomAssets.iconPdf,
-                size: SomIconSize.sm,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              label: const Text('Download PDF'),
+            Wrap(
+              spacing: SomSpacing.sm,
+              runSpacing: SomSpacing.sm,
+              children: [
+                if (offer.pdfPath != null)
+                  FilledButton.tonalIcon(
+                    onPressed: () => _openOfferPdf(offer.id!),
+                    icon: SomSvgIcon(
+                      SomAssets.iconPdf,
+                      size: SomIconSize.sm,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    label: const Text('Download PDF'),
+                  ),
+                FilledButton.tonalIcon(
+                  onPressed: () => generateOfferSummaryPdf(
+                    context,
+                    offerId: offer.id!,
+                  ),
+                  icon: SomSvgIcon(
+                    SomAssets.iconPdf,
+                    size: SomIconSize.sm,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  label: const Text('Generate summary PDF'),
+                ),
+              ],
             ),
           ],
           const Divider(height: 32),

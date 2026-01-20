@@ -526,7 +526,16 @@ class _InquiryPageState extends State<InquiryPage> {
         'format': 'csv',
       },
     );
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!mounted) return;
+    _showSnack(
+      launched
+          ? 'CSV export started.'
+          : 'Failed to start CSV export.',
+    );
   }
 
   Future<ProviderSearchResult> _loadProviders({

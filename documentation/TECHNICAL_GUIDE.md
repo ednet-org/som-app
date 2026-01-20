@@ -13,6 +13,27 @@
 - API Server: `http://127.0.0.1:8081`
 - Flutter Web: `http://localhost:8090`
 
+## Local Domains (Optional)
+For tenant-style domains in local dev (recommended for auth redirect testing):
+
+1) Add hosts entries:
+```
+127.0.0.1 som.localhost tenant.localhost
+```
+
+2) Update `supabase/config.toml`:
+- `site_url = "http://som.localhost:8090"`
+- `additional_redirect_urls = ["http://som.localhost:8090/*", "http://tenant.localhost:8090/*"]`
+
+3) Export app URLs:
+```
+export APP_BASE_URL=http://som.localhost:8090
+export API_BASE_URL=http://127.0.0.1:8081
+export CORS_ALLOWED_ORIGINS=http://som.localhost:8090,http://tenant.localhost:8090
+```
+
+`APP_BASE_URL` is used by the API for email links (activation, reset, notifications).
+
 ## Start Supabase
 ```
 scripts/start_supabase.sh
@@ -27,6 +48,13 @@ To obtain local keys and JWT secret:
 ```
 supabase status
 ```
+
+## Email (Local Inbucket / SMTP)
+- Local uses Supabase Inbucket at `http://127.0.0.1:55514` (view sent emails).
+- `scripts/start_api.sh` defaults to SMTP delivery via Inbucket. Override:
+  - `EMAIL_PROVIDER=outbox` to write mail to `api/storage/outbox`
+  - `EMAIL_PROVIDER=sendgrid` with `SENDGRID_API_KEY` for production.
+- SMTP envs: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_USE_TLS`.
 
 ## Start API (Dart Frog)
 ```

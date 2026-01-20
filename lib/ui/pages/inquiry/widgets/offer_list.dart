@@ -112,6 +112,16 @@ class OfferCard extends StatelessWidget {
                 text: 'PDF',
                 type: SomButtonType.ghost,
               ),
+            SomButton(
+              onPressed: offer.id == null
+                  ? null
+                  : () => generateOfferSummaryPdf(
+                        context,
+                        offerId: offer.id!,
+                      ),
+              text: 'Summary PDF',
+              type: SomButtonType.ghost,
+            ),
             if (isBuyer && offer.status?.toLowerCase() == 'pending') ...[
               SomButton(
                 onPressed: onAccept,

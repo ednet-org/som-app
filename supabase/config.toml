@@ -12,7 +12,11 @@ port = 55514
 
 [auth]
 site_url = "http://localhost:8090"
-additional_redirect_urls = ["http://localhost:8090/*"]
+additional_redirect_urls = [
+  "http://localhost:8090/*",
+  "http://som.localhost:8090/*",
+  "http://tenant.localhost:8090/*",
+]
 jwt_expiry = 3600
 enable_signup = true
 

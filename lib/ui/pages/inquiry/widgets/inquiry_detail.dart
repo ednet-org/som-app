@@ -264,6 +264,17 @@ class InquiryDetail extends StatelessWidget {
                 text: 'Close inquiry',
                 type: SomButtonType.secondary,
               ),
+            SomButton(
+              onPressed: inquiry.id == null
+                  ? null
+                  : () => generateInquirySummaryPdf(
+                        context,
+                        inquiryId: inquiry.id!,
+                      ),
+              icon: SomAssets.iconPdf,
+              text: 'Generate summary PDF',
+              type: SomButtonType.secondary,
+            ),
           ],
         ),
       ],
