@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:openapi/openapi.dart';
-import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
+import '../../../domain/model/forms/som_text_input.dart';
 import '../../../utils/formatters.dart';
 import '../../../widgets/debounced_search_field.dart';
 import '../../../widgets/design_system/som_button.dart';

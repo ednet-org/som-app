@@ -37,7 +37,6 @@ ThemeData somFuturisticTheme({
     secondary: secondary,
     error: error,
     surface: surface,
-    background: background,
     onSurface: onBackground,
     onSurfaceVariant: onSurfaceVariant,
     surfaceContainerLowest: surface,
@@ -331,7 +330,7 @@ ThemeData somFuturisticTheme({
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(SomRadius.sm),
-        border: BorderSide(color: colorScheme.outlineVariant),
+        border: Border.all(color: colorScheme.outlineVariant),
       ),
       textStyle: textTheme.bodySmall?.copyWith(
         color: colorScheme.onSurface,
@@ -351,7 +350,6 @@ ThemeData somFuturisticTheme({
             : colorScheme.surfaceContainerHighest,
       ),
       checkColor: WidgetStateProperty.all(colorScheme.onPrimary),
-      visualDensity: visualDensity,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(SomRadius.sm),
       ),
@@ -362,7 +360,6 @@ ThemeData somFuturisticTheme({
             ? colorScheme.primary
             : colorScheme.outline,
       ),
-      visualDensity: visualDensity,
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith(
@@ -375,7 +372,6 @@ ThemeData somFuturisticTheme({
             ? colorScheme.primary.withValues(alpha: 0.4)
             : colorScheme.surfaceContainerHighest,
       ),
-      visualDensity: visualDensity,
     ),
     dataTableTheme: DataTableThemeData(
       headingRowColor:

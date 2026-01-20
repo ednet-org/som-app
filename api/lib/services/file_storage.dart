@@ -24,11 +24,13 @@ class FileStorage {
     required String category,
     required String fileName,
     required List<int> bytes,
+    bool includeTimestamp = true,
   }) async {
     await _ensureBucket();
     final safeName = fileName.replaceAll(RegExp(r'[^a-zA-Z0-9_.-]'), '_');
-    final path =
-        '$category/${DateTime.now().toUtc().millisecondsSinceEpoch}_$safeName';
+    final path = includeTimestamp
+        ? '$category/${DateTime.now().toUtc().millisecondsSinceEpoch}_$safeName'
+        : '$category/$safeName';
     final contentType = lookupMimeType(fileName) ?? 'application/octet-stream';
     try {
       await _client.storage.from(_bucket).uploadBinary(

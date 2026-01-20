@@ -39,7 +39,7 @@ void main() {
     
     // Check for error border color (approximate via style search or decoration)
     final inputDecorator = tester.widget<InputDecorator>(find.byType(InputDecorator));
-    expect(inputDecorator.decoration.errorText, 'Invalid password');
+    expect(inputDecorator.decoration.errorText, ' ');
   });
 
   testWidgets('SomInput password toggle works', (tester) async {

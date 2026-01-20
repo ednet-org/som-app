@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:openapi/openapi.dart';
@@ -244,7 +245,12 @@ class SomApplication extends StatelessWidget {
   }
 
   String _currentPath(BeamerProvidedKey beamer) {
-    return beamer.currentState?.routerDelegate.currentBeamLocation.state.uri.path ?? '';
+    final state =
+        beamer.currentState?.routerDelegate.currentBeamLocation.state;
+    if (state is BeamState) {
+      return state.uri.path;
+    }
+    return state?.routeInformation.uri.path ?? '';
   }
 
   int _selectedIndex(List<_NavItem> items, String path) {
@@ -405,32 +411,24 @@ class SomApplication extends StatelessWidget {
             ),
           ),
         ),
-        if (auth?.canSwitchRole == true && auth?.activeRole != 'buyer')
-          PopupMenuItem(
-            child: ListTile(
-              leading: SomSvgIcon(
-                SomAssets.iconChevronRight,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+        if (auth?.switchableContexts.isNotEmpty == true)
+          ...auth!.switchableContexts.map(
+            (option) => PopupMenuItem(
+              child: ListTile(
+                leading: SomSvgIcon(
+                  SomAssets.iconChevronRight,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                title: Text(
+                  'Switch to ${option.activeRole} • ${option.companyName}',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                onTap: () => _switchRole(
+                  context,
+                  option.activeRole,
+                  option.companyId,
+                ),
               ),
-              title: Text(
-                'Switch to buyer portal',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              onTap: () => _switchRole(context, 'buyer'),
-            ),
-          ),
-        if (auth?.canSwitchRole == true && auth?.activeRole != 'provider')
-          PopupMenuItem(
-            child: ListTile(
-              leading: SomSvgIcon(
-                SomAssets.iconChevronRight,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              title: Text(
-                'Switch to provider portal',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              onTap: () => _switchRole(context, 'provider'),
             ),
           ),
         PopupMenuItem(
@@ -594,7 +592,11 @@ class SomApplication extends StatelessWidget {
     }
   }
 
-  Future<void> _switchRole(BuildContext context, String role) async {
+  Future<void> _switchRole(
+    BuildContext context,
+    String role,
+    String companyId,
+  ) async {
     final appStore = Provider.of<Application>(context, listen: false);
     final api = Provider.of<Openapi>(context, listen: false);
     if (appStore.authorization == null) {
@@ -603,17 +605,77 @@ class SomApplication extends StatelessWidget {
     try {
       final response = await api.getAuthApi().authSwitchRolePost(
             authSwitchRolePostRequest:
-                AuthSwitchRolePostRequest((b) => b..role = role),
+                AuthSwitchRolePostRequest((b) => b
+                  ..role = role
+                  ..companyId = companyId),
           );
       final token = response.data?.token;
       if (token != null) {
-        appStore.authorization!.token = token;
-        appStore.setActiveRole(role);
+        final userId = appStore.authorization?.userId;
+        final profile = userId == null
+            ? null
+            : await api.getUsersApi().usersLoadUserWithCompanyGet(
+                  userId: userId,
+                  headers: {'Authorization': 'Bearer $token'},
+                );
+        final profileData = profile?.data;
+        final companyOptions = _mapCompanyOptions(profileData?.companyOptions);
+        appStore.login(
+          appStore.authorization!.copyWith(
+            token: token,
+            roles: profileData?.roles?.toList() ??
+                appStore.authorization?.roles,
+            activeRole: profileData?.activeRole ?? role,
+            companyId: profileData?.companyId ?? companyId,
+            activeCompanyId: profileData?.activeCompanyId ?? companyId,
+            companyName: profileData?.companyName ??
+                appStore.authorization?.companyName,
+            companyType: _companyTypeFromApi(profileData?.companyType) ??
+                appStore.authorization?.companyType,
+            companyOptions: companyOptions.isNotEmpty
+                ? companyOptions
+                : appStore.authorization!.companyOptions,
+          ),
+        );
         SupabaseRealtime.setAuth(token);
       }
     } catch (error, stackTrace) {
       UILogger.silentError('SomApplication._switchRole', error, stackTrace);
     }
+  }
+
+  List<CompanyContext> _mapCompanyOptions(
+    BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>? value,
+  ) {
+    if (value == null) return const [];
+    return value
+        .map(
+          (option) => CompanyContext(
+            companyId: option.companyId ?? '',
+            companyName: option.companyName ?? '',
+            companyType: _companyTypeFromApi(option.companyType) ?? 0,
+            roles: option.roles?.toList() ?? const [],
+            activeRole: option.activeRole ?? '',
+          ),
+        )
+        .where((option) => option.companyId.isNotEmpty)
+        .toList();
+  }
+
+  int? _companyTypeFromApi(
+    UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? value,
+  ) {
+    switch (value) {
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number0:
+        return 0;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number1:
+        return 1;
+      case UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.number2:
+        return 2;
+      case null:
+        return null;
+    }
+    return null;
   }
 }
 

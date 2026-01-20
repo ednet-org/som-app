@@ -58,7 +58,11 @@ class AuthService {
       await _resetLoginFailures(user);
       final role = user.lastLoginRole ??
           (user.roles.isNotEmpty ? user.roles.first : 'buyer');
-      await users.updateLastLoginRole(user.id, role);
+      await users.updateLastLoginRole(
+        user.id,
+        role,
+        companyId: user.lastLoginCompanyId ?? user.companyId,
+      );
       return tokens;
     } catch (_) {
       final message = await _recordFailedLogin(user);

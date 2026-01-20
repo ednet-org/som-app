@@ -12,6 +12,8 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/audit_service.dart';
+import 'package:som_api/services/csv_writer.dart';
 import 'package:som_api/services/date_utils.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -160,20 +162,168 @@ Future<Response> _handleList(RequestContext context) async {
 
   if (context.request.uri.queryParameters['format'] == 'csv') {
     final offersRepository = context.read<OfferRepository>();
-    final buffer = StringBuffer();
-    buffer.writeln('id,status,creator,branch,deadline,createdAt,offers');
-    for (final inquiry in inquiries) {
-      final offers = await offersRepository.listByInquiry(inquiry.id);
-      final offersSummary = offers
-          .map((offer) =>
-              '${offer.id}|${offer.providerCompanyId}|${offer.status}|${offer.forwardedAt?.toIso8601String() ?? ''}|${offer.resolvedAt?.toIso8601String() ?? ''}')
-          .join(';');
-      buffer.writeln(
-        '${inquiry.id},${inquiry.status},${inquiry.createdByUserId},${inquiry.branchId},${inquiry.deadline.toIso8601String()},${inquiry.createdAt.toIso8601String()},$offersSummary',
-      );
+    final companyRepo = context.read<CompanyRepository>();
+    final userRepo = context.read<UserRepository>();
+    final branchRepo = context.read<BranchRepository>();
+    final branchMap = <String, String>{};
+    for (final branch in await branchRepo.listBranches()) {
+      branchMap[branch.id] = branch.name;
     }
+    final companyNameCache = <String, String>{};
+    String companyName(String id) {
+      return companyNameCache[id] ?? id;
+    }
+    final userEmailCache = <String, String>{};
+    String userEmail(String id) {
+      return userEmailCache[id] ?? id;
+    }
+    Future<void> primeCompanyName(String companyId) async {
+      if (companyNameCache.containsKey(companyId)) return;
+      final company = await companyRepo.findById(companyId);
+      if (company != null) {
+        companyNameCache[companyId] = company.name;
+      }
+    }
+    Future<void> primeUserEmail(String userId) async {
+      if (userEmailCache.containsKey(userId)) return;
+      final user = await userRepo.findById(userId);
+      if (user != null) {
+        userEmailCache[userId] = user.email;
+      }
+    }
+
+    final writer = CsvWriter();
+    if (isConsultant) {
+      writer.writeRow([
+        'id',
+        'status',
+        'creatorEmail',
+        'branch',
+        'deadline',
+        'createdAt',
+        'offerCreatedAt',
+        'decisionAt',
+        'assignmentAt',
+        'offers',
+      ]);
+    } else if (activeRole == 'provider') {
+      writer.writeRow(
+          ['id', 'companyName', 'status', 'deadline', 'editor']);
+    } else {
+      writer.writeRow([
+        'id',
+        'status',
+        'creatorEmail',
+        'branch',
+        'deadline',
+        'createdAt',
+        'offers',
+      ]);
+    }
+
+    for (final inquiry in inquiries) {
+      await primeCompanyName(inquiry.buyerCompanyId);
+      await primeUserEmail(inquiry.createdByUserId);
+      final offers = await offersRepository.listByInquiry(inquiry.id);
+      final offerCreatedAt = offers
+          .map((offer) => offer.forwardedAt)
+          .whereType<DateTime>()
+          .fold<DateTime?>(
+            null,
+            (prev, next) =>
+                prev == null || next.isBefore(prev) ? next : prev,
+          );
+      final decisionAt = offers
+          .map((offer) => offer.resolvedAt)
+          .whereType<DateTime>()
+          .fold<DateTime?>(
+            null,
+            (prev, next) =>
+                prev == null || next.isAfter(prev) ? next : prev,
+          );
+
+      final offersSummary = <String>[];
+      for (final offer in offers) {
+        await primeCompanyName(offer.providerCompanyId);
+        if (offer.providerUserId != null) {
+          await primeUserEmail(offer.providerUserId!);
+        }
+        final providerName = companyName(offer.providerCompanyId);
+        final providerEditor = offer.providerUserId == null
+            ? ''
+            : userEmail(offer.providerUserId!);
+        final parts = [
+          offer.id,
+          providerName,
+          offer.buyerDecision ?? '',
+          offer.providerDecision ?? '',
+          offer.forwardedAt?.toIso8601String() ?? '',
+          offer.resolvedAt?.toIso8601String() ?? '',
+          providerEditor,
+        ];
+        offersSummary.add(parts.join('|'));
+      }
+
+      if (isConsultant) {
+        writer.writeRow([
+          inquiry.id,
+          inquiry.status,
+          userEmail(inquiry.createdByUserId),
+          branchMap[inquiry.branchId] ?? inquiry.branchId,
+          inquiry.deadline.toIso8601String(),
+          inquiry.createdAt.toIso8601String(),
+          offerCreatedAt?.toIso8601String() ?? '',
+          decisionAt?.toIso8601String() ?? '',
+          inquiry.assignedAt?.toIso8601String() ?? '',
+          offersSummary.join(';'),
+        ]);
+      } else if (activeRole == 'provider') {
+        OfferRecord? companyOffer;
+        for (final offer in offers) {
+          if (offer.providerCompanyId == auth.companyId) {
+            companyOffer = offer;
+            break;
+          }
+        }
+        if (companyOffer?.providerUserId != null) {
+          await primeUserEmail(companyOffer!.providerUserId!);
+        }
+        final editor =
+            companyOffer?.providerUserId == null ? '' : userEmail(companyOffer!.providerUserId!);
+        writer.writeRow([
+          inquiry.id,
+          companyName(inquiry.buyerCompanyId),
+          providerStatusMap?[inquiry.id] ?? '',
+          inquiry.deadline.toIso8601String(),
+          editor,
+        ]);
+      } else {
+        writer.writeRow([
+          inquiry.id,
+          inquiry.status,
+          userEmail(inquiry.createdByUserId),
+          branchMap[inquiry.branchId] ?? inquiry.branchId,
+          inquiry.deadline.toIso8601String(),
+          inquiry.createdAt.toIso8601String(),
+          offersSummary.join(';'),
+        ]);
+      }
+    }
+    await context.read<AuditService>().log(
+          action: 'inquiries.exported',
+          entityType: 'inquiry',
+          entityId: auth.companyId,
+          actorId: auth.userId,
+          metadata: {
+            'format': 'csv',
+            'role': auth.activeRole,
+            'count': inquiries.length,
+          },
+        );
     return Response(
-        headers: {'content-type': 'text/csv'}, body: buffer.toString());
+      headers: {'content-type': 'text/csv'},
+      body: writer.toString(),
+    );
   }
   final body = inquiries.map((inquiry) {
     final json = inquiry.toJson();

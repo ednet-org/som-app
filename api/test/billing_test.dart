@@ -27,7 +27,7 @@ void main() {
         users,
         consultantCompany,
         email: 'consultant@som.test',
-        roles: const ['consultant'],
+        roles: const ['consultant', 'admin'],
       );
       final providerAdmin = await seedUser(
         users,

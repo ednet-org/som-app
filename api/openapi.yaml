@@ -398,6 +398,9 @@ components:
         pdfPath:
           type: string
           nullable: true
+        summaryPdfPath:
+          type: string
+          nullable: true
         providerCriteria:
           $ref: '#/components/schemas/ProviderCriteria'
         contactInfo:
@@ -432,6 +435,9 @@ components:
         status:
           type: string
         pdfPath:
+          type: string
+          nullable: true
+        summaryPdfPath:
           type: string
           nullable: true
         forwardedAt:
@@ -1008,6 +1014,8 @@ paths:
               properties:
                 role:
                   type: string
+                companyId:
+                  type: string
       responses:
         '200':
           description: New access token
@@ -1361,6 +1369,8 @@ paths:
                     type: string
                   companyId:
                     type: string
+                  activeCompanyId:
+                    type: string
                   companyName:
                     type: string
                   companyAddress:
@@ -1369,6 +1379,24 @@ paths:
                     type: integer
                     enum: [0, 1, 2]
                     description: 0=buyer, 1=provider, 2=buyer+provider
+                  companyOptions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        companyId:
+                          type: string
+                        companyName:
+                          type: string
+                        companyType:
+                          type: integer
+                          enum: [0, 1, 2]
+                        roles:
+                          type: array
+                          items:
+                            type: string
+                        activeRole:
+                          type: string
         '404':
           description: Not found
   /Users/{userId}/unlock:
@@ -1871,6 +1899,36 @@ paths:
           description: Forbidden
         '404':
           description: Not found
+  /inquiries/{inquiryId}/pdf/generate:
+    post:
+      tags: [Inquiries]
+      summary: Generate inquiry summary PDF
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: inquiryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generated summary PDF
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summaryPdfPath:
+                    type: string
+                  signedUrl:
+                    type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
     post:
       tags: [Inquiries]
       summary: Upload inquiry PDF
@@ -1950,6 +2008,36 @@ paths:
               schema:
                 type: object
                 properties:
+                  signedUrl:
+                    type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+  /offers/{offerId}/pdf/generate:
+    post:
+      tags: [Offers]
+      summary: Generate offer summary PDF
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: offerId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generated summary PDF
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summaryPdfPath:
+                    type: string
                   signedUrl:
                     type: string
         '401':

@@ -272,7 +272,31 @@ class RegistrationService {
       final fieldKey = normalizedRoles.contains('admin')
           ? 'admin.email'
           : 'users.$userIndex.email';
-      await _ensureUniqueEmail(email, field: fieldKey);
+      if (email.isEmpty) {
+        throw RegistrationException(
+          'E-mail is required.',
+          field: fieldKey,
+          code: 'required',
+        );
+      }
+      final existing = await users.findByEmail(email);
+      if (existing != null && existing.removedAt == null) {
+        await users.addUserToCompany(
+          userId: existing.id,
+          companyId: companyId,
+          roles: normalizedRoles.isEmpty ? ['buyer'] : normalizedRoles,
+        );
+        createdUsers.add(
+          existing.copyWith(
+            companyId: companyId,
+            roles: normalizedRoles.isEmpty ? ['buyer'] : normalizedRoles,
+            lastLoginCompanyId:
+                existing.lastLoginCompanyId ?? existing.companyId,
+          ),
+        );
+        userIndex++;
+        continue;
+      }
       late final String authUserId;
       try {
         authUserId = await auth.ensureAuthUser(email: email);
@@ -296,6 +320,7 @@ class RegistrationService {
         isActive: true,
         emailConfirmed: false,
         lastLoginRole: null,
+        lastLoginCompanyId: companyId,
         createdAt: now,
         updatedAt: now,
       );

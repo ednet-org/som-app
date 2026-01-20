@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:openapi/openapi.dart';
@@ -73,6 +74,8 @@ abstract class _EmailLoginStoreBase with Store {
         List<String> roles = const [];
         String? activeRole;
         int? companyType;
+        String? activeCompanyId;
+        List<CompanyContext> companyOptions = const [];
         if (userId != null) {
           try {
             final profileResponse = await usersApi.usersLoadUserWithCompanyGet(
@@ -80,11 +83,15 @@ abstract class _EmailLoginStoreBase with Store {
               headers: {'Authorization': 'Bearer $token'},
             );
             companyId = profileResponse.data?.companyId;
+            activeCompanyId = profileResponse.data?.activeCompanyId;
             companyName = profileResponse.data?.companyName;
             emailAddress = profileResponse.data?.emailAddress;
             roles = profileResponse.data?.roles?.toList() ?? const [];
             activeRole = profileResponse.data?.activeRole;
             companyType = _companyTypeFromApi(profileResponse.data?.companyType);
+            companyOptions = _companyOptionsFromApi(
+              profileResponse.data?.companyOptions,
+            );
           } catch (_) {
             // Best-effort profile load; keep login flow responsive.
           }
@@ -95,11 +102,13 @@ abstract class _EmailLoginStoreBase with Store {
           refreshToken: refreshToken,
           userId: userId,
           companyId: companyId,
+          activeCompanyId: activeCompanyId ?? companyId,
           companyName: companyName,
           emailAddress: emailAddress ?? email,
           roles: roles,
           activeRole: activeRole,
           companyType: companyType,
+          companyOptions: companyOptions,
         ));
       }
 
@@ -165,5 +174,23 @@ abstract class _EmailLoginStoreBase with Store {
         return null;
     }
     return null;
+  }
+
+  List<CompanyContext> _companyOptionsFromApi(
+    BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>? value,
+  ) {
+    if (value == null) return const [];
+    return value
+        .map(
+          (option) => CompanyContext(
+            companyId: option.companyId ?? '',
+            companyName: option.companyName ?? '',
+            companyType: _companyTypeFromApi(option.companyType) ?? 0,
+            roles: option.roles?.toList() ?? const [],
+            activeRole: option.activeRole ?? '',
+          ),
+        )
+        .where((option) => option.companyId.isNotEmpty)
+        .toList();
   }
 }

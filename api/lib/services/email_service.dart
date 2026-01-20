@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mailer/mailer.dart';
+import 'package:mailer/mailer.dart' as mailer;
 import 'package:mailer/smtp_server.dart';
 import 'package:path/path.dart' as p;
 
@@ -109,13 +109,13 @@ class SmtpEmailProvider implements EmailProvider {
 
   @override
   Future<void> send(EmailMessage message) async {
-    final mail = Message()
-      ..from = Address(message.fromAddress, message.fromName)
+    final mail = mailer.Message()
+      ..from = mailer.Address(message.fromAddress, message.fromName)
       ..recipients.add(message.to)
       ..subject = message.subject
       ..text = message.text
       ..html = message.html;
-    await send(mail, _server);
+    await mailer.send(mail, _server);
   }
 }
 

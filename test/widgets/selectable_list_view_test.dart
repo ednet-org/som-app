@@ -13,7 +13,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byType(SelectableListView<String>));
+    await tester.tap(find.text('Alpha'));
     await tester.pump();
 
     await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);

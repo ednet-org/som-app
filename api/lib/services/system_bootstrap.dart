@@ -74,6 +74,7 @@ class SystemBootstrap {
       isActive: true,
       emailConfirmed: true,
       lastLoginRole: 'consultant',
+      lastLoginCompanyId: systemCompany.id,
       createdAt: now,
       updatedAt: now,
     );
@@ -655,6 +656,7 @@ class SystemBootstrap {
       isActive: true,
       emailConfirmed: true,
       lastLoginRole: lastLoginRole,
+      lastLoginCompanyId: companyId,
       createdAt: now,
       updatedAt: now,
     );

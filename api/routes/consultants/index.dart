@@ -61,6 +61,7 @@ Future<Response> onRequest(RequestContext context) async {
       isActive: true,
       emailConfirmed: false,
       lastLoginRole: 'consultant',
+      lastLoginCompanyId: systemCompany.id,
       createdAt: now,
       updatedAt: now,
     );

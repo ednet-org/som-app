@@ -12,6 +12,7 @@ import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/inline_message.dart';
 import '../../widgets/snackbars.dart';
+import '../../widgets/status_badge.dart';
 import '../../widgets/status_legend.dart';
 import 'widgets/ads_buyer_view.dart';
 import 'widgets/ads_create_form.dart';
@@ -184,6 +185,7 @@ class _AdsPageState extends State<AdsPage> {
       ),
     );
     if (confirmed != true) return;
+    if (!mounted) return;
     final api = Provider.of<Openapi>(context, listen: false);
     int success = 0;
     int failed = 0;

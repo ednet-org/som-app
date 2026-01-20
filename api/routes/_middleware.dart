@@ -31,6 +31,7 @@ import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
+import 'package:som_api/services/pdf_generator.dart';
 import 'package:som_api/services/rate_limit_middleware.dart';
 import 'package:som_api/services/registration_service.dart';
 import 'package:som_api/services/role_seed.dart';
@@ -65,6 +66,7 @@ final _schemaVersions = SchemaVersionRepository(_supabase.adminClient);
 final _schedulerStatus = SchedulerStatusRepository(_supabase.adminClient);
 final _storage =
     FileStorage(client: _supabase.adminClient, bucket: _supabase.storageBucket);
+final _pdfGenerator = PdfGenerator();
 final _notifications = NotificationService(
   ads: _ads,
   users: _users,
@@ -178,6 +180,7 @@ Handler middleware(Handler handler) {
       .use(provider<SchemaVersionRepository>((_) => _schemaVersions))
       .use(provider<SchedulerStatusRepository>((_) => _schedulerStatus))
       .use(provider<FileStorage>((_) => _storage))
+      .use(provider<PdfGenerator>((_) => _pdfGenerator))
       .use(provider<NotificationService>((_) => _notifications))
       .use(provider<DomainEventService>((_) => _domainEventService))
       .use(provider<AuditService>((_) => _auditService))

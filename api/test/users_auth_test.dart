@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 
 import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/auth_service.dart';
+import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import '../routes/Companies/[companyId]/registerUser.dart' as register_route;
 import '../routes/Companies/[companyId]/users/index.dart' as list_route;
@@ -43,6 +44,7 @@ void main() {
       );
       context.provide<UserRepository>(users);
       context.provide<AuthService>(auth);
+      context.provide<CompanyRepository>(companies);
 
       final response =
           await register_route.onRequest(context.context, company.id);
@@ -82,6 +84,7 @@ void main() {
       context.provide<UserRepository>(users);
       context.provide<AuthService>(auth);
       context.provide<AuditService>(audit);
+      context.provide<CompanyRepository>(companies);
 
       final response =
           await register_route.onRequest(context.context, company.id);

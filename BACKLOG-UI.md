@@ -281,32 +281,32 @@ All assets located in `assets/design_system/` organized by context:
 ### Design Tokens + Theme
 - [x] Introduce spacing, radius, icon size tokens.
 - [x] Create `som_theme.dart` with Material 3 color scheme + component theming.
-- [ ] Expand tokens for typography scales and component density.
-- [ ] Extend theme to cover tables, data grids, dialogs.
+- [x] Expand tokens for typography scales and component density.
+- [x] Extend theme to cover tables, data grids, dialogs.
 
 ### Information Hierarchy
-- [ ] Add section headers and visual grouping in detail views.
-- [ ] Use two-column key/value layout for wider screens.
-- [ ] Add “meta” styling for IDs and timestamps.
+- [x] Add section headers and visual grouping in detail views.
+- [x] Use two-column key/value layout for wider screens.
+- [x] Add “meta” styling for IDs and timestamps.
 
 ### Navigation + Responsiveness
-- [ ] Evaluate `NavigationRail` on wide screens vs top bar.
-- [ ] Adopt M3 `NavigationBar` on narrow screens.
-- [ ] Ensure filters are collapsible on smaller widths.
-- [ ] Add responsive breakpoints for list/detail split widths.
+- [x] Evaluate `NavigationRail` on wide screens vs top bar.
+- [x] Adopt M3 `NavigationBar` on narrow screens.
+- [x] Ensure filters are collapsible on smaller widths.
+- [x] Add responsive breakpoints for list/detail split widths.
 
 ---
 
 ## P3: Nice-to-Have
 
 ### Motion
-- [ ] Staggered list animations for initial load.
-- [ ] Subtle transition between list selection states.
+- [x] Staggered list animations for initial load.
+- [x] Subtle transition between list selection states.
 
 ### UX Enhancements
-- [ ] Inline search filtering with debounced input.
-- [ ] Keyboard shortcuts for list navigation (desktop).
-- [ ] Multi-select bulk actions (delete/approve/decline).
+- [x] Inline search filtering with debounced input.
+- [x] Keyboard shortcuts for list navigation (desktop).
+- [x] Multi-select bulk actions (delete/approve/decline).
 
 ---
 
@@ -398,12 +398,12 @@ These higher-abstraction assets replace standard material placeholders for premi
 ### Sprint 2: Core Visual System (P1)
 - [x] Shared toolbar + empty state
 - [x] Status badges + semantic colors
-- [ ] Apply status badges everywhere
-- [ ] Detail cards + key/value layout everywhere
+- [x] Apply status badges everywhere
+- [x] Detail cards + key/value layout everywhere
 
 ### Sprint 3: Appearance + Theme (P1/P2)
 - [x] Material 3 theme file
 - [x] Light/dark/system switcher
 - [x] Density switcher
-- [ ] Persist theme + density
+- [x] Persist theme + density
 - [ ] Contrast audit + typography alignment

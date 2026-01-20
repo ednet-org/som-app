@@ -7,6 +7,7 @@ import 'package:test/test.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import '../routes/roles/index.dart' as roles_route;
 import '../routes/roles/[roleId]/index.dart' as role_route;
 import 'test_utils.dart';
@@ -39,6 +40,9 @@ void main() {
       );
       createContext.provide<RoleRepository>(roles);
       createContext.provide<UserRepository>(users);
+      createContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final createResponse = await roles_route.onRequest(createContext.context);
       expect(createResponse.statusCode, 200);
@@ -60,6 +64,15 @@ void main() {
       );
       updateContext.provide<RoleRepository>(roles);
       updateContext.provide<UserRepository>(users);
+      updateContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
+      updateContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
+      updateContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final updateResponse =
           await role_route.onRequest(updateContext.context, roleId);
@@ -72,6 +85,15 @@ void main() {
       );
       deleteContext.provide<RoleRepository>(roles);
       deleteContext.provide<UserRepository>(users);
+      deleteContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
+      deleteContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
+      deleteContext.provide<AuditService>(
+        AuditService(repository: InMemoryAuditLogRepository()),
+      );
 
       final deleteResponse =
           await role_route.onRequest(deleteContext.context, roleId);

@@ -91,7 +91,6 @@ class SomTheme {
         textColor: colorScheme.onSurface,
         selectedTileColor:
             colorScheme.primaryContainer.withValues(alpha: 0.3),
-        hoverColor: colorScheme.surfaceContainerHigh,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SomRadius.sm),
         ),
@@ -154,7 +153,7 @@ class SomTheme {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(SomRadius.sm),
-          border: BorderSide(color: colorScheme.outlineVariant),
+          border: Border.all(color: colorScheme.outlineVariant),
         ),
         textStyle: textTheme.bodySmall?.copyWith(
           color: colorScheme.onSurface,
@@ -167,7 +166,6 @@ class SomTheme {
               : colorScheme.surfaceContainerHighest,
         ),
         checkColor: WidgetStateProperty.all(colorScheme.onPrimary),
-        visualDensity: visualDensity,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SomRadius.sm),
         ),
@@ -178,7 +176,6 @@ class SomTheme {
               ? colorScheme.primary
               : colorScheme.outline,
         ),
-        visualDensity: visualDensity,
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith(
@@ -191,7 +188,6 @@ class SomTheme {
               ? colorScheme.primary.withValues(alpha: 0.4)
               : colorScheme.surfaceContainerHighest,
         ),
-        visualDensity: visualDensity,
       ),
       dataTableTheme: DataTableThemeData(
         headingRowColor:

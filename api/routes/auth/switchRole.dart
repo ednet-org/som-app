@@ -23,11 +23,24 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
   final role = body['role'] as String? ?? '';
+  final companyId = body['companyId'] as String?;
   final user = await userRepo.findById(auth.userId);
-  if (user == null || !user.roles.contains(role)) {
+  if (user == null) {
     return Response(statusCode: 403);
   }
-  await userRepo.updateLastLoginRole(user.id, role);
+  final targetCompanyId = companyId ?? auth.companyId;
+  final membership = await userRepo.findCompanyRole(
+    userId: user.id,
+    companyId: targetCompanyId,
+  );
+  if (membership == null || !membership.roles.contains(role)) {
+    return Response(statusCode: 403);
+  }
+  await userRepo.updateLastLoginRole(
+    user.id,
+    role,
+    companyId: targetCompanyId,
+  );
   return Response.json(body: {
     'token': context.request.headers['authorization']?.substring(7) ?? ''
   });

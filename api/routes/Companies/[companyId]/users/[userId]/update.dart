@@ -64,6 +64,7 @@ Future<Response> onRequest(
     isActive: existing.isActive,
     emailConfirmed: existing.emailConfirmed,
     lastLoginRole: existing.lastLoginRole,
+    lastLoginCompanyId: existing.lastLoginCompanyId,
     createdAt: existing.createdAt,
     updatedAt: DateTime.now().toUtc(),
     passwordHash: existing.passwordHash,

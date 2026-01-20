@@ -29,6 +29,7 @@ create table if not exists users (
   is_active boolean not null default true,
   email_confirmed boolean not null default false,
   last_login_role text,
+  last_login_company_id uuid references companies(id),
   failed_login_attempts integer not null default 0,
   last_failed_login_at timestamptz,
   locked_at timestamptz,
@@ -37,6 +38,15 @@ create table if not exists users (
   removed_by_user_id uuid,
   created_at timestamptz not null,
   updated_at timestamptz not null
+);
+
+create table if not exists user_company_roles (
+  user_id uuid not null references users(id) on delete cascade,
+  company_id uuid not null references companies(id) on delete cascade,
+  roles_json jsonb not null,
+  created_at timestamptz not null,
+  updated_at timestamptz not null,
+  primary key (user_id, company_id)
 );
 
 create table if not exists user_tokens (
@@ -197,6 +207,7 @@ create table if not exists inquiries (
   number_of_providers integer not null,
   description text,
   pdf_path text,
+  summary_pdf_path text,
   provider_criteria_json jsonb not null,
   contact_json jsonb not null,
   notified_at timestamptz,
@@ -249,6 +260,7 @@ create table if not exists offers (
   provider_user_id uuid,
   status text not null,
   pdf_path text,
+  summary_pdf_path text,
   forwarded_at timestamptz,
   resolved_at timestamptz,
   buyer_decision text,

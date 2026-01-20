@@ -3,7 +3,6 @@ import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:som/ui/theme/som_assets.dart';
 
-import '../../../theme/tokens.dart';
 import '../../../utils/formatters.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/selectable_list_view.dart';

@@ -66,8 +66,38 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   final body = await context.request.body();
   final jsonBody = jsonDecode(body) as Map<String, dynamic>;
   final email = (jsonBody['email'] as String? ?? '').toLowerCase();
-  if (await repo.findByEmail(email) != null) {
-    return Response.json(statusCode: 400, body: 'E-mail already used.');
+  final existingUser = await repo.findByEmail(email);
+  if (existingUser != null && existingUser.removedAt == null) {
+    final membership = await repo.findCompanyRole(
+      userId: existingUser.id,
+      companyId: companyId,
+    );
+    if (membership != null) {
+      return Response.json(statusCode: 400, body: 'E-mail already used.');
+    }
+    final normalizedRoles = _ensureBaseRoles(
+      roles: (jsonBody['roles'] as List<dynamic>? ?? [2])
+          .map((e) => e is int ? roleFromWire(e) : e.toString())
+          .toList(),
+      companyType: company.type,
+    );
+    await repo.addUserToCompany(
+      userId: existingUser.id,
+      companyId: companyId,
+      roles: normalizedRoles,
+    );
+    await context.read<AuditService>().log(
+          action: 'user.created',
+          entityType: 'user',
+          entityId: existingUser.id,
+          actorId: authResult.userId,
+          metadata: {
+            'companyId': companyId,
+            'email': existingUser.email,
+            'existing': true,
+          },
+        );
+    return Response(statusCode: 200);
   }
   late final String authUserId;
   try {
@@ -95,6 +125,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
     isActive: true,
     emailConfirmed: false,
     lastLoginRole: null,
+    lastLoginCompanyId: companyId,
     createdAt: now,
     updatedAt: now,
   );

@@ -14,6 +14,7 @@ import '../../widgets/app_toolbar.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/inline_message.dart';
 import '../../widgets/snackbars.dart';
+import '../../widgets/status_badge.dart';
 import '../../widgets/status_legend.dart';
 import 'widgets/inquiry_create_form.dart';
 import 'widgets/inquiry_detail.dart';

@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/clock.dart';
+import 'package:som_api/models/models.dart';
 import 'package:som_api/services/scheduler.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'test_utils.dart';

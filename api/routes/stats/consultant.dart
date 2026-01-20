@@ -1,6 +1,8 @@
 import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
+import 'package:som_api/services/csv_writer.dart';
 import 'package:som_api/services/request_auth.dart';
 import 'package:som_api/services/statistics_service.dart';
 
@@ -40,14 +42,38 @@ Future<Response> onRequest(RequestContext context) async {
       stats = await statsService.consultantStatusStats(from: from, to: to);
   }
   if (params['format'] == 'csv') {
-    final buffer = StringBuffer();
-    buffer.writeln('$type,count');
+    final writer = CsvWriter();
+    switch (type) {
+      case 'period':
+        writer.writeRow(['month', 'count']);
+        break;
+      case 'providerType':
+        writer.writeRow(['providerType', 'count']);
+        break;
+      case 'providerSize':
+        writer.writeRow(['providerSize', 'count']);
+        break;
+      case 'status':
+      default:
+        writer.writeRow(['status', 'count']);
+    }
     stats.forEach((key, value) {
-      buffer.writeln('$key,$value');
+      writer.writeRow([key, value]);
     });
+    await context.read<AuditService>().log(
+          action: 'stats.exported',
+          entityType: 'stats',
+          entityId: auth.userId,
+          actorId: auth.userId,
+          metadata: {
+            'format': 'csv',
+            'role': auth.activeRole,
+            'type': type,
+          },
+        );
     return Response(
       headers: {'content-type': 'text/csv'},
-      body: buffer.toString(),
+      body: writer.toString(),
     );
   }
   return Response.json(body: stats);

@@ -36,12 +36,27 @@ Future<RequestAuth?> parseAuth(
     if (user == null || !user.isActive || user.lockedAt != null) {
       return null;
     }
-    final activeRole =
-        user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : '');
+    var activeCompanyId = user.lastLoginCompanyId ?? user.companyId;
+    var membership = await users.findCompanyRole(
+      userId: user.id,
+      companyId: activeCompanyId,
+    );
+    if (membership == null && activeCompanyId != user.companyId) {
+      activeCompanyId = user.companyId;
+      membership = await users.findCompanyRole(
+        userId: user.id,
+        companyId: activeCompanyId,
+      );
+    }
+    final roles = membership?.roles ?? user.roles;
+    final lastRole = user.lastLoginRole;
+    final activeRole = (lastRole != null && roles.contains(lastRole))
+        ? lastRole
+        : (roles.isNotEmpty ? roles.first : '');
     return RequestAuth(
       userId: user.id,
-      companyId: user.companyId,
-      roles: user.roles,
+      companyId: activeCompanyId,
+      roles: roles,
       activeRole: activeRole,
     );
   } on JWTException {

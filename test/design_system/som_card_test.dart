@@ -34,7 +34,9 @@ void main() {
     expect(card.clipBehavior, Clip.antiAlias);
     
     final shape = card.shape as RoundedRectangleBorder;
-    expect(shape.borderRadius, BorderRadius.circular(16));
+    final expectedShape =
+        (theme.cardTheme.shape as RoundedRectangleBorder?)?.borderRadius;
+    expect(shape.borderRadius, expectedShape);
   });
 
   testWidgets('SomCard shows mesh background when isFeatured is true', (tester) async {

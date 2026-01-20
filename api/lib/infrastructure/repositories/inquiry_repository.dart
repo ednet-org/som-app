@@ -21,6 +21,7 @@ class InquiryRepository {
       'number_of_providers': inquiry.numberOfProviders,
       'description': inquiry.description,
       'pdf_path': inquiry.pdfPath,
+      'summary_pdf_path': inquiry.summaryPdfPath,
       'provider_criteria_json': inquiry.providerCriteria.toJson(),
       'contact_json': inquiry.contactInfo.toJson(),
       'notified_at': inquiry.notifiedAt?.toIso8601String(),
@@ -84,9 +85,23 @@ class InquiryRepository {
     }).eq('id', id);
   }
 
+  Future<void> updateSummaryPdfPath(String id, String pdfPath) async {
+    await _client.from('inquiries').update({
+      'summary_pdf_path': pdfPath,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
   Future<void> clearPdfPath(String id) async {
     await _client.from('inquiries').update({
       'pdf_path': null,
+      'updated_at': DateTime.now().toUtc().toIso8601String(),
+    }).eq('id', id);
+  }
+
+  Future<void> clearSummaryPdfPath(String id) async {
+    await _client.from('inquiries').update({
+      'summary_pdf_path': null,
       'updated_at': DateTime.now().toUtc().toIso8601String(),
     }).eq('id', id);
   }
@@ -200,6 +215,7 @@ class InquiryRepository {
       numberOfProviders: row['number_of_providers'] as int,
       description: row['description'] as String?,
       pdfPath: row['pdf_path'] as String?,
+      summaryPdfPath: row['summary_pdf_path'] as String?,
       providerCriteria: ProviderCriteria.fromJson(
         decodeJsonMap(row['provider_criteria_json']),
       ),

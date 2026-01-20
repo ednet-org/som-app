@@ -162,9 +162,11 @@ class Authorization {
   int? companyType;
   String? userId;
   String? companyId;
+  String? activeCompanyId;
   String? companyName;
   String? emailAddress;
   Object? user;
+  List<CompanyContext> companyOptions;
 
   Authorization({
     this.companyRole,
@@ -172,11 +174,13 @@ class Authorization {
     this.user,
     this.userId,
     this.companyId,
+    this.activeCompanyId,
     this.companyName,
     this.emailAddress,
     this.roles = const [],
     this.activeRole,
     this.companyType,
+    this.companyOptions = const [],
     required this.token,
     required this.refreshToken,
   });
@@ -191,9 +195,11 @@ class Authorization {
     int? companyType,
     String? userId,
     String? companyId,
+    String? activeCompanyId,
     String? companyName,
     String? emailAddress,
     Object? user,
+    List<CompanyContext>? companyOptions,
   }) {
     return Authorization(
       companyRole: companyRole ?? this.companyRole,
@@ -201,11 +207,13 @@ class Authorization {
       user: user ?? this.user,
       userId: userId ?? this.userId,
       companyId: companyId ?? this.companyId,
+      activeCompanyId: activeCompanyId ?? this.activeCompanyId,
       companyName: companyName ?? this.companyName,
       emailAddress: emailAddress ?? this.emailAddress,
       roles: roles ?? this.roles,
       activeRole: activeRole ?? this.activeRole,
       companyType: companyType ?? this.companyType,
+      companyOptions: companyOptions ?? this.companyOptions,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
     );
@@ -222,6 +230,31 @@ class Authorization {
   bool get isAdmin => roles.contains('admin');
 
   bool get canSwitchRole => roles.contains('buyer') && roles.contains('provider');
+
+  bool get canSwitchCompany => companyOptions.length > 1;
+
+  List<CompanyContext> get switchableContexts {
+    return companyOptions
+        .where((option) =>
+            option.companyId != companyId || option.activeRole != activeRole)
+        .toList();
+  }
+}
+
+class CompanyContext {
+  CompanyContext({
+    required this.companyId,
+    required this.companyName,
+    required this.companyType,
+    required this.roles,
+    required this.activeRole,
+  });
+
+  final String companyId;
+  final String companyName;
+  final int companyType;
+  final List<String> roles;
+  final String activeRole;
 }
 
 enum UserRoles {
