@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/som_application.dart';
+import 'package:som/ui/widgets/snackbars.dart';
 
 import '../../domain/application/application.dart';
 import '../../domain/model/login.dart';
@@ -27,17 +28,10 @@ class AuthLoginPage extends StatelessWidget {
               child: ReactionBuilder(
                 builder: (BuildContext context) {
                   return reaction((_) => appStore.isAuthenticated, (result) {
-                    final messenger = ScaffoldMessenger.of(context);
-
-                    messenger.showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          result == true
-                              ? 'You\'re authenticated'
-                              : 'You\'re not authenticated',
-                        ),
-                      ),
-                    );
+                    final message = result == true
+                        ? 'You\'re authenticated'
+                        : 'You\'re not authenticated';
+                    SomSnackBars.info(context, message);
                   }, delay: 4000);
                 },
                 child: Scaffold(

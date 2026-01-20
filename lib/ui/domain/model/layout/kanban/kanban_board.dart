@@ -107,6 +107,7 @@ class KanbanBoard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
+              tooltip: 'Add column',
               icon: SomSvgIcon(
                 SomAssets.iconChevronRight,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -124,6 +125,7 @@ class KanbanBoard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
+              tooltip: 'Add column',
               icon: SomSvgIcon(
                 SomAssets.iconChevronRight,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

@@ -83,7 +83,7 @@ class _AdminUserSection extends StatelessWidget {
                 request.company.canCreateMoreUsers
                     ? SizedBox(
                         width: 60,
-                        child: ElevatedButton(
+                        child: FilledButton.tonal(
                           onPressed: () =>
                               request.company.increaseNumberOfUsers(),
                           child: const Padding(
@@ -197,7 +197,7 @@ class _AdditionalUserItem extends StatelessWidget {
                 request.company.canCreateMoreUsers
                     ? SizedBox(
                         width: 60,
-                        child: ElevatedButton(
+                        child: FilledButton.tonal(
                           onPressed: () => request.company.removeUser(index),
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),

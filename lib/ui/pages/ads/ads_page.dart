@@ -39,6 +39,8 @@ class _AdsPageState extends State<AdsPage> {
   String? _filterType;
 
   bool _showCreateForm = false;
+  bool _bulkMode = false;
+  final Set<String> _bulkSelection = {};
   bool _bootstrapped = false;
   bool _realtimeReady = false;
   late final RealtimeRefreshHandle _realtimeRefresh =
@@ -124,6 +126,84 @@ class _AdsPageState extends State<AdsPage> {
     setState(() {
       _selectedAd = ad;
     });
+  }
+
+  void _enterBulkMode([Ad? ad]) {
+    setState(() {
+      _bulkMode = true;
+      _bulkSelection.clear();
+      if (ad?.id != null) {
+        _bulkSelection.add(ad!.id!);
+      }
+      _selectedAd = null;
+      _showCreateForm = false;
+    });
+  }
+
+  void _exitBulkMode() {
+    setState(() {
+      _bulkMode = false;
+      _bulkSelection.clear();
+    });
+  }
+
+  void _toggleBulkSelection(Ad ad) {
+    final id = ad.id;
+    if (id == null || id.isEmpty) {
+      SomSnackBars.warning(context, 'Ad is missing an ID.');
+      return;
+    }
+    setState(() {
+      if (!_bulkSelection.add(id)) {
+        _bulkSelection.remove(id);
+      }
+    });
+  }
+
+  Future<void> _bulkDeleteSelected() async {
+    if (_bulkSelection.isEmpty) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete selected ads'),
+        content: Text('Delete ${_bulkSelection.length} ad(s)?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+            ),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    final api = Provider.of<Openapi>(context, listen: false);
+    int success = 0;
+    int failed = 0;
+    for (final id in _bulkSelection) {
+      try {
+        await api.getAdsApi().adsAdIdDelete(adId: id);
+        success += 1;
+      } catch (_) {
+        failed += 1;
+      }
+    }
+    if (!mounted) return;
+    if (success > 0) {
+      final suffix = failed > 0 ? ' • $failed failed' : '';
+      _showSnack('Deleted $success ad${success == 1 ? '' : 's'}$suffix.');
+    } else {
+      _showSnack('Failed to delete selected ads.');
+    }
+    await _refresh();
+    if (mounted) _exitBulkMode();
   }
 
   Future<void> _createAd(AdFormData data) async {
@@ -234,6 +314,30 @@ class _AdsPageState extends State<AdsPage> {
     }
   }
 
+  Widget _buildBulkSummary() {
+    final count = _bulkSelection.length;
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: ListView(
+        children: [
+          Text(
+            'Bulk selection',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          Text('$count ad${count == 1 ? '' : 's'} selected'),
+          const SizedBox(height: 12),
+          InlineMessage(
+            message: count == 0
+                ? 'Select ads to enable bulk actions.'
+                : 'Use the toolbar to delete the selected ads.',
+            type: InlineMessageType.info,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appStore = Provider.of<Application>(context);
@@ -292,41 +396,67 @@ class _AdsPageState extends State<AdsPage> {
               Expanded(
                 child: AdsList(
                   ads: ads,
-                  selectedAdId: _selectedAd?.id,
+                  selectedAdId: _bulkMode ? null : _selectedAd?.id,
                   typeFilter: _filterType,
                   isBuyer: isBuyer,
                   onAdSelected: _selectAd,
+                  selectionMode: _bulkMode,
+                  selectedAdIds: _bulkSelection,
+                  onToggleSelection: _toggleBulkSelection,
+                  onEnterSelectionMode: _enterBulkMode,
                 ),
               ),
             ],
           ),
           rightSplit: isBuyer
               ? AdsBuyerView(ads: ads)
-              : _showCreateForm
-              ? AdsCreateForm(branches: _branches, onSubmit: _createAd)
-              : _selectedAd != null
-              ? AdsEditForm(
-                  ad: _selectedAd!,
-                  onUpdate: _updateAd,
-                  onActivate: _activateAd,
-                  onDeactivate: _deactivateAd,
-                  onDelete: _deleteAd,
-                )
-              : const NoAdSelected(),
+              : _bulkMode
+                  ? _buildBulkSummary()
+                  : _showCreateForm
+                      ? AdsCreateForm(branches: _branches, onSubmit: _createAd)
+                      : _selectedAd != null
+                          ? AdsEditForm(
+                              ad: _selectedAd!,
+                              onUpdate: _updateAd,
+                              onActivate: _activateAd,
+                              onDeactivate: _deactivateAd,
+                              onDelete: _deleteAd,
+                            )
+                          : const NoAdSelected(),
         );
       },
     );
   }
 
   Widget _buildContextMenu(Application appStore) {
+    final canManage = appStore.authorization?.isBuyer != true;
     return AppToolbar(
       title: const Text('SOM Ads'),
       actions: [
-        if (appStore.authorization?.isBuyer != true)
+        if (canManage && _bulkMode) ...[
+          OutlinedButton(
+            onPressed: _bulkSelection.isEmpty ? null : _bulkDeleteSelected,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+              side: BorderSide(color: Theme.of(context).colorScheme.error),
+            ),
+            child: Text('Delete (${_bulkSelection.length})'),
+          ),
+          TextButton(
+            onPressed: _exitBulkMode,
+            child: const Text('Done'),
+          ),
+        ] else if (canManage) ...[
           FilledButton.tonal(
-            onPressed: () => setState(() => _showCreateForm = !_showCreateForm),
+            onPressed: () =>
+                setState(() => _showCreateForm = !_showCreateForm),
             child: Text(_showCreateForm ? 'Close form' : 'Create ad'),
           ),
+          TextButton(
+            onPressed: () => _enterBulkMode(),
+            child: const Text('Bulk actions'),
+          ),
+        ],
         StatusLegendButton(
           title: 'Ad status',
           items: const [

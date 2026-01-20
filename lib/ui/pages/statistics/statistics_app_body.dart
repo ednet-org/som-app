@@ -252,7 +252,9 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
                 items: _companyUsers
                     .map((user) => DropdownMenuItem(
                           value: user.id,
-                          child: Text(user.email ?? user.id ?? '-'),
+                          child: Text(
+                            user.email ?? SomFormatters.shortId(user.id),
+                          ),
                         ))
                     .toList(),
                 onChanged: (value) => setState(() => _userIdFilter = value),

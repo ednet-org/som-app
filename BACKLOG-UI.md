@@ -212,7 +212,7 @@ All assets located in `assets/design_system/` organized by context:
 ### UUID + Date Formatting
 - [x] Replace raw UUIDs with readable short IDs where displayed.
 - [x] Replace ISO timestamps with readable dates/relative times.
-- [ ] Audit remaining screens for raw IDs and raw timestamps.
+- [x] Audit remaining screens for raw IDs and raw timestamps.
 
 ### Theme Alpha Bug
 - [x] Fix seed color alpha bug (`0x0044546a` -> `0xFF44546A`).
@@ -226,23 +226,23 @@ All assets located in `assets/design_system/` organized by context:
   - `AppToolbar` (title + actions + optional subtitle)
   - `DetailSection` / `DetailRow` for key-value blocks
   - `EmptyState` for empty lists
-- [ ] Apply new toolbar + empty state on all remaining screens.
-- [ ] Use M3 buttons consistently (Filled / Tonal / Outlined / Text).
-- [ ] Standardize list tile density, padding, and hover/selection states.
+- [x] Apply new toolbar + empty state on all remaining screens.
+- [x] Use M3 buttons consistently (Filled / Tonal / Outlined / Text).
+- [x] Standardize list tile density, padding, and hover/selection states.
 
 ### Status Visualization
 - [x] Status badges + semantic colors.
-- [ ] Apply status badges consistently in offers, ads, providers, companies, branches.
-- [ ] Add status legend hints where needed.
+- [x] Apply status badges consistently in offers, ads, providers, companies, branches.
+- [x] Add status legend hints where needed.
 
 ### State of System (HCI)
-- [ ] Replace plain text loading with M3 indicators/skeletons.
-- [ ] Use `SnackBar` for action feedback with success/error tones.
-- [ ] Add inline error states in detail panels (not only toast).
+- [x] Replace plain text loading with M3 indicators/skeletons.
+- [x] Use `SnackBar` for action feedback with success/error tones.
+- [x] Add inline error states in detail panels (not only toast).
 
 ### Accessibility
 - [x] Minimum touch target (48dp) for icon actions.
-- [ ] Add `Tooltip`/`Semantics` for icon-only actions.
+- [x] Add `Tooltip`/`Semantics` for icon-only actions.
 - [ ] Verify contrast ratios for status colors in dark theme.
 
 ---
@@ -253,21 +253,21 @@ All assets located in `assets/design_system/` organized by context:
 - [x] Add light/dark/system switcher.
 - [x] Add density switcher (compact/standard/comfortable).
 - [x] Persist theme + density using shared preferences.
-- [ ] Add user-level preference indicators in profile menu.
+- [x] Add user-level preference indicators in profile menu.
 
 ### Design System Assets Integration
-- [ ] Register all `assets/design_system/**` entries in `pubspec.yaml`.
-- [ ] Create a single source of truth for asset paths (e.g., `SomAssets`).
-- [ ] Replace default Material icons with design system SVGs.
-- [ ] Add SVG placeholders for ads + empty states.
-- [ ] Add pattern overlays to cards where specified.
+- [x] Register all `assets/design_system/**` entries in `pubspec.yaml`.
+- [x] Create a single source of truth for asset paths (e.g., `SomAssets`).
+- [x] Replace default Material icons with design system SVGs.
+- [x] Add SVG placeholders for ads + empty states.
+- [x] Add pattern overlays to cards where specified.
 
 ### Material 3 Color System (Aesthetic)
 - [x] Base theme on `ThemeData.from(colorScheme: ColorScheme.fromSeed(...))`.
 - [x] Explicitly set `useMaterial3: true` in theme definitions.
-- [ ] Normalize use of `surfaceContainer*` roles for layers, avoid legacy `surfaceVariant`.
-- [ ] Define semantic feedback colors against M3 surface containers.
-- [ ] Add component themes where `VisualDensity` is ignored (IconButton/Checkbox/etc).
+- [x] Normalize use of `surfaceContainer*` roles for layers, avoid legacy `surfaceVariant`.
+- [x] Define semantic feedback colors against M3 surface containers.
+- [x] Add component themes where `VisualDensity` is ignored (IconButton/Checkbox/etc).
 
 ### Typography (Aesthetic)
 - [x] Use `Typography.material2021()` defaults for both light/dark themes.

@@ -26,7 +26,11 @@ void main() {
 
     // Verify Styling
     final card = tester.widget<Card>(find.byType(Card));
-    expect(card.color, const Color(0xFF1E293B)); // surface/bg-secondary
+    final context = tester.element(find.byType(SomCard));
+    final theme = Theme.of(context);
+    final expectedColor =
+        theme.cardTheme.color ?? theme.colorScheme.surfaceContainerLow;
+    expect(card.color, expectedColor);
     expect(card.clipBehavior, Clip.antiAlias);
     
     final shape = card.shape as RoundedRectangleBorder;

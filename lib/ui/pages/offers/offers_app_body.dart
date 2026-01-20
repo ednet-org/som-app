@@ -20,6 +20,7 @@ import '../../widgets/selectable_list_view.dart';
 import '../../widgets/som_list_tile.dart';
 import '../../widgets/status_badge.dart';
 import '../../widgets/status_legend.dart';
+import '../../widgets/snackbars.dart';
 
 class OffersAppBody extends StatefulWidget {
   const OffersAppBody({super.key});
@@ -135,9 +136,11 @@ class _OffersAppBodyState extends State<OffersAppBody> {
   }
 
   void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    if (message.toLowerCase().contains('failed')) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.success(context, message);
+    }
   }
 
   String _extractError(DioException error) {

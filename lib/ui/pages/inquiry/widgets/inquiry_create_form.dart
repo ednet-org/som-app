@@ -7,7 +7,9 @@ import 'package:som/ui/widgets/design_system/som_input.dart';
 
 import '../../../domain/model/forms/som_drop_down.dart';
 import '../../../domain/model/forms/som_text_input.dart';
+import '../../../utils/formatters.dart';
 import '../../../widgets/design_system/som_button.dart';
+import '../../../widgets/snackbars.dart';
 
 /// Form widget for creating a new inquiry.
 ///
@@ -339,8 +341,12 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
 
   void _showSnack(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    final isFailure = message.toLowerCase().startsWith('failed');
+    if (isFailure) {
+      SomSnackBars.error(context, message);
+    } else {
+      SomSnackBars.warning(context, message);
+    }
   }
 
   String _formatError(Object error) {
@@ -449,7 +455,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
                     itemBuilder: (context, index) {
                       final option = options.elementAt(index);
                       return ListTile(
-                        title: Text(option.name ?? option.id ?? 'Branch'),
+                        title: Text(
+                          option.name ??
+                              'Branch ${SomFormatters.shortId(option.id)}',
+                        ),
                         subtitle: option.status == 'pending'
                             ? const Text('Pending approval')
                             : null,
@@ -522,7 +531,10 @@ class _InquiryCreateFormState extends State<InquiryCreateForm> {
                         itemBuilder: (context, index) {
                           final option = options.elementAt(index);
                           return ListTile(
-                            title: Text(option.name ?? option.id ?? 'Category'),
+                            title: Text(
+                              option.name ??
+                                  'Category ${SomFormatters.shortId(option.id)}',
+                            ),
                             subtitle: option.status == 'pending'
                                 ? const Text('Pending approval')
                                 : null,

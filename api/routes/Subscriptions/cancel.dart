@@ -11,6 +11,7 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -59,11 +60,13 @@ Future<Response> onRequest(RequestContext context) async {
       await context.read<UserRepository>().listByRole('consultant');
   final email = context.read<EmailService>();
   for (final consultant in consultants) {
-    await email.send(
+    await email.sendTemplate(
       to: consultant.email,
-      subject: 'Subscription cancellation request',
-      text:
-          'Company ${auth.companyId} requested cancellation. Request ID: ${record.id}',
+      templateId: EmailTemplateId.subscriptionCancellationRequested,
+      variables: {
+        'companyId': auth.companyId,
+        'cancellationId': record.id,
+      },
     );
   }
   return Response.json(body: record.toJson());

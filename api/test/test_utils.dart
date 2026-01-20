@@ -18,6 +18,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/product_repository.dart';
 import 'package:som_api/infrastructure/repositories/schema_version_repository.dart';
+import 'package:som_api/infrastructure/repositories/scheduler_status_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/token_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
@@ -1165,6 +1166,35 @@ class InMemorySchemaVersionRepository implements SchemaVersionRepository {
   Future<int?> getVersion() async => version;
 }
 
+class InMemorySchedulerStatusRepository implements SchedulerStatusRepository {
+  final Map<String, SchedulerStatusRecord> _records = {};
+
+  @override
+  Future<void> recordRun({
+    required String jobName,
+    required DateTime runAt,
+    required bool success,
+    String? error,
+  }) async {
+    final existing = _records[jobName];
+    final lastSuccessAt = success ? runAt : existing?.lastSuccessAt;
+    _records[jobName] = SchedulerStatusRecord(
+      jobName: jobName,
+      lastRunAt: runAt,
+      lastSuccessAt: lastSuccessAt,
+      lastError: success ? null : error ?? existing?.lastError,
+      updatedAt: runAt,
+    );
+  }
+
+  @override
+  Future<List<SchedulerStatusRecord>> listAll() async {
+    final list = _records.values.toList();
+    list.sort((a, b) => a.jobName.compareTo(b.jobName));
+    return list;
+  }
+}
+
 class InMemoryAdsRepository implements AdsRepository {
   final Map<String, AdRecord> _ads = {};
 
@@ -1598,6 +1628,8 @@ class TestEmailService extends EmailService {
         text: text,
         html: html,
         sentAt: DateTime.now().toUtc(),
+        fromAddress: fromAddress,
+        fromName: fromName,
       ),
     );
   }

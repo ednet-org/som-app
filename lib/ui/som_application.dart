@@ -115,7 +115,7 @@ class SomApplication extends StatelessWidget {
             ],
           ),
         ),
-        body: useNavigationRail
+        body: useNavigationRail && navItems.isNotEmpty
             ? Row(
                 children: [
                   _buildNavigationRail(
@@ -151,6 +151,209 @@ class SomApplication extends StatelessWidget {
         "Oldest Inquiries",
         style: Theme.of(context).textTheme.titleMedium,
       ),
+    );
+  }
+
+  List<_NavItem> _buildNavItems({
+    required bool isBuyer,
+    required bool isProvider,
+    required bool isConsultant,
+    required bool isAdmin,
+  }) {
+    final items = <_NavItem>[
+      if (isBuyer || isProvider || isConsultant)
+        const _NavItem(
+          label: 'Inquiries',
+          route: '/inquiries',
+          icon: SomAssets.iconInquiries,
+        ),
+      if (isBuyer || isProvider || isConsultant)
+        const _NavItem(
+          label: 'Offers',
+          route: '/offers',
+          icon: SomAssets.iconOffers,
+        ),
+      if (isBuyer || isProvider || isConsultant)
+        const _NavItem(
+          label: 'Statistics',
+          route: '/statistics',
+          icon: SomAssets.iconStatistics,
+        ),
+      if (isBuyer || isConsultant || (isProvider && isAdmin))
+        const _NavItem(
+          label: 'Ads',
+          route: '/ads',
+          icon: SomAssets.iconOffers,
+        ),
+      if (isAdmin && (isBuyer || isProvider))
+        const _NavItem(
+          label: 'User',
+          route: '/user',
+          icon: SomAssets.iconUser,
+        ),
+      if (isAdmin && (isBuyer || isProvider))
+        const _NavItem(
+          label: 'Company',
+          route: '/company',
+          icon: SomAssets.iconSettings,
+        ),
+      if (isConsultant)
+        const _NavItem(
+          label: 'Branches',
+          route: '/branches',
+          icon: SomAssets.iconSettings,
+        ),
+      if (isConsultant)
+        const _NavItem(
+          label: 'User Mgmt',
+          route: '/consultants',
+          icon: SomAssets.iconUser,
+        ),
+      if (isConsultant)
+        const _NavItem(
+          label: 'Companies',
+          route: '/companies',
+          icon: SomAssets.iconSettings,
+        ),
+      if (isConsultant && isAdmin)
+        const _NavItem(
+          label: 'Providers',
+          route: '/providers',
+          icon: SomAssets.iconSettings,
+        ),
+      if (isConsultant && isAdmin)
+        const _NavItem(
+          label: 'Subscriptions',
+          route: '/subscriptions',
+          icon: SomAssets.iconStatistics,
+        ),
+      if (isConsultant && isAdmin)
+        const _NavItem(
+          label: 'Roles',
+          route: '/roles',
+          icon: SomAssets.iconUser,
+        ),
+      if (isConsultant && isAdmin)
+        const _NavItem(
+          label: 'Audit',
+          route: '/audit',
+          icon: SomAssets.iconStatistics,
+        ),
+    ];
+    return items;
+  }
+
+  String _currentPath(BeamerProvidedKey beamer) {
+    return beamer.currentState?.routerDelegate.currentBeamLocation.state.uri.path ?? '';
+  }
+
+  int _selectedIndex(List<_NavItem> items, String path) {
+    if (items.isEmpty) return 0;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].matches(path)) return i;
+    }
+    return 0;
+  }
+
+  void _navigate(BeamerProvidedKey beamer, String route) {
+    beamer.currentState?.routerDelegate.beamToNamed(route);
+  }
+
+  Widget _buildTopNavActions(
+    BuildContext context,
+    Application appStore,
+    BeamerProvidedKey beamer,
+    List<_NavItem> navItems,
+    int selectedIndex,
+  ) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            const SizedBox(width: 8),
+            for (var i = 0; i < navItems.length; i++) ...[
+              _TopNavButton(
+                item: navItems[i],
+                selected: i == selectedIndex,
+                onPressed: () => _navigate(beamer, navItems[i].route),
+              ),
+              const SizedBox(width: 4),
+            ],
+            buildPopupMenuButton(context, appStore),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavigationRail(
+    BuildContext context,
+    BeamerProvidedKey beamer,
+    List<_NavItem> navItems,
+    int selectedIndex,
+    double width,
+  ) {
+    if (navItems.isEmpty) return const SizedBox.shrink();
+    final theme = Theme.of(context);
+    final extended = width >= SomBreakpoints.navigationRail + 160;
+    return NavigationRail(
+      extended: extended,
+      selectedIndex: selectedIndex,
+      onDestinationSelected: (index) =>
+          _navigate(beamer, navItems[index].route),
+      labelType:
+          extended ? NavigationRailLabelType.none : NavigationRailLabelType.selected,
+      destinations: navItems
+          .map(
+            (item) => NavigationRailDestination(
+              icon: SomSvgIcon(
+                item.icon,
+                size: SomIconSize.sm,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              selectedIcon: SomSvgIcon(
+                item.icon,
+                size: SomIconSize.sm,
+                color: theme.colorScheme.primary,
+              ),
+              label: Text(item.label),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget? _buildNavigationBar(
+    BuildContext context,
+    BeamerProvidedKey beamer,
+    List<_NavItem> navItems,
+    int selectedIndex,
+  ) {
+    if (navItems.isEmpty) return null;
+    final theme = Theme.of(context);
+    return NavigationBar(
+      selectedIndex: selectedIndex,
+      onDestinationSelected: (index) =>
+          _navigate(beamer, navItems[index].route),
+      destinations: navItems
+          .map(
+            (item) => NavigationDestination(
+              icon: SomSvgIcon(
+                item.icon,
+                size: SomIconSize.sm,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              selectedIcon: SomSvgIcon(
+                item.icon,
+                size: SomIconSize.sm,
+                color: theme.colorScheme.primary,
+              ),
+              label: item.label,
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -411,5 +614,55 @@ class SomApplication extends StatelessWidget {
     } catch (error, stackTrace) {
       UILogger.silentError('SomApplication._switchRole', error, stackTrace);
     }
+  }
+}
+
+class _NavItem {
+  const _NavItem({
+    required this.label,
+    required this.route,
+    required this.icon,
+  });
+
+  final String label;
+  final String route;
+  final String icon;
+
+  bool matches(String path) {
+    if (path == route) return true;
+    return path.startsWith('$route/');
+  }
+}
+
+class _TopNavButton extends StatelessWidget {
+  const _TopNavButton({
+    required this.item,
+    required this.selected,
+    required this.onPressed,
+  });
+
+  final _NavItem item;
+  final bool selected;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = selected
+        ? theme.colorScheme.primary
+        : theme.colorScheme.onSurfaceVariant;
+    return TextButton.icon(
+      onPressed: onPressed,
+      icon: SomSvgIcon(
+        item.icon,
+        size: SomIconSize.sm,
+        color: color,
+      ),
+      label: Text(item.label),
+      style: TextButton.styleFrom(
+        foregroundColor: color,
+        textStyle: theme.textTheme.labelLarge,
+      ),
+    );
   }
 }

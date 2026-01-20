@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 
+import '../../../utils/formatters.dart';
 import '../../../widgets/responsive_filter_panel.dart';
 
 /// Widget for filtering ads by branch, status, and type.
@@ -42,7 +43,9 @@ class AdsFilters extends StatelessWidget {
             items: branches
                 .map((branch) => DropdownMenuItem(
                       value: branch.id,
-                      child: Text(branch.name ?? branch.id ?? '-'),
+                      child: Text(
+                        branch.name ?? SomFormatters.shortId(branch.id),
+                      ),
                     ))
                 .toList(),
             onChanged: onBranchIdChanged,

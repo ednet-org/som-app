@@ -444,7 +444,10 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                         _selectedCategory = null;
                       });
                     },
-                    title: Text(branch.name ?? branch.id ?? 'Branch'),
+                    title: Text(
+                      branch.name ??
+                          'Branch ${SomFormatters.shortId(branch.id)}',
+                    ),
                     subtitle: Text(
                       '${branch.categories?.length ?? 0} categories • ${SomFormatters.capitalize(statusLabel)}',
                     ),
@@ -510,7 +513,8 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                                     () => _selectedCategory = category,
                                   ),
                                   title: Text(
-                                    category.name ?? category.id ?? 'Category',
+                                    category.name ??
+                                        'Category ${SomFormatters.shortId(category.id)}',
                                   ),
                                   subtitle: Text(
                                     SomFormatters.capitalize(statusLabel),
@@ -579,14 +583,16 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                             itemCount: _pendingProviders.length,
                             itemBuilder: (context, index) {
                               final provider = _pendingProviders[index];
-                              final pending =
-                                  provider.pendingBranchIds?.join(', ') ?? '-';
+                              final pending = SomFormatters.list(
+                                provider.pendingBranchIds
+                                    ?.map(SomFormatters.shortId)
+                                    .toList(),
+                              );
                               return Card(
-                                child: ListTile(
+                                child: SomListTile(
                                   title: Text(
                                     provider.companyName ??
-                                        provider.companyId ??
-                                        'Provider',
+                                        'Provider ${SomFormatters.shortId(provider.companyId)}',
                                   ),
                                   subtitle: Text('Pending: $pending'),
                                   trailing: Wrap(

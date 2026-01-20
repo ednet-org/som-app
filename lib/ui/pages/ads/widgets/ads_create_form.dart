@@ -159,7 +159,9 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
       items: widget.branches
           .map((branch) => DropdownMenuItem(
                 value: branch.id,
-                child: Text(branch.name ?? branch.id ?? '-'),
+                child: Text(
+                  branch.name ?? SomFormatters.shortId(branch.id),
+                ),
               ))
           .toList(),
       onChanged: (value) => setState(() => _branchId = value),

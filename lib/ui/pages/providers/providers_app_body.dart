@@ -18,6 +18,7 @@ import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/inline_message.dart';
 import '../../widgets/meta_text.dart';
+import '../../widgets/snackbars.dart';
 import '../../widgets/selectable_list_view.dart';
 import '../../widgets/som_list_tile.dart';
 import '../../widgets/design_system/som_badge.dart';
@@ -44,6 +45,8 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
 
   List<ProviderSummary> _providers = const [];
   ProviderSummary? _selected;
+  bool _bulkMode = false;
+  final Set<String> _bulkSelection = {};
 
   // Pagination state
   int _totalCount = 0;
@@ -233,6 +236,142 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     _loadInitialProviders();
   }
 
+  void _enterBulkMode([ProviderSummary? provider]) {
+    setState(() {
+      _bulkMode = true;
+      _bulkSelection.clear();
+      final id = provider?.companyId;
+      if (id != null && id.isNotEmpty) {
+        _bulkSelection.add(id);
+      }
+      _selected = null;
+    });
+  }
+
+  void _exitBulkMode() {
+    setState(() {
+      _bulkMode = false;
+      _bulkSelection.clear();
+    });
+  }
+
+  void _toggleBulkSelection(ProviderSummary provider) {
+    final id = provider.companyId;
+    if (id == null || id.isEmpty) {
+      SomSnackBars.warning(context, 'Provider is missing a company ID.');
+      return;
+    }
+    setState(() {
+      if (!_bulkSelection.add(id)) {
+        _bulkSelection.remove(id);
+      }
+    });
+  }
+
+  List<ProviderSummary> _bulkSelectedProviders() {
+    if (_bulkSelection.isEmpty) return const [];
+    return _providers
+        .where((provider) => _bulkSelection.contains(provider.companyId))
+        .toList();
+  }
+
+  Future<void> _bulkApproveSelected() async {
+    final providers = _bulkSelectedProviders();
+    if (providers.isEmpty) return;
+    int success = 0;
+    int failed = 0;
+    for (final provider in providers) {
+      final approved = await _approveProvider(
+        provider,
+        showFeedback: false,
+        refreshAfter: false,
+      );
+      if (approved) {
+        success += 1;
+      } else {
+        failed += 1;
+      }
+    }
+    if (!mounted) return;
+    if (success > 0) {
+      final suffix = failed > 0 ? ' • $failed failed' : '';
+      _showSnackbar('Approved $success provider${success == 1 ? '' : 's'}$suffix.');
+    } else {
+      _showSnackbar('Failed to approve selected providers.');
+    }
+    await _refresh();
+    if (mounted) _exitBulkMode();
+  }
+
+  Future<void> _bulkDeclineSelected() async {
+    final providers = _bulkSelectedProviders();
+    if (providers.isEmpty) return;
+    final reasonController = TextEditingController();
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Decline selected providers'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Decline ${providers.length} provider(s).'),
+            const SizedBox(height: 16),
+            TextField(
+              controller: reasonController,
+              decoration: const InputDecoration(
+                labelText: 'Reason for declining',
+                hintText: 'Enter the reason...',
+              ),
+              maxLines: 3,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+            ),
+            child: const Text('Decline'),
+          ),
+        ],
+      ),
+    );
+    final reason = reasonController.text.trim();
+    reasonController.dispose();
+    if (confirmed != true) return;
+    int success = 0;
+    int failed = 0;
+    for (final provider in providers) {
+      final declined = await _declineProvider(
+        provider,
+        reason: reason,
+        showFeedback: false,
+        refreshAfter: false,
+      );
+      if (declined) {
+        success += 1;
+      } else {
+        failed += 1;
+      }
+    }
+    if (!mounted) return;
+    if (success > 0) {
+      final suffix = failed > 0 ? ' • $failed failed' : '';
+      _showSnackbar('Declined $success provider${success == 1 ? '' : 's'}$suffix.');
+    } else {
+      _showSnackbar('Failed to decline selected providers.');
+    }
+    await _refresh();
+    if (mounted) _exitBulkMode();
+  }
+
   Future<void> _exportCsv() async {
     final uri = Uri.parse(_apiBaseUrl).replace(
       path: '/providers',
@@ -251,8 +390,12 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _approveProvider(ProviderSummary provider) async {
-    if (provider.companyId == null) return;
+  Future<bool> _approveProvider(
+    ProviderSummary provider, {
+    bool showFeedback = true,
+    bool refreshAfter = true,
+  }) async {
+    if (provider.companyId == null) return false;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       final branchIdsToApprove = provider.pendingBranchIds?.toList() ?? [];
@@ -264,10 +407,18 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               b.approvedBranchIds.addAll(branchIdsToApprove);
             }),
       );
-      _showSnackbar('Provider approved successfully.');
-      await _refresh();
+      if (showFeedback) {
+        _showSnackbar('Provider approved successfully.');
+      }
+      if (refreshAfter) {
+        await _refresh();
+      }
+      return true;
     } on DioException catch (error) {
-      _showSnackbar('Failed to approve: ${_extractError(error)}');
+      if (showFeedback) {
+        _showSnackbar('Failed to approve: ${_extractError(error)}');
+      }
+      return false;
     }
   }
 
@@ -283,7 +434,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Company: ${provider.companyName ?? provider.companyId}'),
+            Text(
+              'Company: ${provider.companyName ?? 'Provider ${SomFormatters.shortId(provider.companyId)}'}',
+            ),
             const SizedBox(height: 16),
             TextField(
               controller: reasonController,
@@ -312,21 +465,48 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       ),
     );
 
-    if (confirmed != true) return;
-    if (!mounted) return;
+    if (confirmed != true) {
+      reasonController.dispose();
+      return;
+    }
+    if (!mounted) {
+      reasonController.dispose();
+      return;
+    }
+    await _declineProvider(
+      provider,
+      reason: reasonController.text.trim(),
+    );
+    reasonController.dispose();
+  }
 
+  Future<bool> _declineProvider(
+    ProviderSummary provider, {
+    required String reason,
+    bool showFeedback = true,
+    bool refreshAfter = true,
+  }) async {
+    if (provider.companyId == null) return false;
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       await api.getProvidersApi().providersCompanyIdDeclinePost(
         companyId: provider.companyId!,
         subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest(
-          (b) => b..reason = reasonController.text.trim(),
+          (b) => b..reason = reason,
         ),
       );
-      _showSnackbar('Provider declined.');
-      await _refresh();
+      if (showFeedback) {
+        _showSnackbar('Provider declined.');
+      }
+      if (refreshAfter) {
+        await _refresh();
+      }
+      return true;
     } on DioException catch (error) {
-      _showSnackbar('Failed to decline: ${_extractError(error)}');
+      if (showFeedback) {
+        _showSnackbar('Failed to decline: ${_extractError(error)}');
+      }
+      return false;
     }
   }
 
@@ -433,8 +613,8 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                                   category.id ?? '',
                                 ),
                                 title: Text(
-                                  '${branch.name ?? branch.id ?? '-'} — '
-                                  '${category.name ?? category.id ?? '-'}',
+                                  '${branch.name ?? SomFormatters.shortId(branch.id)} — '
+                                  '${category.name ?? SomFormatters.shortId(category.id)}',
                                 ),
                                 onChanged: (checked) {
                                   final id = category.id ?? '';
@@ -666,25 +846,48 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               child: SelectableListView<ProviderSummary>(
                 controller: _scrollController,
                 items: _providers,
-                selectedIndex: () {
-                  final index = _providers.indexWhere(
-                    (provider) => provider.companyId == _selected?.companyId,
-                  );
-                  return index < 0 ? null : index;
-                }(),
-                onSelectedIndex: (index) =>
-                    setState(() => _selected = _providers[index]),
+                selectedIndex: _bulkMode
+                    ? null
+                    : () {
+                        final index = _providers.indexWhere(
+                          (provider) =>
+                              provider.companyId == _selected?.companyId,
+                        );
+                        return index < 0 ? null : index;
+                      }(),
+                onSelectedIndex: (index) {
+                  if (_bulkMode) {
+                    _toggleBulkSelection(_providers[index]);
+                  } else {
+                    setState(() => _selected = _providers[index]);
+                  }
+                },
+                enableKeyboardNavigation: !_bulkMode,
                 itemBuilder: (context, provider, isSelected) {
                   final index = _providers.indexOf(provider);
+                  final isBulkSelected =
+                      _bulkSelection.contains(provider.companyId);
                   return Column(
                     children: [
                       SomListTile(
-                        selected: isSelected,
-                        onTap: () => setState(() => _selected = provider),
+                        selected: isSelected || isBulkSelected,
+                        leading: _bulkMode
+                            ? Checkbox(
+                                value: isBulkSelected,
+                                onChanged: provider.companyId == null
+                                    ? null
+                                    : (_) => _toggleBulkSelection(provider),
+                              )
+                            : null,
+                        onTap: _bulkMode
+                            ? () => _toggleBulkSelection(provider)
+                            : () => setState(() => _selected = provider),
+                        onLongPress: _bulkMode
+                            ? null
+                            : () => _enterBulkMode(provider),
                         title: Text(
                           provider.companyName ??
-                              provider.companyId ??
-                              'Provider',
+                              'Provider ${SomFormatters.shortId(provider.companyId)}',
                         ),
                         subtitle: Text(
                           'Type: ${provider.providerType ?? '-'} | '
@@ -707,13 +910,15 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
             ),
         ],
       ),
-      rightSplit: _selected == null
-          ? const EmptyState(
-              asset: SomAssets.emptySearchResults,
-              title: 'Select a provider',
-              message: 'Choose a provider from the list to view details',
-            )
-          : _buildProviderDetails(),
+      rightSplit: _bulkMode
+          ? _buildBulkSummary()
+          : _selected == null
+              ? const EmptyState(
+                  asset: SomAssets.emptySearchResults,
+                  title: 'Select a provider',
+                  message: 'Choose a provider from the list to view details',
+                )
+              : _buildProviderDetails(),
     );
   }
 
@@ -741,14 +946,37 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     return AppToolbar(
       title: Text('Providers ($_totalCount total)'),
       actions: [
-        TextButton(
-          onPressed: _filterPendingOnly,
-          child: const Text('Pending Approval'),
-        ),
-        FilledButton.tonal(
-          onPressed: _exportCsv,
-          child: const Text('Export CSV'),
-        ),
+        if (_bulkMode) ...[
+          FilledButton(
+            onPressed: _bulkSelection.isEmpty ? null : _bulkApproveSelected,
+            child: Text('Approve (${_bulkSelection.length})'),
+          ),
+          OutlinedButton(
+            onPressed: _bulkSelection.isEmpty ? null : _bulkDeclineSelected,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+              side: BorderSide(color: Theme.of(context).colorScheme.error),
+            ),
+            child: Text('Decline (${_bulkSelection.length})'),
+          ),
+          TextButton(
+            onPressed: _exitBulkMode,
+            child: const Text('Done'),
+          ),
+        ] else ...[
+          TextButton(
+            onPressed: _filterPendingOnly,
+            child: const Text('Pending Approval'),
+          ),
+          FilledButton.tonal(
+            onPressed: _exportCsv,
+            child: const Text('Export CSV'),
+          ),
+          TextButton(
+            onPressed: () => _enterBulkMode(),
+            child: const Text('Bulk actions'),
+          ),
+        ],
         StatusLegendButton(
           title: 'Provider status',
           items: const [
@@ -809,13 +1037,18 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                 DetailItem(label: 'Postcode', value: _selected!.postcode ?? '-'),
                 DetailItem(
                   label: 'Branches',
-                  value:
-                      SomFormatters.list(_selected!.branchIds?.toList()),
+                  value: SomFormatters.list(
+                    _selected!.branchIds
+                        ?.map((id) => SomFormatters.shortId(id))
+                        .toList(),
+                  ),
                 ),
                 DetailItem(
                   label: 'Pending branches',
                   value: SomFormatters.list(
-                    _selected!.pendingBranchIds?.toList(),
+                    _selected!.pendingBranchIds
+                        ?.map((id) => SomFormatters.shortId(id))
+                        .toList(),
                   ),
                 ),
                 if (_selected!.rejectionReason != null)
@@ -873,7 +1106,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
               items: [
                 DetailItem(
                   label: 'Plan',
-                  value: _selected!.subscriptionPlanId ?? '-',
+                  value: SomFormatters.shortId(_selected!.subscriptionPlanId),
                   isMeta: true,
                 ),
                 DetailItem(
@@ -940,6 +1173,32 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
     );
   }
 
+  Widget _buildBulkSummary() {
+    final count = _bulkSelection.length;
+    return Padding(
+      padding: const EdgeInsets.all(SomSpacing.md),
+      child: ListView(
+        children: [
+          Text(
+            'Bulk selection',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: SomSpacing.xs),
+          SomMetaText(
+            '$count provider${count == 1 ? '' : 's'} selected',
+          ),
+          const SizedBox(height: SomSpacing.md),
+          InlineMessage(
+            message: count == 0
+                ? 'Select providers to enable bulk actions.'
+                : 'Use the toolbar to approve or decline the selected providers.',
+            type: InlineMessageType.info,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildClassificationSection() {
     final branchAssignments = _selectedBranchAssignments;
     final categoryAssignments = _selectedCategoryAssignments;
@@ -981,10 +1240,11 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
   }
 
   String _categoryLabelForAssignment(CompanyCategoryAssignment assignment) {
-    final categoryLabel =
-        assignment.categoryName ?? assignment.categoryId ?? '-';
-    final branchLabel = assignment.branchName ?? assignment.branchId;
-    if (branchLabel == null || branchLabel.isEmpty) {
+    final categoryLabel = assignment.categoryName ??
+        SomFormatters.shortId(assignment.categoryId);
+    final branchLabel =
+        assignment.branchName ?? SomFormatters.shortId(assignment.branchId);
+    if (branchLabel == '-' || branchLabel.isEmpty) {
       return categoryLabel;
     }
     return '$branchLabel — $categoryLabel';
@@ -1027,7 +1287,9 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
                     .map(
                       (branch) => DropdownMenuItem(
                         value: branch.id,
-                        child: Text(branch.name ?? branch.id ?? '-'),
+                        child: Text(
+                          branch.name ?? SomFormatters.shortId(branch.id),
+                        ),
                       ),
                     )
                     .toList(),

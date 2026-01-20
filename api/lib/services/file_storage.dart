@@ -12,6 +12,14 @@ class FileStorage {
   final String _bucket;
   bool _bucketEnsured = false;
 
+  static const List<String> _allowedMimeTypes = [
+    'application/pdf',
+    'image/png',
+    'image/jpeg',
+    'image/webp',
+  ];
+  static const String _fileSizeLimit = '10MB';
+
   Future<String> saveFile({
     required String category,
     required String fileName,
@@ -93,12 +101,16 @@ class FileStorage {
     }
     try {
       final bucket = await _client.storage.getBucket(_bucket);
-      if (bucket.public) {
+      final needsUpdate = bucket.public ||
+          bucket.allowedMimeTypes?.toSet().difference(_allowedMimeTypes.toSet()).isNotEmpty == true ||
+          bucket.fileSizeLimit != _fileSizeLimit;
+      if (needsUpdate) {
         await _client.storage.updateBucket(
           _bucket,
-          BucketOptions(
+          const BucketOptions(
             public: false,
-            allowedMimeTypes: bucket.allowedMimeTypes,
+            allowedMimeTypes: _allowedMimeTypes,
+            fileSizeLimit: _fileSizeLimit,
           ),
         );
       }
@@ -109,8 +121,14 @@ class FileStorage {
           error.statusCode == '409' || message.contains('exists');
       if (isNotFound) {
         try {
-          await _client.storage
-              .createBucket(_bucket, const BucketOptions(public: false));
+          await _client.storage.createBucket(
+            _bucket,
+            const BucketOptions(
+              public: false,
+              allowedMimeTypes: _allowedMimeTypes,
+              fileSizeLimit: _fileSizeLimit,
+            ),
+          );
         } on StorageException catch (createError) {
           final createMessage = createError.message.toLowerCase();
           final createAlreadyExists = createError.statusCode == '409' ||
@@ -120,6 +138,8 @@ class FileStorage {
               'id': _bucket,
               'name': _bucket,
               'public': false,
+              'allowed_mime_types': _allowedMimeTypes,
+              'file_size_limit': _fileSizeLimit,
             });
           } else if (!createAlreadyExists) {
             rethrow;

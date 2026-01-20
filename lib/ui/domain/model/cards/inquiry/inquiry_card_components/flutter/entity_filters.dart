@@ -88,6 +88,7 @@ class _EntityFiltersState<F, T> extends State<EntityFilters<F, T>> {
 
   Widget hamburgerMenu({isPinned = false}) {
     return IconButton(
+      tooltip: 'Filter menu',
       onPressed: () {
         print('here comes menu');
       },

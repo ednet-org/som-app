@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../application/application.dart';
 import '../../theme/som_assets.dart';
+import '../../widgets/snackbars.dart';
 
 class FunnyLogo extends StatelessWidget {
   final double height;
@@ -35,11 +36,10 @@ class FunnyLogo extends StatelessWidget {
             ReactionBuilder(
               builder: (BuildContext context) => reaction(
                   (_) => appStore.isDarkModeOn,
-                  (bool isOn) =>
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(isOn ? 'Dark mode' : 'Light mode'),
-                        duration: const Duration(milliseconds: 1500),
-                      ))),
+                  (bool isOn) => SomSnackBars.info(
+                        context,
+                        isOn ? 'Dark mode' : 'Light mode',
+                      )),
               child: Container(),
             ),
           ],

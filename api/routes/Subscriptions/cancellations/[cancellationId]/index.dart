@@ -7,6 +7,7 @@ import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(
@@ -57,10 +58,13 @@ Future<Response> onRequest(
       .listAdminsByCompany(existing.companyId);
   final email = context.read<EmailService>();
   for (final admin in admins) {
-    await email.send(
+    await email.sendTemplate(
       to: admin.email,
-      subject: 'Subscription cancellation update',
-      text: 'Your cancellation request ${existing.id} is now $status.',
+      templateId: EmailTemplateId.subscriptionCancellationUpdated,
+      variables: {
+        'cancellationId': existing.id,
+        'status': status,
+      },
     );
   }
   return Response.json(body: updated.toJson());

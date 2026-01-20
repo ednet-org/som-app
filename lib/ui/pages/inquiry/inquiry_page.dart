@@ -592,7 +592,7 @@ class _InquiryPageState extends State<InquiryPage> {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(confirmText),
           ),

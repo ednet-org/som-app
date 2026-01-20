@@ -5,6 +5,7 @@ import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String offerId) async {
@@ -54,15 +55,18 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
       contact.firstName,
       contact.lastName,
     ].where((value) => value.trim().isNotEmpty).join(' ');
-    await email.send(
+    await email.sendTemplate(
       to: admin.email,
-      subject: 'Offer accepted',
-      text: 'Offer $offerId has been accepted.\n'
-          'Buyer contact:\n'
-          'Company: ${contact.companyName.isNotEmpty ? contact.companyName : '-'}\n'
-          'Name: ${contactName.isNotEmpty ? contactName : '-'}\n'
-          'Phone: ${contact.telephone.isNotEmpty ? contact.telephone : '-'}\n'
-          'Email: ${contact.email.isNotEmpty ? contact.email : 'buyer'}',
+      templateId: EmailTemplateId.offerAccepted,
+      variables: {
+        'offerId': offerId,
+        'companyName':
+            contact.companyName.isNotEmpty ? contact.companyName : '-',
+        'contactName': contactName.isNotEmpty ? contactName : '-',
+        'contactPhone':
+            contact.telephone.isNotEmpty ? contact.telephone : '-',
+        'contactEmail': contact.email.isNotEmpty ? contact.email : 'buyer',
+      },
     );
   }
   await context.read<DomainEventService>().emit(

@@ -334,7 +334,9 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
                   SomListTile(
                     selected: isSelected,
                     onTap: () => _selectPlan(plan),
-                    title: Text(plan.title ?? plan.id ?? 'Plan'),
+                    title: Text(
+                      plan.title ?? 'Plan ${SomFormatters.shortId(plan.id)}',
+                    ),
                     subtitle: Text(
                       'Price: ${(plan.priceInSubunit ?? 0) / 100} • '
                       '${plan.isActive == true ? 'Active' : 'Inactive'}',

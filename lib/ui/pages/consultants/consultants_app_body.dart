@@ -7,9 +7,12 @@ import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
 import '../../domain/model/layout/app_body.dart';
 import '../../theme/tokens.dart';
+import '../../utils/formatters.dart';
 import '../../widgets/app_toolbar.dart';
+import '../../widgets/detail_section.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/inline_message.dart';
+import '../../widgets/meta_text.dart';
 import '../../widgets/selectable_list_view.dart';
 import '../../widgets/som_list_tile.dart';
 
@@ -227,15 +230,58 @@ class _ConsultantsAppBodyState extends State<ConsultantsAppBody> {
                 )
               : Padding(
                   padding: const EdgeInsets.all(SomSpacing.md),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
                     children: [
-                      Text(_selected!.email ?? 'Consultant',
-                          style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: 8),
-                      Text('Name: ${_selected!.firstName ?? ''} ${_selected!.lastName ?? ''}'),
-                      Text('Salutation: ${_selected!.salutation ?? '-'}'),
-                      Text('Title: ${_selected!.title ?? '-'}'),
+                      Text(
+                        _selected!.email ?? 'Consultant',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: SomSpacing.xs),
+                      SomMetaText(
+                        'ID ${SomFormatters.shortId(_selected!.id)}',
+                      ),
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Profile',
+                        iconAsset: SomAssets.iconUser,
+                        child: DetailGrid(
+                          items: [
+                            DetailItem(
+                              label: 'Name',
+                              value: [
+                                _selected!.firstName ?? '',
+                                _selected!.lastName ?? '',
+                              ].join(' ').trim().isEmpty
+                                  ? '-'
+                                  : [
+                                      _selected!.firstName ?? '',
+                                      _selected!.lastName ?? '',
+                                    ].join(' ').trim(),
+                            ),
+                            DetailItem(
+                              label: 'Salutation',
+                              value: _selected!.salutation ?? '-',
+                            ),
+                            DetailItem(
+                              label: 'Title',
+                              value: _selected!.title ?? '-',
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: SomSpacing.md),
+                      DetailSection(
+                        title: 'Contact',
+                        iconAsset: SomAssets.iconInfo,
+                        child: DetailGrid(
+                          items: [
+                            DetailItem(
+                              label: 'Email',
+                              value: _selected!.email ?? '-',
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

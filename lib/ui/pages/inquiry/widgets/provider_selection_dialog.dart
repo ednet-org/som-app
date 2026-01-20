@@ -3,6 +3,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:openapi/openapi.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import '../../../domain/model/forms/som_drop_down.dart';
+import '../../../utils/formatters.dart';
 import '../../../widgets/debounced_search_field.dart';
 import '../../../widgets/design_system/som_button.dart';
 import '../../../widgets/design_system/som_badge.dart';
@@ -161,10 +162,14 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
     final assignments = provider.branchAssignments?.toList() ?? const [];
     if (assignments.isNotEmpty) {
       return assignments
-          .map((a) => a.branchName ?? a.branchId ?? '-')
+          .map((a) => a.branchName ?? SomFormatters.shortId(a.branchId))
           .join(', ');
     }
-    return provider.branchIds?.join(', ') ?? '-';
+    return SomFormatters.list(
+      provider.branchIds
+          ?.map((id) => SomFormatters.shortId(id))
+          .toList(),
+    );
   }
 
   String _categorySummary(ProviderSummary provider) {
@@ -175,9 +180,10 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
 
   String _categoryLabelForAssignment(CompanyCategoryAssignment assignment) {
     final categoryLabel =
-        assignment.categoryName ?? assignment.categoryId ?? '-';
-    final branchLabel = assignment.branchName ?? assignment.branchId;
-    if (branchLabel == null || branchLabel.isEmpty) {
+        assignment.categoryName ?? SomFormatters.shortId(assignment.categoryId);
+    final branchLabel =
+        assignment.branchName ?? SomFormatters.shortId(assignment.branchId);
+    if (branchLabel == '-' || branchLabel.isEmpty) {
       return categoryLabel;
     }
     return '$branchLabel — $categoryLabel';
@@ -604,7 +610,10 @@ class _ProviderSelectionDialogState extends State<ProviderSelectionDialog> {
         return CheckboxListTile(
           value: checked,
           onChanged: id == null ? null : (_) => _toggleSelection(provider),
-          title: Text(provider.companyName ?? (id ?? 'Unknown provider')),
+          title: Text(
+            provider.companyName ??
+                'Provider ${SomFormatters.shortId(id)}',
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

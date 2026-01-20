@@ -225,7 +225,10 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                     items: _branches
                         .map((branch) => DropdownMenuItem(
                               value: branch.id,
-                              child: Text(branch.name ?? branch.id ?? '-'),
+                              child: Text(
+                                branch.name ??
+                                    SomFormatters.shortId(branch.id),
+                              ),
                             ))
                         .toList(),
                     onChanged: (value) => setStateDialog(() => branchId = value),
@@ -247,7 +250,10 @@ class _CompaniesAppBodyState extends State<CompaniesAppBody> {
                     items: _plans
                         .map((plan) => DropdownMenuItem(
                               value: plan,
-                              child: Text(plan.title ?? plan.id ?? 'Plan'),
+                              child: Text(
+                                plan.title ??
+                                    'Plan ${SomFormatters.shortId(plan.id)}',
+                              ),
                             ))
                         .toList(),
                     onChanged: (value) => setStateDialog(() => selectedPlan = value),

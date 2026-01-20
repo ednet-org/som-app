@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/utils/auto_size_text/auto_size_text.dart';
 import 'package:som/ui/theme/som_assets.dart';
+import 'package:som/ui/widgets/snackbars.dart';
 
 import '../../routes/locations/auth/auth_forgot_password_page_location.dart';
 import 'model.dart';
@@ -112,14 +113,10 @@ class Login extends StatelessWidget {
                 child: Container(),
                 builder: (context) =>
                     reaction((_) => emailLoginStore.isLoggedIn, (result) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(emailLoginStore.loggingInMessage),
-                    duration: const Duration(seconds: 5),
-                    action: SnackBarAction(
-                      label: 'ACTION',
-                      onPressed: () {},
-                    ),
-                  ));
+                  SomSnackBars.info(
+                    context,
+                    emailLoginStore.loggingInMessage,
+                  );
                 }),
               ),
               if (!kReleaseMode &&

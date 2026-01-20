@@ -19,6 +19,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/product_repository.dart';
 import 'package:som_api/infrastructure/repositories/schema_version_repository.dart';
+import 'package:som_api/infrastructure/repositories/scheduler_status_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/token_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
@@ -42,7 +43,7 @@ import 'package:som_api/services/system_bootstrap.dart';
 
 final _supabase = SupabaseService.fromEnvironment();
 final _clock = Clock();
-final _email = EmailService();
+final _email = EmailService.fromEnvironment();
 final _users = UserRepository(_supabase.adminClient);
 final _emailEvents = EmailEventRepository(_supabase.adminClient);
 final _roles = RoleRepository(_supabase.adminClient);
@@ -61,6 +62,7 @@ final _cancellations = CancellationRepository(_supabase.adminClient);
 final _domainEvents = DomainEventRepository(_supabase.adminClient);
 final _auditLog = AuditLogRepository(_supabase.adminClient);
 final _schemaVersions = SchemaVersionRepository(_supabase.adminClient);
+final _schedulerStatus = SchedulerStatusRepository(_supabase.adminClient);
 final _storage =
     FileStorage(client: _supabase.adminClient, bucket: _supabase.storageBucket);
 final _notifications = NotificationService(
@@ -108,6 +110,7 @@ final _scheduler = Scheduler(
   email: _email,
   notifications: _notifications,
   clock: _clock,
+  statusRepository: _schedulerStatus,
 );
 final _rateLimiter = RateLimiter(clock: _clock);
 final _rateLimitPolicy = RateLimitPolicy.fromEnvironment();
@@ -139,7 +142,11 @@ Future<void> _bootstrap() async {
   await _subscriptionSeeder.seedDefaults();
   await _systemBootstrap.ensureSystemAdmin();
   await _systemBootstrap.ensureDevFixtures();
-  _scheduler.start();
+  const enableScheduler =
+      bool.fromEnvironment('ENABLE_SCHEDULER', defaultValue: false);
+  if (enableScheduler) {
+    _scheduler.start();
+  }
 }
 
 Handler middleware(Handler handler) {
@@ -169,6 +176,7 @@ Handler middleware(Handler handler) {
       .use(provider<DomainEventRepository>((_) => _domainEvents))
       .use(provider<AuditLogRepository>((_) => _auditLog))
       .use(provider<SchemaVersionRepository>((_) => _schemaVersions))
+      .use(provider<SchedulerStatusRepository>((_) => _schedulerStatus))
       .use(provider<FileStorage>((_) => _storage))
       .use(provider<NotificationService>((_) => _notifications))
       .use(provider<DomainEventService>((_) => _domainEventService))

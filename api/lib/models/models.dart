@@ -657,6 +657,22 @@ class AuditLogRecord {
   final DateTime createdAt;
 }
 
+class SchedulerStatusRecord {
+  SchedulerStatusRecord({
+    required this.jobName,
+    required this.lastRunAt,
+    required this.lastSuccessAt,
+    required this.lastError,
+    required this.updatedAt,
+  });
+
+  final String jobName;
+  final DateTime? lastRunAt;
+  final DateTime? lastSuccessAt;
+  final String? lastError;
+  final DateTime updatedAt;
+}
+
 class AdRecord {
   AdRecord({
     required this.id,

@@ -6,6 +6,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String companyId) async {
@@ -54,12 +55,13 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       await context.read<UserRepository>().listAdminsByCompany(companyId);
   final email = context.read<EmailService>();
   for (final admin in admins) {
-    await email.send(
+    final trimmed = reason?.trim() ?? '';
+    await email.sendTemplate(
       to: admin.email,
-      subject: 'Registration pending',
-      text: reason == null || reason.trim().isEmpty
-          ? 'Your registration remains pending because the requested category was declined.'
-          : 'Your registration remains pending because the requested category was declined.\nReason: ${reason.trim()}',
+      templateId: EmailTemplateId.providerDeclined,
+      variables: {
+        'reason': trimmed.isEmpty ? '' : 'Reason: $trimmed',
+      },
     );
   }
   return Response(statusCode: 200);

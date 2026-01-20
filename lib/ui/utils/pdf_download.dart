@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:som/ui/widgets/snackbars.dart';
 
 Future<void> openInquiryPdf(
   BuildContext context, {
@@ -23,14 +24,10 @@ Future<void> openInquiryPdf(
     );
   } on DioException {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Failed to download PDF.')),
-    );
+    SomSnackBars.error(context, 'Failed to download PDF.');
   } catch (_) {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Failed to download PDF.')),
-    );
+    SomSnackBars.error(context, 'Failed to download PDF.');
   }
 }
 
@@ -52,13 +49,9 @@ Future<void> openOfferPdf(
     );
   } on DioException {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Failed to download PDF.')),
-    );
+    SomSnackBars.error(context, 'Failed to download PDF.');
   } catch (_) {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Failed to download PDF.')),
-    );
+    SomSnackBars.error(context, 'Failed to download PDF.');
   }
 }
