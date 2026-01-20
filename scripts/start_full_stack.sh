@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-"$ROOT/scripts/ensure_hosts.sh"
+bash "$ROOT/scripts/ensure_hosts.sh"
 
 "$ROOT/scripts/start_supabase.sh"
 

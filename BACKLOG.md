@@ -206,6 +206,11 @@
 ### Epic: E2E Harness & Fixtures
 - [x] Tests: add shared integration test env helpers and UI harness utilities.
 - [x] Scripts: propagate fixture credentials and schema defines for integration tests.
+
+### Epic: Local & CI Script Hardening
+- [x] Scripts: add hosts check helper with copy/paste instructions for local domains.
+- [x] Scripts: sanitize Supabase CLI JSON output and support optional project id across start scripts.
+- [x] CI: add GitHub Actions integration test workflow using local Supabase.
 - [x] Tests: cross‑role session switching and access checks.
 
 ### Epic: Local Provisioning & Domains

@@ -3,6 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
+export SUPABASE_PROJECT_ID
 
 ensure_docker() {
   if ! command -v docker >/dev/null 2>&1; then
@@ -65,7 +67,7 @@ apply_migrations() {
   fi
 
   echo "Applying Supabase migrations..." >&2
-  supabase migration up >&2
+  supabase_migration_up >&2
 }
 
 apply_storage_rls() {
@@ -73,10 +75,26 @@ apply_storage_rls() {
     return 0
   fi
 
-  "$ROOT/scripts/apply_storage_rls.sh"
+  bash "$ROOT/scripts/apply_storage_rls.sh"
+}
+
+supabase_start() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase start --project-id "$SUPABASE_PROJECT_ID" --exclude vector "$@"
+  else
+    supabase start --exclude vector "$@"
+  fi
+}
+
+supabase_migration_up() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase migration up --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase migration up
+  fi
 }
 
 ensure_docker
-supabase start --exclude vector "$@"
+supabase_start "$@"
 apply_migrations
 apply_storage_rls

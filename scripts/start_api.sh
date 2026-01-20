@@ -7,6 +7,7 @@ cd "$ROOT"
 export PORT="${PORT:-8081}"
 API_URL="http://127.0.0.1:${PORT}"
 SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
+export SUPABASE_PROJECT_ID
 
 # Idempotent: Check if API is already running
 if curl -s "$API_URL" >/dev/null 2>&1; then
@@ -53,9 +54,9 @@ supabase_status() {
 
 supabase_start() {
   if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
-    supabase start --project-id "$SUPABASE_PROJECT_ID"
+    supabase start --project-id "$SUPABASE_PROJECT_ID" --exclude vector
   else
-    supabase start
+    supabase start --exclude vector
   fi
 }
 
@@ -68,9 +69,10 @@ supabase_migration_up() {
 }
 
 sanitize_supabase_json() {
-  python3 - <<'PY'
-import os
-raw = os.environ.get("RAW", "")
+  local raw="${1:-}"
+  python3 - "$raw" <<'PY'
+import sys
+raw = sys.argv[1] if len(sys.argv) > 1 else ""
 start = raw.find("{")
 end = raw.rfind("}")
 if start == -1 or end == -1 or end < start:
@@ -88,7 +90,11 @@ apply_storage_rls() {
   bash "$ROOT/scripts/apply_storage_rls.sh"
 }
 
-SUPA_JSON="$(RAW="$(ensure_supabase)" sanitize_supabase_json)"
+SUPA_JSON="$(sanitize_supabase_json "$(ensure_supabase)")"
+if [[ -z "$SUPA_JSON" ]]; then
+  echo "Failed to parse Supabase status output. Run 'supabase status --output json' to debug." >&2
+  exit 1
+fi
 apply_migrations
 apply_storage_rls
 export DEV_FIXTURES="${DEV_FIXTURES:-true}"
@@ -103,7 +109,7 @@ export EMAIL_FROM="${EMAIL_FROM:-no-reply@som.local}"
 export EMAIL_FROM_NAME="${EMAIL_FROM_NAME:-SOM}"
 export EMAIL_DEFAULT_LOCALE="${EMAIL_DEFAULT_LOCALE:-en}"
 export EMAIL_OUTBOX_PATH="${EMAIL_OUTBOX_PATH:-}"
-export SMTP_HOST="${SMTP_HOST:-inbucket}"
+export SMTP_HOST="${SMTP_HOST:-127.0.0.1}"
 export SMTP_PORT="${SMTP_PORT:-2500}"
 export SMTP_USERNAME="${SMTP_USERNAME:-inbucket}"
 export SMTP_PASSWORD="${SMTP_PASSWORD:-inbucket}"
@@ -119,6 +125,7 @@ export RATE_LIMIT_LOGIN="${RATE_LIMIT_LOGIN:-0}"
 export RATE_LIMIT_RESET="${RATE_LIMIT_RESET:-0}"
 export RATE_LIMIT_PDF="${RATE_LIMIT_PDF:-0}"
 export RATE_LIMIT_EXPORT="${RATE_LIMIT_EXPORT:-0}"
+export DISABLE_NOTIFICATIONS="${DISABLE_NOTIFICATIONS:-true}"
 
 DART_DEFINES="$(SUPA_JSON="$SUPA_JSON" DEV_FIXTURES="$DEV_FIXTURES" \
   DEV_FIXTURES_PASSWORD="$DEV_FIXTURES_PASSWORD" \
@@ -183,6 +190,7 @@ maybe_define("CORS_ALLOW_CREDENTIALS", os.environ.get("CORS_ALLOW_CREDENTIALS", 
 maybe_define("ENABLE_HSTS", os.environ.get("ENABLE_HSTS", ""))
 maybe_define("HSTS_MAX_AGE_SECONDS", os.environ.get("HSTS_MAX_AGE_SECONDS", ""))
 maybe_define("CSP", os.environ.get("CSP", ""))
+maybe_define("DISABLE_NOTIFICATIONS", os.environ.get("DISABLE_NOTIFICATIONS", ""))
 
 print(" ".join(defines))
 PY

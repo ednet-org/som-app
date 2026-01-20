@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:uuid/uuid.dart';
 
 import '../infrastructure/repositories/company_repository.dart';
@@ -59,6 +61,9 @@ class DomainEventService {
   }
 
   Future<void> _handle(DomainEventRecord event) async {
+    if (_notificationsDisabled()) {
+      return;
+    }
     if (event.status != 'success') {
       return;
     }
@@ -152,4 +157,13 @@ class DomainEventService {
         break;
     }
   }
+}
+
+bool _notificationsDisabled() {
+  final disabled =
+      const bool.fromEnvironment('DISABLE_NOTIFICATIONS', defaultValue: false) ||
+          (Platform.environment['DISABLE_NOTIFICATIONS'] ?? '')
+                  .toLowerCase() ==
+              'true';
+  return disabled;
 }

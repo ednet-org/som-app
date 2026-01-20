@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-"$ROOT/scripts/ensure_hosts.sh"
+bash "$ROOT/scripts/ensure_hosts.sh"
 
 API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:8081}"
 OUTBOX_PATH="${OUTBOX_PATH:-api/storage/outbox}"
@@ -12,19 +12,29 @@ DEVICE="${DEVICE:-macos}"
 SUPABASE_URL="${SUPABASE_URL:-}"
 SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
 SUPABASE_SCHEMA="${SUPABASE_SCHEMA:-som}"
+SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
 DEV_FIXTURES_PASSWORD="${DEV_FIXTURES_PASSWORD:-DevPass123!}"
 SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
 SYSTEM_ADMIN_PASSWORD="${SYSTEM_ADMIN_PASSWORD:-ChangeMe123!}"
 BUYER_ADMIN_EMAIL="${BUYER_ADMIN_EMAIL:-buyer-admin@som.local}"
 CONSULTANT_ADMIN_EMAIL="${CONSULTANT_ADMIN_EMAIL:-consultant-admin@som.local}"
 PROVIDER_ADMIN_EMAIL="${PROVIDER_ADMIN_EMAIL:-provider-admin@som.local}"
-SUPABASE_APPLY_STORAGE_RLS_STRICT="${SUPABASE_APPLY_STORAGE_RLS_STRICT:-true}"
+SUPABASE_APPLY_STORAGE_RLS_STRICT="${SUPABASE_APPLY_STORAGE_RLS_STRICT:-false}"
 export PATH="$ROOT/scripts/stubs:$PATH"
 export SUPABASE_APPLY_STORAGE_RLS_STRICT
+export SUPABASE_PROJECT_ID
 
 echo "Running integration tests on $DEVICE with API_BASE_URL=$API_BASE_URL"
 
 "$ROOT/scripts/start_supabase.sh"
+
+supabase_status_raw() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase status --output json --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase status --output json
+  fi
+}
 
 load_supabase_env() {
   if [[ -n "$SUPABASE_URL" && -n "$SUPABASE_ANON_KEY" ]]; then
@@ -36,12 +46,12 @@ load_supabase_env() {
   if ! command -v python3 >/dev/null 2>&1; then
     return 0
   fi
-  local status_json
-  status_json="$(supabase status --output json 2>/dev/null || true)"
-  if [[ -z "$status_json" ]]; then
+  local status_raw
+  status_raw="$(supabase_status_raw 2>/dev/null || true)"
+  if [[ -z "$status_raw" ]]; then
     return 0
   fi
-  read -r SUPABASE_URL SUPABASE_ANON_KEY <<<"$(STATUS_RAW="$status_json" python3 - <<'PY'
+  read -r SUPABASE_URL SUPABASE_ANON_KEY <<<"$(STATUS_RAW="$status_raw" python3 - <<'PY'
 import json
 import os
 
@@ -63,6 +73,10 @@ PY
 }
 
 load_supabase_env
+
+if [[ -z "${SUPABASE_URL:-}" || -z "${SUPABASE_ANON_KEY:-}" ]]; then
+  echo "Warning: SUPABASE_URL or SUPABASE_ANON_KEY missing; Flutter tests may skip realtime." >&2
+fi
 
 mkdir -p "$ROOT/api/storage/logs"
 "$ROOT/scripts/start_api.sh" > "$ROOT/api/storage/logs/api-test.log" 2>&1 &

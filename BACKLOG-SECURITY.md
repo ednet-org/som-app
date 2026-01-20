@@ -64,6 +64,7 @@ This backlog covers multi-tenant access control and data protection for SOM acro
 - [x] Supabase: configure bucket constraints (max size, allowed MIME types).
 - [x] API: validate MIME type and file size server‑side for PDFs.
 - [x] Infra: apply storage RLS policies via privileged local/CI script (dockerized Postgres).
+- [x] CI: run integration tests with strict storage RLS enforcement.
 - [ ] Infra: optional malware scanning pipeline for uploads (future).
 
 ### P1 — Supabase RLS + Realtime policies

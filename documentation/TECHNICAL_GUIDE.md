@@ -21,6 +21,15 @@ For tenant-style domains in local dev (recommended for auth redirect testing):
 127.0.0.1 som.localhost tenant.localhost
 ```
 
+Or run the helper (idempotent; prints instructions if missing):
+```
+scripts/ensure_hosts.sh
+```
+Optional flags:
+- `SOM_REQUIRE_HOSTS=true` to fail if entries are missing.
+- `SOM_SKIP_HOSTS_CHECK=true` to skip the check entirely.
+- `SOM_PING_HOSTS=false` to skip the ping verification.
+
 2) Update `supabase/config.toml`:
 - `site_url = "http://som.localhost:8090"`
 - `additional_redirect_urls = ["http://som.localhost:8090/*", "http://tenant.localhost:8090/*"]`
@@ -34,11 +43,35 @@ export CORS_ALLOWED_ORIGINS=http://som.localhost:8090,http://tenant.localhost:80
 
 `APP_BASE_URL` is used by the API for email links (activation, reset, notifications).
 
+If DNS caching blocks the hostname:
+```
+sudo sh -c 'printf "127.0.0.1 som.localhost tenant.localhost\n" >> /etc/hosts'
+sudo dscacheutil -flushcache
+ping -c 1 som.localhost
+```
+Expected:
+```
+PING som.localhost (127.0.0.1): 56 data bytes
+64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=...
+```
+
 ## Start Supabase
 ```
 scripts/start_supabase.sh
 ```
 This wrapper excludes the `vector` container (avoids Docker name conflicts).
+It also applies migrations and privileged storage RLS (if enabled).
+
+Optional config:
+- `SUPABASE_PROJECT_ID` to pin the project container name.
+- `SUPABASE_APPLY_STORAGE_RLS` (default true)
+- `SUPABASE_APPLY_STORAGE_RLS_STRICT` (default false; true fails if RLS apply fails).
+- `SUPABASE_SCHEMA` defaults to `som` (dedicated schema for app data).
+
+Manual re-apply (privileged):
+```
+scripts/apply_storage_rls.sh
+```
 
 Environment template:
 - Copy `.env.example` to `.env` and update keys if you want to run without the helper scripts.
@@ -124,6 +157,19 @@ Running each test individually avoids macOS runner connection issues.
 The integration script stubs `open` to avoid macOS foreground warnings during headless runs.
 The integration script also starts Supabase and the API automatically and writes
 logs to `api/storage/logs/api-test.log`.
+
+## GitHub Actions (Local Supabase CI)
+To run integration tests in GitHub Actions using local Supabase:
+- Install Supabase CLI (npm).
+- Ensure Docker is available.
+- Run `scripts/run_integration_tests.sh` with:
+  - `DEVICE=chrome`
+  - `SUPABASE_PROJECT_ID` set to match the Supabase container name (e.g., `som-app`)
+  - `SUPABASE_APPLY_STORAGE_RLS_STRICT=true`
+  - `SOM_SKIP_HOSTS_CHECK=true` (skip `/etc/hosts` edits in CI)
+
+Secrets/inputs needed (if enabling deploy workflows):
+- `FIREBASE_SERVICE_ACCOUNT_SMART_OFFER_MANAGEMENT` for Firebase Hosting workflows.
 
 ## Code Generation
 ```

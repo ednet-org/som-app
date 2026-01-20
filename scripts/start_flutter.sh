@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 # Optional hostnames for tenant-style URLs.
-"$ROOT/scripts/ensure_hosts.sh"
+bash "$ROOT/scripts/ensure_hosts.sh"
 
 # Idempotent: Kill existing Flutter process for this project before starting
 pkill -f "flutter.*som-app.*run" 2>/dev/null || true
@@ -18,6 +18,8 @@ SYSTEM_ADMIN_EMAIL="${SYSTEM_ADMIN_EMAIL:-system-admin@som.local}"
 SUPABASE_URL="${SUPABASE_URL:-}"
 SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
 SUPABASE_SCHEMA="${SUPABASE_SCHEMA:-som}"
+SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
+export SUPABASE_PROJECT_ID
 TARGET="${TARGET:-chrome}"
 FLUTTER_WEB_MODE="${FLUTTER_WEB_MODE:-debug}"
 START_DEPENDENCIES="${START_DEPENDENCIES:-true}"
@@ -62,7 +64,7 @@ ensure_supabase() {
     echo "Supabase CLI not found. Skipping supabase start."
     return 0
   fi
-  if supabase status --output json >/dev/null 2>&1; then
+  if supabase_status_raw >/dev/null 2>&1; then
     return 0
   fi
   echo "Supabase not running. Starting..."
@@ -79,8 +81,10 @@ load_supabase_env() {
   if ! command -v python3 >/dev/null 2>&1; then
     return 0
   fi
+  local status_raw
   local status_json
-  status_json="$(supabase status --output json 2>/dev/null || true)"
+  status_raw="$(supabase_status_raw 2>/dev/null || true)"
+  status_json="$(sanitize_supabase_json "$status_raw")"
   if [[ -z "$status_json" ]]; then
     return 0
   fi
@@ -95,6 +99,28 @@ except Exception:
 print(info.get("API_URL", ""), info.get("ANON_KEY", ""))
 PY
 )"
+}
+
+supabase_status_raw() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase status --output json --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase status --output json
+  fi
+}
+
+sanitize_supabase_json() {
+  local raw="${1:-}"
+  python3 - "$raw" <<'PY'
+import sys
+raw = sys.argv[1] if len(sys.argv) > 1 else ""
+start = raw.find("{")
+end = raw.rfind("}")
+if start == -1 or end == -1 or end < start:
+    print("")
+    raise SystemExit(0)
+print(raw[start : end + 1])
+PY
 }
 
 ensure_api() {
@@ -120,6 +146,9 @@ if [[ "$START_DEPENDENCIES" == "true" ]]; then
     if [[ "$START_SUPABASE" == "true" ]]; then
       ensure_supabase
       load_supabase_env
+    fi
+    if [[ -z "${SUPABASE_URL:-}" || -z "${SUPABASE_ANON_KEY:-}" ]]; then
+      echo "Warning: SUPABASE_URL or SUPABASE_ANON_KEY missing; realtime will be disabled." >&2
     fi
     if [[ "$START_API" == "true" ]]; then
       ensure_api

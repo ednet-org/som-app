@@ -3,6 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+SUPABASE_PROJECT_ID="${SUPABASE_PROJECT_ID:-}"
+export SUPABASE_PROJECT_ID
 
 ensure_supabase() {
   if ! command -v supabase >/dev/null 2>&1; then
@@ -10,23 +12,15 @@ ensure_supabase() {
     exit 1
   fi
 
+  local status_raw=""
   local status_json=""
-  if status_json="$(supabase status --output json 2>/dev/null)"; then
-    if ! python3 - "$status_json" <<'PY' >/dev/null 2>&1; then
-import json, sys
-data = json.loads(sys.argv[1])
-services = data.get("services", {})
-stopped = [name for name, info in services.items() if info.get("status") != "running"]
-sys.exit(1 if stopped else 0)
-PY
-      echo "Supabase not healthy. Starting..."
-      supabase start
-      status_json="$(supabase status --output json)"
-    fi
-  else
+  status_raw="$(supabase_status 2>/dev/null || true)"
+  status_json="$(sanitize_supabase_json "$status_raw")"
+  if [[ -z "$status_json" ]]; then
     echo "Supabase not running. Starting..."
-    supabase start
-    status_json="$(supabase status --output json)"
+    supabase_start
+    status_raw="$(supabase_status 2>/dev/null || true)"
+    status_json="$(sanitize_supabase_json "$status_raw")"
   fi
 
   echo "$status_json"
@@ -38,7 +32,45 @@ apply_migrations() {
   fi
 
   echo "Applying Supabase migrations..." >&2
-  supabase migration up >&2
+  supabase_migration_up >&2
+}
+
+supabase_status() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase status --output json --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase status --output json
+  fi
+}
+
+supabase_start() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase start --project-id "$SUPABASE_PROJECT_ID" --exclude vector
+  else
+    supabase start --exclude vector
+  fi
+}
+
+supabase_migration_up() {
+  if [[ -n "$SUPABASE_PROJECT_ID" ]]; then
+    supabase migration up --project-id "$SUPABASE_PROJECT_ID"
+  else
+    supabase migration up
+  fi
+}
+
+sanitize_supabase_json() {
+  local raw="${1:-}"
+  python3 - "$raw" <<'PY'
+import sys
+raw = sys.argv[1] if len(sys.argv) > 1 else ""
+start = raw.find("{")
+end = raw.rfind("}")
+if start == -1 or end == -1 or end < start:
+    print("")
+    raise SystemExit(0)
+print(raw[start : end + 1])
+PY
 }
 
 apply_storage_rls() {
@@ -46,10 +78,14 @@ apply_storage_rls() {
     return 0
   fi
 
-  "$ROOT/scripts/apply_storage_rls.sh"
+  bash "$ROOT/scripts/apply_storage_rls.sh"
 }
 
-SUPA_JSON="$(ensure_supabase)"
+SUPA_JSON="$(sanitize_supabase_json "$(ensure_supabase)")"
+if [[ -z "$SUPA_JSON" ]]; then
+  echo "Failed to parse Supabase status output. Run 'supabase status --output json' to debug." >&2
+  exit 1
+fi
 apply_migrations
 apply_storage_rls
 APP_BASE_URL="${APP_BASE_URL:-http://localhost:8090}"
