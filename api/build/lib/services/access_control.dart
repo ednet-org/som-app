@@ -19,3 +19,21 @@ bool canAccessInquiryAsBuyer(RequestAuth auth, InquiryRecord inquiry) {
   return auth.activeRole == 'buyer' && inquiry.buyerCompanyId == auth.companyId;
 }
 
+bool canAccessInquiryAsProvider({
+  required RequestAuth auth,
+  required bool isAssignedProvider,
+  required bool isProviderActive,
+}) {
+  if (auth.activeRole != 'provider') {
+    return false;
+  }
+  return isProviderActive && isAssignedProvider;
+}
+
+bool canAccessOfferAsBuyer(RequestAuth auth, InquiryRecord inquiry) {
+  return auth.activeRole == 'buyer' && inquiry.buyerCompanyId == auth.companyId;
+}
+
+bool canAccessOfferAsProvider(RequestAuth auth, OfferRecord offer) {
+  return auth.activeRole == 'provider' && offer.providerCompanyId == auth.companyId;
+}

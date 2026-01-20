@@ -20,19 +20,20 @@ import '../routes/providers/[companyId]/approve.dart' as providers_$company_id_a
 import '../routes/providers/[companyId]/products/index.dart' as providers_$company_id_products_index;
 import '../routes/providers/[companyId]/products/[productId]/index.dart' as providers_$company_id_products_$product_id_index;
 import '../routes/offers/[offerId]/reject.dart' as offers_$offer_id_reject;
-import '../routes/offers/[offerId]/pdf.dart' as offers_$offer_id_pdf;
 import '../routes/offers/[offerId]/accept.dart' as offers_$offer_id_accept;
+import '../routes/offers/[offerId]/pdf/index.dart' as offers_$offer_id_pdf_index;
 import '../routes/offers/[offerId]/pdf/generate.dart' as offers_$offer_id_pdf_generate;
 import '../routes/inquiries/index.dart' as inquiries_index;
-import '../routes/inquiries/[inquiryId]/pdf.dart' as inquiries_$inquiry_id_pdf;
 import '../routes/inquiries/[inquiryId]/index.dart' as inquiries_$inquiry_id_index;
 import '../routes/inquiries/[inquiryId]/ignore.dart' as inquiries_$inquiry_id_ignore;
 import '../routes/inquiries/[inquiryId]/close.dart' as inquiries_$inquiry_id_close;
 import '../routes/inquiries/[inquiryId]/assign.dart' as inquiries_$inquiry_id_assign;
+import '../routes/inquiries/[inquiryId]/pdf/index.dart' as inquiries_$inquiry_id_pdf_index;
 import '../routes/inquiries/[inquiryId]/pdf/generate.dart' as inquiries_$inquiry_id_pdf_generate;
 import '../routes/inquiries/[inquiryId]/offers/index.dart' as inquiries_$inquiry_id_offers_index;
 import '../routes/health/scheduler.dart' as health_scheduler;
 import '../routes/dev/auth/token.dart' as dev_auth_token;
+import '../routes/dev/auth/jwt.dart' as dev_auth_jwt;
 import '../routes/consultants/registerCompany.dart' as consultants_register_company;
 import '../routes/consultants/index.dart' as consultants_index;
 import '../routes/categories/[categoryId]/index.dart' as categories_$category_id_index;
@@ -272,7 +273,7 @@ Handler buildConsultantsHandler() {
 Handler buildDevAuthHandler() {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/token', (context) => dev_auth_token.onRequest(context,));
+    ..all('/token', (context) => dev_auth_token.onRequest(context,))..all('/jwt', (context) => dev_auth_jwt.onRequest(context,));
   return pipeline.addHandler(router);
 }
 
@@ -293,14 +294,14 @@ Handler buildInquiries$inquiryIdOffersHandler(String inquiryId,) {
 Handler buildInquiries$inquiryIdPdfHandler(String inquiryId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/generate', (context) => inquiries_$inquiry_id_pdf_generate.onRequest(context,inquiryId,));
+    ..all('/', (context) => inquiries_$inquiry_id_pdf_index.onRequest(context,inquiryId,))..all('/generate', (context) => inquiries_$inquiry_id_pdf_generate.onRequest(context,inquiryId,));
   return pipeline.addHandler(router);
 }
 
 Handler buildInquiries$inquiryIdHandler(String inquiryId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/pdf', (context) => inquiries_$inquiry_id_pdf.onRequest(context,inquiryId,))..all('/', (context) => inquiries_$inquiry_id_index.onRequest(context,inquiryId,))..all('/ignore', (context) => inquiries_$inquiry_id_ignore.onRequest(context,inquiryId,))..all('/close', (context) => inquiries_$inquiry_id_close.onRequest(context,inquiryId,))..all('/assign', (context) => inquiries_$inquiry_id_assign.onRequest(context,inquiryId,));
+    ..all('/', (context) => inquiries_$inquiry_id_index.onRequest(context,inquiryId,))..all('/ignore', (context) => inquiries_$inquiry_id_ignore.onRequest(context,inquiryId,))..all('/close', (context) => inquiries_$inquiry_id_close.onRequest(context,inquiryId,))..all('/assign', (context) => inquiries_$inquiry_id_assign.onRequest(context,inquiryId,));
   return pipeline.addHandler(router);
 }
 
@@ -314,14 +315,14 @@ Handler buildInquiriesHandler() {
 Handler buildOffers$offerIdPdfHandler(String offerId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/generate', (context) => offers_$offer_id_pdf_generate.onRequest(context,offerId,));
+    ..all('/', (context) => offers_$offer_id_pdf_index.onRequest(context,offerId,))..all('/generate', (context) => offers_$offer_id_pdf_generate.onRequest(context,offerId,));
   return pipeline.addHandler(router);
 }
 
 Handler buildOffers$offerIdHandler(String offerId,) {
   final pipeline = const Pipeline();
   final router = Router()
-    ..all('/reject', (context) => offers_$offer_id_reject.onRequest(context,offerId,))..all('/pdf', (context) => offers_$offer_id_pdf.onRequest(context,offerId,))..all('/accept', (context) => offers_$offer_id_accept.onRequest(context,offerId,));
+    ..all('/reject', (context) => offers_$offer_id_reject.onRequest(context,offerId,))..all('/accept', (context) => offers_$offer_id_accept.onRequest(context,offerId,));
   return pipeline.addHandler(router);
 }
 

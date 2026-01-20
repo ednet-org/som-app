@@ -3,6 +3,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/access_control.dart';
 import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/file_validation.dart';
 import 'package:som_api/services/file_storage.dart';
@@ -27,14 +28,15 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     final isConsultant = auth.roles.contains('consultant');
     if (!isConsultant) {
       if (auth.activeRole == 'buyer') {
-        if (inquiry.buyerCompanyId != auth.companyId) {
+        if (!canAccessInquiryAsBuyer(auth, inquiry)) {
           return Response(statusCode: 403);
         }
       } else if (auth.activeRole == 'provider') {
         final provider = await context
             .read<ProviderRepository>()
             .findByCompany(auth.companyId);
-        if (provider == null || provider.status != 'active') {
+        final isActive = provider != null && provider.status == 'active';
+        if (!isActive) {
           return Response.json(
             statusCode: 403,
             body: 'Provider registration is pending.',
@@ -44,7 +46,11 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
           inquiryId,
           auth.companyId,
         );
-        if (!assigned) {
+        if (!canAccessInquiryAsProvider(
+          auth: auth,
+          isAssignedProvider: assigned,
+          isProviderActive: isActive,
+        )) {
           return Response.json(
             statusCode: 403,
             body: 'Inquiry not assigned to provider.',
