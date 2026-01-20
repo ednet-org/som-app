@@ -9,12 +9,15 @@ part of 'auth_switch_role_post_request.dart';
 class _$AuthSwitchRolePostRequest extends AuthSwitchRolePostRequest {
   @override
   final String role;
+  @override
+  final String? companyId;
 
   factory _$AuthSwitchRolePostRequest(
           [void Function(AuthSwitchRolePostRequestBuilder)? updates]) =>
       (AuthSwitchRolePostRequestBuilder()..update(updates))._build();
 
-  _$AuthSwitchRolePostRequest._({required this.role}) : super._();
+  _$AuthSwitchRolePostRequest._({required this.role, this.companyId})
+      : super._();
   @override
   AuthSwitchRolePostRequest rebuild(
           void Function(AuthSwitchRolePostRequestBuilder) updates) =>
@@ -27,13 +30,16 @@ class _$AuthSwitchRolePostRequest extends AuthSwitchRolePostRequest {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AuthSwitchRolePostRequest && role == other.role;
+    return other is AuthSwitchRolePostRequest &&
+        role == other.role &&
+        companyId == other.companyId;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, role.hashCode);
+    _$hash = $jc(_$hash, companyId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -41,7 +47,8 @@ class _$AuthSwitchRolePostRequest extends AuthSwitchRolePostRequest {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'AuthSwitchRolePostRequest')
-          ..add('role', role))
+          ..add('role', role)
+          ..add('companyId', companyId))
         .toString();
   }
 }
@@ -55,6 +62,10 @@ class AuthSwitchRolePostRequestBuilder
   String? get role => _$this._role;
   set role(String? role) => _$this._role = role;
 
+  String? _companyId;
+  String? get companyId => _$this._companyId;
+  set companyId(String? companyId) => _$this._companyId = companyId;
+
   AuthSwitchRolePostRequestBuilder() {
     AuthSwitchRolePostRequest._defaults(this);
   }
@@ -63,6 +74,7 @@ class AuthSwitchRolePostRequestBuilder
     final $v = _$v;
     if ($v != null) {
       _role = $v.role;
+      _companyId = $v.companyId;
       _$v = null;
     }
     return this;
@@ -86,6 +98,7 @@ class AuthSwitchRolePostRequestBuilder
         _$AuthSwitchRolePostRequest._(
           role: BuiltValueNullFieldError.checkNotNull(
               role, r'AuthSwitchRolePostRequest', 'role'),
+          companyId: companyId,
         );
     replace(_$result);
     return _$result;

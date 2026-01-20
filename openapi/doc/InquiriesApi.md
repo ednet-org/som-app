@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**inquiriesInquiryIdGet**](InquiriesApi.md#inquiriesinquiryidget) | **GET** /inquiries/{inquiryId} | Get inquiry
 [**inquiriesInquiryIdIgnorePost**](InquiriesApi.md#inquiriesinquiryidignorepost) | **POST** /inquiries/{inquiryId}/ignore | Provider ignores inquiry
 [**inquiriesInquiryIdPdfDelete**](InquiriesApi.md#inquiriesinquiryidpdfdelete) | **DELETE** /inquiries/{inquiryId}/pdf | Remove inquiry PDF
+[**inquiriesInquiryIdPdfGeneratePost**](InquiriesApi.md#inquiriesinquiryidpdfgeneratepost) | **POST** /inquiries/{inquiryId}/pdf/generate | Generate inquiry summary PDF
 [**inquiriesInquiryIdPdfGet**](InquiriesApi.md#inquiriesinquiryidpdfget) | **GET** /inquiries/{inquiryId}/pdf | Download inquiry PDF (signed URL)
 [**inquiriesInquiryIdPdfPost**](InquiriesApi.md#inquiriesinquiryidpdfpost) | **POST** /inquiries/{inquiryId}/pdf | Upload inquiry PDF
 
@@ -322,6 +323,47 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **inquiriesInquiryIdPdfGeneratePost**
+> InquiriesInquiryIdPdfGeneratePost200Response inquiriesInquiryIdPdfGeneratePost(inquiryId)
+
+Generate inquiry summary PDF
+
+### Example
+```dart
+import 'package:openapi/api.dart';
+
+final api = Openapi().getInquiriesApi();
+final String inquiryId = inquiryId_example; // String | 
+
+try {
+    final response = api.inquiriesInquiryIdPdfGeneratePost(inquiryId);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling InquiriesApi->inquiriesInquiryIdPdfGeneratePost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inquiryId** | **String**|  | 
+
+### Return type
+
+[**InquiriesInquiryIdPdfGeneratePost200Response**](InquiriesInquiryIdPdfGeneratePost200Response.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

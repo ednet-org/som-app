@@ -57,6 +57,7 @@ export 'package:openapi/src/model/create_inquiry_request.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_assign_post_request.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_offers_post200_response.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_offers_post_request1.dart';
+export 'package:openapi/src/model/inquiries_inquiry_id_pdf_generate_post200_response.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_pdf_get200_response.dart';
 export 'package:openapi/src/model/inquiries_inquiry_id_pdf_post200_response.dart';
 export 'package:openapi/src/model/inquiry.dart';
@@ -87,4 +88,5 @@ export 'package:openapi/src/model/subscriptions_upgrade_post_request.dart';
 export 'package:openapi/src/model/user_dto.dart';
 export 'package:openapi/src/model/user_registration.dart';
 export 'package:openapi/src/model/users_load_user_with_company_get200_response.dart';
+export 'package:openapi/src/model/users_load_user_with_company_get200_response_company_options_inner.dart';
 

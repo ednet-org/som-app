@@ -26,6 +26,7 @@ part 'inquiry.g.dart';
 /// * [numberOfProviders] 
 /// * [description] 
 /// * [pdfPath] 
+/// * [summaryPdfPath] 
 /// * [providerCriteria] 
 /// * [contactInfo] 
 /// * [notifiedAt] 
@@ -70,6 +71,9 @@ abstract class Inquiry implements Built<Inquiry, InquiryBuilder> {
 
   @BuiltValueField(wireName: r'pdfPath')
   String? get pdfPath;
+
+  @BuiltValueField(wireName: r'summaryPdfPath')
+  String? get summaryPdfPath;
 
   @BuiltValueField(wireName: r'providerCriteria')
   ProviderCriteria? get providerCriteria;
@@ -196,6 +200,13 @@ class _$InquirySerializer implements PrimitiveSerializer<Inquiry> {
       yield r'pdfPath';
       yield serializers.serialize(
         object.pdfPath,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.summaryPdfPath != null) {
+      yield r'summaryPdfPath';
+      yield serializers.serialize(
+        object.summaryPdfPath,
         specifiedType: const FullType.nullable(String),
       );
     }
@@ -356,6 +367,14 @@ class _$InquirySerializer implements PrimitiveSerializer<Inquiry> {
           ) as String?;
           if (valueDes == null) continue;
           result.pdfPath = valueDes;
+          break;
+        case r'summaryPdfPath':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.summaryPdfPath = valueDes;
           break;
         case r'providerCriteria':
           final valueDes = serializers.deserialize(

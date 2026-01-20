@@ -18,6 +18,8 @@ class _$Offer extends Offer {
   @override
   final String? pdfPath;
   @override
+  final String? summaryPdfPath;
+  @override
   final DateTime? forwardedAt;
   @override
   final DateTime? resolvedAt;
@@ -35,6 +37,7 @@ class _$Offer extends Offer {
       this.providerCompanyId,
       this.status,
       this.pdfPath,
+      this.summaryPdfPath,
       this.forwardedAt,
       this.resolvedAt,
       this.buyerDecision,
@@ -56,6 +59,7 @@ class _$Offer extends Offer {
         providerCompanyId == other.providerCompanyId &&
         status == other.status &&
         pdfPath == other.pdfPath &&
+        summaryPdfPath == other.summaryPdfPath &&
         forwardedAt == other.forwardedAt &&
         resolvedAt == other.resolvedAt &&
         buyerDecision == other.buyerDecision &&
@@ -70,6 +74,7 @@ class _$Offer extends Offer {
     _$hash = $jc(_$hash, providerCompanyId.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, pdfPath.hashCode);
+    _$hash = $jc(_$hash, summaryPdfPath.hashCode);
     _$hash = $jc(_$hash, forwardedAt.hashCode);
     _$hash = $jc(_$hash, resolvedAt.hashCode);
     _$hash = $jc(_$hash, buyerDecision.hashCode);
@@ -86,6 +91,7 @@ class _$Offer extends Offer {
           ..add('providerCompanyId', providerCompanyId)
           ..add('status', status)
           ..add('pdfPath', pdfPath)
+          ..add('summaryPdfPath', summaryPdfPath)
           ..add('forwardedAt', forwardedAt)
           ..add('resolvedAt', resolvedAt)
           ..add('buyerDecision', buyerDecision)
@@ -118,6 +124,11 @@ class OfferBuilder implements Builder<Offer, OfferBuilder> {
   String? get pdfPath => _$this._pdfPath;
   set pdfPath(String? pdfPath) => _$this._pdfPath = pdfPath;
 
+  String? _summaryPdfPath;
+  String? get summaryPdfPath => _$this._summaryPdfPath;
+  set summaryPdfPath(String? summaryPdfPath) =>
+      _$this._summaryPdfPath = summaryPdfPath;
+
   DateTime? _forwardedAt;
   DateTime? get forwardedAt => _$this._forwardedAt;
   set forwardedAt(DateTime? forwardedAt) => _$this._forwardedAt = forwardedAt;
@@ -148,6 +159,7 @@ class OfferBuilder implements Builder<Offer, OfferBuilder> {
       _providerCompanyId = $v.providerCompanyId;
       _status = $v.status;
       _pdfPath = $v.pdfPath;
+      _summaryPdfPath = $v.summaryPdfPath;
       _forwardedAt = $v.forwardedAt;
       _resolvedAt = $v.resolvedAt;
       _buyerDecision = $v.buyerDecision;
@@ -178,6 +190,7 @@ class OfferBuilder implements Builder<Offer, OfferBuilder> {
           providerCompanyId: providerCompanyId,
           status: status,
           pdfPath: pdfPath,
+          summaryPdfPath: summaryPdfPath,
           forwardedAt: forwardedAt,
           resolvedAt: resolvedAt,
           buyerDecision: buyerDecision,

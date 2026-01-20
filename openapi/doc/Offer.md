@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **providerCompanyId** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
 **pdfPath** | **String** |  | [optional] 
+**summaryPdfPath** | **String** |  | [optional] 
 **forwardedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **resolvedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **buyerDecision** | **String** |  | [optional] 

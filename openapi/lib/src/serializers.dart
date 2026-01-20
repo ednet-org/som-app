@@ -46,6 +46,7 @@ import 'package:openapi/src/model/create_inquiry_request.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_assign_post_request.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_offers_post200_response.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_offers_post_request1.dart';
+import 'package:openapi/src/model/inquiries_inquiry_id_pdf_generate_post200_response.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_pdf_get200_response.dart';
 import 'package:openapi/src/model/inquiries_inquiry_id_pdf_post200_response.dart';
 import 'package:openapi/src/model/inquiry.dart';
@@ -76,6 +77,7 @@ import 'package:openapi/src/model/subscriptions_upgrade_post_request.dart';
 import 'package:openapi/src/model/user_dto.dart';
 import 'package:openapi/src/model/user_registration.dart';
 import 'package:openapi/src/model/users_load_user_with_company_get200_response.dart';
+import 'package:openapi/src/model/users_load_user_with_company_get200_response_company_options_inner.dart';
 
 part 'serializers.g.dart';
 
@@ -112,6 +114,7 @@ part 'serializers.g.dart';
   InquiriesInquiryIdAssignPostRequest,
   InquiriesInquiryIdOffersPost200Response,
   InquiriesInquiryIdOffersPostRequest1,
+  InquiriesInquiryIdPdfGeneratePost200Response,
   InquiriesInquiryIdPdfGet200Response,
   InquiriesInquiryIdPdfPost200Response,
   Inquiry,
@@ -142,6 +145,7 @@ part 'serializers.g.dart';
   UserDto,
   UserRegistration,
   UsersLoadUserWithCompanyGet200Response,
+  UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner,
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(

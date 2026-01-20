@@ -107,11 +107,13 @@ Class | Method | HTTP request | Description
 [*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdGet**](doc/InquiriesApi.md#inquiriesinquiryidget) | **GET** /inquiries/{inquiryId} | Get inquiry
 [*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdIgnorePost**](doc/InquiriesApi.md#inquiriesinquiryidignorepost) | **POST** /inquiries/{inquiryId}/ignore | Provider ignores inquiry
 [*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdPdfDelete**](doc/InquiriesApi.md#inquiriesinquiryidpdfdelete) | **DELETE** /inquiries/{inquiryId}/pdf | Remove inquiry PDF
+[*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdPdfGeneratePost**](doc/InquiriesApi.md#inquiriesinquiryidpdfgeneratepost) | **POST** /inquiries/{inquiryId}/pdf/generate | Generate inquiry summary PDF
 [*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdPdfGet**](doc/InquiriesApi.md#inquiriesinquiryidpdfget) | **GET** /inquiries/{inquiryId}/pdf | Download inquiry PDF (signed URL)
 [*InquiriesApi*](doc/InquiriesApi.md) | [**inquiriesInquiryIdPdfPost**](doc/InquiriesApi.md#inquiriesinquiryidpdfpost) | **POST** /inquiries/{inquiryId}/pdf | Upload inquiry PDF
 [*OffersApi*](doc/OffersApi.md) | [**inquiriesInquiryIdOffersGet**](doc/OffersApi.md#inquiriesinquiryidoffersget) | **GET** /inquiries/{inquiryId}/offers | List offers for inquiry
 [*OffersApi*](doc/OffersApi.md) | [**inquiriesInquiryIdOffersPost**](doc/OffersApi.md#inquiriesinquiryidofferspost) | **POST** /inquiries/{inquiryId}/offers | Create offer for inquiry
 [*OffersApi*](doc/OffersApi.md) | [**offersOfferIdAcceptPost**](doc/OffersApi.md#offersofferidacceptpost) | **POST** /offers/{offerId}/accept | Accept offer
+[*OffersApi*](doc/OffersApi.md) | [**offersOfferIdPdfGeneratePost**](doc/OffersApi.md#offersofferidpdfgeneratepost) | **POST** /offers/{offerId}/pdf/generate | Generate offer summary PDF
 [*OffersApi*](doc/OffersApi.md) | [**offersOfferIdPdfGet**](doc/OffersApi.md#offersofferidpdfget) | **GET** /offers/{offerId}/pdf | Download offer PDF (signed URL)
 [*OffersApi*](doc/OffersApi.md) | [**offersOfferIdRejectPost**](doc/OffersApi.md#offersofferidrejectpost) | **POST** /offers/{offerId}/reject | Reject offer
 [*ProvidersApi*](doc/ProvidersApi.md) | [**providersCompanyIdApprovePost**](doc/ProvidersApi.md#providerscompanyidapprovepost) | **POST** /providers/{companyId}/approve | Approve provider branches
@@ -187,6 +189,7 @@ Class | Method | HTTP request | Description
  - [InquiriesInquiryIdAssignPostRequest](doc/InquiriesInquiryIdAssignPostRequest.md)
  - [InquiriesInquiryIdOffersPost200Response](doc/InquiriesInquiryIdOffersPost200Response.md)
  - [InquiriesInquiryIdOffersPostRequest1](doc/InquiriesInquiryIdOffersPostRequest1.md)
+ - [InquiriesInquiryIdPdfGeneratePost200Response](doc/InquiriesInquiryIdPdfGeneratePost200Response.md)
  - [InquiriesInquiryIdPdfGet200Response](doc/InquiriesInquiryIdPdfGet200Response.md)
  - [InquiriesInquiryIdPdfPost200Response](doc/InquiriesInquiryIdPdfPost200Response.md)
  - [Inquiry](doc/Inquiry.md)
@@ -217,6 +220,7 @@ Class | Method | HTTP request | Description
  - [UserDto](doc/UserDto.md)
  - [UserRegistration](doc/UserRegistration.md)
  - [UsersLoadUserWithCompanyGet200Response](doc/UsersLoadUserWithCompanyGet200Response.md)
+ - [UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner](doc/UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner.md)
 
 
 ## Documentation For Authorization

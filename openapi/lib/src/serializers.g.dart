@@ -42,6 +42,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(InquiriesInquiryIdAssignPostRequest.serializer)
       ..add(InquiriesInquiryIdOffersPost200Response.serializer)
       ..add(InquiriesInquiryIdOffersPostRequest1.serializer)
+      ..add(InquiriesInquiryIdPdfGeneratePost200Response.serializer)
       ..add(InquiriesInquiryIdPdfGet200Response.serializer)
       ..add(InquiriesInquiryIdPdfPost200Response.serializer)
       ..add(Inquiry.serializer)
@@ -74,6 +75,11 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(UserRegistration.serializer)
       ..add(UserRegistrationRolesEnum.serializer)
       ..add(UsersLoadUserWithCompanyGet200Response.serializer)
+      ..add(
+          UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner.serializer)
+      ..add(
+          UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInnerCompanyTypeEnum
+              .serializer)
       ..add(UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Category)]),
@@ -136,6 +142,16 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(CompanyCategoryAssignment)]),
           () => ListBuilder<CompanyCategoryAssignment>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(
+                UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner)
+          ]),
+          () => ListBuilder<
+              UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SubscriptionPlan)]),
           () => ListBuilder<SubscriptionPlan>())

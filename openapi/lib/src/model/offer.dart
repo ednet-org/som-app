@@ -16,6 +16,7 @@ part 'offer.g.dart';
 /// * [providerCompanyId] 
 /// * [status] 
 /// * [pdfPath] 
+/// * [summaryPdfPath] 
 /// * [forwardedAt] 
 /// * [resolvedAt] 
 /// * [buyerDecision] 
@@ -36,6 +37,9 @@ abstract class Offer implements Built<Offer, OfferBuilder> {
 
   @BuiltValueField(wireName: r'pdfPath')
   String? get pdfPath;
+
+  @BuiltValueField(wireName: r'summaryPdfPath')
+  String? get summaryPdfPath;
 
   @BuiltValueField(wireName: r'forwardedAt')
   DateTime? get forwardedAt;
@@ -104,6 +108,13 @@ class _$OfferSerializer implements PrimitiveSerializer<Offer> {
       yield r'pdfPath';
       yield serializers.serialize(
         object.pdfPath,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.summaryPdfPath != null) {
+      yield r'summaryPdfPath';
+      yield serializers.serialize(
+        object.summaryPdfPath,
         specifiedType: const FullType.nullable(String),
       );
     }
@@ -193,6 +204,14 @@ class _$OfferSerializer implements PrimitiveSerializer<Offer> {
           ) as String?;
           if (valueDes == null) continue;
           result.pdfPath = valueDes;
+          break;
+        case r'summaryPdfPath':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.summaryPdfPath = valueDes;
           break;
         case r'forwardedAt':
           final valueDes = serializers.deserialize(

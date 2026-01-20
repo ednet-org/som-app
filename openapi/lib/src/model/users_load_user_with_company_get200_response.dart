@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:openapi/src/model/address.dart';
+import 'package:openapi/src/model/users_load_user_with_company_get200_response_company_options_inner.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -23,9 +24,11 @@ part 'users_load_user_with_company_get200_response.g.dart';
 /// * [roles] 
 /// * [activeRole] 
 /// * [companyId] 
+/// * [activeCompanyId] 
 /// * [companyName] 
 /// * [companyAddress] 
 /// * [companyType] - 0=buyer, 1=provider, 2=buyer+provider
+/// * [companyOptions] 
 @BuiltValue()
 abstract class UsersLoadUserWithCompanyGet200Response implements Built<UsersLoadUserWithCompanyGet200Response, UsersLoadUserWithCompanyGet200ResponseBuilder> {
   @BuiltValueField(wireName: r'userId')
@@ -58,6 +61,9 @@ abstract class UsersLoadUserWithCompanyGet200Response implements Built<UsersLoad
   @BuiltValueField(wireName: r'companyId')
   String? get companyId;
 
+  @BuiltValueField(wireName: r'activeCompanyId')
+  String? get activeCompanyId;
+
   @BuiltValueField(wireName: r'companyName')
   String? get companyName;
 
@@ -68,6 +74,9 @@ abstract class UsersLoadUserWithCompanyGet200Response implements Built<UsersLoad
   @BuiltValueField(wireName: r'companyType')
   UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? get companyType;
   // enum companyTypeEnum {  0,  1,  2,  };
+
+  @BuiltValueField(wireName: r'companyOptions')
+  BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>? get companyOptions;
 
   UsersLoadUserWithCompanyGet200Response._();
 
@@ -162,6 +171,13 @@ class _$UsersLoadUserWithCompanyGet200ResponseSerializer implements PrimitiveSer
         specifiedType: const FullType(String),
       );
     }
+    if (object.activeCompanyId != null) {
+      yield r'activeCompanyId';
+      yield serializers.serialize(
+        object.activeCompanyId,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.companyName != null) {
       yield r'companyName';
       yield serializers.serialize(
@@ -181,6 +197,13 @@ class _$UsersLoadUserWithCompanyGet200ResponseSerializer implements PrimitiveSer
       yield serializers.serialize(
         object.companyType,
         specifiedType: const FullType(UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum),
+      );
+    }
+    if (object.companyOptions != null) {
+      yield r'companyOptions';
+      yield serializers.serialize(
+        object.companyOptions,
+        specifiedType: const FullType(BuiltList, [FullType(UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner)]),
       );
     }
   }
@@ -276,6 +299,13 @@ class _$UsersLoadUserWithCompanyGet200ResponseSerializer implements PrimitiveSer
           ) as String;
           result.companyId = valueDes;
           break;
+        case r'activeCompanyId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.activeCompanyId = valueDes;
+          break;
         case r'companyName':
           final valueDes = serializers.deserialize(
             value,
@@ -296,6 +326,13 @@ class _$UsersLoadUserWithCompanyGet200ResponseSerializer implements PrimitiveSer
             specifiedType: const FullType(UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum),
           ) as UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum;
           result.companyType = valueDes;
+          break;
+        case r'companyOptions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner)]),
+          ) as BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>;
+          result.companyOptions.replace(valueDes);
           break;
         default:
           unhandled.add(key);

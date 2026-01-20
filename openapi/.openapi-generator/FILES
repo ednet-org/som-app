@@ -41,6 +41,7 @@ doc/InquiriesApi.md
 doc/InquiriesInquiryIdAssignPostRequest.md
 doc/InquiriesInquiryIdOffersPost200Response.md
 doc/InquiriesInquiryIdOffersPostRequest1.md
+doc/InquiriesInquiryIdPdfGeneratePost200Response.md
 doc/InquiriesInquiryIdPdfGet200Response.md
 doc/InquiriesInquiryIdPdfPost200Response.md
 doc/Inquiry.md
@@ -77,6 +78,7 @@ doc/UserDto.md
 doc/UserRegistration.md
 doc/UsersApi.md
 doc/UsersLoadUserWithCompanyGet200Response.md
+doc/UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner.md
 lib/openapi.dart
 lib/src/api.dart
 lib/src/api/ads_api.dart
@@ -133,6 +135,7 @@ lib/src/model/date.dart
 lib/src/model/inquiries_inquiry_id_assign_post_request.dart
 lib/src/model/inquiries_inquiry_id_offers_post200_response.dart
 lib/src/model/inquiries_inquiry_id_offers_post_request1.dart
+lib/src/model/inquiries_inquiry_id_pdf_generate_post200_response.dart
 lib/src/model/inquiries_inquiry_id_pdf_get200_response.dart
 lib/src/model/inquiries_inquiry_id_pdf_post200_response.dart
 lib/src/model/inquiry.dart
@@ -163,9 +166,8 @@ lib/src/model/subscriptions_upgrade_post_request.dart
 lib/src/model/user_dto.dart
 lib/src/model/user_registration.dart
 lib/src/model/users_load_user_with_company_get200_response.dart
+lib/src/model/users_load_user_with_company_get200_response_company_options_inner.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/company_branch_assignment_test.dart
-test/company_category_assignment_test.dart
-test/company_taxonomy_test.dart
-test/providers_company_id_taxonomy_put_request_test.dart
+test/inquiries_inquiry_id_pdf_generate_post200_response_test.dart
+test/users_load_user_with_company_get200_response_company_options_inner_test.dart

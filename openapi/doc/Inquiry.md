@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **numberOfProviders** | **int** |  | [optional] 
 **description** | **String** |  | [optional] 
 **pdfPath** | **String** |  | [optional] 
+**summaryPdfPath** | **String** |  | [optional] 
 **providerCriteria** | [**ProviderCriteria**](ProviderCriteria.md) |  | [optional] 
 **contactInfo** | [**ContactInfo**](ContactInfo.md) |  | [optional] 
 **notifiedAt** | [**DateTime**](DateTime.md) |  | [optional] 

@@ -103,11 +103,16 @@ class _$UsersLoadUserWithCompanyGet200Response
   @override
   final String? companyId;
   @override
+  final String? activeCompanyId;
+  @override
   final String? companyName;
   @override
   final Address? companyAddress;
   @override
   final UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? companyType;
+  @override
+  final BuiltList<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>?
+      companyOptions;
 
   factory _$UsersLoadUserWithCompanyGet200Response(
           [void Function(UsersLoadUserWithCompanyGet200ResponseBuilder)?
@@ -126,9 +131,11 @@ class _$UsersLoadUserWithCompanyGet200Response
       this.roles,
       this.activeRole,
       this.companyId,
+      this.activeCompanyId,
       this.companyName,
       this.companyAddress,
-      this.companyType})
+      this.companyType,
+      this.companyOptions})
       : super._();
   @override
   UsersLoadUserWithCompanyGet200Response rebuild(
@@ -154,9 +161,11 @@ class _$UsersLoadUserWithCompanyGet200Response
         roles == other.roles &&
         activeRole == other.activeRole &&
         companyId == other.companyId &&
+        activeCompanyId == other.activeCompanyId &&
         companyName == other.companyName &&
         companyAddress == other.companyAddress &&
-        companyType == other.companyType;
+        companyType == other.companyType &&
+        companyOptions == other.companyOptions;
   }
 
   @override
@@ -172,9 +181,11 @@ class _$UsersLoadUserWithCompanyGet200Response
     _$hash = $jc(_$hash, roles.hashCode);
     _$hash = $jc(_$hash, activeRole.hashCode);
     _$hash = $jc(_$hash, companyId.hashCode);
+    _$hash = $jc(_$hash, activeCompanyId.hashCode);
     _$hash = $jc(_$hash, companyName.hashCode);
     _$hash = $jc(_$hash, companyAddress.hashCode);
     _$hash = $jc(_$hash, companyType.hashCode);
+    _$hash = $jc(_$hash, companyOptions.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -193,9 +204,11 @@ class _$UsersLoadUserWithCompanyGet200Response
           ..add('roles', roles)
           ..add('activeRole', activeRole)
           ..add('companyId', companyId)
+          ..add('activeCompanyId', activeCompanyId)
           ..add('companyName', companyName)
           ..add('companyAddress', companyAddress)
-          ..add('companyType', companyType))
+          ..add('companyType', companyType)
+          ..add('companyOptions', companyOptions))
         .toString();
   }
 }
@@ -246,6 +259,11 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
   String? get companyId => _$this._companyId;
   set companyId(String? companyId) => _$this._companyId = companyId;
 
+  String? _activeCompanyId;
+  String? get activeCompanyId => _$this._activeCompanyId;
+  set activeCompanyId(String? activeCompanyId) =>
+      _$this._activeCompanyId = activeCompanyId;
+
   String? _companyName;
   String? get companyName => _$this._companyName;
   set companyName(String? companyName) => _$this._companyName = companyName;
@@ -262,6 +280,17 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
   set companyType(
           UsersLoadUserWithCompanyGet200ResponseCompanyTypeEnum? companyType) =>
       _$this._companyType = companyType;
+
+  ListBuilder<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>?
+      _companyOptions;
+  ListBuilder<UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>
+      get companyOptions => _$this._companyOptions ??= ListBuilder<
+          UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>();
+  set companyOptions(
+          ListBuilder<
+                  UsersLoadUserWithCompanyGet200ResponseCompanyOptionsInner>?
+              companyOptions) =>
+      _$this._companyOptions = companyOptions;
 
   UsersLoadUserWithCompanyGet200ResponseBuilder() {
     UsersLoadUserWithCompanyGet200Response._defaults(this);
@@ -280,9 +309,11 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
       _roles = $v.roles?.toBuilder();
       _activeRole = $v.activeRole;
       _companyId = $v.companyId;
+      _activeCompanyId = $v.activeCompanyId;
       _companyName = $v.companyName;
       _companyAddress = $v.companyAddress?.toBuilder();
       _companyType = $v.companyType;
+      _companyOptions = $v.companyOptions?.toBuilder();
       _$v = null;
     }
     return this;
@@ -317,9 +348,11 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
             roles: _roles?.build(),
             activeRole: activeRole,
             companyId: companyId,
+            activeCompanyId: activeCompanyId,
             companyName: companyName,
             companyAddress: _companyAddress?.build(),
             companyType: companyType,
+            companyOptions: _companyOptions?.build(),
           );
     } catch (_) {
       late String _$failedField;
@@ -329,6 +362,9 @@ class UsersLoadUserWithCompanyGet200ResponseBuilder
 
         _$failedField = 'companyAddress';
         _companyAddress?.build();
+
+        _$failedField = 'companyOptions';
+        _companyOptions?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'UsersLoadUserWithCompanyGet200Response',

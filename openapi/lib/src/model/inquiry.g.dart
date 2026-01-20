@@ -32,6 +32,8 @@ class _$Inquiry extends Inquiry {
   @override
   final String? pdfPath;
   @override
+  final String? summaryPdfPath;
+  @override
   final ProviderCriteria? providerCriteria;
   @override
   final ContactInfo? contactInfo;
@@ -62,6 +64,7 @@ class _$Inquiry extends Inquiry {
       this.numberOfProviders,
       this.description,
       this.pdfPath,
+      this.summaryPdfPath,
       this.providerCriteria,
       this.contactInfo,
       this.notifiedAt,
@@ -93,6 +96,7 @@ class _$Inquiry extends Inquiry {
         numberOfProviders == other.numberOfProviders &&
         description == other.description &&
         pdfPath == other.pdfPath &&
+        summaryPdfPath == other.summaryPdfPath &&
         providerCriteria == other.providerCriteria &&
         contactInfo == other.contactInfo &&
         notifiedAt == other.notifiedAt &&
@@ -117,6 +121,7 @@ class _$Inquiry extends Inquiry {
     _$hash = $jc(_$hash, numberOfProviders.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, pdfPath.hashCode);
+    _$hash = $jc(_$hash, summaryPdfPath.hashCode);
     _$hash = $jc(_$hash, providerCriteria.hashCode);
     _$hash = $jc(_$hash, contactInfo.hashCode);
     _$hash = $jc(_$hash, notifiedAt.hashCode);
@@ -143,6 +148,7 @@ class _$Inquiry extends Inquiry {
           ..add('numberOfProviders', numberOfProviders)
           ..add('description', description)
           ..add('pdfPath', pdfPath)
+          ..add('summaryPdfPath', summaryPdfPath)
           ..add('providerCriteria', providerCriteria)
           ..add('contactInfo', contactInfo)
           ..add('notifiedAt', notifiedAt)
@@ -212,6 +218,11 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
   String? get pdfPath => _$this._pdfPath;
   set pdfPath(String? pdfPath) => _$this._pdfPath = pdfPath;
 
+  String? _summaryPdfPath;
+  String? get summaryPdfPath => _$this._summaryPdfPath;
+  set summaryPdfPath(String? summaryPdfPath) =>
+      _$this._summaryPdfPath = summaryPdfPath;
+
   ProviderCriteriaBuilder? _providerCriteria;
   ProviderCriteriaBuilder get providerCriteria =>
       _$this._providerCriteria ??= ProviderCriteriaBuilder();
@@ -263,6 +274,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
       _numberOfProviders = $v.numberOfProviders;
       _description = $v.description;
       _pdfPath = $v.pdfPath;
+      _summaryPdfPath = $v.summaryPdfPath;
       _providerCriteria = $v.providerCriteria?.toBuilder();
       _contactInfo = $v.contactInfo?.toBuilder();
       _notifiedAt = $v.notifiedAt;
@@ -305,6 +317,7 @@ class InquiryBuilder implements Builder<Inquiry, InquiryBuilder> {
             numberOfProviders: numberOfProviders,
             description: description,
             pdfPath: pdfPath,
+            summaryPdfPath: summaryPdfPath,
             providerCriteria: _providerCriteria?.build(),
             contactInfo: _contactInfo?.build(),
             notifiedAt: notifiedAt,

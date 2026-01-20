@@ -6,53 +6,55 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'auth_switch_role_post_request.g.dart';
+part 'inquiries_inquiry_id_pdf_generate_post200_response.g.dart';
 
-/// AuthSwitchRolePostRequest
+/// InquiriesInquiryIdPdfGeneratePost200Response
 ///
 /// Properties:
-/// * [role] 
-/// * [companyId] 
+/// * [summaryPdfPath] 
+/// * [signedUrl] 
 @BuiltValue()
-abstract class AuthSwitchRolePostRequest implements Built<AuthSwitchRolePostRequest, AuthSwitchRolePostRequestBuilder> {
-  @BuiltValueField(wireName: r'role')
-  String get role;
+abstract class InquiriesInquiryIdPdfGeneratePost200Response implements Built<InquiriesInquiryIdPdfGeneratePost200Response, InquiriesInquiryIdPdfGeneratePost200ResponseBuilder> {
+  @BuiltValueField(wireName: r'summaryPdfPath')
+  String? get summaryPdfPath;
 
-  @BuiltValueField(wireName: r'companyId')
-  String? get companyId;
+  @BuiltValueField(wireName: r'signedUrl')
+  String? get signedUrl;
 
-  AuthSwitchRolePostRequest._();
+  InquiriesInquiryIdPdfGeneratePost200Response._();
 
-  factory AuthSwitchRolePostRequest([void updates(AuthSwitchRolePostRequestBuilder b)]) = _$AuthSwitchRolePostRequest;
+  factory InquiriesInquiryIdPdfGeneratePost200Response([void updates(InquiriesInquiryIdPdfGeneratePost200ResponseBuilder b)]) = _$InquiriesInquiryIdPdfGeneratePost200Response;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(AuthSwitchRolePostRequestBuilder b) => b;
+  static void _defaults(InquiriesInquiryIdPdfGeneratePost200ResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<AuthSwitchRolePostRequest> get serializer => _$AuthSwitchRolePostRequestSerializer();
+  static Serializer<InquiriesInquiryIdPdfGeneratePost200Response> get serializer => _$InquiriesInquiryIdPdfGeneratePost200ResponseSerializer();
 }
 
-class _$AuthSwitchRolePostRequestSerializer implements PrimitiveSerializer<AuthSwitchRolePostRequest> {
+class _$InquiriesInquiryIdPdfGeneratePost200ResponseSerializer implements PrimitiveSerializer<InquiriesInquiryIdPdfGeneratePost200Response> {
   @override
-  final Iterable<Type> types = const [AuthSwitchRolePostRequest, _$AuthSwitchRolePostRequest];
+  final Iterable<Type> types = const [InquiriesInquiryIdPdfGeneratePost200Response, _$InquiriesInquiryIdPdfGeneratePost200Response];
 
   @override
-  final String wireName = r'AuthSwitchRolePostRequest';
+  final String wireName = r'InquiriesInquiryIdPdfGeneratePost200Response';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    AuthSwitchRolePostRequest object, {
+    InquiriesInquiryIdPdfGeneratePost200Response object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'role';
-    yield serializers.serialize(
-      object.role,
-      specifiedType: const FullType(String),
-    );
-    if (object.companyId != null) {
-      yield r'companyId';
+    if (object.summaryPdfPath != null) {
+      yield r'summaryPdfPath';
       yield serializers.serialize(
-        object.companyId,
+        object.summaryPdfPath,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.signedUrl != null) {
+      yield r'signedUrl';
+      yield serializers.serialize(
+        object.signedUrl,
         specifiedType: const FullType(String),
       );
     }
@@ -61,7 +63,7 @@ class _$AuthSwitchRolePostRequestSerializer implements PrimitiveSerializer<AuthS
   @override
   Object serialize(
     Serializers serializers,
-    AuthSwitchRolePostRequest object, {
+    InquiriesInquiryIdPdfGeneratePost200Response object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -72,26 +74,26 @@ class _$AuthSwitchRolePostRequestSerializer implements PrimitiveSerializer<AuthS
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required AuthSwitchRolePostRequestBuilder result,
+    required InquiriesInquiryIdPdfGeneratePost200ResponseBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'role':
+        case r'summaryPdfPath':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.role = valueDes;
+          result.summaryPdfPath = valueDes;
           break;
-        case r'companyId':
+        case r'signedUrl':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.companyId = valueDes;
+          result.signedUrl = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -102,12 +104,12 @@ class _$AuthSwitchRolePostRequestSerializer implements PrimitiveSerializer<AuthS
   }
 
   @override
-  AuthSwitchRolePostRequest deserialize(
+  InquiriesInquiryIdPdfGeneratePost200Response deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = AuthSwitchRolePostRequestBuilder();
+    final result = InquiriesInquiryIdPdfGeneratePost200ResponseBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(
