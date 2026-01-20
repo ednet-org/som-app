@@ -5,6 +5,7 @@ import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String offerId) async {
@@ -44,10 +45,10 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   final userRepo = context.read<UserRepository>();
   final admins = await userRepo.listAdminsByCompany(offer.providerCompanyId);
   for (final admin in admins) {
-    await email.send(
+    await email.sendTemplate(
       to: admin.email,
-      subject: 'Offer rejected',
-      text: 'Offer $offerId has been rejected.',
+      templateId: EmailTemplateId.offerRejected,
+      variables: {'offerId': offerId},
     );
   }
   await context.read<DomainEventService>().emit(

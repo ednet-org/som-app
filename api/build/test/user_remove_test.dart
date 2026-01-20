@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/notification_service.dart';
 import '../routes/Companies/[companyId]/users/[userId]/remove.dart' as route;
@@ -82,6 +83,8 @@ void main() {
       context.provide<UserRepository>(users);
       context.provide<CompanyRepository>(companies);
       context.provide<NotificationService>(notifications);
+      final auditRepo = InMemoryAuditLogRepository();
+      context.provide<AuditService>(AuditService(repository: auditRepo));
       context.provide<DomainEventService>(
         DomainEventService(
           repository: InMemoryDomainEventRepository(),
@@ -98,6 +101,9 @@ void main() {
       expect(updated?.isActive, isFalse);
       expect(updated?.removedAt, isNotNull);
       expect(email.sent.any((message) => message.to == member.email), isTrue);
+
+      final entries = await auditRepo.listRecent();
+      expect(entries.first.action, 'user.removed');
     });
   });
 }

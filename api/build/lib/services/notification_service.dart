@@ -6,6 +6,7 @@ import '../infrastructure/repositories/provider_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
 import '../models/models.dart';
 import 'email_service.dart';
+import 'email_templates.dart';
 
 class NotificationService {
   NotificationService({
@@ -51,10 +52,10 @@ class NotificationService {
       return;
     }
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'New company registered',
-        text: 'Company ${company.name} has registered on SOM.',
+        templateId: EmailTemplateId.companyRegistered,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -64,10 +65,10 @@ class NotificationService {
   ) async {
     final consultants = await users.listByRole('consultant');
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'Company updated',
-        text: 'Company ${company.name} has updated its profile.',
+        templateId: EmailTemplateId.companyUpdated,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -75,10 +76,10 @@ class NotificationService {
   Future<void> notifyAdminsOnCompanyActivated(CompanyRecord company) async {
     final admins = await users.listAdminsByCompany(company.id);
     for (final admin in admins) {
-      await email.send(
+      await email.sendTemplate(
         to: admin.email,
-        subject: 'Company activated',
-        text: 'Your company ${company.name} has been activated.',
+        templateId: EmailTemplateId.companyActivatedAdmin,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -86,10 +87,10 @@ class NotificationService {
   Future<void> notifyAdminsOnCompanyDeactivated(CompanyRecord company) async {
     final admins = await users.listAdminsByCompany(company.id);
     for (final admin in admins) {
-      await email.send(
+      await email.sendTemplate(
         to: admin.email,
-        subject: 'Company deactivated',
-        text: 'Your company ${company.name} has been deactivated.',
+        templateId: EmailTemplateId.companyDeactivatedAdmin,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -99,10 +100,10 @@ class NotificationService {
   ) async {
     final consultants = await users.listByRole('consultant');
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'Company activated',
-        text: 'Company ${company.name} has been activated.',
+        templateId: EmailTemplateId.companyActivated,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -112,10 +113,10 @@ class NotificationService {
   ) async {
     final consultants = await users.listByRole('consultant');
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'Company deactivated',
-        text: 'Company ${company.name} has been deactivated.',
+        templateId: EmailTemplateId.companyDeactivated,
+        variables: {'companyName': company.name},
       );
     }
   }
@@ -125,19 +126,21 @@ class NotificationService {
     required CompanyRecord company,
     UserRecord? removedBy,
   }) async {
-    await email.send(
+    await email.sendTemplate(
       to: user.email,
-      subject: 'You have been removed from ${company.name}',
-      text:
-          'Your account has been removed from ${company.name}. Please contact support if this was unexpected.',
+      templateId: EmailTemplateId.userRemoved,
+      variables: {'companyName': company.name},
     );
     final admins = await users.listAdminsByCompany(company.id);
     for (final admin in admins) {
-      await email.send(
+      await email.sendTemplate(
         to: admin.email,
-        subject: 'User removed from company',
-        text:
-            'User ${user.email} was removed from ${company.name} by ${removedBy?.email ?? 'an admin'}.',
+        templateId: EmailTemplateId.userRemovedAdmin,
+        variables: {
+          'userEmail': user.email,
+          'companyName': company.name,
+          'removedByEmail': removedBy?.email ?? 'an admin',
+        },
       );
     }
   }
@@ -150,19 +153,21 @@ class NotificationService {
     if (userEmail == null) {
       return;
     }
-    await email.send(
+    await email.sendTemplate(
       to: userEmail,
-      subject: 'You have been removed from ${company.name}',
-      text:
-          'Your account has been removed from ${company.name}. Please contact support if this was unexpected.',
+      templateId: EmailTemplateId.userRemoved,
+      variables: {'companyName': company.name},
     );
     final admins = await users.listAdminsByCompany(company.id);
     for (final admin in admins) {
-      await email.send(
+      await email.sendTemplate(
         to: admin.email,
-        subject: 'User removed from company',
-        text:
-            'User $userEmail was removed from ${company.name} by ${removedByEmail ?? 'an admin'}.',
+        templateId: EmailTemplateId.userRemovedAdmin,
+        variables: {
+          'userEmail': userEmail,
+          'companyName': company.name,
+          'removedByEmail': removedByEmail ?? 'an admin',
+        },
       );
     }
   }
@@ -178,13 +183,14 @@ class NotificationService {
     for (final providerCompanyId in providerCompanyIds) {
       final admins = await users.listAdminsByCompany(providerCompanyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'New inquiry assigned',
-          text: 'A new inquiry has been assigned to your company.\n'
-              'Inquiry ID: ${inquiry.id}\n'
-              'Deadline: ${inquiry.deadline.toIso8601String()}\n'
-              'View: $link',
+          templateId: EmailTemplateId.inquiryAssigned,
+          variables: {
+            'inquiryId': inquiry.id,
+            'deadline': inquiry.deadline.toIso8601String(),
+            'link': link,
+          },
         );
       }
     }
@@ -214,13 +220,14 @@ class NotificationService {
         }
         final link = _inquiryLink(inquiry.id, role: 'provider');
         for (final admin in admins) {
-          await email.send(
+          await email.sendTemplate(
             to: admin.email,
-            subject: 'Inquiry deadline approaching',
-            text:
-                'The inquiry ${inquiry.id} is due on ${inquiry.deadline.toIso8601String()}.\n'
-                'Please submit your offer before the deadline.\n'
-                'View: $link',
+            templateId: EmailTemplateId.inquiryDeadlineReminder,
+            variables: {
+              'inquiryId': inquiry.id,
+              'deadline': inquiry.deadline.toIso8601String(),
+              'link': link,
+            },
           );
         }
         await inquiries.markAssignmentReminderSent(
@@ -255,10 +262,14 @@ class NotificationService {
       defaultValue: 'http://localhost:8090',
     );
     final link = '$baseUrl/#/inquiries?inquiryId=${inquiry.id}';
-    await email.send(
+    await email.sendTemplate(
       to: inquiry.contactInfo.email,
-      subject: 'New offers for your inquiry',
-      text: 'Inquiry ${inquiry.id}: $reason\nView offers: $link',
+      templateId: EmailTemplateId.inquiryOffersReady,
+      variables: {
+        'inquiryId': inquiry.id,
+        'reason': reason,
+        'link': link,
+      },
     );
   }
 
@@ -271,10 +282,13 @@ class NotificationService {
     final companyLabel = company?.name ?? ad.companyId;
     final link = _adLink(ad.id);
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'New ad created',
-        text: 'Company $companyLabel created a new ad.\nReview: $link',
+        templateId: EmailTemplateId.adCreated,
+        variables: {
+          'companyName': companyLabel,
+          'link': link,
+        },
       );
     }
   }
@@ -288,10 +302,13 @@ class NotificationService {
     final companyLabel = company?.name ?? ad.companyId;
     final link = _adLink(ad.id);
     for (final consultant in consultants) {
-      await email.send(
+      await email.sendTemplate(
         to: consultant.email,
-        subject: 'Ad activated',
-        text: 'Company $companyLabel activated an ad.\nReview: $link',
+        templateId: EmailTemplateId.adActivated,
+        variables: {
+          'companyName': companyLabel,
+          'link': link,
+        },
       );
     }
   }
@@ -326,10 +343,13 @@ class NotificationService {
       }
       final link = _adLink(ad.id);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'Your ad has expired',
-          text: 'Ad ${ad.id} has expired.\nReview: $link',
+          templateId: EmailTemplateId.adExpired,
+          variables: {
+            'adId': ad.id,
+            'link': link,
+          },
         );
       }
     }
@@ -347,11 +367,13 @@ class NotificationService {
     for (final profile in affected) {
       final admins = await users.listAdminsByCompany(profile.companyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'Branch updated',
-          text: 'Branch "$oldName" has been renamed to "$newName". '
-              'Please review your provider profile.',
+          templateId: EmailTemplateId.branchUpdated,
+          variables: {
+            'oldName': oldName,
+            'newName': newName,
+          },
         );
       }
     }
@@ -368,11 +390,10 @@ class NotificationService {
     for (final profile in affected) {
       final admins = await users.listAdminsByCompany(profile.companyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'Branch removed',
-          text:
-              'Branch "$name" has been removed. Please update your provider profile.',
+          templateId: EmailTemplateId.branchDeleted,
+          variables: {'name': name},
         );
       }
     }
@@ -391,11 +412,13 @@ class NotificationService {
     for (final profile in affected) {
       final admins = await users.listAdminsByCompany(profile.companyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'Category updated',
-          text: 'Category "$oldName" has been renamed to "$newName". '
-              'Please review your provider profile and inquiries.',
+          templateId: EmailTemplateId.categoryUpdated,
+          variables: {
+            'oldName': oldName,
+            'newName': newName,
+          },
         );
       }
     }
@@ -413,11 +436,10 @@ class NotificationService {
     for (final profile in affected) {
       final admins = await users.listAdminsByCompany(profile.companyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'Category removed',
-          text:
-              'Category "$name" has been removed. Please review your provider profile.',
+          templateId: EmailTemplateId.categoryDeleted,
+          variables: {'name': name},
         );
       }
     }

@@ -5,6 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 const _baseRoles = {'buyer', 'provider', 'consultant', 'admin'};
@@ -53,6 +54,22 @@ Future<Response> onRequest(RequestContext context, String roleId) async {
       updatedAt: DateTime.now().toUtc(),
     );
     await repo.update(updated);
+    await context.read<AuditService>().log(
+          action: 'role.updated',
+          entityType: 'role',
+          entityId: updated.id,
+          actorId: auth.userId,
+          metadata: {
+            'before': {
+              'name': existing.name,
+              'description': existing.description,
+            },
+            'after': {
+              'name': updated.name,
+              'description': updated.description,
+            },
+          },
+        );
     return Response.json(body: {
       'id': updated.id,
       'name': updated.name,
@@ -68,6 +85,13 @@ Future<Response> onRequest(RequestContext context, String roleId) async {
       );
     }
     await repo.delete(roleId);
+    await context.read<AuditService>().log(
+          action: 'role.deleted',
+          entityType: 'role',
+          entityId: existing.id,
+          actorId: auth.userId,
+          metadata: {'name': existing.name},
+        );
     return Response(statusCode: 200);
   }
 

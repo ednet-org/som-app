@@ -15,6 +15,7 @@ class OfferRepository {
       'provider_user_id': offer.providerUserId,
       'status': offer.status,
       'pdf_path': offer.pdfPath,
+      'summary_pdf_path': offer.summaryPdfPath,
       'forwarded_at': offer.forwardedAt?.toIso8601String(),
       'resolved_at': offer.resolvedAt?.toIso8601String(),
       'buyer_decision': offer.buyerDecision,
@@ -29,6 +30,14 @@ class OfferRepository {
         .select()
         .eq('inquiry_id', inquiryId)
         .order('created_at', ascending: false) as List<dynamic>;
+    return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<OfferRecord>> listByProviderCompany(String companyId) async {
+    final rows = await _client
+        .from('offers')
+        .select()
+        .eq('provider_company_id', companyId) as List<dynamic>;
     return rows.map((row) => _mapRow(row as Map<String, dynamic>)).toList();
   }
 
@@ -58,6 +67,12 @@ class OfferRepository {
     }).eq('id', id);
   }
 
+  Future<void> updateSummaryPdfPath(String id, String pdfPath) async {
+    await _client.from('offers').update({
+      'summary_pdf_path': pdfPath,
+    }).eq('id', id);
+  }
+
   Future<int> countByProvider({
     required String companyId,
     String? status,
@@ -81,6 +96,7 @@ class OfferRepository {
       providerUserId: row['provider_user_id'] as String?,
       status: row['status'] as String,
       pdfPath: row['pdf_path'] as String?,
+      summaryPdfPath: row['summary_pdf_path'] as String?,
       forwardedAt: parseDateOrNull(row['forwarded_at']),
       resolvedAt: parseDateOrNull(row['resolved_at']),
       buyerDecision: row['buyer_decision'] as String?,

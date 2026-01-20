@@ -6,7 +6,10 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/billing_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/email_service.dart';
+import 'package:som_api/services/email_templates.dart';
+import 'package:som_api/services/access_control.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -54,7 +57,7 @@ Future<Response> _handleCreate(RequestContext context) async {
         defaultValue: 'som_dev_secret'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null || !auth.roles.contains('consultant')) {
+  if (auth == null || !isConsultantAdmin(auth)) {
     return Response(statusCode: 403);
   }
   final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;
@@ -82,14 +85,25 @@ Future<Response> _handleCreate(RequestContext context) async {
     paidAt: null,
   );
   await context.read<BillingRepository>().create(record);
+  await context.read<AuditService>().log(
+        action: 'billing.created',
+        entityType: 'billing_record',
+        entityId: record.id,
+        actorId: auth.userId,
+        metadata: {
+          'companyId': record.companyId,
+          'amountInSubunit': record.amountInSubunit,
+          'currency': record.currency,
+        },
+      );
   final email = context.read<EmailService>();
   final admins =
       await context.read<UserRepository>().listAdminsByCompany(companyId);
   for (final admin in admins) {
-    await email.send(
+    await email.sendTemplate(
       to: admin.email,
-      subject: 'New billing record',
-      text: 'A new billing record (${record.id}) has been created.',
+      templateId: EmailTemplateId.billingCreated,
+      variables: {'billingId': record.id},
     );
   }
   return Response.json(body: record.toJson());

@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context) async {
@@ -59,6 +60,13 @@ Future<Response> onRequest(RequestContext context) async {
       updatedAt: now,
     );
     await repo.create(record);
+    await context.read<AuditService>().log(
+          action: 'role.created',
+          entityType: 'role',
+          entityId: record.id,
+          actorId: auth.userId,
+          metadata: {'name': record.name},
+        );
     return Response.json(
       body: {
         'id': record.id,

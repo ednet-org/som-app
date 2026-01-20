@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import '../infrastructure/clock.dart';
+import '../infrastructure/repositories/scheduler_status_repository.dart';
 import '../infrastructure/repositories/token_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
 import 'auth_service.dart';
 import 'email_service.dart';
+import 'email_templates.dart';
 import 'notification_service.dart';
 
 class Scheduler {
@@ -15,6 +17,7 @@ class Scheduler {
     required this.email,
     required this.notifications,
     required this.clock,
+    this.statusRepository,
   });
 
   final TokenRepository tokens;
@@ -23,19 +26,70 @@ class Scheduler {
   final EmailService email;
   final NotificationService notifications;
   final Clock clock;
+  final SchedulerStatusRepository? statusRepository;
 
   Timer? _timer;
+  bool _running = false;
 
-  void start() {
-    _timer ??= Timer.periodic(const Duration(hours: 12), (_) => _run());
+  void start({Duration interval = const Duration(hours: 12)}) {
+    _timer ??= Timer.periodic(interval, (_) => _run());
+  }
+
+  Future<void> runOnce() async {
+    await _run();
   }
 
   Future<void> _run() async {
-    await _sendExpiryReminders();
-    await _deleteExpiredInactiveUsers();
-    await notifications.notifyBuyersForOfferCountOrDeadline();
-    await notifications.notifyProvidersOfUpcomingDeadlines();
-    await notifications.notifyProvidersForExpiredAds();
+    if (_running) {
+      return;
+    }
+    _running = true;
+    try {
+      await _runJob(
+        'registration.expiry_reminder',
+        _sendExpiryReminders,
+      );
+      await _runJob(
+        'registration.cleanup',
+        _deleteExpiredInactiveUsers,
+      );
+      await _runJob(
+        'inquiry.offer_notifications',
+        notifications.notifyBuyersForOfferCountOrDeadline,
+      );
+      await _runJob(
+        'inquiry.deadline_reminders',
+        notifications.notifyProvidersOfUpcomingDeadlines,
+      );
+      await _runJob(
+        'ads.expiry',
+        notifications.notifyProvidersForExpiredAds,
+      );
+    } finally {
+      _running = false;
+    }
+  }
+
+  Future<void> _runJob(
+    String name,
+    Future<void> Function() job,
+  ) async {
+    final startedAt = clock.nowUtc();
+    try {
+      await job();
+      await statusRepository?.recordRun(
+        jobName: name,
+        runAt: startedAt,
+        success: true,
+      );
+    } catch (error) {
+      await statusRepository?.recordRun(
+        jobName: name,
+        runAt: startedAt,
+        success: false,
+        error: error.toString(),
+      );
+    }
   }
 
   Future<void> _sendExpiryReminders() async {
@@ -46,19 +100,20 @@ class Scheduler {
       if (user == null || user.emailConfirmed) {
         continue;
       }
-      await email.send(
+      await email.sendTemplate(
         to: user.email,
-        subject: 'Your SOM registration link is expiring soon',
-        text:
-            'Your registration link will expire on ${token.expiresAt.toIso8601String()}. Please complete your registration.',
+        templateId: EmailTemplateId.userRegistrationExpiring,
+        variables: {'expiresAt': token.expiresAt.toIso8601String()},
       );
       final admins = await users.listAdminsByCompany(user.companyId);
       for (final admin in admins) {
-        await email.send(
+        await email.sendTemplate(
           to: admin.email,
-          subject: 'User registration link expiring',
-          text:
-              'User ${user.email} has a registration link expiring on ${token.expiresAt.toIso8601String()}.',
+          templateId: EmailTemplateId.adminUserRegistrationExpiring,
+          variables: {
+            'userEmail': user.email,
+            'expiresAt': token.expiresAt.toIso8601String(),
+          },
         );
       }
     }

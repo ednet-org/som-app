@@ -2,6 +2,7 @@ import 'package:dart_frog/dart_frog.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -42,6 +43,16 @@ Future<Response> onRequest(
     }
   }
   await users.markRemoved(userId: userId, removedByUserId: authResult.userId);
+  await context.read<AuditService>().log(
+        action: 'user.removed',
+        entityType: 'user',
+        entityId: userId,
+        actorId: authResult.userId,
+        metadata: {
+          'companyId': companyId,
+          'email': user.email,
+        },
+      );
   final company = await context.read<CompanyRepository>().findById(companyId);
   if (company != null) {
     final removedBy = await users.findById(authResult.userId);

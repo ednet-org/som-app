@@ -277,6 +277,7 @@ class StatisticsService {
       numberOfProviders: row['number_of_providers'] as int,
       description: row['description'] as String?,
       pdfPath: row['pdf_path'] as String?,
+      summaryPdfPath: row['summary_pdf_path'] as String?,
       providerCriteria: ProviderCriteria.fromJson(
         decodeJsonMap(row['provider_criteria_json']),
       ),

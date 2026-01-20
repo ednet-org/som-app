@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import '../routes/offers/[offerId]/pdf.dart' as route;
 import 'test_utils.dart';
@@ -91,11 +92,16 @@ void main() {
       context.provide<InquiryRepository>(inquiries);
       context.provide<OfferRepository>(offers);
       context.provide<FileStorage>(TestFileStorage());
+      final auditRepo = InMemoryAuditLogRepository();
+      context.provide<AuditService>(AuditService(repository: auditRepo));
 
       final response = await route.onRequest(context.context, offer.id);
       expect(response.statusCode, 200);
       final payload = jsonDecode(await response.body()) as Map<String, dynamic>;
       expect(payload['signedUrl'], isNotEmpty);
+
+      final entries = await auditRepo.listRecent();
+      expect(entries.first.action, 'offer.pdf.downloaded');
     });
   });
 }

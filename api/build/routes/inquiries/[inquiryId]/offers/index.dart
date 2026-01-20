@@ -8,6 +8,8 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/access_control.dart';
+import 'package:som_api/services/file_validation.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
@@ -24,6 +26,38 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
       return Response(statusCode: 401);
     }
     final repo = context.read<OfferRepository>();
+    final inquiryRepo = context.read<InquiryRepository>();
+    final inquiry = await inquiryRepo.findById(inquiryId);
+    if (inquiry == null) {
+      return Response(statusCode: 404);
+    }
+    if (!isConsultant(auth)) {
+      if (auth.activeRole == 'buyer') {
+        if (inquiry.buyerCompanyId != auth.companyId) {
+          return Response(statusCode: 403);
+        }
+      } else if (auth.activeRole == 'provider') {
+        final provider = await context
+            .read<ProviderRepository>()
+            .findByCompany(auth.companyId);
+        if (provider == null || provider.status != 'active') {
+          return Response.json(
+            statusCode: 403,
+            body: 'Provider registration is pending.',
+          );
+        }
+        final assigned =
+            await inquiryRepo.isAssignedToProvider(inquiryId, auth.companyId);
+        if (!assigned) {
+          return Response.json(
+            statusCode: 403,
+            body: 'Inquiry not assigned to provider.',
+          );
+        }
+      } else {
+        return Response(statusCode: 403);
+      }
+    }
     var offers = await repo.listByInquiry(inquiryId);
     if (auth.activeRole == 'provider') {
       offers = offers
@@ -108,6 +142,11 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
     final file = form.files['file'];
     if (file != null) {
       final bytes = await file.readAsBytes();
+      final validationError =
+          validatePdfUpload(fileName: file.name, bytes: bytes);
+      if (validationError != null) {
+        return Response.json(statusCode: 400, body: validationError);
+      }
       pdfPath = await storage.saveFile(
         category: 'offers',
         fileName: file.name,

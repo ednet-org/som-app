@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import '../routes/roles/index.dart' as roles_route;
 import '../routes/roles/[roleId]/index.dart' as role_route;
 import 'test_utils.dart';
@@ -73,6 +74,8 @@ void main() {
     test('consultant admin can create and update role', () async {
       final user = await users.findByEmail('consultant-admin@som.test');
       final token = buildTestJwt(userId: user!.id);
+      final auditRepo = InMemoryAuditLogRepository();
+      final audit = AuditService(repository: auditRepo);
       final createContext = TestRequestContext(
         path: '/roles',
         method: HttpMethod.post,
@@ -84,6 +87,7 @@ void main() {
       );
       createContext.provide<RoleRepository>(roles);
       createContext.provide<UserRepository>(users);
+      createContext.provide<AuditService>(audit);
       final createResponse = await roles_route.onRequest(createContext.context);
       expect(createResponse.statusCode, 200);
       final created =
@@ -101,9 +105,13 @@ void main() {
       );
       updateContext.provide<RoleRepository>(roles);
       updateContext.provide<UserRepository>(users);
+      updateContext.provide<AuditService>(audit);
       final updateResponse =
           await role_route.onRequest(updateContext.context, roleId);
       expect(updateResponse.statusCode, 200);
+      final entries = await auditRepo.listRecent();
+      expect(entries.map((entry) => entry.action),
+          containsAll(['role.created', 'role.updated']));
     });
 
     test('base roles cannot be deleted', () async {
@@ -119,6 +127,47 @@ void main() {
       context.provide<UserRepository>(users);
       final response = await role_route.onRequest(context.context, baseRole.id);
       expect(response.statusCode, 400);
+    });
+
+    test('consultant admin can delete role and logs audit entry', () async {
+      final user = await users.findByEmail('consultant-admin@som.test');
+      final token = buildTestJwt(userId: user!.id);
+      final auditRepo = InMemoryAuditLogRepository();
+      final audit = AuditService(repository: auditRepo);
+
+      final createContext = TestRequestContext(
+        path: '/roles',
+        method: HttpMethod.post,
+        headers: {
+          'authorization': 'Bearer $token',
+          'content-type': 'application/json',
+        },
+        body: jsonEncode({'name': 'temp_role', 'description': 'Temp role'}),
+      );
+      createContext.provide<RoleRepository>(roles);
+      createContext.provide<UserRepository>(users);
+      createContext.provide<AuditService>(audit);
+      final createResponse = await roles_route.onRequest(createContext.context);
+      expect(createResponse.statusCode, 200);
+      final created =
+          jsonDecode(await createResponse.body()) as Map<String, dynamic>;
+      final roleId = created['id'] as String;
+
+      final deleteContext = TestRequestContext(
+        path: '/roles/$roleId',
+        method: HttpMethod.delete,
+        headers: {'authorization': 'Bearer $token'},
+      );
+      deleteContext.provide<RoleRepository>(roles);
+      deleteContext.provide<UserRepository>(users);
+      deleteContext.provide<AuditService>(audit);
+      final deleteResponse =
+          await role_route.onRequest(deleteContext.context, roleId);
+      expect(deleteResponse.statusCode, 200);
+
+      final entries = await auditRepo.listRecent();
+      expect(entries.map((entry) => entry.action),
+          containsAll(['role.created', 'role.deleted']));
     });
   });
 }

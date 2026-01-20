@@ -11,6 +11,7 @@ import '../infrastructure/repositories/token_repository.dart';
 import '../infrastructure/repositories/user_repository.dart';
 import '../models/models.dart';
 import 'email_service.dart';
+import 'email_templates.dart';
 
 class AuthTokens {
   AuthTokens({required this.accessToken, required this.refreshToken});
@@ -57,7 +58,11 @@ class AuthService {
       await _resetLoginFailures(user);
       final role = user.lastLoginRole ??
           (user.roles.isNotEmpty ? user.roles.first : 'buyer');
-      await users.updateLastLoginRole(user.id, role);
+      await users.updateLastLoginRole(
+        user.id,
+        role,
+        companyId: user.lastLoginCompanyId ?? user.companyId,
+      );
       return tokens;
     } catch (_) {
       final message = await _recordFailedLogin(user);
@@ -144,11 +149,17 @@ class AuthService {
       ),
     );
     if (sendEmail) {
-      await email.send(
+      final resetUrl = _buildAppLink(
+        '/auth/confirmEmail',
+        {
+          'token': raw,
+          'email': user.email,
+        },
+      );
+      await email.sendTemplate(
         to: user.email,
-        subject: 'Reset your SOM password',
-        text:
-            'Use this link to reset your password: /auth/resetPassword?token=$raw&email=${user.email}',
+        templateId: EmailTemplateId.userPasswordReset,
+        variables: {'resetUrl': resetUrl},
       );
     }
     return raw;
@@ -250,11 +261,17 @@ class AuthService {
         createdAt: clock.nowUtc(),
       ),
     );
-    await email.send(
+    final activationUrl = _buildAppLink(
+      '/auth/confirmEmail',
+      {
+        'token': raw,
+        'email': user.email,
+      },
+    );
+    await email.sendTemplate(
       to: user.email,
-      subject: 'Complete your SOM registration',
-      text:
-          'Activate your account: /auth/confirmEmail?token=$raw&email=${user.email}',
+      templateId: EmailTemplateId.userRegistration,
+      variables: {'activationUrl': activationUrl},
     );
     return raw;
   }
@@ -355,14 +372,11 @@ class AuthService {
   }
 
   Future<void> _sendWelcomeEmail(UserRecord user) async {
-    final baseUrl = const String.fromEnvironment(
-      'APP_BASE_URL',
-      defaultValue: 'http://localhost:8090',
-    );
-    await email.send(
+    final baseUrl = _appBaseUrl();
+    await email.sendTemplate(
       to: user.email,
-      subject: 'Welcome to SOM',
-      text: 'Your account is now active. Sign in: $baseUrl',
+      templateId: EmailTemplateId.userWelcome,
+      variables: {'appBaseUrl': baseUrl},
     );
     await emailEvents.create(
       EmailEventRecord(
@@ -375,11 +389,9 @@ class AuthService {
   }
 
   Future<void> _sendPasswordChangedEmail(UserRecord user) async {
-    await email.send(
+    await email.sendTemplate(
       to: user.email,
-      subject: 'Your SOM password was changed',
-      text:
-          'Your password was changed. If this was not you, contact support immediately.',
+      templateId: EmailTemplateId.userPasswordChanged,
     );
     await emailEvents.create(
       EmailEventRecord(
@@ -388,6 +400,20 @@ class AuthService {
         type: 'password_changed',
         createdAt: clock.nowUtc(),
       ),
+    );
+  }
+
+  String _buildAppLink(String path, Map<String, String> params) {
+    final baseUrl = _appBaseUrl();
+    final query = Uri(queryParameters: params).query;
+    final suffix = query.isEmpty ? '' : '?$query';
+    return '$baseUrl/#$path$suffix';
+  }
+
+  String _appBaseUrl() {
+    return const String.fromEnvironment(
+      'APP_BASE_URL',
+      defaultValue: 'http://localhost:8090',
     );
   }
 }

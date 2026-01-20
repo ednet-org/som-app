@@ -19,6 +19,7 @@ import 'package:som_api/infrastructure/repositories/provider_repository.dart';
 import 'package:som_api/infrastructure/repositories/role_repository.dart';
 import 'package:som_api/infrastructure/repositories/product_repository.dart';
 import 'package:som_api/infrastructure/repositories/schema_version_repository.dart';
+import 'package:som_api/infrastructure/repositories/scheduler_status_repository.dart';
 import 'package:som_api/infrastructure/repositories/subscription_repository.dart';
 import 'package:som_api/infrastructure/repositories/token_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
@@ -30,17 +31,20 @@ import 'package:som_api/services/domain_event_service.dart';
 import 'package:som_api/services/email_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
+import 'package:som_api/services/pdf_generator.dart';
+import 'package:som_api/services/rate_limit_middleware.dart';
 import 'package:som_api/services/registration_service.dart';
 import 'package:som_api/services/role_seed.dart';
 import 'package:som_api/services/scheduler.dart';
 import 'package:som_api/services/schema_version_service.dart';
+import 'package:som_api/services/security_headers.dart';
 import 'package:som_api/services/statistics_service.dart';
 import 'package:som_api/services/subscription_seed.dart';
 import 'package:som_api/services/system_bootstrap.dart';
 
 final _supabase = SupabaseService.fromEnvironment();
 final _clock = Clock();
-final _email = EmailService();
+final _email = EmailService.fromEnvironment();
 final _users = UserRepository(_supabase.adminClient);
 final _emailEvents = EmailEventRepository(_supabase.adminClient);
 final _roles = RoleRepository(_supabase.adminClient);
@@ -59,8 +63,10 @@ final _cancellations = CancellationRepository(_supabase.adminClient);
 final _domainEvents = DomainEventRepository(_supabase.adminClient);
 final _auditLog = AuditLogRepository(_supabase.adminClient);
 final _schemaVersions = SchemaVersionRepository(_supabase.adminClient);
+final _schedulerStatus = SchedulerStatusRepository(_supabase.adminClient);
 final _storage =
     FileStorage(client: _supabase.adminClient, bucket: _supabase.storageBucket);
+final _pdfGenerator = PdfGenerator();
 final _notifications = NotificationService(
   ads: _ads,
   users: _users,
@@ -106,7 +112,10 @@ final _scheduler = Scheduler(
   email: _email,
   notifications: _notifications,
   clock: _clock,
+  statusRepository: _schedulerStatus,
 );
+final _rateLimiter = RateLimiter(clock: _clock);
+final _rateLimitPolicy = RateLimitPolicy.fromEnvironment();
 final _subscriptionSeeder = SubscriptionSeeder(
   repository: _subscriptions,
   clock: _clock,
@@ -135,16 +144,19 @@ Future<void> _bootstrap() async {
   await _subscriptionSeeder.seedDefaults();
   await _systemBootstrap.ensureSystemAdmin();
   await _systemBootstrap.ensureDevFixtures();
-  _scheduler.start();
+  const enableScheduler =
+      bool.fromEnvironment('ENABLE_SCHEDULER', defaultValue: false);
+  if (enableScheduler) {
+    _scheduler.start();
+  }
 }
 
 Handler middleware(Handler handler) {
-  return ((context) async {
+  final baseHandler = ((context) async {
     await _bootstrapFuture;
     await _schemaVersionService.ensureVersion();
     return handler(context);
   })
-      .use(corsHeaders())
       .use(provider<SupabaseService>((_) => _supabase))
       .use(provider<Clock>((_) => _clock))
       .use(provider<EmailService>((_) => _email))
@@ -166,7 +178,9 @@ Handler middleware(Handler handler) {
       .use(provider<DomainEventRepository>((_) => _domainEvents))
       .use(provider<AuditLogRepository>((_) => _auditLog))
       .use(provider<SchemaVersionRepository>((_) => _schemaVersions))
+      .use(provider<SchedulerStatusRepository>((_) => _schedulerStatus))
       .use(provider<FileStorage>((_) => _storage))
+      .use(provider<PdfGenerator>((_) => _pdfGenerator))
       .use(provider<NotificationService>((_) => _notifications))
       .use(provider<DomainEventService>((_) => _domainEventService))
       .use(provider<AuditService>((_) => _auditService))
@@ -175,4 +189,12 @@ Handler middleware(Handler handler) {
       .use(provider<RegistrationService>((_) => _registration))
       .use(provider<SomDomainModel>((_) => _domain))
       .use(provider<StatisticsService>((_) => _statistics));
+
+  return baseHandler
+      .use(rateLimitMiddleware(
+        limiter: _rateLimiter,
+        policy: _rateLimitPolicy,
+      ))
+      .use(securityHeaders())
+      .use(corsHeaders());
 }

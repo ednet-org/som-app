@@ -32,17 +32,59 @@ Future<Response> onRequest(RequestContext context) async {
   if (user == null) {
     return Response(statusCode: 404);
   }
-  final isAdmin = authResult.roles.contains('admin') &&
-      authResult.companyId == user.companyId;
   final isSelf = authResult.userId == userId;
-  if (!isAdmin && !isSelf && !authResult.roles.contains('consultant')) {
+  final isConsultant = authResult.roles.contains('consultant');
+  final isAdmin = authResult.roles.contains('admin');
+  final sharedCompany =
+      await userRepo.findCompanyRole(userId: userId, companyId: authResult.companyId) !=
+          null;
+  if (!isConsultant && !isSelf && !(isAdmin && sharedCompany)) {
     return Response(statusCode: 403);
   }
-  final resolvedCompanyId = companyId ?? user.companyId;
+
+  final memberships = await userRepo.listCompanyRolesForUser(userId);
+  if (memberships.isEmpty) {
+    return Response(statusCode: 404);
+  }
+  var resolvedCompanyId = companyId ?? user.lastLoginCompanyId ?? user.companyId;
+  if (!memberships.any((membership) => membership.companyId == resolvedCompanyId)) {
+    resolvedCompanyId = memberships.first.companyId;
+  }
   final company = await companyRepo.findById(resolvedCompanyId);
   if (company == null) {
     return Response(statusCode: 404);
   }
+  final activeMembership = memberships.firstWhere(
+    (membership) => membership.companyId == resolvedCompanyId,
+    orElse: () => memberships.first,
+  );
+
+  final companiesById = <String, dynamic>{};
+  for (final membership in memberships) {
+    if (companiesById.containsKey(membership.companyId)) {
+      continue;
+    }
+    final companyRecord = await companyRepo.findById(membership.companyId);
+    if (companyRecord != null) {
+      companiesById[membership.companyId] = companyRecord;
+    }
+  }
+  final companyOptions = memberships
+      .where((membership) => companiesById.containsKey(membership.companyId))
+      .map((membership) {
+    final companyRecord = companiesById[membership.companyId] as dynamic;
+    final roles = membership.roles;
+    final activeRole =
+        roles.contains(user.lastLoginRole) ? user.lastLoginRole : roles.first;
+    return {
+      'companyId': membership.companyId,
+      'companyName': companyRecord.name,
+      'companyType': companyTypeToWire(companyRecord.type),
+      'roles': roles,
+      'activeRole': activeRole,
+    };
+  }).toList();
+
   return Response.json(
     body: {
       'userId': user.id,
@@ -52,13 +94,16 @@ Future<Response> onRequest(RequestContext context) async {
       'lastName': user.lastName,
       'telephoneNr': user.telephoneNr,
       'emailAddress': user.email,
-      'roles': user.roles,
-      'activeRole':
-          user.lastLoginRole ?? (user.roles.isNotEmpty ? user.roles.first : ''),
+      'roles': activeMembership.roles,
+      'activeRole': activeMembership.roles.contains(user.lastLoginRole)
+          ? user.lastLoginRole
+          : activeMembership.roles.first,
       'companyId': company.id,
+      'activeCompanyId': resolvedCompanyId,
       'companyName': company.name,
       'companyAddress': company.address.toJson(),
       'companyType': companyTypeToWire(company.type),
+      'companyOptions': companyOptions,
     },
   );
 }

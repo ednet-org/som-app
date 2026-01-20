@@ -3,6 +3,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/inquiry_repository.dart';
 import 'package:som_api/infrastructure/repositories/offer_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
+import 'package:som_api/services/audit_service.dart';
 import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -48,5 +49,15 @@ Future<Response> onRequest(RequestContext context, String offerId) async {
   if (signedUrl.isEmpty) {
     return Response(statusCode: 404);
   }
+  await context.read<AuditService>().log(
+        action: 'offer.pdf.downloaded',
+        entityType: 'offer',
+        entityId: offerId,
+        actorId: auth.userId,
+        metadata: {
+          'companyId': auth.companyId,
+          'inquiryId': offer.inquiryId,
+        },
+      );
   return Response.json(body: {'signedUrl': signedUrl});
 }
