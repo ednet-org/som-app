@@ -42,21 +42,21 @@ class DetailSection extends StatelessWidget {
                 SomSvgIcon(
                   iconAsset!,
                   size: SomIconSize.sm,
-                  color: theme.colorScheme.outline,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: SomSpacing.xs),
               ] else if (icon != null) ...[
                 Icon(
                   icon,
                   size: SomIconSize.sm,
-                  color: theme.colorScheme.outline,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: SomSpacing.xs),
               ],
               Text(
                 title,
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: theme.colorScheme.outline,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
             ],

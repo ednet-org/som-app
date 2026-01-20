@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
@@ -362,16 +361,7 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  series: <CartesianSeries<_ChartPoint, String>>[
-                    ColumnSeries<_ChartPoint, String>(
-                      dataSource: data,
-                      xValueMapper: (_ChartPoint point, _) => point.label,
-                      yValueMapper: (_ChartPoint point, _) => point.value,
-                    ),
-                  ],
-                ),
+                _SimpleBarChart(data: data),
               ],
             ),
           ),
@@ -419,16 +409,7 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  series: <CartesianSeries<_ChartPoint, String>>[
-                    ColumnSeries<_ChartPoint, String>(
-                      dataSource: data,
-                      xValueMapper: (_ChartPoint point, _) => point.label,
-                      yValueMapper: (_ChartPoint point, _) => point.value,
-                    ),
-                  ],
-                ),
+                _SimpleBarChart(data: data),
               ],
             ),
           ),
@@ -473,6 +454,83 @@ class _ChartPoint {
   final int value;
 
   const _ChartPoint(this.label, this.value);
+}
+
+class _SimpleBarChart extends StatelessWidget {
+  const _SimpleBarChart({
+    required this.data,
+    this.height = 180,
+  });
+
+  final List<_ChartPoint> data;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    if (data.isEmpty) {
+      return const SizedBox(
+        height: 120,
+        child: Center(child: Text('No data available')),
+      );
+    }
+
+    final theme = Theme.of(context);
+    final maxValue = data
+        .map((point) => point.value)
+        .fold<int>(0, (max, value) => value > max ? value : max);
+    final safeMax = maxValue == 0 ? 1 : maxValue;
+    final barColor = theme.colorScheme.primary.withValues(alpha: 0.75);
+
+    return SizedBox(
+      height: height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: data
+            .map(
+              (point) => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Tooltip(
+                            message: '${point.value}',
+                            child: FractionallySizedBox(
+                              heightFactor: point.value / safeMax,
+                              widthFactor: 0.6,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: barColor,
+                                  borderRadius:
+                                      BorderRadius.circular(SomRadius.sm),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        point.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
 }
 
 Map<String, String> _authHeader(String? token) {

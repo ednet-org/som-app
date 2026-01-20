@@ -55,27 +55,27 @@ ThemeData somFuturisticTheme({
   final textTheme = baseTextTheme.copyWith(
     displayLarge: baseTextTheme.displayLarge?.copyWith(
       fontSize: SomTypeScale.display,
-      letterSpacing: -1.0,
-      fontWeight: FontWeight.bold,
+      letterSpacing: -0.9,
+      fontWeight: FontWeight.w700,
     ),
     displayMedium: baseTextTheme.displayMedium?.copyWith(
-      fontSize: SomTypeScale.display,
-      letterSpacing: -0.5,
-      fontWeight: FontWeight.bold,
+      fontSize: SomTypeScale.display - 4,
+      letterSpacing: -0.7,
+      fontWeight: FontWeight.w700,
     ),
     displaySmall: baseTextTheme.displaySmall?.copyWith(
       fontSize: SomTypeScale.headline,
-      letterSpacing: -0.3,
-      fontWeight: FontWeight.bold,
+      letterSpacing: -0.4,
+      fontWeight: FontWeight.w700,
     ),
     headlineLarge: baseTextTheme.headlineLarge?.copyWith(
       fontSize: SomTypeScale.headline,
-      letterSpacing: -0.4,
-      fontWeight: FontWeight.bold,
+      letterSpacing: -0.3,
+      fontWeight: FontWeight.w600,
     ),
     headlineMedium: baseTextTheme.headlineMedium?.copyWith(
-      fontSize: SomTypeScale.headline,
-      letterSpacing: -0.2,
+      fontSize: SomTypeScale.headline - 2,
+      letterSpacing: -0.15,
       fontWeight: FontWeight.w600,
     ),
     headlineSmall: baseTextTheme.headlineSmall?.copyWith(
@@ -90,28 +90,36 @@ ThemeData somFuturisticTheme({
       fontSize: 16,
       fontWeight: FontWeight.w500,
     ),
+    titleSmall: baseTextTheme.titleSmall?.copyWith(
+      fontSize: SomTypeScale.body,
+      fontWeight: FontWeight.w500,
+    ),
     bodyLarge: baseTextTheme.bodyLarge?.copyWith(
       fontSize: SomTypeScale.body,
       height: 1.5,
-      letterSpacing: 0.15,
+      letterSpacing: 0.2,
     ),
     bodyMedium: baseTextTheme.bodyMedium?.copyWith(
       fontSize: SomTypeScale.body,
       height: 1.5,
-      letterSpacing: 0.2,
     ),
     bodySmall: baseTextTheme.bodySmall?.copyWith(
       fontSize: SomTypeScale.label,
       height: 1.4,
     ),
     labelLarge: baseTextTheme.labelLarge?.copyWith(
-      fontSize: 14,
+      fontSize: SomTypeScale.label,
       fontWeight: FontWeight.w600,
-      letterSpacing: 0.6,
+      letterSpacing: 0.4,
+    ),
+    labelMedium: baseTextTheme.labelMedium?.copyWith(
+      fontSize: SomTypeScale.label - 1,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.3,
     ),
     labelSmall: baseTextTheme.labelSmall?.copyWith(
-      fontSize: SomTypeScale.label,
-      letterSpacing: 0.3,
+      fontSize: SomTypeScale.label - 2,
+      letterSpacing: 0.2,
     ),
   );
 

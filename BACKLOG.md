@@ -210,7 +210,7 @@
 ### Epic: Local & CI Script Hardening
 - [x] Scripts: add hosts check helper with copy/paste instructions for local domains.
 - [x] Scripts: sanitize Supabase CLI JSON output and support optional project id across start scripts.
-- [x] CI: add GitHub Actions integration test workflow using local Supabase.
+- [ ] CI: add GitHub Actions integration test workflow using local Supabase (disabled until ready).
 - [x] Tests: cross‑role session switching and access checks.
 
 ### Epic: Local Provisioning & Domains

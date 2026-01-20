@@ -243,7 +243,7 @@ All assets located in `assets/design_system/` organized by context:
 ### Accessibility
 - [x] Minimum touch target (48dp) for icon actions.
 - [x] Add `Tooltip`/`Semantics` for icon-only actions.
-- [ ] Verify contrast ratios for status colors in dark theme.
+- [x] Verify contrast ratios for status colors in dark theme.
 
 ---
 
@@ -271,8 +271,8 @@ All assets located in `assets/design_system/` organized by context:
 
 ### Typography (Aesthetic)
 - [x] Use `Typography.material2021()` defaults for both light/dark themes.
-- [ ] Align usage to M3 type scale: display/headline/title/body/label.
-- [ ] Audit heading hierarchy across admin pages.
+- [x] Align usage to M3 type scale: display/headline/title/body/label.
+- [x] Audit heading hierarchy across admin pages.
 
 ---
 
@@ -315,7 +315,7 @@ All assets located in `assets/design_system/` organized by context:
 ### Flutter SDK + Packages
 - [x] Verified Flutter SDK version.
 - [x] Bumped `provider`, `url_launcher`, `shared_preferences`, `cached_network_image`.
-- [ ] Review remaining outdated packages with `flutter pub outdated`.
+- [x] Review remaining outdated packages with `flutter pub outdated`.
 
 ---
 
@@ -406,4 +406,4 @@ These higher-abstraction assets replace standard material placeholders for premi
 - [x] Light/dark/system switcher
 - [x] Density switcher
 - [x] Persist theme + density
-- [ ] Contrast audit + typography alignment
+- [x] Contrast audit + typography alignment

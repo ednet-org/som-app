@@ -47,7 +47,7 @@ class EmptyState extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: theme.colorScheme.onSurface,
               ),
             ),
             if (message != null) ...[

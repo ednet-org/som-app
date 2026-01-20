@@ -98,11 +98,36 @@ class SomSemanticColors {
 
   /// Build a surface-tinted background for badges and messages.
   static Color backgroundFor(Color base, ColorScheme scheme) {
-    final alpha = scheme.brightness == Brightness.dark ? 0.22 : 0.12;
+    final alpha = scheme.brightness == Brightness.dark ? 0.18 : 0.12;
     return Color.alphaBlend(
       base.withValues(alpha: alpha),
       scheme.surfaceContainerHigh,
     );
+  }
+
+  /// Pick a readable foreground color for status badges.
+  static Color foregroundFor(Color base, ColorScheme scheme) {
+    final background = backgroundFor(base, scheme);
+    final baseContrast = _contrastRatio(base, background);
+    if (baseContrast >= 4.5) {
+      return base;
+    }
+    final onSurface = scheme.onSurface;
+    final onSurfaceVariant = scheme.onSurfaceVariant;
+    final onSurfaceContrast = _contrastRatio(onSurface, background);
+    final onVariantContrast = _contrastRatio(onSurfaceVariant, background);
+    if (onSurfaceContrast >= onVariantContrast) {
+      return onSurfaceContrast >= 4.5 ? onSurface : onSurfaceVariant;
+    }
+    return onVariantContrast >= 4.5 ? onSurfaceVariant : onSurface;
+  }
+
+  static double _contrastRatio(Color a, Color b) {
+    final lumA = a.computeLuminance();
+    final lumB = b.computeLuminance();
+    final brightest = lumA > lumB ? lumA : lumB;
+    final darkest = lumA > lumB ? lumB : lumA;
+    return (brightest + 0.05) / (darkest + 0.05);
   }
 
   /// Get icon asset for status

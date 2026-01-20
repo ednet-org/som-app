@@ -22,7 +22,10 @@ class ResponsiveFilterPanel extends StatelessWidget {
         final isCollapsed = constraints.maxWidth < collapseWidth;
         if (isCollapsed) {
           return ExpansionTile(
-            title: Text(title),
+            title: Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             children: [
               Padding(
                 padding: const EdgeInsets.all(SomSpacing.sm),

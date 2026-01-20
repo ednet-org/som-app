@@ -56,7 +56,7 @@ class AppToolbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DefaultTextStyle(
-                style: theme.textTheme.titleSmall ?? const TextStyle(),
+                style: theme.textTheme.titleLarge ?? const TextStyle(),
                 child: title,
               ),
               if (subtitle != null) ...[

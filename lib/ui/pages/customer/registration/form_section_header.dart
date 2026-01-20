@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:som/ui/theme/tokens.dart';
 
 class FormSectionHeader extends StatelessWidget {
   final String label;
@@ -10,8 +10,8 @@ class FormSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        40.height,
-        Text(label, style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: SomSpacing.xl),
+        Text(label, style: Theme.of(context).textTheme.titleMedium),
       ],
     );
   }

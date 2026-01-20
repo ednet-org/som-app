@@ -24,7 +24,7 @@ class SomMetaText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: theme.textTheme.labelSmall?.copyWith(
-        color: theme.colorScheme.outline,
+        color: theme.colorScheme.onSurfaceVariant,
         letterSpacing: 0.2,
         height: 1.3,
       ),

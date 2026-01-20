@@ -89,6 +89,11 @@ class StatusBadge extends StatelessWidget {
     };
   }
 
+  Color _foregroundColor(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SomSemanticColors.foregroundFor(_color, scheme);
+  }
+
   String get _iconAsset => SomSemanticColors.iconAssetForStatus(status);
 
   String get _label => SomFormatters.capitalize(status);
@@ -102,6 +107,7 @@ class StatusBadge extends StatelessWidget {
   }
 
   Widget _buildFull(BuildContext context) {
+    final foreground = _foregroundColor(context);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: SomSpacing.sm,
@@ -118,14 +124,14 @@ class StatusBadge extends StatelessWidget {
             SomSvgIcon(
               _iconAsset,
               size: SomIconSize.sm,
-              color: _color,
+              color: foreground,
             ),
             const SizedBox(width: SomSpacing.xs),
           ],
           Text(
             _label,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: _color,
+                  color: foreground,
                   fontWeight: FontWeight.w500,
                 ),
           ),

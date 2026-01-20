@@ -159,6 +159,9 @@ The integration script also starts Supabase and the API automatically and writes
 logs to `api/storage/logs/api-test.log`.
 
 ## GitHub Actions (Local Supabase CI)
+Workflows are currently disabled to avoid consuming GitHub runner minutes.
+When you are ready to enable CI, add a workflow and use:
+
 To run integration tests in GitHub Actions using local Supabase:
 - Install Supabase CLI (npm).
 - Ensure Docker is available.
