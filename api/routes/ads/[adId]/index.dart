@@ -5,6 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:som_api/infrastructure/repositories/ads_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
+import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/request_auth.dart';
 
 Future<Response> onRequest(RequestContext context, String adId) async {
@@ -127,6 +128,16 @@ Future<Response> onRequest(RequestContext context, String adId) async {
         return Response(statusCode: 403);
       }
     }
+    // Generate signed URL for image (valid for 1 hour)
+    String? signedImageUrl;
+    if (ad.imagePath.isNotEmpty) {
+      try {
+        final storage = context.read<FileStorage>();
+        signedImageUrl = await storage.createSignedUrl(ad.imagePath, expiresInSeconds: 3600);
+      } catch (_) {
+        // Ignore errors - return null imagePath if signing fails
+      }
+    }
     return Response.json(
       body: {
         'id': ad.id,
@@ -135,7 +146,7 @@ Future<Response> onRequest(RequestContext context, String adId) async {
         'status': ad.status,
         'branchId': ad.branchId,
         'url': ad.url,
-        'imagePath': ad.imagePath,
+        'imagePath': signedImageUrl ?? (ad.imagePath.isEmpty ? null : ad.imagePath),
         'headline': ad.headline,
         'description': ad.description,
         'startDate': ad.startDate?.toIso8601String(),

@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -50,24 +51,33 @@ Future<Response> onRequest(RequestContext context) async {
     } else {
       ads = await context.read<AdsRepository>().listActive(branchId: branchId);
     }
-    return Response.json(
-      body: ads
-          .map((ad) => {
-                'id': ad.id,
-                'companyId': ad.companyId,
-                'type': ad.type,
-                'status': ad.status,
-                'branchId': ad.branchId,
-                'url': ad.url,
-                'imagePath': ad.imagePath,
-                'headline': ad.headline,
-                'description': ad.description,
-                'startDate': ad.startDate?.toIso8601String(),
-                'endDate': ad.endDate?.toIso8601String(),
-                'bannerDate': ad.bannerDate?.toIso8601String(),
-              })
-          .toList(),
-    );
+    // Generate signed URLs for ad images (valid for 1 hour)
+    final storage = context.read<FileStorage>();
+    final adsWithSignedUrls = await Future.wait(ads.map((ad) async {
+      String? signedImageUrl;
+      if (ad.imagePath.isNotEmpty) {
+        try {
+          signedImageUrl = await storage.createSignedUrl(ad.imagePath, expiresInSeconds: 3600);
+        } catch (_) {
+          // Ignore errors - return null imagePath if signing fails
+        }
+      }
+      return {
+        'id': ad.id,
+        'companyId': ad.companyId,
+        'type': ad.type,
+        'status': ad.status,
+        'branchId': ad.branchId,
+        'url': ad.url,
+        'imagePath': signedImageUrl ?? (ad.imagePath.isEmpty ? null : ad.imagePath),
+        'headline': ad.headline,
+        'description': ad.description,
+        'startDate': ad.startDate?.toIso8601String(),
+        'endDate': ad.endDate?.toIso8601String(),
+        'bannerDate': ad.bannerDate?.toIso8601String(),
+      };
+    }));
+    return Response.json(body: adsWithSignedUrls);
   }
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
