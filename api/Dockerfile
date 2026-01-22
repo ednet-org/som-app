@@ -10,7 +10,8 @@
 # ==============================================================================
 # Stage 1: Dependencies
 # ==============================================================================
-FROM dart:stable AS dependencies
+# Using Flutter image since ednet_core depends on shared_preferences (Flutter SDK package)
+FROM ghcr.io/cirruslabs/flutter:stable AS dependencies
 
 WORKDIR /app
 
@@ -34,8 +35,8 @@ WORKDIR /app/api
 #       path: packages/core
 #       ref: main
 
-# Get dependencies
-RUN dart pub get
+# Get dependencies (using flutter pub for packages with Flutter dependencies)
+RUN flutter pub get
 
 # ==============================================================================
 # Stage 2: Build
@@ -51,8 +52,8 @@ COPY api/public ./public
 COPY api/main.dart ./main.dart
 
 # Build production server with dart_frog
-RUN dart pub global activate dart_frog_cli
-RUN dart pub global run dart_frog build
+RUN flutter pub global activate dart_frog_cli
+RUN flutter pub global run dart_frog build
 
 # Compile to native executable for faster startup
 RUN dart compile exe build/bin/server.dart -o build/bin/server
