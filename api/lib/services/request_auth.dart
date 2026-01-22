@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 import '../infrastructure/repositories/user_repository.dart';
+import 'jwks_service.dart';
 
 class RequestAuth {
   RequestAuth(
@@ -17,7 +20,7 @@ class RequestAuth {
 
 Future<RequestAuth?> parseAuth(
   RequestContext context, {
-  required String secret,
+  required String supabaseUrl,
   required UserRepository users,
 }) async {
   final header = context.request.headers['authorization'];
@@ -26,7 +29,23 @@ Future<RequestAuth?> parseAuth(
   }
   final token = header.substring(7);
   try {
-    final jwt = JWT.verify(token, SecretKey(secret));
+    // Supabase projects created after May 2025 use asymmetric JWT signing (ES256/RS256)
+    // We need to fetch the public key from the JWKS endpoint for verification.
+
+    // Extract the key ID from the JWT header
+    final kid = _extractKeyId(token);
+
+    // Get the public key from the JWKS service
+    final jwksService = getJwksService(supabaseUrl);
+    final publicKey = await jwksService.getPublicKey(kid: kid);
+
+    if (publicKey == null) {
+      // Fallback: public key not available
+      return null;
+    }
+
+    // Verify the JWT with the public key
+    final jwt = JWT.verify(token, publicKey);
     final payload = jwt.payload as Map<String, dynamic>;
     final userId = payload['sub'] as String?;
     if (userId == null) {
@@ -60,6 +79,25 @@ Future<RequestAuth?> parseAuth(
       activeRole: activeRole,
     );
   } on JWTException {
+    return null;
+  }
+}
+
+/// Extract the key ID (kid) from the JWT header.
+///
+/// The kid is used to find the correct public key from the JWKS.
+String? _extractKeyId(String token) {
+  try {
+    final parts = token.split('.');
+    if (parts.length != 3) return null;
+
+    final headerBase64 = parts[0];
+    final headerJson = utf8.decode(
+      base64Url.decode(base64Url.normalize(headerBase64)),
+    );
+    final header = json.decode(headerJson) as Map<String, dynamic>;
+    return header['kid'] as String?;
+  } catch (_) {
     return null;
   }
 }

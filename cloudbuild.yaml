@@ -20,6 +20,11 @@ substitutions:
   _REGION: europe-west1
   _SERVICE_NAME: som-api
   _ARTIFACT_REPO: som-docker
+  _APP_BASE_URL: https://ednet-som-staging.web.app
+  _CORS_ALLOWED_ORIGINS: https://ednet-som-staging.web.app,http://localhost:8090,http://localhost:8080
+  # Supabase configuration (anon key is public, safe to include)
+  _SUPABASE_URL: https://rzbfaqfyqznsdecbmamw.supabase.co
+  _SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6YmZhcWZ5cXpuc2RlY2JtYW13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkwNTAyODEsImV4cCI6MjA4NDYyNjI4MX0.WvnHjelafUBy6J_t-ZGcn8V5WkC87Va-Q-LJMUEUqOk
 
 # Make secrets available to build steps
 availableSecrets:
@@ -44,6 +49,8 @@ steps:
           --build-arg SUPABASE_ANON_KEY=${_SUPABASE_ANON_KEY} \
           --build-arg SUPABASE_SERVICE_ROLE_KEY=$$SUPABASE_SERVICE_ROLE_KEY \
           --build-arg SUPABASE_JWT_SECRET=$$SUPABASE_JWT_SECRET \
+          --build-arg CORS_ALLOWED_ORIGINS="${_CORS_ALLOWED_ORIGINS}" \
+          --build-arg APP_BASE_URL="${_APP_BASE_URL}" \
           -f api/Dockerfile \
           .
     secretEnv: ['SUPABASE_SERVICE_ROLE_KEY', 'SUPABASE_JWT_SECRET']

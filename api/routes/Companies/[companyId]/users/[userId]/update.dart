@@ -17,8 +17,7 @@ Future<Response> onRequest(
   final repo = context.read<UserRepository>();
   final authResult = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-        defaultValue: 'som_dev_secret'),
+    supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
     users: repo,
   );
   if (authResult == null) {

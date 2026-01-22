@@ -18,8 +18,7 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (context.request.method == HttpMethod.get) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (auth == null) {
@@ -87,8 +86,7 @@ Future<Response> onRequest(RequestContext context, String inquiryId) async {
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (auth == null || auth.activeRole != 'provider') {

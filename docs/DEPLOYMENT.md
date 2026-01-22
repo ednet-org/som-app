@@ -1219,7 +1219,372 @@ For issues or questions:
 ---
 
 **Last Updated**: January 2026
-**Version**: 1.1.0
+**Version**: 1.2.0
+
+---
+
+## Staging Environment
+
+The staging environment provides a fully functional deployment for testing and validation before production releases.
+
+### Staging URLs
+
+| Service | URL |
+|---------|-----|
+| **Frontend** | https://ednet-som-staging.web.app |
+| **API** | https://som-api-i3iupxxyxq-ew.a.run.app |
+| **Supabase Dashboard** | https://supabase.com/dashboard/project/[PROJECT_ID] |
+
+### Staging Infrastructure
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   Staging Architecture                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   ┌─────────────┐      ┌─────────────┐     ┌────────────┐  │
+│   │   Firebase  │      │  Cloud Run  │     │  Supabase  │  │
+│   │   Hosting   │─────▶│  (som-api)  │────▶│   Cloud    │  │
+│   └─────────────┘      └─────────────┘     └────────────┘  │
+│         │                    │                   │          │
+│   ednet-som-staging    europe-west1        PostgreSQL      │
+│   .web.app             GCP Project:        + Auth          │
+│                        ednet-som-staging   + Storage       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Test Users
+
+Test users are created in Supabase Auth and the `som.users` table. Credentials are stored in 1Password vault: `som-staging`.
+
+| Email | Roles | Company |
+|-------|-------|---------|
+| buyer-admin@test.som-staging.at | buyer, admin | Test Buyer GmbH |
+| buyer-employee@test.som-staging.at | buyer | Test Buyer GmbH |
+| provider-admin@test.som-staging.at | provider, admin | Test Provider AG |
+| provider-employee@test.som-staging.at | provider | Test Provider AG |
+| hybrid-admin@test.som-staging.at | buyer, provider, admin | Test Hybrid KG |
+| consultant@test.som-staging.at | consultant | SOM Platform Admin |
+| sysadmin@test.som-staging.at | consultant, admin | SOM Platform Admin |
+
+### Deploying to Staging
+
+**Frontend (Firebase Hosting)**:
+```bash
+# Build with staging configuration
+# Note: Uses 1Password CLI to retrieve secrets - install with: brew install 1password-cli
+flutter build web --release \
+  --dart-define=API_BASE_URL=https://som-api-i3iupxxyxq-ew.a.run.app \
+  --dart-define=SUPABASE_URL="$(op read 'op://som-staging/supabase/api-url')" \
+  --dart-define=SUPABASE_ANON_KEY="$(op read 'op://som-staging/supabase/anon-key')" \
+  --dart-define=SUPABASE_SCHEMA=som \
+  --dart-define=DEV_QUICK_LOGIN=false
+
+# Deploy to Firebase Hosting
+firebase deploy --only hosting --project ednet-som-staging
+```
+
+**Frontend Build-time Variables**:
+
+| Variable | Description | Staging Value |
+|----------|-------------|---------------|
+| `API_BASE_URL` | Backend API endpoint | https://som-api-i3iupxxyxq-ew.a.run.app |
+| `SUPABASE_URL` | Supabase project URL | From 1Password |
+| `SUPABASE_ANON_KEY` | Supabase anonymous key | From 1Password |
+| `SUPABASE_SCHEMA` | Database schema | `som` |
+| `DEV_QUICK_LOGIN` | Show dev login buttons | `false` (staging) |
+
+**Backend (Cloud Build)**:
+```bash
+# Submit build with substitutions (secrets from GCP Secret Manager)
+SHORT_SHA=$(git rev-parse --short HEAD)
+gcloud builds submit . \
+  --config=cloudbuild.yaml \
+  --project=ednet-som-staging \
+  --substitutions=_SUPABASE_URL="$(op read 'op://som-staging/supabase/api-url')",_SUPABASE_ANON_KEY="$(op read 'op://som-staging/supabase/anon-key')",SHORT_SHA="${SHORT_SHA}"
+```
+
+---
+
+## CORS Configuration
+
+### Important: Compile-Time Configuration
+
+The SOM API uses Dart's `const String.fromEnvironment()` for configuration, which means CORS settings must be provided at **compile time**, not runtime.
+
+```dart
+// api/lib/services/cors_middleware.dart
+factory CorsOptions.fromEnvironment() {
+  const originsEnv = String.fromEnvironment('CORS_ALLOWED_ORIGINS', defaultValue: '*');
+  // ...
+}
+```
+
+### Build Arguments for CORS
+
+When building the Docker image, pass CORS configuration as build arguments:
+
+```bash
+docker build \
+  --build-arg CORS_ALLOWED_ORIGINS="https://your-frontend.com,http://localhost:8080" \
+  --build-arg APP_BASE_URL="https://your-frontend.com" \
+  -f api/Dockerfile .
+```
+
+The Dockerfile passes these to the Dart compiler:
+```dockerfile
+RUN dart compile exe build/bin/server.dart -o build/bin/server \
+    -DCORS_ALLOWED_ORIGINS="${CORS_ALLOWED_ORIGINS}" \
+    -DAPP_BASE_URL="${APP_BASE_URL}" \
+    # ... other args
+```
+
+### Cloud Build CORS Configuration
+
+The `cloudbuild.yaml` includes default CORS origins for staging:
+
+```yaml
+substitutions:
+  _CORS_ALLOWED_ORIGINS: https://ednet-som-staging.web.app,http://localhost:8090,http://localhost:8080
+  _APP_BASE_URL: https://ednet-som-staging.web.app
+```
+
+For production, override these substitutions in Cloud Build triggers or manual submissions.
+
+### Troubleshooting CORS Errors
+
+If you see errors like:
+```
+Access to XMLHttpRequest blocked by CORS policy:
+No 'Access-Control-Allow-Origin' header
+```
+
+**Checklist**:
+1. Verify `CORS_ALLOWED_ORIGINS` includes your frontend URL
+2. Ensure the API was **rebuilt** with the correct build args (runtime env vars won't work)
+3. Check Cloud Build logs to confirm build args were passed correctly
+4. Verify the deployed Cloud Run revision is the latest
+
+---
+
+## 1Password Integration
+
+Secrets for staging are managed in 1Password vault: `som-staging`.
+
+### Vault Structure
+
+| Item | Fields |
+|------|--------|
+| `supabase` | api-url, anon-key, service-role-key, jwt-secret, project-id |
+| `SOM Staging URLs` | frontend-url, api-url, supabase-dashboard |
+| `Test User - *` | email, password (for each test user) |
+
+### Using 1Password CLI
+
+```bash
+# Read Supabase URL
+op read 'op://som-staging/supabase/api-url'
+
+# Build with secrets from 1Password (local development only)
+docker build \
+  --build-arg SUPABASE_URL="$(op read 'op://som-staging/supabase/api-url')" \
+  --build-arg SUPABASE_ANON_KEY="$(op read 'op://som-staging/supabase/anon-key')" \
+  -f api/Dockerfile .
+```
+
+**Note**: For CI/CD, use GCP Secret Manager instead of 1Password.
+
+---
+
+## Deployment Gotchas & Troubleshooting
+
+### SHORT_SHA Not Available for Manual Builds
+
+**Problem**: Cloud Build's `${SHORT_SHA}` substitution is only automatically populated when triggered by a repository event (push, PR). Manual `gcloud builds submit` commands will fail with:
+
+```
+invalid image name "...som-api:": could not parse reference
+```
+
+**Solution**: Provide SHORT_SHA as a substitution variable:
+
+```bash
+SHORT_SHA=$(git rev-parse --short HEAD)
+gcloud builds submit . \
+  --config=cloudbuild.yaml \
+  --project=ednet-som-staging \
+  --substitutions=SHORT_SHA="${SHORT_SHA}",_SUPABASE_URL="...",_SUPABASE_ANON_KEY="..."
+```
+
+### Docker Platform Architecture Mismatch
+
+**Problem**: Building Docker images on Apple Silicon (ARM64) creates images that Cloud Run cannot run:
+
+```
+Container manifest type must support amd64/linux
+```
+
+**Solution**: Always build with explicit platform targeting:
+
+```bash
+docker build --platform linux/amd64 -t your-image -f api/Dockerfile .
+```
+
+### Dart Compile-Time vs Runtime Environment Variables
+
+**Problem**: Dart's `const String.fromEnvironment()` reads values at **compile time only**. Setting runtime environment variables in Cloud Run has no effect.
+
+```dart
+// This is evaluated at compile time, NOT runtime
+const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+```
+
+**Solution**: Pass all configuration as Docker `--build-arg` values, which the Dockerfile passes to `dart compile exe -D...`:
+
+```dockerfile
+ARG SUPABASE_URL
+RUN dart compile exe ... -DSUPABASE_URL="${SUPABASE_URL}"
+```
+
+### Artifact Registry Authentication
+
+**Problem**: Docker push fails with "Unauthenticated request":
+
+```
+denied: Unauthenticated request
+```
+
+**Solution**: Configure Docker to use gcloud credentials:
+
+```bash
+gcloud auth configure-docker europe-west1-docker.pkg.dev
+```
+
+### Cloud Build Secret Access
+
+**Problem**: Cloud Build fails to access secrets from Secret Manager.
+
+**Solution**: Ensure Cloud Build service account has `Secret Manager Secret Accessor` role:
+
+```bash
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
+
+gcloud secrets add-iam-policy-binding SUPABASE_SERVICE_ROLE_KEY \
+  --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com" \
+  --role="roles/secretmanager.secretAccessor"
+```
+
+### Flutter SDK Required for ednet_core
+
+**Problem**: The API uses `ednet_core` which depends on `shared_preferences`, a Flutter package. Standard Dart Docker images fail with:
+
+```
+Because shared_preferences requires the Flutter SDK...
+```
+
+**Solution**: The Dockerfile uses the Flutter image for the build stage:
+
+```dockerfile
+FROM ghcr.io/cirruslabs/flutter:stable AS dependencies
+```
+
+### Supabase JWT Algorithm: ES256 (Asymmetric Keys)
+
+**Problem**: API returns 500 errors with `type 'SecretKey' is not a subtype of type 'ECPublicKey'`:
+
+```
+Error thrown by handler.
+type 'SecretKey' is not a subtype of type 'ECPublicKey' in type cast
+package:dart_jsonwebtoken/src/algorithms.dart 352  ECDSAAlgorithm.verify
+```
+
+**Root Cause**: **Supabase projects created after May 2025 use asymmetric JWT signing (ES256) by default**, not the legacy symmetric HS256. The `dart_jsonwebtoken` library auto-detects the algorithm from the JWT header and tries to use an EC public key, but we were providing a symmetric secret key.
+
+**Solution**: Fetch the public key from Supabase's JWKS endpoint and use it for verification:
+
+1. **JWKS Endpoint**: `https://YOUR-PROJECT.supabase.co/auth/v1/.well-known/jwks.json`
+
+2. **Implementation**: Create a JWKS service to fetch and cache the public key:
+
+```dart
+// api/lib/services/jwks_service.dart
+class JwksService {
+  JwksService({required this.supabaseUrl});
+  final String supabaseUrl;
+  final Map<String, JWTKey> _keyCache = {};
+
+  String get jwksUrl => '$supabaseUrl/auth/v1/.well-known/jwks.json';
+
+  Future<JWTKey?> getPublicKey({String? kid}) async {
+    // Fetch JWKS from Supabase
+    final response = await http.get(Uri.parse(jwksUrl));
+    final jwks = json.decode(response.body) as Map<String, dynamic>;
+    final keys = jwks['keys'] as List<dynamic>;
+
+    for (final keyData in keys) {
+      final jwk = keyData as Map<String, dynamic>;
+      final key = JWTKey.fromJWK(jwk);  // Converts JWK to ECPublicKey
+      _keyCache[jwk['kid']] = key;
+    }
+
+    return kid != null ? _keyCache[kid] : _keyCache.values.first;
+  }
+}
+```
+
+3. **JWT Verification**: Use the public key instead of the secret:
+
+```dart
+// api/lib/services/request_auth.dart
+Future<RequestAuth?> parseAuth(RequestContext context, {
+  required String supabaseUrl,
+  required UserRepository users,
+}) async {
+  // Extract key ID from JWT header
+  final kid = _extractKeyId(token);
+
+  // Get public key from JWKS
+  final jwksService = getJwksService(supabaseUrl);
+  final publicKey = await jwksService.getPublicKey(kid: kid);
+
+  // Verify with ES256 public key
+  final jwt = JWT.verify(token, publicKey!);
+  // ...
+}
+```
+
+**Important**: This change requires passing `SUPABASE_URL` to all auth endpoints instead of `SUPABASE_JWT_SECRET`. The JWT secret is now only used for signing tokens in dev mode.
+
+**References**:
+- [Supabase JWT Signing Keys Documentation](https://supabase.com/docs/guides/auth/signing-keys)
+- [Supabase JWKS Endpoint](https://supabase.com/docs/guides/auth/jwts)
+
+### Production Pubspec for Docker Builds
+
+**Problem**: Local `pubspec.yaml` uses path dependencies that don't exist in Docker:
+
+```yaml
+dependencies:
+  ednet_core:
+    path: ../../cms/packages/core  # Doesn't exist in Docker
+```
+
+**Solution**: Use `pubspec.production.yaml` with git dependencies:
+
+```yaml
+dependencies:
+  ednet_core:
+    git:
+      url: https://github.com/ednet-dev/cms.git
+      path: packages/core
+      ref: main
+```
+
+The Dockerfile copies this as `pubspec.yaml`:
+
+```dockerfile
+COPY api/pubspec.production.yaml /app/api/pubspec.yaml
+```
 
 ---
 
@@ -1231,4 +1596,6 @@ For issues or questions:
 | `api/Dockerfile` | Docker build for Cloud Run |
 | `api/pubspec.production.yaml` | Production dependencies |
 | `cloudbuild.yaml` | Google Cloud Build CI/CD |
+| `firebase.json` | Firebase Hosting configuration |
 | `.gcloudignore` | Files excluded from deployment |
+| `supabase/seeds/staging_test_users.sql` | Staging test user definitions |

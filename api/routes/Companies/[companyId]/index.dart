@@ -15,8 +15,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method == HttpMethod.get) {
     final authResult = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (authResult == null) {
@@ -46,8 +45,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method == HttpMethod.put) {
     final authResult = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (authResult == null) {
@@ -110,8 +108,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   if (context.request.method == HttpMethod.delete) {
     final authResult = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (authResult == null) {
