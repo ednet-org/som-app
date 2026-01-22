@@ -12,23 +12,35 @@ Future<Response> onRequest(RequestContext context) async {
   final repo = context.read<BranchRepository>();
   if (context.request.method == HttpMethod.get) {
     final params = context.request.uri.queryParameters;
-    final limit = int.tryParse(params['limit'] ?? '') ?? 50;
-    final offset = int.tryParse(params['offset'] ?? '') ?? 0;
+    final limitParam = params['limit'];
+    final offsetParam = params['offset'];
     final status = params['status'];
 
+    // If pagination params provided, return paginated response
+    if (limitParam != null || offsetParam != null) {
+      final limit = int.tryParse(limitParam ?? '') ?? 50;
+      final offset = int.tryParse(offsetParam ?? '') ?? 0;
+      final branches = await repo.listBranchesWithCategories(
+        limit: limit,
+        offset: offset,
+        status: status,
+      );
+      final total = await repo.countBranches(status: status);
+      return Response.json(body: {
+        'data': branches,
+        'total': total,
+        'limit': limit,
+        'offset': offset,
+      });
+    }
+
+    // Backward compatible: return flat list with reasonable limit
     final branches = await repo.listBranchesWithCategories(
-      limit: limit,
-      offset: offset,
+      limit: 200,
+      offset: 0,
       status: status,
     );
-    final total = await repo.countBranches(status: status);
-
-    return Response.json(body: {
-      'data': branches,
-      'total': total,
-      'limit': limit,
-      'offset': offset,
-    });
+    return Response.json(body: branches);
   }
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
