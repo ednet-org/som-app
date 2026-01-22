@@ -48,8 +48,6 @@ WORKDIR /app/api
 # Copy API source code
 COPY api/lib ./lib
 COPY api/routes ./routes
-COPY api/public ./public
-COPY api/main.dart ./main.dart
 
 # Build production server with dart_frog
 RUN flutter pub global activate dart_frog_cli
