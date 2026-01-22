@@ -18,6 +18,9 @@ WORKDIR /app
 # This must be copied before pubspec.yaml because it's referenced as a path dependency
 COPY lib/generated /app/lib/generated
 
+# Override som_manager pubspec with production version (uses git dependency for ednet_core)
+COPY lib/generated/pubspec.production.yaml /app/lib/generated/pubspec.yaml
+
 # Copy API dependency files (use production pubspec with git dependencies)
 COPY api/pubspec.production.yaml /app/api/pubspec.yaml
 COPY api/pubspec.lock /app/api/pubspec.lock
