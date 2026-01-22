@@ -49,9 +49,12 @@ WORKDIR /app/api
 COPY api/lib ./lib
 COPY api/routes ./routes
 
+# Add pub-cache/bin to PATH for global executables
+ENV PATH="${PATH}:/root/.pub-cache/bin"
+
 # Build production server with dart_frog
-RUN flutter pub global activate dart_frog_cli
-RUN flutter pub global run dart_frog build
+RUN dart pub global activate dart_frog_cli
+RUN dart_frog build
 
 # Compile to native executable for faster startup
 RUN dart compile exe build/bin/server.dart -o build/bin/server
