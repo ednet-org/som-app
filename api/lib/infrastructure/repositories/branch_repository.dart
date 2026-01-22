@@ -113,18 +113,25 @@ class BranchRepository {
     int? offset,
     String? status,
   }) async {
-    var query = _client.from('branches').select();
+    final effectiveLimit = limit ?? 50;
+    final effectiveOffset = offset ?? 0;
+    List<dynamic> rows;
     if (status != null) {
-      query = query.eq('status', status);
+      rows = await _client
+          .from('branches')
+          .select()
+          .eq('status', status)
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    } else {
+      rows = await _client
+          .from('branches')
+          .select()
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
     }
-    query = query.order('name');
-    if (limit != null) {
-      query = query.limit(limit);
-    }
-    if (offset != null) {
-      query = query.range(offset, offset + (limit ?? 50) - 1);
-    }
-    final rows = await query as List<dynamic>;
     return rows
         .map((row) => BranchRecord(
               id: (row as Map<String, dynamic>)['id'] as String,
@@ -141,18 +148,25 @@ class BranchRepository {
     int? offset,
     String? status,
   }) async {
-    var query = _client.from('branches').select('*, categories(*)');
+    final effectiveLimit = limit ?? 50;
+    final effectiveOffset = offset ?? 0;
+    List<dynamic> rows;
     if (status != null) {
-      query = query.eq('status', status);
+      rows = await _client
+          .from('branches')
+          .select('*, categories(*)')
+          .eq('status', status)
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    } else {
+      rows = await _client
+          .from('branches')
+          .select('*, categories(*)')
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
     }
-    query = query.order('name');
-    if (limit != null) {
-      query = query.limit(limit);
-    }
-    if (offset != null) {
-      query = query.range(offset, offset + (limit ?? 50) - 1);
-    }
-    final rows = await query as List<dynamic>;
     return rows.map((row) {
       final r = row as Map<String, dynamic>;
       final cats = (r['categories'] as List<dynamic>? ?? [])
@@ -172,11 +186,15 @@ class BranchRepository {
   }
 
   Future<int> countBranches({String? status}) async {
-    var query = _client.from('branches').select('id');
+    List<dynamic> rows;
     if (status != null) {
-      query = query.eq('status', status);
+      rows = await _client
+          .from('branches')
+          .select('id')
+          .eq('status', status) as List<dynamic>;
+    } else {
+      rows = await _client.from('branches').select('id') as List<dynamic>;
     }
-    final rows = await query as List<dynamic>;
     return rows.length;
   }
 
