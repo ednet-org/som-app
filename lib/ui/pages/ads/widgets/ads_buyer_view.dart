@@ -7,6 +7,15 @@ import 'package:som/ui/utils/formatters.dart';
 import 'package:som/ui/widgets/som_list_tile.dart';
 import 'package:som/ui/widgets/status_badge.dart';
 
+/// Ensures URL has a scheme for proper launching.
+Uri _ensureScheme(String url) {
+  final trimmed = url.trim();
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return Uri.parse(trimmed);
+  }
+  return Uri.parse('https://$trimmed');
+}
+
 /// View for buyers showing ads grouped by type.
 class AdsBuyerView extends StatelessWidget {
   const AdsBuyerView({
@@ -57,7 +66,7 @@ class _BannerAdButton extends StatelessWidget {
       onPressed: ad.url == null
           ? null
           : () => launchUrl(
-                Uri.parse(ad.url!),
+                _ensureScheme(ad.url!),
                 mode: LaunchMode.externalApplication,
               ),
       child: Column(
@@ -101,7 +110,7 @@ class _NormalAdCard extends StatelessWidget {
         onTap: ad.url == null
             ? null
             : () => launchUrl(
-                  Uri.parse(ad.url!),
+                  _ensureScheme(ad.url!),
                   mode: LaunchMode.externalApplication,
                 ),
       ),

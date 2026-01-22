@@ -131,9 +131,28 @@ class _AdsPageState extends State<AdsPage> {
   }
 
   Future<void> _refresh() async {
+    final selectedId = _selectedAd?.id;
+    final future = _loadAds();
     setState(() {
-      _adsFuture = _loadAds();
+      _adsFuture = future;
     });
+    // Update _selectedAd with fresh data from server to maintain state coherence
+    if (selectedId != null) {
+      try {
+        final ads = await future;
+        final refreshedAd = ads.cast<Ad?>().firstWhere(
+          (ad) => ad?.id == selectedId,
+          orElse: () => null,
+        );
+        if (mounted && refreshedAd != null) {
+          setState(() {
+            _selectedAd = refreshedAd;
+          });
+        }
+      } catch (_) {
+        // Ignore errors - FutureBuilder will handle them
+      }
+    }
   }
 
   void _clearFilters() {
@@ -285,6 +304,10 @@ class _AdsPageState extends State<AdsPage> {
       );
     }
     _showSnack('Ad updated.');
+    // Update local state with the updated ad to prevent stale data
+    setState(() {
+      _selectedAd = updated;
+    });
     await _refresh();
   }
 
