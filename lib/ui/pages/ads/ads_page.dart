@@ -34,6 +34,7 @@ class _AdsPageState extends State<AdsPage> {
   Future<List<Ad>>? _adsFuture;
   Ad? _selectedAd;
   List<Branch> _branches = const [];
+  List<CompanyOption> _providerCompanies = const [];
 
   String? _filterBranchId;
   String? _filterStatus;
@@ -81,6 +82,7 @@ class _AdsPageState extends State<AdsPage> {
   }
 
   Future<void> _bootstrap() async {
+    final appStore = Provider.of<Application>(context, listen: false);
     final api = Provider.of<Openapi>(context, listen: false);
     try {
       final response = await api.getBranchesApi().branchesGet();
@@ -89,6 +91,26 @@ class _AdsPageState extends State<AdsPage> {
       });
     } catch (error, stackTrace) {
       UILogger.silentError('AdsPage._bootstrap.branches', error, stackTrace);
+    }
+    // Fetch provider companies for consultants
+    if (appStore.authorization?.isConsultant == true) {
+      try {
+        final companiesResponse = await api.getCompaniesApi().companiesGet(
+          type: 'provider',
+        );
+        setState(() {
+          _providerCompanies = companiesResponse.data
+                  ?.map((c) => CompanyOption(
+                        id: c.id ?? '',
+                        name: c.name ?? '',
+                      ))
+                  .where((c) => c.id.isNotEmpty)
+                  .toList() ??
+              const [];
+        });
+      } catch (error, stackTrace) {
+        UILogger.silentError('AdsPage._bootstrap.companies', error, stackTrace);
+      }
     }
   }
 
@@ -213,6 +235,7 @@ class _AdsPageState extends State<AdsPage> {
     final response = await api.getAdsApi().createAd(
       createAdRequest: CreateAdRequest(
         (b) => b
+          ..companyId = data.companyId
           ..type = data.type
           ..status = CreateAdRequestStatusEnum.draft
           ..branchId = data.branchId
@@ -415,7 +438,12 @@ class _AdsPageState extends State<AdsPage> {
               : _bulkMode
                   ? _buildBulkSummary()
                   : _showCreateForm
-                      ? AdsCreateForm(branches: _branches, onSubmit: _createAd)
+                      ? AdsCreateForm(
+                          branches: _branches,
+                          onSubmit: _createAd,
+                          isConsultant: appStore.authorization?.isConsultant == true,
+                          providerCompanies: _providerCompanies,
+                        )
                       : _selectedAd != null
                           ? AdsEditForm(
                               ad: _selectedAd!,

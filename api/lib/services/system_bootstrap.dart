@@ -633,6 +633,13 @@ class SystemBootstrap {
           password: password,
           emailConfirmed: true,
         );
+        // Ensure user_company_roles entry exists for existing user
+        await users.addUserToCompany(
+          userId: existing.id,
+          companyId: companyId,
+          roles: roles,
+          updateUserRoles: false,
+        );
         return existing;
       } catch (_) {
         await users.deleteById(existing.id);
@@ -661,6 +668,13 @@ class SystemBootstrap {
       updatedAt: now,
     );
     await users.create(user);
+    // Create user_company_roles entry to link user to company
+    await users.addUserToCompany(
+      userId: authUserId,
+      companyId: companyId,
+      roles: roles,
+      updateUserRoles: false,
+    );
     return user;
   }
 }

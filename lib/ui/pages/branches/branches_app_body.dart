@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
+import 'package:built_value/serializer.dart';
 import 'package:som/ui/theme/som_assets.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
@@ -90,6 +91,10 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     _realtimeReady = true;
   }
 
+  Branch _deserializeBranch(Map<String, dynamic> json, Openapi api) {
+    return api.serializers.deserializeWith(Branch.serializer, json)!;
+  }
+
   Future<void> _loadBranches({bool refresh = false}) async {
     if (_isLoading) return;
     setState(() {
@@ -102,15 +107,24 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     });
     try {
       final api = Provider.of<Openapi>(context, listen: false);
-      final response = await api.getBranchesApi().branchesGet(
-        limit: _pageSize,
-        offset: 0,
+      // Use dio directly to pass pagination params (not in generated client)
+      final response = await api.dio.get<dynamic>(
+        '/branches',
+        queryParameters: {'limit': _pageSize, 'offset': 0},
       );
-      final list = response.data?.toList() ?? const [];
-      // Parse total from response headers or estimate
-      _totalBranches = response.headers['x-total-count']?.firstOrNull != null
-          ? int.tryParse(response.headers['x-total-count']!.first) ?? list.length
-          : (list.length < _pageSize ? list.length : 1000); // Estimate if no header
+      final data = response.data;
+      List<Branch> list = [];
+      if (data is List) {
+        // Flat array response (backward compatible)
+        list = data.map((e) => _deserializeBranch(e as Map<String, dynamic>, api)).toList();
+        _totalBranches = list.length < _pageSize ? list.length : 1000;
+      } else if (data is Map) {
+        // Paginated response
+        final mapData = data as Map<String, dynamic>;
+        final items = mapData['data'] as List<dynamic>? ?? [];
+        list = items.map((e) => _deserializeBranch(e as Map<String, dynamic>, api)).toList();
+        _totalBranches = mapData['total'] as int? ?? list.length;
+      }
       setState(() {
         _branches = list;
         _isLoading = false;
@@ -135,14 +149,26 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     setState(() => _isLoading = true);
     try {
       final api = Provider.of<Openapi>(context, listen: false);
-      final response = await api.getBranchesApi().branchesGet(
-        limit: _pageSize,
-        offset: _branches.length,
+      final response = await api.dio.get<dynamic>(
+        '/branches',
+        queryParameters: {'limit': _pageSize, 'offset': _branches.length},
       );
-      final list = response.data?.toList() ?? const [];
+      final data = response.data;
+      List<Branch> list = [];
+      if (data is List) {
+        list = data.map((e) => _deserializeBranch(e as Map<String, dynamic>, api)).toList();
+      } else if (data is Map) {
+        final mapData = data as Map<String, dynamic>;
+        final items = mapData['data'] as List<dynamic>? ?? [];
+        list = items.map((e) => _deserializeBranch(e as Map<String, dynamic>, api)).toList();
+      }
       setState(() {
         _branches = [..._branches, ...list];
         _isLoading = false;
+        // Update total if we got less than requested (end of list)
+        if (list.length < _pageSize) {
+          _totalBranches = _branches.length;
+        }
       });
     } catch (error) {
       setState(() => _isLoading = false);
@@ -334,16 +360,15 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     final name = branch.name ?? '';
     if (name.isEmpty) return;
     // Optimistic update: update local branch status immediately
-    final previousFuture = _branchesFuture;
-    final branches = await _branchesFuture ?? [];
-    final updatedBranches = branches.map((b) {
+    final previousBranches = List<Branch>.from(_branches);
+    final updatedBranches = _branches.map((b) {
       if (b.id == branch.id) {
         return b.rebuild((builder) => builder.status = status);
       }
       return b;
     }).toList();
     setState(() {
-      _branchesFuture = Future.value(updatedBranches);
+      _branches = updatedBranches;
     });
     try {
       final api = Provider.of<Openapi>(context, listen: false);
@@ -359,7 +384,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     } catch (error) {
       // Revert optimistic update on failure
       setState(() {
-        _branchesFuture = previousFuture;
+        _branches = previousBranches;
       });
       _showSnack('Failed to update branch: $error');
     }
@@ -370,9 +395,8 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     final name = category.name ?? '';
     if (name.isEmpty) return;
     // Optimistic update: update local category status immediately
-    final previousFuture = _branchesFuture;
-    final branches = await _branchesFuture ?? [];
-    final updatedBranches = branches.map((b) {
+    final previousBranches = List<Branch>.from(_branches);
+    final updatedBranches = _branches.map((b) {
       if (b.id == _selectedBranch?.id && b.categories != null) {
         final updatedCategories = b.categories!.map((c) {
           if (c.id == category.id) {
@@ -385,7 +409,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
       return b;
     }).toList();
     setState(() {
-      _branchesFuture = Future.value(updatedBranches);
+      _branches = updatedBranches;
       // Update selected branch reference
       if (_selectedBranch != null) {
         _selectedBranch = updatedBranches.firstWhere(
@@ -408,7 +432,7 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     } catch (error) {
       // Revert optimistic update on failure
       setState(() {
-        _branchesFuture = previousFuture;
+        _branches = previousBranches;
       });
       _showSnack('Failed to update category: $error');
     }
@@ -783,8 +807,6 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
                     ],
                   ),
                 ),
-        );
-      },
     );
   }
 

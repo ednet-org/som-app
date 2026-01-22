@@ -55,6 +55,8 @@ class _$CreateAdRequestStatusEnumSerializer
 
 class _$CreateAdRequest extends CreateAdRequest {
   @override
+  final String? companyId;
+  @override
   final String type;
   @override
   final CreateAdRequestStatusEnum status;
@@ -79,7 +81,8 @@ class _$CreateAdRequest extends CreateAdRequest {
       (CreateAdRequestBuilder()..update(updates))._build();
 
   _$CreateAdRequest._(
-      {required this.type,
+      {this.companyId,
+      required this.type,
       required this.status,
       required this.branchId,
       required this.url,
@@ -101,6 +104,7 @@ class _$CreateAdRequest extends CreateAdRequest {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CreateAdRequest &&
+        companyId == other.companyId &&
         type == other.type &&
         status == other.status &&
         branchId == other.branchId &&
@@ -116,6 +120,7 @@ class _$CreateAdRequest extends CreateAdRequest {
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, companyId.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, branchId.hashCode);
@@ -133,6 +138,7 @@ class _$CreateAdRequest extends CreateAdRequest {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'CreateAdRequest')
+          ..add('companyId', companyId)
           ..add('type', type)
           ..add('status', status)
           ..add('branchId', branchId)
@@ -150,6 +156,10 @@ class _$CreateAdRequest extends CreateAdRequest {
 class CreateAdRequestBuilder
     implements Builder<CreateAdRequest, CreateAdRequestBuilder> {
   _$CreateAdRequest? _$v;
+
+  String? _companyId;
+  String? get companyId => _$this._companyId;
+  set companyId(String? companyId) => _$this._companyId = companyId;
 
   String? _type;
   String? get type => _$this._type;
@@ -198,6 +208,7 @@ class CreateAdRequestBuilder
   CreateAdRequestBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _companyId = $v.companyId;
       _type = $v.type;
       _status = $v.status;
       _branchId = $v.branchId;
@@ -229,6 +240,7 @@ class CreateAdRequestBuilder
   _$CreateAdRequest _build() {
     final _$result = _$v ??
         _$CreateAdRequest._(
+          companyId: companyId,
           type: BuiltValueNullFieldError.checkNotNull(
               type, r'CreateAdRequest', 'type'),
           status: BuiltValueNullFieldError.checkNotNull(

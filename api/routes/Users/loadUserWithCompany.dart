@@ -47,11 +47,50 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   final memberships = await userRepo.listCompanyRolesForUser(userId);
-  if (memberships.isEmpty) {
-    print('[loadUserWithCompany] No memberships for user $userId - returning 404');
-    return Response(statusCode: 404);
-  }
   print('[loadUserWithCompany] Found ${memberships.length} memberships');
+
+  // Fallback: if no memberships exist, use user's companyId and roles
+  if (memberships.isEmpty) {
+    print('[loadUserWithCompany] No memberships, falling back to user.companyId: ${user.companyId}');
+    final fallbackCompanyId = user.companyId;
+    final fallbackCompany = await companyRepo.findById(fallbackCompanyId);
+    if (fallbackCompany == null) {
+      print('[loadUserWithCompany] Fallback company $fallbackCompanyId not found - returning 404');
+      return Response(statusCode: 404);
+    }
+    final fallbackRoles = user.roles.isNotEmpty ? user.roles : ['user'];
+    final fallbackActiveRole = user.lastLoginRole != null && fallbackRoles.contains(user.lastLoginRole)
+        ? user.lastLoginRole!
+        : fallbackRoles.first;
+    return Response.json(
+      body: {
+        'userId': user.id,
+        'salutation': user.salutation,
+        'title': user.title,
+        'firstName': user.firstName,
+        'lastName': user.lastName,
+        'telephoneNr': user.telephoneNr,
+        'emailAddress': user.email,
+        'roles': fallbackRoles,
+        'activeRole': fallbackActiveRole,
+        'companyId': fallbackCompany.id,
+        'activeCompanyId': fallbackCompanyId,
+        'companyName': fallbackCompany.name,
+        'companyAddress': fallbackCompany.address.toJson(),
+        'companyType': companyTypeToWire(fallbackCompany.type),
+        'companyOptions': [
+          {
+            'companyId': fallbackCompany.id,
+            'companyName': fallbackCompany.name,
+            'companyType': companyTypeToWire(fallbackCompany.type),
+            'roles': fallbackRoles,
+            'activeRole': fallbackActiveRole,
+          },
+        ],
+      },
+    );
+  }
+
   var resolvedCompanyId = companyId ?? user.lastLoginCompanyId ?? user.companyId;
   if (!memberships.any((membership) => membership.companyId == resolvedCompanyId)) {
     resolvedCompanyId = memberships.first.companyId;

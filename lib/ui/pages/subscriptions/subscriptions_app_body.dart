@@ -45,7 +45,6 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   final _normalAdsController = TextEditingController();
   final _freeMonthsController = TextEditingController();
   final _commitmentController = TextEditingController();
-  final _rulesController = TextEditingController(text: '[]');
   bool _isActive = true;
   bool _realtimeReady = false;
   late final RealtimeRefreshHandle _realtimeRefresh =
@@ -71,7 +70,6 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
     _normalAdsController.dispose();
     _freeMonthsController.dispose();
     _commitmentController.dispose();
-    _rulesController.dispose();
     super.dispose();
   }
 
@@ -128,6 +126,7 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
   void _selectPlan(SubscriptionPlan plan) {
     setState(() {
       _selected = plan;
+      _isCreating = false;
       _titleController.text = plan.title ?? '';
       _sortController.text = (plan.sortPriority ?? 0).toString();
       _priceController.text = (plan.priceInSubunit ?? 0).toString();
@@ -138,46 +137,114 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       _freeMonthsController.text = _formatOptional(plan.freeMonths);
       _commitmentController.text = _formatOptional(plan.commitmentPeriodMonths);
       _isActive = plan.isActive ?? false;
-      final rules = plan.rules?.map((rule) {
-        return {
-          'restriction': rule.restriction,
-          'upperLimit': rule.upperLimit,
-        };
-      }).toList();
-      _rulesController.text = jsonEncode(rules ?? []);
     });
   }
 
+  /// Auto-generate rules from the dedicated controller values.
+  /// Restriction codes: 0=maxUsers, 1=normalAds, 2=bannerAds
   BuiltList<SubscriptionPlanRulesInner> _parseRules() {
-    final raw = _rulesController.text.trim();
-    if (raw.isEmpty) {
-      return BuiltList<SubscriptionPlanRulesInner>();
+    final rules = <SubscriptionPlanRulesInner>[];
+    final maxUsers = _parseOptionalInt(_maxUsersController);
+    final normalAds = _parseOptionalInt(_normalAdsController);
+    final bannerAds = _parseOptionalInt(_bannerAdsController);
+
+    if (maxUsers != null) {
+      rules.add(SubscriptionPlanRulesInner((b) => b
+        ..restriction = 0
+        ..upperLimit = maxUsers));
     }
-    try {
-      final parsed = jsonDecode(raw);
-      if (parsed is! List) return BuiltList<SubscriptionPlanRulesInner>();
-      final items = parsed.map((item) {
-        final map = item is Map ? item : {};
-        return SubscriptionPlanRulesInner((b) => b
-          ..restriction = map['restriction'] is int
-              ? map['restriction'] as int
-              : null
-          ..upperLimit =
-              map['upperLimit'] is int ? map['upperLimit'] as int : null);
-      }).toList();
-      return BuiltList<SubscriptionPlanRulesInner>(items);
-    } catch (_) {
-      return BuiltList<SubscriptionPlanRulesInner>();
+    if (normalAds != null) {
+      rules.add(SubscriptionPlanRulesInner((b) => b
+        ..restriction = 1
+        ..upperLimit = normalAds));
     }
+    if (bannerAds != null) {
+      rules.add(SubscriptionPlanRulesInner((b) => b
+        ..restriction = 2
+        ..upperLimit = bannerAds));
+    }
+    return BuiltList<SubscriptionPlanRulesInner>(rules);
   }
 
-  Future<void> _createPlan() async {
+  bool _isCreating = false;
+
+  void _startCreatePlan() {
+    setState(() {
+      _isCreating = true;
+      _selected = null;
+      _titleController.text = '';
+      _sortController.text = '0';
+      _priceController.text = '0';
+      _maxUsersController.text = '';
+      _setupFeeController.text = '';
+      _bannerAdsController.text = '';
+      _normalAdsController.text = '';
+      _freeMonthsController.text = '';
+      _commitmentController.text = '';
+      _isActive = true;
+    });
+  }
+
+  Future<void> _savePlan() async {
+    final title = _titleController.text.trim();
+    if (title.isEmpty) {
+      _showSnack('Plan name is required');
+      return;
+    }
     final api = Provider.of<Openapi>(context, listen: false);
-    final input = _buildPlanInput();
-    await api.getSubscriptionsApi().subscriptionsPost(
-          subscriptionPlanInput: input,
+    try {
+      if (_isCreating) {
+        // Create new plan
+        await api.getSubscriptionsApi().subscriptionsPost(
+              subscriptionPlanInput: _buildPlanInput(),
+            );
+        _showSnack('Plan created successfully');
+        setState(() => _isCreating = false);
+      } else if (_selected?.id != null) {
+        // Update existing plan
+        await api.getSubscriptionsApi().subscriptionsPlansPlanIdPut(
+              planId: _selected!.id!,
+              subscriptionPlanInput: _buildPlanInput(),
+            );
+        _showSnack('Plan saved successfully');
+      }
+      await _refresh();
+    } on DioException catch (error) {
+      final message = error.response?.data?.toString() ?? '';
+      if (message.contains('Confirmation required')) {
+        if (!mounted) return;
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Confirm plan update'),
+            content: const Text(
+                'This plan has active subscribers. Apply the changes anyway?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('Cancel'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Confirm'),
+              ),
+            ],
+          ),
         );
-    await _refresh();
+        if (confirmed == true) {
+          await api.getSubscriptionsApi().subscriptionsPlansPlanIdPut(
+                planId: _selected!.id!,
+                subscriptionPlanInput: _buildPlanInput(confirm: true),
+              );
+          _showSnack('Plan saved successfully');
+          await _refresh();
+        }
+      } else {
+        _showSnack('Failed to save plan: ${message.isEmpty ? error.message : message}');
+      }
+    } catch (error) {
+      _showSnack('Failed to save plan: $error');
+    }
   }
 
   Future<void> _updatePlan() async {
@@ -469,18 +536,6 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
                               keyboardType: TextInputType.number,
                             ),
                           ],
-                        ),
-                      ),
-                      const SizedBox(height: SomSpacing.md),
-                      DetailSection(
-                        title: 'Rules',
-                        iconAsset: SomAssets.iconSettings,
-                        child: TextField(
-                          controller: _rulesController,
-                          decoration: const InputDecoration(
-                            labelText: 'Rules (JSON array)',
-                          ),
-                          maxLines: 6,
                         ),
                       ),
                       if (_current != null) ...[

@@ -1,9 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:som/ui/theme/som_assets.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
@@ -130,31 +132,66 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
 
   Future<void> _exportCsv() async {
     final appStore = Provider.of<Application>(context, listen: false);
+    final token = appStore.authorization?.token;
+    if (token == null) {
+      SomSnackBars.error(context, 'Not authenticated');
+      return;
+    }
     String path;
     final params = <String, String>{};
     if (_from != null) params['from'] = _from!.toIso8601String();
     if (_to != null) params['to'] = _to!.toIso8601String();
+    String filePrefix;
     if (appStore.authorization?.isBuyer == true) {
       path = '/stats/buyer';
+      filePrefix = 'buyer_stats';
       if (_userIdFilter != null) params['userId'] = _userIdFilter!;
     } else if (appStore.authorization?.isProvider == true) {
       path = '/stats/provider';
+      filePrefix = 'provider_stats';
     } else {
       path = '/stats/consultant';
+      filePrefix = 'consultant_stats';
       params['type'] = _consultantType;
     }
     params['format'] = 'csv';
-    final uri = Uri.parse(_apiBaseUrl)
-        .replace(path: path, queryParameters: params);
-    final launched = await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-    if (!mounted) return;
-    SomSnackBars.info(
-      context,
-      launched ? 'CSV export started.' : 'Failed to start CSV export.',
-    );
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      final response = await api.dio.get<List<int>>(
+        path,
+        queryParameters: params,
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
+            'Accept': 'text/csv',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      final bytes = response.data;
+      if (bytes == null || bytes.isEmpty) {
+        if (!mounted) return;
+        SomSnackBars.info(context, 'No data to export.');
+        return;
+      }
+      final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
+      final fileName = '${filePrefix}_$timestamp.csv';
+      _downloadFile(bytes, fileName, 'text/csv');
+      if (!mounted) return;
+      SomSnackBars.success(context, 'CSV export completed.');
+    } catch (error) {
+      if (!mounted) return;
+      SomSnackBars.error(context, 'Failed to export CSV: $error');
+    }
+  }
+
+  void _downloadFile(List<int> bytes, String fileName, String mimeType) {
+    final blob = html.Blob([bytes], mimeType);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    html.AnchorElement(href: url)
+      ..setAttribute('download', fileName)
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 
   @override

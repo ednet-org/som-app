@@ -6,16 +6,27 @@ import 'package:som/ui/utils/formatters.dart';
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:som/ui/widgets/snackbars.dart';
 
+/// Company option for the company selector.
+class CompanyOption {
+  const CompanyOption({required this.id, required this.name});
+  final String id;
+  final String name;
+}
+
 /// Form widget for creating a new ad.
 class AdsCreateForm extends StatefulWidget {
   const AdsCreateForm({
     super.key,
     required this.branches,
     required this.onSubmit,
+    this.isConsultant = false,
+    this.providerCompanies = const [],
   });
 
   final List<Branch> branches;
   final Future<void> Function(AdFormData data) onSubmit;
+  final bool isConsultant;
+  final List<CompanyOption> providerCompanies;
 
   @override
   State<AdsCreateForm> createState() => _AdsCreateFormState();
@@ -28,6 +39,7 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
 
   String _type = 'normal';
   String? _branchId;
+  String? _companyId;
   DateTime? _startDate;
   DateTime? _endDate;
   DateTime? _bannerDate;
@@ -54,6 +66,10 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
   }
 
   Future<void> _submit() async {
+    if (widget.isConsultant && _companyId == null) {
+      _showSnack('Please select a provider company.');
+      return;
+    }
     if (_branchId == null) {
       _showSnack('Please select a branch.');
       return;
@@ -78,6 +94,7 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
         type: _type,
         branchId: _branchId!,
         url: _urlController.text.trim(),
+        companyId: _companyId,
         headline: _type == 'normal' ? _headlineController.text.trim() : null,
         description: _type == 'normal' ? _descriptionController.text.trim() : null,
         startDate: _startDate,
@@ -112,6 +129,7 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
         children: [
           Text('Create ad', style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 12),
+          if (widget.isConsultant) _buildCompanyDropdown(),
           _buildTypeDropdown(),
           _buildBranchDropdown(),
           _buildUrlField(),
@@ -138,6 +156,21 @@ class _AdsCreateFormState extends State<AdsCreateForm> {
           _buildSubmitRow(),
         ],
       ),
+    );
+  }
+
+  Widget _buildCompanyDropdown() {
+    return DropdownButton<String>(
+      hint: const Text('Provider company'),
+      value: _companyId,
+      isExpanded: true,
+      items: widget.providerCompanies
+          .map((company) => DropdownMenuItem(
+                value: company.id,
+                child: Text(company.name),
+              ))
+          .toList(),
+      onChanged: (value) => setState(() => _companyId = value),
     );
   }
 
@@ -227,6 +260,7 @@ class AdFormData {
     required this.type,
     required this.branchId,
     required this.url,
+    this.companyId,
     this.headline,
     this.description,
     this.startDate,
@@ -238,6 +272,7 @@ class AdFormData {
   final String type;
   final String branchId;
   final String url;
+  final String? companyId;
   final String? headline;
   final String? description;
   final DateTime? startDate;

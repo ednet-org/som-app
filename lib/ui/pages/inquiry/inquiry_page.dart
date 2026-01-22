@@ -3,8 +3,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:som/ui/theme/som_assets.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
@@ -508,34 +509,63 @@ class _InquiryPageState extends State<InquiryPage> {
   }
 
   Future<void> _exportCsv() async {
-    final uri = Uri.parse(_apiBaseUrl).replace(
-      path: '/inquiries',
-      queryParameters: {
-        if (_statusFilter != null) 'status': _statusFilter,
-        if (_branchIdFilter != null) 'branchId': _branchIdFilter,
-        if (_branchNameFilter != null) 'branch': _branchNameFilter,
-        if (_providerTypeFilter != null) 'providerType': _providerTypeFilter,
-        if (_providerSizeFilter != null) 'providerSize': _providerSizeFilter,
-        if (_createdFrom != null)
-          'createdFrom': _createdFrom!.toIso8601String(),
-        if (_createdTo != null) 'createdTo': _createdTo!.toIso8601String(),
-        if (_deadlineFrom != null)
-          'deadlineFrom': _deadlineFrom!.toIso8601String(),
-        if (_deadlineTo != null) 'deadlineTo': _deadlineTo!.toIso8601String(),
-        if (_editorFilter != null) 'editorIds': _editorFilter,
-        'format': 'csv',
-      },
-    );
-    final launched = await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-    if (!mounted) return;
-    _showSnack(
-      launched
-          ? 'CSV export started.'
-          : 'Failed to start CSV export.',
-    );
+    final api = Provider.of<Openapi>(context, listen: false);
+    final appStore = Provider.of<Application>(context, listen: false);
+
+    try {
+      final response = await api.dio.get<List<int>>(
+        '/inquiries',
+        queryParameters: {
+          if (_statusFilter != null) 'status': _statusFilter,
+          if (_branchIdFilter != null) 'branchId': _branchIdFilter,
+          if (_branchNameFilter != null) 'branch': _branchNameFilter,
+          if (_providerTypeFilter != null) 'providerType': _providerTypeFilter,
+          if (_providerSizeFilter != null) 'providerSize': _providerSizeFilter,
+          if (_createdFrom != null)
+            'createdFrom': _createdFrom!.toIso8601String(),
+          if (_createdTo != null) 'createdTo': _createdTo!.toIso8601String(),
+          if (_deadlineFrom != null)
+            'deadlineFrom': _deadlineFrom!.toIso8601String(),
+          if (_deadlineTo != null) 'deadlineTo': _deadlineTo!.toIso8601String(),
+          if (_editorFilter != null) 'editorIds': _editorFilter,
+          'format': 'csv',
+        },
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
+            'Accept': 'text/csv',
+            if (appStore.authorization?.token != null)
+              'Authorization': 'Bearer ${appStore.authorization!.token}',
+          },
+        ),
+      );
+
+      final bytes = response.data;
+      if (bytes == null || bytes.isEmpty) {
+        _showSnack('No data to export.');
+        return;
+      }
+
+      // Create download using web anchor element
+      final fileName = 'inquiries_${DateTime.now().toIso8601String().split('T').first}.csv';
+      _downloadFile(bytes, fileName, 'text/csv');
+      if (!mounted) return;
+      _showSnack('CSV exported successfully.');
+    } catch (error) {
+      if (!mounted) return;
+      _showSnack('Failed to export CSV: $error');
+    }
+  }
+
+  void _downloadFile(List<int> bytes, String fileName, String mimeType) {
+    // Use universal_html for web download
+    // ignore: avoid_web_libraries_in_flutter
+    final blob = html.Blob([bytes], mimeType);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    html.AnchorElement(href: url)
+      ..setAttribute('download', fileName)
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 
   Future<ProviderSearchResult> _loadProviders({
@@ -685,7 +715,7 @@ class _InquiryPageState extends State<InquiryPage> {
 
         final inquiries = snapshot.data ?? const [];
         return AppBody(
-          contextMenu: _buildContextMenu(appStore),
+          contextMenu: _buildContextMenu(appStore, inquiryCount: inquiries.length),
           leftSplit: Column(
             children: [
               InquiryFilters(
@@ -765,11 +795,14 @@ class _InquiryPageState extends State<InquiryPage> {
     );
   }
 
-  Widget _buildContextMenu(Application appStore) {
+  Widget _buildContextMenu(Application appStore, {int inquiryCount = 0}) {
     return AppToolbar(
       title: const Text('Inquiries'),
       actions: [
-        TextButton(onPressed: _exportCsv, child: const Text('Export CSV')),
+        TextButton(
+          onPressed: inquiryCount > 0 ? _exportCsv : null,
+          child: const Text('Export CSV'),
+        ),
         if (appStore.authorization?.isBuyer == true)
           FilledButton.tonal(
             onPressed: () => setState(() => _showCreateForm = !_showCreateForm),

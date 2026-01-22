@@ -21,8 +21,42 @@ class AuditAppBody extends StatefulWidget {
   State<AuditAppBody> createState() => _AuditAppBodyState();
 }
 
+class _AuditEntry {
+  final String? id;
+  final String? actorId;
+  final String? actorEmail;
+  final String? action;
+  final String? entityType;
+  final String? entityId;
+  final DateTime? createdAt;
+
+  _AuditEntry({
+    this.id,
+    this.actorId,
+    this.actorEmail,
+    this.action,
+    this.entityType,
+    this.entityId,
+    this.createdAt,
+  });
+
+  factory _AuditEntry.fromJson(Map<String, dynamic> json) {
+    return _AuditEntry(
+      id: json['id'] as String?,
+      actorId: json['actorId'] as String?,
+      actorEmail: json['actorEmail'] as String?,
+      action: json['action'] as String?,
+      entityType: json['entityType'] as String?,
+      entityId: json['entityId'] as String?,
+      createdAt: json['createdAt'] != null
+          ? DateTime.tryParse(json['createdAt'] as String)
+          : null,
+    );
+  }
+}
+
 class _AuditAppBodyState extends State<AuditAppBody> {
-  Future<List<AuditLogEntry>>? _future;
+  Future<List<_AuditEntry>>? _future;
   bool _realtimeReady = false;
   late final RealtimeRefreshHandle _realtimeRefresh =
       RealtimeRefreshHandle(_handleRealtimeRefresh);
@@ -56,15 +90,24 @@ class _AuditAppBodyState extends State<AuditAppBody> {
     _realtimeReady = true;
   }
 
-  Future<List<AuditLogEntry>> _loadLogs() async {
+  Future<List<_AuditEntry>> _loadLogs() async {
     final api = Provider.of<Openapi>(context, listen: false);
-    final response = await api.getAuditApi().auditGet(limit: 200);
-    return response.data?.toList() ?? const [];
+    final response = await api.dio.get<dynamic>(
+      '/audit',
+      queryParameters: {'limit': 200},
+    );
+    final data = response.data;
+    if (data is List) {
+      return data
+          .map((e) => _AuditEntry.fromJson(e as Map<String, dynamic>))
+          .toList();
+    }
+    return const [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AuditLogEntry>>(
+    return FutureBuilder<List<_AuditEntry>>(
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -107,7 +150,11 @@ class _AuditAppBodyState extends State<AuditAppBody> {
                     final action = entry.action ?? 'unknown';
                     final entity = entry.entityType ?? '-';
                     final entityId = SomFormatters.shortId(entry.entityId);
-                    final actor = entry.actorId ?? 'system';
+                    // Show email if available, otherwise short ID or 'system'
+                    final actor = entry.actorEmail ??
+                        (entry.actorId != null
+                            ? SomFormatters.shortId(entry.actorId)
+                            : 'system');
                     final createdAt =
                         SomFormatters.dateTime(entry.createdAt);
                     return SomListTile(

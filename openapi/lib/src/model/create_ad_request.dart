@@ -12,18 +12,23 @@ part 'create_ad_request.g.dart';
 /// CreateAdRequest
 ///
 /// Properties:
-/// * [type] 
+/// * [companyId] - Target company ID (consultants only, defaults to own company)
+/// * [type]
 /// * [status] - Must be draft; activate via /ads/{id}/activate
-/// * [branchId] 
-/// * [url] 
-/// * [imagePath] 
-/// * [headline] 
-/// * [description] 
-/// * [startDate] 
-/// * [endDate] 
-/// * [bannerDate] 
+/// * [branchId]
+/// * [url]
+/// * [imagePath]
+/// * [headline]
+/// * [description]
+/// * [startDate]
+/// * [endDate]
+/// * [bannerDate]
 @BuiltValue()
 abstract class CreateAdRequest implements Built<CreateAdRequest, CreateAdRequestBuilder> {
+  /// Target company ID (consultants only, defaults to own company)
+  @BuiltValueField(wireName: r'companyId')
+  String? get companyId;
+
   @BuiltValueField(wireName: r'type')
   String get type;
 
@@ -79,6 +84,13 @@ class _$CreateAdRequestSerializer implements PrimitiveSerializer<CreateAdRequest
     CreateAdRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.companyId != null) {
+      yield r'companyId';
+      yield serializers.serialize(
+        object.companyId,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'type';
     yield serializers.serialize(
       object.type,
@@ -164,6 +176,13 @@ class _$CreateAdRequestSerializer implements PrimitiveSerializer<CreateAdRequest
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'companyId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.companyId = valueDes;
+          break;
         case r'type':
           final valueDes = serializers.deserialize(
             value,

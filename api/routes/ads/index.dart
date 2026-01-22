@@ -78,13 +78,20 @@ Future<Response> onRequest(RequestContext context) async {
     if (auth == null) {
       return Response(statusCode: 401);
     }
-    if (auth.activeRole != 'provider') {
+    // Providers can create ads for themselves, consultants can create for any provider
+    final isProvider = auth.activeRole == 'provider';
+    final isConsultant = auth.roles.contains('consultant');
+    if (!isProvider && !isConsultant) {
       return Response(statusCode: 403);
     }
     final providerRepo = context.read<ProviderRepository>();
     final subscriptionRepo = context.read<SubscriptionRepository>();
     final data =
         jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    // Consultants can specify companyId; providers use their own
+    final companyId = isConsultant
+        ? (data['companyId'] as String? ?? auth.companyId)
+        : auth.companyId;
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
@@ -121,7 +128,7 @@ Future<Response> onRequest(RequestContext context) async {
             statusCode: 400, body: 'Ad period cannot exceed 14 days');
       }
     }
-    final profile = await providerRepo.findByCompany(auth.companyId);
+    final profile = await providerRepo.findByCompany(companyId);
     if (profile != null) {
       if (profile.status != 'active') {
         return Response.json(
@@ -141,7 +148,7 @@ Future<Response> onRequest(RequestContext context) async {
         if (type != 'banner' && status == 'active' && startDate != null) {
           final activeCount = await context
               .read<AdsRepository>()
-              .countActiveByCompanyInMonth(auth.companyId, startDate);
+              .countActiveByCompanyInMonth(companyId, startDate);
           if (maxNormalAds > 0 && activeCount >= maxNormalAds) {
             return Response.json(
                 statusCode: 400, body: 'Monthly ad limit reached');
@@ -166,7 +173,7 @@ Future<Response> onRequest(RequestContext context) async {
     final domain = context.read<SomDomainModel>();
     final ad = AdRecord(
       id: const Uuid().v4(),
-      companyId: auth.companyId,
+      companyId: companyId,
       type: type,
       status: status,
       branchId: data['branchId'] as String? ?? '',

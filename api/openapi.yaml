@@ -216,6 +216,9 @@ components:
       type: object
       required: [branchId, url, type, status]
       properties:
+        companyId:
+          type: string
+          description: Target company ID (consultants only, defaults to own company)
         type:
           type: string
         status:
