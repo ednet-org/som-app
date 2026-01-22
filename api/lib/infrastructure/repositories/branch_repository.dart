@@ -108,9 +108,23 @@ class BranchRepository {
     await updateCategory(categoryId, name: name);
   }
 
-  Future<List<BranchRecord>> listBranches() async {
-    final rows =
-        await _client.from('branches').select().order('name') as List<dynamic>;
+  Future<List<BranchRecord>> listBranches({
+    int? limit,
+    int? offset,
+    String? status,
+  }) async {
+    var query = _client.from('branches').select();
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    query = query.order('name');
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+    if (offset != null) {
+      query = query.range(offset, offset + (limit ?? 50) - 1);
+    }
+    final rows = await query as List<dynamic>;
     return rows
         .map((row) => BranchRecord(
               id: (row as Map<String, dynamic>)['id'] as String,
@@ -120,6 +134,50 @@ class BranchRepository {
               normalizedName: row['normalized_name'] as String?,
             ))
         .toList();
+  }
+
+  Future<List<Map<String, dynamic>>> listBranchesWithCategories({
+    int? limit,
+    int? offset,
+    String? status,
+  }) async {
+    var query = _client.from('branches').select('*, categories(*)');
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    query = query.order('name');
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+    if (offset != null) {
+      query = query.range(offset, offset + (limit ?? 50) - 1);
+    }
+    final rows = await query as List<dynamic>;
+    return rows.map((row) {
+      final r = row as Map<String, dynamic>;
+      final cats = (r['categories'] as List<dynamic>? ?? [])
+          .map((c) => {
+                'id': (c as Map<String, dynamic>)['id'],
+                'name': c['name'],
+                'status': c['status'] ?? 'active',
+              })
+          .toList();
+      return {
+        'id': r['id'],
+        'name': r['name'],
+        'status': r['status'] ?? 'active',
+        'categories': cats,
+      };
+    }).toList();
+  }
+
+  Future<int> countBranches({String? status}) async {
+    var query = _client.from('branches').select('id');
+    if (status != null) {
+      query = query.eq('status', status);
+    }
+    final rows = await query as List<dynamic>;
+    return rows.length;
   }
 
   Future<List<CategoryRecord>> listCategories(String branchId) async {

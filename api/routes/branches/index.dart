@@ -11,24 +11,24 @@ import 'package:som_api/utils/name_normalizer.dart';
 Future<Response> onRequest(RequestContext context) async {
   final repo = context.read<BranchRepository>();
   if (context.request.method == HttpMethod.get) {
-    final branches = await repo.listBranches();
-    final body = <Map<String, dynamic>>[];
-    for (final branch in branches) {
-      final categories = await repo.listCategories(branch.id);
-      body.add({
-        'id': branch.id,
-        'name': branch.name,
-        'status': branch.status,
-        'categories': categories
-            .map((category) => {
-                  'id': category.id,
-                  'name': category.name,
-                  'status': category.status,
-                })
-            .toList(),
-      });
-    }
-    return Response.json(body: body);
+    final params = context.request.uri.queryParameters;
+    final limit = int.tryParse(params['limit'] ?? '') ?? 50;
+    final offset = int.tryParse(params['offset'] ?? '') ?? 0;
+    final status = params['status'];
+
+    final branches = await repo.listBranchesWithCategories(
+      limit: limit,
+      offset: offset,
+      status: status,
+    );
+    final total = await repo.countBranches(status: status);
+
+    return Response.json(body: {
+      'data': branches,
+      'total': total,
+      'limit': limit,
+      'offset': offset,
+    });
   }
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
