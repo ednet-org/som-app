@@ -23,9 +23,13 @@ Future<Response> onRequest(RequestContext context) async {
     supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
     users: context.read<UserRepository>(),
   );
-  if (auth == null ||
-      !auth.roles.contains('admin') ||
-      !auth.roles.contains('provider')) {
+  if (auth == null) {
+    return Response(statusCode: 401);
+  }
+  final isConsultant = auth.roles.contains('consultant');
+  final isProviderAdmin =
+      auth.roles.contains('admin') && auth.activeRole == 'provider';
+  if (!isConsultant && !isProviderAdmin) {
     return Response(statusCode: 403);
   }
   final body = jsonDecode(await context.request.body()) as Map<String, dynamic>;

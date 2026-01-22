@@ -125,6 +125,7 @@ class _AdsPageState extends State<AdsPage> {
     final response = await api.getAdsApi().adsGet(
       branchId: _filterBranchId,
       status: _filterStatus,
+      type: _filterType,
       scope: scope,
     );
     return response.data?.toList() ?? const [];
@@ -144,8 +145,9 @@ class _AdsPageState extends State<AdsPage> {
           (ad) => ad?.id == selectedId,
           orElse: () => null,
         );
-        if (mounted && refreshedAd != null) {
+        if (mounted) {
           setState(() {
+            // Update with fresh data, or clear if filtered out
             _selectedAd = refreshedAd;
           });
         }
@@ -268,16 +270,26 @@ class _AdsPageState extends State<AdsPage> {
     );
     final adId = response.data?.id;
     if (adId != null && data.image?.bytes != null) {
-      await api.getAdsApi().adsAdIdImagePost(
+      final imageResponse = await api.getAdsApi().adsAdIdImagePost(
         adId: adId,
         file: MultipartFile.fromBytes(
           data.image!.bytes!,
           filename: data.image!.name,
         ),
       );
+      // Log image path for debugging (response contains imagePath)
+      UILogger.debug(
+        '[AdsPage._createAd] Image uploaded: ${imageResponse.data?.imagePath}',
+      );
     }
     _showSnack('Ad created.');
-    setState(() => _showCreateForm = false);
+    setState(() {
+      _showCreateForm = false;
+      // Clear status filter so the new draft ad is visible in the list
+      if (_filterStatus != null && _filterStatus != 'draft') {
+        _filterStatus = null;
+      }
+    });
     await _refresh();
   }
 
@@ -294,19 +306,25 @@ class _AdsPageState extends State<AdsPage> {
         ..bannerDate = data.bannerDate?.toUtc(),
     );
     await api.getAdsApi().adsAdIdPut(adId: updated.id!, ad: updated);
+    Ad finalAd = updated;
     if (data.image?.bytes != null) {
-      await api.getAdsApi().adsAdIdImagePost(
+      final imageResponse = await api.getAdsApi().adsAdIdImagePost(
         adId: updated.id!,
         file: MultipartFile.fromBytes(
           data.image!.bytes!,
           filename: data.image!.name,
         ),
       );
+      // Capture the new image path from the upload response
+      final newImagePath = imageResponse.data?.imagePath;
+      if (newImagePath != null) {
+        finalAd = updated.rebuild((b) => b..imagePath = newImagePath);
+      }
     }
     _showSnack('Ad updated.');
-    // Update local state with the updated ad to prevent stale data
+    // Update local state with the final ad (including new imagePath if uploaded)
     setState(() {
-      _selectedAd = updated;
+      _selectedAd = finalAd;
     });
     await _refresh();
   }

@@ -17,9 +17,6 @@ abstract class _Som with Store {
   _Som(this.apiSubscriptionRepository, this.branchesApi);
 
   @observable
-  String nesto = 'Nesto';
-
-  @observable
   bool isLoadingData = true;
 
   @observable

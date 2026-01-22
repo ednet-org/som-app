@@ -16,8 +16,8 @@ Future<Response> onRequest(RequestContext context) async {
   if (auth == null) {
     return Response(statusCode: 401);
   }
-  if (!auth.roles.contains('consultant') &&
-      !(auth.roles.contains('admin') && auth.activeRole == 'provider')) {
+  // Allow consultants or any admin (buyer or provider) to view their company's subscription
+  if (!auth.roles.contains('consultant') && !auth.roles.contains('admin')) {
     return Response(statusCode: 403);
   }
   final repository = context.read<SubscriptionRepository>();

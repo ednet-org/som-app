@@ -8,7 +8,7 @@ import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 import 'package:som/ui/domain/application/application.dart';
 
 import '../../domain/infrastructure/supabase_realtime.dart';
-import '../../domain/model/model.dart' hide BankDetails;
+import '../../domain/model/model.dart' hide BankDetails, Address;
 import '../../domain/model/layout/app_body.dart';
 import '../../widgets/app_toolbar.dart';
 import '../../widgets/detail_section.dart';
@@ -32,6 +32,11 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
   final _bicController = TextEditingController();
   final _ownerController = TextEditingController();
   final _productController = TextEditingController();
+  final _streetController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _zipController = TextEditingController();
+  final _cityController = TextEditingController();
+  String? _selectedCountry;
 
   ProviderProfile? _providerProfile;
   List<Product> _products = const [];
@@ -56,6 +61,10 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     _bicController.dispose();
     _ownerController.dispose();
     _productController.dispose();
+    _streetController.dispose();
+    _numberController.dispose();
+    _zipController.dispose();
+    _cityController.dispose();
     super.dispose();
   }
 
@@ -86,6 +95,13 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     if (company != null) {
       _nameController.text = company.name ?? '';
       _websiteController.text = company.websiteUrl ?? '';
+      if (company.address != null) {
+        _streetController.text = company.address!.street;
+        _numberController.text = company.address!.number;
+        _zipController.text = company.address!.zip;
+        _cityController.text = company.address!.city;
+        _selectedCountry = company.address!.country;
+      }
       if (_isProviderType(company)) {
         await _loadProviderExtras(api, companyId);
       }
@@ -192,7 +208,13 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
     final api = Provider.of<Openapi>(context, listen: false);
     final updated = company!.rebuild((b) => b
       ..name = _nameController.text.trim()
-      ..websiteUrl = _websiteController.text.trim());
+      ..websiteUrl = _websiteController.text.trim()
+      ..address.replace(Address((a) => a
+        ..street = _streetController.text.trim()
+        ..number = _numberController.text.trim()
+        ..zip = _zipController.text.trim()
+        ..city = _cityController.text.trim()
+        ..country = _selectedCountry ?? company.address?.country ?? '')));
     await api
         .getCompaniesApi()
         .companiesCompanyIdPut(companyId: company.id!, companyDto: updated);
@@ -321,6 +343,7 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                   ),
                   DetailItem(label: 'ZIP', value: company.address!.zip),
                   DetailItem(label: 'City', value: company.address!.city),
+                  DetailItem(label: 'Country', value: company.address!.country),
                 ],
               ),
             ),
@@ -349,6 +372,43 @@ class _CompanyAppBodyState extends State<CompanyAppBody> {
                 TextField(
                   controller: _websiteController,
                   decoration: const InputDecoration(labelText: 'Website'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: SomSpacing.md),
+          DetailSection(
+            title: 'Address',
+            iconAsset: SomAssets.iconSettings,
+            child: Column(
+              children: [
+                SomDropDown<String>(
+                  value: _selectedCountry,
+                  onChanged: (val) => setState(() => _selectedCountry = val),
+                  hint: 'Select country',
+                  label: 'Country',
+                  items: countries,
+                  showSearchBox: true,
+                ),
+                const SizedBox(height: SomSpacing.sm),
+                TextField(
+                  controller: _streetController,
+                  decoration: const InputDecoration(labelText: 'Street'),
+                ),
+                const SizedBox(height: SomSpacing.sm),
+                TextField(
+                  controller: _numberController,
+                  decoration: const InputDecoration(labelText: 'Number'),
+                ),
+                const SizedBox(height: SomSpacing.sm),
+                TextField(
+                  controller: _zipController,
+                  decoration: const InputDecoration(labelText: 'ZIP / Postal code'),
+                ),
+                const SizedBox(height: SomSpacing.sm),
+                TextField(
+                  controller: _cityController,
+                  decoration: const InputDecoration(labelText: 'City'),
                 ),
               ],
             ),

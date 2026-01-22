@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'package:som/ui/utils/file_download.dart' as file_download;
 
 import '../../domain/application/application.dart';
 import '../../domain/infrastructure/supabase_realtime.dart';
@@ -558,14 +557,7 @@ class _InquiryPageState extends State<InquiryPage> {
   }
 
   void _downloadFile(List<int> bytes, String fileName, String mimeType) {
-    // Use universal_html for web download
-    // ignore: avoid_web_libraries_in_flutter
-    final blob = html.Blob([bytes], mimeType);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.AnchorElement(href: url)
-      ..setAttribute('download', fileName)
-      ..click();
-    html.Url.revokeObjectUrl(url);
+    file_download.downloadFile(bytes, fileName, mimeType);
   }
 
   Future<ProviderSearchResult> _loadProviders({
@@ -579,6 +571,7 @@ class _InquiryPageState extends State<InquiryPage> {
     String? zipPrefix,
   }) async {
     final api = Provider.of<Openapi>(context, listen: false);
+    // Only load active providers - pending/declined providers cannot be assigned
     final response = await api.getProvidersApi().providersGet(
       limit: limit,
       offset: offset,
@@ -588,6 +581,7 @@ class _InquiryPageState extends State<InquiryPage> {
       companySize: companySize,
       providerType: providerType,
       zipPrefix: zipPrefix,
+      status: 'active',
     );
 
     // Parse pagination headers

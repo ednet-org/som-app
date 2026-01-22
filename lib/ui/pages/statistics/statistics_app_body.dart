@@ -4,8 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:provider/provider.dart';
 import 'package:som/ui/theme/som_assets.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'package:som/ui/utils/file_download.dart' as file_download;
 import 'package:som/ui/widgets/design_system/som_svg_icon.dart';
 
 import '../../domain/application/application.dart';
@@ -186,12 +185,7 @@ class _StatisticsAppBodyState extends State<StatisticsAppBody> {
   }
 
   void _downloadFile(List<int> bytes, String fileName, String mimeType) {
-    final blob = html.Blob([bytes], mimeType);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.AnchorElement(href: url)
-      ..setAttribute('download', fileName)
-      ..click();
-    html.Url.revokeObjectUrl(url);
+    file_download.downloadFile(bytes, fileName, mimeType);
   }
 
   @override

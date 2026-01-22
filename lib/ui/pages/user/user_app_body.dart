@@ -37,8 +37,10 @@ class _UserAppBodyState extends State<UserAppBody> {
   final _salutationController = TextEditingController();
   final _titleController = TextEditingController();
   final _telephoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   bool _isSaving = false;
+  String? _emailError;
   bool _realtimeReady = false;
   late final RealtimeRefreshHandle _realtimeRefresh =
       RealtimeRefreshHandle(_handleRealtimeRefresh);
@@ -51,6 +53,7 @@ class _UserAppBodyState extends State<UserAppBody> {
     _salutationController.dispose();
     _titleController.dispose();
     _telephoneController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -117,6 +120,8 @@ class _UserAppBodyState extends State<UserAppBody> {
       _salutationController.text = user.salutation ?? '';
       _titleController.text = user.title ?? '';
       _telephoneController.text = user.telephoneNr ?? '';
+      _emailController.text = user.email ?? '';
+      _emailError = null;
     });
   }
 
@@ -238,8 +243,21 @@ class _UserAppBodyState extends State<UserAppBody> {
     final appStore = Provider.of<Application>(context, listen: false);
     final companyId = appStore.authorization?.companyId;
     if (companyId == null || _selectedUser?.id == null) return;
+
+    // Validate email if admin is changing it
+    if (appStore.authorization?.isAdmin == true) {
+      final emailError = _validateEmail(_emailController.text);
+      if (emailError != null) {
+        setState(() {
+          _emailError = emailError;
+        });
+        return;
+      }
+    }
+
     setState(() {
       _isSaving = true;
+      _emailError = null;
     });
     final api = Provider.of<Openapi>(context, listen: false);
     final updated = _selectedUser!.rebuild((b) => b
@@ -252,17 +270,28 @@ class _UserAppBodyState extends State<UserAppBody> {
       ..telephoneNr = _telephoneController.text.trim().isEmpty
           ? null
           : _telephoneController.text.trim()
+      ..email = appStore.authorization?.isAdmin == true
+          ? _emailController.text.trim().toLowerCase()
+          : _selectedUser!.email
       ..roles = appStore.authorization?.isAdmin == true
           ? ListBuilder<int>(_editRoles)
           : _selectedUser!.roles?.toBuilder());
-    await api.getUsersApi().companiesCompanyIdUsersUserIdUpdatePut(
-          companyId: companyId,
-          userId: updated.id!,
-          userDto: updated,
-        );
-    setState(() {
-      _isSaving = false;
-    });
+    try {
+      await api.getUsersApi().companiesCompanyIdUsersUserIdUpdatePut(
+            companyId: companyId,
+            userId: updated.id!,
+            userDto: updated,
+          );
+      _showSnack('User updated successfully');
+    } on DioException catch (error) {
+      final message =
+          error.response?.data?.toString() ?? error.message ?? 'Failed to update user';
+      _showSnack(message, success: false);
+    } finally {
+      setState(() {
+        _isSaving = false;
+      });
+    }
     await _refresh();
   }
 
@@ -367,6 +396,17 @@ class _UserAppBodyState extends State<UserAppBody> {
     }
   }
 
+  String? _validateEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Email is required';
+    }
+    final emailRegex = RegExp(r'^[\w\.\-\+]+@[\w\.\-]+\.\w+$');
+    if (!emailRegex.hasMatch(value.trim())) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
   Future<void> _deleteUser() async {
     final appStore = Provider.of<Application>(context, listen: false);
     final companyId = appStore.authorization?.companyId;
@@ -413,6 +453,55 @@ class _UserAppBodyState extends State<UserAppBody> {
         );
     setState(() => _selectedUser = null);
     await _refresh();
+  }
+
+  Future<void> _unlockUser() async {
+    if (_selectedUser?.id == null) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Unlock user'),
+        content: Text(
+          'This will unlock the account for ${_selectedUser!.email ?? 'this user'}, '
+          'resetting failed login attempts and removing any lock. Continue?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Unlock'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    if (!mounted) return;
+
+    final api = Provider.of<Openapi>(context, listen: false);
+    try {
+      await api.getUsersApi().usersUserIdUnlockPost(
+            userId: _selectedUser!.id!,
+          );
+      _showSnack('User account unlocked');
+      await _refresh();
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      String message;
+      if (statusCode == 403) {
+        message = 'You do not have permission to unlock users';
+      } else if (statusCode == 404) {
+        message = 'User not found';
+      } else {
+        final data = error.response?.data;
+        message = data is String ? data : 'Failed to unlock user';
+      }
+      _showSnack(message, success: false);
+    } catch (_) {
+      _showSnack('Failed to unlock user', success: false);
+    }
   }
 
   @override
@@ -560,6 +649,28 @@ class _UserAppBodyState extends State<UserAppBody> {
           const SizedBox(height: SomSpacing.md),
           if (appStore.authorization?.isAdmin == true)
             DetailSection(
+              title: 'Email',
+              iconAsset: SomAssets.iconEdit,
+              child: TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email address',
+                  errorText: _emailError,
+                  helperText: 'Only admins can change user email',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (_) {
+                  if (_emailError != null) {
+                    setState(() {
+                      _emailError = null;
+                    });
+                  }
+                },
+              ),
+            ),
+          const SizedBox(height: SomSpacing.md),
+          if (appStore.authorization?.isAdmin == true)
+            DetailSection(
               title: 'Roles',
               iconAsset: SomAssets.iconSettings,
               child: Wrap(
@@ -593,6 +704,12 @@ class _UserAppBodyState extends State<UserAppBody> {
                   child: const Text('Remove'),
                 ),
               ],
+              if (appStore.authorization?.isConsultant == true &&
+                  appStore.authorization?.isAdmin == true)
+                TextButton(
+                  onPressed: _unlockUser,
+                  child: const Text('Unlock'),
+                ),
               if (appStore.authorization?.userId == user.id)
                 TextButton(
                   onPressed: _showChangePasswordDialog,

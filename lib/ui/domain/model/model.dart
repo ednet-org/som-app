@@ -20,7 +20,6 @@ export './layout/app_body.dart';
 export './layout/expanded_body_container.dart';
 export './layout/extended_split.dart';
 export './layout/main_body.dart';
-export './layout/mock.dart';
 export './layout/spaced_container.dart';
 export './login/email_login_store.dart';
 export './shared/som.dart';

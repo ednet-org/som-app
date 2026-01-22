@@ -49,12 +49,13 @@ class SomSemanticColors {
   }
 
   /// Get color for offer status
+  /// Backend uses: offer_created, won, lost, ignored, open
   static Color forOfferStatus(String? status) {
     return switch (status?.toLowerCase()) {
-      'accepted' => success,
-      'rejected' => error,
-      'pending' => warning,
-      'expired' => neutral,
+      'won' || 'accepted' => success,
+      'lost' || 'rejected' => error,
+      'offer_created' || 'pending' || 'open' => warning,
+      'ignored' || 'expired' => neutral,
       _ => neutral,
     };
   }

@@ -139,6 +139,7 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       _isLoading = true;
       _error = null;
       _providers = const [];
+      _selected = null; // Clear selection when list is reset (filter/search change)
       _currentOffset = 0;
       _hasMore = true;
     });
@@ -690,12 +691,16 @@ class _ProvidersAppBodyState extends State<ProvidersAppBody> {
       _showSnackbar('Classification updated.');
       await _loadInitialProviders();
       if (!mounted) return;
-      setState(() {
-        _selected = _providers.firstWhere(
-          (p) => p.companyId == provider.companyId,
-          orElse: () => provider,
-        );
-      });
+      // Re-select the provider from fresh data if it still exists in filtered list
+      final refreshedProvider = _providers.cast<ProviderSummary?>().firstWhere(
+        (p) => p?.companyId == provider.companyId,
+        orElse: () => null,
+      );
+      if (refreshedProvider != null) {
+        setState(() {
+          _selected = refreshedProvider;
+        });
+      }
     } on DioException catch (error) {
       _showSnackbar('Failed to update: ${_extractError(error)}');
     }

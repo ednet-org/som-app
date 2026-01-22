@@ -212,9 +212,9 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           hint: const Text('All Status'),
           items: const [
             DropdownMenuItem(value: null, child: Text('All Status')),
-            DropdownMenuItem(value: 'pending', child: Text('Pending')),
-            DropdownMenuItem(value: 'accepted', child: Text('Accepted')),
-            DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
+            DropdownMenuItem(value: 'offer_created', child: Text('Pending')),
+            DropdownMenuItem(value: 'won', child: Text('Accepted')),
+            DropdownMenuItem(value: 'lost', child: Text('Rejected')),
           ],
           onChanged: _applyFilter,
         ),
@@ -223,17 +223,17 @@ class _OffersAppBodyState extends State<OffersAppBody> {
           items: const [
             StatusLegendItem(
               label: 'Pending',
-              status: 'pending',
+              status: 'offer_created',
               type: StatusType.offer,
             ),
             StatusLegendItem(
               label: 'Accepted',
-              status: 'accepted',
+              status: 'won',
               type: StatusType.offer,
             ),
             StatusLegendItem(
               label: 'Rejected',
-              status: 'rejected',
+              status: 'lost',
               type: StatusType.offer,
             ),
           ],
@@ -396,7 +396,8 @@ class _OffersAppBodyState extends State<OffersAppBody> {
             ),
           ],
           const Divider(height: 32),
-          if (isBuyer && offer.status == 'pending') ...[
+          // Backend status is 'offer_created' (not 'pending')
+          if (isBuyer && offer.status == 'offer_created') ...[
             Text(
               'Actions',
               style: Theme.of(context).textTheme.titleSmall,

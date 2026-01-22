@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +100,8 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
 
   Future<void> _loadCurrent() async {
     final appStore = Provider.of<Application>(context, listen: false);
-    if (!(appStore.authorization?.isProvider ?? false)) {
+    // Allow any admin (buyer or provider) to view their company's subscription
+    if (!(appStore.authorization?.isAdmin ?? false)) {
       return;
     }
     try {
