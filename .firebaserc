@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "smart-offer-management"
+    "default": "smart-offer-management",
+    "staging": "ednet-som-staging"
+  },
+  "targets": {
+    "ednet-som-staging": {
+      "hosting": {
+        "som-staging": [
+          "ednet-som-staging"
+        ]
+      }
+    }
   }
 }
