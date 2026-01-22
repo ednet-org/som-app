@@ -1,0 +1,89 @@
+# .gcloudignore - Files to exclude from Google Cloud deployments
+# Similar to .gitignore but for gcloud commands
+
+# Git
+.git/
+.github/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Dart/Flutter build outputs
+build/
+.dart_tool/
+.packages
+*.js.deps
+*.js.map
+*.info.json
+
+# Flutter specific
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+android/.gradle/
+ios/Pods/
+ios/.symlinks/
+macos/Pods/
+macos/.symlinks/
+
+# Test and coverage
+coverage/
+.test_coverage.dart
+*.lcov
+
+# Local environment files (use Secret Manager instead)
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+*.env
+
+# Documentation (not needed in deployment)
+docs/
+*.md
+!README.md
+
+# Test files
+test/
+*_test.dart
+integration_test/
+
+# Seed data (not for production)
+seed-data/
+
+# Local config
+.claude/
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# Large assets not needed for API
+images/
+assets/fonts/
+web/
+windows/
+linux/
+android/
+ios/
+macos/
+
+# OpenAPI (documentation only)
+openapi/
+
+# Language files (API doesn't need localization)
+lang/

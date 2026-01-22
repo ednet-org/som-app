@@ -5,6 +5,7 @@ Comprehensive deployment guide for the Smart Offer Management (SOM) Flutter appl
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
+- [Recommended Stack: Supabase Cloud + Google Cloud Run](#recommended-stack-supabase-cloud--google-cloud-run)
 - [Environment Configuration](#environment-configuration)
 - [Backend Deployment (Dart Frog API)](#backend-deployment-dart-frog-api)
 - [Frontend Deployment](#frontend-deployment)
@@ -57,6 +58,289 @@ Comprehensive deployment guide for the Smart Offer Management (SOM) Flutter appl
 - **VS Code** or **Android Studio**: Recommended IDEs
 - **Docker** (Optional): For local Supabase development
 - **PostgreSQL Client**: For database management (psql, pgAdmin, or DBeaver)
+
+---
+
+## Recommended Stack: Supabase Cloud + Google Cloud Run
+
+This is the recommended production deployment approach, optimized for cost and simplicity.
+
+**Estimated Monthly Cost**: ~$25-35/month
+- Supabase Pro: $25/month (PostgreSQL, Auth, Storage)
+- Google Cloud Run: $0-10/month (scale-to-zero, pay-per-request)
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Production Architecture                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   ┌─────────────┐      ┌─────────────┐     ┌────────────┐  │
+│   │   Flutter   │─────▶│  Cloud Run  │────▶│  Supabase  │  │
+│   │   Web/App   │      │   (API)     │     │   Cloud    │  │
+│   └─────────────┘      └─────────────┘     └────────────┘  │
+│         │                    │                   │          │
+│         │              ┌─────┴─────┐      ┌──────┴──────┐  │
+│         │              │  Secret   │      │  PostgreSQL │  │
+│         └─────────────▶│  Manager  │      │  + Auth     │  │
+│                        └───────────┘      │  + Storage  │  │
+│                                           └─────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Step 1: Supabase Cloud Setup
+
+1. **Create Supabase Project**
+   - Go to [supabase.com](https://supabase.com) and sign up
+   - Click "New Project"
+   - Choose organization (or create one)
+   - Set project name: `som-production`
+   - Set database password (save it securely!)
+   - Select region: Choose closest to your users (e.g., `eu-central-1` for Europe)
+   - Click "Create new project"
+
+2. **Get API Credentials**
+   - Go to **Settings → API**
+   - Copy these values:
+     - `Project URL` → `SUPABASE_URL`
+     - `anon/public` key → `SUPABASE_ANON_KEY`
+     - `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (keep secret!)
+   - Go to **Settings → API → JWT Settings**
+     - Copy `JWT Secret` → `SUPABASE_JWT_SECRET`
+
+3. **Create Storage Bucket**
+   - Go to **Storage**
+   - Click "New bucket"
+   - Name: `som-assets`
+   - Public: No (private bucket)
+   - Click "Create bucket"
+
+4. **Run Database Migrations**
+   - Go to **SQL Editor**
+   - Run migration scripts from `seed-data/migrations/`
+   - Or use Supabase CLI:
+     ```bash
+     supabase link --project-ref your-project-ref
+     supabase db push
+     ```
+
+### Step 2: Google Cloud Setup
+
+1. **Create Google Cloud Project**
+   ```bash
+   # Install gcloud CLI: https://cloud.google.com/sdk/docs/install
+   gcloud auth login
+
+   # Create project
+   gcloud projects create som-production --name="SOM Production"
+   gcloud config set project som-production
+
+   # Enable billing (required for Cloud Run)
+   # Go to: https://console.cloud.google.com/billing
+   ```
+
+2. **Enable Required APIs**
+   ```bash
+   gcloud services enable \
+     cloudbuild.googleapis.com \
+     run.googleapis.com \
+     artifactregistry.googleapis.com \
+     secretmanager.googleapis.com
+   ```
+
+3. **Create Artifact Registry Repository**
+   ```bash
+   gcloud artifacts repositories create som-docker \
+     --repository-format=docker \
+     --location=europe-west1 \
+     --description="SOM Docker images"
+   ```
+
+4. **Configure Secret Manager**
+   ```bash
+   # Store Supabase secrets
+   echo -n "your-service-role-key" | \
+     gcloud secrets create SUPABASE_SERVICE_ROLE_KEY --data-file=-
+
+   echo -n "your-jwt-secret" | \
+     gcloud secrets create SUPABASE_JWT_SECRET --data-file=-
+
+   # Grant Cloud Run access to secrets
+   PROJECT_NUMBER=$(gcloud projects describe som-production --format='value(projectNumber)')
+
+   gcloud secrets add-iam-policy-binding SUPABASE_SERVICE_ROLE_KEY \
+     --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+     --role="roles/secretmanager.secretAccessor"
+
+   gcloud secrets add-iam-policy-binding SUPABASE_JWT_SECRET \
+     --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+     --role="roles/secretmanager.secretAccessor"
+   ```
+
+5. **Grant Cloud Build Permissions**
+   ```bash
+   PROJECT_NUMBER=$(gcloud projects describe som-production --format='value(projectNumber)')
+
+   # Allow Cloud Build to deploy to Cloud Run
+   gcloud projects add-iam-policy-binding som-production \
+     --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com" \
+     --role="roles/run.admin"
+
+   # Allow Cloud Build to act as compute service account
+   gcloud iam service-accounts add-iam-policy-binding \
+     ${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
+     --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com" \
+     --role="roles/iam.serviceAccountUser"
+   ```
+
+### Step 3: Configure Local Environment
+
+1. **Update `.env` for Production**
+   ```bash
+   cp .env.example .env.production
+   ```
+
+   Edit `.env.production`:
+   ```bash
+   # Supabase Cloud
+   SUPABASE_URL=https://your-project-id.supabase.co
+   SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+   SUPABASE_JWT_SECRET=your-jwt-secret
+   SUPABASE_PROJECT_ID=your-project-id
+
+   # Google Cloud
+   GCLOUD_PROJECT_ID=som-production
+   GCLOUD_REGION=europe-west1
+   GCLOUD_SERVICE_NAME=som-api
+
+   # Production settings
+   DEV_FIXTURES=false
+   ENABLE_HSTS=true
+   CORS_ALLOWED_ORIGINS=https://your-domain.com
+   ```
+
+2. **Authenticate Docker with Artifact Registry**
+   ```bash
+   gcloud auth configure-docker europe-west1-docker.pkg.dev
+   ```
+
+### Step 4: Deploy API to Cloud Run
+
+**Option A: Manual Deployment**
+
+```bash
+# Build and push Docker image
+cd api
+docker build -t europe-west1-docker.pkg.dev/som-production/som-docker/som-api:latest ..
+
+docker push europe-west1-docker.pkg.dev/som-production/som-docker/som-api:latest
+
+# Deploy to Cloud Run
+gcloud run deploy som-api \
+  --image europe-west1-docker.pkg.dev/som-production/som-docker/som-api:latest \
+  --region europe-west1 \
+  --platform managed \
+  --allow-unauthenticated \
+  --min-instances 0 \
+  --max-instances 10 \
+  --memory 512Mi \
+  --cpu 1 \
+  --set-env-vars "SUPABASE_URL=https://your-project.supabase.co" \
+  --set-env-vars "SUPABASE_ANON_KEY=your-anon-key" \
+  --set-secrets "SUPABASE_SERVICE_ROLE_KEY=SUPABASE_SERVICE_ROLE_KEY:latest" \
+  --set-secrets "SUPABASE_JWT_SECRET=SUPABASE_JWT_SECRET:latest"
+```
+
+**Option B: Automated CI/CD with Cloud Build**
+
+1. **Connect GitHub to Cloud Build**
+   - Go to [Cloud Build Console](https://console.cloud.google.com/cloud-build/triggers)
+   - Click "Connect Repository"
+   - Select GitHub and authorize
+   - Choose your repository
+
+2. **Create Build Trigger**
+   - Click "Create Trigger"
+   - Name: `deploy-main`
+   - Event: Push to branch
+   - Branch: `^main$`
+   - Configuration: Cloud Build configuration file
+   - Location: `cloudbuild.yaml`
+   - Add substitution variables:
+     - `_SUPABASE_URL`: `https://your-project.supabase.co`
+     - `_SUPABASE_ANON_KEY`: `your-anon-key`
+
+3. **Trigger Deployment**
+   ```bash
+   git push origin main
+   # Cloud Build will automatically build and deploy
+   ```
+
+### Step 5: Configure Custom Domain (Optional)
+
+1. **Map Custom Domain in Cloud Run**
+   ```bash
+   gcloud beta run domain-mappings create \
+     --service som-api \
+     --domain api.your-domain.com \
+     --region europe-west1
+   ```
+
+2. **Configure DNS**
+   - Add CNAME record pointing to `ghs.googlehosted.com`
+   - Or add A records as instructed by Cloud Run
+
+### Step 6: Deploy Flutter Web App
+
+Build and deploy the Flutter web app:
+
+```bash
+# Build for production
+flutter build web --release \
+  --dart-define=API_BASE_URL=https://api.your-domain.com \
+  --dart-define=SUPABASE_URL=https://your-project.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=your-anon-key
+
+# Deploy to Firebase Hosting (recommended)
+firebase deploy --only hosting
+
+# Or deploy to any static hosting (Netlify, Vercel, etc.)
+```
+
+### Cost Breakdown
+
+| Service | Free Tier | Pro Tier | Notes |
+|---------|-----------|----------|-------|
+| Supabase | 500MB DB, 1GB storage | $25/mo - 8GB DB, 100GB storage | Includes Auth, Realtime |
+| Cloud Run | 2M requests/mo | ~$0.00002/request | Scale to zero |
+| Artifact Registry | 500MB free | $0.10/GB/month | Docker images |
+| Secret Manager | 6 active secrets free | $0.06/secret/month | Sensitive configs |
+| **Total** | **~$0** | **~$25-35/mo** | Production ready |
+
+### Monitoring & Alerts
+
+1. **Cloud Run Metrics**
+   ```bash
+   # View logs
+   gcloud run services logs read som-api --region europe-west1
+
+   # Stream logs
+   gcloud run services logs tail som-api --region europe-west1
+   ```
+
+2. **Set Up Alerts**
+   - Go to [Cloud Monitoring](https://console.cloud.google.com/monitoring)
+   - Create alerting policies for:
+     - Error rate > 1%
+     - Latency p95 > 2s
+     - Instance count > 5 (cost alert)
+
+3. **Supabase Dashboard**
+   - Monitor database size and connections
+   - View auth logs
+   - Check storage usage
 
 ---
 
@@ -205,48 +489,44 @@ This generates a standalone executable in `api/build/bin/server.exe`.
 
 ### Deployment Options
 
-#### Option 1: Google Cloud Run
+#### Option 1: Google Cloud Run (Recommended)
 
-1. **Create a Dockerfile** (if not exists):
+> **Note**: See [Recommended Stack](#recommended-stack-supabase-cloud--google-cloud-run) section above for detailed setup instructions.
 
-```dockerfile
-FROM dart:stable AS build
+The project includes pre-configured deployment files:
+- `api/Dockerfile` - Multi-stage Docker build optimized for Cloud Run
+- `api/pubspec.production.yaml` - Production dependencies (git-based for Docker)
+- `cloudbuild.yaml` - Automated CI/CD pipeline configuration
+- `.gcloudignore` - Files to exclude from deployment
 
-WORKDIR /app
-COPY api/pubspec.* ./
-RUN dart pub get
-
-COPY api/ .
-RUN dart_frog build
-
-FROM dart:stable-slim
-COPY --from=build /app/build /app
-WORKDIR /app
-
-EXPOSE 8080
-CMD ["./bin/server"]
-```
-
-2. **Build and deploy**:
+**Quick Deployment**:
 
 ```bash
-# Build Docker image
-docker build -t som-api .
+# Authenticate with Google Cloud
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
 
-# Tag for Google Cloud
-docker tag som-api gcr.io/YOUR_PROJECT_ID/som-api
+# Configure Docker
+gcloud auth configure-docker europe-west1-docker.pkg.dev
 
-# Push to Google Container Registry
-docker push gcr.io/YOUR_PROJECT_ID/som-api
+# Build and push image
+docker build -t europe-west1-docker.pkg.dev/YOUR_PROJECT_ID/som-docker/som-api:latest -f api/Dockerfile .
+docker push europe-west1-docker.pkg.dev/YOUR_PROJECT_ID/som-docker/som-api:latest
 
 # Deploy to Cloud Run
 gcloud run deploy som-api \
-  --image gcr.io/YOUR_PROJECT_ID/som-api \
+  --image europe-west1-docker.pkg.dev/YOUR_PROJECT_ID/som-docker/som-api:latest \
   --platform managed \
-  --region us-central1 \
+  --region europe-west1 \
   --allow-unauthenticated \
-  --set-env-vars="$(cat .env.production | xargs)"
+  --min-instances 0 \
+  --max-instances 10 \
+  --memory 512Mi
 ```
+
+**Automated CI/CD with Cloud Build**:
+
+The `cloudbuild.yaml` file automates the entire deployment process. Connect your GitHub repository to Cloud Build and create a trigger on the `main` branch. See [Recommended Stack](#recommended-stack-supabase-cloud--google-cloud-run) for detailed setup.
 
 #### Option 2: Railway
 
@@ -939,4 +1219,16 @@ For issues or questions:
 ---
 
 **Last Updated**: January 2026
-**Version**: 1.0.0
+**Version**: 1.1.0
+
+---
+
+## Quick Reference: Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `.env.example` | Environment variable template |
+| `api/Dockerfile` | Docker build for Cloud Run |
+| `api/pubspec.production.yaml` | Production dependencies |
+| `cloudbuild.yaml` | Google Cloud Build CI/CD |
+| `.gcloudignore` | Files excluded from deployment |
