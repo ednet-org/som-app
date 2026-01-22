@@ -90,23 +90,23 @@ SOM follows a **Domain-Driven Design (DDD)** approach with clean architecture pr
 ```mermaid
 graph TB
     subgraph "Client Layer"
-        A[Flutter App<br/>Mobile/Web/Desktop]
+        A[Flutter App]
     end
 
     subgraph "API Layer"
-        B[Dart Frog API Server<br/>REST Endpoints]
-        C[OpenAPI Specification<br/>API Documentation]
+        B[Dart Frog API Server]
+        C[OpenAPI Specification]
     end
 
     subgraph "Domain Layer"
-        D[EDNet Core<br/>Domain Models]
-        E[SOM Manager<br/>Business Logic]
+        D[EDNet Core]
+        E[SOM Manager]
     end
 
     subgraph "Data Layer"
-        F[Supabase<br/>PostgreSQL Database]
-        G[Supabase Auth<br/>Authentication]
-        H[Supabase Storage<br/>File Storage]
+        F[Supabase]
+        G[Supabase Auth]
+        H[Supabase Storage]
     end
 
     A -->|HTTP/REST| B

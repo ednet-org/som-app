@@ -44,19 +44,19 @@
 ```mermaid
 graph TB
     subgraph External Actors
-        Buyer[👤 Buyer<br/>Creates inquiries,<br/>evaluates offers]
-        Provider[🏭 Provider<br/>Submits offers,<br/>manages products]
-        Consultant[👨‍💼 Consultant<br/>Platform admin,<br/>approves providers]
+        Buyer[👤 Buyer]
+        Provider[🏭 Provider]
+        Consultant[👨‍💼 Consultant]
     end
 
     subgraph SOM Platform
-        SOM[SOM Application<br/>Smart Offer Management<br/>B2B Marketplace]
+        SOM[SOM Application]
     end
 
     subgraph External Systems
-        Email[📧 Email Service<br/>Transactional emails,<br/>notifications]
-        Payment[💳 Payment Gateway<br/>Subscription billing,<br/>invoicing]
-        Storage[☁️ Cloud Storage<br/>File attachments,<br/>documents]
+        Email[📧 Email Service]
+        Payment[💳 Payment Gateway]
+        Storage[☁️ Cloud Storage]
     end
 
     Buyer -->|Creates inquiries| SOM
@@ -91,23 +91,23 @@ graph TB
 
     subgraph SOM Platform
         subgraph Client Applications
-            FlutterMobile[📱 Flutter Mobile App<br/>iOS & Android<br/>Native experience]
-            FlutterWeb[🌐 Flutter Web App<br/>Desktop browsers<br/>Responsive UI]
+            FlutterMobile[📱 Flutter Mobile App]
+            FlutterWeb[🌐 Flutter Web App]
         end
 
         subgraph Backend Services
-            DartFrogAPI[⚡ Dart Frog API<br/>REST endpoints<br/>JWT authentication]
+            DartFrogAPI[⚡ Dart Frog API]
         end
 
         subgraph Data Layer
-            SupabaseAuth[🔐 Supabase Auth<br/>User authentication<br/>Session management]
-            SupabaseDB[🗄️ Supabase Database<br/>PostgreSQL<br/>Real-time subscriptions]
-            SupabaseStorage[📦 Supabase Storage<br/>File uploads<br/>Document management]
+            SupabaseAuth[🔐 Supabase Auth]
+            SupabaseDB[🗄️ Supabase Database]
+            SupabaseStorage[📦 Supabase Storage]
         end
     end
 
     subgraph External Services
-        EmailService[📧 Email Service<br/>Mailer integration]
+        EmailService[📧 Email Service]
     end
 
     BuyerUser -->|HTTPS/JSON| FlutterMobile
@@ -366,21 +366,21 @@ classDiagram
 ```mermaid
 graph TB
     subgraph API Routes /api/
-        Auth[/auth<br/>Authentication]
-        Inquiries[/inquiries<br/>Inquiry management]
-        Offers[/offers<br/>Offer management]
-        Companies[/Companies<br/>Company management]
-        Providers[/providers<br/>Provider operations]
-        Subscriptions[/Subscriptions<br/>Subscription billing]
-        Ads[/ads<br/>Advertisement management]
-        Branches[/branches<br/>Industry branches]
-        Categories[/categories<br/>Product categories]
-        Users[/Users<br/>User management]
-        Roles[/roles<br/>Role management]
-        Billing[/billing<br/>Invoice management]
-        Audit[/audit<br/>Audit logs]
-        Stats[/stats<br/>Statistics]
-        Health[/health<br/>Health checks]
+        Auth[/auth]
+        Inquiries[/inquiries]
+        Offers[/offers]
+        Companies[/Companies]
+        Providers[/providers]
+        Subscriptions[/Subscriptions]
+        Ads[/ads]
+        Branches[/branches]
+        Categories[/categories]
+        Users[/Users]
+        Roles[/roles]
+        Billing[/billing]
+        Audit[/audit]
+        Stats[/stats]
+        Health[/health]
     end
 
     Auth -.->|JWT tokens| Inquiries
@@ -409,7 +409,7 @@ sequenceDiagram
     participant Auth as Supabase Auth
     participant DB as Supabase DB
 
-    Client->>API: POST /auth/login<br/>{email, password}
+    Client->>API: POST /auth/login\n{email, password}
     API->>Auth: Authenticate credentials
     Auth-->>API: User session + tokens
     API->>DB: Fetch user profile & company
@@ -418,7 +418,7 @@ sequenceDiagram
 
     Note over Client: Store tokens securely
 
-    Client->>API: GET /inquiries<br/>Authorization: Bearer {token}
+    Client->>API: GET /inquiries\nAuthorization: Bearer {token}
     API->>Auth: Validate JWT token
     Auth-->>API: Token valid
     API->>DB: Query inquiries
@@ -427,7 +427,7 @@ sequenceDiagram
 
     Note over Client,API: Token expires after 1 hour
 
-    Client->>API: POST /auth/refresh<br/>{refreshToken}
+    Client->>API: POST /auth/refresh\n{refreshToken}
     API->>Auth: Validate refresh token
     Auth-->>API: New access token
     API-->>Client: {accessToken, expiresIn}
@@ -548,22 +548,22 @@ sequenceDiagram
     participant Email as Email Service
     participant Providers as Providers (Flutter App)
 
-    Buyer->>Buyer: Fill inquiry form<br/>(title, description, category)
+    Buyer->>Buyer: Fill inquiry form\n(title, description, category)
     Buyer->>Buyer: Select provider criteria
     Buyer->>Buyer: Upload attachments
 
-    Buyer->>API: POST /inquiries<br/>{inquiry data}
+    Buyer->>API: POST /inquiries\n{inquiry data}
     API->>API: Validate JWT token
     API->>API: Validate input data
-    API->>DB: INSERT inquiry<br/>status = DRAFT
+    API->>DB: INSERT inquiry\nstatus = DRAFT
     DB-->>API: Inquiry created
     API-->>Buyer: {inquiryId, status}
 
     Note over Buyer: Review & publish
 
     Buyer->>API: POST /inquiries/:id/publish
-    API->>DB: UPDATE inquiry<br/>status = OPEN
-    API->>DB: Query matching providers<br/>(by criteria)
+    API->>DB: UPDATE inquiry\nstatus = OPEN
+    API->>DB: Query matching providers\n(by criteria)
     DB-->>API: Provider list
 
     loop For each matching provider
@@ -573,7 +573,7 @@ sequenceDiagram
 
     API-->>Buyer: {success: true}
 
-    Note over Providers: Providers can now view<br/>and submit offers
+    Note over Providers: Providers can now view\nand submit offers
 ```
 
 ### Offer Submission Flow
@@ -587,7 +587,7 @@ sequenceDiagram
     participant Email as Email Service
     participant Buyer as Buyer (Flutter App)
 
-    Provider->>API: GET /inquiries<br/>(filtered by criteria)
+    Provider->>API: GET /inquiries\n(filtered by criteria)
     API->>DB: Query open inquiries
     DB-->>API: Inquiry list
     API-->>Provider: {inquiries: [...]}
@@ -598,22 +598,22 @@ sequenceDiagram
     DB-->>API: Inquiry with attachments
     API-->>Provider: {inquiry details}
 
-    Provider->>Provider: Prepare offer<br/>(price, delivery, description)
+    Provider->>Provider: Prepare offer\n(price, delivery, description)
     Provider->>Provider: Attach documents
 
-    Provider->>API: POST /offers<br/>{offer data, files}
-    API->>API: Validate subscription<br/>(check offer quota)
+    Provider->>API: POST /offers\n{offer data, files}
+    API->>API: Validate subscription\n(check offer quota)
     API->>Storage: Upload attachments
     Storage-->>API: File URLs
-    API->>DB: INSERT offer<br/>status = PENDING
+    API->>DB: INSERT offer\nstatus = PENDING
     DB-->>API: Offer created
 
-    API->>Email: Notify buyer<br/>(new offer received)
+    API->>Email: Notify buyer\n(new offer received)
     Email-->>Buyer: New offer alert
 
     API-->>Provider: {offerId, status}
 
-    Note over Buyer: Buyer reviews offers<br/>and makes decision
+    Note over Buyer: Buyer reviews offers\nand makes decision
 ```
 
 ### User Authentication Flow
@@ -628,17 +628,17 @@ sequenceDiagram
 
     Note over User,Email: Registration Flow
 
-    User->>API: POST /auth/register<br/>{email, password, company}
+    User->>API: POST /auth/register\n{email, password, company}
     API->>Auth: Create user account
     Auth-->>API: User ID
-    API->>DB: INSERT user profile<br/>INSERT company
+    API->>DB: INSERT user profile\nINSERT company
     DB-->>API: Success
     API->>Email: Send verification email
     Email-->>User: Verification link
     API-->>User: {success, userId}
 
     User->>User: Click verification link
-    User->>API: POST /auth/confirmEmail<br/>{token}
+    User->>API: POST /auth/confirmEmail\n{token}
     API->>Auth: Verify email token
     Auth-->>API: Email confirmed
     API->>DB: UPDATE user.emailVerified = true
@@ -646,7 +646,7 @@ sequenceDiagram
 
     Note over User,Email: Login Flow
 
-    User->>API: POST /auth/login<br/>{email, password}
+    User->>API: POST /auth/login\n{email, password}
     API->>Auth: Authenticate
     Auth-->>API: Access token + Refresh token
     API->>DB: Fetch user profile + company
@@ -658,10 +658,10 @@ sequenceDiagram
 
     Note over User,API: Subsequent API calls use Bearer token
 
-    User->>API: GET /inquiries<br/>Authorization: Bearer {token}
+    User->>API: GET /inquiries\nAuthorization: Bearer {token}
     API->>Auth: Validate token
     Auth-->>API: Valid (user context)
-    API->>DB: Query inquiries<br/>(filtered by user role)
+    API->>DB: Query inquiries\n(filtered by user role)
     DB-->>API: Results
     API-->>User: {data}
 ```
@@ -682,7 +682,7 @@ sequenceDiagram
     API-->>Company: {plans: [...]}
 
     Company->>Company: Select plan
-    Company->>API: POST /Subscriptions/upgrade<br/>{planId}
+    Company->>API: POST /Subscriptions/upgrade\n{planId}
     API->>DB: Check current subscription
     DB-->>API: Current plan = Free
     API->>API: Calculate prorated amount
@@ -692,7 +692,7 @@ sequenceDiagram
 
     Company->>Payment: Complete payment
     Payment->>API: Webhook: payment.success
-    API->>DB: UPDATE subscription<br/>plan = Pro<br/>status = ACTIVE
+    API->>DB: UPDATE subscription\nplan = Pro\nstatus = ACTIVE
     API->>DB: INSERT payment record
     DB-->>API: Success
 
@@ -701,7 +701,7 @@ sequenceDiagram
 
     API-->>Payment: Webhook acknowledged
 
-    Note over Company: Subscription features<br/>now unlocked
+    Note over Company: Subscription features\nnow unlocked
 
     Company->>API: GET /Subscriptions/current
     API->>DB: Fetch subscription
