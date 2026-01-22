@@ -95,7 +95,7 @@ abstract class _EmailLoginStoreBase with Store {
           }
         }
 
-        appStore.login(Authorization(
+        await appStore.login(Authorization(
           token: token,
           refreshToken: refreshToken,
           userId: userId,
@@ -117,12 +117,12 @@ abstract class _EmailLoginStoreBase with Store {
           debugPrint(response.statusMessage);
         }
       }
-    }).catchError((error) {
+    }).catchError((error) async {
       final data = error is DioException ? error.response?.data : null;
       errorMessage = parseLoginErrorMessage(data ?? error);
       isInvalidCredentials = true;
       isLoading = false;
-      appStore.logout();
+      await appStore.logout();
     });
   }
 

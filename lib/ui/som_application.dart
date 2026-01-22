@@ -585,7 +585,7 @@ class SomApplication extends StatelessWidget {
     } catch (error, stackTrace) {
       UILogger.silentError('SomApplication._logout', error, stackTrace);
     }
-    appStore.logout();
+    await appStore.logout();
     if (context.mounted) {
       context.beamTo(AuthLoginPageLocation());
     }
@@ -619,7 +619,7 @@ class SomApplication extends StatelessWidget {
                 );
         final profileData = profile?.data;
         final companyOptions = _mapCompanyOptions(profileData);
-        appStore.login(
+        await appStore.login(
           appStore.authorization!.copyWith(
             token: token,
             roles: profileData?.roles?.toList() ??

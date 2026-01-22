@@ -39,28 +39,35 @@ class Login extends StatelessWidget {
       width: 350,
       child: Observer(
         builder: (_) {
-          return Column(
-            children: [
-              SomTextInput(
-                label: 'Username',
-                iconAsset: SomAssets.iconUser,
-                hint: 'usually your email',
-                value: emailLoginStore.email,
-                onChanged: emailLoginStore.setEmail,
-                required: true,
-              ),
-              SomTextInput(
-                label: 'Password',
-                iconAsset: SomAssets.iconVisibilityOff,
-                hint: 'usually your cat name',
-                value: emailLoginStore.password,
-                onChanged: emailLoginStore.setPassword,
-                required: true,
-                showPassword: emailLoginStore.showPassword,
-                onToggleShowPassword: emailLoginStore.toggleShowPassword,
-                isPassword: true,
-                autocorrect: false,
-              ),
+          return AutofillGroup(
+            child: Column(
+              children: [
+                SomTextInput(
+                  label: 'Email',
+                  iconAsset: SomAssets.iconUser,
+                  hint: 'your email address',
+                  value: emailLoginStore.email,
+                  onChanged: emailLoginStore.setEmail,
+                  required: true,
+                  keyboardType: TextInputType.emailAddress,
+                  autofillHints: const [
+                    AutofillHints.email,
+                    AutofillHints.username,
+                  ],
+                ),
+                SomTextInput(
+                  label: 'Password',
+                  iconAsset: SomAssets.iconVisibilityOff,
+                  hint: 'your password',
+                  value: emailLoginStore.password,
+                  onChanged: emailLoginStore.setPassword,
+                  required: true,
+                  showPassword: emailLoginStore.showPassword,
+                  onToggleShowPassword: emailLoginStore.toggleShowPassword,
+                  isPassword: true,
+                  autocorrect: false,
+                  autofillHints: const [AutofillHints.password],
+                ),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -197,7 +204,8 @@ class Login extends StatelessWidget {
               //   primary: Theme.of(context).colorScheme.tertiary,
               //   onPrimary: Theme.of(context).colorScheme.onTertiary,
               // ),
-            ],
+              ],
+            ),
           );
         },
       ),

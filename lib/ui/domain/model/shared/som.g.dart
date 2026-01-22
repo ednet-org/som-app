@@ -170,7 +170,7 @@ mixin _$Som on _Som, Store {
   );
 
   @override
-  void requestBranch(dynamic branch) {
+  void requestBranch(TagModel branch) {
     final _$actionInfo = _$_SomActionController.startAction(
       name: '_Som.requestBranch',
     );
@@ -182,7 +182,7 @@ mixin _$Som on _Som, Store {
   }
 
   @override
-  void removeRequestedBranch(dynamic branch) {
+  void removeRequestedBranch(TagModel branch) {
     final _$actionInfo = _$_SomActionController.startAction(
       name: '_Som.removeRequestedBranch',
     );

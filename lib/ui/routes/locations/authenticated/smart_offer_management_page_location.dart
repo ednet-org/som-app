@@ -18,5 +18,26 @@ class SmartOfferManagementPageLocation extends BeamLocation<BeamState> {
   }
 
   @override
-  List<Pattern> get pathPatterns => ['/'];
+  List<Pattern> get pathPatterns => [
+    '/',
+    '/inquiries',
+    '/inquiries/:inquiryId',
+    '/offers',
+    '/offers/:offerId',
+    '/ads',
+    '/ads/:adId',
+    '/branches',
+    '/branches/:branchId',
+    '/consultants',
+    '/providers',
+    '/providers/:companyId',
+    '/companies',
+    '/companies/:companyId',
+    '/subscriptions',
+    '/subscriptions/:planId',
+    '/roles',
+    '/audit',
+    '/statistics',
+    '/user',
+  ];
 }

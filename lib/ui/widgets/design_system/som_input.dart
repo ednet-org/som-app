@@ -13,6 +13,7 @@ class SomInput extends StatefulWidget {
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
   final TextDirection? textDirection;
+  final Iterable<String>? autofillHints;
 
   const SomInput({
     super.key,
@@ -30,6 +31,7 @@ class SomInput extends StatefulWidget {
     this.maxLines = 1,
     this.onFieldSubmitted,
     this.textDirection,
+    this.autofillHints,
   });
 
   final FormFieldValidator<String>? validator;
@@ -145,6 +147,7 @@ class _SomInputState extends State<SomInput> {
           onFieldSubmitted: widget.onFieldSubmitted,
           textDirection: widget.textDirection,
           textAlign: TextAlign.left,
+          autofillHints: widget.autofillHints,
           decoration: InputDecoration(
             labelText: widget.label,
             hintText: widget.hintText,

@@ -91,8 +91,8 @@ void main() async {
   await initTheming();
 
   //region Entry Point
-  // we do not need # in url
-  // Beamer.setPathUrlStrategy();
+  // Enable clean URLs without # for web
+  Beamer.setPathUrlStrategy();
   runApp(MyApp());
   //endregion
 }
@@ -103,13 +103,48 @@ class MyApp extends StatelessWidget {
   final beamerKey = BeamerProvidedKey();
 
   final routerDelegate = BeamerDelegate(
-    initialPath: '/splash',
+    initialPath: '/inquiries',
     notFoundPage: const BeamPage(
       key: ValueKey('not found page'),
       title: 'Not Found',
       child: NotFoundPage(),
     ),
     transitionDelegate: const NoAnimationTransitionDelegate(),
+    guards: [
+      // Redirect to login if not authenticated for protected routes
+      BeamGuard(
+        pathPatterns: [
+          '/',
+          '/inquiries',
+          '/inquiries/*',
+          '/offers',
+          '/offers/*',
+          '/ads',
+          '/ads/*',
+          '/branches',
+          '/branches/*',
+          '/consultants',
+          '/providers',
+          '/providers/*',
+          '/companies',
+          '/companies/*',
+          '/subscriptions',
+          '/subscriptions/*',
+          '/roles',
+          '/audit',
+          '/statistics',
+          '/user',
+        ],
+        check: (context, location) => appStore.isAuthenticated,
+        beamToNamed: (origin, target) => '/auth/login',
+      ),
+      // Redirect away from login if already authenticated
+      BeamGuard(
+        pathPatterns: ['/auth/login', '/splash'],
+        check: (context, location) => !appStore.isAuthenticated,
+        beamToNamed: (origin, target) => '/inquiries',
+      ),
+    ],
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
         SplashPageBeamLocation(),

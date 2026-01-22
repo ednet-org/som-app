@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
@@ -15,6 +17,9 @@ abstract class _Application with Store {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   static const String _prefThemeMode = 'ui.themeMode';
   static const String _prefDensity = 'ui.density';
+  static const String _prefAuthToken = 'auth.token';
+  static const String _prefAuthRefreshToken = 'auth.refreshToken';
+  static const String _prefAuthData = 'auth.data';
 
   @observable
   double applicationWidth = 600;
@@ -80,6 +85,83 @@ abstract class _Application with Store {
         sharedPrefs.getString(_prefThemeMode));
     density = _uiDensityFromString(
         sharedPrefs.getString(_prefDensity));
+
+    // Restore auth state from persisted storage
+    await _restoreAuth(sharedPrefs);
+  }
+
+  Future<void> _restoreAuth(SharedPreferences prefs) async {
+    final token = prefs.getString(_prefAuthToken);
+    final refreshToken = prefs.getString(_prefAuthRefreshToken);
+    final authDataJson = prefs.getString(_prefAuthData);
+
+    if (token != null && refreshToken != null && authDataJson != null) {
+      try {
+        final authData = jsonDecode(authDataJson) as Map<String, dynamic>;
+        authorization = Authorization(
+          token: token,
+          refreshToken: refreshToken,
+          userId: authData['userId'] as String?,
+          companyId: authData['companyId'] as String?,
+          activeCompanyId: authData['activeCompanyId'] as String?,
+          companyName: authData['companyName'] as String?,
+          emailAddress: authData['emailAddress'] as String?,
+          roles: (authData['roles'] as List<dynamic>?)?.cast<String>() ?? [],
+          activeRole: authData['activeRole'] as String?,
+          companyType: authData['companyType'] as int?,
+          companyOptions: _parseCompanyOptions(authData['companyOptions']),
+        );
+        SupabaseRealtime.setAuth(token);
+      } catch (_) {
+        // Invalid stored auth, clear it
+        await _clearPersistedAuth(prefs);
+      }
+    }
+  }
+
+  List<CompanyContext> _parseCompanyOptions(dynamic data) {
+    if (data == null) return [];
+    final list = data as List<dynamic>;
+    return list.map((item) {
+      final map = item as Map<String, dynamic>;
+      return CompanyContext(
+        companyId: map['companyId'] as String,
+        companyName: map['companyName'] as String,
+        companyType: map['companyType'] as int,
+        roles: (map['roles'] as List<dynamic>).cast<String>(),
+        activeRole: map['activeRole'] as String,
+      );
+    }).toList();
+  }
+
+  Future<void> _persistAuth(Authorization auth) async {
+    final prefs = await _prefs;
+    await prefs.setString(_prefAuthToken, auth.token);
+    await prefs.setString(_prefAuthRefreshToken, auth.refreshToken);
+    final authData = {
+      'userId': auth.userId,
+      'companyId': auth.companyId,
+      'activeCompanyId': auth.activeCompanyId,
+      'companyName': auth.companyName,
+      'emailAddress': auth.emailAddress,
+      'roles': auth.roles,
+      'activeRole': auth.activeRole,
+      'companyType': auth.companyType,
+      'companyOptions': auth.companyOptions.map((c) => {
+        'companyId': c.companyId,
+        'companyName': c.companyName,
+        'companyType': c.companyType,
+        'roles': c.roles,
+        'activeRole': c.activeRole,
+      }).toList(),
+    };
+    await prefs.setString(_prefAuthData, jsonEncode(authData));
+  }
+
+  Future<void> _clearPersistedAuth(SharedPreferences prefs) async {
+    await prefs.remove(_prefAuthToken);
+    await prefs.remove(_prefAuthRefreshToken);
+    await prefs.remove(_prefAuthData);
   }
 
   ThemeMode _themeModeFromString(String? value) {
@@ -118,15 +200,18 @@ abstract class _Application with Store {
   bool get isAuthenticated => authorization != null;
 
   @action
-  void logout() {
+  Future<void> logout() async {
     authorization = null;
     SupabaseRealtime.setAuth(null);
+    final prefs = await _prefs;
+    await _clearPersistedAuth(prefs);
   }
 
   @action
-  void login(Authorization aAuthorization) {
+  Future<void> login(Authorization aAuthorization) async {
     authorization = aAuthorization;
     SupabaseRealtime.setAuth(aAuthorization.token);
+    await _persistAuth(aAuthorization);
   }
 
   @action

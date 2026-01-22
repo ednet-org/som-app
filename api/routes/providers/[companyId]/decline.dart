@@ -43,7 +43,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
       subscriptionPlanId: profile.subscriptionPlanId,
       paymentInterval: profile.paymentInterval,
       providerType: profile.providerType,
-      status: 'pending',
+      status: 'declined',
       rejectionReason: reason?.trim().isEmpty == true ? null : reason?.trim(),
       rejectedAt: DateTime.now().toUtc(),
       createdAt: profile.createdAt,

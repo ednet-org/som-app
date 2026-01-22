@@ -213,7 +213,7 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   );
 
   @override
-  Future<dynamic> setUserPassword(dynamic contextCallback) {
+  Future<void> setUserPassword(VoidCallback contextCallback) {
     return _$setUserPasswordAsyncAction.run(
       () => super.setUserPassword(contextCallback),
     );
@@ -225,7 +225,7 @@ mixin _$UserAccountConfirmation on _UserAccountConfirmationBase, Store {
   );
 
   @override
-  Future<dynamic> confirmEmail() {
+  Future<void> confirmEmail() {
     return _$confirmEmailAsyncAction.run(() => super.confirmEmail());
   }
 

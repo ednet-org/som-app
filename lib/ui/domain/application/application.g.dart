@@ -212,6 +212,26 @@ mixin _$Application on _Application, Store {
     return _$loadPreferencesAsyncAction.run(() => super.loadPreferences());
   }
 
+  late final _$logoutAsyncAction = AsyncAction(
+    '_Application.logout',
+    context: context,
+  );
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
+  late final _$loginAsyncAction = AsyncAction(
+    '_Application.login',
+    context: context,
+  );
+
+  @override
+  Future<void> login(Authorization aAuthorization) {
+    return _$loginAsyncAction.run(() => super.login(aAuthorization));
+  }
+
   late final _$_ApplicationActionController = ActionController(
     name: '_Application',
     context: context,
@@ -296,30 +316,6 @@ mixin _$Application on _Application, Store {
     );
     try {
       return super.setDrawerItemIndex(aIndex);
-    } finally {
-      _$_ApplicationActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void logout() {
-    final _$actionInfo = _$_ApplicationActionController.startAction(
-      name: '_Application.logout',
-    );
-    try {
-      return super.logout();
-    } finally {
-      _$_ApplicationActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void login(Authorization aAuthorization) {
-    final _$actionInfo = _$_ApplicationActionController.startAction(
-      name: '_Application.login',
-    );
-    try {
-      return super.login(aAuthorization);
     } finally {
       _$_ApplicationActionController.endAction(_$actionInfo);
     }

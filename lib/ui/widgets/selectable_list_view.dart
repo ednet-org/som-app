@@ -16,6 +16,8 @@ class SelectableListView<T> extends StatefulWidget {
     this.enableKeyboardNavigation = true,
     this.enableStaggeredAnimation = true,
     this.staggerDelay = const Duration(milliseconds: 40),
+    this.maxAnimatedItems = 15,
+    this.cacheExtent = 500,
   });
 
   final List<T> items;
@@ -27,6 +29,10 @@ class SelectableListView<T> extends StatefulWidget {
   final bool enableKeyboardNavigation;
   final bool enableStaggeredAnimation;
   final Duration staggerDelay;
+  /// Maximum number of items to animate for performance (items beyond this show instantly)
+  final int maxAnimatedItems;
+  /// Cache extent for ListView.builder virtualization
+  final double cacheExtent;
 
   @override
   State<SelectableListView<T>> createState() => _SelectableListViewState<T>();
@@ -52,11 +58,17 @@ class _SelectableListViewState<T> extends State<SelectableListView<T>> {
     Widget list = ListView.builder(
       controller: widget.controller,
       itemCount: widget.items.length,
+      cacheExtent: widget.cacheExtent,
+      addAutomaticKeepAlives: false,
+      addRepaintBoundaries: true,
       itemBuilder: (context, index) {
         final item = widget.items[index];
         final isSelected = index == widget.selectedIndex;
         final child = widget.itemBuilder(context, item, isSelected);
-        if (!widget.enableStaggeredAnimation) return child;
+        // Only animate first N items for performance - beyond that show instantly
+        if (!widget.enableStaggeredAnimation || index >= widget.maxAnimatedItems) {
+          return child;
+        }
         return _StaggeredListItem(
           index: index,
           delay: widget.staggerDelay,

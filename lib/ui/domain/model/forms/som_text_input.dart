@@ -18,6 +18,7 @@ class SomTextInput extends StatefulWidget {
   final FormFieldValidator<String>? validator; // restored
   final ValueChanged<String>? onFieldSubmitted;
   final String? errorText;
+  final Iterable<String>? autofillHints;
 
   const SomTextInput({
     super.key,
@@ -37,6 +38,7 @@ class SomTextInput extends StatefulWidget {
     this.controller,
     this.onFieldSubmitted,
     this.errorText,
+    this.autofillHints,
   });
 
   @override
@@ -98,6 +100,7 @@ class _SomTextInputState extends State<SomTextInput> {
         errorText: widget.errorText,
         focusNode: _focusNode,
         textDirection: TextDirection.ltr,
+        autofillHints: widget.autofillHints,
       ),
     );
   }

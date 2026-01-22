@@ -27,7 +27,16 @@ class BranchesAppBody extends StatefulWidget {
 }
 
 class _BranchesAppBodyState extends State<BranchesAppBody> {
-  Future<List<Branch>>? _branchesFuture;
+  // Pagination state
+  List<Branch> _branches = [];
+  int _totalBranches = 0;
+  bool _isLoading = false;
+  bool _hasError = false;
+  String? _errorMessage;
+  static const int _pageSize = 50;
+
+  final ScrollController _scrollController = ScrollController();
+
   Branch? _selectedBranch;
   Category? _selectedCategory;
   List<ProviderSummary> _pendingProviders = const [];
@@ -36,17 +45,33 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
       RealtimeRefreshHandle(_handleRealtimeRefresh);
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _branchesFuture ??= _loadBranches();
+    if (_branches.isEmpty && !_isLoading) {
+      _loadBranches();
+    }
     _loadPendingProviders();
     _setupRealtime();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _realtimeRefresh.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _loadMoreBranches();
+    }
   }
 
   void _handleRealtimeRefresh() {
@@ -65,23 +90,67 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     _realtimeReady = true;
   }
 
-  Future<List<Branch>> _loadBranches() async {
-    final api = Provider.of<Openapi>(context, listen: false);
-    final response = await api.getBranchesApi().branchesGet();
-    final list = response.data?.toList() ?? const [];
-    if (_selectedBranch != null) {
-      _selectedBranch = list.firstWhere(
-        (branch) => branch.id == _selectedBranch!.id,
-        orElse: () => list.isNotEmpty ? list.first : Branch(),
+  Future<void> _loadBranches({bool refresh = false}) async {
+    if (_isLoading) return;
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+      if (refresh) {
+        _branches = [];
+        _totalBranches = 0;
+      }
+    });
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      final response = await api.getBranchesApi().branchesGet(
+        limit: _pageSize,
+        offset: 0,
       );
+      final list = response.data?.toList() ?? const [];
+      // Parse total from response headers or estimate
+      _totalBranches = response.headers['x-total-count']?.firstOrNull != null
+          ? int.tryParse(response.headers['x-total-count']!.first) ?? list.length
+          : (list.length < _pageSize ? list.length : 1000); // Estimate if no header
+      setState(() {
+        _branches = list;
+        _isLoading = false;
+        if (_selectedBranch != null) {
+          _selectedBranch = list.firstWhere(
+            (branch) => branch.id == _selectedBranch!.id,
+            orElse: () => list.isNotEmpty ? list.first : Branch(),
+          );
+        }
+      });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _errorMessage = error.toString();
+      });
     }
-    return list;
+  }
+
+  Future<void> _loadMoreBranches() async {
+    if (_isLoading || _branches.length >= _totalBranches) return;
+    setState(() => _isLoading = true);
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      final response = await api.getBranchesApi().branchesGet(
+        limit: _pageSize,
+        offset: _branches.length,
+      );
+      final list = response.data?.toList() ?? const [];
+      setState(() {
+        _branches = [..._branches, ...list];
+        _isLoading = false;
+      });
+    } catch (error) {
+      setState(() => _isLoading = false);
+    }
   }
 
   Future<void> _refresh() async {
-    setState(() {
-      _branchesFuture = _loadBranches();
-    });
+    await _loadBranches(refresh: true);
     await _loadPendingProviders();
   }
 
@@ -108,21 +177,35 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
 
   Future<void> _approvePending(ProviderSummary provider) async {
     if (provider.companyId == null) return;
-    final api = Provider.of<Openapi>(context, listen: false);
-    await api.getProvidersApi().providersCompanyIdApprovePost(
-      companyId: provider.companyId!,
-      providersCompanyIdApprovePostRequest:
-          ProvidersCompanyIdApprovePostRequest((b) {
-            b.approvedBranchIds.clear();
-            b.approvedBranchIds.addAll(provider.pendingBranchIds ?? const []);
-          }),
-    );
-    await _loadPendingProviders();
+    // Optimistic update: remove from list immediately
+    final previousList = List<ProviderSummary>.from(_pendingProviders);
+    setState(() {
+      _pendingProviders = _pendingProviders
+          .where((p) => p.companyId != provider.companyId)
+          .toList();
+    });
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      await api.getProvidersApi().providersCompanyIdApprovePost(
+        companyId: provider.companyId!,
+        providersCompanyIdApprovePostRequest:
+            ProvidersCompanyIdApprovePostRequest((b) {
+              b.approvedBranchIds.clear();
+              b.approvedBranchIds.addAll(provider.pendingBranchIds ?? const []);
+            }),
+      );
+      _showSnack('Provider approved successfully');
+    } catch (error) {
+      // Revert optimistic update on failure
+      setState(() {
+        _pendingProviders = previousList;
+      });
+      _showSnack('Failed to approve provider: $error');
+    }
   }
 
   Future<void> _declinePending(ProviderSummary provider) async {
     if (provider.companyId == null) return;
-    final api = Provider.of<Openapi>(context, listen: false);
     final controller = TextEditingController();
     final confirmed = await showDialog<bool>(
       context: context,
@@ -149,17 +232,29 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     );
     if (!mounted) return;
     if (confirmed != true) return;
+    // Optimistic update: remove from list immediately
+    final previousList = List<ProviderSummary>.from(_pendingProviders);
+    setState(() {
+      _pendingProviders = _pendingProviders
+          .where((p) => p.companyId != provider.companyId)
+          .toList();
+    });
     try {
+      final api = Provider.of<Openapi>(context, listen: false);
       await api.getProvidersApi().providersCompanyIdDeclinePost(
         companyId: provider.companyId!,
         subscriptionsCancelPostRequest: SubscriptionsCancelPostRequest(
           (b) => b..reason = controller.text.trim(),
         ),
       );
+      _showSnack('Provider declined');
     } catch (error) {
+      // Revert optimistic update on failure
+      setState(() {
+        _pendingProviders = previousList;
+      });
       _showSnack('Failed to decline provider: $error');
     }
-    await _loadPendingProviders();
   }
 
   Future<void> _createBranch() async {
@@ -238,32 +333,85 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
     if (branch.id == null) return;
     final name = branch.name ?? '';
     if (name.isEmpty) return;
-    final api = Provider.of<Openapi>(context, listen: false);
-    await api.getBranchesApi().branchesBranchIdPut(
-      branchId: branch.id!,
-      branchesPostRequest: BranchesPostRequest(
-        (b) => b
-          ..name = name
-          ..status = status,
-      ),
-    );
-    await _refresh();
+    // Optimistic update: update local branch status immediately
+    final previousFuture = _branchesFuture;
+    final branches = await _branchesFuture ?? [];
+    final updatedBranches = branches.map((b) {
+      if (b.id == branch.id) {
+        return b.rebuild((builder) => builder.status = status);
+      }
+      return b;
+    }).toList();
+    setState(() {
+      _branchesFuture = Future.value(updatedBranches);
+    });
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      await api.getBranchesApi().branchesBranchIdPut(
+        branchId: branch.id!,
+        branchesPostRequest: BranchesPostRequest(
+          (b) => b
+            ..name = name
+            ..status = status,
+        ),
+      );
+      _showSnack('Branch ${status == 'active' ? 'approved' : 'declined'}');
+    } catch (error) {
+      // Revert optimistic update on failure
+      setState(() {
+        _branchesFuture = previousFuture;
+      });
+      _showSnack('Failed to update branch: $error');
+    }
   }
 
   Future<void> _setCategoryStatus(Category category, String status) async {
     if (category.id == null) return;
     final name = category.name ?? '';
     if (name.isEmpty) return;
-    final api = Provider.of<Openapi>(context, listen: false);
-    await api.getBranchesApi().categoriesCategoryIdPut(
-      categoryId: category.id!,
-      branchesPostRequest: BranchesPostRequest(
-        (b) => b
-          ..name = name
-          ..status = status,
-      ),
-    );
-    await _refresh();
+    // Optimistic update: update local category status immediately
+    final previousFuture = _branchesFuture;
+    final branches = await _branchesFuture ?? [];
+    final updatedBranches = branches.map((b) {
+      if (b.id == _selectedBranch?.id && b.categories != null) {
+        final updatedCategories = b.categories!.map((c) {
+          if (c.id == category.id) {
+            return c.rebuild((builder) => builder.status = status);
+          }
+          return c;
+        }).toList();
+        return b.rebuild((builder) => builder.categories.replace(updatedCategories));
+      }
+      return b;
+    }).toList();
+    setState(() {
+      _branchesFuture = Future.value(updatedBranches);
+      // Update selected branch reference
+      if (_selectedBranch != null) {
+        _selectedBranch = updatedBranches.firstWhere(
+          (b) => b.id == _selectedBranch!.id,
+          orElse: () => _selectedBranch!,
+        );
+      }
+    });
+    try {
+      final api = Provider.of<Openapi>(context, listen: false);
+      await api.getBranchesApi().categoriesCategoryIdPut(
+        categoryId: category.id!,
+        branchesPostRequest: BranchesPostRequest(
+          (b) => b
+            ..name = name
+            ..status = status,
+        ),
+      );
+      _showSnack('Category ${status == 'active' ? 'approved' : 'declined'}');
+    } catch (error) {
+      // Revert optimistic update on failure
+      setState(() {
+        _branchesFuture = previousFuture;
+      });
+      _showSnack('Failed to update category: $error');
+    }
   }
 
   Future<void> _deleteBranch() async {
@@ -382,105 +530,121 @@ class _BranchesAppBodyState extends State<BranchesAppBody> {
       );
     }
 
-    return FutureBuilder<List<Branch>>(
-      future: _branchesFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return AppBody(
-            contextMenu: _buildToolbar(),
-            leftSplit: const Center(child: CircularProgressIndicator()),
-            rightSplit: const SizedBox.shrink(),
-          );
-        }
-        if (snapshot.hasError) {
-          return AppBody(
-            contextMenu: _buildToolbar(),
-            leftSplit: Center(
-              child: InlineMessage(
-                message: 'Failed to load branches: ${snapshot.error}',
-                type: InlineMessageType.error,
-              ),
-            ),
-            rightSplit: const SizedBox.shrink(),
-          );
-        }
-        final branches = snapshot.data ?? const [];
-        if (branches.isEmpty) {
-          return AppBody(
-            contextMenu: _buildToolbar(),
-            leftSplit: const EmptyState(
-              asset: SomAssets.emptySearchResults,
-              title: 'No branches yet',
-              message: 'Create a branch to categorize inquiries',
-            ),
-            rightSplit: const SizedBox.shrink(),
-          );
-        }
-        return AppBody(
-          contextMenu: _buildToolbar(),
-          leftSplit: SelectableListView<Branch>(
-            items: branches,
-            selectedIndex: () {
-              final index = branches
-                  .indexWhere((branch) => branch.id == _selectedBranch?.id);
-              return index < 0 ? null : index;
-            }(),
-            onSelectedIndex: (index) {
-              setState(() {
-                _selectedBranch = branches[index];
-                _selectedCategory = null;
-              });
-            },
-            itemBuilder: (context, branch, isSelected) {
-              final index = branches.indexOf(branch);
-              final statusLabel = branch.status ?? 'active';
-              return Column(
-                children: [
-                  SomListTile(
-                    selected: isSelected,
-                    onTap: () {
-                      setState(() {
-                        _selectedBranch = branch;
-                        _selectedCategory = null;
-                      });
-                    },
-                    title: Text(
-                      branch.name ??
-                          'Branch ${SomFormatters.shortId(branch.id)}',
-                    ),
-                    subtitle: Text(
-                      '${branch.categories?.length ?? 0} categories • ${SomFormatters.capitalize(statusLabel)}',
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        StatusBadge.branch(
-                          status: statusLabel,
-                          compact: false,
-                          showIcon: false,
-                        ),
-                        if (statusLabel == 'pending') ...[
-                          const SizedBox(width: 8),
-                          TextButton(
-                            onPressed: () =>
-                                _setBranchStatus(branch, 'active'),
-                            child: const Text('Approve'),
-                          ),
-                          TextButton(
-                            onPressed: () =>
-                                _setBranchStatus(branch, 'declined'),
-                            child: const Text('Decline'),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  if (index != branches.length - 1)
-                    const Divider(height: 1),
-                ],
-              );
-            },
+    // Initial loading state
+    if (_branches.isEmpty && _isLoading) {
+      return AppBody(
+        contextMenu: _buildToolbar(),
+        leftSplit: const Center(child: CircularProgressIndicator()),
+        rightSplit: const SizedBox.shrink(),
+      );
+    }
+
+    // Error state
+    if (_hasError && _branches.isEmpty) {
+      return AppBody(
+        contextMenu: _buildToolbar(),
+        leftSplit: Center(
+          child: InlineMessage(
+            message: 'Failed to load branches: $_errorMessage',
+            type: InlineMessageType.error,
           ),
+        ),
+        rightSplit: const SizedBox.shrink(),
+      );
+    }
+
+    // Empty state
+    if (_branches.isEmpty && !_isLoading) {
+      return AppBody(
+        contextMenu: _buildToolbar(),
+        leftSplit: const EmptyState(
+          asset: SomAssets.emptySearchResults,
+          title: 'No branches yet',
+          message: 'Create a branch to categorize inquiries',
+        ),
+        rightSplit: const SizedBox.shrink(),
+      );
+    }
+
+    // Main content with infinite scroll
+    return AppBody(
+      contextMenu: _buildToolbar(),
+      leftSplit: Column(
+        children: [
+          // Progress indicator showing load status
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Text(
+              'Showing ${_branches.length} of $_totalBranches branches',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: _branches.length + (_isLoading ? 1 : 0),
+              cacheExtent: 500,
+              itemBuilder: (context, index) {
+                // Loading indicator at the end
+                if (index >= _branches.length) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final branch = _branches[index];
+                final isSelected = branch.id == _selectedBranch?.id;
+                final statusLabel = branch.status ?? 'active';
+                return Column(
+                  children: [
+                    SomListTile(
+                      selected: isSelected,
+                      onTap: () {
+                        setState(() {
+                          _selectedBranch = branch;
+                          _selectedCategory = null;
+                        });
+                      },
+                      title: Text(
+                        branch.name ??
+                            'Branch ${SomFormatters.shortId(branch.id)}',
+                      ),
+                      subtitle: Text(
+                        '${branch.categories?.length ?? 0} categories • ${SomFormatters.capitalize(statusLabel)}',
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          StatusBadge.branch(
+                            status: statusLabel,
+                            compact: false,
+                            showIcon: false,
+                          ),
+                          if (statusLabel == 'pending') ...[
+                            const SizedBox(width: 8),
+                            TextButton(
+                              onPressed: () =>
+                                  _setBranchStatus(branch, 'active'),
+                              child: const Text('Approve'),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  _setBranchStatus(branch, 'declined'),
+                              child: const Text('Decline'),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    if (index != _branches.length - 1)
+                      const Divider(height: 1),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
           rightSplit: _selectedBranch == null
               ? const EmptyState(
                   asset: SomAssets.emptySearchResults,
