@@ -1,11 +1,14 @@
 // ignore_for_file: file_names
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:logging/logging.dart';
 
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/mappings.dart';
 import 'package:som_api/services/request_auth.dart';
+
+final _log = Logger('loadUserWithCompany');
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method != HttpMethod.get) {
@@ -17,20 +20,26 @@ Future<Response> onRequest(RequestContext context) async {
     users: context.read<UserRepository>(),
   );
   if (authResult == null) {
+    _log.warning('Auth failed - returning 401');
     return Response(statusCode: 401);
   }
+  _log.info('Auth succeeded for user ${authResult.userId}');
   final params = context.request.uri.queryParameters;
   final userId = params['userId'];
   final companyId = params['companyId'];
   if (userId == null) {
+    _log.warning('userId param missing - returning 400');
     return Response(statusCode: 400);
   }
+  _log.info('Looking up user: $userId');
   final userRepo = context.read<UserRepository>();
   final companyRepo = context.read<CompanyRepository>();
   final user = await userRepo.findById(userId);
   if (user == null) {
+    _log.warning('User $userId not found - returning 404');
     return Response(statusCode: 404);
   }
+  _log.info('Found user: ${user.email}');
   final isSelf = authResult.userId == userId;
   final isConsultant = authResult.roles.contains('consultant');
   final isAdmin = authResult.roles.contains('admin');
@@ -43,16 +52,21 @@ Future<Response> onRequest(RequestContext context) async {
 
   final memberships = await userRepo.listCompanyRolesForUser(userId);
   if (memberships.isEmpty) {
+    _log.warning('No memberships for user $userId - returning 404');
     return Response(statusCode: 404);
   }
+  _log.info('Found ${memberships.length} memberships');
   var resolvedCompanyId = companyId ?? user.lastLoginCompanyId ?? user.companyId;
   if (!memberships.any((membership) => membership.companyId == resolvedCompanyId)) {
     resolvedCompanyId = memberships.first.companyId;
   }
+  _log.info('Looking up company: $resolvedCompanyId');
   final company = await companyRepo.findById(resolvedCompanyId);
   if (company == null) {
+    _log.warning('Company $resolvedCompanyId not found - returning 404');
     return Response(statusCode: 404);
   }
+  _log.info('Found company: ${company.name}');
   final activeMembership = memberships.firstWhere(
     (membership) => membership.companyId == resolvedCompanyId,
     orElse: () => memberships.first,
