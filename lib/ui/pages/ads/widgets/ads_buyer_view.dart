@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:openapi/openapi.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:som/ui/theme/som_assets.dart';
-import 'package:som/ui/utils/formatters.dart';
-import 'package:som/ui/widgets/som_list_tile.dart';
-import 'package:som/ui/widgets/status_badge.dart';
 
 /// Ensures URL has a scheme for proper launching.
 Uri _ensureScheme(String url) {
@@ -16,7 +11,7 @@ Uri _ensureScheme(String url) {
   return Uri.parse('https://$trimmed');
 }
 
-/// View for buyers showing ads grouped by type.
+/// Immersive marketing-focused view for buyers showing ads prominently.
 class AdsBuyerView extends StatelessWidget {
   const AdsBuyerView({
     super.key,
@@ -29,91 +24,513 @@ class AdsBuyerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final banners = ads.where((ad) => ad.type == 'banner').toList();
     final normal = ads.where((ad) => ad.type != 'banner').toList();
+    final theme = Theme.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ListView(
-        children: [
-          if (banners.isNotEmpty) ...[
-            Text('Banner ads', style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: banners
-                  .map((ad) => _BannerAdButton(ad: ad))
-                  .toList(),
+    if (ads.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.campaign_outlined,
+              size: 64,
+              color: theme.colorScheme.outline,
             ),
-            const Divider(height: 24),
-          ],
-          Text('Ads', style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: 8),
-          ...normal.map((ad) => _NormalAdCard(ad: ad)),
-        ],
-      ),
-    );
-  }
-}
-
-class _BannerAdButton extends StatelessWidget {
-  const _BannerAdButton({required this.ad});
-
-  final Ad ad;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: ad.url == null
-          ? null
-          : () => launchUrl(
-                _ensureScheme(ad.url!),
-                mode: LaunchMode.externalApplication,
+            const SizedBox(height: 16),
+            Text(
+              'No promotions available',
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
               ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Check back later for exciting offers!',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.outline,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset(
-            SomAssets.adBannerPlaceholder,
-            width: 220,
-            height: 80,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 6),
-          Text(ad.headline ?? 'Banner ${SomFormatters.shortId(ad.id)}'),
+          // Hero banner section
+          if (banners.isNotEmpty) ...[
+            _BannerHeroSection(banners: banners),
+            const SizedBox(height: 32),
+          ],
+          // Promotions grid
+          if (normal.isNotEmpty) ...[
+            Text(
+              'Featured Offers',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Discover services from our trusted partners',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 20),
+            _PromotionsGrid(ads: normal),
+          ],
         ],
       ),
     );
   }
 }
 
-class _NormalAdCard extends StatelessWidget {
-  const _NormalAdCard({required this.ad});
+/// Hero section displaying banner ads prominently.
+class _BannerHeroSection extends StatelessWidget {
+  const _BannerHeroSection({required this.banners});
+
+  final List<Ad> banners;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.star_rounded,
+              color: theme.colorScheme.primary,
+              size: 20,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              'Highlighted',
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 200,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: banners.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 16),
+            itemBuilder: (context, index) => _BannerCard(ad: banners[index]),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Large banner card with gradient overlay and CTA.
+class _BannerCard extends StatefulWidget {
+  const _BannerCard({required this.ad});
 
   final Ad ad;
 
   @override
+  State<_BannerCard> createState() => _BannerCardState();
+}
+
+class _BannerCardState extends State<_BannerCard> {
+  bool _isHovered = false;
+
+  void _launchUrl() {
+    if (widget.ad.url == null) return;
+    launchUrl(
+      _ensureScheme(widget.ad.url!),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      child: SomListTile(
-        leading: SvgPicture.asset(
-          SomAssets.adSidebarPlaceholder,
-          width: 40,
-          height: 40,
-        ),
-        title: Text(ad.headline ?? 'Ad ${SomFormatters.shortId(ad.id)}'),
-        subtitle: Text(ad.description ?? ad.url ?? ''),
-        trailing: StatusBadge.ad(
-          status: ad.status ?? 'draft',
-          compact: true,
-          showIcon: false,
-        ),
-        onTap: ad.url == null
-            ? null
-            : () => launchUrl(
-                  _ensureScheme(ad.url!),
-                  mode: LaunchMode.externalApplication,
+    final theme = Theme.of(context);
+    final hasImage = widget.ad.imagePath != null && widget.ad.imagePath!.isNotEmpty;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: _launchUrl,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 360,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.shadow.withOpacity(_isHovered ? 0.2 : 0.1),
+                blurRadius: _isHovered ? 20 : 12,
+                offset: Offset(0, _isHovered ? 8 : 4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Background image or gradient
+                if (hasImage)
+                  Image.network(
+                    widget.ad.imagePath!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
+                  )
+                else
+                  _buildPlaceholder(theme),
+                // Gradient overlay
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.7),
+                      ],
+                    ),
+                  ),
                 ),
+                // Content
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.ad.headline ?? 'Special Offer',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (widget.ad.description != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.ad.description!,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                      const SizedBox(height: 12),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: _isHovered ? 16 : 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Learn more',
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 16,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  Widget _buildPlaceholder(ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.colorScheme.primaryContainer,
+            theme.colorScheme.primary,
+          ],
+        ),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.campaign_rounded,
+          size: 48,
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+}
+
+/// Responsive grid of promotional ad cards.
+class _PromotionsGrid extends StatelessWidget {
+  const _PromotionsGrid({required this.ads});
+
+  final List<Ad> ads;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final crossAxisCount = constraints.maxWidth > 900
+            ? 3
+            : constraints.maxWidth > 600
+                ? 2
+                : 1;
+
+        return Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          children: ads.map((ad) {
+            final cardWidth = (constraints.maxWidth - (crossAxisCount - 1) * 20) / crossAxisCount;
+            return SizedBox(
+              width: cardWidth.clamp(280.0, 400.0),
+              child: _PromotionCard(ad: ad),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
+
+/// Individual promotion card with hover effects and CTA.
+class _PromotionCard extends StatefulWidget {
+  const _PromotionCard({required this.ad});
+
+  final Ad ad;
+
+  @override
+  State<_PromotionCard> createState() => _PromotionCardState();
+}
+
+class _PromotionCardState extends State<_PromotionCard> {
+  bool _isHovered = false;
+
+  void _launchUrl() {
+    if (widget.ad.url == null) return;
+    launchUrl(
+      _ensureScheme(widget.ad.url!),
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final hasImage = widget.ad.imagePath != null && widget.ad.imagePath!.isNotEmpty;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: _launchUrl,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: _isHovered
+                  ? theme.colorScheme.primary.withOpacity(0.5)
+                  : theme.colorScheme.outlineVariant.withOpacity(0.5),
+              width: _isHovered ? 2 : 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.shadow.withOpacity(_isHovered ? 0.15 : 0.08),
+                blurRadius: _isHovered ? 16 : 8,
+                offset: Offset(0, _isHovered ? 6 : 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image section
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      if (hasImage)
+                        Image.network(
+                          widget.ad.imagePath!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => _buildImagePlaceholder(theme),
+                        )
+                      else
+                        _buildImagePlaceholder(theme),
+                      // Hover overlay
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 200),
+                        opacity: _isHovered ? 1 : 0,
+                        child: Container(
+                          color: theme.colorScheme.primary.withOpacity(0.1),
+                          child: Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primary,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'View offer',
+                                    style: theme.textTheme.labelMedium?.copyWith(
+                                      color: theme.colorScheme.onPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    Icons.open_in_new_rounded,
+                                    size: 16,
+                                    color: theme.colorScheme.onPrimary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Content section
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.ad.headline ?? 'Special Offer',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (widget.ad.description != null &&
+                        widget.ad.description!.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.ad.description!,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.link_rounded,
+                          size: 16,
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            _displayUrl(widget.ad.url),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.primary,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 18,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImagePlaceholder(ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.colorScheme.primaryContainer.withOpacity(0.5),
+            theme.colorScheme.secondaryContainer.withOpacity(0.5),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.local_offer_rounded,
+          size: 40,
+          color: theme.colorScheme.onPrimaryContainer.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+
+  String _displayUrl(String? url) {
+    if (url == null || url.isEmpty) return '';
+    return url
+        .replaceFirst(RegExp(r'^https?://'), '')
+        .replaceFirst(RegExp(r'^www\.'), '')
+        .split('/')
+        .first;
   }
 }

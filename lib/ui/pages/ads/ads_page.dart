@@ -425,6 +425,15 @@ class _AdsPageState extends State<AdsPage> {
         final ads = snapshot.data ?? const [];
         final isBuyer = appStore.authorization?.isBuyer == true;
 
+        // Full-width immersive view for buyers
+        if (isBuyer) {
+          return AppBody(
+            contextMenu: _buildContextMenu(appStore),
+            body: AdsBuyerView(ads: ads),
+          );
+        }
+
+        // Split view for providers/consultants
         return AppBody(
           contextMenu: _buildContextMenu(appStore),
           leftSplit: Column(
@@ -446,7 +455,7 @@ class _AdsPageState extends State<AdsPage> {
                   ads: ads,
                   selectedAdId: _bulkMode ? null : _selectedAd?.id,
                   typeFilter: _filterType,
-                  isBuyer: isBuyer,
+                  isBuyer: false,
                   onAdSelected: _selectAd,
                   selectionMode: _bulkMode,
                   selectedAdIds: _bulkSelection,
@@ -456,9 +465,7 @@ class _AdsPageState extends State<AdsPage> {
               ),
             ],
           ),
-          rightSplit: isBuyer
-              ? AdsBuyerView(ads: ads)
-              : _bulkMode
+          rightSplit: _bulkMode
                   ? _buildBulkSummary()
                   : _showCreateForm
                       ? AdsCreateForm(
