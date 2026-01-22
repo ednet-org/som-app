@@ -43,6 +43,13 @@ RUN flutter pub get
 # ==============================================================================
 FROM dependencies AS build
 
+# Build arguments for compile-time configuration
+ARG SUPABASE_URL
+ARG SUPABASE_ANON_KEY
+ARG SUPABASE_SERVICE_ROLE_KEY
+ARG SUPABASE_JWT_SECRET
+ARG SUPABASE_STORAGE_BUCKET=som-assets
+
 WORKDIR /app/api
 
 # Copy API source code
@@ -56,8 +63,14 @@ ENV PATH="${PATH}:/root/.pub-cache/bin"
 RUN dart pub global activate dart_frog_cli
 RUN dart_frog build
 
-# Compile to native executable for faster startup
-RUN dart compile exe build/bin/server.dart -o build/bin/server
+# Compile to native executable with environment configuration
+# Note: These are compile-time constants baked into the binary
+RUN dart compile exe build/bin/server.dart -o build/bin/server \
+    -DSUPABASE_URL="${SUPABASE_URL}" \
+    -DSUPABASE_ANON_KEY="${SUPABASE_ANON_KEY}" \
+    -DSUPABASE_SERVICE_ROLE_KEY="${SUPABASE_SERVICE_ROLE_KEY}" \
+    -DSUPABASE_JWT_SECRET="${SUPABASE_JWT_SECRET}" \
+    -DSUPABASE_STORAGE_BUCKET="${SUPABASE_STORAGE_BUCKET}"
 
 # ==============================================================================
 # Stage 3: Production runtime
