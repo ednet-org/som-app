@@ -425,11 +425,27 @@ class _AdsPageState extends State<AdsPage> {
         final ads = snapshot.data ?? const [];
         final isBuyer = appStore.authorization?.isBuyer == true;
 
-        // Full-width immersive view for buyers
+        // Full-width immersive view for buyers with discrete filters
         if (isBuyer) {
           return AppBody(
             contextMenu: _buildContextMenu(appStore),
-            body: AdsBuyerView(ads: ads),
+            body: AdsBuyerView(
+              ads: ads,
+              branches: _branches,
+              branchIdFilter: _filterBranchId,
+              typeFilter: _filterType,
+              onBranchIdChanged: (v) {
+                setState(() => _filterBranchId = v);
+                _refresh();
+              },
+              onTypeChanged: (v) {
+                setState(() => _filterType = v);
+                _refresh();
+              },
+              onClearFilters: () {
+                _clearFilters();
+              },
+            ),
           );
         }
 

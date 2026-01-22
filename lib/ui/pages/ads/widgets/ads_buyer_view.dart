@@ -12,79 +12,179 @@ Uri _ensureScheme(String url) {
 }
 
 /// Immersive marketing-focused view for buyers showing ads prominently.
-class AdsBuyerView extends StatelessWidget {
+class AdsBuyerView extends StatefulWidget {
   const AdsBuyerView({
     super.key,
     required this.ads,
+    this.branches = const [],
+    this.branchIdFilter,
+    this.typeFilter,
+    this.onBranchIdChanged,
+    this.onTypeChanged,
+    this.onClearFilters,
   });
 
   final List<Ad> ads;
+  final List<Branch> branches;
+  final String? branchIdFilter;
+  final String? typeFilter;
+  final ValueChanged<String?>? onBranchIdChanged;
+  final ValueChanged<String?>? onTypeChanged;
+  final VoidCallback? onClearFilters;
+
+  @override
+  State<AdsBuyerView> createState() => _AdsBuyerViewState();
+}
+
+class _AdsBuyerViewState extends State<AdsBuyerView> {
+  bool _filtersExpanded = false;
+
+  bool get _hasActiveFilters =>
+      widget.branchIdFilter != null || widget.typeFilter != null;
 
   @override
   Widget build(BuildContext context) {
-    final banners = ads.where((ad) => ad.type == 'banner').toList();
-    final normal = ads.where((ad) => ad.type != 'banner').toList();
+    final banners = widget.ads.where((ad) => ad.type == 'banner').toList();
+    final normal = widget.ads.where((ad) => ad.type != 'banner').toList();
     final theme = Theme.of(context);
-
-    if (ads.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.campaign_outlined,
-              size: 64,
-              color: theme.colorScheme.outline,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No promotions available',
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Check back later for exciting offers!',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.outline,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Hero banner section
-          if (banners.isNotEmpty) ...[
-            _BannerHeroSection(banners: banners),
-            const SizedBox(height: 32),
-          ],
-          // Promotions grid
-          if (normal.isNotEmpty) ...[
-            Text(
-              'Featured Offers',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
+          // Discrete filter chip row
+          _buildFilterRow(theme),
+          const SizedBox(height: 16),
+          // Empty state
+          if (widget.ads.isEmpty) ...[
+            const SizedBox(height: 48),
+            Center(
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.campaign_outlined,
+                    size: 64,
+                    color: theme.colorScheme.outline,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _hasActiveFilters
+                        ? 'No offers match your filters'
+                        : 'No promotions available',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _hasActiveFilters
+                        ? 'Try adjusting your filters'
+                        : 'Check back later for exciting offers!',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.outline,
+                    ),
+                  ),
+                  if (_hasActiveFilters) ...[
+                    const SizedBox(height: 16),
+                    TextButton.icon(
+                      onPressed: widget.onClearFilters,
+                      icon: const Icon(Icons.clear_all, size: 18),
+                      label: const Text('Clear filters'),
+                    ),
+                  ],
+                ],
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Discover services from our trusted partners',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+          ] else ...[
+            // Hero banner section
+            if (banners.isNotEmpty) ...[
+              _BannerHeroSection(banners: banners),
+              const SizedBox(height: 32),
+            ],
+            // Promotions grid
+            if (normal.isNotEmpty) ...[
+              Text(
+                'Featured Offers',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _PromotionsGrid(ads: normal),
+              const SizedBox(height: 4),
+              Text(
+                'Discover services from our trusted partners',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 20),
+              _PromotionsGrid(ads: normal),
+            ],
           ],
         ],
       ),
+    );
+  }
+
+  Widget _buildFilterRow(ThemeData theme) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        // Filter toggle button
+        FilterChip(
+          avatar: Icon(
+            _filtersExpanded ? Icons.filter_list_off : Icons.filter_list,
+            size: 18,
+          ),
+          label: Text(_hasActiveFilters ? 'Filters active' : 'Filter'),
+          selected: _hasActiveFilters,
+          onSelected: (_) => setState(() => _filtersExpanded = !_filtersExpanded),
+        ),
+        // Expanded filter options
+        if (_filtersExpanded) ...[
+          // Branch filter
+          if (widget.branches.isNotEmpty)
+            DropdownButton<String?>(
+              value: widget.branchIdFilter,
+              hint: const Text('All branches'),
+              underline: const SizedBox.shrink(),
+              borderRadius: BorderRadius.circular(8),
+              items: [
+                const DropdownMenuItem(value: null, child: Text('All branches')),
+                ...widget.branches.map((branch) => DropdownMenuItem(
+                      value: branch.id,
+                      child: Text(branch.name ?? branch.id ?? ''),
+                    )),
+              ],
+              onChanged: widget.onBranchIdChanged,
+            ),
+          // Type filter
+          DropdownButton<String?>(
+            value: widget.typeFilter,
+            hint: const Text('All types'),
+            underline: const SizedBox.shrink(),
+            borderRadius: BorderRadius.circular(8),
+            items: const [
+              DropdownMenuItem(value: null, child: Text('All types')),
+              DropdownMenuItem(value: 'normal', child: Text('Standard')),
+              DropdownMenuItem(value: 'banner', child: Text('Banner')),
+            ],
+            onChanged: widget.onTypeChanged,
+          ),
+          // Clear button
+          if (_hasActiveFilters)
+            TextButton.icon(
+              onPressed: widget.onClearFilters,
+              icon: const Icon(Icons.clear, size: 16),
+              label: const Text('Clear'),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.error,
+              ),
+            ),
+        ],
+      ],
     );
   }
 }
