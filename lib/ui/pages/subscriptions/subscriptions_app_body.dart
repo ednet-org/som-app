@@ -579,12 +579,12 @@ class _SubscriptionsAppBodyState extends State<SubscriptionsAppBody> {
       actions: [
         if (isConsultantAdmin)
           FilledButton.tonal(
-            onPressed: _createPlan,
-            child: const Text('Create'),
+            onPressed: _startCreatePlan,
+            child: const Text('New'),
           ),
         if (isConsultantAdmin)
           FilledButton.tonal(
-            onPressed: _updatePlan,
+            onPressed: _savePlan,
             child: const Text('Save'),
           ),
         if (isConsultantAdmin)
