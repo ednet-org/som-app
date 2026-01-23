@@ -44,20 +44,32 @@ class _AdsBuyerViewState extends State<AdsBuyerView> {
 
   @override
   Widget build(BuildContext context) {
-    final banners = widget.ads.where((ad) => ad.type == 'banner').toList();
-    final normal = widget.ads.where((ad) => ad.type != 'banner').toList();
     final theme = Theme.of(context);
+
+    // Apply type filter to ads
+    final filteredAds = widget.typeFilter != null
+        ? widget.ads.where((ad) => ad.type == widget.typeFilter).toList()
+        : widget.ads;
+
+    // Separate banners and normal ads from filtered results
+    final banners = filteredAds.where((ad) => ad.type == 'banner').toList();
+    final normal = filteredAds.where((ad) => ad.type != 'banner').toList();
+
+    // Show banner section only if not filtering by 'normal' type
+    final showBanners = widget.typeFilter != 'normal' && banners.isNotEmpty;
+    // Show normal section only if not filtering by 'banner' type
+    final showNormal = widget.typeFilter != 'banner' && normal.isNotEmpty;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Discrete filter chip row
+          // Discrete filter row
           _buildFilterRow(theme),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           // Empty state
-          if (widget.ads.isEmpty) ...[
+          if (filteredAds.isEmpty) ...[
             const SizedBox(height: 48),
             Center(
               child: Column(
@@ -98,12 +110,12 @@ class _AdsBuyerViewState extends State<AdsBuyerView> {
             ),
           ] else ...[
             // Hero banner section
-            if (banners.isNotEmpty) ...[
+            if (showBanners) ...[
               _BannerHeroSection(banners: banners),
               const SizedBox(height: 32),
             ],
             // Promotions grid
-            if (normal.isNotEmpty) ...[
+            if (showNormal) ...[
               Text(
                 'Featured Offers',
                 style: theme.textTheme.headlineSmall?.copyWith(
@@ -127,64 +139,155 @@ class _AdsBuyerViewState extends State<AdsBuyerView> {
   }
 
   Widget _buildFilterRow(ThemeData theme) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        // Filter toggle button
-        FilterChip(
-          avatar: Icon(
-            _filtersExpanded ? Icons.filter_list_off : Icons.filter_list,
-            size: 18,
-          ),
-          label: Text(_hasActiveFilters ? 'Filters active' : 'Filter'),
-          selected: _hasActiveFilters,
-          onSelected: (_) => setState(() => _filtersExpanded = !_filtersExpanded),
-        ),
-        // Expanded filter options
-        if (_filtersExpanded) ...[
-          // Branch filter
-          if (widget.branches.isNotEmpty)
-            DropdownButton<String?>(
-              value: widget.branchIdFilter,
-              hint: const Text('All branches'),
-              underline: const SizedBox.shrink(),
-              borderRadius: BorderRadius.circular(8),
-              items: [
-                const DropdownMenuItem(value: null, child: Text('All branches')),
-                ...widget.branches.map((branch) => DropdownMenuItem(
-                      value: branch.id,
-                      child: Text(branch.name ?? branch.id ?? ''),
-                    )),
-              ],
-              onChanged: widget.onBranchIdChanged,
-            ),
-          // Type filter
-          DropdownButton<String?>(
-            value: widget.typeFilter,
-            hint: const Text('All types'),
-            underline: const SizedBox.shrink(),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          // Filter toggle
+          InkWell(
             borderRadius: BorderRadius.circular(8),
-            items: const [
-              DropdownMenuItem(value: null, child: Text('All types')),
-              DropdownMenuItem(value: 'normal', child: Text('Standard')),
-              DropdownMenuItem(value: 'banner', child: Text('Banner')),
-            ],
-            onChanged: widget.onTypeChanged,
-          ),
-          // Clear button
-          if (_hasActiveFilters)
-            TextButton.icon(
-              onPressed: widget.onClearFilters,
-              icon: const Icon(Icons.clear, size: 16),
-              label: const Text('Clear'),
-              style: TextButton.styleFrom(
-                foregroundColor: theme.colorScheme.error,
+            onTap: () => setState(() => _filtersExpanded = !_filtersExpanded),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.tune,
+                    size: 18,
+                    color: _hasActiveFilters
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Filter',
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: _hasActiveFilters
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  if (_hasActiveFilters) ...[
+                    const SizedBox(width: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '${(widget.branchIdFilter != null ? 1 : 0) + (widget.typeFilter != null ? 1 : 0)}',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(width: 4),
+                  Icon(
+                    _filtersExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 18,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ],
               ),
             ),
+          ),
+          // Expanded filters
+          if (_filtersExpanded) ...[
+            const SizedBox(width: 16),
+            const VerticalDivider(width: 1),
+            const SizedBox(width: 16),
+            // Branch dropdown
+            if (widget.branches.isNotEmpty) ...[
+              _buildCompactDropdown<String?>(
+                theme: theme,
+                value: widget.branchIdFilter,
+                hint: 'Branch',
+                items: [
+                  const DropdownMenuItem(value: null, child: Text('All branches')),
+                  ...widget.branches.map((b) => DropdownMenuItem(
+                        value: b.id,
+                        child: Text(
+                          b.name ?? 'Branch',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
+                ],
+                onChanged: widget.onBranchIdChanged,
+              ),
+              const SizedBox(width: 12),
+            ],
+            // Type dropdown
+            _buildCompactDropdown<String?>(
+              theme: theme,
+              value: widget.typeFilter,
+              hint: 'Type',
+              items: const [
+                DropdownMenuItem(value: null, child: Text('All types')),
+                DropdownMenuItem(value: 'normal', child: Text('Standard')),
+                DropdownMenuItem(value: 'banner', child: Text('Banner')),
+              ],
+              onChanged: widget.onTypeChanged,
+            ),
+            // Clear button
+            if (_hasActiveFilters) ...[
+              const SizedBox(width: 12),
+              IconButton(
+                onPressed: widget.onClearFilters,
+                icon: const Icon(Icons.close, size: 18),
+                tooltip: 'Clear filters',
+                style: IconButton.styleFrom(
+                  foregroundColor: theme.colorScheme.error,
+                  padding: const EdgeInsets.all(8),
+                  minimumSize: const Size(32, 32),
+                ),
+              ),
+            ],
+          ],
+          const Spacer(),
+          // Results count
+          Text(
+            '${widget.ads.length} offer${widget.ads.length == 1 ? '' : 's'}',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.outline,
+            ),
+          ),
         ],
-      ],
+      ),
+    );
+  }
+
+  Widget _buildCompactDropdown<T>({
+    required ThemeData theme,
+    required T value,
+    required String hint,
+    required List<DropdownMenuItem<T>> items,
+    required ValueChanged<T?>? onChanged,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: theme.colorScheme.outlineVariant),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          value: value,
+          hint: Text(hint, style: theme.textTheme.bodyMedium),
+          isDense: true,
+          borderRadius: BorderRadius.circular(8),
+          items: items,
+          onChanged: onChanged,
+        ),
+      ),
     );
   }
 }

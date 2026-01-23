@@ -26,10 +26,13 @@ class AdsRepository {
     });
   }
 
-  Future<List<AdRecord>> listActive({String? branchId}) async {
+  Future<List<AdRecord>> listActive({String? branchId, String? type}) async {
     var query = _client.from('ads').select().eq('status', 'active');
     if (branchId != null) {
       query = query.eq('branch_id', branchId);
+    }
+    if (type != null && type.isNotEmpty) {
+      query = query.eq('type', type);
     }
     final rows =
         await query.order('created_at', ascending: false) as List<dynamic>;
@@ -39,6 +42,7 @@ class AdsRepository {
   Future<List<AdRecord>> listAll({
     String? companyId,
     String? status,
+    String? type,
   }) async {
     var query = _client.from('ads').select();
     if (companyId != null) {
@@ -46,6 +50,9 @@ class AdsRepository {
     }
     if (status != null && status.isNotEmpty) {
       query = query.eq('status', status);
+    }
+    if (type != null && type.isNotEmpty) {
+      query = query.eq('type', type);
     }
     final rows =
         await query.order('created_at', ascending: false) as List<dynamic>;

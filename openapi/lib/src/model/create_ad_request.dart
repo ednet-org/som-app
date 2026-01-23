@@ -13,16 +13,16 @@ part 'create_ad_request.g.dart';
 ///
 /// Properties:
 /// * [companyId] - Target company ID (consultants only, defaults to own company)
-/// * [type]
+/// * [type] 
 /// * [status] - Must be draft; activate via /ads/{id}/activate
-/// * [branchId]
-/// * [url]
-/// * [imagePath]
-/// * [headline]
-/// * [description]
-/// * [startDate]
-/// * [endDate]
-/// * [bannerDate]
+/// * [branchId] 
+/// * [url] 
+/// * [imagePath] 
+/// * [headline] 
+/// * [description] 
+/// * [startDate] 
+/// * [endDate] 
+/// * [bannerDate] 
 @BuiltValue()
 abstract class CreateAdRequest implements Built<CreateAdRequest, CreateAdRequestBuilder> {
   /// Target company ID (consultants only, defaults to own company)

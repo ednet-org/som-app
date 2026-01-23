@@ -12,8 +12,6 @@ import '../domain/model/shared/som.dart';
 import '../routes/routes.dart';
 
 class SplashPage extends StatefulWidget {
-  static String tag = '/SplashScreen';
-
   const SplashPage({super.key});
 
   @override

@@ -268,7 +268,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adsGet**
-> BuiltList<Ad> adsGet(branchId, scope, companyId, status)
+> BuiltList<Ad> adsGet(branchId, scope, companyId, status, type)
 
 List ads
 
@@ -283,9 +283,10 @@ final String branchId = branchId_example; // String |
 final String scope = scope_example; // String | company = list ads for the authenticated company, all = list ads across companies (consultant only)
 final String companyId = companyId_example; // String | Optional company id when scope=all
 final String status = status_example; // String | Filter by ad status (e.g. active, draft, expired)
+final String type = type_example; // String | Filter by ad type (normal or banner)
 
 try {
-    final response = api.adsGet(branchId, scope, companyId, status);
+    final response = api.adsGet(branchId, scope, companyId, status, type);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling AdsApi->adsGet: $e\n');
@@ -300,6 +301,7 @@ Name | Type | Description  | Notes
  **scope** | **String**| company = list ads for the authenticated company, all = list ads across companies (consultant only) | [optional] 
  **companyId** | **String**| Optional company id when scope=all | [optional] 
  **status** | **String**| Filter by ad status (e.g. active, draft, expired) | [optional] 
+ **type** | **String**| Filter by ad type (normal or banner) | [optional] 
 
 ### Return type
 

@@ -20,8 +20,6 @@ class SubscriptionSelector extends StatefulWidget {
 class _SubscriptionSelectorState extends State<SubscriptionSelector> {
   int selectIndex = 0;
 
-  int containerIndex = 0;
-
   @override
   void initState() {
     super.initState();

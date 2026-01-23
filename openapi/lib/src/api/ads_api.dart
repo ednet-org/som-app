@@ -467,6 +467,7 @@ class AdsApi {
   /// * [scope] - company = list ads for the authenticated company, all = list ads across companies (consultant only)
   /// * [companyId] - Optional company id when scope=all
   /// * [status] - Filter by ad status (e.g. active, draft, expired)
+  /// * [type] - Filter by ad type (normal or banner)
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -481,6 +482,7 @@ class AdsApi {
     String? scope,
     String? companyId,
     String? status,
+    String? type,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -506,6 +508,7 @@ class AdsApi {
       if (scope != null) r'scope': encodeQueryParameter(_serializers, scope, const FullType(String)),
       if (companyId != null) r'companyId': encodeQueryParameter(_serializers, companyId, const FullType(String)),
       if (status != null) r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(

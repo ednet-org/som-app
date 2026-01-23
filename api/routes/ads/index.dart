@@ -19,6 +19,7 @@ Future<Response> onRequest(RequestContext context) async {
     final branchId = params['branchId'];
     final scope = params['scope'];
     final status = params['status'];
+    final type = params['type'];
     final companyIdParam = params['companyId'];
     List<AdRecord> ads;
     if (scope == 'company' || scope == 'all') {
@@ -47,9 +48,9 @@ Future<Response> onRequest(RequestContext context) async {
       }
       ads = await context
           .read<AdsRepository>()
-          .listAll(companyId: companyId, status: status);
+          .listAll(companyId: companyId, status: status, type: type);
     } else {
-      ads = await context.read<AdsRepository>().listActive(branchId: branchId);
+      ads = await context.read<AdsRepository>().listActive(branchId: branchId, type: type);
     }
     // Generate signed URLs for ad images (valid for 1 hour)
     final storage = context.read<FileStorage>();

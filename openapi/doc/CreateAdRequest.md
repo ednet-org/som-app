@@ -8,6 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**companyId** | **String** | Target company ID (consultants only, defaults to own company) | [optional] 
 **type** | **String** |  | 
 **status** | **String** | Must be draft; activate via /ads/{id}/activate | 
 **branchId** | **String** |  | 

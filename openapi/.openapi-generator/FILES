@@ -169,5 +169,3 @@ lib/src/model/users_load_user_with_company_get200_response.dart
 lib/src/model/users_load_user_with_company_get200_response_company_options_inner.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/inquiries_inquiry_id_pdf_generate_post200_response_test.dart
-test/users_load_user_with_company_get200_response_company_options_inner_test.dart

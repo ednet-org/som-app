@@ -15,6 +15,11 @@ class SomDropDown<T> extends StatelessWidget {
   final PopupMode popupMode;
   final BoxConstraints? popupConstraints;
   final bool showSearchBox;
+  /// Whether to show the leading menu icon. Defaults to true.
+  /// Set to false for compact filter dropdowns.
+  final bool showLeadingIcon;
+  /// Whether to use dense styling for compact layouts.
+  final bool isDense;
 
   const SomDropDown({
     super.key,
@@ -29,6 +34,8 @@ class SomDropDown<T> extends StatelessWidget {
     this.popupConstraints,
     this.showSearchBox = true,
     this.errorText,
+    this.showLeadingIcon = true,
+    this.isDense = false,
   });
 
   @override
@@ -40,19 +47,32 @@ class SomDropDown<T> extends StatelessWidget {
       labelText: label,
       hintText: hint,
       errorText: errorText,
+      isDense: isDense,
+      contentPadding: isDense
+          ? const EdgeInsets.symmetric(horizontal: 12, vertical: 8)
+          : null,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      // Use futuristic icons
-      icon: SvgPicture.asset(
-        SomAssets.iconMenu,
-        width: 24,
-        height: 24,
-        colorFilter: ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
+      // Only show leading icon if showLeadingIcon is true
+      icon: showLeadingIcon
+          ? SvgPicture.asset(
+              SomAssets.iconMenu,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
+            )
+          : null,
+      suffixIcon: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: SvgPicture.asset(
+          SomAssets.iconChevronDown,
+          width: isDense ? 16 : 20,
+          height: isDense ? 16 : 20,
+          colorFilter: ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
+        ),
       ),
-      suffixIcon: SvgPicture.asset(
-        SomAssets.iconChevronDown,
-        width: 20,
-        height: 20,
-        colorFilter: ColorFilter.mode(theme.iconTheme.color!, BlendMode.srcIn),
+      suffixIconConstraints: BoxConstraints(
+        minWidth: isDense ? 24 : 32,
+        minHeight: isDense ? 24 : 32,
       ),
     );
 
@@ -207,7 +227,13 @@ class SomDropDown<T> extends StatelessWidget {
         final text = item != null
             ? (itemAsString?.call(item) ?? item.toString())
             : (hint ?? 'Select option');
-        return Text(text, style: theme.textTheme.bodyMedium);
+        return Text(
+          text,
+          style: isDense
+              ? theme.textTheme.bodySmall
+              : theme.textTheme.bodyMedium,
+          overflow: TextOverflow.ellipsis,
+        );
       },
       items: (filter, loadProps) => items ?? <T>[],
       itemAsString: itemAsString,
@@ -215,7 +241,9 @@ class SomDropDown<T> extends StatelessWidget {
       selectedItem: value,
       decoratorProps: DropDownDecoratorProps(
         textAlign: TextAlign.start,
-        baseStyle: theme.textTheme.bodyMedium,
+        baseStyle: isDense
+            ? theme.textTheme.bodySmall
+            : theme.textTheme.bodyMedium,
         decoration: inputDecoration,
       ),
     );

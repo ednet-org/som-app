@@ -404,6 +404,10 @@
           "status"
         ],
         "properties": {
+          "companyId": {
+            "type": "string",
+            "description": "Target company ID (consultants only, defaults to own company)"
+          },
           "type": {
             "type": "string"
           },
@@ -3789,6 +3793,18 @@
               "type": "string"
             },
             "description": "Filter by ad status (e.g. active, draft, expired)"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "normal",
+                "banner"
+              ]
+            },
+            "description": "Filter by ad type (normal or banner)"
           }
         ],
         "responses": {

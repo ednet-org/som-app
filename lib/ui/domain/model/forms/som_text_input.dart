@@ -19,6 +19,8 @@ class SomTextInput extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final String? errorText;
   final Iterable<String>? autofillHints;
+  /// Whether to use dense styling for compact layouts.
+  final bool isDense;
 
   const SomTextInput({
     super.key,
@@ -39,6 +41,7 @@ class SomTextInput extends StatefulWidget {
     this.onFieldSubmitted,
     this.errorText,
     this.autofillHints,
+    this.isDense = false,
   });
 
   @override

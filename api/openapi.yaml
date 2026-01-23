@@ -2243,6 +2243,12 @@ paths:
           schema:
             type: string
           description: Filter by ad status (e.g. active, draft, expired)
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [normal, banner]
+          description: Filter by ad type (normal or banner)
       responses:
         '200':
           description: Ads
