@@ -9,6 +9,7 @@ import 'package:som_api/infrastructure/repositories/subscription_repository.dart
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/models/models.dart';
 import 'package:som_api/domain/som_domain.dart';
+import 'package:som_api/services/file_storage.dart';
 import 'package:som_api/services/notification_service.dart';
 import 'package:som_api/services/request_auth.dart';
 
@@ -23,10 +24,10 @@ Future<Response> onRequest(RequestContext context) async {
     if (scope == 'company' || scope == 'all') {
       final auth = await parseAuth(
         context,
-        secret: const String.fromEnvironment(
-          'SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret',
-        ),
+        supabaseUrl: const String.fromEnvironment(
+      'SUPABASE_URL',
+      defaultValue: 'http://localhost:54321',
+    ),
         users: context.read<UserRepository>(),
       );
       if (auth == null) {
@@ -50,42 +51,57 @@ Future<Response> onRequest(RequestContext context) async {
     } else {
       ads = await context.read<AdsRepository>().listActive(branchId: branchId);
     }
-    return Response.json(
-      body: ads
-          .map((ad) => {
-                'id': ad.id,
-                'companyId': ad.companyId,
-                'type': ad.type,
-                'status': ad.status,
-                'branchId': ad.branchId,
-                'url': ad.url,
-                'imagePath': ad.imagePath,
-                'headline': ad.headline,
-                'description': ad.description,
-                'startDate': ad.startDate?.toIso8601String(),
-                'endDate': ad.endDate?.toIso8601String(),
-                'bannerDate': ad.bannerDate?.toIso8601String(),
-              })
-          .toList(),
-    );
+    // Generate signed URLs for ad images (valid for 1 hour)
+    final storage = context.read<FileStorage>();
+    final adsWithSignedUrls = await Future.wait(ads.map((ad) async {
+      String? signedImageUrl;
+      if (ad.imagePath.isNotEmpty) {
+        try {
+          signedImageUrl = await storage.createSignedUrl(ad.imagePath, expiresInSeconds: 3600);
+        } catch (_) {
+          // Ignore errors - return null imagePath if signing fails
+        }
+      }
+      return {
+        'id': ad.id,
+        'companyId': ad.companyId,
+        'type': ad.type,
+        'status': ad.status,
+        'branchId': ad.branchId,
+        'url': ad.url,
+        'imagePath': signedImageUrl ?? (ad.imagePath.isEmpty ? null : ad.imagePath),
+        'headline': ad.headline,
+        'description': ad.description,
+        'startDate': ad.startDate?.toIso8601String(),
+        'endDate': ad.endDate?.toIso8601String(),
+        'bannerDate': ad.bannerDate?.toIso8601String(),
+      };
+    }));
+    return Response.json(body: adsWithSignedUrls);
   }
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (auth == null) {
       return Response(statusCode: 401);
     }
-    if (auth.activeRole != 'provider') {
+    // Providers can create ads for themselves, consultants can create for any provider
+    final isProvider = auth.activeRole == 'provider';
+    final isConsultant = auth.roles.contains('consultant');
+    if (!isProvider && !isConsultant) {
       return Response(statusCode: 403);
     }
     final providerRepo = context.read<ProviderRepository>();
     final subscriptionRepo = context.read<SubscriptionRepository>();
     final data =
         jsonDecode(await context.request.body()) as Map<String, dynamic>;
+    // Consultants can specify companyId; providers use their own
+    final companyId = isConsultant
+        ? (data['companyId'] as String? ?? auth.companyId)
+        : auth.companyId;
     final now = DateTime.now().toUtc();
     final type = data['type'] as String? ?? 'normal';
     final status = data['status'] as String? ?? 'draft';
@@ -122,7 +138,7 @@ Future<Response> onRequest(RequestContext context) async {
             statusCode: 400, body: 'Ad period cannot exceed 14 days');
       }
     }
-    final profile = await providerRepo.findByCompany(auth.companyId);
+    final profile = await providerRepo.findByCompany(companyId);
     if (profile != null) {
       if (profile.status != 'active') {
         return Response.json(
@@ -142,7 +158,7 @@ Future<Response> onRequest(RequestContext context) async {
         if (type != 'banner' && status == 'active' && startDate != null) {
           final activeCount = await context
               .read<AdsRepository>()
-              .countActiveByCompanyInMonth(auth.companyId, startDate);
+              .countActiveByCompanyInMonth(companyId, startDate);
           if (maxNormalAds > 0 && activeCount >= maxNormalAds) {
             return Response.json(
                 statusCode: 400, body: 'Monthly ad limit reached');
@@ -167,7 +183,7 @@ Future<Response> onRequest(RequestContext context) async {
     final domain = context.read<SomDomainModel>();
     final ad = AdRecord(
       id: const Uuid().v4(),
-      companyId: auth.companyId,
+      companyId: companyId,
       type: type,
       status: status,
       branchId: data['branchId'] as String? ?? '',

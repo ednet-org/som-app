@@ -108,9 +108,30 @@ class BranchRepository {
     await updateCategory(categoryId, name: name);
   }
 
-  Future<List<BranchRecord>> listBranches() async {
-    final rows =
-        await _client.from('branches').select().order('name') as List<dynamic>;
+  Future<List<BranchRecord>> listBranches({
+    int? limit,
+    int? offset,
+    String? status,
+  }) async {
+    final effectiveLimit = limit ?? 50;
+    final effectiveOffset = offset ?? 0;
+    List<dynamic> rows;
+    if (status != null) {
+      rows = await _client
+          .from('branches')
+          .select()
+          .eq('status', status)
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    } else {
+      rows = await _client
+          .from('branches')
+          .select()
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    }
     return rows
         .map((row) => BranchRecord(
               id: (row as Map<String, dynamic>)['id'] as String,
@@ -120,6 +141,61 @@ class BranchRepository {
               normalizedName: row['normalized_name'] as String?,
             ))
         .toList();
+  }
+
+  Future<List<Map<String, dynamic>>> listBranchesWithCategories({
+    int? limit,
+    int? offset,
+    String? status,
+  }) async {
+    final effectiveLimit = limit ?? 50;
+    final effectiveOffset = offset ?? 0;
+    List<dynamic> rows;
+    if (status != null) {
+      rows = await _client
+          .from('branches')
+          .select('*, categories(*)')
+          .eq('status', status)
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    } else {
+      rows = await _client
+          .from('branches')
+          .select('*, categories(*)')
+          .order('name')
+          .range(effectiveOffset, effectiveOffset + effectiveLimit - 1)
+          as List<dynamic>;
+    }
+    return rows.map((row) {
+      final r = row as Map<String, dynamic>;
+      final cats = (r['categories'] as List<dynamic>? ?? [])
+          .map((c) => {
+                'id': (c as Map<String, dynamic>)['id'],
+                'name': c['name'],
+                'status': c['status'] ?? 'active',
+              })
+          .toList();
+      return {
+        'id': r['id'],
+        'name': r['name'],
+        'status': r['status'] ?? 'active',
+        'categories': cats,
+      };
+    }).toList();
+  }
+
+  Future<int> countBranches({String? status}) async {
+    List<dynamic> rows;
+    if (status != null) {
+      rows = await _client
+          .from('branches')
+          .select('id')
+          .eq('status', status) as List<dynamic>;
+    } else {
+      rows = await _client.from('branches').select('id') as List<dynamic>;
+    }
+    return rows.length;
   }
 
   Future<List<CategoryRecord>> listCategories(String branchId) async {

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:dart_frog/dart_frog.dart';
-
 import 'package:som_api/infrastructure/repositories/company_repository.dart';
 import 'package:som_api/infrastructure/repositories/user_repository.dart';
 import 'package:som_api/services/mappings.dart';
@@ -13,25 +12,30 @@ Future<Response> onRequest(RequestContext context) async {
   }
   final authResult = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-        defaultValue: 'som_dev_secret'),
+    supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
     users: context.read<UserRepository>(),
   );
   if (authResult == null) {
+    print('[loadUserWithCompany] Auth failed - returning 401');
     return Response(statusCode: 401);
   }
+  print('[loadUserWithCompany] Auth succeeded for user ${authResult.userId}');
   final params = context.request.uri.queryParameters;
   final userId = params['userId'];
   final companyId = params['companyId'];
   if (userId == null) {
+    print('[loadUserWithCompany] userId param missing - returning 400');
     return Response(statusCode: 400);
   }
+  print('[loadUserWithCompany] Looking up user: $userId');
   final userRepo = context.read<UserRepository>();
   final companyRepo = context.read<CompanyRepository>();
   final user = await userRepo.findById(userId);
   if (user == null) {
+    print('[loadUserWithCompany] User $userId not found - returning 404');
     return Response(statusCode: 404);
   }
+  print('[loadUserWithCompany] Found user: ${user.email}');
   final isSelf = authResult.userId == userId;
   final isConsultant = authResult.roles.contains('consultant');
   final isAdmin = authResult.roles.contains('admin');
@@ -43,17 +47,61 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   final memberships = await userRepo.listCompanyRolesForUser(userId);
+  print('[loadUserWithCompany] Found ${memberships.length} memberships');
+
+  // Fallback: if no memberships exist, use user's companyId and roles
   if (memberships.isEmpty) {
-    return Response(statusCode: 404);
+    print('[loadUserWithCompany] No memberships, falling back to user.companyId: ${user.companyId}');
+    final fallbackCompanyId = user.companyId;
+    final fallbackCompany = await companyRepo.findById(fallbackCompanyId);
+    if (fallbackCompany == null) {
+      print('[loadUserWithCompany] Fallback company $fallbackCompanyId not found - returning 404');
+      return Response(statusCode: 404);
+    }
+    final fallbackRoles = user.roles.isNotEmpty ? user.roles : ['user'];
+    final fallbackActiveRole = user.lastLoginRole != null && fallbackRoles.contains(user.lastLoginRole)
+        ? user.lastLoginRole!
+        : fallbackRoles.first;
+    return Response.json(
+      body: {
+        'userId': user.id,
+        'salutation': user.salutation,
+        'title': user.title,
+        'firstName': user.firstName,
+        'lastName': user.lastName,
+        'telephoneNr': user.telephoneNr,
+        'emailAddress': user.email,
+        'roles': fallbackRoles,
+        'activeRole': fallbackActiveRole,
+        'companyId': fallbackCompany.id,
+        'activeCompanyId': fallbackCompanyId,
+        'companyName': fallbackCompany.name,
+        'companyAddress': fallbackCompany.address.toJson(),
+        'companyType': companyTypeToWire(fallbackCompany.type),
+        'companyOptions': [
+          {
+            'companyId': fallbackCompany.id,
+            'companyName': fallbackCompany.name,
+            'companyType': companyTypeToWire(fallbackCompany.type),
+            'roles': fallbackRoles,
+            'activeRole': fallbackActiveRole,
+          },
+        ],
+      },
+    );
   }
+
   var resolvedCompanyId = companyId ?? user.lastLoginCompanyId ?? user.companyId;
   if (!memberships.any((membership) => membership.companyId == resolvedCompanyId)) {
     resolvedCompanyId = memberships.first.companyId;
   }
+  print('[loadUserWithCompany] Looking up company: $resolvedCompanyId');
   final company = await companyRepo.findById(resolvedCompanyId);
   if (company == null) {
+    print('[loadUserWithCompany] Company $resolvedCompanyId not found - returning 404');
     return Response(statusCode: 404);
   }
+  print('[loadUserWithCompany] Found company: ${company.name}');
   final activeMembership = memberships.firstWhere(
     (membership) => membership.companyId == resolvedCompanyId,
     orElse: () => memberships.first,

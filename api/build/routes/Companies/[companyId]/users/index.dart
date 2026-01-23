@@ -10,8 +10,7 @@ Future<Response> onRequest(RequestContext context, String companyId) async {
   }
   final authResult = await parseAuth(
     context,
-    secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-        defaultValue: 'som_dev_secret'),
+    supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
     users: context.read<UserRepository>(),
   );
   if (authResult == null) {

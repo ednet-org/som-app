@@ -11,30 +11,41 @@ import 'package:som_api/utils/name_normalizer.dart';
 Future<Response> onRequest(RequestContext context) async {
   final repo = context.read<BranchRepository>();
   if (context.request.method == HttpMethod.get) {
-    final branches = await repo.listBranches();
-    final body = <Map<String, dynamic>>[];
-    for (final branch in branches) {
-      final categories = await repo.listCategories(branch.id);
-      body.add({
-        'id': branch.id,
-        'name': branch.name,
-        'status': branch.status,
-        'categories': categories
-            .map((category) => {
-                  'id': category.id,
-                  'name': category.name,
-                  'status': category.status,
-                })
-            .toList(),
+    final params = context.request.uri.queryParameters;
+    final limitParam = params['limit'];
+    final offsetParam = params['offset'];
+    final status = params['status'];
+
+    // If pagination params provided, return paginated response
+    if (limitParam != null || offsetParam != null) {
+      final limit = int.tryParse(limitParam ?? '') ?? 50;
+      final offset = int.tryParse(offsetParam ?? '') ?? 0;
+      final branches = await repo.listBranchesWithCategories(
+        limit: limit,
+        offset: offset,
+        status: status,
+      );
+      final total = await repo.countBranches(status: status);
+      return Response.json(body: {
+        'data': branches,
+        'total': total,
+        'limit': limit,
+        'offset': offset,
       });
     }
-    return Response.json(body: body);
+
+    // Backward compatible: return flat list with reasonable limit
+    final branches = await repo.listBranchesWithCategories(
+      limit: 200,
+      offset: 0,
+      status: status,
+    );
+    return Response.json(body: branches);
   }
   if (context.request.method == HttpMethod.post) {
     final auth = await parseAuth(
       context,
-      secret: const String.fromEnvironment('SUPABASE_JWT_SECRET',
-          defaultValue: 'som_dev_secret'),
+      supabaseUrl: const String.fromEnvironment('SUPABASE_URL', defaultValue: 'http://localhost:54321'),
       users: context.read<UserRepository>(),
     );
     if (auth == null) {

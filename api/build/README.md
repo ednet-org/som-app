@@ -92,8 +92,30 @@ dart test test/providers_pagination_test.dart
 
 ## Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `SUPABASE_URL` | Supabase project URL | Yes |
-| `SUPABASE_ANON_KEY` | Supabase anonymous key | Yes |
-| `SUPABASE_JWT_SECRET` | JWT signing secret | Yes |
+All environment variables are **compile-time constants** passed via `dart compile exe -D...` flags.
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `SUPABASE_URL` | Supabase project URL | Yes | - |
+| `SUPABASE_ANON_KEY` | Supabase anonymous key | Yes | - |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key | Yes | - |
+| `SUPABASE_JWT_SECRET` | JWT signing secret | Yes | - |
+| `SUPABASE_SCHEMA` | Database schema name | No | `som` |
+| `SUPABASE_STORAGE_BUCKET` | Storage bucket name | No | `som-assets` |
+| `CORS_ALLOWED_ORIGINS` | Comma-separated allowed origins | No | `*` |
+| `APP_BASE_URL` | Frontend application URL | No | - |
+
+### Docker Build Example
+
+```bash
+docker build \
+  --build-arg SUPABASE_URL="https://xxx.supabase.co" \
+  --build-arg SUPABASE_ANON_KEY="eyJ..." \
+  --build-arg SUPABASE_SERVICE_ROLE_KEY="eyJ..." \
+  --build-arg SUPABASE_JWT_SECRET="xxx" \
+  --build-arg CORS_ALLOWED_ORIGINS="https://your-app.com,http://localhost:8080" \
+  --build-arg APP_BASE_URL="https://your-app.com" \
+  -f api/Dockerfile .
+```
+
+**Important**: These are compile-time values. Runtime environment variables will not work.
